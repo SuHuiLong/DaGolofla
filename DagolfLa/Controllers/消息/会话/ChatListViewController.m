@@ -58,6 +58,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    
+    [self reloadRongTKChet];
+}
+- (void)reloadRongTKChet{
     self.isShowNetworkIndicatorView = NO;
     self.tabBarController.tabBar.hidden = NO;
     
@@ -71,7 +75,7 @@
         if ([[RCIMClient sharedRCIMClient]getUnreadCount:self.displayConversationTypeArray] == 0) {
             [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
-//        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+        //        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
         [self refreshConversationTableViewIfNeeded];
         //        [self.tabBarController.tabBar hideBadgeOnItemIndex:4];
         //        [self.tabBarController.tabBar showBadgeOnItemIndex:4];
@@ -79,8 +83,8 @@
     else
     {
         
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        [alertView show];
+        //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        //        [alertView show];
         
         [self refreshConversationTableViewIfNeeded];
         
@@ -88,6 +92,7 @@
     
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
 }
+
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion {
     
 };
@@ -146,7 +151,8 @@
     
 }
 - (void)rongTKChat{
-    [self refreshConversationTableViewIfNeeded];
+//    [self refreshConversationTableViewIfNeeded];
+    [self reloadRongTKChet];
 }
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
