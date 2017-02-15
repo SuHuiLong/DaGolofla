@@ -173,7 +173,7 @@
         self.backTitleView.frame =  CGRectMake((screenWidth - width + 30 * ProportionAdapter ) / 2, 0, width + 30 * ProportionAdapter, 30 * ProportionAdapter);
         self.cityLitleLB.frame = CGRectMake(0, 0, width, 30 * ProportionAdapter);
         self.titleBtn.frame = CGRectMake(width, 0, 30 * ProportionAdapter, 30 * ProportionAdapter);
-
+        self.offset = 0;
         [self dataSet:self.currentType];
     };
     [self.navigationController pushViewController:citySearchVC animated:YES];
