@@ -618,13 +618,13 @@
                 
                 
                 //统计
-//                if ([[dict objectForKey:@"pushData"] objectForKey:@"pushLogKey"]) {
-//                    NSMutableDictionary *pushDict = [NSMutableDictionary dictionary];
-//                    [pushDict setObject:[dict objectForKey:@"pushLogKey"] forKey:@"pushLogKey"];
-//                    [pushDict setObject:DEFAULF_USERID forKey:@"userKey"];
-//                    [pushDict setObject:@0 forKey:@"type"];
-//                    [Helper requestCountPushLog:pushDict];
-//                }
+                if ([[dict objectForKey:@"pushData"] objectForKey:@"pushLogKey"]) {
+                    NSMutableDictionary *pushDict = [NSMutableDictionary dictionary];
+                    [pushDict setObject:[[dict objectForKey:@"pushData"] objectForKey:@"pushLogKey"] forKey:@"pushLogKey"];
+                    [pushDict setObject:DEFAULF_USERID forKey:@"userKey"];
+                    [pushDict setObject:@0 forKey:@"type"];
+                    [Helper requestCountPushLog:pushDict];
+                }
             }
         }
     }
