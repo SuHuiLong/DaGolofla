@@ -272,7 +272,15 @@
         [self startApp];
         
         if ([pushInfo objectForKey:APPDATA]) {
-            [self pushData:[pushInfo objectForKey:APPDATA]];
+           // [self pushData:[pushInfo objectForKey:APPDATA]];
+            
+//            [Helper alertViewWithTitle:@"22222" withBlock:^(UIAlertController *alertView) {
+//                UIWindow   *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//                alertWindow.rootViewController = [[UIViewController alloc] init];
+//                alertWindow.windowLevel = UIWindowLevelAlert + 1;
+//                [alertWindow makeKeyAndVisible];
+//                [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
+//            }];
         }
         
         [self updateBadgeValueForTabBarItem];
@@ -336,15 +344,7 @@
 }
 - (void)application:(UIApplication *)application handleWatchKitExtensionRequest:(NSDictionary *)userInfo
               reply:(void (^)(NSDictionary *))reply {
-//    RCWKRequestHandler *handler =
-//    [[RCWKRequestHandler alloc] initHelperWithUserInfo:userInfo
-//                                              provider:self
-//                                                 reply:reply];
-//    if (![handler handleWatchKitRequest]) {
-        // can not handled!
-        // app should handle it here
-        NSLog(@"not handled the request: %@", userInfo);
-//    }
+
 }
 - (void)phpLogin{
     NSString *url = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLoginUserid&uid=%@&url=dsadsa", DEFAULF_USERID];
@@ -590,6 +590,13 @@
 
     if ([userInfo objectForKey:APPDATA]) {
         [self pushData:[userInfo objectForKey:APPDATA]];
+//        [Helper alertViewWithTitle:@"444444" withBlock:^(UIAlertController *alertView) {
+//            UIWindow   *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//            alertWindow.rootViewController = [[UIViewController alloc] init];
+//            alertWindow.windowLevel = UIWindowLevelAlert + 1;
+//            [alertWindow makeKeyAndVisible];
+//            [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
+//        }];
     }
 }
 #pragma mark -- 跳转数据解析
@@ -601,14 +608,23 @@
                 NSString *urlString = [NSString stringWithFormat:@"%@", [[dict objectForKey:@"pushData"] objectForKey:@"url"]];
                 [self pushSpecifiedViewCtrl:urlString];
                 
+                [Helper alertViewWithTitle:pushDataString withBlock:^(UIAlertController *alertView) {
+                    UIWindow   *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                    alertWindow.rootViewController = [[UIViewController alloc] init];
+                    alertWindow.windowLevel = UIWindowLevelAlert + 1;
+                    [alertWindow makeKeyAndVisible];
+                    [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
+                }];
+                
+                
                 //统计
-                if ([dict objectForKey:@"pushLogKey"]) {
-                    NSMutableDictionary *pushDict = [NSMutableDictionary dictionary];
-                    [pushDict setObject:[dict objectForKey:@"pushLogKey"] forKey:@"pushLogKey"];
-                    [pushDict setObject:DEFAULF_USERID forKey:@"userKey"];
-                    [pushDict setObject:@0 forKey:@"type"];
-                    [Helper requestCountPushLog:pushDict];
-                }
+//                if ([[dict objectForKey:@"pushData"] objectForKey:@"pushLogKey"]) {
+//                    NSMutableDictionary *pushDict = [NSMutableDictionary dictionary];
+//                    [pushDict setObject:[dict objectForKey:@"pushLogKey"] forKey:@"pushLogKey"];
+//                    [pushDict setObject:DEFAULF_USERID forKey:@"userKey"];
+//                    [pushDict setObject:@0 forKey:@"type"];
+//                    [Helper requestCountPushLog:pushDict];
+//                }
             }
         }
     }
@@ -641,6 +657,14 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         
         if ([userInfo objectForKey:APPDATA]) {
             [self pushData:[userInfo objectForKey:APPDATA]];
+            [Helper alertViewWithTitle:@"1000000" withBlock:^(UIAlertController *alertView) {
+                UIWindow   *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                alertWindow.rootViewController = [[UIViewController alloc] init];
+                alertWindow.windowLevel = UIWindowLevelAlert + 1;
+                [alertWindow makeKeyAndVisible];
+                [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
+            }];
+            
         }
         
     }

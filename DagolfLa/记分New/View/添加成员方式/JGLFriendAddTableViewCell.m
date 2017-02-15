@@ -72,7 +72,9 @@
 - (void)configJGLFriendAddTableViewCell:(MyattenModel *)model{
     self.labelTitle.text = model.userName;
     
-    [self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+//    [self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    
+    [self.imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[model.friendUserKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     if ([model.sex integerValue] == 0) {
         _imgvSex.image = [UIImage imageNamed:@"xb_n"];

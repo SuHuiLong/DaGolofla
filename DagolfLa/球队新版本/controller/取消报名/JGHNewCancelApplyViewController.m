@@ -206,7 +206,7 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
     if (applyCount == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请选择确认退出人！" FromView:self.view];
     }else{
-        [Helper alertViewWithTitle:@"确定确认退出？" withBlockCancle:^{
+        [Helper alertViewWithTitle:@"是否确认退出？" withBlockCancle:^{
             NSLog(@"确认退出");
         } withBlockSure:^{
             [self cancelApply:btn];

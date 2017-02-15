@@ -38,7 +38,7 @@
     self.baseLabel.text = string;
     self.baseLabel.font = [UIFont systemFontOfSize:13.0];
     self.backgroundColor = [UIColor colorWithHexString:BG_color];
-    self.baseLabel.textColor = [UIColor colorWithHexString:Nav_Color];
+    self.baseLabel.textColor = [UIColor lightGrayColor];
 }
 
 -(void)configCancelDrawback:(NSString* )str

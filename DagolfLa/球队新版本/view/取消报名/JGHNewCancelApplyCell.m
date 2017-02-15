@@ -22,6 +22,10 @@
         _mobile.textAlignment = NSTextAlignmentRight;
         [self addSubview:_mobile];
         
+        _line = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, self.frame.size.height -0.5, screenWidth -20*ProportionAdapter, 0.5)];
+        _line.backgroundColor = [UIColor colorWithHexString:BG_color];
+        [self addSubview:_line];
+        
         self.backgroundColor = [UIColor whiteColor];
     }
     return self;

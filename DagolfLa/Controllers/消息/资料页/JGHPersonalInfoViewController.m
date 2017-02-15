@@ -69,7 +69,8 @@
     [dict setObject:_otherKey forKey:@"seeUserKey"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&seeUserKey=%@dagolfla.com", DEFAULF_USERID, _otherKey]] forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"user/getUserMainInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"user/getUserMainInfo" JsonKey:nil withData:dict failedBlock:^(id errType) {
         [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);

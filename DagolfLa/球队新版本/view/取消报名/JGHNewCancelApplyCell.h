@@ -14,6 +14,8 @@
 
 @property (nonatomic, retain)UILabel *mobile;
 
+@property (nonatomic, retain)UILabel *line;
+
 - (void)configDict:(NSMutableDictionary *)dict;
 
 @end
