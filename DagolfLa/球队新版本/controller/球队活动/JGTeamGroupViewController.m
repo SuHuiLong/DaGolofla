@@ -86,12 +86,12 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 //    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
 //    [self.view addSubview:view];
     //待分组label
-   UILabel *linelable = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, 10*ProportionAdapter, 30)];
-    linelable.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:linelable];
+//   UILabel *linelable = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, 10*ProportionAdapter, 30)];
+//    linelable.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:linelable];
     
-    _waitGroupLabel = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 10, screenWidth, 30)];
-    _waitGroupLabel.text = @"待分组";
+    _waitGroupLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10*ProportionAdapter, screenWidth, 29*ProportionAdapter)];
+    _waitGroupLabel.text = @"  待分组";
     _waitGroupLabel.backgroundColor = [UIColor whiteColor];
     _waitGroupLabel.textAlignment = NSTextAlignmentLeft;
     _waitGroupLabel.font = [UIFont systemFontOfSize:15];
@@ -104,16 +104,13 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     autoGroupBtn.layer.cornerRadius = 3 *ProportionAdapter;
     [autoGroupBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     autoGroupBtn.backgroundColor = [UIColor colorWithHexString:Nav_Color];
-//    autoGroupBtn.layer.borderWidth = 1.0;
-//    autoGroupBtn.layer.borderColor = [UIColor colorWithHexString:@"#7DDFFD"].CGColor;
     autoGroupBtn.titleLabel.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     [autoGroupBtn addTarget:self action:@selector(autoGroupBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    [autoGroupBtn setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:autoGroupBtn];
     
-    UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 29, screenWidth - 20, 1)];
-    lineLabel.backgroundColor = [UIColor redColor];
-    [_waitGroupLabel addSubview:lineLabel];
+//    UILabel *lineLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 39*ProportionAdapter, screenWidth - 20, 1)];
+//    lineLabel.backgroundColor = [UIColor redColor];
+//    [_waitGroupLabel addSubview:lineLabel];
     
     _maxGroup = 4;
 
@@ -129,7 +126,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     //列表
     UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 35, screenWidth, _collectionHegith)
+    UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 40*ProportionAdapter, screenWidth, _collectionHegith)
                                                           collectionViewLayout:layout];
     collectionView.backgroundColor = [UIColor whiteColor];
     collectionView.dataSource = self;
@@ -168,7 +165,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     //4方格
     UICollectionViewFlowLayout *gridlayout = [UICollectionViewFlowLayout new];
     gridlayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    self.groupDetailsCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, groupLabel.frame.origin.y + groupLabel.frame.size.height + 10, screenWidth, screenHeight - groupLabel.frame.size.height-groupLabel.frame.origin.y - 64) collectionViewLayout:gridlayout];
+    self.groupDetailsCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, groupLabel.frame.origin.y + groupLabel.frame.size.height + 10, screenWidth, screenHeight - groupLabel.frame.size.height-groupLabel.frame.origin.y - 64 -10) collectionViewLayout:gridlayout];
     self.groupDetailsCollectionView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
     self.groupDetailsCollectionView.dataSource = self;
     self.groupDetailsCollectionView.delegate = self;
@@ -186,7 +183,8 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/automaticGroup" JsonKey:nil withData:dict failedBlock:^(id errType) {
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        [[ShowHUD showHUD]showToastWithText:@"分组失败" FromView:self.view];
+        [LQProgressHud showMessage:@"分组失败"];
+//        [[ShowHUD showHUD]showToastWithText:@"分组失败" FromView:self.view];
     } completionBlock:^(id data) {
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         NSLog(@"%@", data);
@@ -272,7 +270,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 
 #pragma mark -- 添加分组
 - (void)addGroupBtnClick:(UIButton *)btn{
-    [[ShowHUD showHUD]showAnimationWithText:@"" FromView:self.view];
+    [[ShowHUD showHUD] showAnimationWithText:@"添加分组..." FromView:self.view];
     _maxGroup += 1;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%td", _maxGroup] forKey:@"maxGroup"];
@@ -337,7 +335,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
             }
         }
         
-        _waitGroupLabel.text = [NSString stringWithFormat:@"待分组:%ld(人)", (unsigned long)[self.teamGroupAllDataArray count]];
+        _waitGroupLabel.text = [NSString stringWithFormat:@"  待分组:%ld(人)", (unsigned long)[self.teamGroupAllDataArray count]];
         
         if (fenzu == 1) {
             UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
