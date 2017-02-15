@@ -78,18 +78,21 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"差点：%.1f",[model.almost floatValue]];
+    _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f",[model.almost floatValue]];
     
     //显示模式XXX。。。XXX
-    if ([power containsString:@"1001"]) {
+    if (model.mobile) {
         _poleLabel.text = [NSString stringWithFormat:@"%@", model.mobile];
-    }else{
-        if (model.mobile.length == 11) {
-            _poleLabel.text = [NSString stringWithFormat:@"%@***%@",[model.mobile substringToIndex:3], [model.mobile substringFromIndex:8]];
-        }else{
-            _poleLabel.text = [NSString stringWithFormat:@"%@***", model.mobile];
-        }
     }
+//    if ([power containsString:@"1001"]) {
+//        _poleLabel.text = [NSString stringWithFormat:@"%@", model.mobile];
+//    }else{
+//        if (model.mobile.length == 11) {
+//            _poleLabel.text = [NSString stringWithFormat:@"%@***%@",[model.mobile substringToIndex:3], [model.mobile substringFromIndex:8]];
+//        }else{
+//            _poleLabel.text = [NSString stringWithFormat:@"%@***", model.mobile];
+//        }
+//    }
     
     
     _moneyLabel.hidden = NO;
@@ -149,14 +152,15 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"差点：%.1f",[model.almost floatValue]];
+    _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f",[model.almost floatValue]];
     
     //显示模式XXX。。。XXX
-    if (model.mobile.length == 11) {
-        _poleLabel.text = [NSString stringWithFormat:@"%@***%@",[model.mobile substringToIndex:3], [model.mobile substringFromIndex:8]];
-    }else{
-        _poleLabel.text = [NSString stringWithFormat:@"%@***", model.mobile];
+    if (model.mobile) {
+        _poleLabel.text = [NSString stringWithFormat:@"%@", model.mobile];
     }
+//    else{
+//        _poleLabel.text = [NSString stringWithFormat:@"%@***", model.mobile];
+//    }
     
     _moneyLabel.hidden = YES;
 }
@@ -174,7 +178,7 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"差点：%.1f", [model.almost floatValue]];
+    _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
     
     _poleLabel.frame = CGRectMake(180*screenWidth/375, 30*screenWidth/375, 130*screenWidth/375, 20*screenWidth/375);
     
@@ -184,6 +188,7 @@
     else{
         _poleLabel.text = [NSString stringWithFormat:@"暂无手机号"];
     }
+    
     [_poleLabel setUserInteractionEnabled:YES];
     _poleLabel.textColor = [UIColor blackColor];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTap:)];

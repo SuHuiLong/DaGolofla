@@ -70,13 +70,11 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"差点：%.1f",[model.almost floatValue]];
+    _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f",[model.almost floatValue]];
     
     //显示模式XXX。。。XXX
-    if (model.mobile.length == 11) {
-        _poleLabel.text = [NSString stringWithFormat:@"%@***%@",[model.mobile substringToIndex:3], [model.mobile substringFromIndex:8]];
-    }else{
-        _poleLabel.text = [NSString stringWithFormat:@"%@***", model.mobile];
+    if (model.mobile) {
+        _poleLabel.text = [NSString stringWithFormat:@"%@", model.mobile];
     }
     
     _selectImgv.image = nil;

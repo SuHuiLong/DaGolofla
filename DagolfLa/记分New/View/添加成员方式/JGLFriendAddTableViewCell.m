@@ -70,6 +70,15 @@
 }
 
 - (void)configJGLFriendAddTableViewCell:(MyattenModel *)model{
+    
+    _imgvIcon.frame = CGRectMake(20*screenWidth/375, 5*screenWidth/375, 40*screenWidth/375, 40*screenWidth/375);
+    
+    _labelTitle.frame = CGRectMake(70*screenWidth/375, 5*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375);
+    
+    _imgvSex.frame = CGRectMake(70*screenWidth/375, 30*screenWidth/375, 12*screenWidth/375, 14*screenWidth/375);
+    
+//    _selectImgv.frame = [[UIImageView alloc]initWithFrame:CGRectMake((screenWidth - 45)*screenWidth/375, 17*screenWidth/375, 15*screenWidth/375, 15*screenWidth/375)];
+    
     self.labelTitle.text = model.userName;
     
 //    [self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:model.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];

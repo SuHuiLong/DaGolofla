@@ -85,7 +85,7 @@
     _searchController.hidesNavigationBarDuringPresentation = NO;
     _searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
     _searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
-    _searchController.searchBar.placeholder = @"输入队友昵称搜索";
+    _searchController.searchBar.placeholder = @"输入球友昵称搜索";
     _tableView.tableHeaderView = _searchController.searchBar;
     _searchController.searchBar.delegate = self;
 }
@@ -99,7 +99,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
