@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    self.navigationItem.title = @"成员列表";
+    self.navigationItem.title = @"活动成员";
     
     [self uiConfig];
     

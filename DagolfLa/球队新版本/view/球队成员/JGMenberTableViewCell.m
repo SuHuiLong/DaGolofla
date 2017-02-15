@@ -176,6 +176,8 @@
     
     _almostLabel.text = [NSString stringWithFormat:@"差点：%.1f", [model.almost floatValue]];
     
+    _poleLabel.frame = CGRectMake(180*screenWidth/375, 30*screenWidth/375, 130*screenWidth/375, 20*screenWidth/375);
+    
     if (![Helper isBlankString:model.mobile]) {
         _poleLabel.text = [NSString stringWithFormat:@"%@",model.mobile];
     }
@@ -183,13 +185,15 @@
         _poleLabel.text = [NSString stringWithFormat:@"暂无手机号"];
     }
     [_poleLabel setUserInteractionEnabled:YES];
-    _poleLabel.textColor = [UIColor blueColor];
+    _poleLabel.textColor = [UIColor blackColor];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTap:)];
     [_poleLabel addGestureRecognizer:recognizer];
     
     _moneyLabel.hidden = NO;
     _moneyLabel.text = nil;
     _moneyLabel.textColor = [UIColor blackColor];
+    
+    _moneyLabel.frame = CGRectMake((screenWidth - 70)*screenWidth/375, 13*screenWidth/375, 50*screenWidth/375, 24*screenWidth/375);
     if (model.groupIndex < 0) {
         _moneyLabel.text = @"未分组";
         _moneyLabel.textColor = [UIColor redColor];

@@ -443,7 +443,7 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
  */
 #pragma mark -- 点击头像图片的代理方法JGGroupdetailsCollectionViewCellDelegate
 - (void)didSelectHeaderImage:(UIButton *)btn JGGroupCell:(JGGroupdetailsCollectionViewCell *)cell{
-
+    
     if ([_power containsString:@"1001"]) {
         //管理员 -- 进入球队列表页码
         JGHTeamMembersViewController *teamMemberCtrl = [[JGHTeamMembersViewController alloc]init];
