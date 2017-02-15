@@ -52,7 +52,7 @@ static CGFloat ImageHeight  = 210.0;
 @implementation JGDCourtDetailViewController
 
 - (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
+    [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
     
@@ -66,6 +66,13 @@ static CGFloat ImageHeight  = 210.0;
     [self.imgProfile sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey]] placeholderImage:[UIImage imageNamed:TeamBGImage]];
     
     
+}
+
+// 隐藏 navigationBar http://www.tuicool.com/articles/BJFNNz
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -115,7 +122,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.navigationController.navigationBar.hidden = YES;
+    self.navigationController.navigationBarHidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
     

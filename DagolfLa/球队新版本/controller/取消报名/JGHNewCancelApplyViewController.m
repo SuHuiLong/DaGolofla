@@ -241,8 +241,9 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
         NSLog(@"data == %@", data);
         //        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"确认退出成功！" FromView:self.view];
-            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:TIMESlEEP];
+            [LQProgressHud showMessage:@"成功退出！"];
+
+            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:0.3];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];

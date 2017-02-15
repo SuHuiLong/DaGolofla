@@ -204,7 +204,8 @@
     
     
     // tableViewHeader
-    UIView *tableheaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 260 * ProportionAdapter)];
+    NSInteger number = self.hotCityArray.count % 3 > 0 ? self.hotCityArray.count / 3 + 1 : self.hotCityArray.count / 3;
+    UIView *tableheaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, number  * 40 * ProportionAdapter + 140 * ProportionAdapter)];
     tableheaderView.backgroundColor = [UIColor whiteColor];
     UILabel *locatTB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, 100, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:@"定位城市" textAlignment:(NSTextAlignmentLeft)];
     [tableheaderView addSubview:locatTB];
