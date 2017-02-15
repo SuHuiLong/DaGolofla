@@ -29,7 +29,7 @@
 
 #import "HomeHeadView.h"  // topscrollView
 #import "ChangePicModel.h"
-
+#import "UseMallViewController.h"
 
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
@@ -284,9 +284,20 @@
                 self.topScrollView.delegate = self;
                 
                 __weak JGTeamChannelViewController *weakSelf = self;
-                [self.topScrollView setClick:^(UIViewController *vc) {
-                    weakSelf.hidesBottomBarWhenPushed = YES;
-                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                [self.topScrollView setClick:^(NSString *urlString) {
+//                    weakSelf.hidesBottomBarWhenPushed = YES;
+//                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                    
+                    if ([urlString containsString:@"dagolfla://"]) {
+                        [[JGHPushClass pushClass]URLString:urlString pushVC:^(UIViewController *vc) {
+                            vc.hidesBottomBarWhenPushed = YES;
+                            [weakSelf.navigationController pushViewController:vc animated:YES];
+                        }];
+                    }else{
+                        UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                        userVc.linkUrl = urlString;
+                        [weakSelf.navigationController pushViewController:userVc animated:YES];
+                    }
                 }];
             }
 

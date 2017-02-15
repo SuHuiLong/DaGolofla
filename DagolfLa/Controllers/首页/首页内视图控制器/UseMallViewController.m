@@ -15,18 +15,28 @@
 #import "MyOrderViewController.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "DataSigner.h"
+#import "JGDSetBusinessPWDViewController.h"
+#import "JGHbalanceView.h"
+#import "WCLPassWordView.h"
 
-@interface UseMallViewController ()<UIWebViewDelegate>
+@interface UseMallViewController ()<UIWebViewDelegate, WCLPassWordViewDelegate, JGHbalanceViewDelegate>
 {
     NSString* _payUrl;
     NSMutableDictionary* _dictCan;
     UIAlertController *_actionView;
+    NSString *_price;
+    
+    UIView *_bgView;
 }
 @property(nonatomic,retain)UIWebView *webView;
 
 @property(nonatomic,retain)UIImageView *imageView;
 
 @property(nonatomic,retain)UIActivityIndicatorView *actIndicatorView;
+
+@property(nonatomic, retain)JGHbalanceView *balanceView;
+
+@property(nonatomic, retain)WCLPassWordView *passWordView;
 
 @end
 
@@ -118,9 +128,9 @@
         _webView.scalesPageToFit = YES ;
         
 //111        
-//        NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-//        NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
-//        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
+        NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+        NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
         [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
         
         
@@ -185,7 +195,6 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
     
-    
     //   分享
     if ([str rangeOfString:@"dagolfla://share"].location != NSNotFound) {
         ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
@@ -198,8 +207,7 @@
         }];
         return NO;
     }
-    
-    
+    /*
     //支付
     if ([str rangeOfString:@"dagolfla://pay"].location != NSNotFound){
         _payUrl = str;
@@ -230,16 +238,185 @@
         [_actionView addAction:cancelAction];
         [self presentViewController:_actionView animated:YES completion:nil];
     }
-    else
-    {
+    */
+    
+    //支付
+    if ([str rangeOfString:@"dagolfla://pay"].location != NSNotFound){
+        _payUrl = str;
+        NSArray *arrayUrl = [_payUrl componentsSeparatedByString:@"?"];
+        NSArray *arrayCanShu = [arrayUrl[2] componentsSeparatedByString:@"&"];
+        for (int i = 0; i < arrayCanShu.count; i++) {
+            if (![Helper isBlankString:arrayCanShu[i]]) {
+                NSArray* arrCan = [arrayCanShu[i] componentsSeparatedByString:@"="];
+                [_dictCan setObject:arrCan[1] forKey:arrCan[0]];
+            }
+        }
+        NSLog(@"%@",_dictCan);
         
+        [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+        [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        } completionBlock:^(id data) {
+            NSLog(@"%@", data);
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                NSString *balanceString;
+                if ([_dictCan objectForKey:@"price"]) {
+                    _price = [NSString stringWithFormat:@"%.2f", [[_dictCan objectForKey:@"price"] floatValue]];
+                    if ([[data objectForKey:@"money"] floatValue] >= [[_dictCan objectForKey:@"price"] floatValue]) {
+                        balanceString = [NSString stringWithFormat:@"余额支付（¥%.2f）", [[data objectForKey:@"money"] floatValue]];
+                    }else{
+                        balanceString = [NSString stringWithFormat:@"余额支付（余额不足 ¥%.2f）", [[data objectForKey:@"money"] floatValue]];
+                    }
+                }else{
+                    balanceString = @"余额支付";
+                }
+                
+                // 分别3个创建操作
+                UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                }];
+                UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    //添加微信支付请求
+                    [self weChatPay];
+                }];
+                UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    //添加支付宝支付请求
+                    [self zhifubaoPay];
+                }];
+                UIAlertAction *balanceAction = [UIAlertAction actionWithTitle:balanceString style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    //余额支付
+                    if ([[data objectForKey:@"money"] floatValue] >= [_price floatValue]) {
+                        if ([[data objectForKey:@"isSetPayPassWord"] integerValue] == 0) {
+                            JGDSetBusinessPWDViewController *setpassCtrl = [[JGDSetBusinessPWDViewController alloc]init];
+                            [self.navigationController pushViewController:setpassCtrl animated:YES];
+                        }else{
+                            [self dreawBalance:[NSString stringWithFormat:@"%.2f", [[data objectForKey:@"money"] floatValue]]];
+                        }
+                    }else{
+                        return ;
+                    }
+                    
+                }];
+                _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                [_actionView addAction:weiChatAction];
+                [_actionView addAction:zhifubaoAction];
+                [_actionView addAction:balanceAction];
+                [_actionView addAction:cancelAction];
+                [self presentViewController:_actionView animated:YES completion:nil];
+            }else{
+                if ([data objectForKey:@"packResultMsg"]) {
+                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                }
+            }
+        }];
     }
     
     
+    if ([str containsString:@"dagolfla://"]) {
+        
+        [[JGHPushClass pushClass] URLString:str pushVC:^(UIViewController *vc) {
+//            vc.hidesBottomBarWhenPushed = YES;
+//            self.navigationController.navigationBarHidden = NO;
+            self.navigationController.navigationBarHidden = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }];
+        return NO;
+    }
+    
     return YES;
 }
-
-
+#pragma mark -- 余额支付
+- (void)dreawBalance:(NSString *)balance{
+    self.navigationItem.leftBarButtonItem.enabled = NO;
+    //
+    _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+    _bgView.backgroundColor = [UIColor colorWithHexString:BG_color];
+    _bgView.alpha = 0.5;
+    [self.view addSubview:_bgView];
+    
+    _balanceView = [[JGHbalanceView alloc]initWithFrame:CGRectMake(15 *ProportionAdapter, 84 *ProportionAdapter, screenWidth -30*ProportionAdapter, 286*ProportionAdapter)];
+    _balanceView.layer.masksToBounds = YES;
+    _balanceView.delegate = self;
+    _balanceView.layer.cornerRadius = 5.0*ProportionAdapter;
+    _balanceView.alpha = 1.0;
+    if ([_price floatValue] > 0.00) {
+        [_balanceView configJGHbalanceViewPrice:[_price floatValue] andBalance:balance andDetail:[_dictCan objectForKey:@"protitle"]];
+    }else{
+        [_balanceView configJGHbalanceViewPrice:0.00 andBalance:balance andDetail:[_dictCan objectForKey:@"protitle"]];
+    }
+    
+    //密码输入框
+    _passWordView = [[[NSBundle mainBundle]loadNibNamed:@"WCLPassWordView" owner:self options:nil]lastObject];
+    _passWordView.frame = CGRectMake(13 *ProportionAdapter, 222 *ProportionAdapter, _balanceView.frame.size.width -26*ProportionAdapter, 45 *ProportionAdapter);
+    _passWordView.delegate = self;
+    _passWordView.backgroundColor = [UIColor whiteColor];
+    [_balanceView addSubview:_passWordView];
+    
+    [self.view addSubview:_balanceView];
+}
+#pragma mark -- 监听输入的改变
+- (void)passWordDidChange:(WCLPassWordView *)passWord{
+    
+}
+#pragma mark -- 监听输入的完成时
+- (void)passWordCompleteInput:(WCLPassWordView *)passWord{
+    [self balancePay];
+}
+#pragma mark -- 监听开始输入
+- (void)passWordBeginInput:(WCLPassWordView *)passWord{
+    
+}
+#pragma mark －－ 删除密码输入框
+- (void)deleteBalanceView:(UIButton *)btn{
+    [_balanceView removeFromSuperview];
+    [_passWordView removeFromSuperview];
+    [_bgView removeFromSuperview];
+    self.navigationItem.leftBarButtonItem.enabled = YES;
+}
+#pragma mark -- 余额支付
+- (void)balancePay{
+    [[ShowHUD showHUD]showAnimationWithText:@"支付中..." FromView:self.view];
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:@3 forKey:@"orderType"];
+    [dict setObject:[_dictCan objectForKey:@"ordersn"] forKey:@"ordersn"];
+    [dict setObject:[_dictCan objectForKey:@"protitle"] forKey:@"name"];//title
+    [dict setObject:@"活动报名" forKey:@"name"];
+    [dict setObject:@"活动余额支付订单" forKey:@"otherInfo"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:[Helper md5HexDigest:_passWordView.textStore] forKey:@"payPassword"];
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"pay/doPayByUserAccount" JsonKey:@"payInfo" withData:dict failedBlock:^(id errType) {
+        NSLog(@"errType == %@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [_bgView removeFromSuperview];
+        self.navigationItem.leftBarButtonItem.enabled = YES;
+    } completionBlock:^(id data) {
+        NSLog(@"%@",[data objectForKey:@"query"]);
+        [_balanceView removeFromSuperview];
+        [_bgView removeFromSuperview];
+        self.navigationItem.leftBarButtonItem.enabled = YES;
+        
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        //
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            MyOrderViewController *groupCtrl = [[MyOrderViewController alloc]init];
+            //groupCtrl.header = 1;
+            [self.navigationController pushViewController:groupCtrl animated:YES];
+        }else{
+            _passWordView.textStore = [@"" mutableCopy];
+            [_passWordView deleteBackward];
+            [_passWordView becomeFirstResponder];
+            
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showAnimationWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }else{
+                [[ShowHUD showHUD]showAnimationWithText:@"支付失败！" FromView:self.view];
+            }
+        }
+    }];
+}
 
 #pragma mark -- 支付宝
 - (void)zhifubaoPay{
