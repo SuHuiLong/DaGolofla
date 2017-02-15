@@ -213,7 +213,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [shareBtn addTarget:self action:@selector(addShare) forControlEvents:UIControlEventTouchUpInside];
     [shareBtn setTintColor:[UIColor whiteColor]];
-    [self.imgProfile addSubview:shareBtn];
+    [self.titleView addSubview:shareBtn];
     
     [self dataSet];
 }

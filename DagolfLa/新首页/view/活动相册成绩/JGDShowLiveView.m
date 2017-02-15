@@ -17,6 +17,7 @@
 //        _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
         [self addSubview:_activityImageView];
         _activityImageView.layer.cornerRadius = 6 * ProportionAdapter;
+        _activityImageView.contentMode = UIViewContentModeScaleAspectFill;
         _activityImageView.clipsToBounds = YES;
         
 //        _isSignUpImageView = [[UIImageView alloc]initWithFrame:CGRectMake(30 *ProportionAdapter, 0, 30 *ProportionAdapter, 30*ProportionAdapter)];

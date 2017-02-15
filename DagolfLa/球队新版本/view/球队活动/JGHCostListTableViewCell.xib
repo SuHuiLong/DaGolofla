@@ -19,23 +19,23 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="活动报名缴费:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOQ-yO-kD2">
-                        <rect key="frame" x="40" y="14" width="84" height="16"/>
+                        <rect key="frame" x="40" y="13" width="84" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="84" id="E0a-op-Ulv"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="500" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WRE-Gl-uKU">
-                        <rect key="frame" x="124" y="14" width="24.5" height="16"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <rect key="frame" x="124" y="13" width="27.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="1" green="0.025081316869999998" blue="0.091398467780000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="元/人" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mct-eI-RR3">
-                        <rect key="frame" x="148.5" y="14" width="166.5" height="16"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <rect key="frame" x="151.5" y="13" width="163.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -55,7 +55,6 @@
                 <outlet property="priceUnit" destination="mct-eI-RR3" id="oTA-yG-HIr"/>
                 <outlet property="titleLeft" destination="v5M-rj-HKL" id="ikL-z9-E6q"/>
                 <outlet property="titles" destination="OOQ-yO-kD2" id="ZjW-Xh-uhc"/>
-                <outlet property="titlesLeft" destination="v5M-rj-HKL" id="yrC-VB-Qgf"/>
                 <outlet property="titlesW" destination="E0a-op-Ulv" id="LDt-h5-h08"/>
             </connections>
         </tableViewCell>

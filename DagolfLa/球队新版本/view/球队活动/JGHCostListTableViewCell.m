@@ -35,18 +35,17 @@
     float priceUnitWSize;
     
     titlesWSize = [Helper textWidthFromTextString:self.titles.text height:self.titles.frame.size.height fontSize:15 *ProportionAdapter];
-    priceWSize = [Helper textWidthFromTextString:self.price.text height:self.price.frame.size.height fontSize:15 *ProportionAdapter];
+    priceWSize = [Helper textWidthFromTextString:[NSString stringWithFormat:@"    %@", self.price.text] height:self.price.frame.size.height fontSize:15 *ProportionAdapter];
     priceUnitWSize = [Helper textWidthFromTextString:self.priceUnit.text height:self.priceUnit.frame.size.height fontSize:15 *ProportionAdapter];
     
-    if (titlesWSize + priceWSize + priceUnitWSize > screenWidth - 50) {
-        self.titlesW.constant = screenWidth - 50 - priceWSize - priceUnitWSize;
+    if (titlesWSize + priceWSize + priceUnitWSize > screenWidth - 40*ProportionAdapter) {
+        self.titlesW.constant = screenWidth - 40*ProportionAdapter - priceWSize - priceUnitWSize;
     }else{
-        self.titlesW.constant = titlesWSize;
+        self.titlesW.constant = titlesWSize +10*ProportionAdapter;
     }
 }
 
 - (void)configMatchCostData:(NSMutableDictionary *)dict{
-    self.titlesLeft.constant = 40 *ProportionAdapter;
     self.titles.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.price.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     
@@ -59,13 +58,13 @@
     float priceUnitWSize;
     
     titlesWSize = [Helper textWidthFromTextString:self.titles.text height:self.titles.frame.size.height fontSize:15 *ProportionAdapter];
-    priceWSize = [Helper textWidthFromTextString:self.price.text height:self.price.frame.size.height fontSize:15 *ProportionAdapter];
+    priceWSize = [Helper textWidthFromTextString:[NSString stringWithFormat:@"    %@", self.price.text] height:self.price.frame.size.height fontSize:15 *ProportionAdapter];
     priceUnitWSize = [Helper textWidthFromTextString:self.priceUnit.text height:self.priceUnit.frame.size.height fontSize:15 *ProportionAdapter];
     
-    if (titlesWSize + priceWSize + priceUnitWSize > screenWidth - 90) {
-        self.titlesW.constant = screenWidth - 90 - priceWSize - priceUnitWSize;
+    if (titlesWSize + priceWSize + priceUnitWSize > screenWidth - 40*ProportionAdapter) {
+        self.titlesW.constant = screenWidth - 40*ProportionAdapter - priceWSize - priceUnitWSize;
     }else{
-        self.titlesW.constant = titlesWSize;
+        self.titlesW.constant = titlesWSize +10*ProportionAdapter;
     }
 }
 
