@@ -295,7 +295,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
 //                [self presentViewController:alertView animated:YES completion:nil];
 //            }];
             [LQProgressHud showMessage:@"您已成功报名！"];
-            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:0.1f];
+            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:0.3f];
             
         }else{
             if ([data count] == 2) {
