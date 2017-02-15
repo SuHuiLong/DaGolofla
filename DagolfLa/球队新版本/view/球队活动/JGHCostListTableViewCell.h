@@ -12,7 +12,6 @@
 
 //titles
 @property (weak, nonatomic) IBOutlet UILabel *titles;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titlesLeft;
 
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLeft;

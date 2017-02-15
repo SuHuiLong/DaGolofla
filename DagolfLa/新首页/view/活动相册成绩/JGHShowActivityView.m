@@ -16,6 +16,7 @@
 //        _activityImageView.image = [UIImage imageNamed:@"activityStateImage"];
         _activityImageView.userInteractionEnabled = YES;
         [self addSubview:_activityImageView];
+        _activityImageView.contentMode = UIViewContentModeScaleAspectFill;
         _activityImageView.layer.cornerRadius = 6 * ProportionAdapter;
         _activityImageView.clipsToBounds = YES;
         
