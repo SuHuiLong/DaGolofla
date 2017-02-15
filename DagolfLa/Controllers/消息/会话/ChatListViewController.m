@@ -52,13 +52,16 @@
 
 @implementation ChatListViewController
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     self.isShowNetworkIndicatorView = NO;
     self.tabBarController.tabBar.hidden = NO;
     
     [[RCIM sharedRCIM] clearUserInfoCache];
-
     //    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
     //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
@@ -134,13 +137,16 @@
     [self createTableHeaderView];
     
     
-    //    self.title = @"消息";
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(rongTKChat) name:@"RongTKChat" object:nil];
     
     
     
     //聚合会话类型
     //   [self setCollectionConversationType:@[@(ConversationType_GROUP),@(ConversationType_PRIVATE)]];
     
+}
+- (void)rongTKChat{
+    [self refreshConversationTableViewIfNeeded];
 }
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{

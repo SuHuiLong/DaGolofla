@@ -823,15 +823,18 @@
                 //            [RCIM sharedRCIM].receiveMessageDelegate=self;
                 // 快速集成第二步，连接融云服务器
                 [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
+//                    NSNotification *chatNot = [NSNotification notificationWithName:@"RongTKChat" object:nil];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"RongTKChat" object:nil];
                     //自动登录   连接融云服务器
                     [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
                     
                 }error:^(RCConnectErrorCode status) {
                     // Connect 失败
                     NSLog(@"status === %td", status);
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"RongTKChat" object:nil];
                 }tokenIncorrect:^() {
                     // Token 失效的状态处理
-                    
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"RongTKChat" object:nil];
                 }];
             }
         }
