@@ -600,6 +600,15 @@
             if ([[dict objectForKey:@"pushData"] objectForKey:@"url"]) {
                 NSString *urlString = [NSString stringWithFormat:@"%@", [[dict objectForKey:@"pushData"] objectForKey:@"url"]];
                 [self pushSpecifiedViewCtrl:urlString];
+                
+                //统计
+                if ([dict objectForKey:@"pushLogKey"]) {
+                    NSMutableDictionary *pushDict = [NSMutableDictionary dictionary];
+                    [pushDict setObject:[dict objectForKey:@"pushLogKey"] forKey:@"pushLogKey"];
+                    [pushDict setObject:DEFAULF_USERID forKey:@"userKey"];
+                    [pushDict setObject:@0 forKey:@"type"];
+                    [Helper requestCountPushLog:pushDict];
+                }
             }
         }
     }

@@ -35,4 +35,6 @@
 
 @property (nonatomic, retain)NSString *nSrcName;//球队名称
 
+@property (nonatomic, retain)NSString *pushLogKey;//存在值调用统计接口
+
 @end

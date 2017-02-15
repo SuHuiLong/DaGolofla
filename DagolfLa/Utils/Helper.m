@@ -841,13 +841,13 @@
     }];
 }
 
-
-
-
-
-
-
-
++ (void)requestCountPushLog:(NSMutableDictionary *)dict{
+    [[JsonHttp jsonHttp]httpRequestWithMD5:@"push/doPushClick" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+    }];
+}
 
 
 @end

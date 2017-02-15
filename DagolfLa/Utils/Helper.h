@@ -137,5 +137,6 @@
 
 + (void)requestRCIMWithToken:(NSString *)token;
 
++ (void)requestCountPushLog:(NSMutableDictionary *)dict;
 
 @end

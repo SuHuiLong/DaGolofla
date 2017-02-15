@@ -27,7 +27,7 @@
     NSTimer *_timer;
     
     //点击的响应
-    void (^_myClick)(UIViewController *);
+    void (^_myClick)(NSString *);
     
     int _scrollHeight;
     
@@ -182,11 +182,11 @@
 {
     UIImageView *imageView = (UIImageView *)g.view;
     NSInteger index = imageView.tag - 300;
-    ChangePicViewController* changeVc = [[ChangePicViewController alloc]init];
-    changeVc.strUrl = _urlArray[index];
-    changeVc.strTitle = _titleArray[index];
+//    ChangePicViewController* changeVc = [[ChangePicViewController alloc]init];
+//    changeVc.strUrl = _urlArray[index];
+//    changeVc.strTitle = _titleArray[index];
     if (_myClick) {
-        _myClick(changeVc);
+        _myClick(_urlArray[index]);
     }
 }
 
@@ -216,7 +216,7 @@
     _timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timeAction) userInfo:nil repeats:YES];
 }
 
-- (void)setClick:(void (^)(UIViewController *))click
+- (void)setClick:(void (^)(NSString *))click
 {
     _myClick = [click copy];//传到这里了
     

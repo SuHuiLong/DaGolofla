@@ -20,7 +20,7 @@
 - (void)config:(NSArray *)dataArray data:(NSArray *)url title:(NSArray *)name ts:(NSArray *)ts;
 
 
-- (void)setClick:( void (^)(UIViewController* ))click;
+- (void)setClick:( void (^)(NSString *))click;
 
 @property (nonatomic, assign) NSInteger currentPage;
 

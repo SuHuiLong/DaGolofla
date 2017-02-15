@@ -32,6 +32,7 @@
 #import "JGHChancelTableViewCell.h"
 #import "JGNewsViewController.h"
 #import "JGWkNewsViewController.h"
+#import "UseMallViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHConsultChannelCellIdentifier = @"JGHConsultChannelCell";
@@ -327,11 +328,20 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             if ([arrayIcon count] != 0) {
                 [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle ts:arrayTs];
                 __weak JGHNewHomePageViewController *weakSelf = self;
-                [self.topScrollView setClick:^(UIViewController *vc) {
+                [self.topScrollView setClick:^(NSString *urlString) {
                     [weakSelf isLoginUp];
                     
-//                    weakSelf.hidesBottomBarWhenPushed = YES;
-                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                    if ([urlString containsString:@"dagolfla://"]) {
+                        [[JGHPushClass pushClass]URLString:urlString pushVC:^(UIViewController *vc) {
+                            vc.hidesBottomBarWhenPushed = YES;
+                            [weakSelf.navigationController pushViewController:vc animated:YES];
+                        }];
+                    }else{
+                        UseMallViewController* userVc = [[UseMallViewController alloc]init];
+                        userVc.linkUrl = urlString;
+                        userVc.hidesBottomBarWhenPushed = YES;
+                        [weakSelf.navigationController pushViewController:userVc animated:YES];
+                    }
                 }];
             }
         }
