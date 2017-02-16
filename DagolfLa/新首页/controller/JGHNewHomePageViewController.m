@@ -854,7 +854,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSLog(@"%td", moreBtn.tag);
     [self isLoginUp];
 
-    NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
+    NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -2];
     NSString *urlString = [dict objectForKey:@"moreLink"];
     [self pushctrlWithUrl:urlString];
 }
