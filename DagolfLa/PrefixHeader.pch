@@ -28,6 +28,7 @@
 #import "ContantHead.h"
 #import "PostDataRequest.h"
 #import "MBProgressHUD.h"
+#import "Factory.h"
 
 //    #import "MJRefresh.h"
 #define FeLogDebug(format,...)        writeCinLog(__FUNCTION__,CinLogLevelDebug,format,##__VA_ARGS__)

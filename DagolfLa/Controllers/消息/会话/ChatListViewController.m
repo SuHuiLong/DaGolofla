@@ -63,7 +63,11 @@
 }
 - (void)reloadRongTKChet{
     self.isShowNetworkIndicatorView = NO;
-    self.tabBarController.tabBar.hidden = NO;
+    /*
+     * 2017年02月21日11:48:43
+     * 解决聊天界面显示tabbar
+     */
+//    self.tabBarController.tabBar.hidden = NO;
     
     [[RCIM sharedRCIM] clearUserInfoCache];
     //    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];

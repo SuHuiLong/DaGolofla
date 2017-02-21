@@ -12,6 +12,11 @@
 
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert
 {
+  return  [self colorWithHexString:stringToConvert alpha:0.95];
+}
+
++ (UIColor *)colorWithHexString:(NSString *)stringToConvert alpha:(CGFloat)alpha{
+
     //删除字符串中的空格
     NSString *cString = [[stringToConvert stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
     // String should be 6 or 8 characters
@@ -53,8 +58,12 @@
     [[NSScanner scannerWithString:rString] scanHexInt:&r];
     [[NSScanner scannerWithString:gString] scanHexInt:&g];
     [[NSScanner scannerWithString:bString] scanHexInt:&b];
-    return [UIColor colorWithRed:((float)r / 255.0f) green:((float)g / 255.0f) blue:((float)b / 255.0f) alpha:0.97];
+    return [UIColor colorWithRed:((float)r / 255.0f) green:((float)g / 255.0f) blue:((float)b / 255.0f) alpha:alpha];
+
 }
+
+
+
 + (UIColor*) colorWithHex:(NSInteger)hexValue alpha:(CGFloat)alphaValue
 {
     return [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0

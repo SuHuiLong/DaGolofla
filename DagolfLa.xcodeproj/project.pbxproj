@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		186855751E5AA162001F44DD /* AdvertiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855741E5AA162001F44DD /* AdvertiseView.m */; };
+		186856001E5BD776001F44DD /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855F71E5BD776001F44DD /* BaseViewController.m */; };
+		186856011E5BD776001F44DD /* Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855F91E5BD776001F44DD /* Factory.m */; };
+		186856021E5BD776001F44DD /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FB1E5BD776001F44DD /* LocationManager.m */; };
+		186856031E5BD776001F44DD /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FD1E5BD776001F44DD /* UIView+Addition.m */; };
+		186856041E5BD776001F44DD /* UIView+GPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FF1E5BD776001F44DD /* UIView+GPExtension.m */; };
 		200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */; };
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
 		2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0641E01729D008B85DF /* JGHAreaListView.m */; };
@@ -1232,6 +1238,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		186855731E5AA162001F44DD /* AdvertiseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertiseView.h; sourceTree = "<group>"; };
+		186855741E5AA162001F44DD /* AdvertiseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertiseView.m; sourceTree = "<group>"; };
+		186855F61E5BD776001F44DD /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		186855F71E5BD776001F44DD /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		186855F81E5BD776001F44DD /* Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Factory.h; sourceTree = "<group>"; };
+		186855F91E5BD776001F44DD /* Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Factory.m; sourceTree = "<group>"; };
+		186855FA1E5BD776001F44DD /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		186855FB1E5BD776001F44DD /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		186855FC1E5BD776001F44DD /* UIView+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Addition.h"; sourceTree = "<group>"; };
+		186855FD1E5BD776001F44DD /* UIView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Addition.m"; sourceTree = "<group>"; };
+		186855FE1E5BD776001F44DD /* UIView+GPExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GPExtension.h"; sourceTree = "<group>"; };
+		186855FF1E5BD776001F44DD /* UIView+GPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GPExtension.m"; sourceTree = "<group>"; };
 		200200FA1D61B2C900308C44 /* JGHStarScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHStarScoreViewController.h; sourceTree = "<group>"; };
 		200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHStarScoreViewController.m; sourceTree = "<group>"; };
 		200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieEditorViewController.h; sourceTree = "<group>"; };
@@ -3637,6 +3655,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		186855721E5AA0F4001F44DD /* 启动广告页 */ = {
+			isa = PBXGroup;
+			children = (
+				186855731E5AA162001F44DD /* AdvertiseView.h */,
+				186855741E5AA162001F44DD /* AdvertiseView.m */,
+			);
+			path = "启动广告页";
+			sourceTree = "<group>";
+		};
+		186855F41E5BD73B001F44DD /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				186855F51E5BD776001F44DD /* Helper */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		186855F51E5BD776001F44DD /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				186855F61E5BD776001F44DD /* BaseViewController.h */,
+				186855F71E5BD776001F44DD /* BaseViewController.m */,
+				186855F81E5BD776001F44DD /* Factory.h */,
+				186855F91E5BD776001F44DD /* Factory.m */,
+				186855FA1E5BD776001F44DD /* LocationManager.h */,
+				186855FB1E5BD776001F44DD /* LocationManager.m */,
+				186855FC1E5BD776001F44DD /* UIView+Addition.h */,
+				186855FD1E5BD776001F44DD /* UIView+Addition.m */,
+				186855FE1E5BD776001F44DD /* UIView+GPExtension.h */,
+				186855FF1E5BD776001F44DD /* UIView+GPExtension.m */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		200CE70D1E5299BC00055A85 /* 咨询频道 */ = {
 			isa = PBXGroup;
 			children = (
@@ -6681,6 +6733,7 @@
 		36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXGroup;
 			children = (
+				186855721E5AA0F4001F44DD /* 启动广告页 */,
 				20BC97961E1F6051007DFD34 /* 奖项 */,
 				20FBE43E1E07EA9600E7419D /* 记分球童 */,
 				20A4CFB71DC9B0ED00F5A81D /* 新登录注册 */,
@@ -6696,6 +6749,7 @@
 				36BFFF8C1BC76D50005B3CE2 /* Controllers */,
 				36BFFF8D1BC76D50005B3CE2 /* Models */,
 				36BFFF8E1BC76D50005B3CE2 /* Views */,
+				186855F41E5BD73B001F44DD /* Factory */,
 				36BFFD2F1BC76C8D005B3CE2 /* AppDelegate.h */,
 				36BFFD301BC76C8D005B3CE2 /* AppDelegate.mm */,
 				36BFFD321BC76C8D005B3CE2 /* ViewController.h */,
@@ -9315,6 +9369,7 @@
 				203019B61E0E4292005568E2 /* ZXRSSExpandedDecodedNumeric.m in Sources */,
 				F5B549971CE9B0710091C962 /* JGApplyMaterialTableViewCell.m in Sources */,
 				20BC97861E1DFA62007DFD34 /* JGHTeamPalerBaseCell.m in Sources */,
+				186856021E5BD776001F44DD /* LocationManager.m in Sources */,
 				36BF003F1BC771FB005B3CE2 /* OtherDataTableViewCell.m in Sources */,
 				F543ACC41CF4269D00C6B111 /* JGLableAndLableTableViewCell.m in Sources */,
 				F59A8B931D5B507F00E8292B /* JGDPlayerHisScoreCardViewController.m in Sources */,
@@ -9418,6 +9473,7 @@
 				F5AEF7361D41B98E009A8C34 /* JGLPlayerNumberTableViewCell.m in Sources */,
 				209B93A11D6E8DAC00A5BE10 /* JGHCostListCell.m in Sources */,
 				8222F49C1D7D67E700627549 /* JGLFeedbackViewController.m in Sources */,
+				186856011E5BD776001F44DD /* Factory.m in Sources */,
 				821A130F1CED5F9C00694E49 /* JGLPhotoAlbumModel.m in Sources */,
 				20591C5F1D220EE0003271EC /* JGHTradRecordViewController.m in Sources */,
 				82E6A6E51CF2FDE8009DD179 /* JGLMyTeamViewController.m in Sources */,
@@ -9602,6 +9658,7 @@
 				2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */,
 				F5EE488D1D462625001D5E44 /* JGLAddActiivePlayModel.m in Sources */,
 				36D6266B1C1A61DB0066E4DD /* ScoreView.m in Sources */,
+				186856041E5BD776001F44DD /* UIView+GPExtension.m in Sources */,
 				20513B481CF5D1D8003233FB /* JGHInvoiceCell.m in Sources */,
 				F5EE488E1D462625001D5E44 /* JGLChooseScoreModel.m in Sources */,
 				36BF01071BC775AC005B3CE2 /* MallView.m in Sources */,
@@ -9718,6 +9775,7 @@
 				203019861E0E4292005568E2 /* ZXErrors.m in Sources */,
 				36BFFF7F1BC76D09005B3CE2 /* UIImageView+HighlightedWebCache.m in Sources */,
 				36B9B59B1C3E004C0053B227 /* ProFileViewController.m in Sources */,
+				186855751E5AA162001F44DD /* AdvertiseView.m in Sources */,
 				F51E5EF41D81304800AE254E /* JGDPlayerScoreCardViewController.m in Sources */,
 				203019581E0E4292005568E2 /* ZXSMSParsedResult.m in Sources */,
 				20591C6F1D221B0B003271EC /* JGHWithdrawDetailsCell.m in Sources */,
@@ -9773,6 +9831,7 @@
 				36A396291BE34DB100CBF455 /* MyFootBodyTableViewCell.m in Sources */,
 				2030197B1E0E4292005568E2 /* ZXGridSampler.m in Sources */,
 				82F9445D1D89775600A65381 /* UIImageView+XHWebCache.m in Sources */,
+				186856001E5BD776001F44DD /* BaseViewController.m in Sources */,
 				826FB5181D5433F300B13155 /* JGLGuestActiveMemberTableViewCell.m in Sources */,
 				20CA137B1CE56B6100DA15B9 /* JGHLaunchActivityViewController.m in Sources */,
 				F5EB44671C995788008ACD73 /* BallFriListCell.m in Sources */,
@@ -10179,6 +10238,7 @@
 				20C1B8AB1CE313A200508ABC /* JGTeamApplyViewController.m in Sources */,
 				203019491E0E4292005568E2 /* ZXCalendarParsedResult.m in Sources */,
 				203019E21E0E4293005568E2 /* ZXPDF417BarcodeValue.m in Sources */,
+				186856031E5BD776001F44DD /* UIView+Addition.m in Sources */,
 				203019FA1E0E4293005568E2 /* ZXQRCodeDecodedBitStreamParser.m in Sources */,
 				20BC97DC1E1F6051007DFD34 /* JGDPrize.m in Sources */,
 				8215EE121D0FD9F90099F161 /* JGTeamMemberManager.m in Sources */,
@@ -10375,7 +10435,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -10430,7 +10490,7 @@
 				CODE_SIGN_ENTITLEMENTS = DagolfLa/DagolfLa.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: nie yi (YKPG8Q2G6Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5P6JNXBH3C;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
