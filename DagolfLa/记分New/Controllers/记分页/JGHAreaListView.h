@@ -23,6 +23,11 @@
 
 @property (nonatomic, strong)NSArray *listArray;
 
-- (void)reloadAreaListView:(NSArray *)listArray;
+- (void)reloadAreaListView:(NSArray *)listArray andCurrAreString:(NSString *)areString;
+
+
+//@property (nonatomic, retain)UILabel *oneLine;
+
+@property (nonatomic, retain)UILabel *twoLine;
 
 @end

@@ -18,10 +18,13 @@
     self.backgroundColor = [UIColor whiteColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    self.TaiwanLeft.constant = 10*ProportionAdapter;
+    self.TaiwanW.constant = 10*ProportionAdapter;
+    
     self.name.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    NSLayoutConstraint *sConstraint = [NSLayoutConstraint constraintWithItem:self.name attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:55.5*ProportionAdapter];
-    NSArray *array2 = [NSArray arrayWithObjects:sConstraint, nil];
-    [self addConstraints: array2];
+//    NSLayoutConstraint *sConstraint = [NSLayoutConstraint constraintWithItem:self.name attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:55.5*ProportionAdapter];
+//    NSArray *array2 = [NSArray arrayWithObjects:sConstraint, nil];
+//    [self addConstraints: array2];
     
     self.one.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
     self.oneLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter)];
@@ -106,6 +109,7 @@
 }
 
 - (void)configAllViewBgColor:(NSString *)colorString andCellTag:(NSInteger)tag{
+    self.bgLable.backgroundColor = [UIColor colorWithHexString:colorString];
     self.name.backgroundColor = [UIColor colorWithHexString:colorString];
     self.one.backgroundColor = [UIColor colorWithHexString:colorString];
     self.two.backgroundColor = [UIColor colorWithHexString:colorString];
@@ -128,6 +132,11 @@
 }
 - (void)configPoorArray:(NSArray *)array{
     self.name.text = @"HOLE";
+    self.Taiwan.hidden = YES;
+    
+    self.nameLeft.constant = 0;
+    self.name.textAlignment = NSTextAlignmentCenter;
+    
     self.oneLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[9]]];
     self.twoLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[10]]];
     self.threeLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[11]]];
@@ -140,6 +149,12 @@
 }
 - (void)configArray:(NSArray *)array{
     self.name.text = @"HOLE";
+    
+    self.Taiwan.hidden = YES;
+    
+    self.nameLeft.constant = 0;
+    self.name.textAlignment = NSTextAlignmentCenter;
+    
     self.oneLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[0]]];
     self.twoLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[1]]];
     self.threeLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[2]]];
@@ -151,8 +166,10 @@
     self.nineLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[8]]];
 }
 
-- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray{
+- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan{
     self.name.text = userName;
+    
+    [self configTaiwan:taiwan];
     
     for (int i=0; i<9; i++) {
         if ([[array objectAtIndex:i] integerValue] == -1) {
@@ -251,8 +268,9 @@
     self.eightLable.text = [NSString stringWithFormat:@"%@", [self pole:[array objectAtIndex:7] andStandard:[[standradArray objectAtIndex:7] integerValue]]];
     self.nineLable.text = [NSString stringWithFormat:@"%@", [self pole:[array objectAtIndex:8] andStandard:[[standradArray objectAtIndex:8] integerValue]]];
 }
-- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray{
+- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan{
     self.name.text = userName;
+    [self configTaiwan:taiwan];
     
     for (int i=9; i<18; i++) {
         if ([[array objectAtIndex:i] integerValue] == -1) {
@@ -354,6 +372,10 @@
 #pragma mark -- 标准杆
 - (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName{
     self.name.text = userName;
+    self.Taiwan.hidden = YES;
+    
+    self.nameLeft.constant = 0;
+    self.name.textAlignment = NSTextAlignmentCenter;
     
     self.oneLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[9]]];
     self.twoLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[10]]];
@@ -367,6 +389,10 @@
 }
 - (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName{
     self.name.text = userName;
+    self.Taiwan.hidden = YES;
+    
+    self.nameLeft.constant = 0;
+    self.name.textAlignment = NSTextAlignmentCenter;
     
     self.oneLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[0]]];
     self.twoLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[1]]];
@@ -394,9 +420,34 @@
         return [NSString stringWithFormat:@"%ld", labs([pole integerValue] - standrad)];
     }
 }
-
-- (void)configPoorOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray{
+- (void)configTaiwan:(NSString *)taiwan{
+    self.Taiwan.hidden = NO;
+    self.nameLeft.constant = 25*ProportionAdapter;
+    self.name.textAlignment = NSTextAlignmentLeft;
+    if ([taiwan containsString:@"蓝"]) {
+        self.Taiwan.backgroundColor = [UIColor blueColor];
+    }
+    
+    if ([taiwan containsString:@"红"]) {
+        self.Taiwan.backgroundColor = [UIColor redColor];
+    }
+    
+    if ([taiwan containsString:@"金"]) {
+        self.Taiwan.backgroundColor = [UIColor colorWithHexString:@"#BFDB2D"];
+    }
+    
+    if ([taiwan containsString:@"白"]) {
+        self.Taiwan.backgroundColor = [UIColor whiteColor];
+    }
+    
+    if ([taiwan containsString:@"黑"]) {
+        self.Taiwan.backgroundColor = [UIColor blackColor];
+    }
+}
+- (void)configPoorOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan{
     self.name.text = userName;
+    
+    [self configTaiwan:taiwan];
     
     for (int i=0; i<9; i++) {
         if ([[array objectAtIndex:i] integerValue] == -1) {
@@ -519,8 +570,9 @@
     self.nineLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[8]]];
 }
 
-- (void)configPoorNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray{
+- (void)configPoorNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan{
     self.name.text = userName;
+    [self configTaiwan:taiwan];
     
     for (int i=9; i<18; i++) {
         if ([[array objectAtIndex:i] integerValue] == -1) {

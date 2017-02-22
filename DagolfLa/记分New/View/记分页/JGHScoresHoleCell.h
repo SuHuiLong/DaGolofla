@@ -18,7 +18,15 @@
 
 @property (nonatomic, weak)id <JGHScoresHoleCellDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UILabel *Taiwan;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *TaiwanLeft;//10
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *TaiwanW;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *bgLable;
+
 @property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeft;
 
 @property (weak, nonatomic) IBOutlet UIButton *one;
 - (IBAction)oneBtnClick:(UIButton *)sender;
@@ -65,16 +73,16 @@
 //总杆模式
 - (void)configArray:(NSArray *)array;
 
-- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;//计算杆的属性
+- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan;//计算杆的属性
 
-- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;//计算杆的属性
+- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan;//计算杆的属性
 
 //差杆模式
 - (void)configPoorArray:(NSArray *)array;
 
-- (void)configPoorOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;
+- (void)configPoorOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan;
 
-- (void)configPoorNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray;//计算杆的属性
+- (void)configPoorNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan;//计算杆的属性
 
 
 @end

@@ -92,7 +92,15 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
             NSArray *dataArray = [data objectForKey:@"teamSignUpList"];
             for (NSMutableDictionary *dataDict in dataArray) {
                 NSMutableDictionary *applyDict = [NSMutableDictionary dictionaryWithDictionary:dataDict];
-                [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
+                
+                if (dataArray.count == 1) {
+                    if ([DEFAULF_USERID integerValue] == [[applyDict objectForKey:@"userKey"] integerValue]) {
+                        [applyDict setObject:@"1" forKey:@"select"];//付款勾选默认勾
+                    }
+                }else{
+                    [applyDict setObject:@"0" forKey:@"select"];
+                }
+                
                 [self.dataArray addObject:applyDict];
             }
         }else{
@@ -162,7 +170,12 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
     }else if (section == 2){
         JGActivityNameBaseCell *promptDetailsCell = [tableView dequeueReusableCellWithIdentifier:JGActivityNameBaseCellIdentifier];
         promptDetailsCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [promptDetailsCell configActivityRefundRulesString:ActivityRefundrules];
+        if (_dataArray.count == 1) {
+            [promptDetailsCell configActivityRefundRulesString:@""];
+        }else{
+            [promptDetailsCell configActivityRefundRulesString:ActivityRefundrules];
+        }
+        
         return (UIView *)promptDetailsCell;
     }else{
         JGHButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:JGHButtonCellIdentifier];
@@ -170,6 +183,16 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
         [buttonCell.clickBtn setTitle:@"确认退出" forState:UIControlStateNormal];
         buttonCell.delegate = self;
         buttonCell.backgroundColor = [UIColor colorWithHexString:BG_color];
+        
+        buttonCell.clickBtn.enabled = NO;
+        [buttonCell.clickBtn setBackgroundColor:[UIColor lightGrayColor]];
+        for (NSDictionary *dict in _dataArray) {
+            if ([[dict objectForKey:@"select"] integerValue] == 1) {
+                buttonCell.clickBtn.enabled = YES;
+                [buttonCell.clickBtn setBackgroundColor:[UIColor colorWithHexString:Nav_Color]];
+            }
+        }
+        
         return (UIView *)buttonCell;
     }
 }

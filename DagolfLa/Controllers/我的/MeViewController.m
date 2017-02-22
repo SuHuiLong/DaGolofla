@@ -58,6 +58,8 @@
 #import "JGMeMoreViewController.h" // 更多
 #import "JGDOrderListViewController.h"
 
+#import "JGDPersonalViewController.h"
+
 
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -358,33 +360,21 @@
 //            selfVc.strMoodId = _model.userId;
 //            [self.navigationController pushViewController:selfVc animated:YES];
             
-            SelfViewController* scVc = [[SelfViewController alloc]init];
-            scVc.userModel = _model;
+            JGDPersonalViewController *personVC = [[JGDPersonalViewController alloc] init];
+            personVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:personVC animated:YES];
             
-            scVc.blockRereshingMe = ^(NSArray* arrayData){
-                
-//                _nameLabel.text = _model.userName;
-                
-//                if (_model.age != nil) {
-//                    _infoLabel.text = [NSString stringWithFormat:@"%@岁  差点:%@",_model.age,_model.almost];
-//                }
-//                _sexImg.image = [UIImage imageNamed:@""];
-//                if ([_model.sex integerValue] == 0) {
-//                    
-//                    _sexImg.image = [UIImage imageNamed:@"xb_n"];
-//                }else{
-//                    _sexImg.image = [UIImage imageNamed:@"xb_nn"];
-//                }
+//            SelfViewController* scVc = [[SelfViewController alloc]init];
+//            scVc.userModel = _model;
+//            
+//            scVc.blockRereshingMe = ^(NSArray* arrayData){
 //                
-//                if (arrayData.count != 0) {
-//                    _iconImg.image = [UIImage imageWithData:arrayData[0]];
-//                }
-                NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
-                [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
-                [_tableView reloadData];
-            };
-            
-            [self.navigationController pushViewController:scVc animated:YES];
+//            NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
+//                [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+//                [_tableView reloadData];
+//            };
+//            
+//            [self.navigationController pushViewController:scVc animated:YES];
         }
         else if (indexPath.section == 1)
         {

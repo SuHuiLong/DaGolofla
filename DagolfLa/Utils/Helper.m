@@ -855,4 +855,18 @@
 }
 
 
+//  封装cell方法
++ (UILabel *)lableRect:(CGRect)rect labelColor:(UIColor *)color labelFont:(NSInteger)font text:(NSString *)text textAlignment:(NSTextAlignment )alignment{
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.textAlignment = alignment;
+    label.frame = rect;
+    label.textColor = color;
+    label.font = [UIFont systemFontOfSize:font];
+    label.text = text;
+    return label;
+}
+
+
+
 @end

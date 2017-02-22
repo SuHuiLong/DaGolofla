@@ -16,14 +16,15 @@
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
     self.totalPoleLeft.constant = 10*ProportionAdapter;
-    self.totalPoleRight.constant = 6*ProportionAdapter;
+    self.totalPoleRight.constant = 5*ProportionAdapter;
+        
+    self.totalPoleValue.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+    self.totalPushValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     
-    self.totalPole.font = [UIFont systemFontOfSize:17*ProportionAdapter];
+    self.rodtoTotalPoleLeft.constant = 6*ProportionAdapter;
+    self.rodtoTotalPoleTop.constant = -6*ProportionAdapter;
     
-    self.totalPoleValue.font = [UIFont systemFontOfSize:27*ProportionAdapter];
-    
-    self.rodTop.constant = 23*ProportionAdapter;
-    self.rodtoTotalPoleTop.constant = -4*ProportionAdapter;
+    self.totalName.font = [UIFont systemFontOfSize:13*ProportionAdapter];
     
     self.userNameLeft.constant = 10*ProportionAdapter;
     self.userNameDown.constant = 23*ProportionAdapter;
@@ -263,16 +264,16 @@
 }
 
 - (void)configTotalPoleViewTitle{
-    self.totalPole.text = @"";
+    self.totalName.text = @"";
     self.totalPromLabel.text = @"";
-    self.totalPole.text = @"总杆";
+    self.totalName.text = @"总杆";
     self.totalPromLabel.text = @"杆数";
 }
 
 - (void)configPoleViewTitle{
-    self.totalPole.text = @"";
+    self.totalName.text = @"";
     self.totalPromLabel.text = @"";
-    self.totalPole.text = @"总差杆";
+    self.totalName.text = @"总差杆";
     self.totalPromLabel.text = @"差杆";
 }
 

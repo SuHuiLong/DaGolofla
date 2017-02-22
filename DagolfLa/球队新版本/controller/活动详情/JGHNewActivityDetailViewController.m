@@ -705,12 +705,12 @@ static CGFloat ImageHeight  = 210.0;
     NSString*  shareUrl;
     if ([_model.timeKey integerValue] == 0) {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
-        NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%td&userKey=%@&share=1dagolfla.com", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID]];
+        NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%td&userKey=%@dagolfla.com", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID]];
         shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%td&userKey=%@&share=1&md5=%@", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID, md5String];
     }
     else
     {
-        NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@&share=1dagolfla.com", _model.teamKey, _model.timeKey, DEFAULF_USERID]];
+        NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@dagolfla.com", _model.teamKey, _model.timeKey, DEFAULF_USERID]];
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
         shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%@&userKey=%@&share=1&md5=%@", _model.teamKey, _model.timeKey, DEFAULF_USERID, md5String];
     }
