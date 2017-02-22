@@ -32,7 +32,7 @@
         [confirmBtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
         [confirmBtn addTarget:self action:@selector(confirmAct) forControlEvents:(UIControlEventTouchUpInside)];
         [btnView addSubview:confirmBtn];
-
+        
         
         self.dataPickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, screenHeight - 233 * ProportionAdapter, screenWidth, 233 * ProportionAdapter)];
         self.dataPickerView.datePickerMode = UIDatePickerModeDate;
@@ -49,17 +49,19 @@
 }
 
 - (void)confirmAct{
-    self.blockStr(@"ACFun");
+    NSLog(@"%@" , self.dataPickerView.date);
+    NSString *date = [NSString stringWithFormat:@"%@" , self.dataPickerView.date];
+    self.blockStr([date substringWithRange:NSMakeRange(0, 10)]);
     [self removeFromSuperview];
 }
 
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end

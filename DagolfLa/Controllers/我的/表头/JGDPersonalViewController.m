@@ -69,7 +69,7 @@
     
     JGDPersonalTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0 || indexPath.row == 7) {
         JGDInputView *inputV = [[JGDInputView alloc] initWithFrame:[UIScreen mainScreen].bounds];
         if (indexPath.row == 0) {
             inputV.height = 52.0;
@@ -84,12 +84,11 @@
         };
         
         [self.view addSubview:inputV];
-    
+        
     }else if (indexPath.row == 1) {
         
         JGDPickerView *pickView = [[JGDPickerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        pickView.dataArray = @[@"江苏", @"湖南",@"河南",@"山东",@"河北",@"6",@"7"];
-        pickView.selectRow = 3;
+        pickView.dataArray = @[@"男", @"女"];
         pickView.blockStr = ^(NSString *string){
             cell.nameLB.text = string;
         };
@@ -102,16 +101,73 @@
             cell.nameLB.text = string;
         };
         [self.view addSubview:datePic];
+    }else if (indexPath.row == 3) {
+        
+        NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/industry.json"];
+        NSError *error;
+        NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
+        NSData * data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSError * error1 = nil;
+        
+        if (data) {
+            NSDictionary * dataDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error1];
+            NSMutableArray *array = [NSMutableArray array];
+            for (NSDictionary *dic in [dataDic objectForKey:@"-1"]) {
+                [array addObject:[dic objectForKey:@"name"]];
+            }
+            
+            JGDPickerView *pickView = [[JGDPickerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+            pickView.dataArray = array;
+            pickView.blockStr = ^(NSString *string){
+                cell.nameLB.text = string;
+            };
+            [self.view addSubview:pickView];
+        }
+        
     }else if (indexPath.row == 4) {
-     
-        JGDTextTipView *textTipV = [[JGDTextTipView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        [self.view addSubview:textTipV];
+        
+        // -10 30
+        
+        NSMutableArray *array = [NSMutableArray array];
+        
+        for (NSInteger i = -10; i <= 30; i ++) {
+            [array addObject:[NSString stringWithFormat:@"%td", i]];
+        }
+        
+        JGDPickerView *pickView = [[JGDPickerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        pickView.dataArray = array;
+        pickView.blockStr = ^(NSString *string){
+            cell.nameLB.text = string;
+        };
+        [self.view addSubview:pickView];
+        
+        
+        //        JGDTextTipView *textTipV = [[JGDTextTipView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        //        [self.view addSubview:textTipV];
+    }else if (indexPath.row == 5) {
+        
+        
+        // 球龄   1-2 (0) ， 3-5 (1)   ， 6-10 (2)， 10 以上 (3)
+        JGDPickerView *pickView = [[JGDPickerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        pickView.dataArray = [NSMutableArray arrayWithObjects: @"1-2", "3-5" ,"6-10", "10 以上", nil];
+        pickView.blockStr = ^(NSString *string){
+            cell.nameLB.text = string;
+        };
+        [self.view addSubview:pickView];
+        
+        
+        //        JGDTextTipView *textTipV = [[JGDTextTipView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        //        [self.view addSubview:textTipV];
     }else if (indexPath.row == 6) {
+        
+        
+        
+    }else if (indexPath.row == 7) {
         
         JGDPersonalCard *personalCard = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
         [self.view addSubview:personalCard];
     }
-
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
