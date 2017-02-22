@@ -1107,6 +1107,11 @@
 		F55573DA1E51F992001A353E /* JGWkNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55573D91E51F992001A353E /* JGWkNewsViewController.m */; };
 		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
+		F55CB1481E5D221900D1798E /* JGDPersonalCard.m in Sources */ = {isa = PBXBuildFile; fileRef = F55CB1471E5D221900D1798E /* JGDPersonalCard.m */; };
+		F55FABD11E5A9BDB00F68D8A /* JGDPersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55FABD01E5A9BDB00F68D8A /* JGDPersonalViewController.m */; };
+		F55FABD41E5A9DD100F68D8A /* JGDPersonalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55FABD31E5A9DD100F68D8A /* JGDPersonalTableViewCell.m */; };
+		F55FABD71E5AC30F00F68D8A /* JGDInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55FABD61E5AC30F00F68D8A /* JGDInputView.m */; };
+		F55FABDA1E5ADEC700F68D8A /* JGDPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55FABD91E5ADEC700F68D8A /* JGDPickerView.m */; };
 		F565BC611D633EFC00F0C7C3 /* bg_somiaohou_03.png in Resources */ = {isa = PBXBuildFile; fileRef = F565BC601D633EFC00F0C7C3 /* bg_somiaohou_03.png */; };
 		F566EFAB1CA0F01B008BB328 /* InformSetmodel.m in Sources */ = {isa = PBXBuildFile; fileRef = F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */; };
 		F569A13F1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F569A13B1CE35A9C00CD0FD5 /* JGTeamChannelViewController.m */; };
@@ -1195,6 +1200,8 @@
 		F5B90E081D1786FE008ACC22 /* JGTeamPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B90E071D1786FE008ACC22 /* JGTeamPayViewController.m */; };
 		F5BC6C181E232F6400E850CD /* JGDWKCourtDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BC6C171E232F6400E850CD /* JGDWKCourtDetailViewController.m */; };
 		F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */; };
+		F5C6D6FE1E5BDAC400EC1C01 /* JGDDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C6D6FD1E5BDAC400EC1C01 /* JGDDatePicker.m */; };
+		F5C6D7011E5C108400EC1C01 /* JGDTextTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C6D7001E5C108400EC1C01 /* JGDTextTipView.m */; };
 		F5CB6EAD1DBA29150068F768 /* bg_image_pk@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */; };
 		F5D2F9B71E03DB550070D26C /* JGDServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D2F9B61E03DB540070D26C /* JGDServiceViewController.m */; };
 		F5D2F9BA1E03DB6C0070D26C /* JGDServiceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D2F9B91E03DB6C0070D26C /* JGDServiceTableViewCell.m */; };
@@ -3372,6 +3379,16 @@
 		F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGPreviewTeamViewController.m; sourceTree = "<group>"; };
 		F55597261CF6DB0F00F33099 /* JGTeamInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamInfoViewController.h; sourceTree = "<group>"; };
 		F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamInfoViewController.m; sourceTree = "<group>"; };
+		F55CB1461E5D221900D1798E /* JGDPersonalCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPersonalCard.h; sourceTree = "<group>"; };
+		F55CB1471E5D221900D1798E /* JGDPersonalCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPersonalCard.m; sourceTree = "<group>"; };
+		F55FABCF1E5A9BDB00F68D8A /* JGDPersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPersonalViewController.h; sourceTree = "<group>"; };
+		F55FABD01E5A9BDB00F68D8A /* JGDPersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPersonalViewController.m; sourceTree = "<group>"; };
+		F55FABD21E5A9DD100F68D8A /* JGDPersonalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPersonalTableViewCell.h; sourceTree = "<group>"; };
+		F55FABD31E5A9DD100F68D8A /* JGDPersonalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPersonalTableViewCell.m; sourceTree = "<group>"; };
+		F55FABD51E5AC30F00F68D8A /* JGDInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDInputView.h; sourceTree = "<group>"; };
+		F55FABD61E5AC30F00F68D8A /* JGDInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDInputView.m; sourceTree = "<group>"; };
+		F55FABD81E5ADEC700F68D8A /* JGDPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPickerView.h; sourceTree = "<group>"; };
+		F55FABD91E5ADEC700F68D8A /* JGDPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPickerView.m; sourceTree = "<group>"; };
 		F565BC601D633EFC00F0C7C3 /* bg_somiaohou_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_somiaohou_03.png; sourceTree = "<group>"; };
 		F566EFA91CA0F01B008BB328 /* InformSetmodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformSetmodel.h; sourceTree = "<group>"; };
 		F566EFAA1CA0F01B008BB328 /* InformSetmodel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformSetmodel.m; sourceTree = "<group>"; };
@@ -3530,6 +3547,10 @@
 		F5BC6C171E232F6400E850CD /* JGDWKCourtDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDWKCourtDetailViewController.m; sourceTree = "<group>"; };
 		F5BDF09F1CEC1B750020175A /* JGTeamDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetail.h; sourceTree = "<group>"; };
 		F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetail.m; sourceTree = "<group>"; };
+		F5C6D6FC1E5BDAC400EC1C01 /* JGDDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDDatePicker.h; sourceTree = "<group>"; };
+		F5C6D6FD1E5BDAC400EC1C01 /* JGDDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDDatePicker.m; sourceTree = "<group>"; };
+		F5C6D6FF1E5C108400EC1C01 /* JGDTextTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDTextTipView.h; sourceTree = "<group>"; };
+		F5C6D7001E5C108400EC1C01 /* JGDTextTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDTextTipView.m; sourceTree = "<group>"; };
 		F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "bg_image_pk@2x.jpg"; sourceTree = "<group>"; };
 		F5D2F9B51E03DB540070D26C /* JGDServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDServiceViewController.h; sourceTree = "<group>"; };
 		F5D2F9B61E03DB540070D26C /* JGDServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDServiceViewController.m; sourceTree = "<group>"; };
@@ -6273,6 +6294,8 @@
 			children = (
 				36BF00511BC7726D005B3CE2 /* SelfViewController.h */,
 				36BF00521BC7726D005B3CE2 /* SelfViewController.m */,
+				F55FABCF1E5A9BDB00F68D8A /* JGDPersonalViewController.h */,
+				F55FABD01E5A9BDB00F68D8A /* JGDPersonalViewController.m */,
 				36BF00571BC77296005B3CE2 /* 足迹 */,
 			);
 			path = "表头";
@@ -6644,6 +6667,18 @@
 				36BF01EF1BC77C71005B3CE2 /* MyselfChooseViewCell.h */,
 				36BF01F01BC77C71005B3CE2 /* MyselfChooseViewCell.m */,
 				36BF01F11BC77C71005B3CE2 /* MyselfChooseViewCell.xib */,
+				F55FABD21E5A9DD100F68D8A /* JGDPersonalTableViewCell.h */,
+				F55FABD31E5A9DD100F68D8A /* JGDPersonalTableViewCell.m */,
+				F55FABD51E5AC30F00F68D8A /* JGDInputView.h */,
+				F55FABD61E5AC30F00F68D8A /* JGDInputView.m */,
+				F55FABD81E5ADEC700F68D8A /* JGDPickerView.h */,
+				F55FABD91E5ADEC700F68D8A /* JGDPickerView.m */,
+				F5C6D6FC1E5BDAC400EC1C01 /* JGDDatePicker.h */,
+				F5C6D6FD1E5BDAC400EC1C01 /* JGDDatePicker.m */,
+				F5C6D6FF1E5C108400EC1C01 /* JGDTextTipView.h */,
+				F5C6D7001E5C108400EC1C01 /* JGDTextTipView.m */,
+				F55CB1461E5D221900D1798E /* JGDPersonalCard.h */,
+				F55CB1471E5D221900D1798E /* JGDPersonalCard.m */,
 			);
 			path = "个人资料";
 			sourceTree = "<group>";
@@ -9248,6 +9283,7 @@
 				203019941E0E4292005568E2 /* ZXDataMatrixBase256Encoder.m in Sources */,
 				203019F51E0E4293005568E2 /* ZXPDF417ResultMetadata.m in Sources */,
 				821DB9D91D5DB64B00C882C2 /* JGLCaddieScoreViewController.m in Sources */,
+				F55FABD41E5A9DD100F68D8A /* JGDPersonalTableViewCell.m in Sources */,
 				828A99E41CE3167800AF9860 /* JGTeamCreatePhotoController.m in Sources */,
 				F58C4EC61E1B3F860057DC9C /* JGDCourtNameSearchViewController.m in Sources */,
 				2067C6D41CE30CC0002900C8 /* JGTeamActivityDetailsCell.m in Sources */,
@@ -9454,6 +9490,7 @@
 				F51E5EF01D80237000AE254E /* JGDActAlmostDetailViewController.m in Sources */,
 				36E300FC1C3FF3F9005C3F08 /* UIScrollView+MJRefresh.m in Sources */,
 				20301A061E0E4293005568E2 /* ZXQRCodeFinderPatternInfo.m in Sources */,
+				F55FABDA1E5ADEC700F68D8A /* JGDPickerView.m in Sources */,
 				36BFFF811BC76D09005B3CE2 /* UIView+WebCacheOperation.m in Sources */,
 				82E6A6F61CF5812C009DD179 /* JGLAuthorityTableViewCell.m in Sources */,
 				203019841E0E4292005568E2 /* ZXDimension.m in Sources */,
@@ -9474,6 +9511,7 @@
 				82EDDF7F1D6154A8003D51EB /* JGLCaddieSelfScoreViewController.m in Sources */,
 				20301A741E1269EB005568E2 /* XLPlainFlowLayout.m in Sources */,
 				36B9B5921C3DFFCE0053B227 /* ShopCarViewController.m in Sources */,
+				F55CB1481E5D221900D1798E /* JGDPersonalCard.m in Sources */,
 				F58C4EC71E1B3F860057DC9C /* JGDCourtSecDetailViewController.m in Sources */,
 				2030194D1E0E4292005568E2 /* ZXExpandedProductParsedResult.m in Sources */,
 				36BF01DA1BC77BB0005B3CE2 /* CaptchaModel.m in Sources */,
@@ -9570,6 +9608,7 @@
 				36BF003C1BC771FB005B3CE2 /* ComDetailViewCell.m in Sources */,
 				20BC97DB1E1F6051007DFD34 /* JGHAwardModel.m in Sources */,
 				36BF008B1BC772EF005B3CE2 /* MySetPasswordController.m in Sources */,
+				F5C6D7011E5C108400EC1C01 /* JGDTextTipView.m in Sources */,
 				203019771E0E4292005568E2 /* ZXDecoderResult.m in Sources */,
 				207F70661DC1FE7B00667E26 /* JGHAddMoreTeamTableViewCell.m in Sources */,
 				36DCA73C1C22630500E12DF7 /* ScoreProStandedModel.m in Sources */,
@@ -9691,6 +9730,7 @@
 				827E12C41DC21D82000BDF65 /* JGLWebUserMallViewController.m in Sources */,
 				36BFFF8B1BC76D09005B3CE2 /* FDCalendarItem.m in Sources */,
 				F58C4EC31E1B3F860057DC9C /* JGDConfirmPayViewController.m in Sources */,
+				F55FABD11E5A9BDB00F68D8A /* JGDPersonalViewController.m in Sources */,
 				203019D11E0E4293005568E2 /* ZXITFWriter.m in Sources */,
 				203019C51E0E4293005568E2 /* ZXCodaBarWriter.m in Sources */,
 				F58C4EC81E1B3F860057DC9C /* JGDOrderDetailViewController.m in Sources */,
@@ -10024,6 +10064,7 @@
 				36BFFF7A1BC76D09005B3CE2 /* SDWebImageManager.m in Sources */,
 				F59A8B961D5B514A00E8292B /* JGDPlayerHisScoreDetailViewController.m in Sources */,
 				36BF01651BC77611005B3CE2 /* DateTimeViewController.m in Sources */,
+				F55FABD71E5AC30F00F68D8A /* JGDInputView.m in Sources */,
 				36DC9D601C9979A6003E4FCC /* ScreenModel.m in Sources */,
 				2030195F1E0E4292005568E2 /* ZXURIResultParser.m in Sources */,
 				F58C4EC01E1B3F860057DC9C /* JGDBookCourtViewController.m in Sources */,
@@ -10082,6 +10123,7 @@
 				207FECB41D1D27E40098E23C /* JGHRepeatApplyView.m in Sources */,
 				20BC97E11E1F6051007DFD34 /* JGHAddAwardImageCell.m in Sources */,
 				F53A05651D518F32009DD489 /* JGHOperScoreBtnListCell.m in Sources */,
+				F5C6D6FE1E5BDAC400EC1C01 /* JGDDatePicker.m in Sources */,
 				20BEF39E1E28D06500E9AED7 /* UITabBarController+JGHUITabBarController.m in Sources */,
 				36E1FBB41C7D817A006B1456 /* ChangePicViewController.m in Sources */,
 				206ECFC21D48D30C00880234 /* JGHActivityScoreManagerViewController.m in Sources */,
