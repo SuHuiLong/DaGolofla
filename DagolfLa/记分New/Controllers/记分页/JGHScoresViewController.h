@@ -6,9 +6,9 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "JGHBaseScoreViewController.h"
 
-@interface JGHScoresViewController : UIViewController
+@interface JGHScoresViewController : JGHBaseScoreViewController
 
 @property (nonatomic, strong)NSString *scorekey;
 

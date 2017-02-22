@@ -25,15 +25,17 @@
 
 @property (nonatomic, weak)id <JGHScoresPageCellDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UILabel *totalName;
+
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *totalPoleLeft;//20
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *totalPoleRight;//10
-@property (weak, nonatomic) IBOutlet UILabel *totalPole;
 
 @property (weak, nonatomic) IBOutlet UILabel *totalPoleValue;
 @property (weak, nonatomic) IBOutlet UILabel *totalPushValue;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodTop;//23
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodtoTotalPoleTop;//-4
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rodtoTotalPoleLeft;//6
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameLeft;//20
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *userNameDown;//23

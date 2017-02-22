@@ -25,6 +25,11 @@
 
 @property (nonatomic, copy)void (^returnScoresDataArray)(NSMutableArray *dataArray);
 
+@property (nonatomic, copy)void (^selectHoleBtnClick)();
+
+
+- (void)switchScoreModeNote;//
+
 @property (nonatomic, assign)NSInteger switchMode;// 0- 总；1- 差
 
 @property (nonatomic, strong)NSString *scorekey;

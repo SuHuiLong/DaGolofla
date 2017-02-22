@@ -57,7 +57,7 @@
     
     NSInteger _ballKey;
     
-    UIImageView *navBarHairlineImageView;
+//    UIImageView *navBarHairlineImageView;
     
     NSInteger _scoreFinish;//是否完成记分0-,1-完成
     
@@ -88,46 +88,44 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icn_home"] style:UIBarButtonItemStylePlain target:self action:@selector(backHome)];
+    leftItem.tintColor=[UIColor colorWithHexString:@"#32b14d"];
+    [leftItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     //替换任务栏
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
-    navBarHairlineImageView.hidden = YES;
-//    if (_backId != 1) {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = BackBtnFrame;
-        btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
-//        [btn setImage:[UIImage imageNamed:@")-2"] forState:UIControlStateNormal];
-//        [btn addTarget:self action:@selector(saveScoresAndBackClick:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
-        self.navigationItem.leftBarButtonItem = leftItem;
-//    }
+//    navBarHairlineImageView.hidden = YES;
     
-    NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
-    if (![usedef objectForKey:@"userFristScore"]) {
-        
-        UIImageView *userFristScoreImageView = [[UIImageView alloc]init];
-        if (_userScoreArray.count > 2) {
-            [userFristScoreImageView setImage:[UIImage imageNamed:@"-3"]];
-        }else{
-            [userFristScoreImageView setImage:[UIImage imageNamed:@"-2"]];
-        }
-        
-        userFristScoreImageView.userInteractionEnabled = YES;
-        userFristScoreImageView.tag = 7777;
-        userFristScoreImageView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-        [userFristScoreImageView bringSubviewToFront:appDelegate.window];
-        UITapGestureRecognizer *imageViewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeUserFristScoreImageView)];
-        [userFristScoreImageView addGestureRecognizer:imageViewTap];
-        [appDelegate.window addSubview:userFristScoreImageView];
-        
-    }
+//    NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
+//    if (![usedef objectForKey:@"userFristScore"]) {
+//        
+//        UIImageView *userFristScoreImageView = [[UIImageView alloc]init];
+//        if (_userScoreArray.count > 2) {
+//            [userFristScoreImageView setImage:[UIImage imageNamed:@"-3"]];
+//        }else{
+//            [userFristScoreImageView setImage:[UIImage imageNamed:@"-2"]];
+//        }
+//        
+//        userFristScoreImageView.userInteractionEnabled = YES;
+//        userFristScoreImageView.tag = 7777;
+//        userFristScoreImageView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+//        [userFristScoreImageView bringSubviewToFront:appDelegate.window];
+//        UITapGestureRecognizer *imageViewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeUserFristScoreImageView)];
+//        [userFristScoreImageView addGestureRecognizer:imageViewTap];
+//        [appDelegate.window addSubview:userFristScoreImageView];
+//        
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-    navBarHairlineImageView.hidden = NO;
+//    navBarHairlineImageView.hidden = NO;
 }
-#pragma mark -- 移除imageView 
+#pragma mark -- 移除imageView
 - (void)removeUserFristScoreImageView{
     [_scoresView removeAreaView];
     [_poorScoreView removePoorAreaView];
@@ -139,8 +137,16 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     _walletMonay = 0;//红包金额
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    //111
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+    
+//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"addLan" style:UIBarButtonItemStylePlain target:self action:@selector(backHome)];
+    
+    [self.segment setTitle:@"差杆模式" forSegmentAtIndex:0];
+    [self.segment setTitle:@"总杆模式" forSegmentAtIndex:1];
+    
+    
 //    _cabbieFinishScore = 0;//不结束
 
     _refreshArea = 0;
@@ -162,25 +168,25 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticeAllScoresCtrl) name:@"noticeAllScores" object:nil];
-    
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 0, 150*ProportionAdapter, 44)];
-    self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120*ProportionAdapter, 44)];
-    [self.titleBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-    self.titleBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
-    [titleView addSubview:self.titleBtn];
-    if (_currentPage > 0) {
-        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR 3", _currentPage+1] forState:UIControlStateNormal];
-    }else{
-        [self.titleBtn setTitle:@"1 Hole PAR 3" forState:UIControlStateNormal];
-    }
-    [self.titleBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(120*ProportionAdapter, 10, 30 *ProportionAdapter, 24)];
-    [_arrowBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
-    [titleView addSubview:_arrowBtn];
-    
-    self.navigationItem.titleView = titleView;
+    //111
+//    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 0, 150*ProportionAdapter, 44)];
+//    self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120*ProportionAdapter, 44)];
+//    [self.titleBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+//    self.titleBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
+//    [titleView addSubview:self.titleBtn];
+//    if (_currentPage > 0) {
+//        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR 3", _currentPage+1] forState:UIControlStateNormal];
+//    }else{
+//        [self.titleBtn setTitle:@"1 Hole PAR 3" forState:UIControlStateNormal];
+//    }
+//    [self.titleBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(120*ProportionAdapter, 10, 30 *ProportionAdapter, 24)];
+//    [_arrowBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
+//    [titleView addSubview:_arrowBtn];
+//    
+//    self.navigationItem.titleView = titleView;
     
     _selectHole = 0;
     if (_currentPage > 0) {
@@ -204,13 +210,34 @@
     
     [self getScoreList];
     
-    navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
+//    navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     
     if (_backHistory == 1) {
         [self historyScoreList];
     }
 }
-
+#pragma mark -- segmentAction 记分模式切换
+- (void)segmentAction:(UISegmentedControl *)segment{
+    NSLog(@"%td", segment.selectedSegmentIndex);
+    
+    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
+    
+    if (segment.selectedSegmentIndex == 0) {
+         //差杆模式
+        [userdf setObject:@1 forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
+    }else{
+        [userdf setObject:@0 forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
+    }
+    
+    [userdf synchronize];
+    
+    JGHScoresMainViewController *sub = (JGHScoresMainViewController *)_pageViewController.viewControllers[0];
+    [sub switchScoreModeNote];
+}
+#pragma mark -- 返回首页
+- (void)backHome{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 - (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
     if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
         return (UIImageView *)view;
@@ -384,6 +411,10 @@
                     weakSelf.userScoreArray = dataArray;
                     _isEdtor = 1;
                 };
+                sub.selectHoleBtnClick = ^(){
+                    [self titleBtnClick];
+                };
+                
                 [_pageViewController setViewControllers:@[sub] direction:0 animated:NO completion:nil];
                 
                 [self.view addSubview:_pageViewController.view];
@@ -415,7 +446,7 @@
 //                }
                 //userFristScore
 //                if (![userdef objectForKey:@"userFristScore"]) {
-                    [self titleBtnClick];
+//                    [self titleBtnClick];
 //                }
             }
         }else{
@@ -425,11 +456,13 @@
         }
     }];
 }
-#pragma mark -- titleBtn 点击事件
+#pragma mark -- 记分详情
 - (void)titleBtnClick{
     NSLog(@"XXX dong");
     _item.enabled = YES;
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UIButton *holeDireBtn = [window viewWithTag:15000];
     
     if (_selectHole == 0) {
         _selectHole = 1;
@@ -439,7 +472,7 @@
             [_item setTitle:@"退出记分"];//结束记分
         }
         
-        [_arrowBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
+        [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
         
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
@@ -447,7 +480,7 @@
             
             _scoresView = [[JGHScoresHoleView alloc]init];
             _scoresView.delegate = self;
-            _scoresView.frame = CGRectMake(0, 0, screenWidth, (200 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter);
+            _scoresView.frame = CGRectMake(0, screenHeight, screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
             _scoresView.dataArray = self.userScoreArray;
             _scoresView.scorekey = _scorekey;
             _scoresView.curPage = _selectPage;
@@ -455,71 +488,71 @@
             
             [self.view addSubview:_scoresView];
             
-            if (![userdef objectForKey:@"userFristScore"]) {
-                [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:1];//更新UI位置
-            }else{
-                [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
-            }
+//            if (![userdef objectForKey:@"userFristScore"]) {
+                [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
+//            }else{
+//                [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
+//            }
             
-            [self.view addSubview:_scoresView];
-            
-            [UIView animateWithDuration:1.0f animations:^{
+            [self.view setUserInteractionEnabled:NO];
+            [UIView animateWithDuration:0.5f animations:^{
                 _scoresView.alpha = 1;
+                _scoresView.frame = CGRectMake(0, screenHeight -(52*ProportionAdapter +(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter +64), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+                [self.view setUserInteractionEnabled:YES];
             }];
-            
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _scoresView.frame.size.height, screenWidth, (screenHeight -64)-(200 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
+            //遮罩
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0;
             
             UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
             [tag addTarget:self action:@selector(titleBtnClick)];
             [_tranView addGestureRecognizer:tag];
-            [self.view addSubview:_tranView];
+            [[UIApplication sharedApplication].keyWindow addSubview:_tranView];
             
-            [UIView animateWithDuration:1.0f animations:^{
+            [UIView animateWithDuration:0.5f animations:^{
                 _tranView.alpha = 0.3;
             }];
-            
         }else{
             
             _poorScoreView = [[JGHPoorScoreHoleView alloc]init];
             _poorScoreView.delegate = self;
             _poorScoreView.alpha = 0;
-            _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (200 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
+            _poorScoreView.frame = CGRectMake(0, screenHeight, screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
             _poorScoreView.scorekey = _scorekey;
             _poorScoreView.curPage = _selectPage;
             // _poorScoreView.curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
-            [self.view addSubview:_scoresView];
-            
-            if (![userdef objectForKey:@"userFristScore"]) {
-                [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:1];//更新UI位置
-            }else{
-                [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
-            }
-            
             [self.view addSubview:_poorScoreView];
             
+//            if (![userdef objectForKey:@"userFristScore"]) {
+                [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
+//            }else{
+//                [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
+//            }
+            
+            [self.view setUserInteractionEnabled:NO];
             [UIView animateWithDuration:0.5f animations:^{
-//                _poorScoreView.frame = CGRectMake(0, 0, screenWidth, (194 + 20 +20+ self.userScoreArray.count * 70)*ProportionAdapter);
-                _poorScoreView.alpha = 1.0;
+                _poorScoreView.alpha = 1;
+                _poorScoreView.frame = CGRectMake(0, screenHeight -(52*ProportionAdapter +(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter +64), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+                [self.view setUserInteractionEnabled:YES];
             }];
             
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, _poorScoreView.frame.size.height, screenWidth, (screenHeight -64)-(200 +20 +20 + self.userScoreArray.count * 70)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0;
             
             UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
             [tag addTarget:self action:@selector(titleBtnClick)];
             [_tranView addGestureRecognizer:tag];
-            [self.view addSubview:_tranView];
+            [[UIApplication sharedApplication].keyWindow addSubview:_tranView];
             
-            [UIView animateWithDuration:1.0f animations:^{
+            [UIView animateWithDuration:0.5f animations:^{
                 _tranView.alpha = 0.3;
             }];
         }
     }else{
-        [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
+        [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
         _selectHole = 0;
         if (_scoreFinish == 1) {
             [_item setTitle:@"完成"];
@@ -543,27 +576,55 @@
         }
 
         
-        NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
-        if (![usedef objectForKey:@"userSeccondScore"]) {
-            UIImageView *userFristScoreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"-1"]];
-            userFristScoreImageView.userInteractionEnabled = YES;
-            userFristScoreImageView.tag = 8888;
-            userFristScoreImageView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-            [userFristScoreImageView bringSubviewToFront:appDelegate.window];
-            UITapGestureRecognizer *imageViewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeUserSeccondScoreImageView)];
-            [userFristScoreImageView addGestureRecognizer:imageViewTap];
-            [appDelegate.window addSubview:userFristScoreImageView];
-            [usedef setObject:@"1" forKey:@"userSeccondScore"];
-        }
+//        NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
+//        if (![usedef objectForKey:@"userSeccondScore"]) {
+//            UIImageView *userFristScoreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"-1"]];
+//            userFristScoreImageView.userInteractionEnabled = YES;
+//            userFristScoreImageView.tag = 8888;
+//            userFristScoreImageView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+//            [userFristScoreImageView bringSubviewToFront:appDelegate.window];
+//            UITapGestureRecognizer *imageViewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeUserSeccondScoreImageView)];
+//            [userFristScoreImageView addGestureRecognizer:imageViewTap];
+//            [appDelegate.window addSubview:userFristScoreImageView];
+//            [usedef setObject:@"1" forKey:@"userSeccondScore"];
+//        }
     }
     
-    [userdef setObject:@"1" forKey:@"userFristScore"];
+//    [userdef setObject:@"1" forKey:@"userFristScore"];
     [userdef synchronize];
 }
 #pragma mark -- 移除imageView
-- (void)removeUserSeccondScoreImageView{
-    UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:8888];
-    [removeImageview removeFromSuperview];
+//- (void)removeUserSeccondScoreImageView{
+//    UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:8888];
+//    [removeImageview removeFromSuperview];
+//}
+
+#pragma mark -- 关闭成绩列表视图
+- (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn{
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    UIButton *holeDireBtn = [window viewWithTag:15000];
+    [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
+    _selectHole = 0;
+    if (_scoreFinish == 1) {
+        [_item setTitle:@"完成"];
+    }else{
+        [_item setTitle:@"保存"];
+    }
+    
+    if (_scoresView != nil) {
+        [_scoresView removeFromSuperview];
+        _scoresView = nil;
+    }
+    
+    if (_poorScoreView != nil) {
+        [_poorScoreView removeFromSuperview];
+        _poorScoreView = nil;
+    }
+    
+    if (_tranView != nil) {
+        [_tranView removeFromSuperview];
+        _tranView = nil;
+    }
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
@@ -639,8 +700,11 @@
         weakSelf.userScoreArray = dataArray;
         _isEdtor = 1;
     };
+    vc2.selectHoleBtnClick = ^(){
+        [self titleBtnClick];
+    };
+    
     [_pageViewController setViewControllers:@[vc2] direction:0 animated:NO completion:nil];
-
     
     [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
 }
@@ -683,6 +747,9 @@
     vc2.returnScoresDataArray= ^(NSMutableArray *dataArray){
         weakSelf.userScoreArray = dataArray;
         _isEdtor = 1;
+    };
+    vc2.selectHoleBtnClick = ^(){
+        [self titleBtnClick];
     };
     [_pageViewController setViewControllers:@[vc2] direction:0 animated:NO completion:nil];
     
@@ -770,6 +837,7 @@
         sub.dataArray = self.userScoreArray;
         sub.currentAreaArray = _currentAreaArray;
         NSLog(@"%@",sub);
+        
         return sub;
     }
 }
@@ -788,7 +856,12 @@
         weakSelf.userScoreArray = dataArray;
         _isEdtor = 1;
     };
+    sub.selectHoleBtnClick = ^(){
+        [self titleBtnClick];
+    };
     [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
+    
+    NSLog(@"viewControllers == %@", _pageViewController.viewControllers);
     
     _currentPage = sub.index;
     _selectPage = sub.index+1;
@@ -1081,7 +1154,11 @@
         
         [self loadOneAreaData:areaString andBtnTag:selectId];
     } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
+        UIWindow   *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        alertWindow.rootViewController = [[UIViewController alloc] init];
+        alertWindow.windowLevel = UIWindowLevelAlert + 1;
+        [alertWindow makeKeyAndVisible];
+        [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
     }];
 }
 

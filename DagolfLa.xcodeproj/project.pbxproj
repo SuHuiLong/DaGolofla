@@ -559,6 +559,8 @@
 		20F7D4521D88E7FC00302406 /* KeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7D44C1D88E7FC00302406 /* KeyChainStore.m */; };
 		20F7D4531D88E7FC00302406 /* UIDevice+FCUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7D44E1D88E7FC00302406 /* UIDevice+FCUUID.m */; };
 		20F7D4541D88E7FC00302406 /* UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F7D4501D88E7FC00302406 /* UUID.m */; };
+		20F9F2941E5C21CF00244276 /* JGHNewPoorBarHoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F9F2931E5C21CF00244276 /* JGHNewPoorBarHoleCell.m */; };
+		20F9F2971E5C361F00244276 /* JGHNewAreaListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F9F2961E5C361F00244276 /* JGHNewAreaListCell.m */; };
 		20FBD5F51D044E5900DEE48D /* ShowHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FBD5F41D044E5900DEE48D /* ShowHUD.m */; };
 		20FBE4441E07EB3B00E7419D /* JGHBaseScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FBE4431E07EB3B00E7419D /* JGHBaseScoreViewController.m */; };
 		20FBE44A1E080C4D00E7419D /* JGHNewStartScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20FBE4491E080C4D00E7419D /* JGHNewStartScoreViewController.m */; };
@@ -2329,6 +2331,10 @@
 		20F7D44E1D88E7FC00302406 /* UIDevice+FCUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+FCUUID.m"; sourceTree = "<group>"; };
 		20F7D44F1D88E7FC00302406 /* UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUID.h; sourceTree = "<group>"; };
 		20F7D4501D88E7FC00302406 /* UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUID.m; sourceTree = "<group>"; };
+		20F9F2921E5C21CF00244276 /* JGHNewPoorBarHoleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewPoorBarHoleCell.h; sourceTree = "<group>"; };
+		20F9F2931E5C21CF00244276 /* JGHNewPoorBarHoleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewPoorBarHoleCell.m; sourceTree = "<group>"; };
+		20F9F2951E5C361F00244276 /* JGHNewAreaListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewAreaListCell.h; sourceTree = "<group>"; };
+		20F9F2961E5C361F00244276 /* JGHNewAreaListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewAreaListCell.m; sourceTree = "<group>"; };
 		20FBD5F31D044E5900DEE48D /* ShowHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowHUD.h; sourceTree = "<group>"; };
 		20FBD5F41D044E5900DEE48D /* ShowHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowHUD.m; sourceTree = "<group>"; };
 		20FBE4421E07EB3B00E7419D /* JGHBaseScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHBaseScoreViewController.h; sourceTree = "<group>"; };
@@ -8719,6 +8725,10 @@
 				202E05331D81568300566CA9 /* JGHPoorBarHoleCell.h */,
 				202E05341D81568300566CA9 /* JGHPoorBarHoleCell.m */,
 				202E05351D81568300566CA9 /* JGHPoorBarHoleCell.xib */,
+				20F9F2921E5C21CF00244276 /* JGHNewPoorBarHoleCell.h */,
+				20F9F2931E5C21CF00244276 /* JGHNewPoorBarHoleCell.m */,
+				20F9F2951E5C361F00244276 /* JGHNewAreaListCell.h */,
+				20F9F2961E5C361F00244276 /* JGHNewAreaListCell.m */,
 			);
 			path = "记分页";
 			sourceTree = "<group>";
@@ -10004,6 +10014,7 @@
 				20BEF39B1E28D00400E9AED7 /* UINavigationController+JGHUINavigationController.m in Sources */,
 				65B596F11CAD43AC007AB83A /* JKSlideSwitchView.m in Sources */,
 				82C16BE81D8FB9970025DDED /* JobChooseViewController.m in Sources */,
+				20F9F2941E5C21CF00244276 /* JGHNewPoorBarHoleCell.m in Sources */,
 				368B73321C102A710002A618 /* ScoreFootViewController.m in Sources */,
 				F51E5EED1D8012EB00AE254E /* JGDActAlmostViewController.m in Sources */,
 				2053FE9B1DC9DC5000975203 /* JGHBindingAccountViewController.m in Sources */,
@@ -10143,6 +10154,7 @@
 				36F4D2B31C7871230094737B /* RCDraggableButton.m in Sources */,
 				827AA0111D1D003C00F6B80B /* JGLPaySignModel.m in Sources */,
 				36BFFFFE1BC770C4005B3CE2 /* ChatWithViewController.m in Sources */,
+				20F9F2971E5C361F00244276 /* JGHNewAreaListCell.m in Sources */,
 				82F9445C1D89775600A65381 /* UIImage+XHGIF.m in Sources */,
 				36DA6ABC1C018AAD00AE5001 /* TeamPeopleModel.m in Sources */,
 				65B596D91CAD43AC007AB83A /* WFReplyBody.m in Sources */,

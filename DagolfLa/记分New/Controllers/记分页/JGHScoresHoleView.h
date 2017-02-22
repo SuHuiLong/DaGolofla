@@ -10,6 +10,8 @@
 
 @protocol JGHScoresHoleViewDelegate <NSObject>
 
+- (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn;
+
 //- (void)oneAreaBtnDelegate:(UIButton *)btn;
 //
 //- (void)twoAreaBtnDelegate:(UIButton *)btn;
@@ -34,7 +36,7 @@
 
 //@property (nonatomic, strong)NSArray *twoAreaArray;//球道区域
 
-- (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray andIsShowArea:(NSInteger)isShowArea;
+- (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray;
 
 - (void)removeAreaView;
 
