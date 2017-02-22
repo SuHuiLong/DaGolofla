@@ -139,4 +139,8 @@
 
 + (void)requestCountPushLog:(NSMutableDictionary *)dict;
 
+
++ (UILabel *)lableRect:(CGRect)rect labelColor:(UIColor *)color labelFont:(NSInteger)font text:(NSString *)text textAlignment:(NSTextAlignment )alignment;
+
+
 @end

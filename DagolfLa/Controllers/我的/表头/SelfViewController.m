@@ -26,6 +26,7 @@
 #define kUpDateData_URL @"user/updateUserInfo.do"
 #import <RongIMKit/RongIMKit.h>
 #import "SXPickPhoto.h"
+
 @interface SelfViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 {
     UITableView* _tableView;
@@ -52,6 +53,7 @@
     
     NSString* _strPIC;
 }
+
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 
 
