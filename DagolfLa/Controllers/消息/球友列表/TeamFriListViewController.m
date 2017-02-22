@@ -54,6 +54,8 @@
 @property (strong, nonatomic) NSMutableArray *keyArray;
 @property (strong, nonatomic) NSMutableArray *listArray;
 
+//时间栏背景
+@property (nonatomic, strong) UIView *barBackView;
 @end
 
 
@@ -86,6 +88,8 @@
         //        [self.searchController.searchBar removeFromSuperview];
         self.searchController.searchBar.hidden = YES;
     }
+    _barBackView = nil;
+    [_barBackView removeFromSuperview];
 }
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
@@ -95,7 +99,13 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
+    [self createUI];
+}
+#pragma mark - createUI
+-(void)createUI{
     
     self.title = @"添加球友";
     _page = 0;
@@ -142,11 +152,17 @@
     _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
 
     // Do any additional setup after loading the view.
+    
+}
+//时间栏背景
+-(void)crateBarView{
+    _barBackView = nil;
+    [_barBackView removeFromSuperview];
+    _barBackView = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:@"#EEEEEE"] frame:CGRectMake(0, 0, screenWidth, 20)];
+    [self.view.window addSubview:_barBackView];
 }
 
-
-#pragma mark --- 联系人tableview
-
+// 联系人tableview
 - (void)contantAct:(UIButton *)btn{
     
     if ([self.view.subviews containsObject:self.contactTableView]) {
@@ -166,9 +182,6 @@
     
     [self.contactTableView registerClass:[JGLAddressAddTableViewCell class] forCellReuseIdentifier:@"JGLAddressAddTableViewCell"];
     self.contactISOpen = YES;
-    
-    
-    
     
     [self.listArray removeAllObjects];
     [self.keyArray removeAllObjects];
@@ -636,7 +649,7 @@
 
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
-
+    [self crateBarView];
     self.navigationController.navigationBarHidden = YES;
     if ([self.view.subviews containsObject:self.contactTableView]) {
         self.contactISOpen = NO;
@@ -658,7 +671,7 @@
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    
+    _barBackView.hidden = YES;
     if ([self.view.subviews containsObject:self.contactTableView]) {
         self.contactISOpen = NO;
         [self.contactTableView removeFromSuperview];

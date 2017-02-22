@@ -281,6 +281,7 @@
     NSDictionary* pushInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (pushInfo)
     {
+        [self getAdvertisingImageWithUrl];
         [self startApp];
         
         if ([pushInfo objectForKey:APPDATA]) {
@@ -298,6 +299,7 @@
         [self updateBadgeValueForTabBarItem];
         
     }else if (url != nil) {
+        [self getAdvertisingImageWithUrl];
         if ([[url query] containsString:@"safepay"]) {
             [self startApp];
         }else{
@@ -316,6 +318,8 @@
         NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
         if(![version isEqualToString:lastVerson])
         {
+            [self getAdvertisingImageWithUrl];
+
             PageViewController* pageview = [[PageViewController alloc]init];
             self.window.rootViewController = pageview;
             [pageview setCallBack:^{
@@ -323,9 +327,7 @@
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 [self startApp];
             }];
-        }
-        else
-        {
+        }else{
             //广告页
             [self getAdvertisingImage];
 
@@ -450,13 +452,11 @@
             //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
         }else{
             return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
-            //        [UMSocialSnsService handleOpenURL:url
-            //                            wxDelegate:self];
         }
     }else if ([url.scheme isEqualToString:@"dagolfla"]){
-        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
-        NSLog(@"URL scheme:%@", [url scheme]);
-        NSLog(@"URL query: %@", [url query]);
+//        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
+//        NSLog(@"URL scheme:%@", [url scheme]);
+//        NSLog(@"URL query: %@", [url query]);
         if ([[url query] containsString:@"safepay"]) {
             //跳转支付宝钱包进行支付，处理支付结果
             [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
@@ -789,7 +789,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
          {
              CLPlacemark *placemark = [array objectAtIndex:0];
              //将获得的所有信息显示到label上
-             NSLog(@"%@",placemark.name);
+             NSLog(@"位置信息%@",placemark.name);
              //获取城市
              NSString *city = placemark.locality;
              if (!city) {
@@ -964,6 +964,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushAdView) name:@"pushtoad" object:nil];
 }
 
+
 /**
  *  判断文件是否存在
  */
@@ -1026,8 +1027,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                     [mDataArray addObject:mDict];
                 }
             }
-            
-            
             [UserDefaults setValue:mDataArray forKey:@"adData"];
         }
     }];

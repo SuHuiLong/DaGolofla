@@ -64,8 +64,8 @@
 - (void)reloadRongTKChet{
     self.isShowNetworkIndicatorView = NO;
     /*
-     * 2017年02月21日11:48:43
-     * 解决聊天界面显示tabbar
+     *2017年02月21日11:48:43 
+     解决聊天界面显示tabbar
      */
 //    self.tabBarController.tabBar.hidden = NO;
     
@@ -318,7 +318,6 @@
         
         [self.conversationListTableView.header endRefreshing];
         btn.userInteractionEnabled = YES;
-        
         return;
     }
     
@@ -460,17 +459,17 @@
 
 - (void)updateBadgeValueForTabBarItem
 {
-    __weak typeof(self) __weakSelf = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        NSArray *count1 =  [[RCIMClient sharedRCIMClient] getConversationList:self.displayConversationTypeArray];
-        
-        if ([count1 count] > 0) {
-            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        }else{
+//    __weak typeof(self) __weakSelf = self;
+//    dispatch_async(dispatch_get_main_queue(), ^{
+    
+//        NSArray *count1 =  [[RCIMClient sharedRCIMClient] getConversationList:self.displayConversationTypeArray];
+    
+//        if ([count1 count] > 0) {
+//            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//        }else{
             self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        }
-        
+//        }
+    
         //会话消息
         int countChat = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
@@ -537,13 +536,13 @@
         [userdef synchronize];
         
         if (iconCount > 0) {
-            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:iconCount];
+            [self.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:iconCount];
         } else {
-            [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
+            [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
         
         [self.conversationListTableView.header endRefreshing];
-    });
+//    });
 }
 
 - (RCDTabBarBtn *)systemRCDbtn{

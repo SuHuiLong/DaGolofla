@@ -901,7 +901,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    NSLog(@"scrollView11 == %f", scrollView.contentOffset.y);
+    NSLog(@"scrollView11 == %f", scrollView.contentOffset.y);
     if (scrollView.contentOffset.y > screenWidth/2 -20) {
 //        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
         [self.view addSubview:self.toolView];
