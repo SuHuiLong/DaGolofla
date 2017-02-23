@@ -1,62 +1,41 @@
 //
-//  JGHScoresHoleCell.h
+//  JGHNewScoresHoleCell.h
 //  DagolfLa
 //
-//  Created by 黄安 on 16/7/13.
-//  Copyright © 2016年 bhxx. All rights reserved.
+//  Created by 黄安 on 17/2/23.
+//  Copyright © 2017年 bhxx. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@protocol JGHScoresHoleCellDelegate <NSObject>
+@protocol JGHNewScoresHoleCellDelegate <NSObject>
 
 - (void)selectHoleCoresBtnTag:(NSInteger)btnTag andCellTag:(NSInteger)cellTag;
 
 @end
 
-@interface JGHScoresHoleCell : UITableViewCell
+@interface JGHNewScoresHoleCell : UITableViewCell
 
-@property (nonatomic, weak)id <JGHScoresHoleCellDelegate> delegate;
+@property (nonatomic, weak)id <JGHNewScoresHoleCellDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UILabel *Taiwan;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *TaiwanLeft;//10
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *TaiwanW;
+@property (strong, nonatomic)UIView *bgView;
 
+@property (strong, nonatomic) UILabel *Taiwan;
 
-@property (weak, nonatomic) IBOutlet UILabel *bgLable;
+@property (strong, nonatomic) UILabel *bgLable;
 
-@property (weak, nonatomic) IBOutlet UILabel *name;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameLeft;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *oneBtnW;
+@property (strong, nonatomic) UILabel *name;
 
-@property (weak, nonatomic) IBOutlet UIButton *one;
-- (IBAction)oneBtnClick:(UIButton *)sender;
+@property (strong, nonatomic) UIButton *one;
+@property (strong, nonatomic) UIButton *two;
+@property (strong, nonatomic) UIButton *three;
+@property (strong, nonatomic) UIButton *four;
+@property (strong, nonatomic) UIButton *five;
+@property (strong, nonatomic) UIButton *six;
+@property (strong, nonatomic) UIButton *seven;
+@property (strong, nonatomic) UIButton *eight;
+@property (strong, nonatomic) UIButton *nine;
 
-@property (weak, nonatomic) IBOutlet UIButton *two;
-- (IBAction)twoBtnClick:(UIButton *)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *three;
-- (IBAction)threeBtnClick:(UIButton *)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *four;
-- (IBAction)fourBtnClick:(UIButton *)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *five;
-- (IBAction)fiveBtnClick:(UIButton *)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *six;
-- (IBAction)sixBtnClick:(UIButton *)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *seven;
-- (IBAction)sevenBtnClick:(UIButton *)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *eight;
-- (IBAction)eightBtnClick:(UIButton *)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *nine;
-- (IBAction)nineBtnClick:(UIButton *)sender;
-
-//@property (strong, nonatomic)UILabel *zeroLable;
 @property (strong, nonatomic)UILabel *oneLable;
 @property (strong, nonatomic)UILabel *twoLable;
 @property (strong, nonatomic)UILabel *threeLable;
@@ -84,6 +63,5 @@
 - (void)configPoorOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan;
 
 - (void)configPoorNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan;//计算杆的属性
-
 
 @end

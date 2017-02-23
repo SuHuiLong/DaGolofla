@@ -7,35 +7,25 @@
 //
 
 #import "JGHScoresHoleView.h"
-#import "JGHScoresHoleCell.h"
 #import "JGHScoreListModel.h"
 #import "JGHScoreAreaCell.h"
 #import "JGHAreaListView.h"
 #import "JGHNewPoorBarHoleCell.h"
+#import "JGHNewScoresHoleCell.h"
 
 #define BGScoreColor @"#B3E4BF"
 
-static NSString *const JGHScoresHoleCellIdentifier = @"JGHScoresHoleCell";
 static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell";
+static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
 
-@interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHScoresHoleCellDelegate, JGHNewPoorBarHoleCellDelegate, JGHAreaListViewDelegate>
+@interface JGHScoresHoleView ()<UITableViewDelegate, UITableViewDataSource, JGHNewPoorBarHoleCellDelegate, JGHAreaListViewDelegate, JGHNewScoresHoleCellDelegate>
 {
     NSArray *_colorArray;
     NSInteger _areaId;// 0-无区域，1- ； 2-；
     
-//    UIView *_oneAreaView;
-//    UIView *_twoAreaView;
-    
     NSArray *_currentAreaArray;//当前区域
     NSArray *_areaArray;//区域列表
-    
-//    NSInteger _imageSelectOne;
-//    NSInteger _imageSelectTwo;
-    
-    UILabel *_headLB;//区域
-    
-//    JGHAreaListView *_areaListView;//区域列表
-    
+
     NSInteger _areaSourceID;//0-一区；1-二区
 }
 
@@ -60,8 +50,8 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
         self.scoreTableView.scrollEnabled = NO;
         self.scoreTableView.delegate = self;
         self.scoreTableView.dataSource = self;
-        UINib *scoresPageCellNib = [UINib nibWithNibName:@"JGHScoresHoleCell" bundle: [NSBundle mainBundle]];
-        [self.scoreTableView registerNib:scoresPageCellNib forCellReuseIdentifier:JGHScoresHoleCellIdentifier];
+        
+        [self.scoreTableView registerClass:[JGHNewScoresHoleCell class] forCellReuseIdentifier:JGHNewScoresHoleCellIdentifier];
         
         [self.scoreTableView registerClass:[JGHNewPoorBarHoleCell class] forCellReuseIdentifier:JGHNewPoorBarHoleCellIdentifier];
         
@@ -130,12 +120,6 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
     }
     return self;
 }
-//- (JGHAreaListView *)areaListView{
-//    if (_areaListView == nil) {
-//        _areaListView = [[JGHAreaListView alloc] init];
-//    }
-//    return _areaListView;
-//}
 
 #pragma mark -- 关闭事件
 - (void)closeBtnClick:(UIButton *)btn{
@@ -145,22 +129,9 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 }
 
 - (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray{
-    //NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-    //_curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
     _areaArray = areaArray;
     _currentAreaArray = currentAreaArray;
-//    _imageSelectOne = 0;
-//    _imageSelectTwo = 0;
-    if (_curPage <= 9) {
-        _headLB.text = currentAreaArray[0];
-    }else{
-        _headLB.text = currentAreaArray[1];
-    }
-    
-//    if (isShowArea == 1) {
-//        [self jGHPoorBarHoleCellDelegate:[[UIButton alloc] init]];
-//    }
-    
+
     self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (80 +90*2 + self.dataArray.count * 30*2)*ProportionAdapter);
 }
 #pragma mark -- tableView代理
@@ -177,7 +148,8 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGHScoresHoleCell *scoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHScoresHoleCellIdentifier];
+    JGHNewScoresHoleCell *scoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewScoresHoleCellIdentifier];
+    
     scoresPageCell.delegate = self;
     scoresPageCell.tag = indexPath.section*10 + indexPath.row*100;
     scoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -251,6 +223,12 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
     NSLog(@"btn.tag == %td", btn.tag);
     [self createTwarnview:currtitle];
     
+    if (btn.tag == 30000) {
+        _areaSourceID = 0;
+    }else{
+        _areaSourceID = 1;
+    }
+    
     UIButton *arebtn = [self viewWithTag:30000 +btn.tag -3000];
     [arebtn setImage:[UIImage imageNamed:@"arrowTop"] forState:UIControlStateNormal];
 }
@@ -260,20 +238,6 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
     NSLog(@"%td", cellTag);//101
     NSLog(@"cell10 = %td", cellTag%100/10);
     NSLog(@"cell100  = %td", cellTag/100);
-//    if (_oneAreaView != nil) {
-//        [_oneAreaView removeFromSuperview];
-//        _oneAreaView = nil;
-//        return;
-//    }
-//    
-//    if (_twoAreaView != nil) {
-//        [_twoAreaView removeFromSuperview];
-//        _twoAreaView = nil;
-//        return;
-//    }
-    
-//    [_areaListView removeFromSuperview];
-//    _areaListView = nil;
     
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
     if ((cellTag%100/10) == 0) {
@@ -287,19 +251,18 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
     //发送消息
     [[NSNotificationCenter defaultCenter]postNotification:notice];
 }
-#pragma mark -- 第一个区域
-//- (void)jGHPoorBarHoleCellDelegate:(UIButton *)btn{
-//    NSLog(@"curent == %@", btn.currentTitle);
-//    [self createTwarnview];
-//}
 #pragma mark -- 创建T台视图
 - (void)createTwarnview:(NSString *)string{
-    self.areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(0, screenHeight -_areaArray.count*40*ProportionAdapter, screenWidth, _areaArray.count *40*ProportionAdapter +2*ProportionAdapter)];
+    self.areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, _areaArray.count *40*ProportionAdapter +2*ProportionAdapter)];
     _areaListView.delegate = self;
     _areaListView.backgroundColor = [UIColor whiteColor];
     [_areaListView reloadAreaListView:_areaArray andCurrAreString:string];
     
     [[UIApplication sharedApplication].keyWindow addSubview:_areaListView];
+    
+    [UIView animateWithDuration:0.5f animations:^{
+        self.areaListView.frame = CGRectMake(0, screenHeight -_areaArray.count*40*ProportionAdapter, screenWidth, _areaArray.count *40*ProportionAdapter +2*ProportionAdapter);
+    }];
     
     _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -(_areaArray.count *40*ProportionAdapter +2*ProportionAdapter))];
     _tranView.backgroundColor = [UIColor whiteColor];
@@ -311,17 +274,23 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 }
 #pragma mark -- 移除遮罩
 - (void)removeTranView{
-    [_tranView removeFromSuperview];
-    _tranView = nil;
-    
-    [_areaListView removeFromSuperview];
-    _areaListView = nil;
+    [UIView animateWithDuration:0.5f animations:^{
+        self.areaListView.frame = CGRectMake(0, screenHeight, screenWidth, _areaArray.count *40*ProportionAdapter +2*ProportionAdapter);
+        [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.5f];
+    }];
     
     UIButton *arebtn = [self viewWithTag:30000];
     [arebtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
     
     UIButton *arebtn1 = [self viewWithTag:30001];
     [arebtn1 setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+}
+- (void)removeAnimateView{
+    [_tranView removeFromSuperview];
+    _tranView = nil;
+    
+    [_areaListView removeFromSuperview];
+    _areaListView = nil;
 }
 #pragma mark -- 区域点击事件
 - (void)areaString:(NSString *)areaString andID:(NSInteger)selectId{
@@ -335,47 +304,22 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
         if (self.delegate) {
             [self.delegate oneAreaString:areaString andID:selectId +400];
         }
-//        [self.delegate twoAreaString:areaString andID:selectId +400];
     }
-    
-//    _imageSelectTwo = 0;
-//    _imageSelectOne = 0;
     
     [self.scoreTableView reloadData];
     
-    [_areaListView removeFromSuperview];
-    _areaListView = nil;
-    
     [self removeTranView];
 }
-#pragma mark -- 第二个区域
-//- (void)twoAreaNameBtn:(UIButton *)btn{
-//    NSLog(@"第二个区域");
-//    [self createTwarnview];
-//}
 
 #pragma mark -- 刷新数据
 - (void)reloadViewData:(NSMutableArray *)dataArray andCurrentAreaArrat:(NSArray *)currentAreaArray{
     
     self.dataArray = dataArray;
     _currentAreaArray = currentAreaArray;
-    
-    if (_curPage < 9) {
-        _headLB.text = currentAreaArray[0];
-    }else{
-        _headLB.text = currentAreaArray[1];
-    }
-    
+      
     [self.scoreTableView reloadData];
 }
 
-//- (void)removeAreaView{
-//    if (_areaListView != nil) {
-//        [_areaListView removeFromSuperview];
-//        _areaListView = nil;
-//    }
-//    
-//}
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.

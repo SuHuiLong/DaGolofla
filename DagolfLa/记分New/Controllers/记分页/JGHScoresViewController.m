@@ -39,15 +39,9 @@
     
     NSInteger _selectPage;
     
-//    NSInteger _selectcompleteHole;
-    
     NSInteger _isEdtor;// 0-未修改， 1- 修改
     
-//    NSInteger _isFinishScore;//是否完成记分0 1
-    
     NSNumber *_walletMonay;//红包金额
-    
-//    NSInteger _cabbieFinishScore;//是否结束所有记分 1- 结束，0－不结束
     
     NSArray *_areaArray;
     
@@ -56,8 +50,6 @@
     NSMutableDictionary *_ballDict;
     
     NSInteger _ballKey;
-    
-//    UIImageView *navBarHairlineImageView;
     
     NSInteger _scoreFinish;//是否完成记分0-,1-完成
     
@@ -96,59 +88,23 @@
     
     //替换任务栏
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
-//    navBarHairlineImageView.hidden = YES;
-    
-//    NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
-//    if (![usedef objectForKey:@"userFristScore"]) {
-//        
-//        UIImageView *userFristScoreImageView = [[UIImageView alloc]init];
-//        if (_userScoreArray.count > 2) {
-//            [userFristScoreImageView setImage:[UIImage imageNamed:@"-3"]];
-//        }else{
-//            [userFristScoreImageView setImage:[UIImage imageNamed:@"-2"]];
-//        }
-//        
-//        userFristScoreImageView.userInteractionEnabled = YES;
-//        userFristScoreImageView.tag = 7777;
-//        userFristScoreImageView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-//        [userFristScoreImageView bringSubviewToFront:appDelegate.window];
-//        UITapGestureRecognizer *imageViewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeUserFristScoreImageView)];
-//        [userFristScoreImageView addGestureRecognizer:imageViewTap];
-//        [appDelegate.window addSubview:userFristScoreImageView];
-//        
-//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-//    navBarHairlineImageView.hidden = NO;
 }
-#pragma mark -- 移除imageView
-- (void)removeUserFristScoreImageView{
-    [_scoresView removeAreaView];
-    [_poorScoreView removePoorAreaView];
-    UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:7777];
-    [removeImageview removeFromSuperview];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     _walletMonay = 0;//红包金额
-    //111
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_white"] forBarMetrics:UIBarMetricsDefault];
-//    [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
-    
-//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"addLan" style:UIBarButtonItemStylePlain target:self action:@selector(backHome)];
     
     [self.segment setTitle:@"差杆模式" forSegmentAtIndex:0];
     [self.segment setTitle:@"总杆模式" forSegmentAtIndex:1];
     
-    
-//    _cabbieFinishScore = 0;//不结束
-
     _refreshArea = 0;
     
     _ballDict = [NSMutableDictionary dictionary];
@@ -156,6 +112,12 @@
     
     if ([userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]) {
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+        if (_switchMode == 0) {
+            //总杆
+            self.segment.selectedSegmentIndex = 1;
+        }else{
+            self.segment.selectedSegmentIndex = 0;
+        }
     }else{
         _switchMode = 1;
         [userdf setObject:@"1" forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
@@ -168,25 +130,6 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticeAllScoresCtrl) name:@"noticeAllScores" object:nil];
-    //111
-//    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(80*ProportionAdapter, 0, 150*ProportionAdapter, 44)];
-//    self.titleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120*ProportionAdapter, 44)];
-//    [self.titleBtn setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-//    self.titleBtn.titleLabel.font = [UIFont systemFontOfSize:17 *ProportionAdapter];
-//    [titleView addSubview:self.titleBtn];
-//    if (_currentPage > 0) {
-//        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR 3", _currentPage+1] forState:UIControlStateNormal];
-//    }else{
-//        [self.titleBtn setTitle:@"1 Hole PAR 3" forState:UIControlStateNormal];
-//    }
-//    [self.titleBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(120*ProportionAdapter, 10, 30 *ProportionAdapter, 24)];
-//    [_arrowBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
-//    [titleView addSubview:_arrowBtn];
-//    
-//    self.navigationItem.titleView = titleView;
     
     _selectHole = 0;
     if (_currentPage > 0) {
@@ -196,8 +139,7 @@
     }
     
     _isEdtor = 0;
-//    _isFinishScore = 0;
-//    _selectcompleteHole = 0;
+    
     _item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveScoresClick)];
     _item.tintColor=[UIColor colorWithHexString:@"#32b14d"];
     [_item setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
@@ -209,8 +151,6 @@
     }
     
     [self getScoreList];
-    
-//    navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     
     if (_backHistory == 1) {
         [self historyScoreList];
@@ -224,8 +164,10 @@
     
     if (segment.selectedSegmentIndex == 0) {
          //差杆模式
+        _switchMode = 1;
         [userdf setObject:@1 forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
     }else{
+        _switchMode = 0;
         [userdf setObject:@0 forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
     }
     
@@ -322,8 +264,6 @@
 
 #pragma mark -- 所有记分完成后
 - (void)noticeAllScoresCtrl{
-    //
-//    _selectcompleteHole = 1;
     _scoreFinish = 1;
     [_item setTitle:@"完成"];
 }
@@ -439,15 +379,6 @@
                         }
                     }
                 }
-                
-//                NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//                if (![userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]) {
-//                    [self titleBtnClick];
-//                }
-                //userFristScore
-//                if (![userdef objectForKey:@"userFristScore"]) {
-//                    [self titleBtnClick];
-//                }
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -469,7 +400,7 @@
         if (_scoreFinish == 1) {
             [_item setTitle:@"完成"];
         }else{
-            [_item setTitle:@"退出记分"];//结束记分
+            [_item setTitle:@"保存"];//结束记分
         }
         
         [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
@@ -488,11 +419,7 @@
             
             [self.view addSubview:_scoresView];
             
-//            if (![userdef objectForKey:@"userFristScore"]) {
-                [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
-//            }else{
-//                [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
-//            }
+            [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             
             [self.view setUserInteractionEnabled:NO];
             [UIView animateWithDuration:0.5f animations:^{
@@ -525,11 +452,7 @@
             // _poorScoreView.curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
             [self.view addSubview:_poorScoreView];
             
-//            if (![userdef objectForKey:@"userFristScore"]) {
-                [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
-//            }else{
-//                [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray andIsShowArea:0];//更新UI位置
-//            }
+            [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             
             [self.view setUserInteractionEnabled:NO];
             [UIView animateWithDuration:0.5f animations:^{
@@ -560,45 +483,11 @@
             [_item setTitle:@"保存"];
         }
 
-        if (_scoresView != nil) {
-            [_scoresView removeFromSuperview];
-            _scoresView = nil;
-        }
-        
-        if (_poorScoreView != nil) {
-            [_poorScoreView removeFromSuperview];
-            _poorScoreView = nil;
-        }
-        
-        if (_tranView != nil) {
-            [_tranView removeFromSuperview];
-            _tranView = nil;
-        }
-
-        
-//        NSUserDefaults *usedef = [NSUserDefaults standardUserDefaults];
-//        if (![usedef objectForKey:@"userSeccondScore"]) {
-//            UIImageView *userFristScoreImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"-1"]];
-//            userFristScoreImageView.userInteractionEnabled = YES;
-//            userFristScoreImageView.tag = 8888;
-//            userFristScoreImageView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-//            [userFristScoreImageView bringSubviewToFront:appDelegate.window];
-//            UITapGestureRecognizer *imageViewTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(removeUserSeccondScoreImageView)];
-//            [userFristScoreImageView addGestureRecognizer:imageViewTap];
-//            [appDelegate.window addSubview:userFristScoreImageView];
-//            [usedef setObject:@"1" forKey:@"userSeccondScore"];
-//        }
+        [self removeALlView];
     }
     
-//    [userdef setObject:@"1" forKey:@"userFristScore"];
     [userdef synchronize];
 }
-#pragma mark -- 移除imageView
-//- (void)removeUserSeccondScoreImageView{
-//    UIImageView *removeImageview = (UIImageView *)[appDelegate.window viewWithTag:8888];
-//    [removeImageview removeFromSuperview];
-//}
-
 #pragma mark -- 关闭成绩列表视图
 - (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn{
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -611,6 +500,35 @@
         [_item setTitle:@"保存"];
     }
     
+    [self removeALlView];
+}
+- (void)removeALlView{
+    if (_scoresView != nil) {
+        [self.view setUserInteractionEnabled:NO];
+        [_scoresView setUserInteractionEnabled:NO];
+        [UIView animateWithDuration:0.5f animations:^{
+            _scoresView.frame = CGRectMake(0, screenHeight, screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            [self.view setUserInteractionEnabled:YES];
+            [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.6f];
+        }];
+    }
+    
+    if (_poorScoreView != nil) {
+        [self.view setUserInteractionEnabled:NO];
+        [_poorScoreView setUserInteractionEnabled:NO];
+        [UIView animateWithDuration:0.5f animations:^{
+            _poorScoreView.frame = CGRectMake(0, screenHeight, screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            [self.view setUserInteractionEnabled:YES];
+            [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.6f];
+        }];
+    }
+    
+    if (_tranView != nil) {
+        [_tranView removeFromSuperview];
+        _tranView = nil;
+    }
+}
+- (void)removeAnimateView{
     if (_scoresView != nil) {
         [_scoresView removeFromSuperview];
         _scoresView = nil;
@@ -620,35 +538,16 @@
         [_poorScoreView removeFromSuperview];
         _poorScoreView = nil;
     }
-    
-    if (_tranView != nil) {
-        [_tranView removeFromSuperview];
-        _tranView = nil;
-    }
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
-    //
     
     [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
     
     if (_refreshArea == 0) {
         _selectHole = 0;
-        if (_scoresView != nil) {
-            [_scoresView removeFromSuperview];
-            _scoresView = nil;
-        }
         
-        if (_poorScoreView != nil) {
-            [_poorScoreView removeFromSuperview];
-            _poorScoreView = nil;
-        }
-        
-        if (_tranView != nil) {
-            [_tranView removeFromSuperview];
-            _tranView = nil;
-        }
-        
+        [self removeALlView];
     }else{
         _selectHole = 1;
     }
@@ -656,12 +555,7 @@
     if (_scoreFinish == 1) {
         [_item setTitle:@"完成"];
     }else{
-        if (_selectHole == 1) {
-            [_item setTitle:@"退出记分"];
-        }else{
-            [_item setTitle:@"保存"];
-        }
-        
+        [_item setTitle:@"保存"];
     }
     
     _refreshArea = 0;
@@ -710,13 +604,6 @@
 }
 #pragma mark -- 历史记分卡－－修改页面 
 - (void)historyScoreList{
-    
-//    if (_currentPage > 0) {
-//        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR 3", _currentPage] forState:UIControlStateNormal];
-//    }else{
-//        [self.titleBtn setTitle:@"1 Hole PAR 3" forState:UIControlStateNormal];
-//    }
-    
     JGHScoresMainViewController *vc2;
     for (JGHScoresMainViewController *vc in _pageViewController.viewControllers) {
         if (vc.index == _currentPage){
@@ -944,59 +831,15 @@
                 [userdef synchronize];
             }
             
-            if ((_selectHole == 1) && _scoreFinish == 0) {
-                //                if (_selectHole == 1 && _isCabbie == 0) {
-                //球童结束记分--1、判断18洞是否完成
-                [Helper alertViewWithTitle:@"您尚未完成所有成绩录入，是否确定退出记分？" withBlockCancle:^{
-                    //                        _cabbieFinishScore = 0;//不结束
-                } withBlockSure:^{
-                    //                        _cabbieFinishScore = 1;//结束
-                    //                        [self finishScore];
-                    
-                    NSInteger soureKey = 0;
-                    for (UIViewController *controller in self.navigationController.viewControllers) {
-                        if ([controller isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
-                            [self.navigationController popToViewController:controller animated:YES];
-                            soureKey = 1;
-                            break;
-                        }else{
-                            soureKey = 0;
-                        }
-                    }
-                    
-                    if (soureKey == 0) {
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                    }
-                     
-//                    if (_backHistory == 1) {
-//                        [self.navigationController popToRootViewControllerAnimated:YES];
-//                        
-//                    }else{
-//                        [self.navigationController popViewControllerAnimated:YES];
-//                    }
-                } withBlock:^(UIAlertController *alertView) {
-                    [self presentViewController:alertView animated:YES completion:nil];
-                }];
-                return;
-                //                }
-                
-                //                [self finishScore];
+            if (_scoreFinish == 0) {
+                [[ShowHUD showHUD]showToastWithText:@"保存成功" FromView:self.view];
             }else{
-                if (_scoreFinish == 1) {
-                    [self finishScore];
-                }else{
-                    
-                    [self titleBtnClick];
-//                    [[ShowHUD showHUD]showToastWithText:@"记分保存成功！" FromView:self.view];
-//                    [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
-                }
+                [self finishScore];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
-            
-//            [self performSelector:@selector(scoresResult) withObject:self afterDelay:TIMESlEEP];
         }
     }];
 }
@@ -1070,17 +913,7 @@
             [self.navigationController pushViewController:historyCtrl animated:YES];
         }
     }else{
-        /*
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        if (_currentPage > 0) {
-            [userdef setObject:@(_currentPage-1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        }else{
-            [userdef setObject:@0 forKey:[NSString stringWithFormat:@"%@", _scorekey]];
-        }
         
-        [userdef synchronize];
-        */
-        //NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", _scorekey]]);
         JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
         [self.navigationController pushViewController:historyCtrl animated:YES];
     }
@@ -1148,8 +981,6 @@
 #pragma mark -- 切换球场区域 -- 总杆模式
 - (void)oneAreaString:(NSString *)areaString andID:(NSInteger)selectId{
     [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeAreaView];
-        [_poorScoreView removePoorAreaView];
     } withBlockSure:^{
         
         [self loadOneAreaData:areaString andBtnTag:selectId];
@@ -1161,19 +992,6 @@
         [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
     }];
 }
-
-- (void)twoAreaString:(NSString *)areaString andID:(NSInteger)selectId{
-    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeAreaView];
-        [_poorScoreView removePoorAreaView];
-    } withBlockSure:^{
-        
-        [self loadOneAreaData:areaString andBtnTag:selectId];
-    } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
-    }];
-}
-
 #pragma mark -- 切换第一区 -- 总杆模式
 - (void)loadOneAreaData:(NSString *)btnString andBtnTag:(NSInteger)tag{
     NSLog(@"%@", btnString);
@@ -1193,8 +1011,6 @@
             NSArray *standardleverArray = [NSArray array];//标准杆
             standardleverArray = [data objectForKey:@"poles"];
             if (tag < 400) {
-                [_scoresView removeAreaView];
-                [_poorScoreView removePoorAreaView];
                 //更换区域信息
                 [_currentAreaArray replaceObjectAtIndex:0 withObject:btnString];
                 
@@ -1227,8 +1043,6 @@
                 }
                 
             }else{
-                [_scoresView removeAreaView];
-                [_poorScoreView removePoorAreaView];
                 //更换区域信息
                 [_currentAreaArray replaceObjectAtIndex:1 withObject:btnString];
                 
@@ -1272,58 +1086,19 @@
         [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:_selectPage -1], [self returnStandardlever:_selectPage -1]] forState:UIControlStateNormal];
         
         //========================
-//        if (_refreshArea == 1) {
-//            _refreshArea = 0;
         _refreshArea = 1;
         
-            NSLog(@"_selectPage == %td", _selectPage);
-            NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
-            [userDict setObject:@(_currentPage) forKey:@"index"];
-            //创建一个消息对象
-            NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
-            
-            //发送消息
-            [[NSNotificationCenter defaultCenter]postNotification:notice];
+        NSLog(@"_selectPage == %td", _selectPage);
+        NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
+        [userDict setObject:@(_currentPage) forKey:@"index"];
+        //创建一个消息对象
+        NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
         
-//        }
+        //发送消息
+        [[NSNotificationCenter defaultCenter]postNotification:notice];
+        
     }];
 }
-#pragma mark -- 切换区域 主页面改变区域
-- (void)poorOneAreaString:(NSString *)areaString andID:(NSInteger)selectId{
-    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeAreaView];
-        [_poorScoreView removePoorAreaView];
-    } withBlockSure:^{
-        [self loadOneAreaData:areaString andBtnTag:selectId];
-    } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
-    }];
-}
-#pragma mark -- 差杆模式。切换区域
-- (void)poorTwoAreaString:(NSString *)areaString andID:(NSInteger)selectId{
-    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeAreaView];
-        [_poorScoreView removePoorAreaView];
-    } withBlockSure:^{
-        
-        [self loadOneAreaData:areaString andBtnTag:selectId];
-    } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
-    }];
-}
-- (void)twoAreaPoorBtnDelegate:(UIButton *)btn{
-    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
-        [_scoresView removeAreaView];
-        
-            [_poorScoreView removePoorAreaView];
-        
-    } withBlockSure:^{
-        [self loadOneAreaData:btn.currentTitle andBtnTag:btn.tag];
-    } withBlock:^(UIAlertController *alertView) {
-        [self presentViewController:alertView animated:YES completion:nil];
-    }];
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

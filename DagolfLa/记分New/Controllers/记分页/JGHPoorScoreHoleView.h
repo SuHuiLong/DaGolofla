@@ -12,13 +12,7 @@
 
 - (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn;
 
-//- (void)oneAreaPoorBtnDelegate:(UIButton *)btn;
-//
-//- (void)twoAreaPoorBtnDelegate:(UIButton *)btn;
-
 - (void)poorOneAreaString:(NSString *)areaString andID:(NSInteger)selectId;
-
-- (void)poorTwoAreaString:(NSString *)areaString andID:(NSInteger)selectId;
 
 @end
 
@@ -34,15 +28,7 @@
 
 @property (nonatomic, assign)NSInteger isShowArea;//是否展开第一球道区域
 
-//@property (nonatomic, strong)NSArray *areaArray;//球道区域
-
-//@property (nonatomic, strong)NSArray *twoAreaArray;//球道区域
-
 - (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray;
-
-- (void)removePoorAreaView;
-
-- (void)removePoorTwoAreaView;
 
 //选择区域后－－刷新试图数据
 - (void)reloadPoorViewData:(NSMutableArray *)dataArray andCurrentAreaArrat:(NSArray *)currentAreaArray;
