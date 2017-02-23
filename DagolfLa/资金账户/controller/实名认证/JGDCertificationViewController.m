@@ -39,7 +39,7 @@
     
     self.pickPhoto = [[SXPickPhoto alloc]init];
     
-    self.tableV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 506 * screenWidth / 375)];
+    self.tableV = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64)];
     self.tableV.delegate = self;
     self.tableV.dataSource = self;
     self.tableV.scrollEnabled = NO;
