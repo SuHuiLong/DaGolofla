@@ -63,7 +63,7 @@
     [super viewDidLoad];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 20*ScreenWidth/375 + 44*ScreenWidth/375 * 2) style:(UITableViewStylePlain)];
     [self.view addSubview: self.tableView];
-    self.title = @"推送设置";
+    self.title = @"系统设置";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 44*ScreenWidth/375;
@@ -72,23 +72,16 @@
     self.tableView.scrollEnabled = NO;
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-//    self.array = [NSArray arrayWithObjects:@"约球消息", @"球队消息", @"悬赏消息", @"赛事消息",  nil];
     // Do any additional setup after loading the view.
 }
 
 
-// tableView 数据源
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 //    return 2;
 //}
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-//    if (section == 0) {
-//        return 1;
-//    }else{
-//        return [self.array count];
-//    }
     return 2;
 
 }
@@ -113,7 +106,6 @@
             cell.mySwitch.on = YES;
         }
         
-//        cell.informSetmodel = self.informSetM;
         return cell;
     }else{
         cell.myLabel.text = @"球队通知";
@@ -195,147 +187,10 @@
 
         
     }
-    
-//    _isAll = YES;
-    
-//    switch (mySwitch.tag) {
-//        case 300:
-//            
-//            for (int i = 300; i < 305; i ++) {
-//                UISwitch *newSwitch = [self.tableView viewWithTag:i];
-//                if (self.informSetM.sysMessAll == 1) {
-//                    newSwitch.on = NO;
-//                }else{
-//                    newSwitch.on = YES;
-//                }
-//            }
-//            
-//            if (self.informSetM.sysMessAll == 1) {
-//                
-//                for (NSString *str in [self.newDic allKeys]) {
-//                    if (![str isEqualToString:@"userId"]) {
-//                        self.newDic[str] = @2;
-//                    }
-//                }
-//                
-//                for (NSString *key in [self.informSetM allPropertyNames]) {
-//                    [self.informSetM setValue:@2 forKey:key];
-//                }
-//                
-//            }else{
-//                
-//                for (NSString *str in [self.newDic allKeys]) {
-//                    if (![str isEqualToString:@"userId"]) {
-//                        self.newDic[str] = @1;
-//                    }
-//                }
-//                for (NSString *key in [self.informSetM allPropertyNames]) {
-//                    [self.informSetM setValue:@1 forKey:key];
-//                }
-//            }
-//            
-//            break;
-//            
-//        case 301:
-//            if (self.informSetM.sysMessaboutball == 1) {
-//                mySwitch.on = NO;
-//                [self.newDic setValue:@2 forKey:@"sysMessaboutball"];
-//                self.informSetM.sysMessaboutball = 2;
-//                
-//                [self setAllWithStr:2];
-//                
-//            }else{
-//                mySwitch.on = YES;
-//                [self.newDic setValue:@1 forKey:@"sysMessaboutball"];
-//                self.informSetM.sysMessaboutball = 1;
-//                
-//                [self setAllWithStr:1];
-//                
-//            }
-//            break;
-//            
-//        case 302:
-//            if (self.informSetM.sysMessball == 1) {
-//                mySwitch.on = NO;
-//                [self.newDic setValue:@2 forKey:@"sysMessball"];
-//                self.informSetM.sysMessball = 2;
-//                
-//                [self setAllWithStr:2];
-//                
-//            }else{
-//                mySwitch.on = YES;
-//                [self.newDic setValue:@1 forKey:@"sysMessball"];
-//                self.informSetM.sysMessball = 1;
-//                
-//                [self setAllWithStr:1];
-//            }
-//            break;
-//            
-//        case 303:
-//            if (self.informSetM.sysMessaboutballre == 1) {
-//                mySwitch.on = NO;
-//                [self.newDic setValue:@2 forKey:@"sysMessaboutballre"];
-//                self.informSetM.sysMessaboutballre = 2;
-//                
-//                [self setAllWithStr:2];
-//                
-//            }else{
-//                mySwitch.on = YES;
-//                [self.newDic setValue:@1 forKey:@"sysMessaboutballre"];
-//                self.informSetM.sysMessaboutballre = 1;
-//                
-//                [self setAllWithStr:1];
-//            }
-//            break;
-//            
-//        case 304:
-//            if (self.informSetM.sysMessevent == 1) {
-//                mySwitch.on = NO;
-//                [self.newDic setValue:@2 forKey:@"sysMessevent"];
-//                self.informSetM.sysMessevent = 2;
-//                
-//                [self setAllWithStr:2];
-//            }else{
-//                mySwitch.on = YES;
-//                [self.newDic setValue:@1 forKey:@"sysMessevent"];
-//                self.informSetM.sysMessevent = 1;
-//                
-//                [self setAllWithStr:1];
-//            }
-//            break;
-//            
-//        default:
-//            break;
-//    }
-    
-    
+  
     
 }
 
-//- (void)setAllWithStr:(int)number{
-//    
-//    NSString *key = [NSString stringWithFormat:@"%d", number];
-//    
-//    for (NSString *str in self.newDic.allKeys) {
-//        if ([self.newDic[str] intValue] == number) {
-//            
-//        }else{
-//            if ([str isEqualToString:@"sysMessAll"] || [str isEqualToString: @"userId"]) {
-//                
-//            }else{
-//                _isAll = NO;
-//            }
-//        }
-//    }
-//    if (_isAll == YES) {
-//        UISwitch *newSwitch = [self.tableView viewWithTag:300];
-//        newSwitch.on = NO;
-//        [self.newDic setValue:key forKey:@"sysMessAll"];
-//        self.informSetM.sysMessAll = number;
-//        [self.tableView reloadData];
-//    }
-//    
-//}
 
 //返回各个分区的头高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -364,10 +219,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-//InformSetmodel *beautifulGirl = [InformSetmodel modelWithDictionary:data];
-//
-//[beautifulGirl displayCurrentModleProperty];
 
 
 /*

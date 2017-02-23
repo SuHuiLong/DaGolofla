@@ -17,4 +17,10 @@
 @property (nonatomic, strong) UIButton *systemBtn; // 系统设置🐍
 @property (nonatomic, strong) UIButton *ManualBtn; // 手动设置
 
+@property (copy, nonatomic) void (^blockManual)();
+@property (copy, nonatomic) void (^blocksys)();
+
+@property (nonatomic, assign) BOOL isUseJG;     // almost_system_setting  1 是启用君高  不能改修改
+
+@property (nonatomic, strong) UIView *backDView;
 @end

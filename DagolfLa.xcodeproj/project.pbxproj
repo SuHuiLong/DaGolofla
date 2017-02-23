@@ -1114,6 +1114,8 @@
 		F55597221CF5328C00F33099 /* JGPreviewTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597211CF5328C00F33099 /* JGPreviewTeamViewController.m */; };
 		F55597281CF6DB0F00F33099 /* JGTeamInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */; };
 		F55CB1481E5D221900D1798E /* JGDPersonalCard.m in Sources */ = {isa = PBXBuildFile; fileRef = F55CB1471E5D221900D1798E /* JGDPersonalCard.m */; };
+		F55CB1531E5D8FAB00D1798E /* CityPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55CB1501E5D8FAB00D1798E /* CityPickerView.m */; };
+		F55CB1541E5D8FAB00D1798E /* GPProvince.m in Sources */ = {isa = PBXBuildFile; fileRef = F55CB1521E5D8FAB00D1798E /* GPProvince.m */; };
 		F55FABD11E5A9BDB00F68D8A /* JGDPersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F55FABD01E5A9BDB00F68D8A /* JGDPersonalViewController.m */; };
 		F55FABD41E5A9DD100F68D8A /* JGDPersonalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F55FABD31E5A9DD100F68D8A /* JGDPersonalTableViewCell.m */; };
 		F55FABD71E5AC30F00F68D8A /* JGDInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F55FABD61E5AC30F00F68D8A /* JGDInputView.m */; };
@@ -3399,6 +3401,10 @@
 		F55597271CF6DB0F00F33099 /* JGTeamInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamInfoViewController.m; sourceTree = "<group>"; };
 		F55CB1461E5D221900D1798E /* JGDPersonalCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPersonalCard.h; sourceTree = "<group>"; };
 		F55CB1471E5D221900D1798E /* JGDPersonalCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPersonalCard.m; sourceTree = "<group>"; };
+		F55CB14F1E5D8FAB00D1798E /* CityPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityPickerView.h; sourceTree = "<group>"; };
+		F55CB1501E5D8FAB00D1798E /* CityPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityPickerView.m; sourceTree = "<group>"; };
+		F55CB1511E5D8FAB00D1798E /* GPProvince.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPProvince.h; sourceTree = "<group>"; };
+		F55CB1521E5D8FAB00D1798E /* GPProvince.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPProvince.m; sourceTree = "<group>"; };
 		F55FABCF1E5A9BDB00F68D8A /* JGDPersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPersonalViewController.h; sourceTree = "<group>"; };
 		F55FABD01E5A9BDB00F68D8A /* JGDPersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPersonalViewController.m; sourceTree = "<group>"; };
 		F55FABD21E5A9DD100F68D8A /* JGDPersonalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPersonalTableViewCell.h; sourceTree = "<group>"; };
@@ -6710,6 +6716,10 @@
 		36BF01E81BC77C62005B3CE2 /* 个人资料 */ = {
 			isa = PBXGroup;
 			children = (
+				F55CB14F1E5D8FAB00D1798E /* CityPickerView.h */,
+				F55CB1501E5D8FAB00D1798E /* CityPickerView.m */,
+				F55CB1511E5D8FAB00D1798E /* GPProvince.h */,
+				F55CB1521E5D8FAB00D1798E /* GPProvince.m */,
 				36BF01E91BC77C71005B3CE2 /* MySelfTableViewCell.h */,
 				36BF01EA1BC77C71005B3CE2 /* MySelfTableViewCell.m */,
 				36BF01EB1BC77C71005B3CE2 /* MySelfTableViewCell.xib */,
@@ -9762,6 +9772,7 @@
 				20BC97D91E1F6051007DFD34 /* JGLPresentAwardViewController.m in Sources */,
 				203019571E0E4292005568E2 /* ZXSMSMMSResultParser.m in Sources */,
 				20D564B41DE4216F005535A6 /* JGHSystemNotViewController.m in Sources */,
+				F55CB1541E5D8FAB00D1798E /* GPProvince.m in Sources */,
 				F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */,
 				F54564E71DE5228600596211 /* JGAddFriendViewController.m in Sources */,
 				2030196F1E0E4292005568E2 /* ZXReedSolomonDecoder.m in Sources */,
@@ -10023,6 +10034,7 @@
 				20591C621D22139D003271EC /* JGHWithdrawDetailsViewController.m in Sources */,
 				828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */,
 				82E6A6F21CF55313009DD179 /* JGLTeamAdviceTableViewCell.m in Sources */,
+				F55CB1531E5D8FAB00D1798E /* CityPickerView.m in Sources */,
 				368B73341C102A710002A618 /* ScoreProfessViewController.m in Sources */,
 				36BF01A41BC779EA005B3CE2 /* BaseModel.m in Sources */,
 				826FB5151D5429DA00B13155 /* JGLActivityMemberSetViewController.m in Sources */,

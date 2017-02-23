@@ -574,10 +574,9 @@
     [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
     
     [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
-        NSLog(@"errType===%@", errType);
+
     } completionBlock:^(id data) {
         [self post:@{@"userId": DEFAULF_USERID}];
-        //-(void)post:(NSDictionary *)dict
         
         NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
         [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
@@ -595,16 +594,13 @@
 }
 
 - (RCUserInfo*)userInfoModel {
+
     RCUserInfo *userInfo = [[RCUserInfo alloc] init];
-//    [[UserDataInformation sharedInstance].userInfor.userId stringValue]
-//    [UserDataInformation sharedInstance].userInfor.userName
+
     userInfo.userId = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]];
     userInfo.name = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"]];
-//    userInfo.portraitUri = [NSString stringWithFormat:@"%@",[Helper imageIconUrl:[[NSUserDefaults standardUserDefaults] objectForKey:@"pic"]]];
     
     userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg", DEFAULF_USERID];
-
-    
     
     return userInfo;
 }
