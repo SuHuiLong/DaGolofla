@@ -1,124 +1,168 @@
 //
-//  JGHScoresHoleCell.m
+//  JGHNewScoresHoleCell.m
 //  DagolfLa
 //
-//  Created by 黄安 on 16/7/13.
-//  Copyright © 2016年 bhxx. All rights reserved.
+//  Created by 黄安 on 17/2/23.
+//  Copyright © 2017年 bhxx. All rights reserved.
 //
 
-#import "JGHScoresHoleCell.h"
+#import "JGHNewScoresHoleCell.h"
 
 #define BGScoreColor @"#B3E4BF"
 
-@implementation JGHScoresHoleCell
+@implementation JGHNewScoresHoleCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-    self.backgroundColor = [UIColor whiteColor];
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    self.TaiwanLeft.constant = 10*ProportionAdapter;
-    self.TaiwanW.constant = 10*ProportionAdapter;
-    
-    self.oneBtnW.constant = 30*ProportionAdapter;
-    
-//    NSLayoutConstraint *addScoresConstraint = [NSLayoutConstraint constraintWithItem:self.one attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:30*ProportionAdapter];
-//    
-//    NSArray *addScoreArray = [NSArray arrayWithObjects:addScoresConstraint, nil];
-//    [self addConstraints: addScoreArray];
-    
-    self.name.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    self.one.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    
-    self.oneLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
-    self.oneLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
-    self.oneLable.textAlignment = NSTextAlignmentCenter;
-    self.oneLable.layer.masksToBounds = YES;
-    self.oneLable.layer.cornerRadius = self.oneLable.frame.size.width /2;
-//    self.oneLable.userInteractionEnabled = YES;
-//    self.oneLable.center = CGPointMake(self.one.bounds.size.width/2, self.one.bounds.size.width/2);
-    [self.one addSubview:self.oneLable];
-    
-    NSLog(@"self.oneBtnW.constant == %f", self.oneBtnW.constant);
-    NSLog(@"self.frame.size.width == %f", self.frame.size.width);
-    NSLog(@"self.one.frame.size.width == %f", self.one.frame.size.width);
-    NSLog(@"self.one.frame.size.height == %f", self.one.frame.size.height);
-    NSLog(@"self.oneLable.frame.size.width == %f", self.oneLable.frame.size.width);
-    NSLog(@"self.oneLable.frame.size.height == %f", self.oneLable.frame.size.height);
-    
-    self.two.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    self.twoLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
-    self.twoLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
-    self.twoLable.layer.masksToBounds = YES;
-    self.twoLable.textAlignment = NSTextAlignmentCenter;
-    self.twoLable.layer.cornerRadius = self.twoLable.frame.size.width /2;
-//    self.twoLable.userInteractionEnabled = YES;
-    [self.two addSubview:self.twoLable];
-    
-    self.three.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    self.threeLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
-    self.threeLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
-    self.threeLable.layer.masksToBounds = YES;
-    self.threeLable.textAlignment = NSTextAlignmentCenter;
-    self.threeLable.layer.cornerRadius = self.threeLable.frame.size.width /2;
-//    self.threeLable.userInteractionEnabled = YES;
-    [self.three addSubview:self.threeLable];
-    
-    self.four.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    self.fourLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
-    self.fourLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
-    self.fourLable.layer.masksToBounds = YES;
-    self.fourLable.textAlignment = NSTextAlignmentCenter;
-    self.fourLable.layer.cornerRadius = self.fourLable.frame.size.width /2;
-//    self.fourLable.userInteractionEnabled = YES;
-    [self.four addSubview:self.fourLable];
-    
-    self.five.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    self.fiveLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
-    self.fiveLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
-    self.fiveLable.layer.masksToBounds = YES;
-    self.fiveLable.textAlignment = NSTextAlignmentCenter;
-    self.fiveLable.layer.cornerRadius = self.fiveLable.frame.size.width /2;
-//    self.fiveLable.userInteractionEnabled = YES;
-    [self.five addSubview:self.fiveLable];
-    
-    self.six.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    self.sixLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
-    self.sixLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
-    self.sixLable.layer.masksToBounds = YES;
-    self.sixLable.textAlignment = NSTextAlignmentCenter;
-    self.sixLable.layer.cornerRadius = self.sixLable.frame.size.width /2;
-//    self.sixLable.userInteractionEnabled = YES;
-    [self.six addSubview:self.sixLable];
-    
-    self.seven.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    self.sevenLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
-    self.sevenLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
-    self.sevenLable.layer.masksToBounds = YES;
-    self.sevenLable.textAlignment = NSTextAlignmentCenter;
-    self.sevenLable.layer.cornerRadius = self.sevenLable.frame.size.width /2;
-//    self.sevenLable.userInteractionEnabled = YES;
-    [self.seven addSubview:self.sevenLable];
-    
-    self.eight.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    self.eightLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
-    self.eightLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
-    self.eightLable.layer.masksToBounds = YES;
-    self.eightLable.textAlignment = NSTextAlignmentCenter;
-    self.eightLable.layer.cornerRadius = self.eightLable.frame.size.width /2;
-//    self.eightLable.userInteractionEnabled = YES;
-    [self.eight addSubview:self.eightLable];
-    
-    self.nine.titleLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    self.nineLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
-    self.nineLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
-    self.nineLable.layer.masksToBounds = YES;
-    self.nineLable.textAlignment = NSTextAlignmentCenter;
-    self.nineLable.layer.cornerRadius = self.nineLable.frame.size.width /2;
-//    self.nineLable.userInteractionEnabled = YES;
-    [self.nine addSubview:self.nineLable];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.backgroundColor = [UIColor colorWithHexString:BG_color];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        _bgLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+        [self addSubview:_bgLable];
+
+        //------------名字-----
+        _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, screenWidth -(30*9*ProportionAdapter +9), 30*ProportionAdapter)];
+        _name.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
+        _name.textColor = [UIColor colorWithHexString:B31_Color];
+        _name.textAlignment = NSTextAlignmentCenter;
+        _name.text = @"name";
+        [self addSubview:_name];
+        
+        //---------T台------
+        _Taiwan = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
+        _Taiwan.hidden = YES;
+        [self addSubview:_Taiwan];
+        
+        //----------第1洞--------------
+        _one = [[UIButton alloc]initWithFrame:CGRectMake(_name.frame.origin.x +_name.bounds.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
+        _one.tag = 1;
+        [_one addTarget:self action:@selector(oneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_one];
+
+        self.oneLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter, 30*ProportionAdapter - 8 *ProportionAdapter)];
+        self.oneLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+        self.oneLable.textAlignment = NSTextAlignmentCenter;
+        self.oneLable.layer.masksToBounds = YES;
+        self.oneLable.layer.cornerRadius = self.oneLable.frame.size.width /2;
+        self.oneLable.text = @"1";
+        [self.one addSubview:self.oneLable];
+        
+        //----------第2洞--------------
+        _two = [[UIButton alloc]initWithFrame:CGRectMake(_one.frame.origin.x +_one.bounds.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
+        _two.tag = 2;
+        [_two addTarget:self action:@selector(oneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_two];
+
+        self.twoLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter)];
+        self.twoLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+        self.twoLable.layer.masksToBounds = YES;
+        self.twoLable.textAlignment = NSTextAlignmentCenter;
+        self.twoLable.layer.cornerRadius = self.twoLable.frame.size.width /2;
+        self.twoLable.text = @"2";
+        [self.two addSubview:self.twoLable];
+        
+        //----------第3洞--------------
+        _three = [[UIButton alloc]initWithFrame:CGRectMake(_two.frame.origin.x +_two.bounds.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
+        _three.tag = 3;
+        [_three addTarget:self action:@selector(oneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_three];
+
+        self.threeLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter)];
+        self.threeLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+        self.threeLable.layer.masksToBounds = YES;
+        self.threeLable.textAlignment = NSTextAlignmentCenter;
+        self.threeLable.layer.cornerRadius = self.threeLable.frame.size.width /2;
+        self.threeLable.text = @"3";
+        [self.three addSubview:self.threeLable];
+        
+        //----------第4洞--------------
+        _four = [[UIButton alloc]initWithFrame:CGRectMake(_three.frame.origin.x +_three.bounds.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
+        _four.tag = 4;
+        [_four addTarget:self action:@selector(oneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_four];
+
+        self.fourLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter, self.one.frame.size.height - 8 *ProportionAdapter)];
+        self.fourLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+        self.fourLable.layer.masksToBounds = YES;
+        self.fourLable.textAlignment = NSTextAlignmentCenter;
+        self.fourLable.layer.cornerRadius = self.fourLable.frame.size.width /2;
+        self.fourLable.text = @"4";
+        [self.four addSubview:self.fourLable];
+        
+        //----------第5洞--------------
+        _five = [[UIButton alloc]initWithFrame:CGRectMake(_four.frame.origin.x +_four.frame.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
+        _five.tag = 5;
+        [_five addTarget:self action:@selector(oneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_five];
+
+        self.fiveLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter)];
+        self.fiveLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+        self.fiveLable.layer.masksToBounds = YES;
+        self.fiveLable.textAlignment = NSTextAlignmentCenter;
+        self.fiveLable.layer.cornerRadius = self.fiveLable.frame.size.width /2;
+        self.fiveLable.text = @"5";
+        [self.five addSubview:self.fiveLable];
+        
+        //----------第6洞--------------
+        _six = [[UIButton alloc]initWithFrame:CGRectMake(_five.frame.origin.x +_five.bounds.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
+        _six.tag = 6;
+        [_six addTarget:self action:@selector(oneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_six];
+
+        self.sixLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter)];
+        self.sixLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+        self.sixLable.layer.masksToBounds = YES;
+        self.sixLable.textAlignment = NSTextAlignmentCenter;
+        self.sixLable.layer.cornerRadius = self.sixLable.frame.size.width /2;
+        self.sixLable.text = @"6";
+        [self.six addSubview:self.sixLable];
+        
+        //----------第7洞--------------
+        _seven = [[UIButton alloc]initWithFrame:CGRectMake(_six.frame.origin.x +_six.bounds.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
+        _seven.tag = 7;
+        [_seven addTarget:self action:@selector(oneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_seven];
+
+        self.sevenLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter)];
+        self.sevenLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+        self.sevenLable.layer.masksToBounds = YES;
+        self.sevenLable.textAlignment = NSTextAlignmentCenter;
+        self.sevenLable.layer.cornerRadius = self.sevenLable.frame.size.width /2;
+        self.sevenLable.text = @"7";
+        [self.seven addSubview:self.sevenLable];
+        
+        //----------第8洞--------------
+        _eight = [[UIButton alloc]initWithFrame:CGRectMake(_seven.frame.origin.x +_seven.bounds.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
+        _eight.tag = 8;
+        [_eight addTarget:self action:@selector(oneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_eight];
+
+        self.eightLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter)];
+        self.eightLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+        self.eightLable.layer.masksToBounds = YES;
+        self.eightLable.textAlignment = NSTextAlignmentCenter;
+        self.eightLable.layer.cornerRadius = self.eightLable.frame.size.width /2;
+        self.eightLable.text = @"8";
+        [self.eight addSubview:self.eightLable];
+        
+        //----------第8洞--------------
+        _nine = [[UIButton alloc]initWithFrame:CGRectMake(_eight.frame.origin.x +_eight.bounds.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
+        _nine.tag = 9;
+        [_nine addTarget:self action:@selector(oneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_nine];
+
+        self.nineLable = [[UILabel alloc]initWithFrame:CGRectMake(4 *ProportionAdapter, 4 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter, self.one.frame.size.width - 8 *ProportionAdapter)];
+        self.nineLable.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+        self.nineLable.layer.masksToBounds = YES;
+        self.nineLable.textAlignment = NSTextAlignmentCenter;
+        self.nineLable.layer.cornerRadius = self.nineLable.frame.size.width /2;
+        self.nineLable.text = @"9";
+        [self.nine addSubview:self.nineLable];
+        
+    }
+    return self;
 }
+
 
 - (void)configAllViewBgColor:(NSString *)colorString andCellTag:(NSInteger)tag{
     self.bgLable.backgroundColor = [UIColor colorWithHexString:colorString];
@@ -141,30 +185,49 @@
         UIButton * temp = [self viewWithTag:tag];
         temp.backgroundColor = [UIColor colorWithHexString:BGScoreColor];
     }
+    
+    self.backgroundColor = [UIColor colorWithHexString:BG_color];
 }
-- (void)configPoorArray:(NSArray *)array{
-    self.name.text = @"HOLE";
+- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName{
+    self.name.text = userName;
     self.Taiwan.hidden = YES;
     
-    self.nameLeft.constant = 0;
+//    self.nameLeft.constant = 0;
     self.name.textAlignment = NSTextAlignmentCenter;
     
-    self.oneLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[9]]];
-    self.twoLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[10]]];
-    self.threeLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[11]]];
-    self.fourLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[12]]];
-    self.fiveLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[13]]];
-    self.sixLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[14]]];
-    self.sevenLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[15]]];
-    self.eightLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[16]]];
-    self.nineLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[17]]];
+    self.oneLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[0]]];
+    self.twoLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[1]]];
+    self.threeLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[2]]];
+    self.fourLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[3]]];
+    self.fiveLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[4]]];
+    self.sixLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[5]]];
+    self.sevenLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[6]]];
+    self.eightLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[7]]];
+    self.nineLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[8]]];
+}
+#pragma mark -- 标准杆
+- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName{
+    self.name.text = userName;
+    self.Taiwan.hidden = YES;
+    
+//    self.nameLeft.constant = 0;
+    self.name.textAlignment = NSTextAlignmentCenter;
+    
+    self.oneLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[9]]];
+    self.twoLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[10]]];
+    self.threeLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[11]]];
+    self.fourLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[12]]];
+    self.fiveLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[13]]];
+    self.sixLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[14]]];
+    self.sevenLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[15]]];
+    self.eightLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[16]]];
+    self.nineLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[17]]];
 }
 - (void)configArray:(NSArray *)array{
     self.name.text = @"HOLE";
     
     self.Taiwan.hidden = YES;
     
-    self.nameLeft.constant = 0;
     self.name.textAlignment = NSTextAlignmentCenter;
     
     self.oneLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[0]]];
@@ -270,7 +333,7 @@
     }
     
     self.oneLable.text = [NSString stringWithFormat:@"%@", [self pole:[array objectAtIndex:0] andStandard:[[standradArray objectAtIndex:0] integerValue]]];
-                          
+    
     self.twoLable.text = [NSString stringWithFormat:@"%@", [self pole:[array objectAtIndex:1] andStandard:[[standradArray objectAtIndex:1] integerValue]]];
     self.threeLable.text = [NSString stringWithFormat:@"%@", [self pole:[array objectAtIndex:2] andStandard:[[standradArray objectAtIndex:2] integerValue]]];
     self.fourLable.text = [NSString stringWithFormat:@"%@", [self pole:[array objectAtIndex:3] andStandard:[[standradArray objectAtIndex:3] integerValue]]];
@@ -381,80 +444,21 @@
     self.eightLable.text = [NSString stringWithFormat:@"%@", [self pole:[array objectAtIndex:16] andStandard:[[standradArray objectAtIndex:16] integerValue]]];
     self.nineLable.text = [NSString stringWithFormat:@"%@", [self pole:[array objectAtIndex:17] andStandard:[[standradArray objectAtIndex:17] integerValue]]];
 }
-#pragma mark -- 标准杆
-- (void)configNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName{
-    self.name.text = userName;
+- (void)configPoorArray:(NSArray *)array{
+    self.name.text = @"HOLE";
     self.Taiwan.hidden = YES;
     
-    self.nameLeft.constant = 0;
     self.name.textAlignment = NSTextAlignmentCenter;
     
-    self.oneLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[9]]];
-    self.twoLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[10]]];
-    self.threeLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[11]]];
-    self.fourLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[12]]];
-    self.fiveLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[13]]];
-    self.sixLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[14]]];
-    self.sevenLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[15]]];
-    self.eightLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[16]]];
-    self.nineLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[17]]];
-}
-- (void)configOneToNine:(NSArray *)array andUserName:(NSString *)userName{
-    self.name.text = userName;
-    self.Taiwan.hidden = YES;
-    
-    self.nameLeft.constant = 0;
-    self.name.textAlignment = NSTextAlignmentCenter;
-    
-    self.oneLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[0]]];
-    self.twoLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[1]]];
-    self.threeLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[2]]];
-    self.fourLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[3]]];
-    self.fiveLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[4]]];
-    self.sixLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[5]]];
-    self.sevenLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[6]]];
-    self.eightLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[7]]];
-    self.nineLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[8]]];
-}
-- (NSString *)returnValue:(id)value{
-    
-    if ([value integerValue] == -1) {
-        return @"";
-    }else{
-        return value;
-    }
-}
-#pragma mark -- 计算差杆 －－ 杆数减去标准杆
-- (NSString *)pole:(id)pole andStandard:(NSInteger)standrad{
-    if ([pole integerValue] == -1) {
-        return @"";
-    }else{
-        return [NSString stringWithFormat:@"%ld", labs([pole integerValue] - standrad)];
-    }
-}
-- (void)configTaiwan:(NSString *)taiwan{
-    self.Taiwan.hidden = NO;
-    self.nameLeft.constant = 25*ProportionAdapter;
-    self.name.textAlignment = NSTextAlignmentLeft;
-    if ([taiwan containsString:@"蓝"]) {
-        self.Taiwan.backgroundColor = [UIColor blueColor];
-    }
-    
-    if ([taiwan containsString:@"红"]) {
-        self.Taiwan.backgroundColor = [UIColor redColor];
-    }
-    
-    if ([taiwan containsString:@"金"]) {
-        self.Taiwan.backgroundColor = [UIColor colorWithHexString:@"#BFDB2D"];
-    }
-    
-    if ([taiwan containsString:@"白"]) {
-        self.Taiwan.backgroundColor = [UIColor whiteColor];
-    }
-    
-    if ([taiwan containsString:@"黑"]) {
-        self.Taiwan.backgroundColor = [UIColor blackColor];
-    }
+    self.oneLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[9]]];
+    self.twoLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[10]]];
+    self.threeLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[11]]];
+    self.fourLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[12]]];
+    self.fiveLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[13]]];
+    self.sixLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[14]]];
+    self.sevenLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[15]]];
+    self.eightLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[16]]];
+    self.nineLable.text = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", array[17]]];
 }
 - (void)configPoorOneToNine:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan{
     self.name.text = userName;
@@ -581,7 +585,6 @@
     self.eightLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[7]]];
     self.nineLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[8]]];
 }
-
 - (void)configPoorNineToEighteenth:(NSArray *)array andUserName:(NSString *)userName andStandradArray:(NSArray *)standradArray andTaiwan:(NSString *)taiwan{
     self.name.text = userName;
     [self configTaiwan:taiwan];
@@ -707,6 +710,61 @@
     self.eightLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[16]]];
     self.nineLable.text = [NSString stringWithFormat:@"%@", [self returnValue:array[17]]];
 }
+- (void)configTaiwan:(NSString *)taiwan{
+    self.Taiwan.hidden = NO;
+    self.name.textAlignment = NSTextAlignmentLeft;
+    
+    self.bgLable.frame = CGRectMake(0, 0, 25*ProportionAdapter, 30*ProportionAdapter);
+    self.name.frame = CGRectMake(25*ProportionAdapter, 0, screenWidth -(30*9*ProportionAdapter +9 +25*ProportionAdapter), 30*ProportionAdapter);
+    
+    if ([taiwan containsString:@"蓝"]) {
+        self.Taiwan.backgroundColor = [UIColor blueColor];
+    }
+    
+    if ([taiwan containsString:@"红"]) {
+        self.Taiwan.backgroundColor = [UIColor redColor];
+    }
+    
+    if ([taiwan containsString:@"金"]) {
+        self.Taiwan.backgroundColor = [UIColor colorWithHexString:@"#BFDB2D"];
+    }
+    
+    if ([taiwan containsString:@"白"]) {
+        self.Taiwan.backgroundColor = [UIColor whiteColor];
+    }
+    
+    if ([taiwan containsString:@"黑"]) {
+        self.Taiwan.backgroundColor = [UIColor blackColor];
+    }
+}
+#pragma mark -- 计算差杆 －－ 杆数减去标准杆
+- (NSString *)pole:(id)pole andStandard:(NSInteger)standrad{
+    if ([pole integerValue] == -1) {
+        return @"";
+    }else{
+        return [NSString stringWithFormat:@"%ld", labs([pole integerValue] - standrad)];
+    }
+}
+
+- (void)oneBtnClick:(UIButton *)btn {
+    if (self.delegate) {
+        [self.delegate selectHoleCoresBtnTag:btn.tag andCellTag:self.tag];
+    }
+}
+
+- (NSString *)returnValue:(id)value{
+    
+    if ([value integerValue] == -1) {
+        return @"";
+    }else{
+        return value;
+    }
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -714,49 +772,4 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)oneBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate selectHoleCoresBtnTag:sender.tag andCellTag:self.tag];
-    }
-}
-- (IBAction)twoBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate selectHoleCoresBtnTag:sender.tag andCellTag:self.tag];
-    }
-}
-- (IBAction)threeBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate selectHoleCoresBtnTag:sender.tag andCellTag:self.tag];
-    }
-}
-- (IBAction)fourBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate selectHoleCoresBtnTag:sender.tag andCellTag:self.tag];
-    }
-}
-- (IBAction)fiveBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate selectHoleCoresBtnTag:sender.tag andCellTag:self.tag];
-    }
-}
-- (IBAction)sixBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate selectHoleCoresBtnTag:sender.tag andCellTag:self.tag];
-    }
-}
-- (IBAction)sevenBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate selectHoleCoresBtnTag:sender.tag andCellTag:self.tag];
-    }
-}
-- (IBAction)eightBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate selectHoleCoresBtnTag:sender.tag andCellTag:self.tag];
-    }
-}
-- (IBAction)nineBtnClick:(UIButton *)sender {
-    if (self.delegate) {
-        [self.delegate selectHoleCoresBtnTag:sender.tag andCellTag:self.tag];
-    }
-}
 @end
