@@ -44,6 +44,10 @@
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
 
 
+//启动广告页
+#import "AdvertiseView.h"
+
+
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
 #endif
@@ -80,7 +84,6 @@
     [DataDic setObject:DEFAULF_USERID forKey:@"userKey"];
     [DataDic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp] httpRequest:@"mobileContact/getLastUploadTime" JsonKey:nil withData:DataDic requestMethod:@"GET" failedBlock:^(id errType) {
-        
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             // 是否允许同步通讯录
@@ -192,7 +195,16 @@
 //    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
     
     if (DEFAULF_USERID) {
-        [self contanctUpload];
+        /*
+         *2017年02月21日11:54:41
+         *耗费性能
+         */
+        __weak typeof(self) weakself = self;
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakself contanctUpload];
+        });
+//        [self contanctUpload];
     }
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
@@ -234,7 +246,7 @@
     
     //-------------------------融云-------------------------
     //初始化融云SDK
-    [self connectRongTK];
+//    [self connectRongTK];
     
     /**
      * 推送处理1
@@ -269,6 +281,7 @@
     NSDictionary* pushInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (pushInfo)
     {
+        [self getAdvertisingImageWithUrl];
         [self startApp];
         
         if ([pushInfo objectForKey:APPDATA]) {
@@ -286,6 +299,7 @@
         [self updateBadgeValueForTabBarItem];
         
     }else if (url != nil) {
+        [self getAdvertisingImageWithUrl];
         if ([[url query] containsString:@"safepay"]) {
             [self startApp];
         }else{
@@ -304,6 +318,8 @@
         NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
         if(![version isEqualToString:lastVerson])
         {
+            [self getAdvertisingImageWithUrl];
+
             PageViewController* pageview = [[PageViewController alloc]init];
             self.window.rootViewController = pageview;
             [pageview setCallBack:^{
@@ -311,14 +327,10 @@
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 [self startApp];
             }];
-        }
-        else
-        {
-            JGLAnimationViewController* aniVc = [[JGLAnimationViewController alloc]init];
-            self.window.rootViewController = aniVc;
-            [aniVc setCallBack:^{
-                [self startApp];
-            }];
+        }else{
+            //广告页
+            [self getAdvertisingImage];
+
             
         }
     }
@@ -440,13 +452,11 @@
             //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
         }else{
             return [UMSocialSnsService handleOpenURL:url wxApiDelegate:self];
-            //        [UMSocialSnsService handleOpenURL:url
-            //                            wxDelegate:self];
         }
     }else if ([url.scheme isEqualToString:@"dagolfla"]){
-        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
-        NSLog(@"URL scheme:%@", [url scheme]);
-        NSLog(@"URL query: %@", [url query]);
+//        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
+//        NSLog(@"URL scheme:%@", [url scheme]);
+//        NSLog(@"URL query: %@", [url query]);
         if ([[url query] containsString:@"safepay"]) {
             //跳转支付宝钱包进行支付，处理支付结果
             [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
@@ -709,10 +719,14 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     if ([[RCIMClient sharedRCIMClient] getConnectionStatus] == ConnectionStatus_Connected) {
         // 插入分享消息
-        [self insertSharedMessageIfNeed];
+//        [self insertSharedMessageIfNeed];
     }
-    
-    [application cancelAllLocalNotifications];
+//
+    /*
+     * 2017年02月21日11:51:14
+     * 与下面applicationDidBecomeActive里面重复
+     */
+//    [application cancelAllLocalNotifications];
 }
 //插入分享消息
 - (void)insertSharedMessageIfNeed {
@@ -724,7 +738,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     [self connectRongTK];
     
     _pushID = 0;
-    
+
     [UMSocialSnsService  applicationDidBecomeActive];
     
     [application cancelAllLocalNotifications];
@@ -738,8 +752,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     
     if (DEFAULF_USERID) {
         // TODO
-        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-        NSString  *token  = [userdef objectForKey:@"rongTk"];
+        NSString  *token  = [UserDefaults objectForKey:@"rongTk"];
         [Helper requestRCIMWithToken:token];
     }
 }
@@ -765,7 +778,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *currLocation = [locations lastObject];
-    //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
+
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     // 获取当前所在的城市名
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
@@ -776,7 +789,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
          {
              CLPlacemark *placemark = [array objectAtIndex:0];
              //将获得的所有信息显示到label上
-             NSLog(@"%@",placemark.name);
+             NSLog(@"位置信息%@",placemark.name);
              //获取城市
              NSString *city = placemark.locality;
              if (!city) {
@@ -899,9 +912,260 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
         }
     });
 }
+
+#pragma mark - 启动广告页
+/**
+ *  初始化广告页面
+ */
+- (void)getAdvertisingImage
+{
+    // 1.判断沙盒中是否存在广告图片，如果存在，直接显示]
+    NSArray *dataArray = [UserDefaults objectForKey:@"adData"];
+    BOOL isExistPic = false;
+    for (NSDictionary *imageDict in dataArray) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *currentDateStr = [formatter stringFromDate:[NSDate date]];
+        NSString *imageName = [imageDict objectForKey:@"imageName"];
+        int A = [self compareDate:currentDateStr withDate:imageName];
+        switch (A) {
+            case -1:{
+                [self deleteOldImage:imageName];
+            }break;
+            case 0:{
+                NSString *filePath = [self getFilePathWithImageName:imageName];
+                BOOL isExist = [self isFileExistWithFilePath:filePath];
+                if (isExist) {// 图片存在
+                    isExistPic = true;
+                    AdvertiseView *advertiseView = [[AdvertiseView alloc] initWithFrame:self.window.bounds];
+                    advertiseView.filePath = filePath;
+                    [advertiseView setCallBack:^{
+                        [self startApp];
+                    }];
+                    if (filePath.length>0) {
+                        [advertiseView show];
+                    }
+                    break;
+                }
+            }break;
+            default:
+                break;
+        }
+    }
+    if (!isExistPic) {
+        JGLAnimationViewController* aniVc = [[JGLAnimationViewController alloc]init];
+        self.window.rootViewController = aniVc;
+        [aniVc setCallBack:^{
+            [self startApp];
+        }];
+    }
+    // 2.无论沙盒中是否存在广告图片，都需要重新调用广告接口，判断广告是否更新
+    [self getAdvertisingImageWithUrl];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushAdView) name:@"pushtoad" object:nil];
+}
+
+
+/**
+ *  判断文件是否存在
+ */
+- (BOOL)isFileExistWithFilePath:(NSString *)filePath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDirectory = FALSE;
+    return [fileManager fileExistsAtPath:filePath isDirectory:&isDirectory];
+}
+
+/**
+ *  初始化广告页面
+ */
+- (void)getAdvertisingImageWithUrl
+{
+    // TODO 请求广告接口
+    [[JsonHttp jsonHttp] httpRequest:@"index/getStartPageList" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+
+        NSArray *listArray = [data objectForKey:@"list"];
+        NSMutableArray *mDataArray = [NSMutableArray arrayWithArray:[UserDefaults objectForKey:@"adData"]];
+
+        for (int i = 0; i<listArray.count; i++) {
+            
+            NSDictionary *imageDict = listArray[i];
+            NSMutableDictionary *mDict = [NSMutableDictionary dictionary];
+            NSMutableString *mImageName = [NSMutableString stringWithFormat:@"%@",[imageDict objectForKey:@"startTime"]];
+            NSString * imageName =  [mImageName substringToIndex:10];
+            NSString * picURL = [imageDict objectForKey:@"picURL"];
+            [mDict setValue:imageName forKey:@"imageName"];
+            [mDict setValue:picURL forKey:@"picURL"];
+            [mDict setValue:[imageDict objectForKey:@"webLinkURL"] forKey:@"webLinkURL"];
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            NSString *currentDateStr = [formatter stringFromDate:[NSDate date]];
+            
+            int A = [self compareDate:currentDateStr withDate:imageName];
+            
+            if (A>-1) {
+                BOOL isExist = false;
+                for (int j = 0; j<mDataArray.count; j++) {
+                    NSDictionary *isExistDict = mDataArray[j];
+                    NSString *isExistPicURL = [isExistDict objectForKey:@"picURL"];
+                    NSString *isExistImageName = [isExistDict objectForKey:@"imageName"];
+                    BOOL picURLEquel = [isExistPicURL isEqualToString:picURL];
+                    BOOL nameEquel  = [isExistImageName isEqualToString:imageName];
+                    
+                    if (picURLEquel&&nameEquel) {
+                        isExist = true;
+                    }
+                    if (!picURLEquel&&nameEquel) {
+                        isExist = true;
+                        [mDataArray removeObject:mDict];
+                        [self deleteOldImage:imageName];
+                    }
+                }
+                if (!isExist) {
+                    [mDataArray addObject:mDict];
+                }
+            }
+            [UserDefaults setValue:mDataArray forKey:@"adData"];
+        }
+    }];
+    
+
+    NSArray *listArray = [UserDefaults objectForKey:@"adData"];
+    for (NSDictionary *imageDict in listArray) {
+        // 获取图片名
+        NSString * imageName =  [imageDict objectForKey:@"imageName"];
+        // 拼接沙盒路径
+        NSString *filePath = [self getFilePathWithImageName:imageName];
+        BOOL isExist = [self isFileExistWithFilePath:filePath];
+        NSString *imageUrl = [imageDict objectForKey:@"picURL"];
+        if (!isExist){// 如果该图片不存在，则删除老图片，下载新图片
+            [self downloadAdImageWithUrl:imageUrl imageName:imageName];
+        }
+    }
+}
+/**
+ *  下载新图片
+ */
+- (void)downloadAdImageWithUrl:(NSString *)imageUrl imageName:(NSString *)imageName
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+        UIImage *image = [UIImage imageWithData:data];
+        
+        NSString *filePath = [self getFilePathWithImageName:imageName]; // 保存文件的名称
+        
+        if ([UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES]) {
+            // 保存成功
+            NSLog(@"保存成功");
+        }else{
+            NSLog(@"保存失败");
+        }
+    });
+}
+
+/**
+ *  删除旧图片
+ */
+- (void)deleteOldImage:(NSString *)imageName
+{
+    NSString *filePath = [self getFilePathWithImageName:imageName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:filePath error:nil];
+    
+    NSMutableArray *dataArray = [NSMutableArray arrayWithArray:[UserDefaults objectForKey:@"adData"]];
+    
+    for (int i = 0; i<dataArray.count; i++) {
+        NSDictionary *imageDict = dataArray[i];
+        NSString *ImageName = [imageDict objectForKey:@"imageName"];
+        if ([ImageName isEqualToString:imageName]) {
+            [dataArray removeObjectAtIndex:i];
+        }
+    }
+    [UserDefaults setValue:dataArray forKey:@"adData"];
+}
+
+/**
+ *  根据图片名拼接文件路径
+ */
+- (NSString *)getFilePathWithImageName:(NSString *)imageName
+{
+    if (imageName) {
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES);
+        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+        
+        return filePath;
+    }
+    
+    return nil;
+}
+//点击跳转
+-(void)pushAdView{
+    
+    NSArray *dataArray = [UserDefaults objectForKey:@"adData"];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *currentDateStr = [formatter stringFromDate:[NSDate date]];
+    NSDictionary *imageDict = [NSDictionary dictionary];
+
+    for (NSDictionary *indexDict in dataArray) {
+        NSString *imageName = [indexDict objectForKey:@"imageName"];
+        if ([imageName isEqualToString:currentDateStr]) {
+            imageDict = indexDict;
+            break;
+        }
+    }
+    
+    NSString *urlString = [imageDict objectForKey:@"webLinkURL"];
+
+    
+
+    if ([urlString containsString:@"dagolfla://"]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UITabBarController *tabVC = (UITabBarController *)self.window.rootViewController;
+            UINavigationController *pushClassStance = (UINavigationController *)tabVC.viewControllers[tabVC.selectedIndex];
+            [[JGHPushClass pushClass] URLString:urlString pushVC:^(UIViewController *vc) {
+                vc.hidesBottomBarWhenPushed = YES;
+                [pushClassStance pushViewController:vc animated:YES];
+            }];
+        });
+    }
+    
+}
+//时间比较
+-(int)compareDate:(NSString*)date01 withDate:(NSString*)date02{
+    int ci;
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    NSDate *dt1 = [[NSDate alloc] init];
+    NSDate *dt2 = [[NSDate alloc] init];
+    dt1 = [df dateFromString:date01];
+    dt2 = [df dateFromString:date02];
+    NSComparisonResult result = [dt1 compare:dt2];
+    switch (result)
+    {
+            //date02比date01大
+        case NSOrderedAscending: ci=1; break;
+            //date02比date01小
+        case NSOrderedDescending: ci=-1; break;
+            //date02=date01
+        case NSOrderedSame: ci=0; break;
+        default: NSLog(@"erorr dates %@, %@", dt2, dt1); break;
+    }
+    return ci;
+}
+
+
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
     return UIInterfaceOrientationMaskPortrait;
 }
+
+
+
 
 @end

@@ -696,7 +696,6 @@
     }
     
     [_delegate changeFoldState:tempDate onCellRow:self.stamp];
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

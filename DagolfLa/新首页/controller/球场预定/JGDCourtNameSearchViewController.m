@@ -29,7 +29,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
+    
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -43,6 +43,7 @@
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.offset = 0;
     [self downData];
     [self searchVCSet];
     // Do any additional setup after loading the view.
@@ -66,11 +67,11 @@
             }
         }
     }];
-
+    
 }
 
 - (void)searchVCSet{
-
+    
     
     self.searchTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 * ProportionAdapter, screenWidth, screenHeight - 64 * ProportionAdapter) style:(UITableViewStyleGrouped)];
     self.searchTable.delegate = self;
@@ -79,7 +80,7 @@
     self.searchTable.rowHeight = 28 * ProportionAdapter;
     self.searchTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.searchTable.backgroundColor = [UIColor whiteColor];
-
+    
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 64 * ProportionAdapter)];
     headView.backgroundColor = [UIColor colorWithHexString:@"#32b14b"];
     
@@ -97,14 +98,14 @@
     [headView addSubview:button];
     
     
-   UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(5 * ProportionAdapter, 5, 31 * ProportionAdapter, 17 * ProportionAdapter)];
+    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(5 * ProportionAdapter, 5, 31 * ProportionAdapter, 17 * ProportionAdapter)];
     imageV.image = [UIImage imageNamed:@"Search-1"];
     self.searchTF.leftView = imageV;
     self.searchTF.leftViewMode = UITextFieldViewModeAlways;
     
     
     [self.view addSubview:headView];
-
+    
     [self.view addSubview:self.searchTable];
 }
 
@@ -134,7 +135,7 @@
         [hotLB addSubview:deleteBtn];
         hotLB.userInteractionEnabled = YES;
     }
-
+    
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
     style.firstLineHeadIndent = 16 * ProportionAdapter;
     [text addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, text.length)];
@@ -193,11 +194,11 @@
         JGDBookCourtTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"bookCourtCell"];
         cell.model = self.resultDataArray[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        
         return cell;
     }
     
-
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -211,7 +212,7 @@
     }else{
         return [self.resultDataArray count];
     }
-
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -229,7 +230,7 @@
             JGDCourtDetailViewController *courtDetailVC = [[JGDCourtDetailViewController alloc] init];
             courtDetailVC.timeKey = [self.dataArray[indexPath.row] objectForKey:@"timeKey"];
             [self.navigationController pushViewController:courtDetailVC animated:YES];
-
+            
         }else{
             [self nameSearch:[[NSUserDefaults standardUserDefaults] objectForKey:@"history"][indexPath.row]];
         }
@@ -242,6 +243,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
+    self.offset = 0;
     [self nameSearch:textField.text];
     
     return YES;
@@ -251,7 +253,7 @@
 - (void)nameSearch:(NSString *)nameStr{
     
     self.searchTF.text = nameStr;
-
+    
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     
@@ -284,7 +286,7 @@
                 }
             }
             [self.resultTableView reloadData];
-
+            
             
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -319,6 +321,7 @@
 #pragma mark -- 下拉刷新
 
 - (void)footRefresh{
+    self.offset ++;
     [self nameSearch:self.searchTF.text];
 }
 
@@ -332,8 +335,8 @@
         _resultTableView.rowHeight = 90 * ProportionAdapter;
         _resultTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
         [_resultTableView registerClass:[JGDBookCourtTableViewCell class] forCellReuseIdentifier:@"bookCourtCell"];
-
-
+        
+        
     }
     return _resultTableView;
 }
@@ -368,13 +371,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

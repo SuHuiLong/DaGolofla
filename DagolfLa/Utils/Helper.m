@@ -11,7 +11,7 @@
 #import "UIAlertController+JGHUIAlertController.h"
 #import "UserInformationModel.h"
 #import "UserDataInformation.h"
-
+#import "TabBarController.h"
 @implementation Helper
 
 //根据字符串的实际内容的多少 在固定的宽度和字体的大小，动态的计算出实际的高度
@@ -793,12 +793,6 @@
     [dataDic setObject:DEFAULF_USERID forKey:@"seeUserKey"];
     [dataDic setObject:[NSString stringWithFormat:@"userKey=%@&seeUserKey=%@dagolfla.com",DEFAULF_USERID, DEFAULF_USERID] forKey:@"md5"];
     
-//    [[JsonHttp jsonHttp]httpRequest:@"user/getUserMainInfo" JsonKey:nil withData:dataDic requestMethod:@"GET" failedBlock:^(id errType) {
-//        
-//    } completionBlock:^(id data) {
-//        
-//    }];
-    
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserMainInfo" JsonKey:nil withData:dataDic requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -818,7 +812,11 @@
                 
                 UserInformationModel *model = [[UserInformationModel alloc] init];
                 [model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
-                [[UserDataInformation sharedInstance] saveUserInformation:model];
+                /*
+                 * 2017年02月21日11:50:26
+                 * 聊天界面后台之后图片显示错误
+                 */
+//                [[UserDataInformation sharedInstance] saveUserInformation:model];
                 
                 [[RCIM sharedRCIM] refreshUserInfoCache:userInfo  withUserId:userInfo.userId];
                 
@@ -826,13 +824,14 @@
                 [RCIM sharedRCIM].currentUserInfo=userInfo;
                 [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
                 
-                //            [RCIM sharedRCIM].receiveMessageDelegate=self;
+
                 // 快速集成第二步，连接融云服务器
                 [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
-//                    NSNotification *chatNot = [NSNotification notificationWithName:@"RongTKChat" object:nil];
+                    
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"RongTKChat" object:nil];
                     //自动登录   连接融云服务器
                     [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
+
                     
                 }error:^(RCConnectErrorCode status) {
                     // Connect 失败

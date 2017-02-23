@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 #define IconCount @"iconCount"
 #define DEFAULF_IconCount [[NSUserDefaults standardUserDefaults] objectForKey:IconCount]
+#define UserDefaults  [NSUserDefaults standardUserDefaults]
 
 // 系统ID
 #define SYSTEM_ID @"-1"
@@ -156,6 +157,42 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define TYPE_USER_CERTIFICATION       @9   // 实名认证
 #define TYPE_FEEDBACK_HEAD       @12   // 用户头像
 #define TYPE_MATCH_HEAD       @15   // 赛事头像
+
+
+
+
+//安全释放宏
+#define Release_Safe(_control) [_control release], _control = nil;
+
+#pragma mark - SystemColor
+#define RandomColor RGB(arc4random()%256,arc4random()%256,arc4random()%256)
+#define BlackColor [UIColor blackColor]
+#define ClearColor [UIColor clearColor]
+#define WhiteColor [UIColor whiteColor]
+#define RedColor [UIColor redColor]
+#define BlueColor [UIColor blueColor]
+#define OrangeColor [UIColor orangeColor]
+#define LightGrayColor [UIColor lightGrayColor]
+#define LightTextColor [UIColor lightTextColor]
+#define BORDCOLOR GPColor(299, 299, 299)
+
+//适配宽高
+#define kWvertical(W)  ([UIScreen mainScreen].bounds.size.width/375.0)*(W)
+#define kHvertical(W)  ([UIScreen mainScreen].bounds.size.height/667.0)*(W)
+
+//字体
+#define kHorizontal(Z) ((Z)/375.0*([UIScreen mainScreen].bounds.size.width))
+
+//字体和图片
+#define Font(...)  [Global FontRegular:(__VA_ARGS__)]
+#define FontBold(...)  [Global FontSemibold:(__VA_ARGS__)]
+#define FontLigth(...) [Global FontLight:(__VA_ARGS__)]
+#define ImageName(...) [UIImage imageNamed:\\_VA_ARGS__)]
+
+
+
+
+
 
 #import "UIColor+ColorTransfer.h"
 #import "JsonHttp.h"

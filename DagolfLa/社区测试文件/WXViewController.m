@@ -71,7 +71,7 @@
     
     NSInteger _replyIndex;
     
-    NSInteger _page;
+    int _page;
     
     
     
