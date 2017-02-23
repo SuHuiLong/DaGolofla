@@ -59,6 +59,7 @@
 #import "JGDOrderListViewController.h"
 
 #import "JGDPersonalViewController.h"
+#import "JGDPersonalCard.h"
 
 
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -126,6 +127,17 @@
                 [user setObject:[[data objectForKey:@"user"] objectForKey:@"sex"] forKey:@"sex"];
                 [user setObject:[[data objectForKey:@"user"] objectForKey:@"msg_team_setting"] forKey:@"msg_team_setting"];
                 [user setObject:[[data objectForKey:@"user"] objectForKey:@"msg_system_setting"] forKey:@"msg_system_setting"];
+                [user setObject:[[data objectForKey:@"user"] objectForKey:@"almost_system_setting"] forKey:@"almost_system_setting"];
+
+                if ([[data objectForKey:@"user"] objectForKey:@"sex"]){
+                    [user setObject:[[data objectForKey:@"user"] objectForKey:@"sex"] forKey:@"sex"];
+                }
+                if ([[data objectForKey:@"user"] objectForKey:@"almost"]) {
+                    [user setObject:[[data objectForKey:@"user"] objectForKey:@"almost"] forKey:@"almost"];
+                }
+                if ([[data objectForKey:@"user"] objectForKey:@"workName"]) {
+                    [user setObject:[[data objectForKey:@"user"] objectForKey:@"workName"] forKey:@"workName"];
+                }
                 
                 [user synchronize];
                 
@@ -436,23 +448,20 @@
                 }
                     
                 case 1:{
-                    [self.navigationController pushViewController:arr[8] animated:YES];
+                    
+                    JGDPersonalCard *cardVC = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                    [self.view addSubview:cardVC];
+//                    [self.navigationController pushViewController:arr[8] animated:YES];
                     
                     break;
                 }
-                    
-//                case 2:
-//                {
-//
-//                    break;
-//                }
+
                 default:
                     break;
             }
         }
         else
         {
-            
             
             [self.navigationController pushViewController:arr[9] animated:YES];
         }

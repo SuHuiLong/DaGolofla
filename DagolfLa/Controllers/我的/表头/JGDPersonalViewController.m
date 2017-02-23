@@ -12,7 +12,6 @@
 #import "JGDPickerView.h"
 #import "JGDDatePicker.h"
 #import "JGDTextTipView.h"
-#import "JGDPersonalCard.h"
 #import "GPProvince.h"
 #import "CityPickerView.h"
 #import "SXPickPhoto.h"
@@ -28,6 +27,9 @@
 @property (nonatomic, strong) NSMutableDictionary* dict;
 @property (nonatomic, strong) NSDictionary* downLoadDic;
 @property (nonatomic, strong) NSArray *keyArray;
+@property (nonatomic, strong) NSMutableArray *picImageArray;
+@property (nonatomic, strong) UIButton *iconBtn;
+@property (nonatomic, strong) CityPickerView *cityPickView;
 
 @end
 
@@ -71,6 +73,7 @@
     
     
     UIBarButtonItem *saveBtn = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:(UIBarButtonItemStyleDone) target:self action:@selector(saveAct)];
+    [saveBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:UIControlStateNormal];
     saveBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = saveBtn;
     
@@ -78,16 +81,18 @@
     headerView.backgroundColor = [UIColor whiteColor];
     self.tableView.tableHeaderView = headerView;
     
-    UIButton *iconBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 73 * ProportionAdapter, 73 * ProportionAdapter)];
-    iconBtn.center = headerView.center;
-    [iconBtn setImage:[UIImage imageNamed:@"bg_photo"] forState:(UIControlStateNormal)];;
-    iconBtn.layer.cornerRadius = 73 * ProportionAdapter / 2;
-    iconBtn.clipsToBounds = YES;
-    iconBtn.layer.borderWidth = 1.5 * ProportionAdapter;
-    iconBtn.layer.borderColor = [[UIColor colorWithHexString:@"#e4e4e4"] CGColor];
-    iconBtn.contentMode = UIViewContentModeScaleAspectFill;
-    [iconBtn addTarget:self action:@selector(iconChangeAct:) forControlEvents:(UIControlEventTouchUpInside)];
-    [headerView addSubview:iconBtn];
+    self.iconBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 73 * ProportionAdapter, 73 * ProportionAdapter)];
+    self.iconBtn.center = headerView.center;
+    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
+    [self.iconBtn sd_setImageWithURL:[NSURL URLWithString:bgUrl] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"bg_photo"]];
+//    [self.iconBtn setImage:[UIImage imageNamed:@"bg_photo"] forState:(UIControlStateNormal)];;
+    self.iconBtn.layer.cornerRadius = 73 * ProportionAdapter / 2;
+    self.iconBtn.clipsToBounds = YES;
+    self.iconBtn.layer.borderWidth = 1.5 * ProportionAdapter;
+    self.iconBtn.layer.borderColor = [[UIColor colorWithHexString:@"#e4e4e4"] CGColor];
+    self.iconBtn.contentMode = UIViewContentModeScaleAspectFill;
+    [self.iconBtn addTarget:self action:@selector(iconChangeAct:) forControlEvents:(UIControlEventTouchUpInside)];
+    [headerView addSubview:self.iconBtn];
     
     [self downLoadData];
     // Do any additional setup after loading the view.
@@ -113,6 +118,32 @@
 #pragma mark -- 保存 提交
 
 - (void)saveAct{
+        
+    if ([self.picImageArray count] > 0) {
+        NSNumber* strTimeKey = DEFAULF_USERID;
+        // 上传图片
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:strTimeKey forKey:@"data"];
+        [dict setObject:TYPE_USER_HEAD forKey:@"nType"];
+        [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+        
+        [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:self.picImageArray failedBlock:^(id errType) {
+            
+        } completionBlock:^(id data) {
+            
+            NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
+            [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+            NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
+            if (![Helper isBlankString:headUrl]) {
+                [user setObject:headUrl forKey:@"pic"];
+            }
+            [user synchronize];
+        }];
+    }
+
+    
+    //  - - -
+    
     
     for (JGDPersonalTableViewCell *cell in self.tableView.visibleCells) {
         
@@ -145,6 +176,12 @@
         }else{
             [self.dict setObject:@0 forKey:@"sex"];
         }
+    }
+    
+    if ([self.dict objectForKey:@"address"]) {
+        NSArray *array = [[self.dict objectForKey:@"address"] componentsSeparatedByString:@" "];
+        [self.dict setObject:array[0] forKey:@"province"];
+        [self.dict setObject:array[1] forKey:@"city"];
     }
     
     [self.dict setObject:DEFAULF_USERID forKey:@"userId"];
@@ -190,6 +227,9 @@
                 cell.nameLB.text = @"10 以上";
                 
             }
+        }else if (indexPath.row == 6) {
+            
+            cell.nameLB.text = [NSString stringWithFormat:@"%@ %@", [self.downLoadDic objectForKey:@"province"], [self.downLoadDic objectForKey:@"city"]];
         }else{
             cell.nameLB.text = [NSString stringWithFormat:@"%@", [self.downLoadDic objectForKey:self.keyArray[indexPath.row]]];
         }
@@ -363,22 +403,22 @@
                 GPProvince *p = [GPProvince provinceWithDict:dict];
                 [mDataArray addObject:p];
             }
-            CityPickerView *cityPickView = [[CityPickerView alloc] init];
-            cityPickView.provincesArray = mDataArray;
-            [cityPickView setBlock:^(NSDictionary *dict) {
+            self.cityPickView.provincesArray = mDataArray;
+            [self.cityPickView setBlock:^(NSDictionary *dict) {
                 cell.nameLB.text = [NSString stringWithFormat:@"%@ %@", [dict objectForKey:@"proVinceName"], [dict objectForKey:@"cityName"]];
                 
             }];
-            [self.view addSubview:cityPickView];
+            [self.view addSubview:self.cityPickView];
             
         }];
         
-    }else if (indexPath.row == 7) {
-        
-        JGDPersonalCard *personalCard = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        [self.view addSubview:personalCard];
     }
-    
+//    else if (indexPath.row == 7) {
+//        
+//        JGDPersonalCard *personalCard = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//        [self.view addSubview:personalCard];
+//    }
+//    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -409,7 +449,8 @@
         //打开相机
         _pickPhoto.picker.allowsEditing = NO;
         [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
-            //            _arrayPage = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            self.picImageArray = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self.iconBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
             //            [self imageArray:_arrayPage];
             
         }];
@@ -419,7 +460,9 @@
         //打开相册
         _pickPhoto.picker.allowsEditing = NO;
         [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
-            //            _arrayPage = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            self.picImageArray = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
+            [self.iconBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
+
             //            [self imageArray:_arrayPage];
         }];
     }];
@@ -474,6 +517,20 @@
         _downLoadDic = [[NSDictionary alloc] init];
     }
     return _downLoadDic;
+}
+
+- (NSMutableArray *)picImageArray{
+    if (!_picImageArray) {
+        _picImageArray = [[NSMutableArray alloc] init];
+    }
+    return _picImageArray;
+}
+
+- (CityPickerView *)cityPickView{
+    if (!_cityPickView) {
+        _cityPickView = [[CityPickerView alloc] init];
+    }
+    return _cityPickView;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
