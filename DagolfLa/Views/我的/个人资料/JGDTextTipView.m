@@ -34,12 +34,14 @@
         
         self.systemBtn = [[UIButton alloc] initWithFrame:CGRectMake(60 * ProportionAdapter, 220 * ProportionAdapter - 80 * ProportionAdapter, 70 * ProportionAdapter, 30 * ProportionAdapter)];
         [self.systemBtn setTitle:@"系统设置" forState:(UIControlStateNormal)];
+        self.systemBtn.titleLabel.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [self.systemBtn setTitleColor:[UIColor colorWithHexString:@"#f39800"] forState:(UIControlStateNormal)];
         [self.systemBtn addTarget:self action:@selector(sysAct) forControlEvents:(UIControlEventTouchUpInside)];
         [self.backDView addSubview:self.systemBtn];
         
         self.ManualBtn = [[UIButton alloc] initWithFrame:CGRectMake(screenWidth - 130 * ProportionAdapter, 220 * ProportionAdapter - 80 * ProportionAdapter, 70 * ProportionAdapter, 30 * ProportionAdapter)];
         [self.ManualBtn setTitle:@"手动输入" forState:(UIControlStateNormal)];
+        self.ManualBtn.titleLabel.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         [self.ManualBtn addTarget:self action:@selector(manualAct) forControlEvents:(UIControlEventTouchUpInside)];
         [self.ManualBtn setTitleColor:[UIColor colorWithHexString:@"#f39800"] forState:(UIControlStateNormal)];
         

@@ -10,7 +10,7 @@
 
 @interface JGDPaySuccessViewController : ViewController
 
-@property (nonatomic, assign) NSInteger payORlaterPay; // 1 是 pay  2 laterPay  // 3 cancel
+@property (nonatomic, assign) NSInteger payORlaterPay; // 1 是 pay  2 laterPay  // 3 cancel  4 零押金
 @property (nonatomic, strong) NSNumber *orderKey;
 
 @end

@@ -19,6 +19,7 @@
         self.pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, screenHeight - 290 * ProportionAdapter, screenWidth, 290 * ProportionAdapter)];
         self.pickerView.delegate = self;
         self.pickerView.dataSource = self;
+        
         if (self.selectRow) {
             [self.pickerView selectRow:self.selectRow inComponent:0 animated:NO];
         }else{
@@ -74,6 +75,22 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     self.selectString = self.dataArray[row];
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+    UILabel* pickerLabel = (UILabel*)view;
+    if (!pickerLabel){
+        pickerLabel = [[UILabel alloc] init];
+        // Setup label properties - frame, font, colors etc
+        //adjustsFontSizeToFitWidth property to YES
+        pickerLabel.adjustsFontSizeToFitWidth = YES;
+        [pickerLabel setTextAlignment:NSTextAlignmentCenter];
+        [pickerLabel setBackgroundColor:[UIColor clearColor]];
+        [pickerLabel setFont:[UIFont boldSystemFontOfSize:18 * ProportionAdapter]];
+    }
+    // Fill the label text here
+    pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
+    return pickerLabel;
 }
 
 - (void)cancelAct{

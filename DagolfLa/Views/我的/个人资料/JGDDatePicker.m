@@ -38,6 +38,7 @@
         self.dataPickerView.datePickerMode = UIDatePickerModeDate;
         self.dataPickerView.locale = [NSLocale localeWithLocaleIdentifier:@"Chinese"];
         self.dataPickerView.backgroundColor = [UIColor whiteColor];
+        self.dataPickerView.maximumDate = [NSDate date];
         [self addSubview:self.dataPickerView];
     }
     return self;
