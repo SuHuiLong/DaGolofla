@@ -57,7 +57,8 @@
 //        self.labelTitle.text = model.userremarks;
 //    }
     
-    [self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:myModel.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    //[self.imgvIcon sd_setImageWithURL:[Helper imageIconUrl:myModel.pic] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
+    [self.imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[myModel.friendUserKey integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     
     if ([myModel.sex integerValue] == 0) {
         _imgvSex.image = [UIImage imageNamed:@"xb_n"];

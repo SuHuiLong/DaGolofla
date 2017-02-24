@@ -10,11 +10,13 @@
 #import "JGHScoresPageCell.h"
 #import "JGHScoreListModel.h"
 #import "JGHNewScoresPageCell.h"
+#import "JGHNewFourScoresPageCell.h"
 
+static NSString *const JGHNewFourScoresPageCellIdentifier = @"JGHNewFourScoresPageCell";
 static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
 static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
-@interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHScoresPageCellDelegate, JGHNewScoresPageCellDelegate>
+@interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHScoresPageCellDelegate, JGHNewScoresPageCellDelegate,JGHNewFourScoresPageCellDelegate>
 {
 
     UILabel *_holeLable;
@@ -65,6 +67,8 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     UINib *newScoresPageCellNib = [UINib nibWithNibName:@"JGHNewScoresPageCell" bundle: [NSBundle mainBundle]];
     [self.scoresTableView registerNib:newScoresPageCellNib forCellReuseIdentifier:JGHNewScoresPageCellIdentifier];
+    
+    [self.scoresTableView registerClass:[JGHNewFourScoresPageCell class] forCellReuseIdentifier:JGHNewFourScoresPageCellIdentifier];
     
     [self.view addSubview:self.scoresTableView];
     
@@ -208,9 +212,10 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_dataArray.count < 3) {
-        return 260 *ProportionAdapter;
+        return (screenHeight-64-82*ProportionAdapter)/2;
     }else{
-        return (screenHeight-64-50*ProportionAdapter)/4 -5*ProportionAdapter;
+        return (screenHeight-64-102*ProportionAdapter)/4;
+        //return 125*ProportionAdapter;
     }
 }
 
@@ -235,17 +240,16 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         
         return newScoresPageCell;
     }else{
-        JGHScoresPageCell *scoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHScoresPageCellIdentifier];
+        JGHNewFourScoresPageCell *scoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewFourScoresPageCellIdentifier];
+        
         scoresPageCell.delegate = self;
         scoresPageCell.tag = indexPath.section + 100;
         scoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
         NSLog(@"useeeees === %@", [userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]);
         if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
-            [scoresPageCell configTotalPoleViewTitle];
             [scoresPageCell configJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
         }else{
             [scoresPageCell configPoorJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
-            [scoresPageCell configPoleViewTitle];
         }
         
         return scoresPageCell;
@@ -256,7 +260,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     if (section == 4) {
         return 0;
     }
-    return 5*ProportionAdapter;
+    return 10*ProportionAdapter;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
