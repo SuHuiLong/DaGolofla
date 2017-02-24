@@ -211,7 +211,7 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     JGHNewPoorBarHoleCell *scoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHNewPoorBarHoleCellIdentifier];
-    scoreAreaCell.backgroundColor = [UIColor colorWithHexString:BG_color];
+    scoreAreaCell.backgroundColor = [UIColor colorWithHexString:@"#DCE0E1"];
     scoreAreaCell.delegate = self;
     scoreAreaCell.poorBtn.tag = 3000 +section;
     scoreAreaCell.arebtn.tag = 30000 +section;

@@ -42,6 +42,7 @@
 		201056201D59C93600C90FDE /* JGHCabbieCertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2010561F1D59C93600C90FDE /* JGHCabbieCertViewController.m */; };
 		2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */; };
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
+		2015AC111E5EEAB7009E112F /* JGHNewFourScoresPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2015AC101E5EEAB7009E112F /* JGHNewFourScoresPageCell.m */; };
 		201750911E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 201750901E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m */; };
 		201750981E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201750971E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m */; };
 		2017509B1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017509A1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m */; };
@@ -1314,6 +1315,8 @@
 		2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresViewController.m; sourceTree = "<group>"; };
 		2012AD9C1D36192F00F70E40 /* JGHScoresMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoresMainViewController.h; sourceTree = "<group>"; };
 		2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresMainViewController.m; sourceTree = "<group>"; };
+		2015AC0F1E5EEAB7009E112F /* JGHNewFourScoresPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewFourScoresPageCell.h; sourceTree = "<group>"; };
+		2015AC101E5EEAB7009E112F /* JGHNewFourScoresPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewFourScoresPageCell.m; sourceTree = "<group>"; };
 		2017508F1E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewCancelApplyViewController.h; sourceTree = "<group>"; };
 		201750901E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewCancelApplyViewController.m; sourceTree = "<group>"; };
 		201750961E2CA85600FB2FE4 /* JGHNewCancelApplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewCancelApplyCell.h; sourceTree = "<group>"; };
@@ -8820,6 +8823,8 @@
 				F5AEF7151D41B98E009A8C34 /* JGHScoresPageCell.h */,
 				F5AEF7161D41B98E009A8C34 /* JGHScoresPageCell.m */,
 				F5AEF7171D41B98E009A8C34 /* JGHScoresPageCell.xib */,
+				2015AC0F1E5EEAB7009E112F /* JGHNewFourScoresPageCell.h */,
+				2015AC101E5EEAB7009E112F /* JGHNewFourScoresPageCell.m */,
 				202E05291D80120800566CA9 /* JGHScoreAreaCell.h */,
 				202E052A1D80120800566CA9 /* JGHScoreAreaCell.m */,
 				202E052B1D80120800566CA9 /* JGHScoreAreaCell.xib */,
@@ -10266,6 +10271,7 @@
 				2067C6D61CE30CC0002900C8 /* JGTeamActivityWithAddressCell.m in Sources */,
 				36BFFF941BC76D6B005B3CE2 /* TabBarController.m in Sources */,
 				F58C4EE41E1B3FC30057DC9C /* JGDOrderDetailTableViewCell.m in Sources */,
+				2015AC111E5EEAB7009E112F /* JGHNewFourScoresPageCell.m in Sources */,
 				20C1B8B51CE344C600508ABC /* JGApplyPepoleCell.m in Sources */,
 				82ABF1C61D1C02A3004493DB /* JGLPayHeaderTableViewCell.m in Sources */,
 				36BFFFA11BC76FE3005B3CE2 /* MeViewController.m in Sources */,

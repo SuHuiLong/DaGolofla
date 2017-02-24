@@ -206,7 +206,7 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     JGHNewPoorBarHoleCell *scoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHNewPoorBarHoleCellIdentifier];
-    scoreAreaCell.backgroundColor = [UIColor colorWithHexString:BG_color];
+    scoreAreaCell.backgroundColor = [UIColor colorWithHexString:@"#DCE0E1"];
     scoreAreaCell.delegate = self;
     scoreAreaCell.poorBtn.tag = 3000 +section;
     scoreAreaCell.arebtn.tag = 30000 +section;
@@ -229,7 +229,7 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 }
 #pragma mark -- 创建T台视图
 - (void)createTwarnview:(NSString *)string{
-    self.areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(0, screenHeight -_areaArray.count*40*ProportionAdapter, screenWidth, _areaArray.count *40*ProportionAdapter +2*ProportionAdapter)];
+    self.areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, _areaArray.count *40*ProportionAdapter +2*ProportionAdapter)];
     _areaListView.delegate = self;
     _areaListView.backgroundColor = [UIColor whiteColor];
     [_areaListView reloadAreaListView:_areaArray andCurrAreString:string];
