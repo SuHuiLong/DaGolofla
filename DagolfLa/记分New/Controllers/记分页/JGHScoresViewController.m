@@ -537,6 +537,8 @@
     _refreshArea = 0;
     
     //[self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
+    //当前页
+    NSInteger currentingPage = _currentPage;
     
     _currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     JGHScoresMainViewController *vc2;
@@ -574,7 +576,12 @@
         [self titleBtnClick];
     };
     
-    [_pageViewController setViewControllers:@[vc2] direction:0 animated:YES completion:nil];
+    if ([[not.userInfo objectForKey:@"direction"] integerValue] == 0) {
+        [_pageViewController setViewControllers:@[vc2] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+    }else{
+        [_pageViewController setViewControllers:@[vc2] direction:0 animated:YES completion:nil];
+    }
+    
     
     [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
 }
