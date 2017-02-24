@@ -90,7 +90,7 @@
     self.iconBtn.clipsToBounds = YES;
     self.iconBtn.layer.borderWidth = 1.5 * ProportionAdapter;
     self.iconBtn.layer.borderColor = [[UIColor colorWithHexString:@"#e4e4e4"] CGColor];
-    self.iconBtn.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.iconBtn addTarget:self action:@selector(iconChangeAct:) forControlEvents:(UIControlEventTouchUpInside)];
     [headerView addSubview:self.iconBtn];
     
