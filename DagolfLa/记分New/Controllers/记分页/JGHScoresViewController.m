@@ -344,7 +344,7 @@
                     [self titleBtnClick];
                 };
                 
-                [_pageViewController setViewControllers:@[sub] direction:0 animated:NO completion:nil];
+                [_pageViewController setViewControllers:@[sub] direction:0 animated:YES completion:nil];
                 
                 [self.view addSubview:_pageViewController.view];
                 
@@ -574,7 +574,7 @@
         [self titleBtnClick];
     };
     
-    [_pageViewController setViewControllers:@[vc2] direction:0 animated:NO completion:nil];
+    [_pageViewController setViewControllers:@[vc2] direction:0 animated:YES completion:nil];
     
     [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
 }
@@ -614,7 +614,7 @@
     vc2.selectHoleBtnClick = ^(){
         [self titleBtnClick];
     };
-    [_pageViewController setViewControllers:@[vc2] direction:0 animated:NO completion:nil];
+    [_pageViewController setViewControllers:@[vc2] direction:0 animated:YES completion:nil];
     
     
     [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
