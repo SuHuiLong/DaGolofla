@@ -137,7 +137,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     [view addSubview:holeBtn];
     
     //线
-    UILabel *line = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 1)];
+    UILabel *line = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 0.5)];
     line.backgroundColor = [UIColor colorWithHexString:Bar_Color];
     [view addSubview:line];
     

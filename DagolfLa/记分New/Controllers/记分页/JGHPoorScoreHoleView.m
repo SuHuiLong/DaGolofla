@@ -44,7 +44,7 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 - (instancetype)init{
     if (self == [super init]) {
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
-        _colorArray = @[@"#FFFFFF", @"#EEEEEE", @"#FFFFFF", @"#F9F9F9", @"#FFFFFF", @"#F9F9F9"];
+        _colorArray = @[@"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8"];
         self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (200 +20 +20 +60)*ProportionAdapter) style:UITableViewStylePlain];
         self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
         self.scoreTableView.scrollEnabled = NO;
@@ -206,7 +206,7 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     JGHNewPoorBarHoleCell *scoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHNewPoorBarHoleCellIdentifier];
-    scoreAreaCell.backgroundColor = [UIColor colorWithHexString:@"#DCE0E1"];
+    scoreAreaCell.backgroundColor = [UIColor colorWithHexString:@"#dddfe1"];
     scoreAreaCell.delegate = self;
     scoreAreaCell.poorBtn.tag = 3000 +section;
     scoreAreaCell.arebtn.tag = 30000 +section;
@@ -218,14 +218,14 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
     NSLog(@"btn.tag == %td", btn.tag);
     [self createTwarnview:currtitle];
     
-    if (btn.tag == 30000) {
+    if (btn.tag == 3000) {
         _areaSourceID = 0;
     }else{
         _areaSourceID = 1;
     }
     
     UIButton *arebtn = [self viewWithTag:30000 +btn.tag -3000];
-    [arebtn setImage:[UIImage imageNamed:@"arrowTop"] forState:UIControlStateNormal];
+    [arebtn setImage:[UIImage imageNamed:@"icn_show_arrowdown"] forState:UIControlStateNormal];
 }
 #pragma mark -- 创建T台视图
 - (void)createTwarnview:(NSString *)string{
@@ -255,11 +255,11 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
         [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.5f];
     }];
     
-    UIButton *arebtn = [self viewWithTag:40000];
-    [arebtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+    UIButton *arebtn = [self viewWithTag:30000];
+    [arebtn setImage:[UIImage imageNamed:@"icn_show_arrowup"] forState:UIControlStateNormal];
     
-    UIButton *arebtn1 = [self viewWithTag:40001];
-    [arebtn1 setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+    UIButton *arebtn1 = [self viewWithTag:30001];
+    [arebtn1 setImage:[UIImage imageNamed:@"icn_show_arrowup"] forState:UIControlStateNormal];
 }
 - (void)removeAnimateView{
     [_tranView removeFromSuperview];
