@@ -61,11 +61,31 @@
 
 @implementation TeamFriListViewController
 
+- (NSMutableArray *)addressBookTemp{
+    if (!_addressBookTemp) {
+        _addressBookTemp = [[NSMutableArray alloc] init];
+    }
+    return _addressBookTemp;
+}
+
+- (NSMutableArray *)keyArray{
+    if (!_keyArray) {
+        _keyArray = [[NSMutableArray alloc] init];
+    }
+    return _keyArray;
+}
+
+- (NSMutableArray *)listArray{
+    if (!_listArray) {
+        _listArray = [[NSMutableArray alloc] init];
+    }
+    return _listArray;
+}
+
 //- (void)dealloc{
 //    self.searchController = nil;
 //}
 - (void)viewWillAppear:(BOOL)animated{
-    
     [super viewWillAppear:animated];
     
     self.searchController.searchBar.hidden = NO;
@@ -90,7 +110,10 @@
     }
     _barBackView = nil;
     [_barBackView removeFromSuperview];
+    [self.view.window makeKeyAndVisible];
 }
+
+
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
     [UIView animateWithDuration:0.1 animations:^{} completion:^(BOOL finished) {
@@ -109,7 +132,7 @@
     
     self.title = @"添加球友";
     _page = 0;
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight + 50) style:(UITableViewStylePlain)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight ) style:(UITableViewStylePlain)];
 //    self.view = _tableView;
     [self.view addSubview:_tableView];
     _tableView.delegate = self;
@@ -136,7 +159,7 @@
 //    searchTextField.backgroundColor = [UIColor whiteColor];
     searchTextField.clearButtonMode = UITextFieldViewModeNever;
     searchTextField.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
-//    searchTextField.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"msg_search_kuang"]];
+//    [searchTextField addTarget:searchTextField action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];
     
     self.contactBtn = [[UIButton alloc] initWithFrame:CGRectMake(333 * ProportionAdapter, searchBar.frame.origin.y + 13, 20 * ProportionAdapter, 20 * ProportionAdapter)];
     [self.contactBtn setImage:[UIImage imageNamed:@"phonenumber"] forState:(UIControlStateNormal)];
@@ -156,7 +179,7 @@
 }
 //时间栏背景
 -(void)crateBarView{
-    _barBackView = nil;
+    _barBackView.y = -20;
     [_barBackView removeFromSuperview];
     _barBackView = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:@"#EEEEEE"] frame:CGRectMake(0, 0, screenWidth, 20)];
     [self.view.window addSubview:_barBackView];
@@ -423,6 +446,9 @@
 #pragma mark --- 添加好友的按钮
 
 - (void)addFriAct:(UIButton *)btn event:(id)event{
+    _barBackView.y = -20;
+    [_barBackView removeFromSuperview];
+
     NSSet *touches =[event allTouches];
     UITouch *touch =[touches anyObject];
     CGPoint currentTouchPosition = [touch locationInView:_tableView];
@@ -465,16 +491,24 @@
 
 
 #pragma mark ---搜索
+//textView内容变化
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    _page = 0;
+    [self loadSearchData];
+}
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
     _page = 0;
-
     [[ShowHUD showHUD] showAnimationWithText:@"搜索中…" FromView:self.view];
-    
+    [self loadSearchData];
+}
+
+#pragma mark - loadData
+-(void)loadSearchData{
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:DEFAULF_USERID forKey:@"userKey"];
-    [dic setValue:searchBar.text forKey:@"searchStr"];
+    [dic setValue:self.searchController.searchBar.text forKey:@"searchStr"];
     [dic setValue:@"0" forKey:@"offset"];
     
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"userFriend/getSearchUser" JsonKey:nil withData:dic failedBlock:^(id errType) {
@@ -482,17 +516,14 @@
         
     } completionBlock:^(id data) {
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
-        
+        [self.searchArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
             if ([data objectForKey:@"list"]) {
-                [self.searchArray removeAllObjects];
                 for (NSDictionary *dic in [data objectForKey:@"list"]) {
                     NewFriendModel *myAtModel = [[NewFriendModel alloc] init];
                     [myAtModel setValuesForKeysWithDictionary:dic];
                     [self.searchArray addObject:myAtModel];
                 }
-                [self.tableView reloadData];
             }else{
                 [LQProgressHud showMessage:@"该用户不存在"];
             }
@@ -501,19 +532,13 @@
                 [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
             }
         }
+        [self.tableView reloadData];
         
     }];
     
-//    [[JsonHttp jsonHttp] httpRequest:@"userFriend/getSearchUser" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-//        
-//    } completionBlock:^(id data) {
 
-        
-
-//    }];
-
-    
 }
+
 
 - (NSMutableArray *)searchArray{
     if (!_searchArray) {
@@ -536,7 +561,9 @@
 //            RecomeFriendViewController* reVc = [[RecomeFriendViewController alloc]init];
 //            [self.navigationController pushViewController:reVc animated:YES];
 //        }
-//        
+//
+        _barBackView.y = -20;
+        [_barBackView removeFromSuperview];
         if (self.contactISOpen == YES) {
             self.contactISOpen = NO;
             TKAddressModel *addressBook = self.listArray[indexPath.section][indexPath.row];
@@ -572,9 +599,8 @@
 
 - (void)footRereshing{
     _page ++;
-   
+    [self loadSearchData];
     [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
-    
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:DEFAULF_USERID forKey:@"userKey"];
     [dic setValue:self.searchController.searchBar.text forKey:@"searchStr"];
@@ -591,8 +617,6 @@
             
             if ([data objectForKey:@"list"]) {
 //                [self.searchArray removeAllObjects];
-                
-                    
                 
                 for (NSDictionary *dic in [data objectForKey:@"list"]) {
                     NewFriendModel *myAtModel = [[NewFriendModel alloc] init];
@@ -622,29 +646,6 @@
     
     
     
-//    [self.paraDic setObject:[NSNumber numberWithInt:_page] forKey:@"page"];
-//    [[PostDataRequest sharedInstance] postDataRequest:@"user/searchTuser.do" parameter:self.paraDic success:^(id respondsData) {
-//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-//        
-//        if ([[dict objectForKey:@"success"] boolValue]) {
-//            NSArray *arra = [dict objectForKey:@"rows"];
-//            
-//            for (NSDictionary *dic in arra) {
-//                NewFriendModel *myModel = [[NewFriendModel alloc] init];
-//                [myModel setValuesForKeysWithDictionary:dic];
-//                [self.searchArray addObject:myModel];
-//            }
-//            
-//            [self.tableView reloadData];
-//        }else {
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//            [alert show];
-//        }
-//        [self.tableView.footer endRefreshing];
-//    } failed:^(NSError *error) {
-//        
-//    }];
-    
 }
 
 
@@ -667,11 +668,13 @@
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
-
+    _barBackView.y = -20;
+    [_barBackView removeFromSuperview];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    _barBackView.hidden = YES;
+    _searchArray = [NSMutableArray array];
+
     if ([self.view.subviews containsObject:self.contactTableView]) {
         self.contactISOpen = NO;
         [self.contactTableView removeFromSuperview];
@@ -683,29 +686,18 @@
     self.contactBtn.frame = CGRectMake(333 * ProportionAdapter,  self.searchController.searchBar.frame.origin.y + 13, 20 * ProportionAdapter, 20 * ProportionAdapter);
     self.contactBtn.enabled = NO;
     self.contactBtn.hidden = YES;
-
 }
 
-- (NSMutableArray *)addressBookTemp{
-    if (!_addressBookTemp) {
-        _addressBookTemp = [[NSMutableArray alloc] init];
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if ((!_barBackView||_barBackView.y<20)&&_searchArray.count>0) {
+        [self crateBarView];
+    }else{
+        _barBackView.y = -20;
+
     }
-    return _addressBookTemp;
+    [self.searchController.searchBar resignFirstResponder];
 }
 
-- (NSMutableArray *)keyArray{
-    if (!_keyArray) {
-        _keyArray = [[NSMutableArray alloc] init];
-    }
-    return _keyArray;
-}
-
-- (NSMutableArray *)listArray{
-    if (!_listArray) {
-        _listArray = [[NSMutableArray alloc] init];
-    }
-    return _listArray;
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -247,7 +247,6 @@
             _isEdtor = 1;
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
-            
             NSLog(@"5S  时间保存");
             if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                 

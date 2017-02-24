@@ -139,6 +139,7 @@
     
     self.conversationListTableView.backgroundColor=[UIColor whiteColor];
     self.conversationListTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+    [self.conversationListTableView setExtraCellLineHidden];
     //设置要显示的会话类型
     [self setShowConversationListWhileLogOut:NO];
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
@@ -459,17 +460,11 @@
 
 - (void)updateBadgeValueForTabBarItem
 {
-//    __weak typeof(self) __weakSelf = self;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-    
-//        NSArray *count1 =  [[RCIMClient sharedRCIMClient] getConversationList:self.displayConversationTypeArray];
-    
-//        if ([count1 count] > 0) {
-//            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//        }else{
-            self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//        }
-    
+    __weak typeof(self) __weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
         //会话消息
         int countChat = [[RCIMClient sharedRCIMClient]
                      getUnreadCount:self.displayConversationTypeArray];
@@ -536,13 +531,13 @@
         [userdef synchronize];
         
         if (iconCount > 0) {
-            [self.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:iconCount];
+            [__weakSelf.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:iconCount];
         } else {
-            [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
+            [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
         
         [self.conversationListTableView.header endRefreshing];
-//    });
+    });
 }
 
 - (RCDTabBarBtn *)systemRCDbtn{

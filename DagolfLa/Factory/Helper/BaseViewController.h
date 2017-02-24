@@ -12,6 +12,7 @@
 #import "UIButton+WebCache.h"
 #import "UIImageView+WebCache.h"
 #import "UIView+GPExtension.h"
+#import "UITableView+Addition.h"
 //#import "FileUtils.h"
 //#import "StorageManager.h"
 @interface BaseViewController : UIViewController

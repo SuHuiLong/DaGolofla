@@ -94,6 +94,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+    [_tableView setExtraCellLineHidden];
     
     [_tableView registerClass:[JGHNewFriendAddTableViewCell class] forCellReuseIdentifier:@"JGHNewFriendAddTableViewCell"];
     

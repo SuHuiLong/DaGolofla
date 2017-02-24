@@ -167,7 +167,7 @@
     _textField = [[UITextField alloc] initWithFrame:CGRectMake(30*ScreenWidth/375, 0*ScreenWidth/375, ScreenWidth-115*ScreenWidth/375, 36*ScreenWidth/375)];
     _textField.textColor=[UIColor lightGrayColor];
     _textField.tag=888;
-    [_textField addTarget:self action:@selector(keyboardDown3:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [_textField addTarget:self action:@selector(keyboardDown3:) forControlEvents:UIControlEventEditingChanged];
     _textField.placeholder=@"请输入类别或关键字";
     [imageView addSubview:_textField];
     _textField.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
@@ -181,17 +181,11 @@
     [view addSubview:SeachButton];
 }
 -(void)keyboardDown3:(UITextField *)tf{
-    
+    [self headerRereshing];
 }
 -(void)seachBtnClick{
     [_textField resignFirstResponder];
-    UIImageView *imageView=(UIImageView *)[self.view viewWithTag:88];
-    NSLog(@"%@",_textField.text);
     if ([Helper isBlankString:_textField.text]==NO) {
-        
-//        [_dataArray removeAllObjects];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-//        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
         [_tableView.header beginRefreshing];
     }else{
         [[ShowHUD showHUD]showToastWithText:@"请填写搜索信息" FromView:self.view];
@@ -207,6 +201,7 @@
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    [_tableView setExtraCellLineHidden];
     [self.view addSubview:_tableView];
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
@@ -354,6 +349,13 @@
             
         }
     }
+}
+
+
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [_textField resignFirstResponder];
+
 }
 
 
