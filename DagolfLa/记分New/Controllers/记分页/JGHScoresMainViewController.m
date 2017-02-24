@@ -7,7 +7,6 @@
 //
 
 #import "JGHScoresMainViewController.h"
-#import "JGHScoresPageCell.h"
 #import "JGHScoreListModel.h"
 #import "JGHNewScoresPageCell.h"
 #import "JGHNewFourScoresPageCell.h"
@@ -16,7 +15,7 @@ static NSString *const JGHNewFourScoresPageCellIdentifier = @"JGHNewFourScoresPa
 static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
 static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
-@interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHScoresPageCellDelegate, JGHNewScoresPageCellDelegate,JGHNewFourScoresPageCellDelegate>
+@interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHNewScoresPageCellDelegate,JGHNewFourScoresPageCellDelegate>
 {
 
     UILabel *_holeLable;

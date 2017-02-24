@@ -738,7 +738,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     [self connectRongTK];
     
     _pushID = 0;
-
+    
     [UMSocialSnsService  applicationDidBecomeActive];
     
     [application cancelAllLocalNotifications];

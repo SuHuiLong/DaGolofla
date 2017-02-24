@@ -328,6 +328,7 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-15*screenWidth/375)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    [_tableView setExtraCellLineHidden];
     [self.view addSubview:_tableView];
     
     [_tableView registerClass:[JGLAddressAddTableViewCell class] forCellReuseIdentifier:@"JGLAddressAddTableViewCell"];

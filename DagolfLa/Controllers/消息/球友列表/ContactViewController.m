@@ -77,6 +77,7 @@
     self.tableView.dataSource = self;
     self.tableView.bounces = NO;
     //    [self setData];
+    [self.tableView setExtraCellLineHidden];
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
     UIView *EEEVIew = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];

@@ -52,20 +52,19 @@ static int const showtime = 3;
         CGFloat btnW = kWvertical(50);
         CGFloat btnH = btnW;
         _countBtn = [[UIButton alloc] initWithFrame:CGRectMake(kscreenWidth - btnW - kWvertical(20), kHvertical(25), btnW, btnH)];
-        [_countBtn setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];
-//         [UIColor colorWithHexString:[UIColor blackColor] alpha:0.5]];
+        [_countBtn setBackgroundColor:BlackColor];
+        _countBtn.alpha = 0.4;
+
         
         [_countBtn addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-        _timeLable = [Factory createLabelWithFrame:CGRectMake( 0, kWvertical(10), _countBtn.width, btnW/2-kWvertical(10)) textColor:WhiteColor fontSize:kHorizontal(14) Title:[NSString stringWithFormat:@"%ds", showtime]];
+        _timeLable = [Factory createLabelWithFrame:CGRectMake( _countBtn.x,_countBtn.y + kWvertical(10), _countBtn.width, btnW/2-kWvertical(10)) textColor:WhiteColor fontSize:kHorizontal(14) Title:[NSString stringWithFormat:@"%ds", showtime]];
         _timeLable.backgroundColor = ClearColor;
         [_timeLable setTextAlignment:NSTextAlignmentCenter];
         
-        UILabel *skipLabel = [Factory createLabelWithFrame:CGRectMake( 0, btnW/2, _countBtn.width, btnW/2-kWvertical(10)) textColor:WhiteColor fontSize:kHorizontal(15) Title:@"跳过"];
+        UILabel *skipLabel = [Factory createLabelWithFrame:CGRectMake( _timeLable.x, _timeLable.y_height, _countBtn.width, btnW/2-kWvertical(10)) textColor:WhiteColor fontSize:kHorizontal(15) Title:@"跳过"];
         skipLabel.backgroundColor = ClearColor;
         [skipLabel setTextAlignment:NSTextAlignmentCenter];
         
-        [_countBtn addSubview:_timeLable];
-        [_countBtn addSubview:skipLabel];
         
         
         _countBtn.layer.cornerRadius = btnW/2;
@@ -74,6 +73,9 @@ static int const showtime = 3;
         
         [self addSubview:_adView];
         [self addSubview:_countBtn];
+        [self addSubview:_timeLable];
+        [self addSubview:skipLabel];
+
         
     }
     return self;

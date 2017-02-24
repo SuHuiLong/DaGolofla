@@ -33,6 +33,7 @@
 #import "JGNewsViewController.h"
 #import "JGWkNewsViewController.h"
 #import "UseMallViewController.h"
+#import "JGDPersonalCard.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHConsultChannelCellIdentifier = @"JGHConsultChannelCell";
@@ -55,6 +56,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 @property (nonatomic, strong)JGHNavListView *navListView;
 
 @property (nonatomic, strong)UIView *toolView;
+//是否为启动请求数据接口 0： 非启动   1：启动
+@property (nonatomic, copy)NSString *isBoot;
 
 @end
 
@@ -196,9 +199,14 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)loadIndexdata{
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *getDict = [NSMutableDictionary dictionary];
-    
     if ([[userDef objectForKey:userID] integerValue] > 0) {
         [getDict setObject:DEFAULF_USERID forKey:@"userKey"];
+        if ([_isBoot isEqualToString:@"1"]) {
+            _isBoot = @"0";
+        }else{
+            _isBoot = @"1";
+        }
+        [getDict setObject:_isBoot forKey:@"isBoot"];
     }else{
         [getDict setObject:@0 forKey:@"userKey"];
     }
@@ -217,6 +225,10 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         _showEventID = 0;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            bool isCanPerfectUserInfo =  [[data objectForKey:@"isCanPerfectUserInfo"] boolValue];
+            if (isCanPerfectUserInfo) {
+                [self alertCompleteSelfView];
+            }
             [self.indexModel setValuesForKeysWithDictionary:data];
             
             [self.homeTableView reloadData];
@@ -925,9 +937,17 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     return _toolView;
 }
 
+
+//显示完善资料弹窗
+-(void)alertCompleteSelfView{
+
+    JGDPersonalCard *card = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    card.userInteractionEnabled = YES;
+    [self.view addSubview:card];
+}
+
 /*
 #pragma mark - Navigation
-
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].

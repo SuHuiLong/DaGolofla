@@ -35,7 +35,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+    self.view.backgroundColor = WhiteColor;
+    
+    UIView *backView = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:@"#EEEEEE"] frame:self.view.bounds];
+    [self.view addSubview:backView];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 218 * ProportionAdapter) style:(UITableViewStylePlain)];
     self.tableView.rowHeight = 44 * ProportionAdapter;
