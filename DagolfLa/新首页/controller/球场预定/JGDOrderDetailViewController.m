@@ -546,7 +546,11 @@
             }else{
                 
                 JGDPaySuccessViewController *cancelVC = [[JGDPaySuccessViewController alloc] init];
-                cancelVC.payORlaterPay = 3 ;
+                if ([[self.dataDic objectForKey:@"payType"] integerValue] == 2 && [[self.dataDic objectForKey:@"depositMoney"] integerValue] == 0) {
+                    cancelVC.payORlaterPay = 5;
+                }else{
+                    cancelVC.payORlaterPay = 3;
+                }
                 cancelVC.orderKey = self.orderKey;
                 [self.navigationController pushViewController:cancelVC animated:YES];
                 

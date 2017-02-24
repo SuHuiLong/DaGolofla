@@ -14,6 +14,7 @@
 #import "JGDConfirmPayViewController.h"
 #import "JGDContactViewController.h"
 #import "LGLCalenderViewController.h"
+#import "JGDPaySuccessViewController.h"
 
 @interface JGDCommitOrderViewController () <UITableViewDelegate, UITableViewDataSource ,UITextFieldDelegate>
 
@@ -217,9 +218,11 @@
                     confirVC.orderKey = [data objectForKey:@"orderKey"];
                     [self.navigationController pushViewController:confirVC animated:YES];
                 }else{
-                    NSLog(@"零押金");
+                    JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
+                    payVC.payORlaterPay = 4;
+                    payVC.orderKey = [data objectForKey:@"orderKey"];
+                    [self.navigationController pushViewController:payVC animated:YES];
                 }
-
             }
             
         }else{

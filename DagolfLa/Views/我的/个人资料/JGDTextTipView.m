@@ -27,7 +27,7 @@
         self.detailLB.numberOfLines = 0;
         [self.backDView addSubview:self.detailLB];
         
-        self.closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(screenWidth - 40 * ProportionAdapter, 18 * ProportionAdapter, 25 * ProportionAdapter, 25 * ProportionAdapter)];
+        self.closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(screenWidth - 40 * ProportionAdapter, 18 * ProportionAdapter, 20 * ProportionAdapter, 20 * ProportionAdapter)];
         [self.closeBtn setImage:[UIImage imageNamed:@"date_close"] forState:(UIControlStateNormal)];
         [self.closeBtn addTarget:self action:@selector(closeAct) forControlEvents:(UIControlEventTouchUpInside)];
         [self.backDView addSubview:self.closeBtn];

@@ -115,6 +115,7 @@
         } completionBlock:^(id data) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if ([[data objectForKey:@"packSuccess"]boolValue]) {
+                _model = [[MeselfModel alloc] init];
                 [_model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
                 NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
                 if (![Helper isBlankString:[data objectForKey:@"handImgUrl"]]) {
