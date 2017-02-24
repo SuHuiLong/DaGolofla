@@ -108,6 +108,7 @@
         self.pointTF.placeholder = @"请输入您的差点";
         self.pointTF.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         self.pointTF.borderStyle = UITextBorderStyleRoundedRect;
+        self.pointTF.keyboardType = UIKeyboardTypeNumberPad;
         [self.backView addSubview:self.pointTF];
         
         

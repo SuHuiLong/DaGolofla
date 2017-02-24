@@ -210,10 +210,16 @@
             
             if ([data objectForKey:@"orderKey"]) {
                 
-                JGDConfirmPayViewController *confirVC = [[JGDConfirmPayViewController alloc] init];
-                confirVC.payMoney = [[data objectForKey:@"money"] integerValue];
-                confirVC.orderKey = [data objectForKey:@"orderKey"];
-                [self.navigationController pushViewController:confirVC animated:YES];
+                
+                if ([[data objectForKey:@"stateButtonString"] isEqualToString:@"待付款"]) {
+                    JGDConfirmPayViewController *confirVC = [[JGDConfirmPayViewController alloc] init];
+                    confirVC.payMoney = [[data objectForKey:@"money"] integerValue];
+                    confirVC.orderKey = [data objectForKey:@"orderKey"];
+                    [self.navigationController pushViewController:confirVC animated:YES];
+                }else{
+                    NSLog(@"零押金");
+                }
+
             }
             
         }else{
