@@ -12,13 +12,7 @@
 
 - (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn;
 
-//- (void)oneAreaBtnDelegate:(UIButton *)btn;
-//
-//- (void)twoAreaBtnDelegate:(UIButton *)btn;
-
 - (void)oneAreaString:(NSString *)areaString andID:(NSInteger)selectId;
-
-- (void)twoAreaString:(NSString *)areaString andID:(NSInteger)selectId;
 
 @end
 
@@ -32,14 +26,7 @@
 
 @property (nonatomic, strong)NSString *scorekey;
 
-//@property (nonatomic, strong)NSArray *areaArray;//球道区域
-
-//@property (nonatomic, strong)NSArray *twoAreaArray;//球道区域
-
 - (void)reloadScoreList:(NSArray *)currentAreaArray andAreaArray:(NSArray *)areaArray;
-
-- (void)removeAreaView;
-
 
 //选择区域后－－刷新试图数据
 - (void)reloadViewData:(NSMutableArray *)dataArray andCurrentAreaArrat:(NSArray *)currentAreaArray;

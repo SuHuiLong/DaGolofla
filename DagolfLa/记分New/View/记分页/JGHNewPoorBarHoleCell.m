@@ -20,7 +20,7 @@
         [self addSubview:_nameLable];
         
         _arebtn = [[UIButton alloc]initWithFrame:CGRectMake(_nameLable.frame.origin.x, _nameLable.frame.origin.y, 20*ProportionAdapter, 30*ProportionAdapter)];
-        [_arebtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+        [_arebtn setImage:[UIImage imageNamed:@"icn_show_arrowup"] forState:UIControlStateNormal];
         [self addSubview:_arebtn];
         
         _poorBtn = [[UIButton alloc]initWithFrame:CGRectMake(_nameLable.frame.origin.x, _nameLable.frame.origin.y, _nameLable.frame.size.width +20*ProportionAdapter, 30*ProportionAdapter)];

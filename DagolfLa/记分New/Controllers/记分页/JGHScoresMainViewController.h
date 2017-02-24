@@ -34,8 +34,6 @@
 
 @property (nonatomic, strong)NSString *scorekey;
 
-- (void)reloadTableView:(NSInteger)switchMode;
-
 @property (nonatomic, strong)NSMutableArray *currentAreaArray;
 
 

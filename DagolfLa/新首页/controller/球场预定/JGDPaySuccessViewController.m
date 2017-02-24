@@ -77,9 +77,9 @@
 
     if (_payORlaterPay == 1) {
         self.title = @"支付成功";
-    }else if (_payORlaterPay == 2) {
+    }else if (_payORlaterPay == 2 || _payORlaterPay == 4) {
         self.title = @"提交成功";
-    }else if (_payORlaterPay == 3) {
+    }else if (_payORlaterPay == 3 || _payORlaterPay == 5) {
         self.title = @"取消订单";
     }
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -100,10 +100,10 @@
     shitaView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:shitaView];
     
-    if (_payORlaterPay == 1) {
+    if (_payORlaterPay == 1 || _payORlaterPay == 4) {
         
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, screenWidth, 50 * ProportionAdapter)];
-        [btn setTitle:@"支付成功" forState:(UIControlStateNormal)];
+        [btn setTitle:_payORlaterPay == 1 ? @"支付成功" : @"提交成功" forState:(UIControlStateNormal)];
         [btn setTitleColor:[UIColor colorWithHexString:@"#313131"] forState:(UIControlStateNormal)];
         [btn setImage:[UIImage imageNamed:@"icn_present_success"] forState:(UIControlStateNormal)];
         btn.titleLabel.font = [UIFont systemFontOfSize:20 * ProportionAdapter];
@@ -164,7 +164,7 @@
             [ueView addSubview:imageView];
         }
         
-    }else if (_payORlaterPay ==  3) {
+    }else if (_payORlaterPay ==  3 || _payORlaterPay == 5) {
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 10, screenWidth, 50 * ProportionAdapter)];
         [btn setTitle:@"提交成功" forState:(UIControlStateNormal)];
         [btn setTitleColor:[UIColor colorWithHexString:@"#313131"] forState:(UIControlStateNormal)];
@@ -182,7 +182,7 @@
         lineView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [ueView addSubview:lineView];
         
-        NSArray *titleArray = [NSArray arrayWithObjects:@"提交取消", @"球场审核", @"    退款" ,nil];
+        NSArray *titleArray = [NSArray arrayWithObjects:@"提交取消", @"球场审核", _payORlaterPay == 5 ? @"取消成功" : @"    退款" ,nil];
         for (int i = 0; i < 3; i ++) {
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(35 * ProportionAdapter + i * 145 * ProportionAdapter, 53 * ProportionAdapter, 14 * ProportionAdapter, 14 * ProportionAdapter)];
             if (i != 0) {

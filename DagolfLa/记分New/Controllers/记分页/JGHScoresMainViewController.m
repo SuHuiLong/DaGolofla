@@ -7,22 +7,20 @@
 //
 
 #import "JGHScoresMainViewController.h"
-#import "JGHScoresPageCell.h"
 #import "JGHScoreListModel.h"
 #import "JGHNewScoresPageCell.h"
+#import "JGHNewFourScoresPageCell.h"
 
+static NSString *const JGHNewFourScoresPageCellIdentifier = @"JGHNewFourScoresPageCell";
 static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
 static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
-@interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHScoresPageCellDelegate, JGHNewScoresPageCellDelegate>
+@interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHNewScoresPageCellDelegate,JGHNewFourScoresPageCellDelegate>
 {
 
-//    UIButton *_totalPoleBtn;
     UILabel *_holeLable;
     
     UILabel *_areaLable;
-    
-//    UILabel *_
     
     UIButton *_holeDirebtn;
 }
@@ -32,26 +30,6 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 @end
 
 @implementation JGHScoresMainViewController
-
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
-
-    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-    _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
-    
-//    if (_switchMode == 0) {
-//        [_totalPoleBtn setTitle:@"总杆模式" forState:UIControlStateNormal];
-//    }else{
-//        [_totalPoleBtn setTitle:@"差杆模式" forState:UIControlStateNormal];
-//    }
-    
-    [self.scoresTableView reloadData];
-}
 
 - (instancetype)init{
     if (self == [super init]) {
@@ -89,35 +67,13 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     UINib *newScoresPageCellNib = [UINib nibWithNibName:@"JGHNewScoresPageCell" bundle: [NSBundle mainBundle]];
     [self.scoresTableView registerNib:newScoresPageCellNib forCellReuseIdentifier:JGHNewScoresPageCellIdentifier];
     
+    [self.scoresTableView registerClass:[JGHNewFourScoresPageCell class] forCellReuseIdentifier:JGHNewFourScoresPageCellIdentifier];
+    
     [self.view addSubview:self.scoresTableView];
     
     [self creteSlidingView];//总杆／差杆
     
-//    [self createHeaderBallAreaView];
 }
-//#pragma mark -- 球场区域
-//- (void)createHeaderBallAreaView{
-//    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 20*ProportionAdapter)];
-//    headerView.backgroundColor = [UIColor whiteColor];
-//    
-//    _areaLable = [[UILabel alloc]initWithFrame:CGRectMake(100*ProportionAdapter, 0, screenWidth -200 *ProportionAdapter, 18 *ProportionAdapter)];
-//    _areaLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-//    _areaLable.textColor = [UIColor blackColor];
-//    _areaLable.textAlignment = NSTextAlignmentCenter;
-//    if (_index < 9) {
-//        _areaLable.text = _currentAreaArray[0];
-//    }else{
-//        _areaLable.text = _currentAreaArray[1];
-//    }
-//    
-//    [headerView addSubview:_areaLable];
-//    
-//    UILabel *lineLbale = [[UILabel alloc]initWithFrame:CGRectMake(100*ProportionAdapter, 20 *ProportionAdapter -1, screenWidth -200 *ProportionAdapter, 1)];
-//    lineLbale.backgroundColor = [UIColor colorWithHexString:@"#32B14D"];
-//    [headerView addSubview:lineLbale];
-//    
-//    self.scoresTableView.tableHeaderView =headerView;
-//}
 #pragma mark -- 总杆／差杆
 - (void)creteSlidingView{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 64 - 52*ProportionAdapter, screenWidth, 52*ProportionAdapter)];
@@ -125,8 +81,6 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     leftBtn.frame = CGRectMake(10 *ProportionAdapter, 5*ProportionAdapter, 60 *ProportionAdapter, 42*ProportionAdapter);
-//    [[UIButton alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 5*ProportionAdapter, 60 *ProportionAdapter, 42*ProportionAdapter)];
-//    [leftBtn setImage:[UIImage imageNamed:@"sildLeft"] forState:UIControlStateNormal];
     [leftBtn setTitle:@"上一洞" forState:UIControlStateNormal];
     [leftBtn setTintColor:[UIColor colorWithHexString:Bar_Color]];
     leftBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
@@ -136,8 +90,6 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     rightBtn.frame = CGRectMake(screenWidth -70*ProportionAdapter, 5*ProportionAdapter, 60 *ProportionAdapter, 42*ProportionAdapter);
-//    [[UIButton alloc]initWithFrame:CGRectMake(screenWidth -70*ProportionAdapter, 5*ProportionAdapter, 60 *ProportionAdapter, 42*ProportionAdapter)];
-//    [rightBtn setImage:[UIImage imageNamed:@"sildRight"] forState:UIControlStateNormal];
     [rightBtn setTintColor:[UIColor colorWithHexString:Bar_Color]];
     [rightBtn setTitle:@"下一洞" forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:15*ProportionAdapter];
@@ -147,52 +99,28 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     _areaLable = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2, 26*ProportionAdapter, 140*ProportionAdapter, 20*ProportionAdapter)];
     _areaLable.textAlignment = NSTextAlignmentCenter;
-//    _holeLable = [[UIButton alloc]initWithFrame:CGRectMake((screenWidth-140*ProportionAdapter)/2, 26*ProportionAdapter, 140*ProportionAdapter, 20*ProportionAdapter)];
-//    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-    
-//    if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
-//        [_totalPoleBtn setTitle:@"总杆模式" forState:UIControlStateNormal];
-//    }else{
-//        [_totalPoleBtn setTitle:@"差杆模式" forState:UIControlStateNormal];
-//    }
     
     if (_index < 9) {
         _areaLable.text = _currentAreaArray[0];
-//        [_holeLable setTitle:_currentAreaArray[0] forState:UIControlStateNormal];
-//        _totalPoleBtn.text = _currentAreaArray[0];
     }else{
         _areaLable.text = _currentAreaArray[1];
-//        [_totalPoleBtn setTitle:_currentAreaArray[1] forState:UIControlStateNormal];
-//        _totalPoleBtn.text = _currentAreaArray[1];
     }
     
     _areaLable.textColor = [UIColor colorWithHexString:B31_Color];
     _areaLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
-//    NSLog(@"%td", [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue]);
-//    [_totalPoleBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
-//    _totalPoleBtn.titleLabel.font = [UIFont systemFontOfSize:17.0*ProportionAdapter];
-//    [_totalPoleBtn addTarget:self action:@selector(switchMode:) forControlEvents:UIControlEventTouchUpInside];
+
     [view addSubview:_areaLable];
     
-    /*
-    if (_currentPage > 0) {
-        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR 3", _currentPage+1] forState:UIControlStateNormal];
-    }else{
-        [self.titleBtn setTitle:@"1 Hole PAR 3" forState:UIControlStateNormal];
-    }
-    [self.titleBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    _arrowBtn = [[UIButton alloc]initWithFrame:CGRectMake(120*ProportionAdapter, 10, 30 *ProportionAdapter, 24)];
-    [_arrowBtn addTarget:self action:@selector(titleBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
-    [titleView addSubview:_arrowBtn];
-    
-    self.navigationItem.titleView = titleView;
-    */
-    
     //洞号
-    _holeLable = [[UILabel alloc]initWithFrame:CGRectMake(120*ProportionAdapter, 6*ProportionAdapter, 100*ProportionAdapter, 20*ProportionAdapter)];
-    _holeLable.text = [NSString stringWithFormat:@"%td Hole PAR", _index +1];
+    _holeLable = [[UILabel alloc]initWithFrame:CGRectMake(110*ProportionAdapter, 6*ProportionAdapter, 120*ProportionAdapter, 20*ProportionAdapter)];
+    JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
+    model = _dataArray[0];
+    if ([model.standardlever objectAtIndex:_index]) {
+        _holeLable.text = [NSString stringWithFormat:@"%td Hole PAR %@", _index +1, [model.standardlever objectAtIndex:_index]];
+    }else{
+        _holeLable.text = [NSString stringWithFormat:@"%td Hole PAR ", _index +1];
+    }
+    
     _holeLable.textAlignment = NSTextAlignmentCenter;
     _holeLable.font = [UIFont systemFontOfSize:17*ProportionAdapter];
     _holeLable.textColor = [UIColor colorWithHexString:Bar_Color];
@@ -208,7 +136,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     [view addSubview:holeBtn];
     
     //线
-    UILabel *line = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 1)];
+    UILabel *line = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 0.5)];
     line.backgroundColor = [UIColor colorWithHexString:Bar_Color];
     [view addSubview:line];
     
@@ -217,17 +145,18 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 }
 #pragma mark -- 阅历成绩
 - (void)holeBtnClick:(UIButton *)btn{
+    [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(btnClickedOperations) object:nil];
+    
+    [self performSelector:@selector(btnClickedOperations) withObject:nil afterDelay:0.2f];
+}
+- (void)btnClickedOperations{
     _selectHoleBtnClick();
 }
 #pragma mark -- LeftBtn 左切换 右切换
 - (void)leftScoreBtn:(UIButton *)btn{
     NSLog(@"切换");
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
-//    if ((cellTag%100/10) == 0) {
-//        [userDict setObject:@(_index) forKey:@"index"];
-//    }else{
-//        [userDict setObject:@(btnTag - 1 + 9) forKey:@"index"];
-//    }
+
     NSInteger indx = 0;
     if (btn.tag == 20) {
         //左
@@ -256,38 +185,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 #pragma mark -- 记分模式切换
 - (void)switchScoreModeNote{
     NSLog(@"记分模式");
-//    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-//    if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
-//        _switchMode = 1;
-//        [_totalPoleBtn setTitle:@"差杆模式" forState:UIControlStateNormal];
-//    }else{
-//        _switchMode = 0;
-//        [_totalPoleBtn setTitle:@"总杆模式" forState:UIControlStateNormal];
-//        
-//    }
-    
     [self.scoresTableView reloadData];
-    
-//    [userdf setObject:@(_switchMode) forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
-//    [userdf synchronize];
-    
-}
-- (void)switchMode:(UIButton *)btn{
-    NSLog(@"记分模式");
-    NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
-//    if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
-//        _switchMode = 1;
-//        [_totalPoleBtn setTitle:@"差杆模式" forState:UIControlStateNormal];
-//    }else{
-//        _switchMode = 0;
-//        [_totalPoleBtn setTitle:@"总杆模式" forState:UIControlStateNormal];
-//        
-//    }
-    
-    [self.scoresTableView reloadData];
-    
-    [userdf setObject:@(_switchMode) forKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]];
-    [userdf synchronize];
 }
 #pragma mark -- 跳转指定记分几页通知
 - (void)noticePushScoresCtrl:(NSNotification *)not{
@@ -313,9 +211,10 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_dataArray.count < 3) {
-        return 260 *ProportionAdapter;
+        return (screenHeight-64-82*ProportionAdapter)/2;
     }else{
-        return (screenHeight-64-50*ProportionAdapter)/4 -5*ProportionAdapter;
+        return (screenHeight-64-102*ProportionAdapter)/4;
+        //return 125*ProportionAdapter;
     }
 }
 
@@ -340,17 +239,16 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         
         return newScoresPageCell;
     }else{
-        JGHScoresPageCell *scoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHScoresPageCellIdentifier];
+        JGHNewFourScoresPageCell *scoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewFourScoresPageCellIdentifier];
+        
         scoresPageCell.delegate = self;
         scoresPageCell.tag = indexPath.section + 100;
         scoresPageCell.selectionStyle = UITableViewCellSelectionStyleNone;
         NSLog(@"useeeees === %@", [userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]]);
         if ([[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue] == 0) {
-            [scoresPageCell configTotalPoleViewTitle];
             [scoresPageCell configJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
         }else{
             [scoresPageCell configPoorJGHScoreListModel:_dataArray[indexPath.section] andIndex:_index];
-            [scoresPageCell configPoleViewTitle];
         }
         
         return scoresPageCell;
@@ -361,7 +259,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     if (section == 4) {
         return 0;
     }
-    return 5*ProportionAdapter;
+    return 10*ProportionAdapter;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{

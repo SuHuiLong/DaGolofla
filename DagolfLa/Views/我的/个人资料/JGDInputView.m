@@ -54,7 +54,7 @@
 
 - (void)setHeight:(CGFloat)height{
     
-    [self.backView setFrame:CGRectMake(0, 200 * ProportionAdapter, screenWidth, (100 + height) * ProportionAdapter)];
+    [self.backView setFrame:CGRectMake(0, 200 * ProportionAdapter - (height - 50 * ProportionAdapter), screenWidth, (100 + height) * ProportionAdapter)];
     
     [self.putTextView setFrame:CGRectMake(15 * ProportionAdapter, 30 * ProportionAdapter, screenWidth - 30 * ProportionAdapter, height * ProportionAdapter)];
     
