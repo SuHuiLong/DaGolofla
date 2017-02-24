@@ -37,26 +37,26 @@
     self.fairwayBtnTop.constant = 25 *ProportionAdapter;
     
     self.pushNumber.font = [UIFont systemFontOfSize:25 *ProportionAdapter];
-    self.pushNumberTop.constant = 16 *ProportionAdapter;
     
     self.pushNumberProLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-    self.pushNumberProLabelTop.constant = 10 *ProportionAdapter;
     
     self.rodNumber.font = [UIFont systemFontOfSize:25 *ProportionAdapter];
-    self.rodNumberTop.constant = 41 *ProportionAdapter;
     self.rodNumberW.constant = 60 *ProportionAdapter;
     
     self.rodNumberProLable.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-    self.rodNumberProLableTop.constant = 10 *ProportionAdapter;
     
     self.pushAddBtnRight.constant = 20 *ProportionAdapter;
     self.pushAddBtnTop.constant = 22 *ProportionAdapter;
-    self.pushRedBtnLeft.constant = 16 *ProportionAdapter;
     self.rodAddBtnRight.constant = 20 *ProportionAdapter;
-    self.rodRedBtnLeft.constant = 16 *ProportionAdapter;
     
     self.rodRedBtnW.constant = 60 *ProportionAdapter;
     self.rodAddBtnTop.constant = 48 *ProportionAdapter;
+    
+    self.PoleaddrodW.constant = 75 *ProportionAdapter;
+    self.PoleNumber.constant = 46 *ProportionAdapter;
+    
+    self.pushRodW.constant = 75 *ProportionAdapter;
+    self.pushRodNumber.constant = 46 *ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -133,8 +133,9 @@
         self.pushNumber.textColor = [UIColor lightGrayColor];
     }else{
         self.pushNumber.text = [NSString stringWithFormat:@"%@", [model.poleNumber objectAtIndex:index]];
-        self.pushNumber.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.pushNumber.font = [UIFont systemFontOfSize:30*ProportionAdapter];
         self.pushNumber.textColor = [UIColor blackColor];
+        self.PoleNumber.constant = 42 *ProportionAdapter;
     }
     
     if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
@@ -143,8 +144,10 @@
         self.rodNumber.textColor = [UIColor lightGrayColor];
     }else{
         self.rodNumber.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
-        self.rodNumber.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.rodNumber.font = [UIFont systemFontOfSize:30*ProportionAdapter];
         self.rodNumber.textColor = [UIColor blackColor];
+        
+        self.pushRodNumber.constant = 42 *ProportionAdapter;
     }
     
     self.name.text = model.userName;
@@ -160,6 +163,9 @@
         [self.fairwayBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayYES"] forState:UIControlStateNormal];
         [self.noFairwayBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayNO"] forState:UIControlStateNormal];
     }
+    
+    [self bringSubviewToFront:self.fairwayBtn];
+    [self bringSubviewToFront:self.noFairwayBtn];
 }
 
 - (void)configPoorJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index{
@@ -212,8 +218,9 @@
             }
         }
         
-        self.pushNumber.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.pushNumber.font = [UIFont systemFontOfSize:30*ProportionAdapter];
         self.pushNumber.textColor = [UIColor blackColor];
+        self.PoleNumber.constant = 42 *ProportionAdapter;
     }
     
     if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
@@ -222,8 +229,9 @@
         self.rodNumber.textColor = [UIColor lightGrayColor];
     }else{
         self.rodNumber.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
-        self.rodNumber.font = [UIFont systemFontOfSize:25*ProportionAdapter];
+        self.rodNumber.font = [UIFont systemFontOfSize:30*ProportionAdapter];
         self.rodNumber.textColor = [UIColor blackColor];
+        self.pushRodNumber.constant = 42 *ProportionAdapter;
     }
     
     self.name.text = model.userName;
@@ -239,6 +247,9 @@
         [self.fairwayBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayYES"] forState:UIControlStateNormal];
         [self.noFairwayBtn setBackgroundImage:[UIImage imageNamed:@"poorFairwayNO"] forState:UIControlStateNormal];
     }
+    
+    [self bringSubviewToFront:self.fairwayBtn];
+    [self bringSubviewToFront:self.noFairwayBtn];
 }
 
 

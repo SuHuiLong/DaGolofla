@@ -33,7 +33,6 @@
     UIView *_tranView;
     
     UIBarButtonItem *_item;
-    UIButton *_arrowBtn;
     
     NSMutableDictionary *_macthDict;//结束页面的参数
     
@@ -61,7 +60,7 @@
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
 
-@property (nonatomic, strong)UIButton *titleBtn;
+//@property (nonatomic, strong)UIButton *titleBtn;
 
 @property (nonatomic, weak)NSTimer *timer;//计时器
 
@@ -323,15 +322,6 @@
                     [_currentAreaArray addObject:model.region2];
                 }
                 
-                if (_backHistory != 1) {
-                    if (_currentPage != 0) {
-                        [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[_currentPage], model.standardlever[_currentPage]] forState:UIControlStateNormal];
-                    }else{
-                        [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[0], model.standardlever[0]] forState:UIControlStateNormal];
-                    }
-                }
-                
-                
                 self.timer =[NSTimer scheduledTimerWithTimeInterval:[[data objectForKey:@"interval"] integerValue] target:self
                                                            selector:@selector(changeTimeAtTimeDoClick) userInfo:nil repeats:YES];
                 [self.timer fire];
@@ -379,6 +369,8 @@
                         }
                     }
                 }
+                
+                [self titleBtnClick];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -411,40 +403,30 @@
             
             _scoresView = [[JGHScoresHoleView alloc]init];
             _scoresView.delegate = self;
-            _scoresView.frame = CGRectMake(0, screenHeight, screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            _scoresView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            
             _scoresView.dataArray = self.userScoreArray;
             _scoresView.scorekey = _scorekey;
             _scoresView.curPage = _selectPage;
-            _scoresView.alpha = 0;
             
             [self.view addSubview:_scoresView];
             
             [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
-            
-            [self.view setUserInteractionEnabled:NO];
-            [UIView animateWithDuration:0.5f animations:^{
-                _scoresView.alpha = 1;
-                _scoresView.frame = CGRectMake(0, screenHeight -(52*ProportionAdapter +(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter +64), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
-                [self.view setUserInteractionEnabled:YES];
-            }];
             //遮罩
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
-            _tranView.alpha = 0;
+            _tranView.alpha = 0.3;
             
             UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
             [tag addTarget:self action:@selector(titleBtnClick)];
             [_tranView addGestureRecognizer:tag];
             [[UIApplication sharedApplication].keyWindow addSubview:_tranView];
             
-            [UIView animateWithDuration:0.5f animations:^{
-                _tranView.alpha = 0.3;
-            }];
+            [self showViewAnimate:_scoresView];
         }else{
             
             _poorScoreView = [[JGHPoorScoreHoleView alloc]init];
             _poorScoreView.delegate = self;
-            _poorScoreView.alpha = 0;
             _poorScoreView.frame = CGRectMake(0, screenHeight, screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
             _poorScoreView.scorekey = _scorekey;
@@ -455,24 +437,18 @@
             [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             
             [self.view setUserInteractionEnabled:NO];
-            [UIView animateWithDuration:0.5f animations:^{
-                _poorScoreView.alpha = 1;
-                _poorScoreView.frame = CGRectMake(0, screenHeight -(52*ProportionAdapter +(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter +64), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
-                [self.view setUserInteractionEnabled:YES];
-            }];
+
             
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
-            _tranView.alpha = 0;
+            _tranView.alpha = 0.3;
             
             UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
             [tag addTarget:self action:@selector(titleBtnClick)];
             [_tranView addGestureRecognizer:tag];
             [[UIApplication sharedApplication].keyWindow addSubview:_tranView];
             
-            [UIView animateWithDuration:0.5f animations:^{
-                _tranView.alpha = 0.3;
-            }];
+            [self showViewAnimate:_poorScoreView];
         }
     }else{
         [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
@@ -488,6 +464,30 @@
     
     [userdef synchronize];
 }
+- (void)showViewAnimate:(UIView *)animateView{
+    [UIView animateWithDuration:0.5f animations:^{
+        _tranView.frame = CGRectMake(0, 0, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        animateView.frame = CGRectMake(0, screenHeight -(52*ProportionAdapter +(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter +64), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        [self.view setUserInteractionEnabled:YES];
+    }];
+}
+- (void)removeALlView{
+    [self.view setUserInteractionEnabled:NO];
+    [_scoresView setUserInteractionEnabled:NO];
+    [UIView animateWithDuration:0.5f animations:^{
+        if (_scoresView != nil) {
+            _scoresView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        }
+        
+        if (_poorScoreView != nil) {
+            _poorScoreView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        }
+        
+        _tranView.frame = CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        [self.view setUserInteractionEnabled:YES];
+        [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.6f];
+    }];
+}
 #pragma mark -- 关闭成绩列表视图
 - (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn{
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -502,32 +502,6 @@
     
     [self removeALlView];
 }
-- (void)removeALlView{
-    if (_scoresView != nil) {
-        [self.view setUserInteractionEnabled:NO];
-        [_scoresView setUserInteractionEnabled:NO];
-        [UIView animateWithDuration:0.5f animations:^{
-            _scoresView.frame = CGRectMake(0, screenHeight, screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
-            [self.view setUserInteractionEnabled:YES];
-            [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.6f];
-        }];
-    }
-    
-    if (_poorScoreView != nil) {
-        [self.view setUserInteractionEnabled:NO];
-        [_poorScoreView setUserInteractionEnabled:NO];
-        [UIView animateWithDuration:0.5f animations:^{
-            _poorScoreView.frame = CGRectMake(0, screenHeight, screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
-            [self.view setUserInteractionEnabled:YES];
-            [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.6f];
-        }];
-    }
-    
-    if (_tranView != nil) {
-        [_tranView removeFromSuperview];
-        _tranView = nil;
-    }
-}
 - (void)removeAnimateView{
     if (_scoresView != nil) {
         [_scoresView removeFromSuperview];
@@ -538,11 +512,14 @@
         [_poorScoreView removeFromSuperview];
         _poorScoreView = nil;
     }
+    
+    if (_tranView != nil) {
+        [_tranView removeFromSuperview];
+        _tranView = nil;
+    }
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
-    
-    [_arrowBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
     
     if (_refreshArea == 0) {
         _selectHole = 0;
@@ -560,7 +537,7 @@
     
     _refreshArea = 0;
     
-    [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
+    //[self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
     
     _currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     JGHScoresMainViewController *vc2;
@@ -746,12 +723,14 @@
     sub.selectHoleBtnClick = ^(){
         [self titleBtnClick];
     };
-    [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
+    //[self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:sub.index], [self returnStandardlever:sub.index]] forState:UIControlStateNormal];
     
     NSLog(@"viewControllers == %@", _pageViewController.viewControllers);
     
     _currentPage = sub.index;
     _selectPage = sub.index+1;
+    
+    [sub switchScoreModeNote];
 }
 #pragma mark -- 获取标准杆
 - (NSInteger)returnStandardlever:(NSInteger)standardId{
@@ -992,6 +971,20 @@
         [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
     }];
 }
+#pragma mark -- 切换球场区域 -- 总杆模式
+- (void)poorOneAreaString:(NSString *)areaString andID:(NSInteger)selectId{
+    [Helper alertViewWithTitle:@"确定切换打球区吗？该区切换前的记分数据会被清空！" withBlockCancle:^{
+    } withBlockSure:^{
+        
+        [self loadOneAreaData:areaString andBtnTag:selectId];
+    } withBlock:^(UIAlertController *alertView) {
+        UIWindow   *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        alertWindow.rootViewController = [[UIViewController alloc] init];
+        alertWindow.windowLevel = UIWindowLevelAlert + 1;
+        [alertWindow makeKeyAndVisible];
+        [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
+    }];
+}
 #pragma mark -- 切换第一区 -- 总杆模式
 - (void)loadOneAreaData:(NSString *)btnString andBtnTag:(NSInteger)tag{
     NSLog(@"%@", btnString);
@@ -1083,7 +1076,7 @@
             }
         }
         
-        [self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:_selectPage -1], [self returnStandardlever:_selectPage -1]] forState:UIControlStateNormal];
+        //[self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:_selectPage -1], [self returnStandardlever:_selectPage -1]] forState:UIControlStateNormal];
         
         //========================
         _refreshArea = 1;

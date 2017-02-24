@@ -24,7 +24,7 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
     
     NSArray *_currentAreaArray;//当前区域
     NSArray *_areaArray;//区域列表
-
+    
     NSInteger _areaSourceID;//0-一区；1-二区
 }
 
