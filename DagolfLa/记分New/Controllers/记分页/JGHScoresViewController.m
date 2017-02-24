@@ -306,7 +306,6 @@
             _isEdtor = 1;
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
-            
             NSLog(@"5S  时间保存");
             if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                 
@@ -390,7 +389,6 @@
                         [self.titleBtn setTitle:[NSString stringWithFormat:@"%@ Hole PAR %@", model.poleNameList[0], model.standardlever[0]] forState:UIControlStateNormal];
                     }
                 }
-                
                 
                 self.timer =[NSTimer scheduledTimerWithTimeInterval:[[data objectForKey:@"interval"] integerValue] target:self
                                                            selector:@selector(changeTimeAtTimeDoClick) userInfo:nil repeats:YES];

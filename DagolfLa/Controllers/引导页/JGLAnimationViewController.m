@@ -75,8 +75,7 @@ static int timeNumber = 0;
 {
     if (timeNumber % 2 == 0) {
         _imgvQi.image = [UIImage imageNamed:@"fllag_1"];
-    }
-    else{
+    }else{
         _imgvQi.image = [UIImage imageNamed:@"fllag_2"];
     }
     timeNumber++;

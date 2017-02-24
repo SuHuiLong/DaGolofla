@@ -162,6 +162,7 @@
     self.mainTable.dataSource = self;
 //    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.mainTable];
+    [_mainTable setExtraCellLineHidden];
     
     self.mainTable.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     self.mainTable.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];

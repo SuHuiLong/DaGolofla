@@ -19,18 +19,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.title = @"建议与反馈";
-    
     [self createUIConfig];
-    
 }
 
 -(void)createUIConfig
 {
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 130 * ProportionAdapter) style:(UITableViewStylePlain)];
     self.tableView.rowHeight = 44 * ProportionAdapter;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
@@ -39,7 +35,6 @@
     self.tableView.scrollEnabled = NO;
     [self.view addSubview:self.tableView];
     // Do any additional setup after loading the view.
-    
     
 }
 
@@ -60,7 +55,6 @@
             JGLBallParkDataViewController* parkVc = [[JGLBallParkDataViewController alloc]init];
             [self.navigationController pushViewController:parkVc animated:YES];
         }
-            
             break;
             
         case 1:

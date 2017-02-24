@@ -97,7 +97,6 @@
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [_dictData setObject:searchBar.text forKey:@"searchStr"];
     _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.header beginRefreshing];
 }
@@ -112,7 +111,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    
+    [_tableView setExtraCellLineHidden];
     [_tableView registerClass:[JGLFriendAddTableViewCell class] forCellReuseIdentifier:@"JGLFriendAddTableViewCell"];
     
     
@@ -124,7 +123,8 @@
 
 #pragma mark - 下载数据
 //1.0的借口，可能要替换
-- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
+- (void)downLoadData:(NSInteger )page isReshing:(BOOL)isReshing{
+    [_dictData setObject:_searchController.searchBar.text forKey:@"searchStr"];
     [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
 //    [_dictData setObject:@0 forKey:@"otherUserId"];
 //    [_dictData setObject:@0 forKey:@"page"];
@@ -294,16 +294,21 @@
     NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:0 inSection:index];
     
     if (![_listArray[index] count]) {
-        
+
         return 0;
-        
     }else{
-        
         [tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
-        
         return index;
     }
 }
+
+
+//输入过程中搜索
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+
+    [self headRereshing];
+}
+
 
 
 @end
