@@ -43,7 +43,7 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
 - (instancetype)init{
     if (self == [super init]) {
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
-        _colorArray = @[@"#FFFFFF", @"#EEEEEE", @"#FFFFFF", @"#F9F9F9", @"#FFFFFF", @"#F9F9F9"];
+        _colorArray = @[@"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8"];
         
         self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (200 +20 +20 + 70)*ProportionAdapter) style:UITableViewStylePlain];
         self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -211,7 +211,7 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     JGHNewPoorBarHoleCell *scoreAreaCell = [tableView dequeueReusableCellWithIdentifier:JGHNewPoorBarHoleCellIdentifier];
-    scoreAreaCell.backgroundColor = [UIColor colorWithHexString:@"#DCE0E1"];
+    scoreAreaCell.backgroundColor = [UIColor colorWithHexString:@"#dddfe1"];
     scoreAreaCell.delegate = self;
     scoreAreaCell.poorBtn.tag = 3000 +section;
     scoreAreaCell.arebtn.tag = 30000 +section;
@@ -230,7 +230,7 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
     }
     
     UIButton *arebtn = [self viewWithTag:30000 +btn.tag -3000];
-    [arebtn setImage:[UIImage imageNamed:@"arrowTop"] forState:UIControlStateNormal];
+    [arebtn setImage:[UIImage imageNamed:@"icn_show_arrowdown"] forState:UIControlStateNormal];
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)selectHoleCoresBtnTag:(NSInteger)btnTag andCellTag:(NSInteger)cellTag{
@@ -280,10 +280,10 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
     }];
     
     UIButton *arebtn = [self viewWithTag:30000];
-    [arebtn setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+    [arebtn setImage:[UIImage imageNamed:@"icn_show_arrowup"] forState:UIControlStateNormal];
     
     UIButton *arebtn1 = [self viewWithTag:30001];
-    [arebtn1 setImage:[UIImage imageNamed:@"arrowDown"] forState:UIControlStateNormal];
+    [arebtn1 setImage:[UIImage imageNamed:@"icn_show_arrowup"] forState:UIControlStateNormal];
 }
 - (void)removeAnimateView{
     [_tranView removeFromSuperview];

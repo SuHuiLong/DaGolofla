@@ -15,21 +15,21 @@
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.backgroundColor = [UIColor whiteColor];
         
-        _userName = [[UILabel alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 20*ProportionAdapter, 115*ProportionAdapter, 20*ProportionAdapter)];
+        _userName = [[UILabel alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 18*ProportionAdapter, 115*ProportionAdapter, 20*ProportionAdapter)];
         _userName.text = @"笨笨－播客";
         _userName.font = [UIFont systemFontOfSize:17*ProportionAdapter];
         _userName.textAlignment = NSTextAlignmentLeft;
         _userName.textColor = [UIColor colorWithHexString:B31_Color];
         [self addSubview:_userName];
         
-        _fairway = [[UILabel alloc]initWithFrame:CGRectMake(135*ProportionAdapter, 20*ProportionAdapter, 46*ProportionAdapter, 15*ProportionAdapter)];
+        _fairway = [[UILabel alloc]initWithFrame:CGRectMake(135*ProportionAdapter, 19*ProportionAdapter, 46*ProportionAdapter, 15*ProportionAdapter)];
         _fairway.text = @"上球道";
         _fairway.font = [UIFont systemFontOfSize:13*ProportionAdapter];
         _fairway.textAlignment = NSTextAlignmentCenter;
         _fairway.textColor = [UIColor colorWithHexString:@"#999999"];
         [self addSubview:_fairway];
         
-        _totalName = [[UILabel alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 85*ProportionAdapter, 45*ProportionAdapter, 20*ProportionAdapter)];
+        _totalName = [[UILabel alloc]initWithFrame:CGRectMake(20*ProportionAdapter, 84*ProportionAdapter, 45*ProportionAdapter, 20*ProportionAdapter)];
         _totalName.text = @"总杆";
         _totalName.font = [UIFont systemFontOfSize:15*ProportionAdapter];
         _totalName.textAlignment = NSTextAlignmentLeft;
@@ -37,33 +37,33 @@
         [self addSubview:_totalName];
         
         //总杆值
-        _totalPoleValue = [[UILabel alloc]initWithFrame:CGRectMake(_totalName.frame.origin.x +_totalName.frame.size.width, 85*ProportionAdapter, 40*ProportionAdapter, 20*ProportionAdapter)];
+        _totalPoleValue = [[UILabel alloc]initWithFrame:CGRectMake(_totalName.frame.origin.x +_totalName.frame.size.width, 83*ProportionAdapter, 40*ProportionAdapter, 20*ProportionAdapter)];
         _totalPoleValue.text = @"25";
-        _totalPoleValue.font = [UIFont systemFontOfSize:15*ProportionAdapter];
+        _totalPoleValue.font = [UIFont systemFontOfSize:20*ProportionAdapter];
         _totalPoleValue.textAlignment = NSTextAlignmentLeft;
         _totalPoleValue.textColor = [UIColor colorWithHexString:B31_Color];
         [self addSubview:_totalPoleValue];
         
         //总推杆
-        _totalPushValue = [[UILabel alloc]initWithFrame:CGRectMake(_totalPoleValue.frame.origin.x +_totalPoleValue.frame.size.width, 75*ProportionAdapter, 40*ProportionAdapter, 20*ProportionAdapter)];
+        _totalPushValue = [[UILabel alloc]initWithFrame:CGRectMake(_totalPoleValue.frame.origin.x +_totalPoleValue.frame.size.width, 70*ProportionAdapter, 40*ProportionAdapter, 20*ProportionAdapter)];
         _totalPushValue.text = @"25";
         _totalPushValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
         _totalPushValue.textAlignment = NSTextAlignmentLeft;
         _totalPushValue.textColor = [UIColor colorWithHexString:B31_Color];
         [self addSubview:_totalPushValue];
         
-        //是
-        _upperTrackBtn = [[UIButton alloc]initWithFrame:CGRectMake(140*ProportionAdapter, 40*ProportionAdapter, 36*ProportionAdapter, 30*ProportionAdapter)];
-        [_upperTrackBtn setImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
-        [_upperTrackBtn addTarget:self action:@selector(upperTrackBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_upperTrackBtn];
-        
         //否
-        _upperTrackNoBtn = [[UIButton alloc]initWithFrame:CGRectMake(140*ProportionAdapter, 70*ProportionAdapter, 36*ProportionAdapter, 30*ProportionAdapter)];
+        _upperTrackNoBtn = [[UIButton alloc]initWithFrame:CGRectMake(140*ProportionAdapter, 70*ProportionAdapter, 36*ProportionAdapter, 31*ProportionAdapter)];
         [_upperTrackNoBtn setImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
         [_upperTrackNoBtn addTarget:self action:@selector(upperTrackNoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_upperTrackNoBtn];
         
+        //是
+        _upperTrackBtn = [[UIButton alloc]initWithFrame:CGRectMake(140*ProportionAdapter, 40*ProportionAdapter, 36*ProportionAdapter, 31*ProportionAdapter)];
+        [_upperTrackBtn setImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
+        [_upperTrackBtn addTarget:self action:@selector(upperTrackBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_upperTrackBtn];
+                
         //-杆数
         _reduntionScoresBtn = [[UIButton alloc]initWithFrame:CGRectMake(210*ProportionAdapter, 20*ProportionAdapter, 50*ProportionAdapter, 32*ProportionAdapter)];
         [_reduntionScoresBtn setImage:[UIImage imageNamed:@"reductionScores"] forState:UIControlStateNormal];
@@ -212,7 +212,7 @@
     
     if ([[model.poleNumber objectAtIndex:index] integerValue] == -1) {
         self.poleValue.text = [NSString stringWithFormat:@"%@", [model.standardlever objectAtIndex:index]];
-        self.poleValue.font = [UIFont systemFontOfSize:23 *ProportionAdapter];
+        self.poleValue.font = [UIFont systemFontOfSize:20 *ProportionAdapter];
         self.poleValue.textColor = [UIColor lightGrayColor];
     }else{
         self.poleValue.text = [NSString stringWithFormat:@"%@", [model.poleNumber objectAtIndex:index]];
@@ -222,7 +222,7 @@
     
     if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
         self.pushPoleValue.text = @"2";
-        self.pushPoleValue.font = [UIFont systemFontOfSize:23*ProportionAdapter];
+        self.pushPoleValue.font = [UIFont systemFontOfSize:20*ProportionAdapter];
         self.pushPoleValue.textColor = [UIColor lightGrayColor];
     }else{
         self.pushPoleValue.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
@@ -236,15 +236,22 @@
     [self calculateViewSize];
 
     
+    [self onTheFairway:model.onthefairway andIndex:index];
+}
+
+- (void)onTheFairway:(NSArray *)onthefairway  andIndex:(NSInteger)index{
     //是否上球道
-    if ([[model.onthefairway objectAtIndex:index] integerValue] == 1){
+    if ([[onthefairway objectAtIndex:index] integerValue] == 1){
         [self.upperTrackBtn setImage:[UIImage imageNamed:@"onballG"] forState:UIControlStateNormal];
+        [self bringSubviewToFront:self.upperTrackBtn];
         [self.upperTrackNoBtn setImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
-    }else if ([[model.onthefairway objectAtIndex:index] integerValue] == 0){
+    }else if ([[onthefairway objectAtIndex:index] integerValue] == 0){
         [self.upperTrackBtn setImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
         [self.upperTrackNoBtn setImage:[UIImage imageNamed:@"noballG"] forState:UIControlStateNormal];
+        [self bringSubviewToFront:self.upperTrackNoBtn];
     }else{
         [self.upperTrackBtn setImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
+        [self bringSubviewToFront:self.upperTrackBtn];
         [self.upperTrackNoBtn setImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
     }
 }
@@ -252,17 +259,17 @@
 - (void)calculateViewSize{
     float totalNameWSize;
     totalNameWSize = [Helper textWidthFromTextString:_totalName.text height:_totalName.frame.size.height fontSize:15 *ProportionAdapter];
-    self.totalName.frame = CGRectMake(20*ProportionAdapter, 85*ProportionAdapter, totalNameWSize +10*ProportionAdapter, 20*ProportionAdapter);
+    self.totalName.frame = CGRectMake(20*ProportionAdapter, 84*ProportionAdapter, totalNameWSize +10*ProportionAdapter, 20*ProportionAdapter);
     
     //总杆值
     float totalPoleValueWSize;
-    totalPoleValueWSize = [Helper textWidthFromTextString:_totalPoleValue.text height:_totalPoleValue.frame.size.height fontSize:15 *ProportionAdapter];
-    _totalPoleValue.frame = CGRectMake(_totalName.frame.origin.x +_totalName.frame.size.width, 85*ProportionAdapter, totalPoleValueWSize, 20*ProportionAdapter);
+    totalPoleValueWSize = [Helper textWidthFromTextString:_totalPoleValue.text height:_totalPoleValue.frame.size.height fontSize:20 *ProportionAdapter];
+    _totalPoleValue.frame = CGRectMake(_totalName.frame.origin.x +_totalName.frame.size.width, 83*ProportionAdapter, totalPoleValueWSize, 20*ProportionAdapter);
     
     //总推杆
     float totalPushValueWSize;
     totalPushValueWSize = [Helper textWidthFromTextString:_totalPushValue.text height:_totalPushValue.frame.size.height fontSize:13 *ProportionAdapter];
-    _totalPushValue.frame = CGRectMake(_totalPoleValue.frame.origin.x +_totalPoleValue.frame.size.width, 75*ProportionAdapter, 40*ProportionAdapter, 20*ProportionAdapter);
+    _totalPushValue.frame = CGRectMake(_totalPoleValue.frame.origin.x +_totalPoleValue.frame.size.width, 70*ProportionAdapter, totalPushValueWSize, 20*ProportionAdapter);
 }
 - (void)configPoorJGHScoreListModel:(JGHScoreListModel *)model andIndex:(NSInteger)index{
     //standardlever  总差杆数
@@ -304,7 +311,7 @@
     //差杆
     if ([[model.poleNumber objectAtIndex:index] integerValue] == -1) {
         self.poleValue.text = @"0";
-        self.poleValue.font = [UIFont systemFontOfSize:23*ProportionAdapter];
+        self.poleValue.font = [UIFont systemFontOfSize:20*ProportionAdapter];
         self.poleValue.textColor = [UIColor lightGrayColor];
     }else{
         if ([[model.poleNumber objectAtIndex:index] integerValue] == 0) {
@@ -323,7 +330,7 @@
     
     if ([[model.pushrod objectAtIndex:index] integerValue] == -1) {
         self.pushPoleValue.text = @"2";
-        self.pushPoleValue.font = [UIFont systemFontOfSize:23*ProportionAdapter];
+        self.pushPoleValue.font = [UIFont systemFontOfSize:20*ProportionAdapter];
         self.pushPoleValue.textColor = [UIColor lightGrayColor];
     }else{
         self.pushPoleValue.text = [NSString stringWithFormat:@"%@", [model.pushrod objectAtIndex:index]];
@@ -337,16 +344,7 @@
     [self calculateViewSize];
     
     //是否上球道
-    if ([[model.onthefairway objectAtIndex:index] integerValue] == 1){
-        [self.upperTrackBtn setImage:[UIImage imageNamed:@"onballG"] forState:UIControlStateNormal];
-        [self.upperTrackNoBtn setImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
-    }else if ([[model.onthefairway objectAtIndex:index] integerValue] == 0){
-        [self.upperTrackBtn setImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
-        [self.upperTrackNoBtn setImage:[UIImage imageNamed:@"noballG"] forState:UIControlStateNormal];
-    }else{
-        [self.upperTrackBtn setImage:[UIImage imageNamed:@"onballL"] forState:UIControlStateNormal];
-        [self.upperTrackNoBtn setImage:[UIImage imageNamed:@"noballL"] forState:UIControlStateNormal];
-    }
+    [self onTheFairway:model.onthefairway andIndex:index];
     
 }
 
