@@ -8,7 +8,6 @@
 
 #import "JGHScoresHoleView.h"
 #import "JGHScoreListModel.h"
-#import "JGHScoreAreaCell.h"
 #import "JGHAreaListView.h"
 #import "JGHNewPoorBarHoleCell.h"
 #import "JGHNewScoresHoleCell.h"
