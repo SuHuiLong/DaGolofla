@@ -126,9 +126,9 @@
             cell.mySwitch.tag = indexPath.row + 300;
             cell.myLabel.text = @"系统通知";
             if ([[user objectForKey:@"msg_system_setting"] integerValue] == 1) {
-                cell.mySwitch.on = NO;
-            }else{
                 cell.mySwitch.on = YES;
+            }else{
+                cell.mySwitch.on = NO;
             }
             
             return cell;
@@ -136,9 +136,9 @@
             cell.myLabel.text = @"球队通知";
             cell.mySwitch.tag = indexPath.row + 300;
             if ([[user objectForKey:@"msg_team_setting"] integerValue] == 1) {
-                cell.mySwitch.on = NO;
-            }else{
                 cell.mySwitch.on = YES;
+            }else{
+                cell.mySwitch.on = NO;
             }
             return cell;
         }
@@ -159,9 +159,9 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:DEFAULF_USERID forKey:@"userId"];
         if (mySwitch.isOn) {
-            [dic setObject:@0 forKey:@"msg_system_setting"];
-        }else{
             [dic setObject:@1 forKey:@"msg_system_setting"];
+        }else{
+            [dic setObject:@0 forKey:@"msg_system_setting"];
         }
         [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
         // msg_system_setting  // 1 是  close
@@ -187,9 +187,9 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:DEFAULF_USERID forKey:@"userId"];
         if (mySwitch.isOn) {
-            [dic setObject:@0 forKey:@"msg_team_setting"];
-        }else{
             [dic setObject:@1 forKey:@"msg_team_setting"];
+        }else{
+            [dic setObject:@0 forKey:@"msg_team_setting"];
         }
         [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
         // msg_team_setting

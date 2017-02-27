@@ -450,9 +450,8 @@
                     
                 case 1:{
                     
-                    JGDPersonalCard *cardVC = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
-                    [self.view addSubview:cardVC];
-//                    [self.navigationController pushViewController:arr[8] animated:YES];
+
+                    [self.navigationController pushViewController:arr[8] animated:YES];
                     
                     break;
                 }
