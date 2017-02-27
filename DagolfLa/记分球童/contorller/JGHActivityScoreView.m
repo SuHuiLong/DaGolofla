@@ -457,6 +457,7 @@
     
     _palyArray = [palerArray mutableCopy];
     
+    _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64 -60*ProportionAdapter);
     [_tableView reloadData];
 }
 #pragma mark --刷新时间

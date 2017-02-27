@@ -66,11 +66,11 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-    [self createItem];
+    //[self createItem];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     
     [_caddieWithPalyerScoreView.tableView.header beginRefreshing];
     [_caddieWithCaddieScoreView.tableView.header beginRefreshing];
@@ -281,7 +281,7 @@
 }
 #pragma mark -- 活动记分
 - (void)createActivityScoreView:(JGLChooseScoreModel *)model{
-    _activityScoreView = [[JGHActivityScoreView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64)];
+    _activityScoreView = [[JGHActivityScoreView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -60*ProportionAdapter)];
     [_activityScoreView reloadData:model];
     
     __weak JGHNewStartScoreViewController *weakSelf = self;
