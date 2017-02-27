@@ -147,7 +147,13 @@
     }
     
     if (model.almost) {
-        _almostValue.text = [NSString stringWithFormat:@"%@", model.almost];
+        if ([model.almost floatValue] == -10000) {
+            _almostValue.text = @"差点  --";
+        }else{
+            _almostValue.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
+        }
+    }else{
+        _almostValue.text = @"差点  --";
     }
     
     if (model.industry) {

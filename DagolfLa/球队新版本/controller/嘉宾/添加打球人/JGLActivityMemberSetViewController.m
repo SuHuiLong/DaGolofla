@@ -273,9 +273,13 @@
 //    }
     
     if (model.almost) {
-        cell.almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
+        if ([model.almost floatValue] == -10000) {
+            cell.almostLabel.text = @"差点  --";
+        }else{
+            cell.almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
+        }
     }else{
-        cell.almostLabel.text = @"差点";
+        cell.almostLabel.text = @"差点  --";
     }
     
     return cell;
