@@ -13,6 +13,6 @@
 @property (copy, nonatomic) void (^blockStr)(NSString *);
 
 @property (nonatomic, strong) UIDatePicker *dataPickerView;
-
+@property (nonatomic, strong) NSDate *lastDate;
 
 @end

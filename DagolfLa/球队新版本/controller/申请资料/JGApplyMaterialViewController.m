@@ -15,7 +15,7 @@
 
 @interface JGApplyMaterialViewController ()<UITableViewDelegate, UITableViewDataSource,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>
 
-@property (nonatomic, strong)UITableView *tableView;
+//@property (nonatomic, strong)UITableView *tableView;
 @property (nonatomic, strong)UITableView *secondTableView;
 @property (nonatomic, strong)NSArray *titleArray;
 @property (nonatomic, strong)NSArray *placeholderArray;
@@ -23,9 +23,47 @@
 @property (nonatomic, strong)UIPickerView *pickerView;
 @property (nonatomic, strong)UIView *pickerBackView;
 
+@property (nonatomic, strong) NSNumber *almost;
+@property (nonatomic, strong) NSNumber *almost_system_setting;
+
 @end
 
 @implementation JGApplyMaterialViewController
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    
+    [[JsonHttp jsonHttp] httpRequest:@"user/getUserAlmost" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"almost"]) {
+                self.almost = [data objectForKey:@"almost"];
+            }else{
+                self.almost = [NSNumber numberWithInt:-10000];
+            }
+            
+            if ([data objectForKey:@"almost_system_setting"]) {
+                self.almost_system_setting = [data objectForKey:@"almost_system_setting"];
+            }
+            
+            [self.secondTableView reloadData];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+}
 
 - (void)viewDidLoad {
     
@@ -395,23 +433,29 @@
             cell.contentLB.text = strName;
         };
         [self.navigationController pushViewController:tcVc animated:YES];
+    }else if (indexPath.row == 3) {
+        if (([self.almost integerValue] != -10000) && ([self.almost_system_setting integerValue] == 1)) {
+            [LQProgressHud showInfoMsg:@"您启用了君高差点系统，无法手动更改。\n可移步『系统设置』关闭该系统。"];
+        }else{
+            return;
+        }
     }
     else
     {
         return;
     }
 }
-- (void)creatTableView{
-    
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.tableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
-    [self.tableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
-    self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"差点", @"手机号码"], @"常住地址", @"衣服尺码", @"惯用手", nil];
-    self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入性别", @"请输入您的差点", @"请输入手机号" ],@"方便活动邀请（选填）",@"统一制服定做（选填）",@"制定特殊需求（选填）", nil];
-    [self.view addSubview: self.tableView];
-}
+//- (void)creatTableView{
+//    
+//    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:(UITableViewStylePlain)];
+//    self.tableView.delegate = self;
+//    self.tableView.dataSource = self;
+//    [self.tableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"cell"];
+//    [self.tableView registerClass:[JGButtonTableViewCell class] forCellReuseIdentifier:@"cellBtn"];
+//    self.titleArray = [NSArray arrayWithObjects:@[@"姓名", @"性别", @"差点", @"手机号码"], @"常住地址", @"衣服尺码", @"惯用手", nil];
+//    self.placeholderArray = [NSArray arrayWithObjects:@[@"请输入真实姓名", @"请输入性别", @"请输入您的差点", @"请输入手机号" ],@"方便活动邀请（选填）",@"统一制服定做（选填）",@"制定特殊需求（选填）", nil];
+//    [self.view addSubview: self.tableView];
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40 * screenWidth / 320;
@@ -457,11 +501,25 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"almost"]) {
             cell.textFD.text = [[self.memeDic objectForKey:@"almost"] stringValue];
-            return cell;
         }else{
             cell.textFD.placeholder = @"请输入你的差点";
-            return cell;
         }
+        
+        // 君高差点系统 1 启用
+        
+        if ([self.almost integerValue] == -10000) {
+        
+            cell.textFD.placeholder = @"--";
+            cell.textFD.text = @"";
+        }else{
+            
+            cell.textFD.text = [NSString stringWithFormat:@"%@", self.almost];
+            if ([self.almost_system_setting integerValue] == 1) {
+                cell.textFD.enabled = NO;
+            }
+        }
+        
+        return cell;
         
     }else{
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
