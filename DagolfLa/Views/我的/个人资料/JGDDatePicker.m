@@ -44,6 +44,9 @@
     return self;
 }
 
+- (void)setLastDate:(NSDate *)lastDate{
+    self.dataPickerView.date = lastDate;
+}
 
 - (void)cancelAct{
     [self removeFromSuperview];

@@ -61,7 +61,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90*ScreenWidth/375 + 44*ScreenWidth/375 * 3) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 80*ScreenWidth/375 + 44*ScreenWidth/375 * 3) style:(UITableViewStylePlain)];
     [self.view addSubview: self.tableView];
     self.title = @"系统设置";
     self.tableView.delegate = self;
@@ -82,7 +82,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, section == 1 ?  70 * ProportionAdapter : 20 * ProportionAdapter)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, section == 1 ?  70 * ProportionAdapter : 10 * ProportionAdapter)];
     backView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
     NSString *text = @"启用君高差点管理系统后，系统会根据每场完整几分成绩，计算出当此球场差点值，然后将该值与个人历史差点进行计算，实时算出您的新差点并自动更新。";
     UILabel *lalel = [Helper lableRect:CGRectMake(15 * ProportionAdapter, 0, screenWidth - 30 * ProportionAdapter, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:12 * ProportionAdapter text:section == 1 ? text : @"" textAlignment:(NSTextAlignmentLeft)];
@@ -246,7 +246,7 @@
 //返回各个分区的头高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return section == 0 ? 20*ScreenWidth/375 : 70*ScreenWidth/375;
+    return section == 0 ? 10*ScreenWidth/375 : 70*ScreenWidth/375;
 }
 
 - (NSMutableDictionary *)newDic{
