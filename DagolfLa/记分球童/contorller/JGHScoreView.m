@@ -313,13 +313,15 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
+        if (_dataBallArray.count > 0) {
+            return 1;
+        }
         return 0* screenWidth / 375;
     }
     else{
         return 10* screenWidth / 375;
     }
 }
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         return  60* screenWidth / 375;
@@ -358,11 +360,13 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    /*
     if (_chooseView != nil)  {
         [_chooseView removeFromSuperview];
         _chooseView = nil;
     }
-    
+    */
+     
     if (indexPath.section == 0) {
         //球场
         _blockSelectBall();

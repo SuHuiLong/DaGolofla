@@ -402,7 +402,7 @@
             
             _scoresView = [[JGHScoresHoleView alloc]init];
             _scoresView.delegate = self;
-            _scoresView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            _scoresView.frame = CGRectMake(0, screenHeight +(screenHeight-(35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
             
             _scoresView.dataArray = self.userScoreArray;
             _scoresView.scorekey = _scorekey;
@@ -412,7 +412,7 @@
             
             [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
             //遮罩
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, screenHeight-(35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
             
@@ -426,7 +426,7 @@
             
             _poorScoreView = [[JGHPoorScoreHoleView alloc]init];
             _poorScoreView.delegate = self;
-            _poorScoreView.frame = CGRectMake(0, screenHeight, screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            _poorScoreView.frame = CGRectMake(0, screenHeight, screenWidth, (35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
             _poorScoreView.dataArray = self.userScoreArray;
             _poorScoreView.scorekey = _scorekey;
             _poorScoreView.curPage = _selectPage;
@@ -438,7 +438,7 @@
             [self.view setUserInteractionEnabled:NO];
 
             
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
+            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
             _tranView.backgroundColor = [UIColor blackColor];
             _tranView.alpha = 0.3;
             
@@ -464,27 +464,27 @@
     [userdef synchronize];
 }
 - (void)showViewAnimate:(UIView *)animateView{
-    [UIView animateWithDuration:0.5f animations:^{
-        _tranView.frame = CGRectMake(0, 0, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
-        animateView.frame = CGRectMake(0, screenHeight -(52*ProportionAdapter +(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter +64), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+    [UIView animateWithDuration:0.3f animations:^{
+        _tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight-(35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        animateView.frame = CGRectMake(0, screenHeight -((35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter +64), screenWidth, (35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
         [self.view setUserInteractionEnabled:YES];
     }];
 }
 - (void)removeALlView{
     [self.view setUserInteractionEnabled:NO];
     [_scoresView setUserInteractionEnabled:NO];
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.3f animations:^{
         if (_scoresView != nil) {
-            _scoresView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            _scoresView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
         }
         
         if (_poorScoreView != nil) {
-            _poorScoreView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            _poorScoreView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
         }
         
-        _tranView.frame = CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(80 +90*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        _tranView.frame = CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
         [self.view setUserInteractionEnabled:YES];
-        [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.6f];
+        [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.4f];
     }];
 }
 #pragma mark -- 关闭成绩列表视图
@@ -1088,13 +1088,13 @@
         _refreshArea = 1;
         
         NSLog(@"_selectPage == %td", _selectPage);
-        NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
-        [userDict setObject:@(_currentPage) forKey:@"index"];
+        //NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
+        //[userDict setObject:@(_currentPage) forKey:@"index"];
         //创建一个消息对象
-        NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
+        //NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
         
         //发送消息
-        [[NSNotificationCenter defaultCenter]postNotification:notice];
+        //[[NSNotificationCenter defaultCenter]postNotification:notice];
         
     }];
 }
