@@ -557,7 +557,7 @@
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
             }
         }
     }
