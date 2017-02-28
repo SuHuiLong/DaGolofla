@@ -137,7 +137,7 @@ static CGFloat ImageHeight  = 210.0;
     
     //咨询
     UIButton *consultBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    consultBtn.frame = CGRectMake(screenWidth - 54 * screenWidth / 320, 10, 54 * screenWidth / 320, 44 * screenWidth / 320);
+    consultBtn.frame = CGRectMake(screenWidth - 70 * screenWidth / 320, 17 * ProportionAdapter, 22 * screenWidth / 320, 22 * screenWidth / 320);
     consultBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     [consultBtn setTintColor:[UIColor whiteColor]];
     [consultBtn setImage:[UIImage imageNamed:@"consult"] forState:(UIControlStateNormal)];
@@ -145,6 +145,18 @@ static CGFloat ImageHeight  = 210.0;
     consultBtn.tag = 520;
     [consultBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:consultBtn];
+    
+    // share
+    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    shareBtn.frame = CGRectMake(screenWidth - 40 * screenWidth / 320, 15 * ProportionAdapter, 23 * screenWidth / 320, 23 * screenWidth / 320);
+    shareBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
+    [shareBtn setTintColor:[UIColor whiteColor]];
+    [shareBtn setImage:[UIImage imageNamed:@"ic_portshare"] forState:(UIControlStateNormal)];
+    shareBtn.titleLabel.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
+    shareBtn.tag = 530;
+    [shareBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.titleView addSubview:shareBtn];
+    
     
     // 球队详情
     //    UILabel *courtLB = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 270, 44 * ProportionAdapter)];;
@@ -252,22 +264,15 @@ static CGFloat ImageHeight  = 210.0;
         JGDWKCourtDetailViewController *detailVC = [[JGDWKCourtDetailViewController alloc] init];
         detailVC.ballKey = self.timeKey;
         [self.navigationController pushViewController:detailVC animated:YES];
-        //        JGDCourtSecDetailViewController *secDetailVC = [[JGDCourtSecDetailViewController alloc] init];
-        //        secDetailVC.detailDic = self.detailDic;
-        //        NSArray *keyArray = [NSArray arrayWithObjects:@"type", @"buildTime", @"areaMeasure", @"greenGrass", @"holesSum", @"designer", @"fairwayLength", @"fairwayGrass", nil];
-        //        for (int i = 0; i < 8; i ++) {
-        //            if ([self.detailDic objectForKey:keyArray[i]]) {
-        //                if (i == 4) {
-        //                    [secDetailVC.proArray addObject:[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:keyArray[i]]]];
-        //                }else{
-        //                    [secDetailVC.proArray addObject:[self.detailDic objectForKey:keyArray[i]]];
-        //                }
-        //            }else{
-        //                [secDetailVC.proArray addObject:@""];
-        //            }
-        //        }
-        //        [self.navigationController pushViewController:secDetailVC animated:YES];
-    }
+    }else if (btn.tag == 530) {
+        ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        [alert setCallBackTitle:^(NSInteger index) {
+            [self shareInfo:index];
+        }];
+        [UIView animateWithDuration:0.2 animations:^{
+            [alert show];
+        }];    }
 }
 
 
@@ -607,9 +612,57 @@ static CGFloat ImageHeight  = 210.0;
     [self.navigationController pushViewController:commitVC animated:YES];
 }
 
-#pragma mark -- 咨询
-- (void)askBtnClick:(UIButton *)btn{
+
+
+#pragma mark -- 分享
+-(void)shareInfo:(NSInteger)index{
     
+    NSData *fiData;
+    
+    fiData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey]]];
+    NSObject* obj;
+    if (fiData != nil && fiData.length > 0) {
+        obj = fiData;
+    }
+    else
+    {
+        obj = [UIImage imageNamed:@"iconlogo"];
+    }
+    
+    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, [self.detailDic objectForKey:@"id"]]];
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@&share=1", DEFAULF_USERID, [self.detailDic objectForKey:@"id"], md5Str];
+    
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"title"]];
+    if (index == 0){
+        
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:[NSString stringWithFormat:@"%@" ,[self.detailDic objectForKey:@"summary"]]  image:obj location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+        
+    }else if (index==1){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:[NSString stringWithFormat:@"%@" ,[self.detailDic objectForKey:@"summary"]] image:obj location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                //                [self shareS:indexRow];
+            }
+        }];
+    }else{
+        UMSocialData *data = [UMSocialData defaultData];
+        data.shareImage = [UIImage imageNamed:DefaultHeaderImage];
+        data.shareText = [NSString stringWithFormat:@"%@%@",@"君高高尔夫",shareUrl];
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        //        self.launchActivityTableView.frame = CGRectMake(0, 64, ScreenWidth, screenHeight - 64 - 49);
+        
+    }
     
 }
 
