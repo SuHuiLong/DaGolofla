@@ -114,7 +114,8 @@
     [PWDView addSubview:self.eyeBtn];
     
     // 提交
-    UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 250 * ProportionAdapter, screenWidth - 20, 50 * ProportionAdapter)];
+    UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 250 * ProportionAdapter, screenWidth - 20 * screenWidth / 375, 40 * screenWidth / 375)];
+
     commitBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     commitBtn.layer.cornerRadius = 5.0 * ProportionAdapter;
     [commitBtn setTitle:@"提交" forState:(UIControlStateNormal)];
