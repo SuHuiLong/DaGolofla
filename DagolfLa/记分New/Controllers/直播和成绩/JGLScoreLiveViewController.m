@@ -43,6 +43,7 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    [_tableView setExtraCellLineHidden];
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLChoosesScoreTableViewCell class] forCellReuseIdentifier:@"JGLChoosesScoreTableViewCell"];
     [_tableView registerClass:[JGLScoreLiveHeadTableViewCell class] forCellReuseIdentifier:@"JGLScoreLiveHeadTableViewCell"];

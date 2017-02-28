@@ -48,8 +48,7 @@
     
     [self setupScanWindowView];//设置扫描二维码区域的视图
 //    [self sweepCode];
-    
-    //    [self checkCameraAuth];
+//    [self checkCameraAuth];
     
 }
 -(void)viewDidAppear:(BOOL)animated{

@@ -68,7 +68,6 @@
 
 - (void)configJGHShowFavouritesCell:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     
-    
     self.iconImageV.frame = CGRectMake(11 * ProportionAdapter, 14 * ProportionAdapter, imageW * ProportionAdapter, imageH * ProportionAdapter);
     
     CGFloat width = [Helper textWidthFromTextString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]] height:self.addressImageView.frame.size.height fontSize:18 * ProportionAdapter];
@@ -96,11 +95,10 @@
         [self.iconImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
         
         self.nameLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
-
+        
         self.addressLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"position"]];
         
         self.detailLB.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"desc"]];
-        
     }
 }
 

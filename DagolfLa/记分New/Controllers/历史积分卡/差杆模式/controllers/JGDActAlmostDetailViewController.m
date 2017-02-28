@@ -296,11 +296,10 @@
         partLB.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
         [viewTitle addSubview:partLB];
         
-        
         UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 205 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [viewTitle addSubview:greenView];
-        
+
         return viewTitle;
     }else{
         
