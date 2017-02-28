@@ -18,7 +18,7 @@
 
 @property (copy, nonatomic) void (^blockSelectScore)(NSString *);
 
-- (void)reloadDataBallArray:(NSArray *)dataBallArray andSelectAreaArray:(NSArray *)selectAreaArray andNumTimeKeyLogo:(NSInteger)numTimeKeyLogo;
+- (void)reloadDataBallArray:(NSArray *)dataBallArray andSelectAreaArray:(NSArray *)selectAreaArray andNumTimeKeyLogo:(NSInteger)numTimeKeyLogo andBtnEnble:(BOOL)enble;
 
 - (void)reloadBallName:(NSString *)ballName andBallId:(NSInteger)ballID;
 

@@ -35,6 +35,8 @@
 
 @property (nonatomic, retain)JGLTeeChooseView* chooseView;//tee台视图
 
+@property (nonatomic, retain)UIButton *scoreBtn;
+
 @end
 
 @implementation JGHActivityScoreView
@@ -134,15 +136,17 @@
 
 -(void)createScoreBtn
 {
-    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.backgroundColor = [UIColor orangeColor];
-    [btn setTitle:@"开始记分" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    btn.layer.masksToBounds = YES;
-    [btn addTarget:self action:@selector(professionalScore:) forControlEvents:UIControlEventTouchUpInside];
-    btn.layer.cornerRadius = 8*ScreenWidth/375;
-    btn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
-    [self addSubview:btn];
+    _scoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _scoreBtn.backgroundColor = [UIColor lightGrayColor];
+    _scoreBtn.userInteractionEnabled = NO;
+    [_scoreBtn setTitle:@"开始记分" forState:UIControlStateNormal];
+    [_scoreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _scoreBtn.layer.masksToBounds = YES;
+    [_scoreBtn addTarget:self action:@selector(professionalScore:) forControlEvents:UIControlEventTouchUpInside];
+    _scoreBtn.layer.cornerRadius = 8*ScreenWidth/375;
+    //btn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
+    _scoreBtn.frame = CGRectMake(10*ScreenWidth/375, self.frame.size.height - 54*ScreenWidth/375, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
+    [self addSubview:_scoreBtn];
 }
 #pragma mark -- 开始记分
 - (void)professionalScore:(UIButton *)btn{
@@ -230,7 +234,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -54*ProportionAdapter) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -60*ProportionAdapter) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -322,6 +326,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
+        if (_dataBallArray.count > 0) {
+            return 1;
+        }
         return 0* screenWidth / 375;
     }
     else{
@@ -368,23 +375,19 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_chooseView != nil) {
-        [_chooseView removeFromSuperview];
-        _chooseView = nil;
-    }
+    //if (_chooseView != nil) {
+      //  [_chooseView removeFromSuperview];
+        //_chooseView = nil;
+    //}
     
     if (indexPath.section == 0) {
         
     }else if (indexPath.section == 1) {
         
         if ([[_selectAreaArray objectAtIndex:indexPath.row] integerValue] == 0) {
-            
-            
             [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@1];
         }else{
-            
             [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
-            
         }
         
         //最多勾选2个
@@ -396,6 +399,14 @@
         if (selectCount > 2) {
             [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
             [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self];
+        }
+        
+        if (selectCount == 2) {
+            [_scoreBtn setBackgroundColor:[UIColor orangeColor]];
+            _scoreBtn.userInteractionEnabled = YES;
+        }else{
+            [_scoreBtn setBackgroundColor:[UIColor lightGrayColor]];
+            _scoreBtn.userInteractionEnabled = NO;
         }
         
         NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];

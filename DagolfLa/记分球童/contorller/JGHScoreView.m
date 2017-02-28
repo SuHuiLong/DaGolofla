@@ -79,13 +79,20 @@
     return self;
 }
 
-- (void)reloadDataBallArray:(NSArray *)dataBallArray andSelectAreaArray:(NSArray *)selectAreaArray andNumTimeKeyLogo:(NSInteger)numTimeKeyLogo{
+- (void)reloadDataBallArray:(NSArray *)dataBallArray andSelectAreaArray:(NSArray *)selectAreaArray andNumTimeKeyLogo:(NSInteger)numTimeKeyLogo andBtnEnble:(BOOL)enble{
     _dataBallArray = [dataBallArray mutableCopy];
     _selectAreaArray = [selectAreaArray mutableCopy];
     _numTimeKeyLogo = numTimeKeyLogo;
-    [_scoreBtn setBackgroundColor:[UIColor orangeColor]];
-    _scoreBtn.userInteractionEnabled = YES;
+    
     [self.tableView reloadData];
+    
+    if (enble) {
+        [_scoreBtn setBackgroundColor:[UIColor orangeColor]];
+        _scoreBtn.userInteractionEnabled = YES;
+    }else {
+        [_scoreBtn setBackgroundColor:[UIColor lightGrayColor]];
+        _scoreBtn.userInteractionEnabled = NO;
+    }
 }
 - (void)reloadBallName:(NSString *)ballName andBallId:(NSInteger)ballID{
     _strBall = ballName;
@@ -390,6 +397,14 @@
         if (selectCount > 2) {
             [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
             [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self];
+        }
+        
+        if (selectCount == 2) {
+            [_scoreBtn setBackgroundColor:[UIColor orangeColor]];
+            _scoreBtn.userInteractionEnabled = YES;
+        }else{
+            [_scoreBtn setBackgroundColor:[UIColor lightGrayColor]];
+            _scoreBtn.userInteractionEnabled = NO;
         }
         
         NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
