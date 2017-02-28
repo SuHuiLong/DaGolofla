@@ -19,7 +19,6 @@
     self.titleLableW.constant = 60 *ProportionAdapter;
     
     self.manBtn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
-    
     self.womanBtn.titleLabel.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
     self.manBtnLeft.constant = 40 *ProportionAdapter;
     self.womanLeft.constant = 30 *ProportionAdapter;

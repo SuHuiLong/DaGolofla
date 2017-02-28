@@ -47,7 +47,10 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * screenWidth / 375)];
     UIButton *nextBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    nextBtn.frame = CGRectMake(10 * screenWidth / 375, 25 * screenWidth / 375, screenWidth - 20 * screenWidth / 375, 40 * screenWidth / 375);
+    
+    nextBtn.frame = CGRectMake(10 * screenWidth / 375, kWvertical(105), screenWidth - 20 * screenWidth / 375, 40 * screenWidth / 375);
+
+    
     nextBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
     [nextBtn setTitle:@"提交" forState:(UIControlStateNormal)];
     [nextBtn addTarget:self action:@selector(comitBtnClick) forControlEvents:UIControlEventTouchUpInside];

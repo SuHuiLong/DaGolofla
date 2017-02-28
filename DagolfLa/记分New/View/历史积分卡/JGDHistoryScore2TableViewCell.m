@@ -86,7 +86,7 @@
 }
 
 - (void)setModel:(JGDHistoryScoreModel *)model{
-    
+
     self.timeLB.text = [model.createtime substringWithRange:NSMakeRange(0, 10)];
     self.ballName.text = model.ballName;
     self.nameList.text = model.userNames;

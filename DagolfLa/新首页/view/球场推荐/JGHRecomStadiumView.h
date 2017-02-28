@@ -11,9 +11,7 @@
 @interface JGHRecomStadiumView : UIView
 
 @property (nonatomic, strong)UIImageView *activityImageView;
-
 @property (nonatomic ,strong)UILabel *name;
-
 @property (nonatomic ,strong)UILabel *price;
 
 - (void)configJGHRecomStadiumView:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;

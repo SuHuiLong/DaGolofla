@@ -46,6 +46,7 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    [_tableView setExtraCellLineHidden];
     [self.view addSubview:_tableView];
     [_tableView registerClass:[ShieldingTableViewCell class] forCellReuseIdentifier:@"ShieldingTableViewCell"];
     
@@ -149,8 +150,6 @@
         } failed:^(NSError *error) {
             
         }];
-
-        
     };
     
     UITableViewRowAction *action1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"解除" handler:rowActionHandler];

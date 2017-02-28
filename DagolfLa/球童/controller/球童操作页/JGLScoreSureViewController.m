@@ -125,11 +125,6 @@
             [self.navigationController pushViewController:selfVc animated:YES];
         }
     }];
-    
-    
-    
-    
-    
 }
 #pragma mark --球童相互扫描返回按钮
 -(void)backCaddieClick
