@@ -633,7 +633,10 @@ static CGFloat ImageHeight  = 210.0;
     NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/bookBallPark.html?ballKey=%@&md5=%@", self.timeKey, md5Str];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"ballName"]];
-    NSString *timeString =[[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:@"unitPriceDate"]] substringWithRange:NSMakeRange(0, 10)];
+    
+    
+    
+    NSString *timeString = [Helper stringFromDateString:[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:@"unitPriceDate"]] withFormater:@"yyyy年MM月dd日"];;
     NSString *detailString = [NSString stringWithFormat:@"%@ | %@洞\n%@  ¥%@" ,[self.detailDic objectForKey:@"type"], [self.detailDic objectForKey:@"holesSum"],timeString, self.unitPrice];
     ;
     if (index == 0){
