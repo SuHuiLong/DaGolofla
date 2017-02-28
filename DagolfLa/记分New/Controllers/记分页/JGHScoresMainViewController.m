@@ -154,6 +154,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 }
 #pragma mark -- LeftBtn 左切换 右切换
 - (void)leftScoreBtn:(UIButton *)btn{
+    btn.enabled = NO;
     NSLog(@"切换");
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
 
@@ -165,6 +166,8 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         }else{
             indx = _index -1;
         }
+        
+        [userDict setObject:@0 forKey:@"direction"];
     }else{
         //右
         if (_index +1 > 17) {
@@ -172,6 +175,8 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         }else{
             indx = _index +1;
         }
+        
+        [userDict setObject:@1 forKey:@"direction"];
     }
     
     [userDict setObject:@(indx) forKey:@"index"];
@@ -180,6 +185,8 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     //发送消息
     [[NSNotificationCenter defaultCenter]postNotification:notice];
+    
+    btn.enabled = YES;
 }
 
 #pragma mark -- 记分模式切换

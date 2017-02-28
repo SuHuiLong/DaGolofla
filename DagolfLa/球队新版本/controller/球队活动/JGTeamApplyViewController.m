@@ -655,19 +655,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     groupCtrl.activityFrom = 1;
     [self.navigationController pushViewController:groupCtrl animated:YES];
 }
-//- (void)popActivityCtrl{
-//    //
-//    NSNotification * notice = [NSNotification notificationWithName:@"reloadActivityData" object:nil userInfo:nil];
-//    //发送消息
-//    [[NSNotificationCenter defaultCenter]postNotification:notice];
-//    
-//    for (UIViewController *controller in self.navigationController.viewControllers) {
-//        if ([controller isKindOfClass:[JGTeamActibityNameViewController class]]) {
-//            [self.navigationController popToViewController:controller animated:YES];
-//        }
-//    }
-//
-//}
+
 #pragma mark -- 支付宝
 - (void)zhifubaoPay{
     NSLog(@"支付宝支付");

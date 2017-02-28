@@ -19,11 +19,11 @@
         _nameLable.textColor = [UIColor colorWithHexString:B31_Color];
         [self addSubview:_nameLable];
         
-        _arebtn = [[UIButton alloc]initWithFrame:CGRectMake(_nameLable.frame.origin.x, _nameLable.frame.origin.y, 20*ProportionAdapter, 30*ProportionAdapter)];
+        _arebtn = [[UIButton alloc]initWithFrame:CGRectMake(_nameLable.frame.origin.x, _nameLable.frame.origin.y, 20*ProportionAdapter, 35*ProportionAdapter)];
         [_arebtn setImage:[UIImage imageNamed:@"icn_show_arrowup"] forState:UIControlStateNormal];
         [self addSubview:_arebtn];
         
-        _poorBtn = [[UIButton alloc]initWithFrame:CGRectMake(_nameLable.frame.origin.x, _nameLable.frame.origin.y, _nameLable.frame.size.width +20*ProportionAdapter, 30*ProportionAdapter)];
+        _poorBtn = [[UIButton alloc]initWithFrame:CGRectMake(_nameLable.frame.origin.x, _nameLable.frame.origin.y, _nameLable.frame.size.width +20*ProportionAdapter, 35*ProportionAdapter)];
         [_poorBtn addTarget:self action:@selector(selectAreaBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_poorBtn];
     }
@@ -42,11 +42,11 @@
     float titlesWSize;
     titlesWSize = [Helper textWidthFromTextString:boor height:_nameLable.frame.size.height fontSize:14 *ProportionAdapter];
     
-    _nameLable.frame = CGRectMake((screenWidth -20*ProportionAdapter-titlesWSize -15*ProportionAdapter)/2, 0, titlesWSize, 30*ProportionAdapter);
+    _nameLable.frame = CGRectMake((screenWidth -20*ProportionAdapter-titlesWSize -15*ProportionAdapter)/2, 0, titlesWSize, 35*ProportionAdapter);
     
-    _arebtn.frame = CGRectMake(_nameLable.frame.origin.x +_nameLable.frame.size.width +5*ProportionAdapter, 0, 20*ProportionAdapter, 30*ProportionAdapter);
+    _arebtn.frame = CGRectMake(_nameLable.frame.origin.x +_nameLable.frame.size.width +5*ProportionAdapter, 0, 20*ProportionAdapter, 35*ProportionAdapter);
     
-    _poorBtn.frame = CGRectMake(_nameLable.frame.origin.x, 0, titlesWSize +_arebtn.frame.size.width, 30*ProportionAdapter);
+    _poorBtn.frame = CGRectMake(_nameLable.frame.origin.x, 0, titlesWSize +_arebtn.frame.size.width, 35*ProportionAdapter);
 }
 
 - (void)awakeFromNib {

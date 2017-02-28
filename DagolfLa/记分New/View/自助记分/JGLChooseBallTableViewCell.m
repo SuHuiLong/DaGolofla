@@ -28,8 +28,6 @@
         _labelTitle.text = @"请选择球场";
         _labelTitle.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
         [self.contentView addSubview:_labelTitle];
-        
-        
     }
     return self;
 }

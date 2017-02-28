@@ -75,7 +75,11 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"差点：%@",model.almost];
+    if ([model.almost floatValue] == -10000) {
+        _almostLabel.text = @"差点  --";
+    }else{
+        _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
+    }
     
     if (model.mobile.length == 11) {
         _mobileLabel.text = [NSString stringWithFormat:@"%@***%@",[model.mobile substringToIndex:3], [model.mobile substringFromIndex:8]];

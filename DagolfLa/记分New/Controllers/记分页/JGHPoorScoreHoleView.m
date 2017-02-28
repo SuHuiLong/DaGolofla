@@ -43,10 +43,10 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 
 - (instancetype)init{
     if (self == [super init]) {
-        self.backgroundColor = [UIColor colorWithHexString:BG_color];
+        self.backgroundColor = [UIColor whiteColor];
         _colorArray = @[@"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8"];
         self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (200 +20 +20 +60)*ProportionAdapter) style:UITableViewStylePlain];
-        self.scoreTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
+        self.scoreTableView.backgroundColor = [UIColor whiteColor];
         self.scoreTableView.scrollEnabled = NO;
         self.scoreTableView.delegate = self;
         self.scoreTableView.dataSource = self;
@@ -62,7 +62,7 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
         whiteHeaderView.backgroundColor = [UIColor whiteColor];
         
         //关闭按钮
-        UIButton *closeBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth -34*ProportionAdapter, 10*ProportionAdapter, 22*ProportionAdapter, 22*ProportionAdapter)];
+        UIButton *closeBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth -50*ProportionAdapter, 8*ProportionAdapter, 32*ProportionAdapter, 32*ProportionAdapter)];
         [closeBtn setImage:[UIImage imageNamed:@"date_close"] forState:UIControlStateNormal];
         [closeBtn addTarget:self action:@selector(closeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [whiteHeaderView addSubview:closeBtn];
@@ -131,7 +131,7 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
     _areaArray = areaArray;
     _currentAreaArray = currentAreaArray;
     
-    self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (80 +90*2 + self.dataArray.count * 30*2)*ProportionAdapter);
+    self.scoreTableView.frame = CGRectMake(0, 0, screenWidth, (35*3 +80 +60*2 + self.dataArray.count * 30*2)*ProportionAdapter);
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -201,7 +201,7 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 30*ProportionAdapter;
+    return 35*ProportionAdapter;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{

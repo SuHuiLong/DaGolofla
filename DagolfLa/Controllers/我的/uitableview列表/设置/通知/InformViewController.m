@@ -61,7 +61,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90*ScreenWidth/375 + 44*ScreenWidth/375 * 3) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 80*ScreenWidth/375 + 44*ScreenWidth/375 * 3) style:(UITableViewStylePlain)];
     [self.view addSubview: self.tableView];
     self.title = @"系统设置";
     self.tableView.delegate = self;
@@ -82,7 +82,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, section == 1 ?  70 * ProportionAdapter : 20 * ProportionAdapter)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, section == 1 ?  70 * ProportionAdapter : 10 * ProportionAdapter)];
     backView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
     NSString *text = @"启用君高差点管理系统后，系统会根据每场完整几分成绩，计算出当此球场差点值，然后将该值与个人历史差点进行计算，实时算出您的新差点并自动更新。";
     UILabel *lalel = [Helper lableRect:CGRectMake(15 * ProportionAdapter, 0, screenWidth - 30 * ProportionAdapter, 60 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:12 * ProportionAdapter text:section == 1 ? text : @"" textAlignment:(NSTextAlignmentLeft)];
@@ -126,9 +126,9 @@
             cell.mySwitch.tag = indexPath.row + 300;
             cell.myLabel.text = @"系统通知";
             if ([[user objectForKey:@"msg_system_setting"] integerValue] == 1) {
-                cell.mySwitch.on = NO;
-            }else{
                 cell.mySwitch.on = YES;
+            }else{
+                cell.mySwitch.on = NO;
             }
             
             return cell;
@@ -136,9 +136,9 @@
             cell.myLabel.text = @"球队通知";
             cell.mySwitch.tag = indexPath.row + 300;
             if ([[user objectForKey:@"msg_team_setting"] integerValue] == 1) {
-                cell.mySwitch.on = NO;
-            }else{
                 cell.mySwitch.on = YES;
+            }else{
+                cell.mySwitch.on = NO;
             }
             return cell;
         }
@@ -159,9 +159,9 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:DEFAULF_USERID forKey:@"userId"];
         if (mySwitch.isOn) {
-            [dic setObject:@0 forKey:@"msg_system_setting"];
-        }else{
             [dic setObject:@1 forKey:@"msg_system_setting"];
+        }else{
+            [dic setObject:@0 forKey:@"msg_system_setting"];
         }
         [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
         // msg_system_setting  // 1 是  close
@@ -187,9 +187,9 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [dic setObject:DEFAULF_USERID forKey:@"userId"];
         if (mySwitch.isOn) {
-            [dic setObject:@0 forKey:@"msg_team_setting"];
-        }else{
             [dic setObject:@1 forKey:@"msg_team_setting"];
+        }else{
+            [dic setObject:@0 forKey:@"msg_team_setting"];
         }
         [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
         // msg_team_setting
@@ -246,7 +246,7 @@
 //返回各个分区的头高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return section == 0 ? 20*ScreenWidth/375 : 70*ScreenWidth/375;
+    return section == 0 ? 10*ScreenWidth/375 : 70*ScreenWidth/375;
 }
 
 - (NSMutableDictionary *)newDic{

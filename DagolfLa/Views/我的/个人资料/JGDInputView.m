@@ -22,7 +22,7 @@
         self.backView.backgroundColor = [UIColor whiteColor];
         
         self.putTextView = [[UITextView alloc] initWithFrame:CGRectMake(15 * ProportionAdapter, 30 * ProportionAdapter, screenWidth - 30 * ProportionAdapter, self.height * ProportionAdapter)];
-        self.putTextView.layer.borderWidth = 0.5 * ProportionAdapter;
+        self.putTextView.layer.borderWidth = 0.7 * ProportionAdapter;
         self.putTextView.layer.borderColor = [UIColor colorWithHexString:@"#a0a0a0"].CGColor;
         self.putTextView.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         self.putTextView.delegate = self;

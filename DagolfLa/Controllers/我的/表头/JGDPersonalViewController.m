@@ -85,12 +85,12 @@
     self.iconBtn.center = headerView.center;
     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
     [self.iconBtn sd_setImageWithURL:[NSURL URLWithString:bgUrl] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"bg_photo"]];
-//    [self.iconBtn setImage:[UIImage imageNamed:@"bg_photo"] forState:(UIControlStateNormal)];;
+    //    [self.iconBtn setImage:[UIImage imageNamed:@"bg_photo"] forState:(UIControlStateNormal)];;
     self.iconBtn.layer.cornerRadius = 73 * ProportionAdapter / 2;
     self.iconBtn.clipsToBounds = YES;
     self.iconBtn.layer.borderWidth = 1.5 * ProportionAdapter;
     self.iconBtn.layer.borderColor = [[UIColor colorWithHexString:@"#e4e4e4"] CGColor];
-    self.iconBtn.contentMode = UIViewContentModeScaleAspectFill;
+    self.iconBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.iconBtn addTarget:self action:@selector(iconChangeAct:) forControlEvents:(UIControlEventTouchUpInside)];
     [headerView addSubview:self.iconBtn];
     
@@ -118,7 +118,7 @@
 #pragma mark -- 保存 提交
 
 - (void)saveAct{
-        
+    
     if ([self.picImageArray count] > 0) {
         NSNumber* strTimeKey = DEFAULF_USERID;
         // 上传图片
@@ -140,7 +140,7 @@
             [user synchronize];
         }];
     }
-
+    
     
     //  - - -
     
@@ -155,16 +155,16 @@
     
     if ([self.dict objectForKey:@"ballage"]) {
         
-        if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"1-2"]) {
+        if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"1-2年"]) {
             [self.dict setObject:@0 forKey:@"ballage"];
             
-        }else if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"3-5"]) {
+        }else if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"3-5年"]) {
             [self.dict setObject:@1 forKey:@"ballage"];
             
-        }else if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"6-10"]) {
+        }else if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"6-10年"]) {
             [self.dict setObject:@2 forKey:@"ballage"];
             
-        }else if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"10 以上"]) {
+        }else if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"10年 以上"]) {
             [self.dict setObject:@3 forKey:@"ballage"];
             
         }
@@ -215,16 +215,16 @@
             
             
             if ([string isEqualToString:@"0"]) {
-                cell.nameLB.text = @"1-2";
+                cell.nameLB.text = @"1-2年";
                 
             }else if ([string isEqualToString:@"1"]) {
-                cell.nameLB.text = @"3-5";
+                cell.nameLB.text = @"3-5年";
                 
             }else if ([string isEqualToString:@"2"]) {
-                cell.nameLB.text = @"6-10";
+                cell.nameLB.text = @"6-10年";
                 
             }else if ([string isEqualToString:@"3"]) {
-                cell.nameLB.text = @"10 以上";
+                cell.nameLB.text = @"10年 以上";
                 
             }
         }else if (indexPath.row == 6) {
@@ -269,6 +269,16 @@
     }else if (indexPath.row == 2) {
         
         JGDDatePicker *datePic = [[JGDDatePicker alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        
+        NSDateFormatter * formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        if ([cell.nameLB.text isEqualToString:@"请选择"]) {
+            datePic.lastDate = [NSDate date];
+        }else{
+            NSDate * date = [formatter dateFromString:cell.nameLB.text];
+            datePic.lastDate = date;
+        }
+        
         datePic.blockStr = ^(NSString *string){
             cell.nameLB.text = string;
         };
@@ -359,7 +369,7 @@
         
         // 球龄   1-2 (0) ， 3-5 (1)   ， 6-10 (2)， 10 以上 (3)
         JGDPickerView *pickView = [[JGDPickerView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        NSArray *array = [NSArray arrayWithObjects:@"1-2", @"3-5" ,@"6-10", @"10 以上", nil];
+        NSArray *array = [NSArray arrayWithObjects:@"1-2年", @"3-5年" ,@"6-10年", @"10年 以上", nil];
         pickView.dataArray = array;
         pickView.blockStr = ^(NSString *string){
             cell.nameLB.text = string;
@@ -413,12 +423,12 @@
         }];
         
     }
-//    else if (indexPath.row == 7) {
-//        
-//        JGDPersonalCard *personalCard = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//        [self.view addSubview:personalCard];
-//    }
-//    
+    //    else if (indexPath.row == 7) {
+    //
+    //        JGDPersonalCard *personalCard = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    //        [self.view addSubview:personalCard];
+    //    }
+    //
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -462,7 +472,7 @@
         [_pickPhoto SHowLocalPhotoWithController:self andWithBlock:^(NSObject *Data) {
             self.picImageArray = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
             [self.iconBtn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
-
+            
             //            [self imageArray:_arrayPage];
         }];
     }];
