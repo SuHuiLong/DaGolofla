@@ -394,7 +394,7 @@
             [_item setTitle:@"保存"];//结束记分
         }
         
-        [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
+        [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
         
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
@@ -450,7 +450,7 @@
             [self showViewAnimate:_poorScoreView];
         }
     }else{
-        [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
+        [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
         _selectHole = 0;
         if (_scoreFinish == 1) {
             [_item setTitle:@"完成"];
@@ -491,7 +491,7 @@
 - (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn{
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UIButton *holeDireBtn = [window viewWithTag:15000];
-    [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
+    [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
     _selectHole = 0;
     if (_scoreFinish == 1) {
         [_item setTitle:@"完成"];

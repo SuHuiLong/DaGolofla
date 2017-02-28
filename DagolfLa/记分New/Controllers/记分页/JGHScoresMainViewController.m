@@ -127,7 +127,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     [view addSubview:_holeLable];
     
     _holeDirebtn = [[UIButton alloc]initWithFrame:CGRectMake(_holeLable.frame.origin.x +_holeLable.frame.size.width, _holeLable.frame.origin.y, 20 *ProportionAdapter, 20*ProportionAdapter)];
-    [_holeDirebtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
+    [_holeDirebtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
     _holeDirebtn.tag = 15000;
     [view addSubview:_holeDirebtn];
     
