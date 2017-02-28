@@ -717,24 +717,24 @@
     self.bgLable.frame = CGRectMake(0, 0, 25*ProportionAdapter, 30*ProportionAdapter);
     self.name.frame = CGRectMake(25*ProportionAdapter, 0, screenWidth -(30*9*ProportionAdapter +9 +25*ProportionAdapter), 30*ProportionAdapter);
     
-    if ([taiwan containsString:@"蓝"]) {
-        self.Taiwan.backgroundColor = [UIColor blueColor];
+    if ([taiwan isEqualToString:@"红T"] == YES) {
+        _Taiwan.backgroundColor = [UITool colorWithHexString:@"e21f23" alpha:1];
     }
-    
-    if ([taiwan containsString:@"红"]) {
-        self.Taiwan.backgroundColor = [UIColor redColor];
+    else if ([taiwan isEqualToString:@"蓝T"] == YES)
+    {
+        _Taiwan.backgroundColor = [UITool colorWithHexString:@"2474ac" alpha:1];
     }
-    
-    if ([taiwan containsString:@"金"]) {
-        self.Taiwan.backgroundColor = [UIColor colorWithHexString:@"#BFDB2D"];
+    else if ([taiwan isEqualToString:@"黑T"] == YES)
+    {
+        _Taiwan.backgroundColor = [UITool colorWithHexString:@"000000" alpha:1];
     }
-    
-    if ([taiwan containsString:@"白"]) {
-        self.Taiwan.backgroundColor = [UIColor whiteColor];
+    else if ([taiwan isEqualToString:@"黄T"] == YES || [taiwan isEqualToString:@"金T"] == YES)
+    {
+        _Taiwan.backgroundColor = [UITool colorWithHexString:@"bedd00" alpha:1];
     }
-    
-    if ([taiwan containsString:@"黑"]) {
-        self.Taiwan.backgroundColor = [UIColor blackColor];
+    else
+    {
+        _Taiwan.backgroundColor = [UITool colorWithHexString:@"eeeeee" alpha:1];
     }
 }
 #pragma mark -- 计算差杆 －－ 杆数减去标准杆

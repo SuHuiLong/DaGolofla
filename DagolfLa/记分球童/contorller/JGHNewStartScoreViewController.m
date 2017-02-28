@@ -110,20 +110,24 @@
             
             if (dict.count != 0) {
                 //添加默认勾选区域，2个全勾，其他不勾
+                BOOL enble;
                 NSArray *ballAreasArray = [dict objectForKey:@"ballAreas"];
                 if (ballAreasArray.count == 2) {
                     [selectAreaArray addObject:@1];
                     [selectAreaArray addObject:@1];
+                    enble = YES;
                 }else{
                     for (int i=0; i<ballAreasArray.count; i++) {
                         [selectAreaArray addObject:@0];
                     }
+                    
+                    enble = NO;
                 }
                 
                 [dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
                 [dataBallArray addObject:[dict objectForKey:@"tAll"]];
                 
-                [weakNewStartCtrl.scoreView reloadDataBallArray:dataBallArray andSelectAreaArray:selectAreaArray andNumTimeKeyLogo:[num integerValue]];
+                [weakNewStartCtrl.scoreView reloadDataBallArray:dataBallArray andSelectAreaArray:selectAreaArray andNumTimeKeyLogo:[num integerValue] andBtnEnble:enble];
             }
         };
         [ballVc setCallback:^(NSString *balltitle, NSInteger ballid) {
@@ -281,7 +285,7 @@
 }
 #pragma mark -- 活动记分
 - (void)createActivityScoreView:(JGLChooseScoreModel *)model{
-    _activityScoreView = [[JGHActivityScoreView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -60*ProportionAdapter)];
+    _activityScoreView = [[JGHActivityScoreView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64)];
     [_activityScoreView reloadData:model];
     
     __weak JGHNewStartScoreViewController *weakSelf = self;
@@ -467,10 +471,10 @@
 - (void)createCaddieScoreUserKey:(NSString *)userKey andUserName:(NSString *)userName andSex:(NSInteger)sex{
     [self.caddieWithCaddieScoreView removeFromSuperview];
     
-    self.caddieScoreView = [[JGHCaddieScoreView alloc]init];
+    self.caddieScoreView = [[JGHCaddieScoreView alloc]initWithFrame:CGRectMake(screenWidth, 0, screenWidth, screenHeight -64)];
 //    self.caddieScoreView.userKeyPlayer = [NSNumber numberWithInteger:[userKey integerValue]];
 //    self.caddieScoreView.userNamePlayer = userName;
-    self.caddieScoreView.frame = CGRectMake(screenWidth, 0, screenWidth, screenHeight -64);
+    //self.caddieScoreView.frame = CGRectMake(screenWidth, 0, screenWidth, screenHeight -64);
     
     [self.caddieScoreView reloadCaddieDefaultUserKeyPlayer:userKey andUserNamePlayer:userName andSex:sex];
     
@@ -492,22 +496,27 @@
             NSMutableArray *selectAreaArray = [NSMutableArray array];
             NSMutableArray *dataBallArray = [NSMutableArray array];
             
+            BOOL enable;
+            
             if (dict.count != 0) {
                 //添加默认勾选区域，2个全勾，其他不勾
                 NSArray *ballAreasArray = [dict objectForKey:@"ballAreas"];
                 if (ballAreasArray.count == 2) {
                     [selectAreaArray addObject:@1];
                     [selectAreaArray addObject:@1];
+                    enable = YES;
                 }else{
                     for (int i=0; i<ballAreasArray.count; i++) {
                         [selectAreaArray addObject:@0];
                     }
+                    
+                    enable = NO;
                 }
                 
                 [dataBallArray addObject:[dict objectForKey:@"ballAreas"]];
                 [dataBallArray addObject:[dict objectForKey:@"tAll"]];
                 
-                [weakSelf.caddieScoreView reloadDataBallArray:dataBallArray andSelectAreaArray:selectAreaArray andNumTimeKeyLogo:[num integerValue]];
+                [weakSelf.caddieScoreView reloadDataBallArray:dataBallArray andSelectAreaArray:selectAreaArray andNumTimeKeyLogo:[num integerValue] andBtnEnble:enable];
             }
         };
         [ballVc setCallback:^(NSString *balltitle, NSInteger ballid) {
