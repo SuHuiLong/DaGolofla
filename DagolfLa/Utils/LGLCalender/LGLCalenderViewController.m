@@ -39,6 +39,8 @@
 
 @property (nonatomic, strong)JGHTimeListView *timeListView;
 
+@property (nonatomic, assign)NSInteger selectDay;
+
 @end
 
 @implementation LGLCalenderViewController
@@ -144,6 +146,8 @@
 }
 
 - (void)getData {
+    __weak LGLCalenderViewController *weakSelf = self;
+    _selectDay = 0;
     [LQProgressHud showLoading:@"加载中..."];
     [LGLCalenderModel getCalenderDataWithDate:[NSDate date] andBallKey:_ballKey block:^(NSMutableArray *result) {
         [LQProgressHud hide];
@@ -151,7 +155,7 @@
         
         for (LGLCalenderModel *model in self.dataSource) {
             for (LGLCalenderSubModel *dayModel in model.details) {
-                if (model.month == _month) {
+                //if (model.month == _month) {
                     if (dayModel.price.length > 0) {
                         
                         NSString *day;
@@ -161,7 +165,13 @@
                             day = [NSString stringWithFormat:@"%td", dayModel.day];
                         }
                         
-                        _day = dayModel.day;//可预定时间
+                        //可预定时间
+                        if (weakSelf.selectDay == 0) {
+                            _day = dayModel.day;
+                            _month = model.month;
+                            _year = model.year;
+                            weakSelf.selectDay = 1;
+                        }
                         
                         NSString *month;
                         if (_month < 10) {
@@ -176,9 +186,9 @@
                     }else{
                         continue;
                     }
-                }else{
-                    continue;
-                }
+               // }else{
+                 //   continue;
+                //}
             }
         }
         
