@@ -186,7 +186,6 @@
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         
         //点击cell进入详情
-       
         DetailViewController * comDevc = [[DetailViewController alloc]init];
         
         comDevc.detailId = [_dataArray[indexPath.row] messObjid];

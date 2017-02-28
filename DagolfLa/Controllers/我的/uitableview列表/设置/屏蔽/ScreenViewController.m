@@ -150,8 +150,6 @@
         } failed:^(NSError *error) {
             
         }];
-
-        
     };
     
     UITableViewRowAction *action1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"解除" handler:rowActionHandler];
