@@ -73,7 +73,7 @@
     if ([model.almost floatValue] == -10000) {
         _almostLabel.text = @"差点  --";
     }else{
-        _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
+        _almostLabel.text = [NSString stringWithFormat:@"差点  %.0f", [model.almost floatValue]];
     }
     
     //显示模式XXX。。。XXX
