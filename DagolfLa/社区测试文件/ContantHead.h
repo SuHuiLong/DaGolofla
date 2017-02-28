@@ -134,6 +134,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 #define NUMBERS @"0123456789\n"
 
+#define ALMOSTNUMBERS @"-0123456789\n"
+
 //#define SwitchMode @"switchMode"
 
 //正式环境图片基础地址

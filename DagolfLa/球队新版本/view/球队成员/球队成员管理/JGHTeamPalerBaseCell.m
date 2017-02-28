@@ -150,7 +150,7 @@
         if ([model.almost floatValue] == -10000) {
             _almostValue.text = @"差点  --";
         }else{
-            _almostValue.text = [NSString stringWithFormat:@"差点  %.0f", [model.almost floatValue]];
+            _almostValue.text = [NSString stringWithFormat:@"差点  %@", model.almost];
         }
     }else{
         _almostValue.text = @"差点  --";
