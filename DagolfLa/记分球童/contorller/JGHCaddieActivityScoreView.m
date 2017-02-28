@@ -456,24 +456,29 @@
             if (indexPath.row  == _palyArray.count + 1) {
                 _blockCaddieActivityAddPalyer(_model, _palyArray, [NSNumber numberWithInteger:[_userKeyPlayer integerValue]]);
             }else{
+                if (_chooseView != nil) {
+                    [_chooseView removeFromSuperview];
+                    _chooseView = nil;
+                }else{
+                    JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+                    _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[1] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[1] count]* 40*screenWidth/375) withArray:_dataBallArray[1]];
+                    [tableView addSubview:_chooseView];
+                    __weak JGHCaddieActivityScoreView *weakSelf = self;
+                    weakSelf.chooseView.blockTeeName = ^(NSString *strT){
+                        
+                        JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
+                        NSLog(@"indexPath.row -1 == %td", indexPath.row -1);
+                        model = _palyArray[indexPath.row -1];
+                        model.tTaiwan = strT;
+                        
+                        NSLog(@"indexPath.row == %td", indexPath.row);
+                        [weakSelf.chooseView removeFromSuperview];
+                        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
+                        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+                        [weakSelf.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+                    };
+                }
                 
-                JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-                _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[1] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[1] count]* 40*screenWidth/375) withArray:_dataBallArray[1]];
-                [tableView addSubview:_chooseView];
-                __weak JGHCaddieActivityScoreView *weakSelf = self;
-                weakSelf.chooseView.blockTeeName = ^(NSString *strT){
-                    
-                    JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
-                    NSLog(@"indexPath.row -1 == %td", indexPath.row -1);
-                    model = _palyArray[indexPath.row -1];
-                    model.tTaiwan = strT;
-                    
-                    NSLog(@"indexPath.row == %td", indexPath.row);
-                    [weakSelf.chooseView removeFromSuperview];
-                    NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
-                    NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-                    [weakSelf.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-                };
             }
         }
     }
