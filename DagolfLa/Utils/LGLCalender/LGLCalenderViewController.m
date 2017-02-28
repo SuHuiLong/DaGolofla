@@ -181,8 +181,9 @@
                         }
                         
                         [self.collectionView reloadData];
-                        [_timeListView loadTimeListWithBallKey:_ballKey andDateString:[NSString stringWithFormat:@"%td-%@-%@", _year, month, day]];
-                        break;
+                        [_timeListView loadTimeListWithBallKey:_ballKey andDateString:[NSString stringWithFormat:@"%td-%@-%@ 00:00:00", _year, month, day]];
+                        return ;
+                        //break;
                     }else{
                         continue;
                     }
