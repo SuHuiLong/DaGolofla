@@ -429,12 +429,16 @@ static CGFloat ImageHeight  = 210.0;
         
         if (indexPath.row == 0) {
             
+            CGFloat height = [Helper textHeightFromTextString:[self.detailDic objectForKey:@"bookName"] width: 200 * ProportionAdapter fontSize:17 * ProportionAdapter];
+
             UILabel *courtName = [[UILabel alloc] init];
-            [self lableReDraw:courtName rect:CGRectMake(10 * ProportionAdapter, 25 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[self.detailDic objectForKey:@"bookName"] textAlignment:NSTextAlignmentLeft];
+            [self lableReDraw:courtName rect:CGRectMake(10 * ProportionAdapter, 25 * ProportionAdapter, 200 * ProportionAdapter, height) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[self.detailDic objectForKey:@"bookName"] textAlignment:NSTextAlignmentLeft];
+            courtName.numberOfLines = 0;
             [cell.contentView addSubview:courtName];
             
+            
             UILabel *serviceName = [[UILabel alloc] init];
-            [self lableReDraw:serviceName rect:CGRectMake(10 * ProportionAdapter, 55 * ProportionAdapter, 200 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(13 * ProportionAdapter) text:[self.detailDic objectForKey:@"servicePj"] textAlignment:NSTextAlignmentLeft];
+            [self lableReDraw:serviceName rect:CGRectMake(10 * ProportionAdapter, 30 * ProportionAdapter + height, 200 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(13 * ProportionAdapter) text:[self.detailDic objectForKey:@"servicePj"] textAlignment:NSTextAlignmentLeft];
             [cell.contentView addSubview:serviceName];
             
             UILabel *underLine = [[UILabel alloc] init];
