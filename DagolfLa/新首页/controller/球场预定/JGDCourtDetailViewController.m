@@ -632,9 +632,9 @@ static CGFloat ImageHeight  = 210.0;
     {
         obj = [UIImage imageNamed:@"iconlogo"];
     }
-    
+
     NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", self.timeKey]];
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/bookBallPark.html?ballKey=%@&md5=%@", self.timeKey, md5Str];
+    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/bookball/bookBallPark.html?ballKey=%@&md5=%@", self.timeKey, md5Str];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"ballName"]];
     
