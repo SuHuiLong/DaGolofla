@@ -14,6 +14,7 @@
 		186856021E5BD776001F44DD /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FB1E5BD776001F44DD /* LocationManager.m */; };
 		186856031E5BD776001F44DD /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FD1E5BD776001F44DD /* UIView+Addition.m */; };
 		186856041E5BD776001F44DD /* UIView+GPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FF1E5BD776001F44DD /* UIView+GPExtension.m */; };
+		18D5DBCE1E65700F008C87EE /* shake-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18D5DBCD1E65700F008C87EE /* shake-sound.wav */; };
 		200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */; };
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
 		2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0641E01729D008B85DF /* JGHAreaListView.m */; };
@@ -1255,6 +1256,7 @@
 		186855FD1E5BD776001F44DD /* UIView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Addition.m"; sourceTree = "<group>"; };
 		186855FE1E5BD776001F44DD /* UIView+GPExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GPExtension.h"; sourceTree = "<group>"; };
 		186855FF1E5BD776001F44DD /* UIView+GPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GPExtension.m"; sourceTree = "<group>"; };
+		18D5DBCD1E65700F008C87EE /* shake-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "shake-sound.wav"; sourceTree = "<group>"; };
 		200200FA1D61B2C900308C44 /* JGHStarScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHStarScoreViewController.h; sourceTree = "<group>"; };
 		200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHStarScoreViewController.m; sourceTree = "<group>"; };
 		200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieEditorViewController.h; sourceTree = "<group>"; };
@@ -6956,6 +6958,7 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				18D5DBCD1E65700F008C87EE /* shake-sound.wav */,
 				20301A581E1269EB005568E2 /* LGLCalender */,
 				203017451E0E4291005568E2 /* ZXingObjC */,
 				2030173B1E0E3EAA005568E2 /* datePicks */,
@@ -9236,6 +9239,7 @@
 				20BC97E61E1F6051007DFD34 /* JGHChooseAwardCell.xib in Resources */,
 				2080304A1CF828D100448BFC /* JGHAddAddressViewController.xib in Resources */,
 				654332061BD5D9B900363947 /* UMSCommentInputController.xib in Resources */,
+				18D5DBCE1E65700F008C87EE /* shake-sound.wav in Resources */,
 				20513B511CF5D9AD003233FB /* JGHAddInvoiceViewController.xib in Resources */,
 				2053FE921DC9C04300975203 /* JGHRegistersViewController.xib in Resources */,
 				AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */,

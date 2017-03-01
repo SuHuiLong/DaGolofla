@@ -27,6 +27,9 @@
 #import "JGDCourtDetailViewController.h" // 球场详情
 #import "JGDBookCourtViewController.h"
 
+#import <AudioToolbox/AudioToolbox.h>
+
+
 static JGHPushClass *pushClass = nil;
 
 @implementation JGHPushClass
@@ -243,8 +246,33 @@ static JGHPushClass *pushClass = nil;
                 pushVC(creatteamVc);
             }
         }
+        
     }
+    
+    if ([urlString containsString:@"shakeSound"]) {
+        [self sharkAction];
+    }
+    
 
 }
+
+
+
+//摇一摇事件
+-(void)sharkAction{
+    
+    SystemSoundID   soundID;
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"shake-sound" ofType:@"wav"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &soundID);
+    
+    //播放声音
+    AudioServicesPlaySystemSound (soundID);
+    //播放震动
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    
+}
+
+
 
 @end

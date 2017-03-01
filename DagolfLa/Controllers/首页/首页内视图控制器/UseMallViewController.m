@@ -19,6 +19,7 @@
 #import "JGHbalanceView.h"
 #import "WCLPassWordView.h"
 
+
 @interface UseMallViewController ()<UIWebViewDelegate, WCLPassWordViewDelegate, JGHbalanceViewDelegate>
 {
     NSString* _payUrl;
@@ -27,6 +28,7 @@
     NSString *_price;
     
     UIView *_bgView;
+
 }
 @property(nonatomic,retain)UIWebView *webView;
 
@@ -37,6 +39,10 @@
 @property(nonatomic, retain)JGHbalanceView *balanceView;
 
 @property(nonatomic, retain)WCLPassWordView *passWordView;
+
+
+@property(nonatomic,readonly,getter=canGoBack)BOOL canGoBack;
+
 
 @end
 
@@ -146,8 +152,12 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    
+    
     NSLog(@"%@",[request.URL absoluteString]);
     NSString *str = [[request.URL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"1111  ======      =   %@",str);
@@ -184,10 +194,14 @@
     NSString *backStr = @"backsys";
     if (![Helper isBlankString:[request.URL absoluteString]]) {
         if ([arrayBack[0] isEqual:backStr]) {
-            self.navigationController.navigationBarHidden=NO;
-            [self.navigationController popViewControllerAnimated:YES];
-            return NO;
-            
+            if(!_canGoBack)
+            {
+                self.navigationController.navigationBarHidden=NO;
+                [self.navigationController popViewControllerAnimated:YES];
+                return NO;
+            }else{
+                [webView goBack];
+            }
         }
     }
     else
@@ -325,6 +339,9 @@
         }];
         return NO;
     }
+    
+    
+    
     
     return YES;
 }
@@ -565,7 +582,7 @@
     [self.view addSubview:statusView];
     [_actIndicatorView stopAnimating];
     
-    
+    _canGoBack = webView.canGoBack;
     
 }
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

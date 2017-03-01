@@ -286,10 +286,9 @@
                 [_macthDict setObject:[scoreDict objectForKey:@"ballName"] forKey:@"ballName"];
                 [_macthDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"placeId"];
                 [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"playTimes"];
-                
                 [_ballDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
-                
                 _switchMode = [[scoreDict objectForKey:@"scoreModel"] integerValue];
+            
             }
             
             if ([data objectForKey:@"score"]) {

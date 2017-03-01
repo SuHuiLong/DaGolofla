@@ -995,9 +995,10 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             NSMutableString *mImageName = [NSMutableString stringWithFormat:@"%@",[imageDict objectForKey:@"startTime"]];
             NSString * imageName =  [mImageName substringToIndex:10];
             NSString * picURL = [imageDict objectForKey:@"picURL"];
+            NSString * webLinkURL = [imageDict objectForKey:@"webLinkURL"];
             [mDict setValue:imageName forKey:@"imageName"];
             [mDict setValue:picURL forKey:@"picURL"];
-            [mDict setValue:[imageDict objectForKey:@"webLinkURL"] forKey:@"webLinkURL"];
+            [mDict setValue:webLinkURL forKey:@"webLinkURL"];
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"yyyy-MM-dd"];
@@ -1011,16 +1012,27 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                     NSDictionary *isExistDict = mDataArray[j];
                     NSString *isExistPicURL = [isExistDict objectForKey:@"picURL"];
                     NSString *isExistImageName = [isExistDict objectForKey:@"imageName"];
+                    NSString *isExistWebLInkURL = [isExistDict objectForKey:@"webLinkURL"];
+                    
                     BOOL picURLEquel = [isExistPicURL isEqualToString:picURL];
                     BOOL nameEquel  = [isExistImageName isEqualToString:imageName];
+                    BOOL webLinkEquel = [isExistWebLInkURL isEqualToString:webLinkURL];
                     
-                    if (picURLEquel&&nameEquel) {
+                    if (picURLEquel&&nameEquel&&webLinkEquel) {
                         isExist = true;
                     }
-                    if (!picURLEquel&&nameEquel) {
-                        isExist = true;
+                    if (!(picURLEquel&&webLinkEquel)&&nameEquel) {
+//                        isExist = true;
                         [mDataArray removeObject:mDict];
                         [self deleteOldImage:imageName];
+                        for (int i = 0; i<mDataArray.count; i++) {
+                            NSDictionary *imageDict = mDataArray[i];
+                            NSString *ImageName = [imageDict objectForKey:@"imageName"];
+                            if ([ImageName isEqualToString:imageName]) {
+                                [mDataArray removeObjectAtIndex:i];
+                            }
+                        }
+
                     }
                 }
                 if (!isExist) {
@@ -1121,8 +1133,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     }
     
     NSString *urlString = [imageDict objectForKey:@"webLinkURL"];
-
-    
 
     if ([urlString containsString:@"dagolfla://"]) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
