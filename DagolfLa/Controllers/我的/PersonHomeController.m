@@ -7,7 +7,6 @@
 //
 
 #import "PersonHomeController.h"
-#import "JGDPersonalViewController.h"
 
 #import "Helper.h"
 #import "UIView+Extension.h"
@@ -46,6 +45,7 @@
 
 #import "AddNoteViewController.h"
 #import "SXPickPhoto.h"
+#import "JGDPersonalViewController.h"
 
 
 static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
