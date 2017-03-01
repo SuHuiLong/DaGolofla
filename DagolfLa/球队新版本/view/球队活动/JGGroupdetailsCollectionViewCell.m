@@ -268,9 +268,15 @@
                     if ([model.payMoney floatValue] != 0) {
                         [self.money1 setImage:[UIImage imageNamed:@"payMoney"]];
                     }
-                    
+
                     if (model.almost) {
-                        self.leftTopValue.text = [NSString stringWithFormat:@"%.1f", [model.almost floatValue]];
+                        if ([model.almost floatValue] == -10000) {
+                            self.leftTopValue.text = @"--";
+                        }else{
+                            self.leftTopValue.text = [NSString stringWithFormat:@"%@", model.almost];
+                        }
+                    }else{
+                        self.leftTopValue.text = @"--";
                     }
                 }
                 
@@ -288,7 +294,13 @@
                     }
                     
                     if (model.almost) {
-                        self.rightTopValue.text = [NSString stringWithFormat:@"%.1f", [model.almost floatValue]];
+                        if ([model.almost floatValue] == -10000) {
+                            self.rightTopValue.text = @"--";
+                        }else{
+                            self.rightTopValue.text = [NSString stringWithFormat:@"%@", model.almost];
+                        }
+                    }else{
+                        self.rightTopValue.text = @"--";
                     }
                 }
                 
@@ -306,7 +318,13 @@
                     }
                     
                     if (model.almost) {
-                        self.leftDownValue.text = [NSString stringWithFormat:@"%.1f", [model.almost floatValue]];
+                        if ([model.almost floatValue] == -10000) {
+                            self.leftDownValue.text = @"--";
+                        }else{
+                            self.leftDownValue.text = [NSString stringWithFormat:@"%@", model.almost];
+                        }
+                    }else{
+                        self.leftDownValue.text = @"--";
                     }
                 }
                 
@@ -323,8 +341,15 @@
                         [self.money4 setImage:[UIImage imageNamed:@"payMoney"]];
                     }
                     
+                    
                     if (model.almost) {
-                        self.rightDownVlaue.text = [NSString stringWithFormat:@"%.1f", [model.almost floatValue]];
+                        if ([model.almost floatValue] == -10000) {
+                            self.rightDownVlaue.text = @"--";
+                        }else{
+                            self.rightDownVlaue.text = [NSString stringWithFormat:@"%@", model.almost];
+                        }
+                    }else{
+                        self.rightDownVlaue.text = @"--";
                     }
                 }
             }
