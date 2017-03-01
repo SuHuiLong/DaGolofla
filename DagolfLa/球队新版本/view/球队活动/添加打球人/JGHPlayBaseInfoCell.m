@@ -74,7 +74,7 @@
     }
     
     if ([dict objectForKey:@"almost"]) {
-        self.almostFext.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"almost"]];
+        self.almostFext.text = [NSString stringWithFormat:@"%@", ([[dict objectForKey:@"almost"] integerValue] == -10000)?@"":[dict objectForKey:@"almost"]];
     }else{
         self.almostFext.text = @"";
     }

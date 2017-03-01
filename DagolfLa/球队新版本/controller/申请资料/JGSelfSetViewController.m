@@ -300,7 +300,13 @@
         cell.textFD.delegate = self;
         cell.textFD.tag = 1000;
         if ([self.memeDic objectForKey:@"almost"]) {
-            cell.textFD.text = [NSString stringWithFormat:@"%.0f",[[self.memeDic objectForKey:@"almost"] floatValue]];
+            if ([[self.memeDic objectForKey:@"almost"] floatValue] == -10000) {
+                cell.textFD.placeholder = @"请输入你的差点";
+                cell.textFD.text = @"";
+            }else{
+                cell.textFD.text = [NSString stringWithFormat:@"%.0f",[[self.memeDic objectForKey:@"almost"] floatValue]];
+            }
+            
             return cell;
         }else{
             cell.textFD.placeholder = @"请输入你的差点";

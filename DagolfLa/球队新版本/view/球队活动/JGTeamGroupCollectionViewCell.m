@@ -50,7 +50,15 @@
     if (model.almost) {
         self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:%.1f", sexStr, [model.almost floatValue]];
     }
-    
+    if (model.almost) {
+        if ([model.almost floatValue] == -10000) {
+            self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:--", sexStr];
+        }else{
+            self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:%@", sexStr, (model.almost)?model.almost:@"--"];
+        }
+    }else{
+        self.sexAndValue.text = [NSString stringWithFormat:@"%@ 差点:--", sexStr];
+    }
 }
 
 @end

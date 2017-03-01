@@ -263,6 +263,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     
     [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
     
+    /*
     if (_relApplistArray.count > 0) {
         NSMutableArray *listArray = [NSMutableArray array];
         listArray = [_relApplistArray mutableCopy];
@@ -270,6 +271,21 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         [_relApplistArray removeAllObjects];
     }else{
         [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
+    }
+    */
+    //过滤差点数据
+    for (NSMutableDictionary *almostDict in _applyArray) {
+        if ([almostDict objectForKey:@"almost_system_setting"]) {
+            if ([[almostDict objectForKey:@"almost_system_setting"] integerValue] == 1) {
+                [almostDict removeObjectForKey:@"almost"];
+            }
+            break;
+        }else{
+            if ([[almostDict objectForKey:@"userKey"] integerValue] == [DEFAULF_USERID integerValue]) {
+                [almostDict removeObjectForKey:@"almost"];
+            }
+            break;
+        }
     }
     
     [dict setObject:_info forKey:@"info"];
