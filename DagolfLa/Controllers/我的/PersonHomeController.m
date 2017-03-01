@@ -7,6 +7,7 @@
 //
 
 #import "PersonHomeController.h"
+#import "JGDPersonalViewController.h"
 
 #import "Helper.h"
 #import "UIView+Extension.h"
@@ -96,6 +97,8 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     [_mapView viewWillAppear];
 
     self.tabBarController.tabBar.hidden = YES;
+    [self gerenPostData];
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -116,7 +119,6 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     [self detailPostData];
     
     [self creatScrollView];
-    [self gerenPostData];
     
 
 }
@@ -562,34 +564,14 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 }
 
 
+#pragma mark -- 编辑个人资料
 
 -(void)gerenClick:(UIButton *)btn{
     
-    SelfViewController* scVc = [[SelfViewController alloc]init];
-    scVc.userModel = _model;
+    JGDPersonalViewController *personAC = [[JGDPersonalViewController alloc] init];
+    [self.navigationController pushViewController:personAC animated:YES];
     
-    scVc.blockRereshingMe = ^(NSArray* arrayData){
-
-        _nameLabel.text = _model.userName;
-        
-        if (_model.age != nil) {
-            _infoLabel.text = [NSString stringWithFormat:@"%@岁  差点:%@",_model.age,_model.almost];
-        }
-        _sexImg.image = [UIImage imageNamed:@""];
-        if ([_model.sex integerValue] == 0) {
-            
-            _sexImg.image = [UIImage imageNamed:@"xb_n"];
-        }else{
-            _sexImg.image = [UIImage imageNamed:@"xb_nn"];
-        }
-        
-        if (arrayData.count != 0) {
-            _iconImg.image = [UIImage imageWithData:arrayData[0]];
-        }
-        [_tableView reloadData];
-    };
-    
-    [self.navigationController pushViewController:scVc animated:YES];
+    return;
 }
 
 

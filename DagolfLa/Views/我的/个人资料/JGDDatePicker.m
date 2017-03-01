@@ -36,7 +36,7 @@
         
         self.dataPickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, screenHeight - 233 * ProportionAdapter, screenWidth, 233 * ProportionAdapter)];
         self.dataPickerView.datePickerMode = UIDatePickerModeDate;
-        self.dataPickerView.locale = [NSLocale localeWithLocaleIdentifier:@"Chinese"];
+        self.dataPickerView.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
         self.dataPickerView.backgroundColor = [UIColor whiteColor];
         self.dataPickerView.maximumDate = [NSDate date];
         [self addSubview:self.dataPickerView];
@@ -53,8 +53,9 @@
 }
 
 - (void)confirmAct{
-    NSLog(@"%@" , self.dataPickerView.date);
-    NSString *date = [NSString stringWithFormat:@"%@" , self.dataPickerView.date];
+
+    NSDate *zhDate = [Helper getNowDateFromatAnDate:self.dataPickerView.date];
+    NSString *date = [NSString stringWithFormat:@"%@" , zhDate];
     self.blockStr([date substringWithRange:NSMakeRange(0, 10)]);
     [self removeFromSuperview];
 }
