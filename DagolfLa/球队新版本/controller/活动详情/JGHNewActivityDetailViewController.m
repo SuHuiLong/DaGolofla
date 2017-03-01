@@ -653,6 +653,11 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 抽奖活动
 - (void)getLuckyDraw:(UIButton *)btn{
+    if (_isTeamMember == 1) {
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        return;
+    }
+    
     btn.userInteractionEnabled = NO;
     
     JGHLuckyDrawViewController *webCtrl = [[JGHLuckyDrawViewController alloc]init];
