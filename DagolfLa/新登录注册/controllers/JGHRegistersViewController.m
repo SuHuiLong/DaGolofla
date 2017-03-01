@@ -10,6 +10,8 @@
 #import "JGHUserAgreementViewController.h"
 #import "UserInformationModel.h"
 #import "MySetBindViewController.h"
+#import "JGDPersonalCard.h"
+
 
 @interface JGHRegistersViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 {
@@ -259,6 +261,7 @@
 }
 #pragma mark -- 完成
 - (IBAction)completeBtn:(UIButton *)sender {
+    
     if (_select == 1) {
         [LQProgressHud showMessage:@"请同意协议！"];
         return;
@@ -340,6 +343,19 @@
                 [LQProgressHud showMessage:@"注册成功！"];
                 
                 [self.navigationController popViewControllerAnimated:YES];
+                
+                //获取上个界面的控制器
+                //获取上个界面的控制器
+                UIViewController *popController = self.navigationController.viewControllers[self.navigationController.viewControllers.count - 2];
+                
+                JGDPersonalCard *card = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                card.userInteractionEnabled = YES;
+                [popController.view addSubview:card];
+                
+                
+                [self.navigationController popToViewController:popController animated:YES];
+                                
+                
                 _blackCtrl();
             }
         }else{
@@ -426,6 +442,7 @@
     [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
+
 
 
 @end
