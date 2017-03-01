@@ -256,7 +256,7 @@
                     cell.dateL.font = [UIFont systemFontOfSize:18*ProportionAdapter];
                     cell.dateL.text = @"今";
                     cell.dateL.center = CGPointMake(25 *ProportionAdapter, 25 *ProportionAdapter);
-                    [self.collectionView setContentOffset:CGPointMake(0, (indexPath.item/7 + ((indexPath.item%7 >0)?1:0)) *40*ProportionAdapter)];
+                    [self.collectionView setContentOffset:CGPointMake(0, ((indexPath.item <7)?0:indexPath.item/7 + ((indexPath.item%7 >0)?1:0)) *40*ProportionAdapter)];
                 }else{
                     cell.dateL.text = [NSString stringWithFormat:@"%ld",(long)subModel.day];
                 }
