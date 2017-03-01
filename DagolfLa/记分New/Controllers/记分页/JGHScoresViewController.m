@@ -54,7 +54,7 @@
     
     NSInteger _switchMode;// 0- 总；1- 差
     
-    NSInteger _refreshArea;
+    //NSInteger _refreshArea;
     
 }
 
@@ -104,7 +104,7 @@
     [self.segment setTitle:@"差杆模式" forSegmentAtIndex:0];
     [self.segment setTitle:@"总杆模式" forSegmentAtIndex:1];
     
-    _refreshArea = 0;
+    //_refreshArea = 0;
     
     _ballDict = [NSMutableDictionary dictionary];
     NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
@@ -393,7 +393,7 @@
             [_item setTitle:@"保存"];//结束记分
         }
         
-        [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
+        [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
         
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
@@ -449,7 +449,7 @@
             [self showViewAnimate:_poorScoreView];
         }
     }else{
-        [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
+        [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
         _selectHole = 0;
         if (_scoreFinish == 1) {
             [_item setTitle:@"完成"];
@@ -490,7 +490,7 @@
 - (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn{
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UIButton *holeDireBtn = [window viewWithTag:15000];
-    [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
+    [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
     _selectHole = 0;
     if (_scoreFinish == 1) {
         [_item setTitle:@"完成"];
@@ -519,13 +519,13 @@
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
     
-    if (_refreshArea == 0) {
+    //if (_refreshArea == 0) {
         _selectHole = 0;
         
         [self removeALlView];
-    }else{
-        _selectHole = 1;
-    }
+    //}else{
+      //  _selectHole = 1;
+    //}
     
     if (_scoreFinish == 1) {
         [_item setTitle:@"完成"];
@@ -533,11 +533,11 @@
         [_item setTitle:@"保存"];
     }
     
-    _refreshArea = 0;
+    //_refreshArea = 0;
     
     //[self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
     //当前页
-    NSInteger currentingPage = _currentPage;
+    //NSInteger currentingPage = _currentPage;
     
     _currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     JGHScoresMainViewController *vc2;
@@ -1084,7 +1084,7 @@
         //[self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:_selectPage -1], [self returnStandardlever:_selectPage -1]] forState:UIControlStateNormal];
         
         //========================
-        _refreshArea = 1;
+        //_refreshArea = 1;
         
         NSLog(@"_selectPage == %td", _selectPage);
         //NSMutableDictionary *userDict = [NSMutableDictionary dictionary];

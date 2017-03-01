@@ -37,6 +37,8 @@
 
 @property (nonatomic, retain)JGLTeeChooseView* chooseView;//tee台视图
 
+@property (nonatomic, retain)UIButton *scoreBtn;
+
 @end
 
 @implementation JGHCaddieActivityScoreView
@@ -99,6 +101,8 @@
             [_palyArray addObject:model];
             
             [_tableView reloadData];
+        }else{
+            
         }
     }];
 }
@@ -144,15 +148,16 @@
 
 -(void)createScoreBtn
 {
-    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.backgroundColor = [UIColor orangeColor];
-    [btn setTitle:@"开始记分" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    btn.layer.masksToBounds = YES;
-    [btn addTarget:self action:@selector(professionalScore:) forControlEvents:UIControlEventTouchUpInside];
-    btn.layer.cornerRadius = 8*ScreenWidth/375;
-    btn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
-    [self addSubview:btn];
+    _scoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _scoreBtn.backgroundColor = [UIColor lightGrayColor];
+    _scoreBtn.userInteractionEnabled = NO;
+    [_scoreBtn setTitle:@"开始记分" forState:UIControlStateNormal];
+    [_scoreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _scoreBtn.layer.masksToBounds = YES;
+    [_scoreBtn addTarget:self action:@selector(professionalScore:) forControlEvents:UIControlEventTouchUpInside];
+    _scoreBtn.layer.cornerRadius = 8*ScreenWidth/375;
+    _scoreBtn.frame = CGRectMake(10*ScreenWidth/375, screenHeight - 54*ScreenWidth/375 - 64, ScreenWidth-20*ScreenWidth/375, 44*ScreenWidth/375);
+    [self addSubview:_scoreBtn];
 }
 #pragma mark -- 开始记分
 - (void)professionalScore:(UIButton *)btn{
@@ -357,6 +362,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
+        if (_dataBallArray.count > 0) {
+            return 1;
+        }
         return 0* screenWidth / 375;
     }
     else{
@@ -393,10 +401,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_chooseView != nil) {
-        [_chooseView removeFromSuperview];
-        _chooseView = nil;
-    }
+    //if (_chooseView != nil) {
+      //  [_chooseView removeFromSuperview];
+        //_chooseView = nil;
+    //}
     
     if (indexPath.section == 0) {
         
@@ -423,6 +431,14 @@
             [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self];
         }
         
+        if (selectCount == 2) {
+            [_scoreBtn setBackgroundColor:[UIColor orangeColor]];
+            _scoreBtn.userInteractionEnabled = YES;
+        }else{
+            [_scoreBtn setBackgroundColor:[UIColor lightGrayColor]];
+            _scoreBtn.userInteractionEnabled = NO;
+        }
+        
         NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
         NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
         [_tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -440,24 +456,29 @@
             if (indexPath.row  == _palyArray.count + 1) {
                 _blockCaddieActivityAddPalyer(_model, _palyArray, [NSNumber numberWithInteger:[_userKeyPlayer integerValue]]);
             }else{
+                if (_chooseView != nil) {
+                    [_chooseView removeFromSuperview];
+                    _chooseView = nil;
+                }else{
+                    JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+                    _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[1] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[1] count]* 40*screenWidth/375) withArray:_dataBallArray[1]];
+                    [tableView addSubview:_chooseView];
+                    __weak JGHCaddieActivityScoreView *weakSelf = self;
+                    weakSelf.chooseView.blockTeeName = ^(NSString *strT){
+                        
+                        JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
+                        NSLog(@"indexPath.row -1 == %td", indexPath.row -1);
+                        model = _palyArray[indexPath.row -1];
+                        model.tTaiwan = strT;
+                        
+                        NSLog(@"indexPath.row == %td", indexPath.row);
+                        [weakSelf.chooseView removeFromSuperview];
+                        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
+                        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+                        [weakSelf.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+                    };
+                }
                 
-                JGLPlayerNameTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-                _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[1] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[1] count]* 40*screenWidth/375) withArray:_dataBallArray[1]];
-                [tableView addSubview:_chooseView];
-                __weak JGHCaddieActivityScoreView *weakSelf = self;
-                weakSelf.chooseView.blockTeeName = ^(NSString *strT){
-                    
-                    JGLAddActiivePlayModel *model = [[JGLAddActiivePlayModel alloc]init];
-                    NSLog(@"indexPath.row -1 == %td", indexPath.row -1);
-                    model = _palyArray[indexPath.row -1];
-                    model.tTaiwan = strT;
-                    
-                    NSLog(@"indexPath.row == %td", indexPath.row);
-                    [weakSelf.chooseView removeFromSuperview];
-                    NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
-                    NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-                    [weakSelf.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
-                };
             }
         }
     }

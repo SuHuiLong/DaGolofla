@@ -232,6 +232,7 @@
             [self.navigationController pushViewController:courtDetailVC animated:YES];
             
         }else{
+            self.offset = 0;
             [self nameSearch:[[NSUserDefaults standardUserDefaults] objectForKey:@"history"][indexPath.row]];
         }
     }else{

@@ -127,9 +127,12 @@
         [dict setObject:TYPE_USER_HEAD forKey:@"nType"];
         [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
         
+        [[ShowHUD showHUD] showAnimationWithText:@"上传中…" FromView:self.view];
         [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:self.picImageArray failedBlock:^(id errType) {
+            [[ShowHUD showHUD] hideAnimationFromView:self.view];
             
         } completionBlock:^(id data) {
+            [[ShowHUD showHUD] hideAnimationFromView:self.view];
             
             NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
             [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
@@ -138,13 +141,23 @@
                 [user setObject:headUrl forKey:@"pic"];
             }
             [user synchronize];
+            
+            [self infoCommit];
+            
         }];
+    }else{
+        
+        [self infoCommit];
     }
+    
     
     
     //  - - -
     
     
+}
+
+- (void)infoCommit{
     for (JGDPersonalTableViewCell *cell in self.tableView.visibleCells) {
         
         NSIndexPath *index = [self.tableView indexPathForCell:cell];
@@ -191,7 +204,9 @@
         NSLog(@"保－存");
         [self.navigationController popViewControllerAnimated:YES];
     }];
+    
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGDPersonalTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGDPersonalTableViewCell"];

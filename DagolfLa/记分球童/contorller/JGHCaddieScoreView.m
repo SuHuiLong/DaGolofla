@@ -189,7 +189,7 @@
 
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64 -54*ProportionAdapter) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, self.frame.size.height -54*ProportionAdapter) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -286,6 +286,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
+        if (_dataBallArray.count > 0) {
+            return 1;
+        }
         return 0* screenWidth / 375;
     }
     else{
@@ -332,10 +335,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_chooseView != nil)  {
-        [_chooseView removeFromSuperview];
-        _chooseView = nil;
-    }
+    //if (_chooseView != nil)  {
+      //  [_chooseView removeFromSuperview];
+        //_chooseView = nil;
+    //}
     
     if (indexPath.section == 0) {
         //球场
@@ -366,6 +369,14 @@
         if (selectCount > 2) {
             [_selectAreaArray replaceObjectAtIndex:indexPath.row withObject:@0];
             [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self];
+        }
+        
+        if (selectCount == 2) {
+            [_scoreBtn setBackgroundColor:[UIColor orangeColor]];
+            _scoreBtn.userInteractionEnabled = YES;
+        }else{
+            [_scoreBtn setBackgroundColor:[UIColor lightGrayColor]];
+            _scoreBtn.userInteractionEnabled = NO;
         }
         
         NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -419,13 +430,20 @@
     }
 }
 
-- (void)reloadDataBallArray:(NSArray *)dataBallArray andSelectAreaArray:(NSArray *)selectAreaArray andNumTimeKeyLogo:(NSInteger)numTimeKeyLogo{
+- (void)reloadDataBallArray:(NSArray *)dataBallArray andSelectAreaArray:(NSArray *)selectAreaArray andNumTimeKeyLogo:(NSInteger)numTimeKeyLogo andBtnEnble:(BOOL)enble{
     _dataBallArray = [dataBallArray mutableCopy];
     _selectAreaArray = [selectAreaArray mutableCopy];
     _numTimeKeyLogo = [NSNumber numberWithInteger:numTimeKeyLogo];
-    _scoreBtn.backgroundColor = [UIColor orangeColor];
-    _scoreBtn.userInteractionEnabled = YES;
+
     [self.tableView reloadData];
+    
+    if (enble) {
+        [_scoreBtn setBackgroundColor:[UIColor orangeColor]];
+        _scoreBtn.userInteractionEnabled = YES;
+    }else {
+        [_scoreBtn setBackgroundColor:[UIColor lightGrayColor]];
+        _scoreBtn.userInteractionEnabled = NO;
+    }
 }
 - (void)reloadBallName:(NSString *)ballName andBallId:(NSInteger)ballID{
     _strBall = ballName;

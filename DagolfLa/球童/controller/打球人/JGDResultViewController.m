@@ -29,8 +29,11 @@
     for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([controller isKindOfClass:[JGDPlayPersonViewController class]]) {
             [self.navigationController popToViewController:controller animated:YES];
+            return;
         }
     }
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setData{

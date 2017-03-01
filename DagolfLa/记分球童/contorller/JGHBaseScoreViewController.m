@@ -48,6 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
     
     NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"1",@"2",nil];
     _segment = [[UISegmentedControl alloc]initWithItems:segmentedArray];

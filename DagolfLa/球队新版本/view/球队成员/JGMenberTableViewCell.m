@@ -81,7 +81,7 @@
     if ([model.almost floatValue] == -10000) {
         _almostLabel.text = @"差点  --";
     }else{
-        _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
+        [NSString stringWithFormat:@"差点  %@", (model.almost)?model.almost:@"--"];
     }
     
     //显示模式XXX。。。XXX
@@ -156,7 +156,7 @@
         [_sexImgv setImage: [UIImage imageNamed:@"xb_nn"]];
     }
     
-    _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f",[model.almost floatValue]];
+    _almostLabel.text = [NSString stringWithFormat:@"差点  %@", model.almost];
     
     //显示模式XXX。。。XXX
     if (model.mobile) {
@@ -185,9 +185,8 @@
     if ([model.almost floatValue] == -10000) {
         _almostLabel.text = @"差点  --";
     }else{
-       _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
+       [NSString stringWithFormat:@"差点  %@", (model.almost)?model.almost:@"--"];
     }
-    
     
     _poleLabel.frame = CGRectMake(180*screenWidth/375, 30*screenWidth/375, 130*screenWidth/375, 20*screenWidth/375);
     

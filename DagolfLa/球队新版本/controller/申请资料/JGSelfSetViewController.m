@@ -296,8 +296,11 @@
         cell.labell.text = @"差点";
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+#warning ------
+        cell.textFD.delegate = self;
+        cell.textFD.tag = 1000;
         if ([self.memeDic objectForKey:@"almost"]) {
-            cell.textFD.text = [NSString stringWithFormat:@"%.1f",[[self.memeDic objectForKey:@"almost"] floatValue]];
+            cell.textFD.text = [NSString stringWithFormat:@"%.0f",[[self.memeDic objectForKey:@"almost"] floatValue]];
             return cell;
         }else{
             cell.textFD.placeholder = @"请输入你的差点";
@@ -470,6 +473,28 @@
         _paraDic = [[NSMutableDictionary alloc] init];
     }
     return _paraDic;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
+{
+    if (textField.tag == 1000) {
+        NSCharacterSet *cs;
+        if(textField)
+        {
+            cs = [[NSCharacterSet characterSetWithCharactersInString:ALMOSTNUMBERS] invertedSet];
+            NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+            BOOL basicTest = [string isEqualToString:filtered];
+            if(!basicTest)
+            {
+                [[ShowHUD showHUD]showToastWithText:@"请输入整数数字" FromView:self.view];
+                return NO;
+            }
+        }
+        //其他的类型不需要检测，直接写入
+        return YES;
+    }else{
+        return YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

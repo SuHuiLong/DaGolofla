@@ -518,7 +518,8 @@
                 cell.textFD.enabled = NO;
             }
         }
-        
+        cell.textFD.tag = 1000;
+        cell.textFD.delegate = self;
         return cell;
         
     }else{
@@ -556,6 +557,28 @@
 //- (void)cellBtn{
 //    NSLog(@"***********/n*************");
 //}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
+{
+    if (textField.tag == 1000) {
+        NSCharacterSet *cs;
+        if(textField)
+        {
+            cs = [[NSCharacterSet characterSetWithCharactersInString:ALMOSTNUMBERS] invertedSet];
+            NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+            BOOL basicTest = [string isEqualToString:filtered];
+            if(!basicTest)
+            {
+                [[ShowHUD showHUD]showToastWithText:@"请输入整数数字" FromView:self.view];
+                return NO;
+            }
+        }
+        //其他的类型不需要检测，直接写入
+        return YES;
+    }else{
+        return YES;
+    }
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 26 * screenWidth / 320;

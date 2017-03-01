@@ -78,7 +78,7 @@
     if ([model.almost floatValue] == -10000) {
         _almostLabel.text = @"差点  --";
     }else{
-        _almostLabel.text = [NSString stringWithFormat:@"差点  %.1f", [model.almost floatValue]];
+        [NSString stringWithFormat:@"差点  %@", (model.almost)?model.almost:@"--"];
     }
     
     if (model.mobile.length == 11) {

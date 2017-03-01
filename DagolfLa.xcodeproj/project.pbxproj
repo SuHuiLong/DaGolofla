@@ -45,6 +45,7 @@
 		2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */; };
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
 		2015AC111E5EEAB7009E112F /* JGHNewFourScoresPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2015AC101E5EEAB7009E112F /* JGHNewFourScoresPageCell.m */; };
+		2016A2E81E666A160085EFFC /* JGHLuckyDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2016A2E71E666A160085EFFC /* JGHLuckyDrawViewController.m */; };
 		201750911E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 201750901E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m */; };
 		201750981E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201750971E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m */; };
 		2017509B1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017509A1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m */; };
@@ -1311,6 +1312,8 @@
 		2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresMainViewController.m; sourceTree = "<group>"; };
 		2015AC0F1E5EEAB7009E112F /* JGHNewFourScoresPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewFourScoresPageCell.h; sourceTree = "<group>"; };
 		2015AC101E5EEAB7009E112F /* JGHNewFourScoresPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewFourScoresPageCell.m; sourceTree = "<group>"; };
+		2016A2E61E666A160085EFFC /* JGHLuckyDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHLuckyDrawViewController.h; sourceTree = "<group>"; };
+		2016A2E71E666A160085EFFC /* JGHLuckyDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHLuckyDrawViewController.m; sourceTree = "<group>"; };
 		2017508F1E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewCancelApplyViewController.h; sourceTree = "<group>"; };
 		201750901E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewCancelApplyViewController.m; sourceTree = "<group>"; };
 		201750961E2CA85600FB2FE4 /* JGHNewCancelApplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewCancelApplyCell.h; sourceTree = "<group>"; };
@@ -3808,6 +3811,15 @@
 				2006C0641E01729D008B85DF /* JGHAreaListView.m */,
 			);
 			path = "记分页";
+			sourceTree = "<group>";
+		};
+		2016A2E51E6669F70085EFFC /* 活动抽奖H5 */ = {
+			isa = PBXGroup;
+			children = (
+				2016A2E61E666A160085EFFC /* JGHLuckyDrawViewController.h */,
+				2016A2E71E666A160085EFFC /* JGHLuckyDrawViewController.m */,
+			);
+			path = "活动抽奖H5";
 			sourceTree = "<group>";
 		};
 		2017508E1E2CA24D00FB2FE4 /* 取消报名 */ = {
@@ -8679,6 +8691,7 @@
 		F5A105421CE309750050461D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				2016A2E51E6669F70085EFFC /* 活动抽奖H5 */,
 				2017508E1E2CA24D00FB2FE4 /* 取消报名 */,
 				20BEF3CC1E2A1B8D00E9AED7 /* 活动添加打球人 */,
 				209D7D0B1E1F75DC002BDC7A /* 活动详情 */,
@@ -10063,6 +10076,7 @@
 				36BF00E31BC77428005B3CE2 /* UseMallViewController.m in Sources */,
 				20BC97DE1E1F6051007DFD34 /* JGLWinnerShareModel.m in Sources */,
 				20F025361D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.m in Sources */,
+				2016A2E81E666A160085EFFC /* JGHLuckyDrawViewController.m in Sources */,
 				203019AA1E0E4292005568E2 /* ZXAI01392xDecoder.m in Sources */,
 				AA91C7881C4201B80078DA17 /* IQKeyboardManager.m in Sources */,
 				36DCB8251C01AA38000EB674 /* TeamJoinModel.m in Sources */,
