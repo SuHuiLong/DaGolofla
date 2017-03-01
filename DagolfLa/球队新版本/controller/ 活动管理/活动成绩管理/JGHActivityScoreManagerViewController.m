@@ -261,11 +261,15 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
 {
     NSLog(@"%td", indexPath.section);
     NSLog(@"%td", indexPath.row);
-    if (indexPath.section == 2) {
+    if (indexPath.section == 0) {
         JGDActSelfHistoryScoreViewController *actVC = [[JGDActSelfHistoryScoreViewController alloc] init];
-        actVC.scoreModel = self.dataArray[indexPath.section - 2];
+        actVC.scoreModel = self.dataArray[indexPath.row];
         actVC.timeKey = _activityBaseModel.timeKey;
         actVC.teamKey = _teamKey;
+        actVC.isblock = 1;
+        actVC.refrehData = ^(){
+            [self headRereshing];
+        };
         [self.navigationController pushViewController:actVC animated:YES];
     }
 }

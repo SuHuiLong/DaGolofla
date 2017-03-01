@@ -253,7 +253,11 @@ static JGHPushClass *pushClass = nil;
         [self sharkAction];
     }
     
-
+    if ([urlString containsString:@"closeWebView"]) {
+        if (pushVC) {
+            pushVC(nil);
+        }
+    }
 }
 
 
