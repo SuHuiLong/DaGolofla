@@ -221,7 +221,7 @@
         
         self.poleLB = [[UILabel alloc] initWithFrame:CGRectMake(200 * ProportionAdapter, 45 * ProportionAdapter, 80 * ProportionAdapter, 25 * ProportionAdapter)];
         self.poleLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-            NSString *pole = [NSString stringWithFormat:@"总杆：%@", self.model.poles];
+            NSString *pole = [NSString stringWithFormat:@"总杆：%@", (self.model.poles)?self.model.poles:@""];
             NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:pole];
             [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fe6424"] range:NSMakeRange(3, str.length - 3)];
             [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:15 * ProportionAdapter] range:NSMakeRange(0, 3)];
@@ -401,6 +401,10 @@
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [[ShowHUD showHUD]showToastWithText:@"差点保存成功" FromView:self.view];
+            if (_isblock == 1) {
+                _refrehData();
+            }
+            
             [self performSelector:@selector(pop) withObject:self afterDelay:TIMESlEEP];
         }else{
             if ([data objectForKey:@"packResultMsg"]) {

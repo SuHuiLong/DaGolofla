@@ -20,4 +20,8 @@
 @property (nonatomic, strong) NSNumber *userKey;
 @property (nonatomic, strong) NSNumber *scoreKey;
 
+@property (nonatomic, assign)NSInteger isblock;
+@property (nonatomic, copy) void(^refrehData)();
+
+
 @end

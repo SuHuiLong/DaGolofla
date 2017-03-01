@@ -139,7 +139,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<true/>
+	<false/>
 	<key>kTCCServiceMediaLibrary</key>
 	<string></string>
 </dict>

@@ -14,6 +14,7 @@
 		186856021E5BD776001F44DD /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FB1E5BD776001F44DD /* LocationManager.m */; };
 		186856031E5BD776001F44DD /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FD1E5BD776001F44DD /* UIView+Addition.m */; };
 		186856041E5BD776001F44DD /* UIView+GPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FF1E5BD776001F44DD /* UIView+GPExtension.m */; };
+		18D5DBCE1E65700F008C87EE /* shake-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18D5DBCD1E65700F008C87EE /* shake-sound.wav */; };
 		200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */; };
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
 		2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0641E01729D008B85DF /* JGHAreaListView.m */; };
@@ -44,6 +45,7 @@
 		2012AD9B1D3615AB00F70E40 /* JGHScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */; };
 		2012AD9E1D36192F00F70E40 /* JGHScoresMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */; };
 		2015AC111E5EEAB7009E112F /* JGHNewFourScoresPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2015AC101E5EEAB7009E112F /* JGHNewFourScoresPageCell.m */; };
+		2016A2E81E666A160085EFFC /* JGHLuckyDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2016A2E71E666A160085EFFC /* JGHLuckyDrawViewController.m */; };
 		201750911E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 201750901E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m */; };
 		201750981E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 201750971E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m */; };
 		2017509B1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017509A1E2CB2D300FB2FE4 /* JGHNewCancelAppListCell.m */; };
@@ -1255,6 +1257,7 @@
 		186855FD1E5BD776001F44DD /* UIView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Addition.m"; sourceTree = "<group>"; };
 		186855FE1E5BD776001F44DD /* UIView+GPExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GPExtension.h"; sourceTree = "<group>"; };
 		186855FF1E5BD776001F44DD /* UIView+GPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GPExtension.m"; sourceTree = "<group>"; };
+		18D5DBCD1E65700F008C87EE /* shake-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "shake-sound.wav"; sourceTree = "<group>"; };
 		200200FA1D61B2C900308C44 /* JGHStarScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHStarScoreViewController.h; sourceTree = "<group>"; };
 		200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHStarScoreViewController.m; sourceTree = "<group>"; };
 		200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieEditorViewController.h; sourceTree = "<group>"; };
@@ -1309,6 +1312,8 @@
 		2012AD9D1D36192F00F70E40 /* JGHScoresMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoresMainViewController.m; sourceTree = "<group>"; };
 		2015AC0F1E5EEAB7009E112F /* JGHNewFourScoresPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewFourScoresPageCell.h; sourceTree = "<group>"; };
 		2015AC101E5EEAB7009E112F /* JGHNewFourScoresPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewFourScoresPageCell.m; sourceTree = "<group>"; };
+		2016A2E61E666A160085EFFC /* JGHLuckyDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHLuckyDrawViewController.h; sourceTree = "<group>"; };
+		2016A2E71E666A160085EFFC /* JGHLuckyDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHLuckyDrawViewController.m; sourceTree = "<group>"; };
 		2017508F1E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewCancelApplyViewController.h; sourceTree = "<group>"; };
 		201750901E2CA2AF00FB2FE4 /* JGHNewCancelApplyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHNewCancelApplyViewController.m; sourceTree = "<group>"; };
 		201750961E2CA85600FB2FE4 /* JGHNewCancelApplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHNewCancelApplyCell.h; sourceTree = "<group>"; };
@@ -3806,6 +3811,15 @@
 				2006C0641E01729D008B85DF /* JGHAreaListView.m */,
 			);
 			path = "记分页";
+			sourceTree = "<group>";
+		};
+		2016A2E51E6669F70085EFFC /* 活动抽奖H5 */ = {
+			isa = PBXGroup;
+			children = (
+				2016A2E61E666A160085EFFC /* JGHLuckyDrawViewController.h */,
+				2016A2E71E666A160085EFFC /* JGHLuckyDrawViewController.m */,
+			);
+			path = "活动抽奖H5";
 			sourceTree = "<group>";
 		};
 		2017508E1E2CA24D00FB2FE4 /* 取消报名 */ = {
@@ -6956,6 +6970,7 @@
 		36BFFF431BC76D09005B3CE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				18D5DBCD1E65700F008C87EE /* shake-sound.wav */,
 				20301A581E1269EB005568E2 /* LGLCalender */,
 				203017451E0E4291005568E2 /* ZXingObjC */,
 				2030173B1E0E3EAA005568E2 /* datePicks */,
@@ -8676,6 +8691,7 @@
 		F5A105421CE309750050461D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				2016A2E51E6669F70085EFFC /* 活动抽奖H5 */,
 				2017508E1E2CA24D00FB2FE4 /* 取消报名 */,
 				20BEF3CC1E2A1B8D00E9AED7 /* 活动添加打球人 */,
 				209D7D0B1E1F75DC002BDC7A /* 活动详情 */,
@@ -9236,6 +9252,7 @@
 				20BC97E61E1F6051007DFD34 /* JGHChooseAwardCell.xib in Resources */,
 				2080304A1CF828D100448BFC /* JGHAddAddressViewController.xib in Resources */,
 				654332061BD5D9B900363947 /* UMSCommentInputController.xib in Resources */,
+				18D5DBCE1E65700F008C87EE /* shake-sound.wav in Resources */,
 				20513B511CF5D9AD003233FB /* JGHAddInvoiceViewController.xib in Resources */,
 				2053FE921DC9C04300975203 /* JGHRegistersViewController.xib in Resources */,
 				AA91C7861C4201B80078DA17 /* IQButtonBarArrowLeft@2x.png in Resources */,
@@ -10059,6 +10076,7 @@
 				36BF00E31BC77428005B3CE2 /* UseMallViewController.m in Sources */,
 				20BC97DE1E1F6051007DFD34 /* JGLWinnerShareModel.m in Sources */,
 				20F025361D6FD59300D7D7B6 /* JGHAddTeamPlaysViewController.m in Sources */,
+				2016A2E81E666A160085EFFC /* JGHLuckyDrawViewController.m in Sources */,
 				203019AA1E0E4292005568E2 /* ZXAI01392xDecoder.m in Sources */,
 				AA91C7881C4201B80078DA17 /* IQKeyboardManager.m in Sources */,
 				36DCB8251C01AA38000EB674 /* TeamJoinModel.m in Sources */,

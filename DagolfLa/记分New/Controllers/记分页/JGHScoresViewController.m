@@ -80,13 +80,14 @@
 {
     [super viewWillAppear:animated];
     
+    //替换任务栏
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
+    
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icn_home"] style:UIBarButtonItemStylePlain target:self action:@selector(backHome)];
     leftItem.tintColor=[UIColor colorWithHexString:@"#32b14d"];
     [leftItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15 * ProportionAdapter], NSFontAttributeName, nil] forState:(UIControlStateNormal)];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    //替换任务栏
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -99,6 +100,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
+    
     _walletMonay = 0;//红包金额
     
     [self.segment setTitle:@"差杆模式" forSegmentAtIndex:0];
@@ -286,10 +289,9 @@
                 [_macthDict setObject:[scoreDict objectForKey:@"ballName"] forKey:@"ballName"];
                 [_macthDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"placeId"];
                 [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"playTimes"];
-                
                 [_ballDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
-                
                 _switchMode = [[scoreDict objectForKey:@"scoreModel"] integerValue];
+            
             }
             
             if ([data objectForKey:@"score"]) {

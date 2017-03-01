@@ -230,5 +230,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "JGHPushClass.h"
 #import "SXPickPhoto.h"
 #import "ConvertJson.h"
+#import "JGLWebUserMallViewController.h"
 
 #endif

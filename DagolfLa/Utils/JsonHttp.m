@@ -47,6 +47,11 @@ static JsonHttp *jsonHttp = nil;
     
     // 2.设置请求头
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    //当前版本号
+    NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+
+    
     
     NSData *data2 =[paraStr dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -96,6 +101,10 @@ static JsonHttp *jsonHttp = nil;
     
     // 2.设置请求头
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    //当前版本号
+    NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+
+    [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
     
     NSData *data2 =[paraStr dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -157,7 +166,10 @@ static JsonHttp *jsonHttp = nil;
     
     // 2.设置请求头
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
+    //当前版本号
+    NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+
     NSData *data2 =[paraStr dataUsingEncoding:NSUTF8StringEncoding];
     
     request.HTTPBody = data2;
@@ -185,9 +197,13 @@ static JsonHttp *jsonHttp = nil;
 
 - (void)httpRequest:(NSString *)url JsonKey:(NSString *)jsonKey withData:(NSDictionary *)postData requestMethod:(NSString *)httpMethod failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock
 {
+
     url = [NSString stringWithFormat:@"%@%@",PORTOCOL_APP_ROOT_URL,url];
     NSLog(@"%@",url);
+    
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
     if (jsonKey == nil) {
         postDict = [NSMutableDictionary dictionaryWithDictionary:postData];
@@ -201,6 +217,12 @@ static JsonHttp *jsonHttp = nil;
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     manager.requestSerializer.timeoutInterval = 20.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
+    
+    
+    //当前版本号
+    NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [manager.requestSerializer setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+
 //    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略
 //    manager.securityPolicy.allowInvalidCertificates = YES;
@@ -218,7 +240,6 @@ static JsonHttp *jsonHttp = nil;
             
 //            if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
                 [Helper netWorkError];
-//
 //            }else{
 //                [Helper downLoadDataOverrun];
 //            }
@@ -350,6 +371,9 @@ static JsonHttp *jsonHttp = nil;
     NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
     //设置HTTPHeader
     [request setValue:content forHTTPHeaderField:@"Content-Type"];
+    //当前版本号
+    NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
 
     //设置Content-Length
     [request setValue:[NSString stringWithFormat:@"%ld", (long)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
@@ -443,7 +467,10 @@ static JsonHttp *jsonHttp = nil;
     NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",TWITTERFON_FORM_BOUNDARY];
     //设置HTTPHeader
     [request setValue:content forHTTPHeaderField:@"Content-Type"];
-    
+    //当前版本号
+    NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+
     //设置Content-Length
     [request setValue:[NSString stringWithFormat:@"%ld", (long)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
     //设置http body
@@ -502,7 +529,10 @@ static JsonHttp *jsonHttp = nil;
     [manager.requestSerializer willChangeValueForKey:@"timeoutInterval"];
     manager.requestSerializer.timeoutInterval = 20.f;
     [manager.requestSerializer didChangeValueForKey:@"timeoutInterval"];
-    
+    //当前版本号
+    NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [manager.requestSerializer setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+
     manager.responseSerializer.acceptableContentTypes =  [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];//设置相应内容类型
 
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {

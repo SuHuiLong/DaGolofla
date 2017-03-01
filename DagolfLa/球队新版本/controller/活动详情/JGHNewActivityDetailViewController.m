@@ -27,6 +27,7 @@
 #import "JGHActivityAllCell.h"
 #import "JGHActivityInfoCell.h"
 #import "JGHNewCancelApplyViewController.h"
+#import "UseMallViewController.h"
 
 static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableViewCell";
 static NSString *const JGHNewActivityCellIdentifier = @"JGHNewActivityCell";
@@ -134,8 +135,8 @@ static CGFloat ImageHeight  = 210.0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    _titleArray = @[@"参赛费用", @"活动成员及分组", @"查看成绩", @"查看奖项", @"活动说明"];
-    _imageArray = @[@"icn_preferential", @"icn_event_group1", @"icn_event_score", @"icn_awards", @"icn_event_details"];
+    _titleArray = @[@"参赛费用", @"活动成员及分组", @"查看成绩", @"查看奖项", @"抽奖活动", @"活动说明"];
+    _imageArray = @[@"icn_preferential", @"icn_event_group1", @"icn_event_score", @"icn_awards", @"icn_lottery", @"icn_event_details"];
     
     //监听分组页面返回，刷新数据
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
@@ -434,18 +435,18 @@ static CGFloat ImageHeight  = 210.0;
         //参赛费用列表
         NSLog(@"%td", _costListArray.count + 1);
         return _costListArray.count;
-    }else if (section == 6){
+    }else if (section == 7){
         return 1;
     }
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 7;//详情页面
+    return 8;//详情页面
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
         return 30*ProportionAdapter;
-    }else if (indexPath.section == 6){
+    }else if (indexPath.section == 7){
         static JGHActivityInfoCell *cell;
         if (!cell) {
             cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGHActivityInfoCellIdentifier];
@@ -458,7 +459,7 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 3 || section == 4 || section == 6) {
+    if (section == 3 || section == 4 || section == 5) {
         return 0;
     }
     return 10*ProportionAdapter;
@@ -481,7 +482,7 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         return costListCell;
-    }else if (indexPath.section == 6){
+    }else if (indexPath.section == 7){
         JGHActivityInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityInfoCellIdentifier];
         infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
         infoCell.infoLable.text = _model.info;
@@ -510,9 +511,9 @@ static CGFloat ImageHeight  = 210.0;
         JGHActivityAllCell *activityCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityAllCellIdentifier];
         activityCell.clickBtn.tag = 100 +section;
         activityCell.delegate = self;
-        if (section == 2 || section == 6) {
+        if (section == 2 || section == 7) {
             activityCell.accessoryType = UITableViewCellAccessoryNone;
-            if (section == 6) {
+            if (section == 7) {
                 activityCell.line.hidden = YES;
             }
         }else{
@@ -645,6 +646,26 @@ static CGFloat ImageHeight  = 210.0;
     if (btn.tag == 105) {
         [self getTeamActivityAward:btn];
     }
+    
+    if (btn.tag == 106) {
+        [self getLuckyDraw:btn];
+    }
+}
+#pragma mark -- 抽奖活动
+- (void)getLuckyDraw:(UIButton *)btn{
+    if (_isTeamMember == 1) {
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        return;
+    }
+    
+    btn.userInteractionEnabled = NO;
+    
+    UseMallViewController *webCtrl = [[UseMallViewController alloc]init];
+    //http://res.dagolfla.com/h5/luck/historyListDetail.html?userKey=167238&teamKey=4011&activityKey=571084&luckDrawKey=571249&md5=6FC5449449E8E78326ACBF47873681F0
+    webCtrl.linkUrl = [NSString stringWithFormat:@"http://res.dagolfla.com/h5/luck/luckMain.html?userKey=%@&teamKey=%td&activityKey=%td&md5=%@", DEFAULF_USERID, _model.teamKey, _teamKey, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%td&activityKey=%tddagolfla.com", DEFAULF_USERID, _model.teamKey, _teamKey]]];
+    
+    [self.navigationController pushViewController:webCtrl animated:YES];
+    btn.userInteractionEnabled = YES;
 }
 #pragma mark - Table View Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
