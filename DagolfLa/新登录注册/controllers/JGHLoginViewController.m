@@ -410,10 +410,12 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
     
     JGHRegistersViewController *registerCtrl = [[JGHRegistersViewController alloc]initWithNibName:@"JGHRegistersViewController" bundle:nil];
     registerCtrl.delegate = self;
+    /*
     registerCtrl.blackCtrl = ^(){
         _reloadCtrlData();
         [self.navigationController popViewControllerAnimated:YES];
     };
+     */
     [self.navigationController pushViewController:registerCtrl animated:YES];
 }
 #pragma mark -- 登录

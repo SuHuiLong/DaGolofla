@@ -89,6 +89,7 @@
     
     [self.view addSubview:self.webView];
     
+    /*
     RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
     [self.view addSubview:avatar];
     avatar.backgroundColor = [UIColor clearColor];
@@ -96,7 +97,7 @@
     UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
     tapGesture.numberOfTapsRequired = 1;
     [avatar addGestureRecognizer:tapGesture];
-    
+    */
     
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     

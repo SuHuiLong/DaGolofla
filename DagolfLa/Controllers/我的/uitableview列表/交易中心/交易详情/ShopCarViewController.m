@@ -78,6 +78,8 @@
     self.webView.delegate=self;
     
     [self.view addSubview:self.webView];
+    
+    /*
     RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
     [self.view addSubview:avatar];
     avatar.backgroundColor = [UIColor clearColor];
@@ -85,7 +87,7 @@
     UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
     tapGesture.numberOfTapsRequired = 1;
     [avatar addGestureRecognizer:tapGesture];
-    
+    */
     
     UIActivityIndicatorView* actIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     actIndicator.frame = CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2-100, 0, 0);

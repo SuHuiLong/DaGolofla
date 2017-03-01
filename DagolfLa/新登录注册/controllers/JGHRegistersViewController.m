@@ -10,6 +10,9 @@
 #import "JGHUserAgreementViewController.h"
 #import "UserInformationModel.h"
 #import "MySetBindViewController.h"
+#import "JKSlideViewController.h"
+#import "MeViewController.h"
+#import "ChatListViewController.h"
 
 @interface JGHRegistersViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 {
@@ -339,8 +342,8 @@
                 
                 [LQProgressHud showMessage:@"注册成功！"];
                 
-                [self.navigationController popViewControllerAnimated:YES];
-                _blackCtrl();
+                self.tabBarController.selectedIndex = 0;
+                [self.navigationController popToRootViewControllerAnimated:NO];
             }
         }else{
             _getCodeBtn.userInteractionEnabled = YES;

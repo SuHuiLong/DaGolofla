@@ -45,7 +45,7 @@
         
         _almostLabel = [[UILabel alloc]initWithFrame:CGRectMake(80*screenWidth/375, 30*screenWidth/375, 80*screenWidth/375, 20*screenWidth/375)];
         _almostLabel.textColor = [UIColor blackColor];
-        _almostLabel.text = @"差点 39";
+        _almostLabel.text = @"差点 0";
         [self addSubview:_almostLabel];
         _almostLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         
@@ -78,7 +78,7 @@
     if ([model.almost floatValue] == -10000) {
         _almostLabel.text = @"差点  --";
     }else{
-        [NSString stringWithFormat:@"差点  %@", (model.almost)?model.almost:@"--"];
+        _almostLabel.text = [NSString stringWithFormat:@"差点  %@", (model.almost)?model.almost:@"--"];
     }
     
     if (model.mobile.length == 11) {

@@ -86,8 +86,8 @@
     JGHNewHomePageViewController *shou = [[JGHNewHomePageViewController alloc] init];
     shou.title = @"首页";
     [self setUpOneChildViewController:shou image:[UIImage imageNamed:@"home-page_gray"] selectImage:[[UIImage imageNamed:@"home-page_green"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    JKSlideViewController *comVc = [[JKSlideViewController alloc] init];
     
+    JKSlideViewController *comVc = [[JKSlideViewController alloc] init];
     comVc.title = @"球友圈";
     [self setUpOneChildViewController:comVc image:[UIImage imageNamed:@"main_btn_community"] selectImage:[[UIImage imageNamed:@"main_btn_community_select"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         

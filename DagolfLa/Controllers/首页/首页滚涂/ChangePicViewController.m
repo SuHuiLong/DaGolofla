@@ -193,7 +193,7 @@
     [self.view addSubview:actIndicator];
     _actIndicatorView = actIndicator;
     
-    
+    /*
     RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
     [self.view addSubview:avatar];
     avatar.backgroundColor = [UIColor clearColor];
@@ -201,7 +201,7 @@
     UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
     tapGesture.numberOfTapsRequired = 1;
     [avatar addGestureRecognizer:tapGesture];
-    
+    */
 }
 -(void)btnWebClick:(UIButton *)btn
 {

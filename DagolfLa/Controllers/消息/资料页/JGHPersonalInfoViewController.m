@@ -144,7 +144,11 @@
                     
                     self.nickname.frame = CGRectMake(130 *ProportionAdapter, 39 *ProportionAdapter, screenWidth -140*ProportionAdapter, 17 *ProportionAdapter);
                     self.nickname.text = [NSString stringWithFormat:@"%@", _model.userName];
-                    self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
+                    if ([_model.almost floatValue] == -10000) {
+                        self.almost.text = @"差点  --";
+                    }else{
+                        self.almost.text = [NSString stringWithFormat:@"差点  %@", (_model.almost)?_model.almost:@"--"];
+                    }
                 }else{
                     CGSize nameSize = [_model.userName boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18*ProportionAdapter]} context:nil].size;
                     self.name.frame = CGRectMake(90 *ProportionAdapter, 10 *ProportionAdapter, nameSize.width, 20 *ProportionAdapter);
@@ -154,7 +158,11 @@
                     
                     self.alm.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
                     self.almost.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
-                    self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
+                    if ([_model.almost floatValue] == -10000) {
+                        self.almost.text = @"差点  --";
+                    }else{
+                        self.almost.text = [NSString stringWithFormat:@"差点  %@", (_model.almost)?_model.almost:@"--"];
+                    }
                 }
                 
                 self.sexImageView.frame = CGRectMake(self.name.frame.origin.x +10*ProportionAdapter + self.name.frame.size.width, self.name.frame.origin.y +2*ProportionAdapter, 15*ProportionAdapter, 15*ProportionAdapter);
@@ -175,7 +183,11 @@
                 
                 self.alm.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
                 self.almost.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
-                self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
+                if ([_model.almost floatValue] == -10000) {
+                    self.almost.text = @"差点  --";
+                }else{
+                    self.almost.text = [NSString stringWithFormat:@"差点  %@", (_model.almost)?_model.almost:@"--"];
+                }
             }
             
             if (_model.sex == 0) {
@@ -368,7 +380,11 @@
             
             self.alm.frame = CGRectMake(90 *ProportionAdapter, 40 *ProportionAdapter, 40 *ProportionAdapter, 15 *ProportionAdapter);
             self.almost.frame = CGRectMake(130 *ProportionAdapter, 40 *ProportionAdapter, screenWidth -140*ProportionAdapter, 15 *ProportionAdapter);
-            self.almost.text = [NSString stringWithFormat:@"%.1f", [_model.almost floatValue]];
+            if ([_model.almost floatValue] == -10000) {
+                self.almost.text = @"差点  --";
+            }else{
+                self.almost.text = [NSString stringWithFormat:@"差点  %@", (_model.almost)?_model.almost:@"--"];
+            }
             
             self.nick.hidden = YES;
             self.nickname.hidden = YES;
