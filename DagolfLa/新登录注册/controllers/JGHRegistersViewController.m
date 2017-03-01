@@ -262,6 +262,7 @@
 }
 #pragma mark -- 完成
 - (IBAction)completeBtn:(UIButton *)sender {
+    
     if (_select == 1) {
         [LQProgressHud showMessage:@"请同意协议！"];
         return;
@@ -429,6 +430,7 @@
     [_mobileBtn setTitle:cddd forState:UIControlStateNormal];
     _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
 }
+
 
 
 @end
