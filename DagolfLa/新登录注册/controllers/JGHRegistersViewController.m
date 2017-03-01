@@ -345,7 +345,6 @@
                 [self.navigationController popViewControllerAnimated:YES];
                 
                 //获取上个界面的控制器
-                //获取上个界面的控制器
                 UIViewController *popController = self.navigationController.viewControllers[self.navigationController.viewControllers.count - 2];
                 
                 JGDPersonalCard *card = [[JGDPersonalCard alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -354,7 +353,7 @@
                 
                 
                 [self.navigationController popToViewController:popController animated:YES];
-                                
+                
                 
                 _blackCtrl();
             }
