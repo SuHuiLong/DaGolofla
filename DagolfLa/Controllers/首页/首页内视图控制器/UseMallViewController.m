@@ -153,7 +153,6 @@
 }
 
 
-
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     
@@ -333,9 +332,12 @@
         [[JGHPushClass pushClass] URLString:str pushVC:^(UIViewController *vc) {
 //            vc.hidesBottomBarWhenPushed = YES;
 //            self.navigationController.navigationBarHidden = NO;
-            self.navigationController.navigationBarHidden = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-            
+            if (vc == nil) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                self.navigationController.navigationBarHidden = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }            
         }];
         return NO;
     }
@@ -569,26 +571,35 @@
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+    if ([_linkUrl containsString:@"luckMain"]) {
+        _webView.frame = CGRectMake(0, -20, screenWidth, screenHeight +20);
+    }else{
+        _webView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+        
+        UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+        
+        statusView.image = [UIImage imageNamed:@"nav_bg"];
+        
+        CGRect frame = statusView.frame;
+        
+        frame.origin = CGPointMake(0, 0);
+        
+        statusView.frame = frame;
+        
+        [self.view addSubview:statusView];
+        [_actIndicatorView stopAnimating];
+        
+        _canGoBack = webView.canGoBack;
+    }
     
-    statusView.image = [UIImage imageNamed:@"nav_bg"];
-    
-    CGRect frame = statusView.frame;
-    
-    frame.origin = CGPointMake(0, 0);
-    
-    statusView.frame = frame;
-    
-    [self.view addSubview:statusView];
     [_actIndicatorView stopAnimating];
-    
-    _canGoBack = webView.canGoBack;
-    
 }
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     ////NSLog(@"webview下载失败，error = %@",[error localizedDescription]);
     self.imageView.image = [UIImage imageNamed:DefaultHeaderImage];
+    
+    [_actIndicatorView stopAnimating];
 }
 
 

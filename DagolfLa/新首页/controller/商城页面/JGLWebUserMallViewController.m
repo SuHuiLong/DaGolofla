@@ -34,6 +34,7 @@
 
 @property (nonatomic, retain)WCLPassWordView *passWordView;
 
+
 @end
 
 @implementation JGLWebUserMallViewController
@@ -287,17 +288,23 @@
 }
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+    if ([_urlRequest containsString:@"luckMain"]) {
+        _webView.frame = CGRectMake(0, -20, screenWidth, screenHeight +20);
+    }else{
+        _webView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+        UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
+        
+        statusView.image = [UIImage imageNamed:@"nav_bg"];
+        
+        CGRect frame = statusView.frame;
+        
+        frame.origin = CGPointMake(0, 0);
+        
+        statusView.frame = frame;
+        
+        [self.view addSubview:statusView];
+    }
     
-    statusView.image = [UIImage imageNamed:@"nav_bg"];
-    
-    CGRect frame = statusView.frame;
-    
-    frame.origin = CGPointMake(0, 0);
-    
-    statusView.frame = frame;
-    
-    [self.view addSubview:statusView];
 //    [_actIndicatorView stopAnimating];
 }
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

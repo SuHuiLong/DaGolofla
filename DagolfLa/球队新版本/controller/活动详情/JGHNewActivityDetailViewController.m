@@ -27,7 +27,7 @@
 #import "JGHActivityAllCell.h"
 #import "JGHActivityInfoCell.h"
 #import "JGHNewCancelApplyViewController.h"
-#import "JGHLuckyDrawViewController.h"
+#import "UseMallViewController.h"
 
 static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableViewCell";
 static NSString *const JGHNewActivityCellIdentifier = @"JGHNewActivityCell";
@@ -660,9 +660,9 @@ static CGFloat ImageHeight  = 210.0;
     
     btn.userInteractionEnabled = NO;
     
-    JGHLuckyDrawViewController *webCtrl = [[JGHLuckyDrawViewController alloc]init];
+    UseMallViewController *webCtrl = [[UseMallViewController alloc]init];
     //http://res.dagolfla.com/h5/luck/historyListDetail.html?userKey=167238&teamKey=4011&activityKey=571084&luckDrawKey=571249&md5=6FC5449449E8E78326ACBF47873681F0
-    webCtrl.urlRequest = [NSString stringWithFormat:@"http://res.dagolfla.com/h5/luck/luckMain.html?userKey=%@&teamKey=%td&activityKey=%td&md5=%@", DEFAULF_USERID, _model.teamKey, _teamKey, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%td&activityKey=%tddagolfla.com", DEFAULF_USERID, _model.teamKey, _teamKey]]];
+    webCtrl.linkUrl = [NSString stringWithFormat:@"http://res.dagolfla.com/h5/luck/luckMain.html?userKey=%@&teamKey=%td&activityKey=%td&md5=%@", DEFAULF_USERID, _model.teamKey, _teamKey, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%td&activityKey=%tddagolfla.com", DEFAULF_USERID, _model.teamKey, _teamKey]]];
     
     [self.navigationController pushViewController:webCtrl animated:YES];
     btn.userInteractionEnabled = YES;
