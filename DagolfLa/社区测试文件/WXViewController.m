@@ -174,7 +174,6 @@
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     
     
-    
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     NSNumber *userId = [user objectForKey:@"userId"];
     NSNumber *lat = [user objectForKey:@"lat"];
