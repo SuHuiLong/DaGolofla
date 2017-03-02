@@ -68,15 +68,14 @@
     
     [self.view addSubview:self.webView];
     
-    /*
     RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
+    avatar.tag = 10000;
     [self.view addSubview:avatar];
     avatar.backgroundColor = [UIColor clearColor];
     [avatar setBackgroundImage:[UIImage imageNamed:@"sy"] forState:UIControlStateNormal];
     UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
     tapGesture.numberOfTapsRequired = 1;
     [avatar addGestureRecognizer:tapGesture];
-     */
     
     UIActivityIndicatorView* actIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
@@ -291,6 +290,8 @@
     
     [self.view addSubview:statusView];
     [_actIndicatorView stopAnimating];
+    UIButton *avrBtn = [self.view viewWithTag:10000];
+    [avrBtn removeFromSuperview];
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

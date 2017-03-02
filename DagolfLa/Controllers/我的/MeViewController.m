@@ -49,7 +49,6 @@
 #import "JGDNewTeamDetailViewController.h"
 //#import "JGTeamMemberORManagerViewController.h"
 #import "DetailViewController.h"
-#import "JGLPushDetailsViewController.h"
 #import "UseMallViewController.h"
 
 #import "JGMyBarCodeViewController.h"

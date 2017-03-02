@@ -1,5 +1,4 @@
 //
-//  JGLNewShopDetailViewController.m
 //  DagolfLa
 //
 //  Created by 黄达明 on 16/5/28.
@@ -126,15 +125,16 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlRequest]]];
     
-    /*
     RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
+    avatar.tag = 10000;
     [self.view addSubview:avatar];
     avatar.backgroundColor = [UIColor clearColor];
     [avatar setBackgroundImage:[UIImage imageNamed:@"sy"] forState:UIControlStateNormal];
     UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(btnWebClick:)];
     tapGesture.numberOfTapsRequired = 1;
+    avatar.tag = 10000;
     [avatar addGestureRecognizer:tapGesture];
-     */
+    
 }
 -(void)btnWebClick:(UIButton *)btn
 {
@@ -306,6 +306,8 @@
         [self.view addSubview:statusView];
     }
     
+    UIButton *avrBtn = [self.view viewWithTag:10000];
+    [avrBtn removeFromSuperview];
 //    [_actIndicatorView stopAnimating];
 }
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
