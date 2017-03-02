@@ -128,6 +128,9 @@
             if (ballAreasArray.count == 2) {
                 [_selectAreaArray addObject:@1];
                 [_selectAreaArray addObject:@1];
+                
+                [_scoreBtn setBackgroundColor:[UIColor orangeColor]];
+                _scoreBtn.userInteractionEnabled = YES;
             }else{
                 for (int i=0; i<ballAreasArray.count; i++) {
                     [_selectAreaArray addObject:@0];

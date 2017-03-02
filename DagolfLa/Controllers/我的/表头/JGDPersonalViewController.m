@@ -59,7 +59,7 @@
     self.title = @"个人资料";
     _pickPhoto = [[SXPickPhoto alloc]init];
     self.titleArray = [NSArray arrayWithObjects:@"昵称", @"性别", @"出生年月", @"行业", @"差点", @"球龄", @"城市", @"个人签名",  nil];
-    self.keyArray = [NSArray arrayWithObjects:@"userName", @"sex", @"birthday", @"workName", @"almost", @"ballage", @"address", @"userSign", nil];
+    self.keyArray = [NSArray arrayWithObjects:@"userName", @"sex", @"birthday", @"workName", @"almost", @"ballYear", @"address", @"userSign", nil];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:(UITableViewStyleGrouped)];
     self.tableView.delegate = self;
@@ -166,19 +166,19 @@
         }
     }
     
-    if ([self.dict objectForKey:@"ballage"]) {
+    if ([self.dict objectForKey:@"ballYear"]) {
         
-        if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"1-2年"]) {
-            [self.dict setObject:@0 forKey:@"ballage"];
+        if ([[self.dict objectForKey:@"ballYear"] isEqualToString:@"1-2年"]) {
+            [self.dict setObject:@0 forKey:@"ballYear"];
             
-        }else if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"3-5年"]) {
-            [self.dict setObject:@1 forKey:@"ballage"];
+        }else if ([[self.dict objectForKey:@"ballYear"] isEqualToString:@"3-5年"]) {
+            [self.dict setObject:@1 forKey:@"ballYear"];
             
-        }else if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"6-10年"]) {
-            [self.dict setObject:@2 forKey:@"ballage"];
+        }else if ([[self.dict objectForKey:@"ballYear"] isEqualToString:@"6-10年"]) {
+            [self.dict setObject:@2 forKey:@"ballYear"];
             
-        }else if ([[self.dict objectForKey:@"ballage"] isEqualToString:@"10年 以上"]) {
-            [self.dict setObject:@3 forKey:@"ballage"];
+        }else if ([[self.dict objectForKey:@"ballYear"] isEqualToString:@"10年 以上"]) {
+            [self.dict setObject:@3 forKey:@"ballYear"];
             
         }
     }

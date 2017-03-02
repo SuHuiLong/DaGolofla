@@ -134,6 +134,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         playBaseInfoCell.nameText.tag = 200;
         playBaseInfoCell.almostFext.delegate = self;
         playBaseInfoCell.almostFext.tag = 201;
+        playBaseInfoCell.almostFext.keyboardType = UIKeyboardTypeDefault;
         playBaseInfoCell.phoneNumberText.delegate = self;
         playBaseInfoCell.phoneNumberText.tag = 202;
         [playBaseInfoCell configJGHPlayBaseInfoCell:_playsBaseDict];
@@ -211,14 +212,20 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         [_playsBaseDict setObject:@"0" forKey:@"userKey"];
         
         if (model.almost) {
-            [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"almost"];
+            if ([model.almost floatValue] == -10000) {
+                
+            }else{
+                [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"almost"];
+            }
         }
         
+        /*
         if (model.almost_system_setting == 0) {
             [_playsBaseDict setObject:@0 forKey:@"almost_system_setting"];
         }else{
             [_playsBaseDict setObject:@1 forKey:@"almost_system_setting"];
         }
+        */
         
         if ([model.sex integerValue] == 0) {
             [_playsBaseDict setObject:model.sex forKey:@"sex"];
@@ -258,15 +265,19 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         }
         
         if (model.almost) {
-            [_playsBaseDict setObject:model.almost forKey:@"almost"];
+            if ([model.almost floatValue] == -10000) {
+                
+            }else{
+                [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"almost"];
+            }
         }
-        
+        /*
         if (model.almost_system_setting == 0) {
             [_playsBaseDict setObject:@0 forKey:@"almost_system_setting"];
         }else{
             [_playsBaseDict setObject:@1 forKey:@"almost_system_setting"];
         }
-        
+        */
         if (model.fMobile) {
             [_playsBaseDict setObject:model.fMobile forKey:@"mobile"];
         }
@@ -393,12 +404,13 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     [self.addTeamPlaysTableView reloadData];
 }
 #pragma mark -- textDelegate
+/*
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     if (textField.tag == 201){
         NSLog(@"差点");
         if ([_playsBaseDict objectForKey:@"almost_system_setting"]) {
             //队员、球友
-            if ([[_playsBaseDict objectForKey:@"almost_system_setting"] integerValue] == 0) {
+            if ([[_playsBaseDict objectForKey:@"almost_system_setting"] integerValue] == 1) {
                 //不可以编辑
                 //[textField canResignFirstResponder];
                 [LQProgressHud showInfoMsg:@"您启用了君高差点系统，无法手动更改。\n可移步『系统设置』关闭该系统。"];
@@ -413,6 +425,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     }
     return YES;
 }
+*/
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (textField.tag == 200) {
         NSLog(@"名字");
@@ -427,7 +440,27 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         [_playsBaseDict setObject:textField.text forKey:@"mobile"];
     }
 }
-
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
+{
+    if (textField.tag == 201) {
+        NSCharacterSet *cs;
+        if(textField)
+        {
+            cs = [[NSCharacterSet characterSetWithCharactersInString:ALMOSTNUMBERS] invertedSet];
+            NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+            BOOL basicTest = [string isEqualToString:filtered];
+            if(!basicTest)
+            {
+                [[ShowHUD showHUD]showToastWithText:@"请输入整数数字" FromView:self.view];
+                return NO;
+            }
+        }
+        //其他的类型不需要检测，直接写入
+        return YES;
+    }else{
+        return YES;
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
