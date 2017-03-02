@@ -92,6 +92,7 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItems = nil;
     
+
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.tabBarController.tabBar.hidden = NO;
