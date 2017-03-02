@@ -66,7 +66,7 @@
         iconBtn.layer.borderWidth = 1.5 * ProportionAdapter;
         iconBtn.layer.borderColor = [[UIColor whiteColor] CGColor];
         [self.backView addSubview:iconBtn];
-        iconBtn.contentMode = UIViewContentModeScaleAspectFill;
+        iconBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
         [iconBtn addTarget:self action:@selector(changeIcon:) forControlEvents:(UIControlEventTouchUpInside)];
         
         UIButton *removeBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
@@ -205,10 +205,13 @@
         [dict setObject:TYPE_USER_HEAD forKey:@"nType"];
         [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
         
+        [[ShowHUD showHUD] showAnimationWithText:@"上传中…" FromView:self];
         [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:self.picImageArray failedBlock:^(id errType) {
-            
+            [[ShowHUD showHUD] hideAnimationFromView:self];
+
         } completionBlock:^(id data) {
-            
+            [[ShowHUD showHUD] hideAnimationFromView:self];
+
             NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
             [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
@@ -229,7 +232,8 @@
         [self.dataDic setObject:self.pointTF.text forKey:@"almost"];
     }
     
-    if (self.industryTF.text) {
+    if (self.industryTF.text && ![self.industryTF.text isEqualToString:@""]) {
+        
         [self.dataDic setObject:self.industryTF.text forKey:@"workName"];
     }
     
@@ -296,7 +300,7 @@
     UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //打开相机
         _pickPhoto.picker.allowsEditing = NO;
-        [_pickPhoto ShowTakePhotoWithController:self.controller andWithBlock:^(NSObject *Data) {
+        [_pickPhoto ShowTakePhotoWithController:alertWindow.rootViewController andWithBlock:^(NSObject *Data) {
             self.picImageArray = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
             [btn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
             
