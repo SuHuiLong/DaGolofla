@@ -51,7 +51,7 @@ static JsonHttp *jsonHttp = nil;
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
 
-    
+    [request setValue:@"IOS" forHTTPHeaderField:@"AppSystem"];
     
     NSData *data2 =[paraStr dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -105,6 +105,8 @@ static JsonHttp *jsonHttp = nil;
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 
     [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+    [request setValue:@"IOS" forHTTPHeaderField:@"AppSystem"];
+
     
     NSData *data2 =[paraStr dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -169,6 +171,7 @@ static JsonHttp *jsonHttp = nil;
     //当前版本号
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+    [request setValue:@"IOS" forHTTPHeaderField:@"AppSystem"];
 
     NSData *data2 =[paraStr dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -222,6 +225,7 @@ static JsonHttp *jsonHttp = nil;
     //当前版本号
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [manager.requestSerializer setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+    [manager.requestSerializer setValue:@"IOS" forHTTPHeaderField:@"AppSystem"];
 
 //    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略
@@ -374,6 +378,7 @@ static JsonHttp *jsonHttp = nil;
     //当前版本号
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+    [request setValue:@"IOS" forHTTPHeaderField:@"AppSystem"];
 
     //设置Content-Length
     [request setValue:[NSString stringWithFormat:@"%ld", (long)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
@@ -470,6 +475,7 @@ static JsonHttp *jsonHttp = nil;
     //当前版本号
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [request setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+    [request setValue:@"IOS" forHTTPHeaderField:@"AppSystem"];
 
     //设置Content-Length
     [request setValue:[NSString stringWithFormat:@"%ld", (long)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
@@ -532,6 +538,7 @@ static JsonHttp *jsonHttp = nil;
     //当前版本号
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [manager.requestSerializer setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+    [manager.requestSerializer setValue:@"IOS" forHTTPHeaderField:@"AppSystem"];
 
     manager.responseSerializer.acceptableContentTypes =  [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];//设置相应内容类型
 

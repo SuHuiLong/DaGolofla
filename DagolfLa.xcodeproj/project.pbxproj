@@ -15,6 +15,8 @@
 		186856031E5BD776001F44DD /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FD1E5BD776001F44DD /* UIView+Addition.m */; };
 		186856041E5BD776001F44DD /* UIView+GPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FF1E5BD776001F44DD /* UIView+GPExtension.m */; };
 		18D5DBCE1E65700F008C87EE /* shake-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18D5DBCD1E65700F008C87EE /* shake-sound.wav */; };
+		18D5DBD41E67A913008C87EE /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DBD11E67A912008C87EE /* NJKWebViewProgress.m */; };
+		18D5DBD51E67A913008C87EE /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DBD31E67A912008C87EE /* NJKWebViewProgressView.m */; };
 		200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */; };
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
 		2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0641E01729D008B85DF /* JGHAreaListView.m */; };
@@ -1258,6 +1260,10 @@
 		186855FE1E5BD776001F44DD /* UIView+GPExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GPExtension.h"; sourceTree = "<group>"; };
 		186855FF1E5BD776001F44DD /* UIView+GPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GPExtension.m"; sourceTree = "<group>"; };
 		18D5DBCD1E65700F008C87EE /* shake-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "shake-sound.wav"; sourceTree = "<group>"; };
+		18D5DBD01E67A912008C87EE /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgress.h; sourceTree = "<group>"; };
+		18D5DBD11E67A912008C87EE /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgress.m; sourceTree = "<group>"; };
+		18D5DBD21E67A912008C87EE /* NJKWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgressView.h; sourceTree = "<group>"; };
+		18D5DBD31E67A912008C87EE /* NJKWebViewProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgressView.m; sourceTree = "<group>"; };
 		200200FA1D61B2C900308C44 /* JGHStarScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHStarScoreViewController.h; sourceTree = "<group>"; };
 		200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHStarScoreViewController.m; sourceTree = "<group>"; };
 		200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieEditorViewController.h; sourceTree = "<group>"; };
@@ -3708,6 +3714,17 @@
 				1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		18D5DBCF1E67A912008C87EE /* NJKWebViewProgress */ = {
+			isa = PBXGroup;
+			children = (
+				18D5DBD01E67A912008C87EE /* NJKWebViewProgress.h */,
+				18D5DBD11E67A912008C87EE /* NJKWebViewProgress.m */,
+				18D5DBD21E67A912008C87EE /* NJKWebViewProgressView.h */,
+				18D5DBD31E67A912008C87EE /* NJKWebViewProgressView.m */,
+			);
+			path = NJKWebViewProgress;
 			sourceTree = "<group>";
 		};
 		200CE70D1E5299BC00055A85 /* 咨询频道 */ = {
@@ -7673,6 +7690,7 @@
 		65B596CF1CAD43AC007AB83A /* 社区导航文件 */ = {
 			isa = PBXGroup;
 			children = (
+				18D5DBCF1E67A912008C87EE /* NJKWebViewProgress */,
 				65B596D01CAD43AC007AB83A /* JKSlideSwitchView.h */,
 				65B596D11CAD43AC007AB83A /* JKSlideSwitchView.m */,
 				65B596D21CAD43AC007AB83A /* JKSlideViewController.h */,
@@ -9391,6 +9409,7 @@
 				368B733B1C1045DE0002A618 /* ScoreGameModel.m in Sources */,
 				2067C6CE1CE30CC0002900C8 /* JGActivityNameBaseCell.m in Sources */,
 				36BF01871BC77611005B3CE2 /* CityCollectionViewCell.m in Sources */,
+				18D5DBD51E67A913008C87EE /* NJKWebViewProgressView.m in Sources */,
 				36E300FD1C3FF3F9005C3F08 /* UIView+MJExtension.m in Sources */,
 				203019B71E0E4292005568E2 /* ZXRSSExpandedDecodedObject.m in Sources */,
 				20513BDB1CF7050A003233FB /* RSADataVerifier.m in Sources */,
@@ -10140,6 +10159,7 @@
 				2064DEA61D4219BB00F0D52A /* JGHEndScoresViewController.m in Sources */,
 				203019FE1E0E4293005568E2 /* ZXQRCodeFormatInformation.m in Sources */,
 				82AAB7B11CE5C18E005F5633 /* JGSelfSetTableViewCell.m in Sources */,
+				18D5DBD41E67A913008C87EE /* NJKWebViewProgress.m in Sources */,
 				201750981E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m in Sources */,
 				2030193B1E0E4292005568E2 /* ZXAztecEncoder.m in Sources */,
 				2066E87D1D5C585900A3A2B8 /* JGHCaddieAuthModel.m in Sources */,
