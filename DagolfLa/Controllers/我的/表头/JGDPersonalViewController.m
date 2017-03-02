@@ -84,7 +84,14 @@
     self.iconBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 73 * ProportionAdapter, 73 * ProportionAdapter)];
     self.iconBtn.center = headerView.center;
     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
-    [self.iconBtn sd_setImageWithURL:[NSURL URLWithString:bgUrl] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"bg_photo"]];
+//    [self.iconBtn sd_setImageWithURL:[NSURL URLWithString:bgUrl] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"bg_photo"]];
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:bgUrl]];
+    if (data) {
+        [self.iconBtn setImage:[UIImage imageWithData:data] forState:(UIControlStateNormal)];
+    }else{
+        [self.iconBtn setImage:[UIImage imageNamed:@"bg_photo"] forState:(UIControlStateNormal)];
+    }
+
     //    [self.iconBtn setImage:[UIImage imageNamed:@"bg_photo"] forState:(UIControlStateNormal)];;
     self.iconBtn.layer.cornerRadius = 73 * ProportionAdapter / 2;
     self.iconBtn.clipsToBounds = YES;
