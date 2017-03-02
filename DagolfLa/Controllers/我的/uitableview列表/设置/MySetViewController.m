@@ -224,6 +224,9 @@
         [user removeObjectForKey:@"uid"];
         [user removeObjectForKey:@"isWeChat"];
         [user removeObjectForKey:@"rongTk"];
+        
+        
+        [user setValue:@"1" forKey:@"isExitTag"];
         NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
         NSDictionary * dict = [defs dictionaryRepresentation];
         for (id key in dict) {
