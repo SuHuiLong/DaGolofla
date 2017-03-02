@@ -481,6 +481,28 @@
     return _paraDic;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if (textField.tag == 1000){
+        NSLog(@"差点");
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        if ([[user objectForKey:@"almost_system_setting"] integerValue]) {
+            //队员、球友
+            if ([[user objectForKey:@"almost_system_setting"] integerValue] == 1) {
+                //不可以编辑
+                //[textField canResignFirstResponder];
+                [LQProgressHud showInfoMsg:@"您启用了君高差点系统，无法手动更改。\n可移步『系统设置』关闭该系统。"];
+                return NO;
+            }else{
+                return YES;
+            }
+        }else{
+            //嘉宾
+            return YES;
+        }
+    }
+    return YES;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
 {
     if (textField.tag == 1000) {

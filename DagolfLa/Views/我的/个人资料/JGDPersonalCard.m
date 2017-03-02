@@ -159,13 +159,13 @@
             self.industryTF.text = [user objectForKey:@"workName"];
         }
         
-        if ([[user objectForKey:@"almost_system_setting"] integerValue] == 0) {
-            [self.isUseJGBtn setImage:[UIImage imageNamed:@"icn_registerlay"] forState:(UIControlStateNormal)];
-            self.isUerJG = NO;
-        }else{
-            self.isUerJG = YES;
-        }
-        
+//        if ([[user objectForKey:@"almost_system_setting"] integerValue] == 0) {
+//            [self.isUseJGBtn setImage:[UIImage imageNamed:@"icn_registerlay"] forState:(UIControlStateNormal)];
+//            self.isUerJG = NO;
+//        }else{
+//            self.isUerJG = YES;
+//        }
+        [self isJGSystemAct:self.isUseJGBtn];
         
     }
     return self;
