@@ -57,7 +57,6 @@ static JGHPushClass *pushClass = nil;
         }
     }
     
-    
     // 球场详情
     if ([urlString containsString:@"bookBallParkDetail"]) {
         JGDCourtDetailViewController *teamMainCtrl = [[JGDCourtDetailViewController alloc]init];

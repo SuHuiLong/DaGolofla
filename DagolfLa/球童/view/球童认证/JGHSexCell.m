@@ -45,11 +45,12 @@
 - (void)configSex:(NSInteger)sex{
     self.titleLable.text = @"性别";
     if (sex == 1) {
-        [self.manBtn setImage:[UIImage imageNamed:@"xuan_w"] forState:UIControlStateNormal];
-        [self.womanBtn setImage:[UIImage imageNamed:@"xuan_z"] forState:UIControlStateNormal];
-    }else{
+        
         [self.manBtn setImage:[UIImage imageNamed:@"xuan_z"] forState:UIControlStateNormal];
         [self.womanBtn setImage:[UIImage imageNamed:@"xuan_w"] forState:UIControlStateNormal];
+    }else{
+        [self.manBtn setImage:[UIImage imageNamed:@"xuan_w"] forState:UIControlStateNormal];
+        [self.womanBtn setImage:[UIImage imageNamed:@"xuan_z"] forState:UIControlStateNormal];
     }
 }
 

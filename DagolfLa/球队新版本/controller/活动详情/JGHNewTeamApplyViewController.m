@@ -274,6 +274,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     }
     */
     //过滤差点数据
+    /*
     for (NSMutableDictionary *almostDict in _applyArray) {
         if ([almostDict objectForKey:@"almost_system_setting"]) {
             if ([[almostDict objectForKey:@"almost_system_setting"] integerValue] == 1) {
@@ -287,6 +288,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
             break;
         }
     }
+    */
     
     [dict setObject:_info forKey:@"info"];
     [dict setObject:@0 forKey:@"srcType"];//报名类型－－0非嘉宾通道

@@ -95,10 +95,28 @@
     }
     
     if (model.workName) {
-        _ageLabel.text = [NSString stringWithFormat:@"%.1f  |  %@",[model.almost floatValue], model.workName];
+        
+        if (model.almost) {
+            if ([model.almost floatValue] == -10000) {
+                _ageLabel.text = [NSString stringWithFormat:@"－－  |  %@", model.workName];
+            }else{
+                _ageLabel.text = [NSString stringWithFormat:@"%@  |  %@", model.almost, model.workName];
+            }
+        }else{
+            _ageLabel.text = [NSString stringWithFormat:@"－－  |  %@", model.workName];
+        }
 
     }else{
-        _ageLabel.text = [NSString stringWithFormat:@"%.1f",[model.almost floatValue]];
+        
+        if (model.almost) {
+            if ([model.almost floatValue] == -10000) {
+                _ageLabel.text = @"差点  --";
+            }else{
+                _ageLabel.text = [NSString stringWithFormat:@"%@", model.almost];
+            }
+        }else{
+            _ageLabel.text = @"差点  --";
+        }
 
     }
 //    _ageLabel.text = [NSString stringWithFormat:@"%@",model.age];
@@ -146,10 +164,28 @@
     }
     
     if (model.workName) {
-        _ageLabel.text = [NSString stringWithFormat:@"%.1f  |  %@",[model.almost floatValue], model.workName];
+        
+        if (model.almost) {
+            if ([model.almost floatValue] == -10000) {
+                _ageLabel.text = [NSString stringWithFormat:@"－－  |  %@", model.workName];
+            }else{
+                _ageLabel.text = [NSString stringWithFormat:@"%@  |  %@", model.almost, model.workName];
+            }
+        }else{
+            _ageLabel.text = [NSString stringWithFormat:@"－－  |  %@", model.workName];
+        }
         
     }else{
-        _ageLabel.text = [NSString stringWithFormat:@"%@",model.almost];
+        
+        if (model.almost) {
+            if ([model.almost floatValue] == -10000) {
+                _ageLabel.text = @"差点  --";
+            }else{
+                _ageLabel.text = [NSString stringWithFormat:@"%@", model.almost];
+            }
+        }else{
+            _ageLabel.text = @"差点  --";
+        }
         
     }
     

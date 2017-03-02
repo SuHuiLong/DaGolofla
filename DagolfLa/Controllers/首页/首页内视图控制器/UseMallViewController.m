@@ -19,8 +19,10 @@
 #import "JGHbalanceView.h"
 #import "WCLPassWordView.h"
 
+#import "NJKWebViewProgressView.h"
+#import "NJKWebViewProgress.h"
 
-@interface UseMallViewController ()<UIWebViewDelegate, WCLPassWordViewDelegate, JGHbalanceViewDelegate>
+@interface UseMallViewController ()<UIWebViewDelegate, WCLPassWordViewDelegate, JGHbalanceViewDelegate, NJKWebViewProgressDelegate>
 {
     NSString* _payUrl;
     NSMutableDictionary* _dictCan;
@@ -28,6 +30,11 @@
     NSString *_price;
     
     UIView *_bgView;
+    
+    //进度条
+    NJKWebViewProgressView *_progressView;
+    NJKWebViewProgress *_progressProxy;
+
 
 }
 @property(nonatomic,retain)UIWebView *webView;
@@ -68,6 +75,7 @@
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=YES;
+
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -79,6 +87,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     //如果为空就直接赋值，否则从推送或者分享跳转页面中调取
     if ([Helper isBlankString:_linkUrl]) {
         _linkUrl = @"http://www.dagolfla.com/app/index.html";
@@ -89,7 +98,20 @@
     
     [self.view addSubview:self.webView];
     
-    /*
+    //进度条
+    _progressProxy = [[NJKWebViewProgress alloc] init];
+    _webView.delegate = _progressProxy;
+    _progressProxy.webViewProxyDelegate = self;
+    _progressProxy.progressDelegate = self;
+    //进度条frame
+    CGFloat progressBarHeight = 2.f;
+    CGRect barFrame = CGRectMake(0, 20, screenWidth, progressBarHeight);
+    _progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
+    _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    
+    [_webView addSubview:_progressView];
+
+        /*
     RCDraggableButton *avatar = [[RCDraggableButton alloc] initInKeyWindowWithFrame:CGRectMake(0, 100, 33, 38)];
     [self.view addSubview:avatar];
     avatar.backgroundColor = [UIColor clearColor];
@@ -603,6 +625,12 @@
     [_actIndicatorView stopAnimating];
 }
 
+#pragma mark - NJKWebViewProgressDelegate
+-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
+{
+    [_progressView setProgress:progress animated:YES];
+//    self.title = [_webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+}
 
 
 @end

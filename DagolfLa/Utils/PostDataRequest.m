@@ -38,6 +38,12 @@
         //返回二进制
         _httpManager.requestSerializer.timeoutInterval = 20.f;
         _httpManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        //当前版本号
+        NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        [_httpManager.requestSerializer setValue:app_Version forHTTPHeaderField:@"AppVersion"];
+        [_httpManager.requestSerializer setValue:@"IOS" forHTTPHeaderField:@"AppSystem"];
+        
+        
     }
     return self;
 }
