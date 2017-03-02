@@ -214,7 +214,7 @@
     [user synchronize];
     
     //设置状态栏字体颜色
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     //---------------------------友盟-------------------------------
     [self umengTrack];
     //-------------------------定位-------------------------

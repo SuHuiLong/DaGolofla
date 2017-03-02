@@ -330,10 +330,21 @@
     navigation.navigationBarHidden = YES;
     [self presentViewController:navigation animated:YES completion:nil];
 }
+
+
+
 #pragma mark --  视频保存后调用
 - (void)qupaiSDK:(id<ALBBQuPaiPluginPluginServiceProtocol>)sdk compeleteVideoPath:(NSString *)videoPath thumbnailPath:(NSString *)thumbnailPath
 {
     NSLog(@"Qupai SDK compelete %@",videoPath);
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+        // iOS 7
+        
+        [self prefersStatusBarHidden];
+        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+    }    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    
     [_selectImages removeAllObjects];
     [self dismissViewControllerAnimated:YES completion:nil];
     if (videoPath) {
@@ -351,6 +362,15 @@
     
     [self updateUserInterface];
 }
+
+- (BOOL)prefersStatusBarHidden
+
+{
+    return NO;//隐藏为YES，显示为NO
+    
+}
+
+
 - (void)selectFromCamera
 {
     _vedioData = nil;

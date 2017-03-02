@@ -72,19 +72,13 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     self.tabBarController.tabBar.hidden = NO;
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
-    
-}
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     //把当前界面的导航栏隐藏
     self.navigationController.navigationBarHidden = NO;
-    
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
 - (void)viewDidLoad {
@@ -200,9 +194,13 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *getDict = [NSMutableDictionary dictionary];
     if ([[userDef objectForKey:userID] integerValue] > 0) {
+        NSString *isExitTag = [userDef objectForKey:@"isExitTag"];
         [getDict setObject:DEFAULF_USERID forKey:@"userKey"];
         if ([_isBoot isEqualToString:@"1"]) {
             _isBoot = @"0";
+        }else if(isExitTag){
+            _isBoot = @"1";
+            [userDef removeObjectForKey:@"isExitTag"];
         }else{
             _isBoot = @"1";
         }
@@ -915,11 +913,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     NSLog(@"scrollView11 == %f", scrollView.contentOffset.y);
     if (scrollView.contentOffset.y > screenWidth/2 -20) {
-//        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
         [self.view addSubview:self.toolView];
         _toolView.alpha = 1.0;
     }else{
-//        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
+        [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
         [self.view addSubview:self.toolView];
         _toolView.alpha = 0.0;
     }
