@@ -85,4 +85,6 @@
 
 @property (assign, nonatomic)NSInteger select;//是否选择
 
+@property (assign, nonatomic)NSInteger almost_system_setting;//是否开启差点系统
+
 @end

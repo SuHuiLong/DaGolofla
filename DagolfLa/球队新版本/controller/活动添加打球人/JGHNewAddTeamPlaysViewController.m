@@ -214,6 +214,12 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
             [_playsBaseDict setObject:[NSString stringWithFormat:@"%@", model.almost] forKey:@"almost"];
         }
         
+        if (model.almost_system_setting == 0) {
+            [_playsBaseDict setObject:@0 forKey:@"almost_system_setting"];
+        }else{
+            [_playsBaseDict setObject:@1 forKey:@"almost_system_setting"];
+        }
+        
         if ([model.sex integerValue] == 0) {
             [_playsBaseDict setObject:model.sex forKey:@"sex"];
         }else{
@@ -253,6 +259,12 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         
         if (model.almost) {
             [_playsBaseDict setObject:model.almost forKey:@"almost"];
+        }
+        
+        if (model.almost_system_setting == 0) {
+            [_playsBaseDict setObject:@0 forKey:@"almost_system_setting"];
+        }else{
+            [_playsBaseDict setObject:@1 forKey:@"almost_system_setting"];
         }
         
         if (model.fMobile) {
@@ -381,6 +393,26 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     [self.addTeamPlaysTableView reloadData];
 }
 #pragma mark -- textDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if (textField.tag == 201){
+        NSLog(@"差点");
+        if ([_playsBaseDict objectForKey:@"almost_system_setting"]) {
+            //队员、球友
+            if ([[_playsBaseDict objectForKey:@"almost_system_setting"] integerValue] == 0) {
+                //不可以编辑
+                //[textField canResignFirstResponder];
+                [LQProgressHud showInfoMsg:@"您启用了君高差点系统，无法手动更改。\n可移步『系统设置』关闭该系统。"];
+                return NO;
+            }else{
+                return YES;
+            }
+        }else{
+            //嘉宾
+            return YES;
+        }
+    }
+    return YES;
+}
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (textField.tag == 200) {
         NSLog(@"名字");

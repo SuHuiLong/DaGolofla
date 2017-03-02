@@ -10,9 +10,8 @@
 #import "JGHUserAgreementViewController.h"
 #import "UserInformationModel.h"
 #import "MySetBindViewController.h"
-#import "JKSlideViewController.h"
-#import "MeViewController.h"
-#import "ChatListViewController.h"
+#import "JGDPersonalCard.h"
+
 
 @interface JGHRegistersViewController ()<UITextFieldDelegate, UIPickerViewDataSource,UIPickerViewDelegate>
 {
