@@ -78,7 +78,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [super viewWillDisappear:animated];
     //把当前界面的导航栏隐藏
     self.navigationController.navigationBarHidden = NO;
-//    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)viewDidLoad {
