@@ -529,7 +529,7 @@
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
-    
+
     //if (_refreshArea == 0) {
         _selectHole = 0;
         
@@ -592,8 +592,12 @@
         [_pageViewController setViewControllers:@[vc2] direction:0 animated:YES completion:nil];
     }
     
-    
     [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
+    
+    [self performSelector:@selector(removeRepeatView) withObject:nil afterDelay:0.3f];
+}
+- (void)removeRepeatView{
+    [[[UIApplication sharedApplication].keyWindow viewWithTag:1234]removeFromSuperview];
 }
 #pragma mark -- 历史记分卡－－修改页面 
 - (void)historyScoreList{
