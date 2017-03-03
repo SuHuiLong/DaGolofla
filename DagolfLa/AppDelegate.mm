@@ -166,6 +166,7 @@
                             
                         }else{
                             [commitContactArray addObject:personDic];
+                            
                         }
                     }
                 }
@@ -177,7 +178,6 @@
                     [[JsonHttp jsonHttp] httpRequestWithMD5:@"mobileContact/doUploadContacts" JsonKey:nil withData:dic failedBlock:^(id errType) {
                         
                     } completionBlock:^(id data) {
-                        
                         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                             NSLog(@"mobileContact/doUploadContacts success");
                         }
@@ -981,7 +981,14 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 - (void)getAdvertisingImageWithUrl
 {
     // TODO 请求广告接口
-    [[JsonHttp jsonHttp] httpRequest:@"index/getStartPageList" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
+    NSDictionary *dict = [NSDictionary dictionary];
+    if (DEFAULF_USERID) {
+        dict = @{
+                 @"userKey":DEFAULF_USERID
+                 };
+    }
+    
+    [[JsonHttp jsonHttp] httpRequest:@"index/getStartPageList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
 

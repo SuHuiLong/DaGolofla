@@ -575,11 +575,9 @@
                 ////NSLog(@"分享成功！");
             }
         }];
-        
     }
     else
     {
-        
         UMSocialData *data = [UMSocialData defaultData];
         data.shareImage = fiData;
         data.shareText = [NSString stringWithFormat:@"%@%@",[dict objectForKey:@"title"],shareUrl];
