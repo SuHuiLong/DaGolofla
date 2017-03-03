@@ -78,6 +78,9 @@
         UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
         self.navigationItem.leftBarButtonItem = leftItem;
     }
+    
+    //显示任务栏
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
 }
 
 - (void)endScoresAndBackClick:(UIButton *)btn{
