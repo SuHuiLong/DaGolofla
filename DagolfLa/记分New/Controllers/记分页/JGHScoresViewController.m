@@ -477,10 +477,16 @@
     [_scoresView setUserInteractionEnabled:NO];
     [UIView animateWithDuration:0.3f animations:^{
         if (_scoresView != nil) {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:34567]removeFromSuperview];
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:45678]removeFromSuperview];
+            //[[UIApplication sharedApplication].keyWindow.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
             _scoresView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
         }
         
         if (_poorScoreView != nil) {
+            //[[UIApplication sharedApplication].keyWindow.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:34567]removeFromSuperview];
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:45678]removeFromSuperview];
             _poorScoreView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
         }
         
@@ -505,11 +511,13 @@
 }
 - (void)removeAnimateView{
     if (_scoresView != nil) {
+        //[_scoresView.areaListView removeFromSuperview];
         [_scoresView removeFromSuperview];
         _scoresView = nil;
     }
     
     if (_poorScoreView != nil) {
+        
         [_poorScoreView removeFromSuperview];
         _poorScoreView = nil;
     }
@@ -521,7 +529,7 @@
 }
 #pragma mark -- 点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
-    
+
     //if (_refreshArea == 0) {
         _selectHole = 0;
         
@@ -584,8 +592,12 @@
         [_pageViewController setViewControllers:@[vc2] direction:0 animated:YES completion:nil];
     }
     
-    
     [self pageViewController:_pageViewController viewControllerAfterViewController:vc2];
+    
+    [self performSelector:@selector(removeRepeatView) withObject:nil afterDelay:0.3f];
+}
+- (void)removeRepeatView{
+    [[[UIApplication sharedApplication].keyWindow viewWithTag:1234]removeFromSuperview];
 }
 #pragma mark -- 历史记分卡－－修改页面 
 - (void)historyScoreList{

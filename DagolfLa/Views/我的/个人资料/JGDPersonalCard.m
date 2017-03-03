@@ -196,6 +196,10 @@
 
 - (void)commitAct{
     
+    if ([self.nameTF.text isEqualToString:@""] || [self.pointTF.text isEqualToString:@""]) {
+        [LQProgressHud showMessage:@"请补全昵称和差点"];
+        return;
+    }
     
     if ([self.picImageArray count] > 0) {
         NSNumber* strTimeKey = DEFAULF_USERID;

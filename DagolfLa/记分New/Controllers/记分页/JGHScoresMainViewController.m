@@ -154,10 +154,26 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 }
 #pragma mark -- LeftBtn 左切换 右切换
 - (void)leftScoreBtn:(UIButton *)btn{
+   
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(btnRepeatClick:) object:btn];
+    
+    [self performSelector:@selector(btnRepeatClick:) withObject:btn afterDelay:0.3f];
+}
+
+- (void)btnRepeatClick:(UIButton *)btn{
+    
     btn.enabled = NO;
+    
+    UIView *bgRepeatView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight -52*ProportionAdapter, screenWidth, 52 *ProportionAdapter)];
+    bgRepeatView.backgroundColor = [UIColor whiteColor];
+    bgRepeatView.alpha = 0.1;
+    bgRepeatView.tag = 1234;
+    [[UIApplication sharedApplication].keyWindow addSubview:bgRepeatView];
+    
     NSLog(@"切换");
     NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
-
+    
     NSInteger indx = 0;
     if (btn.tag == 20) {
         //左
@@ -182,7 +198,6 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     [userDict setObject:@(indx) forKey:@"index"];
     //创建一个消息对象
     NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
-    
     //发送消息
     [[NSNotificationCenter defaultCenter]postNotification:notice];
     
