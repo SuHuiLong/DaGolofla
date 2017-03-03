@@ -198,11 +198,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [getDict setObject:DEFAULF_USERID forKey:@"userKey"];
         if ([_isBoot isEqualToString:@"1"]) {
             _isBoot = @"0";
-        }else if(isExitTag){
-            _isBoot = @"1";
-            [userDef removeObjectForKey:@"isExitTag"];
         }else{
             _isBoot = @"1";
+        }
+        if(isExitTag){
+            _isBoot = @"1";
+            [userDef removeObjectForKey:@"isExitTag"];
         }
         [getDict setObject:_isBoot forKey:@"isBoot"];
     }else{

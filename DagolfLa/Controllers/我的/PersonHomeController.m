@@ -370,7 +370,6 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                     [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     
                 }));
-
                 
                 //替换备注名称
 //                NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
@@ -379,8 +378,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 //                }else{
 //                    _nameLabel.text = model.userremarks;
 //                }
-                
-                if ([_model.sex integerValue] == 0) {
+                 if ([_model.sex integerValue] == 0) {
                     _sexImg.image = [UIImage imageNamed:@"xb_n"];
                 }else{
                     _sexImg.image = [UIImage imageNamed:@"xb_nn"];
