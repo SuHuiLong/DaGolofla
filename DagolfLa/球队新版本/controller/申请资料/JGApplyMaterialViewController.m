@@ -509,7 +509,7 @@
         
         if ([self.almost integerValue] == -10000) {
         
-            cell.textFD.placeholder = @"--";
+            cell.textFD.placeholder = @"请输入你的差点";
             cell.textFD.text = @"";
         }else{
             
