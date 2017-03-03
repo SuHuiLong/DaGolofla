@@ -299,7 +299,7 @@
     //拍照：
     UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //打开相机
-        _pickPhoto.picker.allowsEditing = NO;
+        _pickPhoto.picker.allowsEditing = YES;
         [_pickPhoto ShowTakePhotoWithController:alertWindow.rootViewController andWithBlock:^(NSObject *Data) {
             self.picImageArray = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
             [btn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
@@ -309,7 +309,7 @@
     //相册
     UIAlertAction * act3 = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //打开相册
-        _pickPhoto.picker.allowsEditing = NO;
+        _pickPhoto.picker.allowsEditing = YES;
         [_pickPhoto SHowLocalPhotoWithController:alertWindow.rootViewController andWithBlock:^(NSObject *Data) {
             self.picImageArray = [NSMutableArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)];
             [btn setImage:(UIImage *)Data forState:(UIControlStateNormal)];
