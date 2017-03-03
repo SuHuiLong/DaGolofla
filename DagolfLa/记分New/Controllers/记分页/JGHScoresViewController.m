@@ -477,10 +477,16 @@
     [_scoresView setUserInteractionEnabled:NO];
     [UIView animateWithDuration:0.3f animations:^{
         if (_scoresView != nil) {
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:34567]removeFromSuperview];
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:45678]removeFromSuperview];
+            //[[UIApplication sharedApplication].keyWindow.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
             _scoresView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
         }
         
         if (_poorScoreView != nil) {
+            //[[UIApplication sharedApplication].keyWindow.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:34567]removeFromSuperview];
+            [[[UIApplication sharedApplication].keyWindow viewWithTag:45678]removeFromSuperview];
             _poorScoreView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
         }
         
@@ -505,11 +511,13 @@
 }
 - (void)removeAnimateView{
     if (_scoresView != nil) {
+        //[_scoresView.areaListView removeFromSuperview];
         [_scoresView removeFromSuperview];
         _scoresView = nil;
     }
     
     if (_poorScoreView != nil) {
+        
         [_poorScoreView removeFromSuperview];
         _poorScoreView = nil;
     }

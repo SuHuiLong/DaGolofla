@@ -231,6 +231,7 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 - (void)createTwarnview:(NSString *)string{
     self.areaListView = [[JGHAreaListView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, _areaArray.count *40*ProportionAdapter +2*ProportionAdapter)];
     _areaListView.delegate = self;
+    _areaListView.tag = 34567;
     _areaListView.backgroundColor = [UIColor whiteColor];
     [_areaListView reloadAreaListView:_areaArray andCurrAreString:string];
     
@@ -243,6 +244,7 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
     _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -(_areaArray.count *40*ProportionAdapter +2*ProportionAdapter))];
     _tranView.backgroundColor = [UIColor whiteColor];
     _tranView.alpha = 0.2;
+    _tranView.tag = 45678;
     UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
     [tag addTarget:self action:@selector(removeTranView)];
     [_tranView addGestureRecognizer:tag];
