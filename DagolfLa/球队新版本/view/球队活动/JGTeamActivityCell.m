@@ -20,6 +20,7 @@
     self.imageview.layer.masksToBounds = YES;
     self.imageview.layer.cornerRadius = CornerRadiu;
     self.imageviewW.constant = 65*ProportionAdapter;
+    self.imageview.contentMode = UIViewContentModeScaleAspectFill;
     
     self.nameLeft.constant = 10*ProportionAdapter;
     self.timeImageLeft.constant = 10*ProportionAdapter;

@@ -49,7 +49,6 @@
 #import "JGDNewTeamDetailViewController.h"
 //#import "JGTeamMemberORManagerViewController.h"
 #import "DetailViewController.h"
-#import "JGLPushDetailsViewController.h"
 #import "UseMallViewController.h"
 
 #import "JGMyBarCodeViewController.h"
@@ -290,7 +289,13 @@
             
             NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
             [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-            [cell.iconImgv sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:bgUrl]];
+            if (data) {
+                cell.iconImgv.image = [UIImage imageWithData:data];
+            }else{
+                cell.iconImgv.image = [UIImage imageNamed:DefaultHeaderImage];
+            }
+//            [cell.iconImgv sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             cell.iconImgv.contentMode = UIViewContentModeScaleAspectFill;
             cell.nameLabel.text = _model.userName;
             if (![Helper isBlankString:_model.userName] && ![Helper isBlankString:_model.userSign]) {

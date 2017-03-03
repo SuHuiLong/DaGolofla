@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "UIImageView+WebCache.h"
 #import "Helper.h"
-#import "ChangePicViewController.h"
+
 @implementation HomeHeadView
 {
     UIScrollView *_scrollView;
@@ -182,9 +182,6 @@
 {
     UIImageView *imageView = (UIImageView *)g.view;
     NSInteger index = imageView.tag - 300;
-//    ChangePicViewController* changeVc = [[ChangePicViewController alloc]init];
-//    changeVc.strUrl = _urlArray[index];
-//    changeVc.strTitle = _titleArray[index];
     if (_myClick) {
         _myClick(_urlArray[index]);
     }

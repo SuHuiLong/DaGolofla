@@ -19,7 +19,6 @@
 #import "JGLPresentAwardViewController.h"
 #import "JGDNewTeamDetailViewController.h"
 #import "UseMallViewController.h"
-#import "JGLPushDetailsViewController.h"
 #import "DetailViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
 
@@ -194,11 +193,7 @@ static JGHPushClass *pushClass = nil;
         if (pushVC) {
             pushVC(userVc);
         }
-//        JGLPushDetailsViewController* puVc = [[JGLPushDetailsViewController alloc]init];
-//        puVc.strUrl = [Helper returnKeyVlaueWithUrlString:urlString andKey:@"url"];
-//        if (pushVC) {
-//            pushVC(puVc);
-//        }
+
     }
     
     //社区
