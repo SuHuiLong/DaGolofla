@@ -77,12 +77,20 @@
 
     [_picker dismissViewControllerAnimated:YES completion:nil];
     
+    
+    
     NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
     //当选择的类型是图片
     if ([type isEqualToString:@"public.image"])
      {
          //图片可编辑
-          UIImage *newHeaderImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+         UIImage * newHeaderImage = info[UIImagePickerControllerEditedImage];
+         
+         if (!newHeaderImage) {
+             newHeaderImage = info[UIImagePickerControllerOriginalImage];
+         }
+
+//          UIImage *newHeaderImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
 //          newHeaderImage = [newHeaderImage fixOrientation];
          
          if (_myblock)
