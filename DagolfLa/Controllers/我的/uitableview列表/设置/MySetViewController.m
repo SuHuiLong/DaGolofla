@@ -226,7 +226,6 @@
         [user removeObjectForKey:@"rongTk"];
         
         
-        [user setValue:@"1" forKey:@"isExitTag"];
         NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
         NSDictionary * dict = [defs dictionaryRepresentation];
         for (id key in dict) {
@@ -242,6 +241,7 @@
         [user setObject:@(lat) forKey:BDMAPLAT];
         [user setObject:@(lng) forKey:BDMAPLNG];
         [user setObject:cityName forKey:CITYNAME];
+        [user setValue:@"1" forKey:@"isExitTag"];
         [user synchronize];
         
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];

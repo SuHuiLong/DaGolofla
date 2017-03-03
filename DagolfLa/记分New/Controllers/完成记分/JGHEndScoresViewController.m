@@ -356,6 +356,8 @@
         NSString *encodedVedioStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
         _vedioData = [[NSData alloc] initWithBase64EncodedString:encodedVedioStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
     }
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+
     //缩略图
     if (thumbnailPath) {
         UIImageWriteToSavedPhotosAlbum([UIImage imageWithContentsOfFile:thumbnailPath], nil, nil, nil);
