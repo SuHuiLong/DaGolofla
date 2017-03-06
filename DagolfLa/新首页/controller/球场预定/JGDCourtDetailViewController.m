@@ -47,6 +47,8 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, copy) NSString *week;
 @property (nonatomic, copy) NSString *time;
 
+@property (nonatomic, assign) BOOL isAlliance; //  是否是联盟会员
+
 @end
 
 @implementation JGDCourtDetailViewController
@@ -125,7 +127,7 @@ static CGFloat ImageHeight  = 210.0;
     self.navigationController.navigationBarHidden = YES;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
-    
+    self.isAlliance = YES;
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 10, 44, 44);
@@ -342,8 +344,11 @@ static CGFloat ImageHeight  = 210.0;
         
     }else {
         
+        CGFloat row0Height;
+        self.isAlliance ? (row0Height = 200 * ProportionAdapter) : (row0Height = 100 * ProportionAdapter);
+        
         CGFloat height = [Helper textHeightFromTextString:self.serviceDetail.text width:screenWidth - 20 * ProportionAdapter fontSize:15 * ProportionAdapter];
-        return indexPath.row == 0 ? 100 * ProportionAdapter : 50 * ProportionAdapter + height;
+        return indexPath.row == 0 ? row0Height : 50 * ProportionAdapter + height;
         
     }
 }
@@ -449,6 +454,8 @@ static CGFloat ImageHeight  = 210.0;
             
             UILabel *priceLB = [[UILabel alloc] init];
             
+            UIButton *allianceBtn = [[UIButton alloc] initWithFrame:CGRectMake(screenWidth - 85 * ProportionAdapter, 22 * ProportionAdapter, 75 * ProportionAdapter, 55 * ProportionAdapter)];
+
             UIButton *payBtn = [[UIButton alloc] initWithFrame:CGRectMake(screenWidth - 85 * ProportionAdapter, 22 * ProportionAdapter, 75 * ProportionAdapter, 55 * ProportionAdapter)];
     // 0: 未上架  1: 已上架   2:封场
             if ([[self.detailDic objectForKey:@"instapaper"] integerValue] == 2) {
@@ -461,10 +468,38 @@ static CGFloat ImageHeight  = 210.0;
                 
                 [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_paycolor"] forState:(UIControlStateNormal)];
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
+        
+                [allianceBtn setBackgroundImage:[UIImage imageNamed:@"booking_paycolor"] forState:(UIControlStateNormal)];
+                [allianceBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
 
-                if (self.deductionMoney) {
-        // 立减优惠
-                // 优惠前价格
+        // 无立减价格
+                [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %@", self.unitPrice] textAlignment:(NSTextAlignmentRight)];
+                NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.unitPrice]];
+                [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
+                priceLB.attributedText = mutaStr;
+                [cell.contentView addSubview:priceLB];
+
+                if (self.deductionMoney && self.isAlliance) {
+                    NSLog(@"有立减的联盟会员");
+                    
+                    [payBtn setFrame:CGRectMake(20, 110, 75 * ProportionAdapter, 55 * ProportionAdapter)];
+                    
+                }
+                
+                if (!self.deductionMoney && self.isAlliance) {
+                    NSLog(@"无立减的联盟会员");
+
+                    [payBtn setFrame:CGRectMake(30 * ProportionAdapter, 110 * ProportionAdapter, 75 * ProportionAdapter, 55 * ProportionAdapter)];
+                    [allianceBtn setFrame:CGRectMake(ScreenWidth / 2 + 30 * ProportionAdapter, 110 * ProportionAdapter, 75 * ProportionAdapter, 55 * ProportionAdapter)];
+                    
+                    [priceLB setFrame:CGRectMake(30 * ProportionAdapter, 80 * ProportionAdapter, 75 * ProportionAdapter, 30 * ProportionAdapter)];
+                    priceLB.textAlignment = NSTextAlignmentCenter;
+                }
+                
+            // 非联盟 立减优惠
+                if (self.deductionMoney && !self.isAlliance) {
+
+                    // 优惠前价格
                     UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:[NSString stringWithFormat:@"¥ %@",self.unitPrice] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:greyLB];
                     
@@ -474,22 +509,47 @@ static CGFloat ImageHeight  = 210.0;
                     lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
                     [cell.contentView addSubview:lineLB];
                     
-                // 优惠后价格
-//                    NSInteger orangePrice = [self.unitPrice integerValue] - [self.deductionMoney integerValue];
-
+                    // 优惠后价格
                     UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", self.payMoney] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:orangeLB];
-
-                }else{
-                    
-            // 无立减优惠
-                    [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %@", self.unitPrice] textAlignment:(NSTextAlignmentRight)];
-                    
-                    NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.unitPrice]];
-                    [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
-                    priceLB.attributedText = mutaStr;
-                    [cell.contentView addSubview:priceLB];
                 }
+                
+            // 非联盟 无立减优惠
+                if (!self.deductionMoney && !self.isAlliance) {
+
+
+
+                }
+                
+                
+//                if (self.deductionMoney) {
+//        // 立减优惠
+//                // 优惠前价格
+//                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:[NSString stringWithFormat:@"¥ %@",self.unitPrice] textAlignment:(NSTextAlignmentRight)];
+//                    [cell.contentView addSubview:greyLB];
+//                    
+//                    CGFloat width = [Helper textWidthFromTextString:[NSString stringWithFormat:@"¥ %@",self.unitPrice] height:screenWidth - 20 * ProportionAdapter fontSize:13];
+//                    
+//                    UILabel *lineLB = [self lablerect:CGRectMake(screenWidth - 95 * ProportionAdapter - width - 2.5 * ProportionAdapter , 40 * ProportionAdapter, width + 5 * ProportionAdapter, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
+//                    lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+//                    [cell.contentView addSubview:lineLB];
+//                    
+//                // 优惠后价格
+////                    NSInteger orangePrice = [self.unitPrice integerValue] - [self.deductionMoney integerValue];
+//
+//                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", self.payMoney] textAlignment:(NSTextAlignmentRight)];
+//                    [cell.contentView addSubview:orangeLB];
+//
+//                }else{
+//                    
+//            // 无立减优惠
+//                    [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %@", self.unitPrice] textAlignment:(NSTextAlignmentRight)];
+//                    
+//                    NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.unitPrice]];
+//                    [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
+//                    priceLB.attributedText = mutaStr;
+//                    [cell.contentView addSubview:priceLB];
+//                }
                 
                 
             }else{
