@@ -70,14 +70,14 @@
 
 - (void)tipCreate{
     UILabel *oneLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-80 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
-    oneLable.text = @"纸质记分如何导入系统？";
+    oneLable.text = @"照片太多，手机上传太慢？";
     oneLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
     oneLable.textColor = [UIColor colorWithHexString:Ba0_Color];
     oneLable.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:oneLable];
     
     UILabel *twoLable = [[UILabel alloc]initWithFrame:CGRectMake(0, screenHeight -64-60 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
-    twoLable.text = @"我们提供了PC端导入工具、excel成绩表一键导入！";
+    twoLable.text = @"我们提供了PC端导入工具，海量照片，一键导入！";
     twoLable.textAlignment = NSTextAlignmentCenter;
     twoLable.textColor = [UIColor colorWithHexString:Ba0_Color];
     twoLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];

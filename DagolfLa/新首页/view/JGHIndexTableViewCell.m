@@ -11,14 +11,18 @@
 #import "JGHRecomStadiumView.h"
 #import "JGHSuppliesMallView.h"
 #import "JGDHotTeamView.h"
+#import "JGHSpectatorSportsView.h"
+#import "JGHGolfPackageView.h"
 
-@interface JGHIndexTableViewCell ()
+@interface JGHIndexTableViewCell ()<JGHSpectatorSportsViewDelegate, JGHGolfPackageViewDelegate>
 
 {
     JGHWonderfulView *_wonderfulView;
     JGHRecomStadiumView *_recomStadiumView;
     JGHSuppliesMallView *_suppliesMallView;
     JGDHotTeamView *_hotTeamView;
+    JGHSpectatorSportsView *_spectatorSportsView;
+    JGHGolfPackageView *_golfPackageView;
 }
 
 @end
@@ -33,7 +37,38 @@
     }
     return self;
 }
-
+//高旅套餐
+- (void)configJGHGolfPackageView:(NSArray *)spectatorArray{
+    self.backgroundColor = [UIColor whiteColor];
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    _golfPackageView = [[JGHGolfPackageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 262*ProportionAdapter)];
+    _golfPackageView.delegate = self;
+    [_golfPackageView configJGHGolfPackageViewData:spectatorArray];
+    [self addSubview:_golfPackageView];
+}
+#pragma mark -- 高旅套餐
+- (void)didSelectGolgPackageViewUrlString:(NSInteger)selectID{
+    if ([self.delegate respondsToSelector:@selector(didSelectGolgPackageUrlString:)]) {
+        [self.delegate didSelectGolgPackageUrlString:selectID];
+    }
+}
+//精彩赛事
+- (void)configJGHSpectatorSportsView:(NSArray *)spectatorArray{
+    self.backgroundColor = [UIColor whiteColor];
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    _spectatorSportsView = [[JGHSpectatorSportsView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 262*ProportionAdapter)];
+    _spectatorSportsView.delegate = self;
+    [_spectatorSportsView configJGHSpectatorSportsViewData:spectatorArray];
+    [self addSubview:_spectatorSportsView];
+}
+#pragma mark -- 精彩赛事
+- (void)selectSpectatorSportsViewUrlString:(NSInteger)selectID{
+    if ([self.delegate respondsToSelector:@selector(selectSpectatorSportsUrlString:)]) {
+        [self.delegate selectSpectatorSportsUrlString:selectID];
+    }
+}
 - (void)configJGHWonderfulTableViewCell:(NSArray *)wonderfulArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     self.backgroundColor = [UIColor whiteColor];
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];

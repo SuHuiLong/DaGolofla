@@ -71,8 +71,8 @@
         nakaLable.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [self addSubview:nakaLable];
         
-        NSArray *iconArray = [NSArray arrayWithObjects:@"home_serve", @"home_restore", @"home_icon_package", @"home_icon_score",   nil];
-        NSArray *titleArray = [NSArray arrayWithObjects:@"服务定制", @"用品商城", @"高旅套餐", @"历史成绩",   nil];
+        NSArray *iconArray = [NSArray arrayWithObjects:@"home_icon_score", @"home_restore", @"home_icon_package", @"home_serve",   nil];
+        NSArray *titleArray = [NSArray arrayWithObjects:@"历史成绩", @"用品商城", @"高旅套餐", @"服务定制",   nil];
 
         for (int i = 0; i < 4; i ++) {
             
