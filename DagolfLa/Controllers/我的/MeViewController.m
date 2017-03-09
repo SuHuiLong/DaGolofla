@@ -60,6 +60,8 @@
 #import "JGDPersonalViewController.h"
 #import "JGDPersonalCard.h"
 
+//联盟会员
+#import "AllianceVipViewController.h"
 
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -91,6 +93,7 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationItem.leftBarButtonItems = nil;
     
+    self.navigationController.navigationBarHidden = NO;
 
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     
@@ -226,8 +229,8 @@
     _arrayTitle = [[NSArray alloc]init];
     _arrayPic = [[NSArray alloc]init];
 //    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
-    _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户", @"球场订单", @"交易中心"],@[@"设置",@"更多"]];
-    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu", @"icn_order", @"jyIcon"],@[@"sz",@"btn_more"]];
+    _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户",@"联盟会员", @"球场订单", @"交易中心"],@[@"设置",@"更多"]];
+    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu",@"icn_allianceVip", @"icn_order", @"jyIcon"],@[@"sz",@"btn_more"]];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*8*ScreenWidth/375+40*ScreenWidth/375+78*ScreenWidth/375)];
     
     _tableView.delegate = self;
@@ -267,7 +270,7 @@
     }
     else if (section == 2)
     {
-        count = 3;
+        count = 4;
     }
     else if (section == 3)
     {
@@ -295,7 +298,6 @@
             }else{
                 cell.iconImgv.image = [UIImage imageNamed:DefaultHeaderImage];
             }
-//            [cell.iconImgv sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             cell.iconImgv.contentMode = UIViewContentModeScaleAspectFill;
             cell.nameLabel.text = _model.userName;
             if (![Helper isBlankString:_model.userName] && ![Helper isBlankString:_model.userSign]) {
@@ -357,43 +359,23 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
-//        NSArray *titleArr = @[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼",@"设置"];
-        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"足迹",@"交易中心",@"球场订单",@"交易中心",@"设置", @"更多"];
-//PersonHomeController   PersonHomeController
-        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"JGDOrderListViewController",@"MyTradeViewController",@"MySetViewController", @"JGMeMoreViewController"];
+        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"足迹",@"个人账户",@"",@"球场订单",@"交易中心",@"设置", @"更多"];
+        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"AllianceVipViewController",@"JGDOrderListViewController",@"MyTradeViewController",@"MySetViewController", @"JGMeMoreViewController"];
+        
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         for (int i = 0; i < VcArr.count; i++) {
-//            if (i != 8) {
-                ViewController* vc = [[NSClassFromString(VcArr[i]) alloc]init];
-                vc.title = titleArr[i];
-                [arr addObject:vc];
-//            }
-            
+            ViewController* vc = [[NSClassFromString(VcArr[i]) alloc]init];
+            vc.title = titleArr[i];
+            [arr addObject:vc];
         }
         
         if (indexPath.section == 0) {
-//            PersonHomeController* selfVc = [[PersonHomeController alloc]init];
-//            selfVc.sexType = [_model.sex integerValue];
-//            selfVc.strMoodId = _model.userId;
-//            [self.navigationController pushViewController:selfVc animated:YES];
             
             JGDPersonalViewController *personVC = [[JGDPersonalViewController alloc] init];
             personVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:personVC animated:YES];
             
-//            SelfViewController* scVc = [[SelfViewController alloc]init];
-//            scVc.userModel = _model;
-//            
-//            scVc.blockRereshingMe = ^(NSArray* arrayData){
-//                
-//            NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
-//                [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
-//                [_tableView reloadData];
-//            };
-//            
-//            [self.navigationController pushViewController:scVc animated:YES];
         }
         else if (indexPath.section == 1)
         {
@@ -434,10 +416,14 @@
                     [self.navigationController pushViewController:arr[5] animated:YES];
                     break;
                 }
-                    break;
                 case 2:
                 {
                     [self.navigationController pushViewController:arr[6] animated:YES];
+                    break;
+                }
+                case 3:
+                {
+                    [self.navigationController pushViewController:arr[7] animated:YES];
                     break;
                 }
                 default:
@@ -450,33 +436,32 @@
             switch (indexPath.row) {
                 case 0:
                 {
-                    [self.navigationController pushViewController:arr[7] animated:YES];
+                    [self.navigationController pushViewController:arr[8] animated:YES];
                     break;
                 }
                     
                 case 1:{
                     
-
-                    [self.navigationController pushViewController:arr[8] animated:YES];
+                    
+                    [self.navigationController pushViewController:arr[9] animated:YES];
                     
                     break;
                 }
-
+                    
                 default:
                     break;
             }
         }
         else
         {
-            
-            [self.navigationController pushViewController:arr[9] animated:YES];
+            [self.navigationController pushViewController:arr[10] animated:YES];
         }
     }
     else
     {
         [self loginOut];
     }
- 
+    
 }
 
 

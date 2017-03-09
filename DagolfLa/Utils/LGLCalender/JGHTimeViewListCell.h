@@ -17,6 +17,6 @@
 @property (nonatomic, retain)UILabel *line;
 
 
-- (void)configJGHTimeViewListCell:(NSDictionary *)pircedict;
+- (void)configJGHTimeViewListCell:(NSDictionary *)pircedict andHasUserCard:(BOOL)hasUserCard;
 
 @end

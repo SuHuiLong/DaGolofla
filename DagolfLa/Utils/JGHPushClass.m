@@ -27,7 +27,7 @@
 #import "JGDBookCourtViewController.h"
 #import "JGNewsViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
-
+#import "JGHTeamShadowViewController.h"
 
 static JGHPushClass *pushClass = nil;
 
@@ -264,7 +264,16 @@ static JGHPushClass *pushClass = nil;
     
     //更多资讯
     if ([urlString containsString:@"golfNewsList"]) {
-        JGNewsViewController *moreCtrl = [[JGNewsViewController alloc]init];
+        //JGNewsViewController *moreCtrl = [[JGNewsViewController alloc]init];
+        JGHTeamShadowViewController *moreCtrl = [[JGHTeamShadowViewController alloc]init];
+        if (pushVC) {
+            pushVC(moreCtrl);
+        }
+    }
+    
+    //球队掠影
+    if ([urlString containsString:@"recommendAlbumList"]) {
+        JGHTeamShadowViewController *moreCtrl = [[JGHTeamShadowViewController alloc]init];
         if (pushVC) {
             pushVC(moreCtrl);
         }

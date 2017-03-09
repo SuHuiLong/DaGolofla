@@ -892,7 +892,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
     NSLog(@"%td", moreBtn.tag);
     [self isLoginUp];
-
+    
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *urlString = [dict objectForKey:@"moreLink"];
     [self pushctrlWithUrl:urlString];

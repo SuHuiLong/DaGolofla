@@ -28,6 +28,8 @@
     
     NSInteger _currentMonth;
     NSInteger _currentDay;
+    
+    BOOL _hasUserCard;
 }
 @property (nonatomic, strong) UICollectionView * collectionView;
 @property (nonatomic, strong) NSMutableArray * dataSource;
@@ -63,6 +65,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _hasUserCard = NO;
+    
     [self initOtherData];
     [self addHeaderWeekView];
     [self getData];
@@ -149,8 +153,10 @@
     __weak LGLCalenderViewController *weakSelf = self;
     _selectDay = 0;
     [LQProgressHud showLoading:@"加载中..."];
-    [LGLCalenderModel getCalenderDataWithDate:[NSDate date] andBallKey:_ballKey block:^(NSMutableArray *result) {
+    
+    [LGLCalenderModel getCalenderDataWithDate:[NSDate date] andBallKey:_ballKey block:^(NSMutableArray *result, BOOL hasUserCard) {
         [LQProgressHud hide];
+        _hasUserCard = hasUserCard;
         [self.dataSource addObjectsFromArray:result];
         
         for (LGLCalenderModel *model in self.dataSource) {
@@ -224,7 +230,7 @@
             NSInteger index = indexPath.item - model.firstday;
             LGLCalenderSubModel * subModel = model.details[index];
             cell.dateL.text = [NSString stringWithFormat:@"%ld",(long)subModel.day];
-            if (subModel.leagueMoney.length >0) {
+            if (_hasUserCard) {
                 cell.priceL.text = [NSString stringWithFormat:@"￥%@", subModel.leagueMoney];
             }else{
                 if (subModel.price.length >0) {

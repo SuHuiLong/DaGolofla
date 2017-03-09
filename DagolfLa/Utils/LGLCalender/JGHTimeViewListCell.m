@@ -31,10 +31,10 @@
     return self;
 }
 
-- (void)configJGHTimeViewListCell:(NSDictionary *)pircedict{
+- (void)configJGHTimeViewListCell:(NSDictionary *)pircedict andHasUserCard:(BOOL)hasUserCard{
     _timeLable.text = [NSString stringWithFormat:@"%@", [pircedict objectForKey:@"halfHour"]];
     
-    if ([pircedict objectForKey:@"leagueMoney"]) {
+    if (hasUserCard) {
         _priceLable.text = [NSString stringWithFormat:@"¥ %@", [pircedict objectForKey:@"leagueMoney"]];
     }else{
         if ([pircedict objectForKey:@"money"]) {
