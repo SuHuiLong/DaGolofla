@@ -186,6 +186,17 @@ static JGHPushClass *pushClass = nil;
         }
     }
     
+    //高旅套餐
+    if ([urlString containsString:@""]) {
+        NSString *urlRequest = @"http://www.dagolfla.com/app/golftourism.html"; // 商旅套餐
+        
+        JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
+        mallCtrl.urlRequest = urlRequest;
+        if (pushVC) {
+            pushVC(mallCtrl);
+        }
+    }
+    
     //H5
     if ([urlString containsString:@"openURL"]) {
         UseMallViewController* userVc = [[UseMallViewController alloc]init];

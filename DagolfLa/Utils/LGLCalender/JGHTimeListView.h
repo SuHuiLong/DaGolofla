@@ -16,6 +16,6 @@
 
 @property (copy, nonatomic) void (^blockSelectTimeAndPrice)(NSString *, NSString *, NSString *, NSString *, NSString *);
 
-- (void)loadTimeListWithBallKey:(NSNumber *)ballKey andDateString:(NSString *)dateString;
+- (void)loadTimeListWithBallKey:(NSNumber *)ballKey andDateString:(NSString *)dateString andIsLeagueUser:(BOOL)isLeagueUser;
 
 @end

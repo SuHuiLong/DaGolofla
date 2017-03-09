@@ -111,7 +111,7 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
     }
 }
 
-- (void)loadTimeListWithBallKey:(NSNumber *)ballKey andDateString:(NSString *)dateString{
+- (void)loadTimeListWithBallKey:(NSNumber *)ballKey andDateString:(NSString *)dateString andIsLeagueUser:(BOOL)isLeagueUser{
     [LQProgressHud showLoading:@"加载中..."];
     self.dataArray = [NSMutableArray array];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -126,7 +126,8 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
         [LQProgressHud hide];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _dataArray = [data objectForKey:@"priceList"];
-            _hasUserCard = ([[data objectForKey:@"hasUserCard"] integerValue] == 1)?YES:NO;
+            //_hasUserCard = ([[data objectForKey:@"hasUserCard"] integerValue] == 1)?YES:NO;
+            _hasUserCard = isLeagueUser;
             
             [self.timeListTableView reloadData];
         }
