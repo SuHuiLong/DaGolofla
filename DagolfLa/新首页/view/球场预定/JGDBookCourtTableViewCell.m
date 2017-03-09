@@ -12,6 +12,8 @@
 
 @property (nonatomic , strong) UIImageView *iconImageView;
 
+@property (nonatomic, strong) UIImageView *signImageView;
+
 @property (nonatomic , strong) UILabel *courtBallname;
 
 @property (nonatomic , strong) UILabel *styleANDcount;
@@ -41,6 +43,10 @@
         self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
         [self.contentView addSubview:self.iconImageView];
         
+        self.signImageView = [[UIImageView alloc] initWithFrame:CGRectMake(35 * ProportionAdapter, 0, 35 * ProportionAdapter, 35 * ProportionAdapter)];
+        self.signImageView.image = [UIImage imageNamed:@"icn_team"];
+        [self.iconImageView addSubview:self.signImageView];
+
         self.courtBallname = [[UILabel alloc] initWithFrame:CGRectMake(93 * ProportionAdapter, 12 * ProportionAdapter, 260 * ProportionAdapter, 20 * ProportionAdapter)];
         self.courtBallname.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
         self.courtBallname.textColor = [UIColor colorWithHexString:@"#313131"];
@@ -94,6 +100,12 @@
 
 
 - (void)setModel:(JGDCourtModel *)model{
+    
+    if ([model.isLeague integerValue] == 1) {
+        [self.signImageView setHidden:NO];
+    }else{
+        [self.signImageView setHidden:YES];
+    }
 
 //    NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", model.timeKey];
 //    [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
@@ -120,7 +132,7 @@
     self.distanceLB.text = [NSString stringWithFormat:@"%.1fkm", [model.distance floatValue]];
     
     if (model.instapaper == 2) {
-        self.priceLB.text = @"封场";
+        self.priceLB.text = @"已封场";
     }else{
         NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", model.unitPrice]];
         [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];

@@ -1195,6 +1195,9 @@
 		F5B90E081D1786FE008ACC22 /* JGTeamPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B90E071D1786FE008ACC22 /* JGTeamPayViewController.m */; };
 		F5BC6C181E232F6400E850CD /* JGDWKCourtDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BC6C171E232F6400E850CD /* JGDWKCourtDetailViewController.m */; };
 		F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */; };
+		F5C3A24B1E6E46EF0028DF17 /* JGDCourtAllianceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C3A24A1E6E46EF0028DF17 /* JGDCourtAllianceTableViewCell.m */; };
+		F5C3A24E1E6E8B030028DF17 /* JGDAllianceCommitOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C3A24D1E6E8B030028DF17 /* JGDAllianceCommitOrderViewController.m */; };
+		F5C3A2511E6EB5B50028DF17 /* JGDNormalWithLabelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C3A2501E6EB5B50028DF17 /* JGDNormalWithLabelTableViewCell.m */; };
 		F5C6D6FE1E5BDAC400EC1C01 /* JGDDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C6D6FD1E5BDAC400EC1C01 /* JGDDatePicker.m */; };
 		F5C6D7011E5C108400EC1C01 /* JGDTextTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C6D7001E5C108400EC1C01 /* JGDTextTipView.m */; };
 		F5CB6EAD1DBA29150068F768 /* bg_image_pk@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5CB6EAC1DBA29150068F768 /* bg_image_pk@2x.jpg */; };
@@ -3536,6 +3539,12 @@
 		F5BC6C171E232F6400E850CD /* JGDWKCourtDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDWKCourtDetailViewController.m; sourceTree = "<group>"; };
 		F5BDF09F1CEC1B750020175A /* JGTeamDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetail.h; sourceTree = "<group>"; };
 		F5BDF0A01CEC1B750020175A /* JGTeamDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDetail.m; sourceTree = "<group>"; };
+		F5C3A2491E6E46EF0028DF17 /* JGDCourtAllianceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDCourtAllianceTableViewCell.h; sourceTree = "<group>"; };
+		F5C3A24A1E6E46EF0028DF17 /* JGDCourtAllianceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDCourtAllianceTableViewCell.m; sourceTree = "<group>"; };
+		F5C3A24C1E6E8B030028DF17 /* JGDAllianceCommitOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDAllianceCommitOrderViewController.h; sourceTree = "<group>"; };
+		F5C3A24D1E6E8B030028DF17 /* JGDAllianceCommitOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDAllianceCommitOrderViewController.m; sourceTree = "<group>"; };
+		F5C3A24F1E6EB5B50028DF17 /* JGDNormalWithLabelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDNormalWithLabelTableViewCell.h; sourceTree = "<group>"; };
+		F5C3A2501E6EB5B50028DF17 /* JGDNormalWithLabelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDNormalWithLabelTableViewCell.m; sourceTree = "<group>"; };
 		F5C6D6FC1E5BDAC400EC1C01 /* JGDDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDDatePicker.h; sourceTree = "<group>"; };
 		F5C6D6FD1E5BDAC400EC1C01 /* JGDDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDDatePicker.m; sourceTree = "<group>"; };
 		F5C6D6FF1E5C108400EC1C01 /* JGDTextTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDTextTipView.h; sourceTree = "<group>"; };
@@ -8539,6 +8548,8 @@
 				F58C4EAD1E1B3F860057DC9C /* JGDCitySearchViewController.m */,
 				F58C4EAE1E1B3F860057DC9C /* JGDCommitOrderViewController.h */,
 				F58C4EAF1E1B3F860057DC9C /* JGDCommitOrderViewController.m */,
+				F5C3A24C1E6E8B030028DF17 /* JGDAllianceCommitOrderViewController.h */,
+				F5C3A24D1E6E8B030028DF17 /* JGDAllianceCommitOrderViewController.m */,
 				F58C4EB01E1B3F860057DC9C /* JGDConfirmPayViewController.h */,
 				F58C4EB11E1B3F860057DC9C /* JGDConfirmPayViewController.m */,
 				F58C4EB21E1B3F860057DC9C /* JGDContactViewController.h */,
@@ -8585,6 +8596,10 @@
 				F58C4EDE1E1B3FC30057DC9C /* JGDOrderDetailTableViewCell.m */,
 				F58C4EDF1E1B3FC30057DC9C /* JGDOrderListTableViewCell.h */,
 				F58C4EE01E1B3FC30057DC9C /* JGDOrderListTableViewCell.m */,
+				F5C3A2491E6E46EF0028DF17 /* JGDCourtAllianceTableViewCell.h */,
+				F5C3A24A1E6E46EF0028DF17 /* JGDCourtAllianceTableViewCell.m */,
+				F5C3A24F1E6EB5B50028DF17 /* JGDNormalWithLabelTableViewCell.h */,
+				F5C3A2501E6EB5B50028DF17 /* JGDNormalWithLabelTableViewCell.m */,
 			);
 			path = "球场预定";
 			sourceTree = "<group>";
@@ -9488,6 +9503,7 @@
 				F55FABDA1E5ADEC700F68D8A /* JGDPickerView.m in Sources */,
 				82E6A6F61CF5812C009DD179 /* JGLAuthorityTableViewCell.m in Sources */,
 				203019841E0E4292005568E2 /* ZXDimension.m in Sources */,
+				F5C3A24E1E6E8B030028DF17 /* JGDAllianceCommitOrderViewController.m in Sources */,
 				203019BD1E0E4293005568E2 /* ZXRSSExpandedRow.m in Sources */,
 				65B596EC1CAD43AC007AB83A /* YMReplyInputView.m in Sources */,
 				203019AE1E0E4292005568E2 /* ZXAI01AndOtherAIs.m in Sources */,
@@ -10090,6 +10106,7 @@
 				18D5DBD41E67A913008C87EE /* NJKWebViewProgress.m in Sources */,
 				201750981E2CA85600FB2FE4 /* JGHNewCancelApplyCell.m in Sources */,
 				2030193B1E0E4292005568E2 /* ZXAztecEncoder.m in Sources */,
+				F5C3A2511E6EB5B50028DF17 /* JGDNormalWithLabelTableViewCell.m in Sources */,
 				2066E87D1D5C585900A3A2B8 /* JGHCaddieAuthModel.m in Sources */,
 				203019E81E0E4293005568E2 /* ZXPDF417DetectionResultColumn.m in Sources */,
 				201056131D59C92800C90FDE /* JGHBtnCell.m in Sources */,
@@ -10114,6 +10131,7 @@
 				20CA13711CE4929C00DA15B9 /* JGInvoiceTypeTextCell.m in Sources */,
 				20FBE4501E092B8400E7419D /* JGHOptionCaddieOrPalyView.m in Sources */,
 				36BFFF5B1BC76D09005B3CE2 /* AFHTTPSessionManager.m in Sources */,
+				F5C3A24B1E6E46EF0028DF17 /* JGDCourtAllianceTableViewCell.m in Sources */,
 				203019731E0E4292005568E2 /* ZXBitSource.m in Sources */,
 				823C149D1CEEF0B5000AB612 /* JGLTeamMemberModel.m in Sources */,
 				207FECA01D1BE4180098E23C /* JGHTextFiledCell.m in Sources */,
