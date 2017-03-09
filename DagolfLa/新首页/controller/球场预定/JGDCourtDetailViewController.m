@@ -213,10 +213,12 @@ static CGFloat ImageHeight  = 210.0;
             
             if ([data objectForKey:@"ball"]) {
                 
-                if ([self.detailDic objectForKey:@"leagueMoney"]) {
-                   self.leagueMoney = [[self.detailDic objectForKey:@"leagueMoney"] stringValue];
-                }
+
                 self.detailDic = [[data objectForKey:@"ball"] mutableCopy];
+                
+                if ([self.detailDic objectForKey:@"leagueMoney"]) {
+                    self.leagueMoney = [[self.detailDic objectForKey:@"leagueMoney"] stringValue];
+                }
                 
                 NSString *time = [self.detailDic objectForKey:@"unitPriceDate"];
                 
@@ -575,7 +577,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)calendarTap{
     LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
     caleVC.ballKey = self.timeKey;
-    caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney){
+    caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney, NSString *leagueMoney){
         _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"yyyy年MM月dd日"]];
         _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
         _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
@@ -591,6 +593,8 @@ static CGFloat ImageHeight  = 210.0;
             self.deductionMoney = deductionMoney;
             self.unitPrice = [NSString stringWithFormat:@"%td", [pay integerValue] + [deductionMoney integerValue]];
         }
+        self.leagueMoney = leagueMoney;
+        
         self.selectDate = selectTime;
         NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:0 inSection:0];
         NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];

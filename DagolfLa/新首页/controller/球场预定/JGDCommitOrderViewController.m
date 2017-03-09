@@ -437,23 +437,20 @@
     if (indexPath.row == 1) {
         LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
         caleVC.ballKey = self.timeKey;
-        caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney){
-//            _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"yyyy年MM月dd日"]];
-//            _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
-//            _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
+        caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney, NSString *leagueMoney){
+
             self.selectDate = selectTime;
-           
+            
             
             if ([[self.detailDic objectForKey:@"payType"] integerValue] != 2) {
                 self.selectMoney = pay;
             }
             self.selectSceneMoney = scenePay;
             if ([deductionMoney isEqualToString:@""]) {
-//                self.deductionMoney = nil;
-//                self.unitPrice = pay;
+                
             }else{
                 self.selectSceneMoney = deductionMoney;
-//                self.unitPrice = [NSString stringWithFormat:@"%td", [pay integerValue] + [deductionMoney integerValue]];
+                
             }
             self.selectDate = selectTime;
             
