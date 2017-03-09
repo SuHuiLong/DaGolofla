@@ -437,6 +437,7 @@
     if (indexPath.row == 1) {
         LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
         caleVC.ballKey = self.timeKey;
+        caleVC.isLeagueUser = NO;
         caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney, NSString *leagueMoney){
 
             self.selectDate = selectTime;

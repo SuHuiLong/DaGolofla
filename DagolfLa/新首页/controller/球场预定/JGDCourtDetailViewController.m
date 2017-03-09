@@ -50,8 +50,9 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, copy) NSString *week;
 @property (nonatomic, copy) NSString *time;
 
-@property (nonatomic, assign) BOOL hasUserCard;     // 是否是联盟会员
+@property (nonatomic, assign) BOOL hasLeagueUser;   // 是否是联盟会员
 @property (nonatomic, assign) NSInteger isLeague;   // 是否是联盟球场
+@property (nonatomic, copy) NSString *strPrompt;
 
 @end
 
@@ -209,12 +210,13 @@ static CGFloat ImageHeight  = 210.0;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
-            self.hasUserCard = [[data objectForKey:@"hasUserCard"] boolValue];
-            
+            self.hasLeagueUser = [[data objectForKey:@"hasLeagueUser"] boolValue];
+            if ([data objectForKey:@"strPrompt"]) {
+                self.strPrompt = [data objectForKey:@"strPrompt"];
+            }
 
             if ([data objectForKey:@"ball"]) {
                 
-
                 self.detailDic = [[data objectForKey:@"ball"] mutableCopy];
 
                 self.isLeague = [[self.detailDic objectForKey:@"isLeague"] integerValue];
@@ -458,7 +460,7 @@ static CGFloat ImageHeight  = 210.0;
                 allianceCell.payType = [[self.detailDic objectForKey:@"payType"] integerValue];
                 allianceCell.leagueMoney = self.leagueMoney;
                 allianceCell.deductionMoney = self.deductionMoney;
-                allianceCell.hasUserCard = self.hasUserCard;
+                allianceCell.hasUserCard = self.hasLeagueUser;
                 allianceCell.dataDic = self.detailDic;
                 [allianceCell.vipBtn addTarget:self action:@selector(vipCommitAct) forControlEvents:(UIControlEventTouchUpInside)];
                 [allianceCell.normalBtn addTarget:self action:@selector(payAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -618,6 +620,16 @@ static CGFloat ImageHeight  = 210.0;
 #pragma  mark -- 付款
 // 联盟会员付款
 - (void)vipCommitAct{
+    
+    if (!self.hasLeagueUser) {
+        [LQProgressHud showMessage:@"请先绑定联盟会员卡"];
+        return;
+    }else if (self.strPrompt){
+        [LQProgressHud showMessage:self.strPrompt];
+        return;
+    }
+    
+    
     JGDAllianceCommitOrderViewController *commitVC = [[JGDAllianceCommitOrderViewController alloc] init];
     commitVC.selectDate = self.selectDate;
     commitVC.detailDic = self.detailDic;
