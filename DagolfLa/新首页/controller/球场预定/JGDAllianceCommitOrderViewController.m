@@ -394,7 +394,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 6 + [self.playerArray count];
+    if (tableView.tag == 567) {
+        return [self.vipCardArray count];
+    }else{
+        return 6 + [self.playerArray count];
+    }
 }
 
 
@@ -467,6 +471,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (tableView.tag == 567) {
+
+        if ([[self.vipCardArray[indexPath.row] objectForKey:@"state"] integerValue] == 5) {
+            [LQProgressHud showMessage:@"会员卡不可用"];
+            return;
+        }
         self.allianceCardLB.text = [self.vipCardArray[indexPath.row] objectForKey:@"name"];
         self.vipTimekey = [self.vipCardArray[indexPath.row] objectForKey:@"timeKey"];
         [tableView removeFromSuperview];
@@ -477,6 +486,7 @@
     if (indexPath.row == 1) {
         LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
         caleVC.ballKey = self.timeKey;
+        caleVC.isLeagueUser = YES;
         caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney, NSString *leagueMoney){
             self.selectDate = selectTime;
             
@@ -539,8 +549,12 @@
 
 - (void)userVipCardData:(UITableView *)tableView{
     
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[self.detailDic objectForKey:@"ballKey"] forKey:@"ballKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&ballKey=%@dagolfla.com",DEFAULF_USERID, [self.detailDic objectForKey:@"ballKey"]]] forKey:@"md5"];
     [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
-    [[JsonHttp jsonHttp] httpRequest:@"league/getUserCardList" JsonKey:nil withData:@{@"userKey" : DEFAULF_USERID} requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"league/getSelectUserCardList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
@@ -549,9 +563,12 @@
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            self.vipCardArray = [NSMutableArray arrayWithArray:[data objectForKey:@"canCardList"]];
-            [tableView reloadData];
             
+            if ([data objectForKey:@"userCardList"]) {
+                self.vipCardArray = [NSMutableArray arrayWithArray:[data objectForKey:@"userCardList"]];
+                [tableView reloadData];
+            }
+
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -756,6 +773,13 @@
         _playerArray = [NSMutableArray arrayWithObjects:@"", nil];
     }
     return _playerArray;
+}
+
+- (NSMutableArray *)vipCardArray{
+    if (!_vipCardArray) {
+        _vipCardArray = [[NSMutableArray alloc] init];
+    }
+    return _vipCardArray;
 }
 
 
