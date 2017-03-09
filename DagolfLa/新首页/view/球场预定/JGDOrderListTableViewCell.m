@@ -85,6 +85,13 @@
     
     self.nameLB.text = [dataDic objectForKey:@"ballName"];    
     
+    if ([[dataDic objectForKey:@"userCardKey"] integerValue] > 0) {
+        self.allianceSign.hidden = NO;
+    }else{
+        self.allianceSign.hidden = YES;
+    }
+    
+    
     CGFloat width = [Helper textWidthFromTextString:self.nameLB.text height:20 * ProportionAdapter fontSize:17 * ProportionAdapter];
     
     if (width >= 287 * ProportionAdapter) {
@@ -92,6 +99,7 @@
     }else{
         [self.allianceSign setFrame:CGRectMake(width + 12 * ProportionAdapter, 12 * ProportionAdapter, 54 * ProportionAdapter, 15 * ProportionAdapter)];
     }
+
     
     self.begainTimeLB.text = [Helper stringFromDateString:[dataDic objectForKey:@"teeTime"] withFormater:@"yyyy.MM.dd EEE  HH:mm"];
     self.sumPeopleNumLB.text = [NSString stringWithFormat:@"%@人", [dataDic objectForKey:@"userSum"]];

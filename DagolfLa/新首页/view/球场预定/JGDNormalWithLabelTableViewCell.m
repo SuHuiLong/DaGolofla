@@ -14,8 +14,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.nameLB = [Helper lableRect:CGRectMake(0, 0, screenWidth, _cellHeight) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:15 * ProportionAdapter text:@"劳劳碌碌哩哩啦啦" textAlignment:(NSTextAlignmentCenter)];
-        self.nameLB.backgroundColor = [UIColor cyanColor];
+        self.nameLB = [Helper lableRect:CGRectMake(0, 0, screenWidth, _cellHeight) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:15 * ProportionAdapter text:@" " textAlignment:(NSTextAlignmentCenter)];
         [self.contentView addSubview:self.nameLB];
         
         self.lineLB = [Helper lableRect:CGRectMake(0, 41.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter) labelColor:[UIColor whiteColor] labelFont:1 text:@"" textAlignment:(NSTextAlignmentCenter)];

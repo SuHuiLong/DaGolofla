@@ -387,7 +387,7 @@
         lineView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         [backView addSubview:lineView];
         
-        UILabel *noteLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, 80, 40 * ProportionAdapter)];
+        UILabel *noteLB = [[UILabel alloc] initWithFrame:CGRectMake(8 * ProportionAdapter, 10 * ProportionAdapter, 80 * ProportionAdapter, 40 * ProportionAdapter)];
         noteLB.text = @"我的备注：";
         noteLB.textAlignment = NSTextAlignmentRight;
         noteLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
@@ -404,7 +404,7 @@
         
         UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
         backView.backgroundColor = [UIColor whiteColor];
-        UILabel *oderLB = [[UILabel alloc] initWithFrame:CGRectMake(8 * ProportionAdapter, 0, 80, 22 * ProportionAdapter)];
+        UILabel *oderLB = [[UILabel alloc] initWithFrame:CGRectMake(8 * ProportionAdapter, 0, 80 * ProportionAdapter, 22 * ProportionAdapter)];
         oderLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
         oderLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         oderLB.textAlignment = NSTextAlignmentRight;

@@ -38,7 +38,7 @@
 @property (nonatomic, assign) NSInteger payType;            //
 
 
-
+@property (nonatomic, assign) BOOL hasUserCard;     // 是否是联盟会员
 
 
 

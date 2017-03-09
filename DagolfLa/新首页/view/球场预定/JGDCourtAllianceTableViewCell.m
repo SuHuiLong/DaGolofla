@@ -76,7 +76,7 @@
     NSMutableAttributedString *leagueStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.leagueMoney]];
     [leagueStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14 * ProportionAdapter] range:NSMakeRange(0, 1)];
     self.vipPriceLB.attributedText = leagueStr;
-    if ([[dataDic objectForKey:@"remoteMaxCount"] integerValue] == 0) {
+    if (([[dataDic objectForKey:@"remoteMaxCount"] integerValue] == 0) || !self.hasUserCard) {
         [self.vipBtn setImage:[UIImage imageNamed:@"booking_pay_nocolor"] forState:(UIControlStateNormal)];
         self.vipBtn.userInteractionEnabled = NO;
     }else{

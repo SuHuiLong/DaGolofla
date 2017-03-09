@@ -50,7 +50,8 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, copy) NSString *week;
 @property (nonatomic, copy) NSString *time;
 
-@property (nonatomic, assign) BOOL hasUserCard;
+@property (nonatomic, assign) BOOL hasUserCard;     // 是否是联盟会员
+@property (nonatomic, assign) NSInteger isLeague;   // 是否是联盟球场
 
 @end
 
@@ -210,12 +211,14 @@ static CGFloat ImageHeight  = 210.0;
             
             self.hasUserCard = [[data objectForKey:@"hasUserCard"] boolValue];
             
-            
+
             if ([data objectForKey:@"ball"]) {
                 
 
                 self.detailDic = [[data objectForKey:@"ball"] mutableCopy];
-                
+
+                self.isLeague = [[self.detailDic objectForKey:@"isLeague"] integerValue];
+
                 if ([self.detailDic objectForKey:@"leagueMoney"]) {
                     self.leagueMoney = [[self.detailDic objectForKey:@"leagueMoney"] stringValue];
                 }
@@ -359,7 +362,7 @@ static CGFloat ImageHeight  = 210.0;
         CGFloat height = [Helper textHeightFromTextString:self.serviceDetail.text width:screenWidth - 20 * ProportionAdapter fontSize:15 * ProportionAdapter];
         
         CGFloat row1heght;
-        self.hasUserCard ? (row1heght = 240 * ProportionAdapter) : (row1heght = 100 * ProportionAdapter);
+        self.isLeague == 1 ? (row1heght = 240 * ProportionAdapter) : (row1heght = 100 * ProportionAdapter);
         
         return indexPath.row == 0 ? row1heght : 50 * ProportionAdapter + height;
         
@@ -447,7 +450,7 @@ static CGFloat ImageHeight  = 210.0;
         
         if (indexPath.row == 0) {
             
-            if (self.hasUserCard) { // 联盟会员
+            if (self.isLeague == 1) { // 联盟球场
                 JGDCourtAllianceTableViewCell *allianceCell = [tableView dequeueReusableCellWithIdentifier:@"CourtAlliance"];
                 allianceCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 allianceCell.unitPrice = self.unitPrice;
@@ -455,8 +458,10 @@ static CGFloat ImageHeight  = 210.0;
                 allianceCell.payType = [[self.detailDic objectForKey:@"payType"] integerValue];
                 allianceCell.leagueMoney = self.leagueMoney;
                 allianceCell.deductionMoney = self.deductionMoney;
+                allianceCell.hasUserCard = self.hasUserCard;
                 allianceCell.dataDic = self.detailDic;
                 [allianceCell.vipBtn addTarget:self action:@selector(vipCommitAct) forControlEvents:(UIControlEventTouchUpInside)];
+                [allianceCell.normalBtn addTarget:self action:@selector(payAct) forControlEvents:(UIControlEventTouchUpInside)];
                 return allianceCell;
             }
             
@@ -615,6 +620,9 @@ static CGFloat ImageHeight  = 210.0;
 - (void)vipCommitAct{
     JGDAllianceCommitOrderViewController *commitVC = [[JGDAllianceCommitOrderViewController alloc] init];
     commitVC.selectDate = self.selectDate;
+    commitVC.detailDic = self.detailDic;
+    commitVC.timeKey = self.timeKey;
+    commitVC.selectMoney = self.leagueMoney;
     [self.navigationController pushViewController:commitVC animated:YES];
 }
 //普通会员付款
@@ -622,12 +630,7 @@ static CGFloat ImageHeight  = 210.0;
     JGDCommitOrderViewController *commitVC = [[JGDCommitOrderViewController alloc] init];
     commitVC.selectDate = self.selectDate;
     
-//    if (self.deductionMoney) {
-//        commitVC.selectMoney = [NSString stringWithFormat:@"%td", [self.payMoney integerValue] - [self.deductionMoney integerValue]];
-//    }else{
-//        commitVC.selectMoney = self.payMoney;
-//    }
-    
+   
     if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
 //         球场现付
             commitVC.selectMoney = self.payMoney;

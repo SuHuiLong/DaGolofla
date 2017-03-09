@@ -456,7 +456,6 @@
             
             
             
-            
             if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
                 //         球场现付
                 self.selectMoney = pay;
