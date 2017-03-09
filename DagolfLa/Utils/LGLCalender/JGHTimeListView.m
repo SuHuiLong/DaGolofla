@@ -95,7 +95,14 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
             deductionMoney = @"";
         }
         
-        _blockSelectTimeAndPrice([NSString stringWithFormat:@"%@", [dict objectForKey:@"halfHour"]], money, paymentMoney, deductionMoney);
+        NSString *leagueMoney;//球场联盟价格
+        if ([dict objectForKey:@"leagueMoney"]) {
+            leagueMoney = [NSString stringWithFormat:@"%@", [dict objectForKey:@"leagueMoney"]];
+        }else{
+            leagueMoney = @"";
+        }
+        
+        _blockSelectTimeAndPrice([NSString stringWithFormat:@"%@", [dict objectForKey:@"halfHour"]], money, paymentMoney, deductionMoney, leagueMoney);
     }else{
         [LQProgressHud showMessage:@"暂无价格，无法预定！"];
     }
