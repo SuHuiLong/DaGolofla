@@ -34,11 +34,16 @@
 - (void)configJGHTimeViewListCell:(NSDictionary *)pircedict{
     _timeLable.text = [NSString stringWithFormat:@"%@", [pircedict objectForKey:@"halfHour"]];
     
-    if ([pircedict objectForKey:@"money"]) {
-        _priceLable.text = [NSString stringWithFormat:@"¥ %@", [pircedict objectForKey:@"money"]];
+    if ([pircedict objectForKey:@"leagueMoney"]) {
+        _priceLable.text = [NSString stringWithFormat:@"¥ %@", [pircedict objectForKey:@"leagueMoney"]];
     }else{
-        _priceLable.text = @"";
+        if ([pircedict objectForKey:@"money"]) {
+            _priceLable.text = [NSString stringWithFormat:@"¥ %@", [pircedict objectForKey:@"money"]];
+        }else{
+            _priceLable.text = @"";
+        }
     }
+    
 }
 
 - (void)awakeFromNib {

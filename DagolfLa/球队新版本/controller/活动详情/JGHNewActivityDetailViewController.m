@@ -453,7 +453,7 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         cell.infoLable.text = self.model.info;
-        
+        cell.infoLable.preferredMaxLayoutWidth = screenWidth -80*ProportionAdapter;
         return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }
     return 0;

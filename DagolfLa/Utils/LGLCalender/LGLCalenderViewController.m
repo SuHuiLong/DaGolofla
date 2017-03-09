@@ -224,10 +224,14 @@
             NSInteger index = indexPath.item - model.firstday;
             LGLCalenderSubModel * subModel = model.details[index];
             cell.dateL.text = [NSString stringWithFormat:@"%ld",(long)subModel.day];
-            if (subModel.price.length >0) {
-                cell.priceL.text = [NSString stringWithFormat:@"￥%@", subModel.price];
+            if (subModel.leagueMoney.length >0) {
+                cell.priceL.text = [NSString stringWithFormat:@"￥%@", subModel.leagueMoney];
             }else{
-                cell.priceL.text = @"";
+                if (subModel.price.length >0) {
+                    cell.priceL.text = [NSString stringWithFormat:@"￥%@", subModel.price];
+                }else{
+                    cell.priceL.text = @"";
+                }
             }
             
             cell.backgroundColor = [UIColor whiteColor];//LGLColor(244, 243, 231)
@@ -244,8 +248,6 @@
                 }else{
                     cell.dateL.textColor = [UIColor blackColor];
                 }
-                
-                
                 
                 cell.priceL.textColor = [UIColor colorWithHexString:@"#fc5a01"];
             }

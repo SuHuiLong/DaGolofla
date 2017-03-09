@@ -25,7 +25,7 @@
         _titleLable = [[UILabel alloc]initWithFrame:CGRectMake(60 *ProportionAdapter, 18*ProportionAdapter, screenWidth -76*ProportionAdapter, 20*ProportionAdapter)];
         _titleLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
         _titleLable.textColor = [UIColor colorWithHexString:B31_Color];
-        _titleLable.text = @"你就开始那地方看见你的开发机构贷款纠纷";
+        _titleLable.text = @"暂无消息";
         [self addSubview:_titleLable];
         
         _directionImageView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth -16*ProportionAdapter, 23*ProportionAdapter, 6*ProportionAdapter, 10*ProportionAdapter)];
@@ -35,11 +35,22 @@
         _detailLable = [[UILabel alloc]initWithFrame:CGRectMake(60*ProportionAdapter, 42*ProportionAdapter, screenWidth -60*ProportionAdapter, 15*ProportionAdapter)];
         _detailLable.textColor = [UIColor colorWithHexString:Ba0_Color];
         _detailLable.font = [UIFont systemFontOfSize:14*ProportionAdapter];
-        _detailLable.text = @"福斯护肤 i 和 iu 风格和丢法国 i的风格你觉得法国 i 多功能的咖啡机股份";
+        _detailLable.text = @"";
         [self addSubview:_detailLable];
         
     }
     return self;
+}
+
+- (void)configJGHIndexSystemMessageCell:(NSDictionary *)dict{
+    if ([dict objectForKey:@"nSrcName"]) {
+        _titleLable.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"nSrcName"]];
+    }
+    
+    if ([dict objectForKey:@"title"]) {
+        _detailLable.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];
+    }
+    
 }
 
 - (void)awakeFromNib {

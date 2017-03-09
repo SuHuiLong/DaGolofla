@@ -15,7 +15,7 @@
         _headerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(6*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 164*ProportionAdapter)];
         _headerImageView.image = [UIImage imageNamed:@"home_bg_comp"];
         _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
-        _headerImageView.layer.masksToBounds = YES;
+        _headerImageView.clipsToBounds = YES;
         [self addSubview:_headerImageView];
         
         _golfImageView = [[UIImageView alloc]initWithFrame:CGRectMake(6*ProportionAdapter, 180*ProportionAdapter, 12*ProportionAdapter, 17*ProportionAdapter)];
@@ -38,10 +38,10 @@
 }
 
 - (void)configJGHGolfPackageSubCell:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
-    _headerImageView.frame = CGRectMake(6*ProportionAdapter, 0, imageW *ProportionAdapter, imageH*ProportionAdapter);
+    _headerImageView.frame = CGRectMake(6*ProportionAdapter, 0, imageW*ProportionAdapter, imageH*ProportionAdapter);
     _golfImageView.frame = CGRectMake(6*ProportionAdapter, imageH*ProportionAdapter+ 16*ProportionAdapter, 12*ProportionAdapter, 17*ProportionAdapter);
-    _titleLable.frame = CGRectMake(23*ProportionAdapter, imageH*ProportionAdapter+ 16*ProportionAdapter, imageW*ProportionAdapter -26*ProportionAdapter, 20*ProportionAdapter);
-    _price.frame = CGRectMake(23*ProportionAdapter, imageH*ProportionAdapter+ 48*ProportionAdapter, imageW*ProportionAdapter -26*ProportionAdapter, 20*ProportionAdapter);
+    _titleLable.frame = CGRectMake(23*ProportionAdapter, imageH*ProportionAdapter+ 16*ProportionAdapter, imageW*ProportionAdapter -17*ProportionAdapter, 20*ProportionAdapter);
+    _price.frame = CGRectMake(23*ProportionAdapter, imageH*ProportionAdapter+ 48*ProportionAdapter, imageW*ProportionAdapter -17*ProportionAdapter, 20*ProportionAdapter);
     
     [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"imgURL"]] placeholderImage:[UIImage imageNamed:@"home_bg_comp"]];
     //_headerImageView.contentMode = UIViewContentModeScaleAspectFill;

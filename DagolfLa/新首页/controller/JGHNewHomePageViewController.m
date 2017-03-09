@@ -231,6 +231,11 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
             if (isCanPerfectUserInfo) {
                 [self alertCompleteSelfView];
             }
+            
+            if ([data objectForKey:@"newMsg"]) {
+                self.indexModel.Msg = [data objectForKey:@"newMsg"];
+            }
+            
             [self.indexModel setValuesForKeysWithDictionary:data];
             
             [self.homeTableView reloadData];
@@ -394,16 +399,10 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (indexPath.section == 0) {
         JGHIndexSystemMessageCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHIndexSystemMessageCellIdentifier];
         showSectionCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //showSectionCell.delegate = self;
-        //showSectionCell.moreBtn.tag = 100 +section;
+        if (_indexModel.Msg) {
+            [showSectionCell configJGHIndexSystemMessageCell:_indexModel.Msg];
+        }
         
-        //NSDictionary *dict = _indexModel.plateList[section];
-        //NSInteger _more = 0;
-        //if ([dict objectForKey:@"moreLink"]) {
-        //  _more = 1;
-        //}
-        
-        //[showSectionCell congfigJGHShowSectionTableViewCell:[dict objectForKey:@"title"] andHiden:_more];
         return showSectionCell;
     }else{
         JGHIndexTableViewCell *indexTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHIndexTableViewCellIdentifier];
@@ -434,7 +433,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
                 [indexTableViewCell configJGHSpectatorSportsView:bodyList andImageW:imgWidth andImageH:imgHeight];
             }else if (bodyLayoutType == 5){
                 //高旅套餐
-                [indexTableViewCell configJGHGolfPackageView:bodyList andImageW:imgHeight andImageH:imgHeight];
+                [indexTableViewCell configJGHGolfPackageView:bodyList andImageW:imgWidth andImageH:imgHeight];
             }else{
                 //其他  －－－ 更新版本
                 

@@ -263,7 +263,7 @@ static JGHPushClass *pushClass = nil;
     }
     
     //更多资讯
-    if ([urlString containsString:@"newsDetail"]) {
+    if ([urlString containsString:@"golfNewsList"]) {
         JGNewsViewController *moreCtrl = [[JGNewsViewController alloc]init];
         if (pushVC) {
             pushVC(moreCtrl);
