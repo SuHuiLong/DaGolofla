@@ -40,5 +40,18 @@
         
 }
 
+-(void)configData:(JGLPhotoAlbumModel *)model{
+    [_iconIngv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
+    
+    if (![Helper isBlankString:model.name]) {
+        
+        _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    }
+    else
+    {
+        _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    }
+}
+
 
 @end

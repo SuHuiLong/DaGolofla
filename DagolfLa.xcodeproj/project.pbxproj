@@ -537,6 +537,8 @@
 		20D008121E6FF0EB0040883C /* LEOHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D0080D1E6FF0EB0040883C /* LEOHeaderView.m */; };
 		20D008131E6FF0EB0040883C /* UINavigationBar+leoAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D0080F1E6FF0EB0040883C /* UINavigationBar+leoAdd.m */; };
 		20D008141E6FF0EB0040883C /* UIView+leoAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D008111E6FF0EB0040883C /* UIView+leoAdd.m */; };
+		20D008181E7128100040883C /* JGHTeamShadowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D008171E7128100040883C /* JGHTeamShadowViewController.m */; };
+		20D0081B1E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D0081A1E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.m */; };
 		20D1E1AB1DD41DE600EB25C3 /* WCLPassWordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D1E1A91DD41DE600EB25C3 /* WCLPassWordView.m */; };
 		20D1E1AE1DD42F7400EB25C3 /* JGHbalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D1E1AD1DD42F7400EB25C3 /* JGHbalanceView.m */; };
 		20D1E1B01DD4615E00EB25C3 /* WCLPassWordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D1E1AF1DD4615E00EB25C3 /* WCLPassWordView.xib */; };
@@ -2315,6 +2317,10 @@
 		20D0080F1E6FF0EB0040883C /* UINavigationBar+leoAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+leoAdd.m"; sourceTree = "<group>"; };
 		20D008101E6FF0EB0040883C /* UIView+leoAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+leoAdd.h"; sourceTree = "<group>"; };
 		20D008111E6FF0EB0040883C /* UIView+leoAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+leoAdd.m"; sourceTree = "<group>"; };
+		20D008161E7128100040883C /* JGHTeamShadowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHTeamShadowViewController.h; sourceTree = "<group>"; };
+		20D008171E7128100040883C /* JGHTeamShadowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTeamShadowViewController.m; sourceTree = "<group>"; };
+		20D008191E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPhotoShadowCollectionViewCell.h; sourceTree = "<group>"; };
+		20D0081A1E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPhotoShadowCollectionViewCell.m; sourceTree = "<group>"; };
 		20D1E1A91DD41DE600EB25C3 /* WCLPassWordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCLPassWordView.m; sourceTree = "<group>"; };
 		20D1E1AA1DD41DE600EB25C3 /* WCLPassWordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCLPassWordView.h; sourceTree = "<group>"; };
 		20D1E1AC1DD42F7400EB25C3 /* JGHbalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHbalanceView.h; sourceTree = "<group>"; };
@@ -4897,6 +4903,7 @@
 		2053ED951DBEF7650076BFE4 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				20D008151E7127CE0040883C /* 球队掠影 */,
 				F55573D11E515C89001A353E /* 资讯 */,
 				F58C4EA91E1B3F860057DC9C /* 球场预定 */,
 				F5D2F9B31E03DB130070D26C /* 服务定制 */,
@@ -5757,6 +5764,15 @@
 				20D008111E6FF0EB0040883C /* UIView+leoAdd.m */,
 			);
 			path = "下拉放大";
+			sourceTree = "<group>";
+		};
+		20D008151E7127CE0040883C /* 球队掠影 */ = {
+			isa = PBXGroup;
+			children = (
+				20D008161E7128100040883C /* JGHTeamShadowViewController.h */,
+				20D008171E7128100040883C /* JGHTeamShadowViewController.m */,
+			);
+			path = "球队掠影";
 			sourceTree = "<group>";
 		};
 		20D1E1A81DD41DC100EB25C3 /* 支付密码框 */ = {
@@ -7985,6 +8001,8 @@
 		828A99EB1CE32E2500AF9860 /* 球队相册 */ = {
 			isa = PBXGroup;
 			children = (
+				20D008191E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.h */,
+				20D0081A1E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.m */,
 				82D595EA1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.h */,
 				82D595EB1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.m */,
 				82D595EC1CE4654C00CD9587 /* JGTeamPhotoCollectionViewCell.xib */,
@@ -9341,6 +9359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5EE48931D4626D4001D5E44 /* JGLAddActivePlayViewController.h in Sources */,
+				20D008181E7128100040883C /* JGHTeamShadowViewController.m in Sources */,
 				203019EA1E0E4293005568E2 /* ZXPDF417ScanningDecoder.m in Sources */,
 				F5EE48941D4626D4001D5E44 /* JGLAddActivePlayViewController.m in Sources */,
 				20301A6D1E1269EB005568E2 /* LGLCalenderCell.m in Sources */,
@@ -9966,6 +9985,7 @@
 				2066E8861D5D668600A3A2B8 /* JGHCabbieAwaredCell.m in Sources */,
 				36BF01631BC77611005B3CE2 /* BallParkViewController.m in Sources */,
 				2030195A1E0E4292005568E2 /* ZXSMTPResultParser.m in Sources */,
+				20D0081B1E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.m in Sources */,
 				207FEC9B1D1BDDB10098E23C /* JGHButtonCell.m in Sources */,
 				203019C41E0E4293005568E2 /* ZXCodaBarReader.m in Sources */,
 				36BF01A11BC779D8005B3CE2 /* YueDetailModel.m in Sources */,

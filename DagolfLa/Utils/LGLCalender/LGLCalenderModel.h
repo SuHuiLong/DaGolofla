@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^CallBackBlock)(NSMutableArray * result);
+typedef void(^CallBackBlock)(NSMutableArray * result, BOOL hasUserCard);
 @interface LGLCalenderModel : NSObject
 
 @property (nonatomic, assign) NSInteger year;

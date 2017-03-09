@@ -12,6 +12,9 @@
 static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
 
 @interface JGHTimeListView ()<UITableViewDelegate, UITableViewDataSource>
+{
+    BOOL _hasUserCard;
+}
 
 @property (nonatomic, retain)UITableView *timeListTableView;
 
@@ -24,7 +27,7 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self == [super initWithFrame:frame]) {
-        
+        _hasUserCard = NO;
         UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 40 *ProportionAdapter)];
         headerView.backgroundColor = [UIColor colorWithHexString:@"#eff5f0"];
         UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0.5, screenWidth, 39*ProportionAdapter)];
@@ -64,7 +67,7 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHTimeViewListCell *timeViewListCell = [tableView dequeueReusableCellWithIdentifier:JGHTimeViewListCellIdentifier];
     if (_dataArray.count > 0) {
-        [timeViewListCell configJGHTimeViewListCell:_dataArray[indexPath.row]];
+        [timeViewListCell configJGHTimeViewListCell:_dataArray[indexPath.row] andHasUserCard:_hasUserCard];
     }
     
     
@@ -123,11 +126,14 @@ static NSString *const JGHTimeViewListCellIdentifier = @"JGHTimeViewListCell";
         [LQProgressHud hide];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _dataArray = [data objectForKey:@"priceList"];
+            _hasUserCard = ([[data objectForKey:@"hasUserCard"] integerValue] == 1)?YES:NO;
             
             [self.timeListTableView reloadData];
         }
         else
         {
+            _hasUserCard = NO;
+            
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self];
         }
     }];

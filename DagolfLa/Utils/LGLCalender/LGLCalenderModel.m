@@ -102,7 +102,7 @@
     [dict setObject:ballKey forKey:@"ballKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", ballKey]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"bookball/getBallPriceDate" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        block(array);
+        block(array, NO);
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         //NSLog(@"%@", array);
@@ -173,9 +173,9 @@
                 }
             }
             
-            block(array);
+            block(array, ([[data objectForKey:@"hasUserCard"] integerValue] == 1)?YES:NO);
         }else{
-            block(array);
+            block(array, NO);
             [LQProgressHud showMessage:@"获取价格信息失败！"];
         }
     }];

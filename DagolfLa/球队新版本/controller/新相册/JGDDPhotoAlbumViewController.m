@@ -45,7 +45,7 @@
     }
     else
     {
-        self.title = @"球队掠影";
+        self.title = @"球队相册";
     }
     
     self.view.backgroundColor = [UIColor whiteColor]; //
