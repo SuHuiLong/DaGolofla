@@ -25,6 +25,7 @@
 
 @property (nonatomic, strong) NSNumber *unitPrice; // 单价
 @property (nonatomic, strong) NSNumber *deductionMoney; // 减免金额
+@property (nonatomic, strong) NSNumber *isLeague; // 1 是联盟球场
 
 
 @end

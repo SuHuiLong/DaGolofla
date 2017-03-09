@@ -226,7 +226,7 @@ static JsonHttp *jsonHttp = nil;
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     [manager.requestSerializer setValue:app_Version forHTTPHeaderField:@"AppVersion"];
     [manager.requestSerializer setValue:@"IOS" forHTTPHeaderField:@"AppSystem"];
-
+    
 //    [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
     //https安全策略
 //    manager.securityPolicy.allowInvalidCertificates = YES;

@@ -426,7 +426,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     JGWkNewsViewController *newVC = [[JGWkNewsViewController alloc] init];
-    newVC.detailDic = self.allDataArray[self.currentType - 1][indexPath.row];
+    //newVC.detailDic = self.allDataArray[self.currentType - 1][indexPath.row];
+    NSDictionary *detailDic = self.allDataArray[self.currentType - 1][indexPath.row];
+    if ([detailDic objectForKey:@"id"]) {
+        newVC.newsId = [detailDic objectForKey:@"id"];
+    }
     
     [self.navigationController pushViewController:newVC animated:YES];
     

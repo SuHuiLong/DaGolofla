@@ -21,11 +21,11 @@
 #import "UseMallViewController.h"
 #import "DetailViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
-
+#import "JGWkNewsViewController.h"
 
 #import "JGDCourtDetailViewController.h" // 球场详情
 #import "JGDBookCourtViewController.h"
-
+#import "JGNewsViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 
 
@@ -250,6 +250,23 @@ static JGHPushClass *pushClass = nil;
     if ([urlString containsString:@"closeWebView"]) {
         if (pushVC) {
             pushVC(nil);
+        }
+    }
+    
+    //资讯
+    if ([urlString containsString:@"newsDetail"]) {
+        JGWkNewsViewController * comDevc = [[JGWkNewsViewController alloc]init];
+        comDevc.newsId = [NSString stringWithFormat:@"%@", [Helper returnKeyVlaueWithUrlString:urlString andKey:@"newId"]];
+        if (pushVC) {
+            pushVC(comDevc);
+        }
+    }
+    
+    //更多资讯
+    if ([urlString containsString:@"golfNewsList"]) {
+        JGNewsViewController *moreCtrl = [[JGNewsViewController alloc]init];
+        if (pushVC) {
+            pushVC(moreCtrl);
         }
     }
 }

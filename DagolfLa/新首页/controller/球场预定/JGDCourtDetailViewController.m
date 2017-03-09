@@ -13,6 +13,8 @@
 #import "JGDCommitOrderViewController.h"
 #import "LGLCalenderViewController.h" // 日历
 #import "JGDWKCourtDetailViewController.h"
+#import "JGDCourtAllianceTableViewCell.h"
+#import "JGDAllianceCommitOrderViewController.h"    // 联盟会员提交界面
 
 static CGFloat ImageHeight  = 210.0;
 
@@ -42,10 +44,14 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, copy) NSString *deductionMoney; // 立减价格
 
 @property (nonatomic, copy) NSString *depositMoney; // 押金
+@property (nonatomic, copy) NSString *leagueMoney; // 联盟会员价格
 
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, copy) NSString *week;
 @property (nonatomic, copy) NSString *time;
+
+@property (nonatomic, assign) BOOL hasUserCard;     // 是否是联盟会员
+@property (nonatomic, assign) NSInteger isLeague;   // 是否是联盟球场
 
 @end
 
@@ -101,6 +107,7 @@ static CGFloat ImageHeight  = 210.0;
         self.courtDetail = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStylePlain)];
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight)];
         self.courtDetail.tableHeaderView = headView;
+        [self.courtDetail registerClass:[JGDCourtAllianceTableViewCell class] forCellReuseIdentifier:@"CourtAlliance"];
         
         self.courtDetail.dataSource = self;
         self.courtDetail.delegate = self;
@@ -202,9 +209,19 @@ static CGFloat ImageHeight  = 210.0;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
+            self.hasUserCard = [[data objectForKey:@"hasUserCard"] boolValue];
+            
+
             if ([data objectForKey:@"ball"]) {
                 
+
                 self.detailDic = [[data objectForKey:@"ball"] mutableCopy];
+
+                self.isLeague = [[self.detailDic objectForKey:@"isLeague"] integerValue];
+
+                if ([self.detailDic objectForKey:@"leagueMoney"]) {
+                    self.leagueMoney = [[self.detailDic objectForKey:@"leagueMoney"] stringValue];
+                }
                 
                 NSString *time = [self.detailDic objectForKey:@"unitPriceDate"];
                 
@@ -343,7 +360,11 @@ static CGFloat ImageHeight  = 210.0;
     }else {
         
         CGFloat height = [Helper textHeightFromTextString:self.serviceDetail.text width:screenWidth - 20 * ProportionAdapter fontSize:15 * ProportionAdapter];
-        return indexPath.row == 0 ? 100 * ProportionAdapter : 50 * ProportionAdapter + height;
+        
+        CGFloat row1heght;
+        self.isLeague == 1 ? (row1heght = 240 * ProportionAdapter) : (row1heght = 100 * ProportionAdapter);
+        
+        return indexPath.row == 0 ? row1heght : 50 * ProportionAdapter + height;
         
     }
 }
@@ -429,6 +450,22 @@ static CGFloat ImageHeight  = 210.0;
         
         if (indexPath.row == 0) {
             
+            if (self.isLeague == 1) { // 联盟球场
+                JGDCourtAllianceTableViewCell *allianceCell = [tableView dequeueReusableCellWithIdentifier:@"CourtAlliance"];
+                allianceCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                allianceCell.unitPrice = self.unitPrice;
+                allianceCell.payMoney = self.payMoney;
+                allianceCell.payType = [[self.detailDic objectForKey:@"payType"] integerValue];
+                allianceCell.leagueMoney = self.leagueMoney;
+                allianceCell.deductionMoney = self.deductionMoney;
+                allianceCell.hasUserCard = self.hasUserCard;
+                allianceCell.dataDic = self.detailDic;
+                [allianceCell.vipBtn addTarget:self action:@selector(vipCommitAct) forControlEvents:(UIControlEventTouchUpInside)];
+                [allianceCell.normalBtn addTarget:self action:@selector(payAct) forControlEvents:(UIControlEventTouchUpInside)];
+                return allianceCell;
+            }
+            
+            
             CGFloat height = [Helper textHeightFromTextString:[self.detailDic objectForKey:@"bookName"] width: 200 * ProportionAdapter fontSize:17 * ProportionAdapter];
 
             UILabel *courtName = [[UILabel alloc] init];
@@ -454,7 +491,7 @@ static CGFloat ImageHeight  = 210.0;
             if ([[self.detailDic objectForKey:@"instapaper"] integerValue] == 2) {
                 [payBtn setBackgroundImage:[UIImage imageNamed:@"booking_pay"] forState:(UIControlStateNormal)];
                 [payBtn setTitleColor:[UIColor colorWithHexString:@"#a0a0a0"] forState:(UIControlStateNormal)];
-                [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:@"已封场" textAlignment:(NSTextAlignmentRight)];
+                [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 165 * ProportionAdapter , 35 * ProportionAdapter, 70 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 * ProportionAdapter text:@"已封场" textAlignment:(NSTextAlignmentRight)];
                 payBtn.enabled = NO;
                 [cell.contentView addSubview:priceLB];
             }else if ([[self.detailDic objectForKey:@"instapaper"] integerValue] == 1) {
@@ -465,7 +502,7 @@ static CGFloat ImageHeight  = 210.0;
                 if (self.deductionMoney) {
         // 立减优惠
                 // 优惠前价格
-                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 30 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:[NSString stringWithFormat:@"¥ %@",self.unitPrice] textAlignment:(NSTextAlignmentRight)];
+                    UILabel *greyLB = [self lablerect:CGRectMake(screenWidth - 165 * ProportionAdapter , 30 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:13 text:[NSString stringWithFormat:@"¥ %@",self.unitPrice] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:greyLB];
                     
                     CGFloat width = [Helper textWidthFromTextString:[NSString stringWithFormat:@"¥ %@",self.unitPrice] height:screenWidth - 20 * ProportionAdapter fontSize:13];
@@ -477,13 +514,13 @@ static CGFloat ImageHeight  = 210.0;
                 // 优惠后价格
 //                    NSInteger orangePrice = [self.unitPrice integerValue] - [self.deductionMoney integerValue];
 
-                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 155 * ProportionAdapter , 50 * ProportionAdapter, 60 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", self.payMoney] textAlignment:(NSTextAlignmentRight)];
+                    UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 165 * ProportionAdapter , 50 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", self.payMoney] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:orangeLB];
 
                 }else{
                     
             // 无立减优惠
-                    [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 155 * ProportionAdapter , 35 * ProportionAdapter, 60 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %@", self.unitPrice] textAlignment:(NSTextAlignmentRight)];
+                    [self lableReDraw:priceLB rect:CGRectMake(screenWidth - 165 * ProportionAdapter , 35 * ProportionAdapter, 70 * ProportionAdapter, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥ %@", self.unitPrice] textAlignment:(NSTextAlignmentRight)];
                     
                     NSMutableAttributedString *mutaStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.unitPrice]];
                     [mutaStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(0, 1)];
@@ -539,12 +576,13 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 
+
 #pragma mark --- 时间选择
 //  money 单价（减免后的）     sence 现场价格  deductionMoney 减免
 - (void)calendarTap{
     LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
     caleVC.ballKey = self.timeKey;
-    caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney){
+    caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney, NSString *leagueMoney){
         _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"yyyy年MM月dd日"]];
         _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
         _time = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"HH:mm"]];
@@ -560,6 +598,8 @@ static CGFloat ImageHeight  = 210.0;
             self.deductionMoney = deductionMoney;
             self.unitPrice = [NSString stringWithFormat:@"%td", [pay integerValue] + [deductionMoney integerValue]];
         }
+        self.leagueMoney = leagueMoney;
+        
         self.selectDate = selectTime;
         NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:0 inSection:0];
         NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
@@ -576,17 +616,21 @@ static CGFloat ImageHeight  = 210.0;
 
 
 #pragma  mark -- 付款
-
+// 联盟会员付款
+- (void)vipCommitAct{
+    JGDAllianceCommitOrderViewController *commitVC = [[JGDAllianceCommitOrderViewController alloc] init];
+    commitVC.selectDate = self.selectDate;
+    commitVC.detailDic = self.detailDic;
+    commitVC.timeKey = self.timeKey;
+    commitVC.selectMoney = self.leagueMoney;
+    [self.navigationController pushViewController:commitVC animated:YES];
+}
+//普通会员付款
 - (void)payAct{
     JGDCommitOrderViewController *commitVC = [[JGDCommitOrderViewController alloc] init];
     commitVC.selectDate = self.selectDate;
     
-//    if (self.deductionMoney) {
-//        commitVC.selectMoney = [NSString stringWithFormat:@"%td", [self.payMoney integerValue] - [self.deductionMoney integerValue]];
-//    }else{
-//        commitVC.selectMoney = self.payMoney;
-//    }
-    
+   
     if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
 //         球场现付
             commitVC.selectMoney = self.payMoney;

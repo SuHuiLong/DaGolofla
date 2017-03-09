@@ -34,6 +34,7 @@
 #import "JGWkNewsViewController.h"
 #import "UseMallViewController.h"
 #import "JGDPersonalCard.h"
+#import "JGHIndexSystemMessageCell.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHConsultChannelCellIdentifier = @"JGHConsultChannelCell";
@@ -41,6 +42,8 @@ static NSString *const JGHChancelTableViewCellIdentifier = @"JGHChancelTableView
 static NSString *const JGHShowSectionTableViewCellIdentifier = @"JGHShowSectionTableViewCell";
 static NSString *const JGHShowActivityPhotoCellIdentifier = @"JGHShowActivityPhotoCell";
 static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell";
+static NSString *const JGHIndexSystemMessageCellIdentifier = @"JGHIndexSystemMessageCell";
+static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCell";
 
 @interface JGHNewHomePageViewController ()<UITableViewDelegate, UITableViewDataSource, JGHShowSectionTableViewCellDelegate, JGHShowActivityPhotoCellDelegate, JGHNavListViewDelegate, JGHPASHeaderTableViewCellDelegate, JGHIndexTableViewCellDelegate, JGHConsultChannelCellDelegate, JGHChancelTableViewCellDelegate>
 {
@@ -103,7 +106,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     [self parsingCacheData];
     
-    [self loadIndexdata];//上线不注释
+    [self loadIndexdata];
     
     [self createBanner];
     
@@ -216,7 +219,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }
     
     [getDict setObject:@1 forKey:@"ballType"];
-    [[JsonHttp jsonHttp]httpRequest:@"index/getIndex" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"index/getIndexV1" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.homeTableView.header endRefreshing];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
@@ -228,6 +231,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             if (isCanPerfectUserInfo) {
                 [self alertCompleteSelfView];
             }
+            
+            if ([data objectForKey:@"newMsg"]) {
+                self.indexModel.Msg = [data objectForKey:@"newMsg"];
+            }
+            
             [self.indexModel setValuesForKeysWithDictionary:data];
             
             [self.homeTableView reloadData];
@@ -278,6 +286,8 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     [self.homeTableView registerClass:[JGHChancelTableViewCell class] forCellReuseIdentifier:JGHChancelTableViewCellIdentifier];
     
+    [self.homeTableView registerClass:[JGHIndexSystemMessageCell class] forCellReuseIdentifier:JGHIndexSystemMessageCellIdentifier];
+    
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
     self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -322,6 +332,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     [[JsonHttp jsonHttp] httpRequest:@"adv/getAdvertList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
+        NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSMutableArray* arrayIcon = [[NSMutableArray alloc]init];
             NSMutableArray* arrayUrl = [[NSMutableArray alloc]init];
@@ -362,20 +373,20 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 #pragma mark - UITableViewDataSource 协议方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {  
-    return _indexModel.plateList.count +2;
+    return _indexModel.plateList.count +1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == _indexModel.plateList.count +2) {
+    if (section == _indexModel.plateList.count +1) {
         return 0;
     }
     return 10 *ProportionAdapter;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    if (section == _indexModel.plateList.count +2) {
+    if (section == _indexModel.plateList.count +1) {
         return nil;
     }else{
         UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10 *ProportionAdapter)];
@@ -384,23 +395,22 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+
     if (indexPath.section == 0) {
-        JGHShowActivityPhotoCell *showActivityPhotoCell = [tableView dequeueReusableCellWithIdentifier:JGHShowActivityPhotoCellIdentifier];
-        showActivityPhotoCell.delegate = self;
-        [showActivityPhotoCell configJGHShowActivityPhotoCell:_indexModel.activityList];
-        return showActivityPhotoCell;
-    }else if (indexPath.section == 1){
-        JGHChancelTableViewCell *chancelTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHChancelTableViewCellIdentifier];
-        chancelTableViewCell.delegate = self;
-        [chancelTableViewCell configJGHChancelTableViewCellMatchList:_indexModel.matchNewList];
-        return chancelTableViewCell;
+        JGHIndexSystemMessageCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHIndexSystemMessageCellIdentifier];
+        showSectionCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (_indexModel.Msg) {
+            [showSectionCell configJGHIndexSystemMessageCell:_indexModel.Msg];
+        }
+        
+        return showSectionCell;
     }else{
         JGHIndexTableViewCell *indexTableViewCell = [tableView dequeueReusableCellWithIdentifier:JGHIndexTableViewCellIdentifier];
+        indexTableViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
         indexTableViewCell.delegate = self;
         
         if (_indexModel.plateList.count > 0) {
-            NSDictionary *dict = _indexModel.plateList[indexPath.section -2];
+            NSDictionary *dict = _indexModel.plateList[indexPath.section -1];
             NSArray *bodyList = [dict objectForKey:@"bodyList"];
             NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
             NSInteger imgHeight = [[dict objectForKey:@"imgHeight"] integerValue];
@@ -418,6 +428,12 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             }else if (bodyLayoutType == 3){
                 //订场推荐
                 [indexTableViewCell configJGHShowRecomStadiumTableViewCell:bodyList andImageW:imgWidth andImageH:imgHeight];
+            }else if (bodyLayoutType == 4){
+                //精彩赛事
+                [indexTableViewCell configJGHSpectatorSportsView:bodyList andImageW:imgWidth andImageH:imgHeight];
+            }else if (bodyLayoutType == 5){
+                //高旅套餐
+                [indexTableViewCell configJGHGolfPackageView:bodyList andImageW:imgWidth andImageH:imgHeight];
             }else{
                 //其他  －－－ 更新版本
                 
@@ -431,41 +447,31 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        JGHPASHeaderTableViewCell *pASHeaderCell = [tableView dequeueReusableCellWithIdentifier:JGHPASHeaderTableViewCellIdentifier];
-        pASHeaderCell.delegate = self;
-        [pASHeaderCell configJGHPASHeaderTableViewCell:_showLineID];
-        return (UIView *)pASHeaderCell;
-    }else if (section == 1){
-        JGHConsultChannelCell *consultChannelCell = [tableView dequeueReusableCellWithIdentifier:JGHConsultChannelCellIdentifier];
-        consultChannelCell.delegate = self;
-        [consultChannelCell configJGHConsultChannelCell:_showEventID];
-        return (UIView *)consultChannelCell;
-    }else{
-        JGHShowSectionTableViewCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSectionTableViewCellIdentifier];
-        showSectionCell.delegate = self;
-        showSectionCell.moreBtn.tag = 100 +section;
-        
-        NSDictionary *dict = _indexModel.plateList[section -2];
-        NSInteger _more = 0;
-        if ([dict objectForKey:@"moreLink"]) {
-            _more = 1;
-        }
-        
-        [showSectionCell congfigJGHShowSectionTableViewCell:[dict objectForKey:@"title"] andHiden:_more];
-        return (UIView *)showSectionCell;
+        return nil;
     }
+
+    JGHShowSectionTableViewCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSectionTableViewCellIdentifier];
+    showSectionCell.delegate = self;
+    showSectionCell.moreBtn.tag = 100 +section;
+    
+    NSDictionary *dict = _indexModel.plateList[section -1];
+    NSInteger _more = 0;
+    if ([dict objectForKey:@"moreLink"]) {
+        _more = 1;
+    }
+    
+    [showSectionCell congfigJGHShowSectionTableViewCell:[dict objectForKey:@"title"] andHiden:_more];
+    return (UIView *)showSectionCell;
 }
 //Cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        // 活动－相册－成绩
-        return 190 *ProportionAdapter;
-    }else if (indexPath.section == 1){
-        return 300 *ProportionAdapter;
+        // 系统消息
+        return 80 *ProportionAdapter;
     }else{
         if (_indexModel.plateList.count > 0) {
-            NSDictionary *dict = _indexModel.plateList[indexPath.section -2];
+            NSDictionary *dict = _indexModel.plateList[indexPath.section -1];
             NSArray *bodyList = [dict objectForKey:@"bodyList"];
             NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
             NSInteger imgHeight = [[dict objectForKey:@"imgHeight"] integerValue];
@@ -481,9 +487,15 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
             }else if (bodyLayoutType == 3){
                 //订场推荐
                 return ((bodyList.count-1)/2+1) *(imgHeight +56 +8) *ProportionAdapter + 8*ProportionAdapter;
+            }else if (bodyLayoutType == 4){
+                //精彩赛事
+                return imgHeight +99*ProportionAdapter;
+            }else if (bodyLayoutType == 5){
+                //高旅套餐
+                return imgHeight +99*ProportionAdapter;
             }else{
                 //其他  －－－ 更新版本
-                return 30 *ProportionAdapter;
+                return 0;
             }
         }else{
             return 0;
@@ -493,9 +505,22 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 //设置头部高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section == 0) {
+        return 0;
+    }
     return 45 *ProportionAdapter;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        //系统消息
+        /*
+        [[JGHPushClass pushClass] URLString:url pushVC:^(UIViewController *vc) {
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+         */
+    }
+}
 - (void)hotTeam:(NSDictionary *)dict{
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
@@ -548,6 +573,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 
     [self isLoginUp];
 
+    /*
     JGWkNewsViewController *wknewsCtrl = [[JGWkNewsViewController alloc]init];
     if (_showEventID == 0) {
         wknewsCtrl.detailDic = _indexModel.matchNewList[btn.tag - 900];
@@ -565,6 +591,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     
     wknewsCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:wknewsCtrl animated:YES];
+     */
 }
 #pragma mark -- 查看更多
 - (void)didSelectChancelMoreClick:(UIButton *)btn{
@@ -630,7 +657,7 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     } else if (btn.tag == 1003) {
         
         [MobClick event:@"live"];
-
+        
         _showLineID = 2;
         activityLable.hidden = YES;
         photoLable.hidden = YES;
@@ -655,12 +682,13 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
 - (void)didSelectShitaBtn:(UIButton *)btn{
     
     [self isLoginUp];
-
+    
     if (btn.tag == 700) {
-        // 服务定制
-        JGDServiceViewController *serviceVC = [[JGDServiceViewController alloc] init];
-        serviceVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:serviceVC animated:YES];
+        // 历史成绩
+        [MobClick event:@"historyScore"];
+        JGHHistoryAndResultsViewController *historyCtrl = [[JGHHistoryAndResultsViewController alloc]init];
+        historyCtrl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:historyCtrl animated:YES];
     }else if (btn.tag == 701) {
         
         NSString *urlRequest = @"http://www.dagolfla.com/app/index.html"; // 用品商城
@@ -681,11 +709,11 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
         [self.navigationController pushViewController:mallCtrl animated:YES];
 
     } else{
-        // 历史成绩
-        [MobClick event:@"historyScore"];
-        JGHHistoryAndResultsViewController *historyCtrl = [[JGHHistoryAndResultsViewController alloc]init];
-        historyCtrl.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:historyCtrl animated:YES];        
+        
+        // 服务定制
+        JGDServiceViewController *serviceVC = [[JGDServiceViewController alloc] init];
+        serviceVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:serviceVC animated:YES];
     }
 }
 
@@ -865,10 +893,50 @@ static NSString *const JGHIndexTableViewCellIdentifier = @"JGHIndexTableViewCell
     NSLog(@"%td", moreBtn.tag);
     [self isLoginUp];
 
-    NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -2];
+    NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *urlString = [dict objectForKey:@"moreLink"];
     [self pushctrlWithUrl:urlString];
 }
+#pragma mark -- 高旅套餐
+- (void)didSelectGolgPackageUrlString:(NSInteger)selectID{
+    [self isLoginUp];
+    
+    for (NSDictionary *dict in _indexModel.plateList) {
+        NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
+        if (bodyLayoutType == 5) {
+            
+            NSArray *bodyListArray = [dict objectForKey:@"bodyList"];
+            NSDictionary *bodyDict = bodyListArray[selectID];
+            if ([bodyDict objectForKey:@"weblinks"]) {
+                [[JGHPushClass pushClass] URLString:[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]] pushVC:^(UIViewController *vc) {
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }];
+            }
+        }
+    }
+}
+#pragma mark -- 精彩赛事
+- (void)selectSpectatorSportsUrlString:(NSInteger)selectID{
+    [self isLoginUp];
+    
+    for (NSDictionary *dict in _indexModel.plateList) {
+        NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
+        if (bodyLayoutType == 4) {
+            
+            NSArray *bodyListArray = [dict objectForKey:@"bodyList"];
+            NSDictionary *bodyDict = bodyListArray[selectID];
+            if ([bodyDict objectForKey:@"weblinks"]) {
+                [[JGHPushClass pushClass] URLString:[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]] pushVC:^(UIViewController *vc) {
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }];
+            }
+        }
+    }
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

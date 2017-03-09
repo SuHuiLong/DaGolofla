@@ -9,8 +9,14 @@
 #import "JGWkNewsViewController.h"
 
 @interface JGWkNewsViewController ()<WKNavigationDelegate,WKUIDelegate>
-
+{
+    UIBarButtonItem *_bar;
+}
 @property (strong, nonatomic) WKWebView *webView;
+
+@property (nonatomic, copy) NSString *urlString;
+
+@property (nonatomic, retain)NSDictionary *detailDic;
 
 @end
 
@@ -19,16 +25,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     self.title = @"高球资讯";
     
-    UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"fenxiang"] style:(UIBarButtonItemStyleDone) target:self action:@selector(shareAct)];
-    bar.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = bar;
-    
-    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, [self.detailDic objectForKey:@"id"]]];
-    self.urlString = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@", DEFAULF_USERID, [self.detailDic objectForKey:@"id"], md5Str];
-    
+    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
+    self.urlString = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@", DEFAULF_USERID, _newsId, md5Str];
     
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     [self.view addSubview:self.webView];
@@ -36,13 +36,41 @@
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures =YES;
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
-
-    // Do any additional setup after loading the view.
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_urlString]]];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self getNewInfo];
+    });
 }
 
-
-
+- (void)getNewInfo{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:_newsId forKey:@"newsId"];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"news/getNewInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([data objectForKey:@"news"]) {
+                self.detailDic = [data objectForKey:@"news"];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self createBarBtn];
+                });
+            }
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+        
+    }];
+}
+- (void)createBarBtn{
+    _bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"fenxiang"] style:(UIBarButtonItemStyleDone) target:self action:@selector(shareAct)];
+    _bar.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = _bar;
+}
 - (void)shareAct{
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
     alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
@@ -59,7 +87,7 @@
 -(void)shareInfo:(NSInteger)index{
     
     NSData *fiData;
-
+    
     fiData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:@"picURL"]]]];
     NSObject* obj;
     if (fiData != nil && fiData.length > 0) {
@@ -70,10 +98,10 @@
         obj = [UIImage imageNamed:@"iconlogo"];
     }
     
-    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, [self.detailDic objectForKey:@"id"]]];
-     NSString*  shareUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@&share=1", DEFAULF_USERID, [self.detailDic objectForKey:@"id"], md5Str];
+    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
+     NSString*  shareUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@&share=1", DEFAULF_USERID, _newsId, md5Str];
 
-    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"title"]];
+    [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:@"title"]];
     if (index == 0){
         
         //微信
