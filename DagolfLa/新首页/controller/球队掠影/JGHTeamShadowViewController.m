@@ -19,6 +19,9 @@
 #import "JGLPhotoAlbumModel.h"
 
 #import "JGDDPhotoAlbumViewController.h"
+#import "JGHPhotoShadowCollectionViewCell.h"
+
+static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoShadowCollectionViewCell";
 
 @interface JGHTeamShadowViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
@@ -38,41 +41,15 @@
     self.title = @"球队相册";
     _dataArray = [[NSMutableArray alloc]init];
     
-    /*
-    if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
-        UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"创建相册" style:UIBarButtonItemStylePlain target:self action:@selector(createClick)];
-        rightBtn.tintColor = [UIColor whiteColor];
-        self.navigationItem.rightBarButtonItem = rightBtn;
-    }
-    */
-    
     [self uiConfig];
 }
-
-/*
--(void)createClick
-{
-    JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
-    phoVc.title = @"创建相册";
-    phoVc.isManage = NO;
-    //传非0，1的数
-    phoVc.isShowMem = @3;
-    phoVc.teamKey = _teamKey;
-    phoVc.createBlock = ^(void){
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        [_collectionView.header beginRefreshing];
-        [_collectionView reloadData];
-    };
-    [self.navigationController pushViewController:phoVc animated:YES];
-}
-*/
 
 
 -(void)uiConfig
 {
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumInteritemSpacing=0.f;//左右间隔
-    flowLayout.minimumLineSpacing=10.f;
+    flowLayout.minimumLineSpacing=0.f;
     
     
     _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44 * ProportionAdapter - 15*screenWidth/375) collectionViewLayout:flowLayout];
@@ -81,20 +58,14 @@
     _collectionView.delegate=self;
     _collectionView.dataSource=self;
     _collectionView.showsHorizontalScrollIndicator=NO;
-    _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.backgroundColor = [UIColor colorWithHexString:@"f5f5f5"];
     //    _collectionView.bounces = NO;
     //    _collectionView.scrollEnabled = NO;
     _collectionView.contentSize = CGSizeMake(0, 0);
+    
     //注册cell
-    [_collectionView registerNib: [UINib nibWithNibName:@"JGTeamPhotoCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell"];
-    /*
-    NSString *powerStr = [_dictMember objectForKey:@"power"];
-    if ([powerStr containsString:@"1005"]) {
-        // 设置footerView的
-        [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
-        flowLayout.footerReferenceSize = CGSizeMake(_collectionView.frame.size.width, 100 * ProportionAdapter);
-    }
-    */
+    [_collectionView registerClass:[JGHPhotoShadowCollectionViewCell class] forCellWithReuseIdentifier:JGHPhotoShadowCollectionViewCellIdentifier];
+
     
     _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _collectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
@@ -172,9 +143,6 @@
             _page++;
             [_collectionView reloadData];
         }else {
-            //            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
-            //                [self presentViewController:alertView animated:YES completion:nil];
-            //            }];
             [[ShowHUD showHUD]showToastWithText:[dict objectForKey:@"message"] FromView:self.view];
         }
         [_collectionView reloadData];
@@ -197,9 +165,6 @@
     [self downLoadData:_page isReshing:NO];
 }
 
-
-
-
 #pragma mark -- uicollection方法
 //定义展示的UICollectionViewCell的个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -214,70 +179,11 @@
 //每个UICollectionView展示的内容
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    JGTeamPhotoCollectionViewCell *cell = [[JGTeamPhotoCollectionViewCell alloc]init];
-    
-    // Set up the reuse identifier
-    cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
-    
-    cell.timeLabel.hidden = YES;
-    cell.manageBtn.hidden = YES;
-    cell.suoImage.hidden = YES;
-    cell.numLabel.hidden = YES;
-    
-    [cell configData:_dataArray[indexPath.row]];
-    
-    
-    /**
-     *  //POWER == 0，所有人可见，隐藏image    power == 1  仅球队成员可见
-     */
-    /*
-    if (_dictMember != nil) {
-        if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
-            cell.suoImage.hidden = YES;
-        }
-        else{
-            if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
-                cell.suoImage.hidden = YES;
-            }
-            else
-            {
-                cell.suoImage.hidden = NO;
-            }
-        }
+    JGHPhotoShadowCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:JGHPhotoShadowCollectionViewCellIdentifier forIndexPath:indexPath];
+    if (_dataArray.count >0) {
+        [cell configData:_dataArray[indexPath.item]];
     }
-    else
-    {
-        if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
-            cell.suoImage.hidden = YES;
-        }
-        else
-        {
-            cell.suoImage.hidden = NO;
-        }
-    }
-    if (_powerPho != nil) {
-        if ([_powerPho containsString:@"1005"] == YES) {
-            if (_manageInter == 1) {
-                cell.manageBtn.hidden = YES;
-            }
-            else{
-                cell.manageBtn.hidden = NO;
-                cell.manageBtn.tag = 10000 + indexPath.row;
-                [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
-            }
-        }
-        else
-        {
-            cell.manageBtn.hidden = YES;
-        }
-    }
-    else
-    {
-        cell.manageBtn.hidden = YES;
-    }
-    */
+    
     return cell;
 }
 -(void)manageClick:(UIButton *)btn
@@ -300,12 +206,12 @@
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(170*ScreenWidth/375, 160*ScreenWidth/375);
+    return CGSizeMake((screenWidth -18*ProportionAdapter)/2, 164*ScreenWidth/375);
 }
 ////定义每个UICollectionView 的 margin
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(10*ScreenWidth/375, 10*ScreenWidth/375, 10*ScreenWidth/375, 10*ScreenWidth/375);
+    return UIEdgeInsetsMake(6*ProportionAdapter, 6*ProportionAdapter, 6*ProportionAdapter, 6*ProportionAdapter);
 }
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -313,13 +219,16 @@
     
     JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
     //    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
-    phoVc.strTitle = [_dataArray[indexPath.row] name];
-    phoVc.albumKey = [_dataArray[indexPath.row] timeKey];
-    //phoVc.power = _powerPho;
+    JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc]init];
+    model = _dataArray[indexPath.item];
+    
+    phoVc.strTitle = model.name;
+    phoVc.albumKey = model.timeKey;
+    phoVc.power = [NSString stringWithFormat:@"%@", model.power];
     //phoVc.state = [_dictMember objectForKey:@"state"];
-    //phoVc.teamTimeKey = _teamKey;
+    phoVc.teamTimeKey = model.teamKey;
     //phoVc.dictMember = _dictMember;
-    phoVc.userKey = [_dataArray[indexPath.row] userKey];
+    phoVc.userKey = model.userKey;
     //    phoVc.blockRefresh = ^(){
     //        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     //        [_collectionView.header beginRefreshing];

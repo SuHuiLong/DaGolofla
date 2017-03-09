@@ -513,12 +513,9 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         //系统消息
-        /*
-        [[JGHPushClass pushClass] URLString:url pushVC:^(UIViewController *vc) {
-            vc.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:vc animated:YES];
-        }];
-         */
+        if ([_indexModel.Msg objectForKey:@"linkURL"]) {
+            [self pushctrlWithUrl:[_indexModel.Msg objectForKey:@"linkURL"]];
+        }
     }
 }
 - (void)hotTeam:(NSDictionary *)dict{

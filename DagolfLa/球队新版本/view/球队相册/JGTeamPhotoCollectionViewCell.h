@@ -20,7 +20,6 @@
 
 -(void)showData:(JGLPhotoAlbumModel *)model;
 
--(void)configData:(JGLPhotoAlbumModel *)model;
 
 
 @end

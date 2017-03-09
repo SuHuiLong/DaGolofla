@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+@class JGLPhotoAlbumModel;
 
 @interface JGHPhotoShadowCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong)UIImageView *shadowImageView;
 
 @property (nonatomic, strong)UILabel *title;
+
+-(void)configData:(JGLPhotoAlbumModel *)model;
+
 
 @end

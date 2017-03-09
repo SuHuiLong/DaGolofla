@@ -33,7 +33,6 @@
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.navigationItem.title = @"活动成员";
     
-    [self uiConfig];
     
 //    if (self.isload == 1) {
 //        [self loadData];
@@ -44,10 +43,13 @@
         
         for (int i = (int)_listArray.count-1; i>=0; i--) {
             if ([_listArray[i] count] == 0) {
+                [_keyArray removeObjectAtIndex:i];
                 [_listArray removeObjectAtIndex:i];
             }
         }
 //    }
+    
+    [self uiConfig];
 }
 //- (void)loadData{
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
