@@ -16,7 +16,8 @@
 //#import "FileUtils.h"
 //#import "StorageManager.h"
 @interface BaseViewController : UIViewController
-
+//每次进入界面都会调用
+-(void)initViewWillApperData;
 //获取进入时界面展示数据
 -(void)initViewData;
 //创建视图

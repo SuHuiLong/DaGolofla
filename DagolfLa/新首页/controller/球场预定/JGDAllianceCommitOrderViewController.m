@@ -37,6 +37,11 @@
 
 @property (nonatomic, copy) NSString *remark; // 备注信息
 
+@property (nonatomic, strong) NSMutableArray *vipCardArray;
+
+@property (nonatomic, strong) UILabel *allianceCardLB;
+
+@property (nonatomic, strong) NSNumber *vipTimekey;
 
 @end
 
@@ -172,31 +177,37 @@
 - (void)ConfirmAct{
     
     [self.view endEditing:YES];
-    for (NSString *player in self.playerArray) {
-        if ([player isEqualToString:@""] || [self.mobile isEqualToString:@""]) {
-            [LQProgressHud showMessage:@"请完善打球人信息"];
-            return;
-        }
+
+    if ([self.allianceCardLB.text isEqualToString:@"请选择会员卡"]) {
+        [LQProgressHud showMessage:@"请选择会员卡"];
+        return;
     }
     
+    JGDBallPlayTableViewCell *cell3 = [self.commitOrderTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+    JGDBallPlayTableViewCell *cell4 = [self.commitOrderTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
+    if ([cell3.nameTF.text isEqualToString:@""] || [cell4.nameTF.text isEqualToString:@""]) {
+        [LQProgressHud showMessage:@"请完善打球人信息"];
+        return;
+    }
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *orderDic = [NSMutableDictionary dictionary];
     
+    [orderDic setObject:self.vipTimekey forKey:@"userCardKey"];
     [orderDic setObject:self.noteTF.text forKey:@"remark"];
     [orderDic setObject:self.selectDate forKey:@"teeTime"];
-    [orderDic setObject:@([self.playerArray count]) forKey:@"userSum"];
-    [orderDic setObject:self.playerArray[0] forKey:@"userName"];
-    [orderDic setObject:self.mobile forKey:@"userMobile"];
+    [orderDic setObject:@1 forKey:@"userSum"];
+    [orderDic setObject:DEFAULF_UserName forKey:@"userName"];
+    [orderDic setObject:cell4.nameTF.text forKey:@"userMobile"];
     UITextField *noteTF = [self.commitOrderTableView viewWithTag:999]; // 备注
     [orderDic setObject:noteTF.text forKey:@"remark"];
     
-    NSMutableString *nameString = [[NSMutableString alloc] init];
-    for (NSString *name in self.playerArray) {
-        nameString = [NSMutableString stringWithFormat:@"%@、 %@",nameString, name];
-    }
-    [orderDic setObject:[nameString substringFromIndex:2] forKey:@"playPersonNames"];
-    
+//    NSMutableString *nameString = [[NSMutableString alloc] init];
+//    for (NSString *name in self.playerArray) {
+//        nameString = [NSMutableString stringWithFormat:@"%@、 %@",nameString, name];
+//    }
+    [orderDic setObject:cell3.nameTF.text forKey:@"playPersonNames"];
+//
     [dic setObject:orderDic forKey:@"order"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     [dic setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"bookBallParkKey"];
@@ -242,6 +253,7 @@
     if (tableView.tag == 567) {
         JGDNormalWithLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"normalCell"];
         cell.cellHeight = 41 * ProportionAdapter;
+        cell.nameLB.text = [self.vipCardArray[indexPath.row] objectForKey:@"name"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -316,7 +328,7 @@
             cell.nameTF.text = [def objectForKey:Mobile];
             self.mobile = [def objectForKey:Mobile];
         }else {
-            cell.nameTF.text = @"TEST";
+            cell.nameTF.text = @"";
             
         }
 
@@ -352,13 +364,13 @@
         UILabel *vipSelectLB = [Helper lableRect:CGRectMake(13 * ProportionAdapter, 10 * ProportionAdapter, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:16 * ProportionAdapter text:@"会员优惠" textAlignment:NSTextAlignmentLeft];
         [cell.contentView addSubview:vipSelectLB];
         
-        UILabel *allianceCardLB = [Helper lableRect:CGRectMake(103 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 133 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:16 * ProportionAdapter text:@"ギガンティックO.T.N (ver.れをる)" textAlignment:(NSTextAlignmentRight)];
+        self.allianceCardLB = [Helper lableRect:CGRectMake(103 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 133 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:16 * ProportionAdapter text:@"请选择会员卡" textAlignment:(NSTextAlignmentRight)];
 
         UIImageView *accessView = [[UIImageView alloc] initWithFrame:CGRectMake(screenWidth - 20 * ProportionAdapter, 26 * ProportionAdapter, 9 * ProportionAdapter, 16 * ProportionAdapter)];
         accessView.image = [UIImage imageNamed:@"accessoryHEI"];
         [cell.contentView addSubview:accessView];
         
-        [cell.contentView addSubview:allianceCardLB];
+        [cell.contentView addSubview:self.allianceCardLB];
         
         return cell;
         
@@ -455,6 +467,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (tableView.tag == 567) {
+        self.allianceCardLB.text = [self.vipCardArray[indexPath.row] objectForKey:@"name"];
+        self.vipTimekey = [self.vipCardArray[indexPath.row] objectForKey:@"timeKey"];
+        [tableView removeFromSuperview];
         return;
     }
     
@@ -491,11 +506,12 @@
                 
             }else{
                 //         全额预付
-                if ([self.selectSceneMoney isEqualToString:@""]) {
-                    self.selectMoney = pay;
-                }else{
-                    self.selectMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [self.selectSceneMoney integerValue]];
-                }
+//                if ([self.selectSceneMoney isEqualToString:@""]) {
+//                    self.selectMoney = pay;
+//                }else{
+//                    self.selectMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [self.selectSceneMoney integerValue]];
+//                }
+                self.selectMoney = leagueMoney;
                 
             }
             
@@ -516,9 +532,34 @@
         [cardTaBleView registerClass:[JGDNormalWithLabelTableViewCell class] forCellReuseIdentifier:@"normalCell"];
         [self.view addSubview:cardTaBleView];
         cardTaBleView.tag = 567;
-        
+        cardTaBleView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self userVipCardData:cardTaBleView];
     }
 }
+
+- (void)userVipCardData:(UITableView *)tableView{
+    
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    [[JsonHttp jsonHttp] httpRequest:@"league/getUserCardList" JsonKey:nil withData:@{@"userKey" : DEFAULF_USERID} requestMethod:@"GET" failedBlock:^(id errType) {
+        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+    } completionBlock:^(id data) {
+        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            self.vipCardArray = [NSMutableArray arrayWithArray:[data objectForKey:@"canCardList"]];
+            [tableView reloadData];
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+}
+
 
 - (void)closeCardAct:(UIButton *)btn{
     

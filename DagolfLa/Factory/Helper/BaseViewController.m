@@ -30,6 +30,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    //每次界面进入调用
+    [self initViewWillApperData];
     /*
      将要做还没有做的时候提醒
      */
@@ -50,6 +52,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+//每次进入界面都会调用
+-(void)initViewWillApperData{
+    
 }
 //获取进入时界面展示数据
 -(void)initViewData{

@@ -90,11 +90,14 @@
     LQProgressHud *hud = [LQProgressHud sharedHUD];
     [hud show:YES];
     [hud setShowNow:YES];
-    [hud setLabelText:text];
+    hud.detailsLabelText = text;
+    //只显示单行文字
+    //[hud setLabelText:text];
     [hud setMinSize:CGSizeZero];
     [hud setMode:MBProgressHUDModeText];
     [hud setRemoveFromSuperViewOnHide:YES];
     [hud setLabelFont:[UIFont boldSystemFontOfSize:TEXT_SIZE]];
+    
     [[UIApplication sharedApplication].keyWindow addSubview:hud];
     //    [hud hide:YES afterDelay:2.0f];
     

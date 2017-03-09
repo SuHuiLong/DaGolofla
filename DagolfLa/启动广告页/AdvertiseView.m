@@ -111,6 +111,7 @@ static int const showtime = 3;
     _count --;
     dispatch_async(dispatch_get_main_queue(), ^{
         [_timeLable setText:[NSString stringWithFormat:@"%ds",_count]];
+        
     });
 
 

@@ -167,7 +167,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define Release_Safe(_control) [_control release], _control = nil;
 
 #pragma mark - SystemColor
-#define RandomColor RGB(arc4random()%256,arc4random()%256,arc4random()%256)
+#define GPRGBAColor(r, g, b ,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)/1]
+#define RandomColor GPRGBAColor(arc4random()%256,arc4random()%256,arc4random()%256,1)
 #define BlackColor [UIColor blackColor]
 #define ClearColor [UIColor clearColor]
 #define WhiteColor [UIColor whiteColor]
@@ -177,6 +178,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define LightGrayColor [UIColor lightGrayColor]
 #define LightTextColor [UIColor lightTextColor]
 #define BORDCOLOR GPColor(299, 299, 299)
+
 
 //适配宽高
 #define kWvertical(W)  ([UIScreen mainScreen].bounds.size.width/375.0)*(W)
