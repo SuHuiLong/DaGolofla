@@ -18,6 +18,6 @@
 
 @property (nonatomic, weak)id<JGHSpectatorSportsViewDelegate> delegate;
 
-- (void)configJGHSpectatorSportsViewData:(NSArray *)dataArray;
+- (void)configJGHSpectatorSportsViewData:(NSArray *)dataArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

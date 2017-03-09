@@ -29,9 +29,9 @@
 
 @property (weak, nonatomic)id <JGHIndexTableViewCellDelegate> delegate;
 //高旅套餐
-- (void)configJGHGolfPackageView:(NSArray *)spectatorArray;
+- (void)configJGHGolfPackageView:(NSArray *)spectatorArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 //精彩赛事
-- (void)configJGHSpectatorSportsView:(NSArray *)spectatorArray;
+- (void)configJGHSpectatorSportsView:(NSArray *)spectatorArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 //精彩推荐
 - (void)configJGHWonderfulTableViewCell:(NSArray *)wonderfulArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 //订场推荐

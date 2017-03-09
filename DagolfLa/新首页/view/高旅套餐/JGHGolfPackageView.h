@@ -18,6 +18,6 @@
 
 @property (weak, nonatomic)id <JGHGolfPackageViewDelegate> delegate;
 
-- (void)configJGHGolfPackageViewData:(NSArray *)dataArray;
+- (void)configJGHGolfPackageViewData:(NSArray *)dataArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

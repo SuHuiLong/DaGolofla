@@ -38,13 +38,13 @@
     return self;
 }
 //高旅套餐
-- (void)configJGHGolfPackageView:(NSArray *)spectatorArray{
+- (void)configJGHGolfPackageView:(NSArray *)spectatorArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     self.backgroundColor = [UIColor whiteColor];
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    _golfPackageView = [[JGHGolfPackageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 262*ProportionAdapter)];
+    _golfPackageView = [[JGHGolfPackageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, imageH +99*ProportionAdapter)];
     _golfPackageView.delegate = self;
-    [_golfPackageView configJGHGolfPackageViewData:spectatorArray];
+    [_golfPackageView configJGHGolfPackageViewData:spectatorArray andImageW:imageW andImageH:imageH];
     [self addSubview:_golfPackageView];
 }
 #pragma mark -- 高旅套餐
@@ -54,13 +54,13 @@
     }
 }
 //精彩赛事
-- (void)configJGHSpectatorSportsView:(NSArray *)spectatorArray{
+- (void)configJGHSpectatorSportsView:(NSArray *)spectatorArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     self.backgroundColor = [UIColor whiteColor];
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    _spectatorSportsView = [[JGHSpectatorSportsView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 262*ProportionAdapter)];
+    _spectatorSportsView = [[JGHSpectatorSportsView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, imageH +99*ProportionAdapter)];
     _spectatorSportsView.delegate = self;
-    [_spectatorSportsView configJGHSpectatorSportsViewData:spectatorArray];
+    [_spectatorSportsView configJGHSpectatorSportsViewData:spectatorArray andImageW:imageW andImageH:imageH];
     [self addSubview:_spectatorSportsView];
 }
 #pragma mark -- 精彩赛事

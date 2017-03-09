@@ -18,6 +18,6 @@
 
 @property (nonatomic, retain)UILabel *detailLable;
 
-- (void)configJGHSpectatorSubCell:(NSDictionary *)dict;
+- (void)configJGHSpectatorSubCell:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

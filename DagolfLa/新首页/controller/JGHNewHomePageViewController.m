@@ -431,10 +431,10 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
                 [indexTableViewCell configJGHShowRecomStadiumTableViewCell:bodyList andImageW:imgWidth andImageH:imgHeight];
             }else if (bodyLayoutType == 4){
                 //精彩赛事
-                [indexTableViewCell configJGHSpectatorSportsView:bodyList];
+                [indexTableViewCell configJGHSpectatorSportsView:bodyList andImageW:imgWidth andImageH:imgHeight];
             }else if (bodyLayoutType == 5){
                 //高旅套餐
-                [indexTableViewCell configJGHGolfPackageView:bodyList];
+                [indexTableViewCell configJGHGolfPackageView:bodyList andImageW:imgHeight andImageH:imgHeight];
             }else{
                 //其他  －－－ 更新版本
                 
@@ -490,10 +490,10 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
                 return ((bodyList.count-1)/2+1) *(imgHeight +56 +8) *ProportionAdapter + 8*ProportionAdapter;
             }else if (bodyLayoutType == 4){
                 //精彩赛事
-                return 262*ProportionAdapter;
+                return imgHeight +99*ProportionAdapter;
             }else if (bodyLayoutType == 5){
                 //高旅套餐
-                return 262*ProportionAdapter;
+                return imgHeight +99*ProportionAdapter;
             }else{
                 //其他  －－－ 更新版本
                 return 0;

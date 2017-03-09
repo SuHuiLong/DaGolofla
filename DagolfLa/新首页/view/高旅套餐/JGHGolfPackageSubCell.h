@@ -18,6 +18,6 @@
 
 @property (nonatomic, retain)UILabel *price;
 
-- (void)configJGHGolfPackageSubCell:(NSDictionary *)dict;
+- (void)configJGHGolfPackageSubCell:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH;
 
 @end

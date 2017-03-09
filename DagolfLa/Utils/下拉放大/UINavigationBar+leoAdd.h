@@ -28,6 +28,8 @@
  */
 - (void)leo_setBackgroundColor:(UIColor *)color;
 
+- (void)lt_setBackgroundColor:(UIColor *)backgroundColor;
+
 /**
  * 移除navigationBar底部的横线
  */

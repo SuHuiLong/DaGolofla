@@ -35,16 +35,5 @@ typedef void(^PressHeaderBlock) ();
  */
 - (void)reloadWithScrollView:(UIScrollView *)scrollView;
 
-/**
- * 头像的点击回调方法
- */
-- (void)pressHeaderImageWithBlock:(PressHeaderBlock)block;
-
-
-/** 监听scrollView是否滚动到顶部
- * @param reachtop: YES 已经滚动到顶部, NO 在顶部以下
- */
-- (void)scrollViewStateChangeWithBlock:(ReachtopBlock)block;
-
 
 @end

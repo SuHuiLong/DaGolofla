@@ -12,6 +12,10 @@
 static NSString *const JGHSpectatorSubCellIdentifier = @"JGHSpectatorSubCell";
 
 @interface JGHSpectatorSportsView ()<UITableViewDelegate, UITableViewDataSource>
+{
+    NSInteger _imageW;
+    NSInteger _imageH;
+}
 
 @property (nonatomic, retain)NSArray *dataArray;
 
@@ -39,7 +43,9 @@ static NSString *const JGHSpectatorSubCellIdentifier = @"JGHSpectatorSubCell";
     return self;
 }
 
-- (void)configJGHSpectatorSportsViewData:(NSArray *)dataArray{
+- (void)configJGHSpectatorSportsViewData:(NSArray *)dataArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
+    _imageW = imageW;
+    _imageH = imageH;
     _dataArray = dataArray;
     [_spectatorTableView reloadData];
 }
@@ -54,19 +60,20 @@ static NSString *const JGHSpectatorSubCellIdentifier = @"JGHSpectatorSubCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return screenWidth -40*ProportionAdapter;
+    return _imageW +6*ProportionAdapter;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHSpectatorSubCell *spectatorSubCell = [tableView dequeueReusableCellWithIdentifier:JGHSpectatorSubCellIdentifier];
     if (_dataArray.count >0) {
         NSLog(@"====%td", indexPath.row);
-        [spectatorSubCell configJGHSpectatorSubCell:_dataArray[indexPath.section]];
+        [spectatorSubCell configJGHSpectatorSubCell:_dataArray[indexPath.section] andImageW:_imageW andImageH:_imageH];
     }
     
     spectatorSubCell.selectionStyle = UITableViewCellSelectionStyleNone;
     spectatorSubCell.transform = CGAffineTransformMakeRotation(M_PI/2);
-    spectatorSubCell.frame = CGRectMake(0, 0, screenWidth -40*ProportionAdapter, 262*ProportionAdapter);
+    //spectatorSubCell.frame = CGRectMake(0, 0, screenWidth -40*ProportionAdapter, 262*ProportionAdapter);
+    spectatorSubCell.frame = CGRectMake(0, 0, _imageW +20*ProportionAdapter, _imageH+ 99*ProportionAdapter);
     return spectatorSubCell;
 }
 
