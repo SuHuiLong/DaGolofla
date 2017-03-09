@@ -72,11 +72,11 @@
     
     self.courtNameLB.text = [dataDic objectForKey:@"bookName"];
     self.serviceLB.text = [dataDic objectForKey:@"servicePj"];
-    self.remainderBallLB.text = [NSString stringWithFormat:@"年度剩余可预定球位数：%@位", [dataDic objectForKey:@"remoteMaxCount"]];
+    self.remainderBallLB.text = [NSString stringWithFormat:@"年度剩余可预定球位数：%@位", [dataDic objectForKey:@"remoteRemainingNumber"]];
     NSMutableAttributedString *leagueStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.leagueMoney]];
     [leagueStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14 * ProportionAdapter] range:NSMakeRange(0, 1)];
     self.vipPriceLB.attributedText = leagueStr;
-    if (([[dataDic objectForKey:@"remoteMaxCount"] integerValue] == 0) || !self.hasUserCard) {
+    if (([[dataDic objectForKey:@"remoteRemainingNumber"] integerValue] == 0) || !self.hasUserCard) {
         [self.vipBtn setImage:[UIImage imageNamed:@"booking_pay_nocolor"] forState:(UIControlStateNormal)];
         self.vipBtn.userInteractionEnabled = NO;
     }else{
