@@ -29,6 +29,8 @@
 
 @property (nonatomic, strong)NSArray *matchNewList;
 
+@property (nonatomic, strong)NSDictionary *Msg;
+
 @end
 
 

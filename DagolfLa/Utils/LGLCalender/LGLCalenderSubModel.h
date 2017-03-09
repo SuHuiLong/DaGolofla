@@ -12,5 +12,6 @@
 
 @property (nonatomic, assign) NSInteger day;
 @property (nonatomic, copy)   NSString * price;
+@property (nonatomic, copy)   NSString * leagueMoney;
 
 @end

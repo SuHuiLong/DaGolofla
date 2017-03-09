@@ -20,6 +20,6 @@
 
 @property (nonatomic, retain)UILabel *detailLable;
 
-- (void)configJGHIndexSystemMessageCell;
+- (void)configJGHIndexSystemMessageCell:(NSDictionary *)dict;
 
 @end

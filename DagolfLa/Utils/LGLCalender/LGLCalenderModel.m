@@ -156,11 +156,19 @@
                             }else{
                                 priceModel.price = @"";
                             }
+                            
+                            if ([priceDict objectForKey:@"leagueMoney"]) {
+                                priceModel.leagueMoney = [NSString stringWithFormat:@"%@", [priceDict objectForKey:@"leagueMoney"]];
+                            }else{
+                                priceModel.leagueMoney = @"";
+                            }
                         }else{
                             priceModel.price = @"";
+                            priceModel.leagueMoney = @"";
                         }
                     }else{
                         priceModel.price = @"";
+                        priceModel.leagueMoney = @"";
                     }
                 }
             }

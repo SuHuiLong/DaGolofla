@@ -37,6 +37,8 @@
     
     [encoder encodeObject:@(_isHaveTeam) forKey:@"isHaveTeam"];
     //isHaveTeam
+    
+    [encoder encodeObject:_Msg forKey:@"newMsg"];
 }
 
 #pragma mark 当从对象中解析时 调用。
@@ -50,6 +52,7 @@
         _albumList = [decode decodeObjectForKey:@"albumList"];
         _plateList = [decode decodeObjectForKey:@"plateList"];
         _scoreList = [decode decodeObjectForKey:@"scoreList"];
+        _Msg = [decode decodeObjectForKey:@"newMsg"];
         _isHaveTeam = [[decode decodeObjectForKey:@"isHaveTeam"] integerValue];
     }
     return self;
