@@ -68,6 +68,8 @@
 {
     NSLog(@"%td   %@",btn.tag -100,_arrData[btn.tag - 100]);
     _blockTeeName(_arrData[btn.tag - 100]);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadPlayerData" object:_arrData[btn.tag - 100]];
 }
 
 

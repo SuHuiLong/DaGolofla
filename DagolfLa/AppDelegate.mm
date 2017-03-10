@@ -714,6 +714,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // 为消息分享保存会话信息
 //    [self saveConversationInfoForMessageShare];
+    [UIApplication sharedApplication].statusBarHidden = NO;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

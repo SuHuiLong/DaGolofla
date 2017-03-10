@@ -25,6 +25,8 @@
     
     NSMutableArray *_selectAreaArray;//记录选择的区域0-1
     
+    //点击颜色时tableview的index
+    NSInteger _selectIndex;
 }
 @property (strong, nonatomic) UITableView* tableView;
 
@@ -428,22 +430,26 @@
                     _chooseView = [[JGLTeeChooseView alloc]initWithFrame:CGRectMake(screenWidth - 120*screenWidth/375,  cell.frame.origin.y - [_dataBallArray[1] count]* 40*screenWidth/375, 100*screenWidth/375, [_dataBallArray[1] count]* 40*screenWidth/375) withArray:_dataBallArray[1]];
                     [tableView addSubview:_chooseView];
                     
+                    [self reciveNotice:indexPath.row];
                     __weak JGHScoreView *weakSelf = self;
                     _chooseView.blockTeeName = ^(NSString *strT){
                         NSLog(@"%td",indexPath.row);
-                        //替换T台
-                        NSMutableArray *preCopyArray = [weakSelf.preListArray mutableCopy];
-                        NSMutableDictionary *preDict = weakSelf.preListArray[indexPath.row -1];
-                        [preDict setObject:strT forKey:@"tTaiwan"];
-                        [preCopyArray replaceObjectAtIndex:indexPath.row -1 withObject:preDict];
-                        weakSelf.preListArray = [preCopyArray mutableCopy];
-                        
-                        [weakSelf.chooseView removeFromSuperview];
-                        weakSelf.chooseView = nil;
-                        
-                        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
-                        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
-                        [weakSelf.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+//                        //替换T台
+//                        NSMutableArray *preCopyArray = [weakSelf.preListArray mutableCopy];
+//                        NSMutableDictionary *preDict = weakSelf.preListArray[indexPath.row -1];
+//                        [preDict setObject:strT forKey:@"tTaiwan"];
+//                        [preCopyArray replaceObjectAtIndex:indexPath.row -1 withObject:preDict];
+//                        weakSelf.preListArray = [preCopyArray mutableCopy];
+//                        
+//                        [weakSelf.chooseView removeFromSuperview];
+//                        weakSelf.chooseView = nil;
+//                        
+//                        NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:indexPath.row inSection:3];
+//                        NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+//
+//                        
+//                        [weakSelf.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+//                        [weakSelf.tableView reloadData];
                     };
                     
                 }else{
@@ -454,6 +460,35 @@
             [[ShowHUD showHUD]showToastWithText:@"请先选择球场" FromView:self];
         }
     }
+}
+
+
+-(void)reciveNotice:(NSInteger)index{
+    _selectIndex = index;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerChange:) name:@"reloadPlayerData" object:nil];
+    
+    
+}
+-(void)playerChange:(NSNotification *)notice{
+    NSString *strT = notice.object;
+    NSInteger index = _selectIndex;
+    NSLog(@"%td",index);
+    //替换T台
+    NSMutableArray *preCopyArray = [self.preListArray mutableCopy];
+    NSMutableDictionary *preDict = self.preListArray[index -1];
+    [preDict setObject:strT forKey:@"tTaiwan"];
+    [preCopyArray replaceObjectAtIndex:index -1 withObject:preDict];
+    self.preListArray = [preCopyArray mutableCopy];
+    
+    [self.chooseView removeFromSuperview];
+    self.chooseView = nil;
+    
+    NSIndexPath *indexPath_1=[NSIndexPath indexPathForRow:index inSection:3];
+    NSArray *indexArray=[NSArray arrayWithObject:indexPath_1];
+    
+    
+    [self.tableView reloadRowsAtIndexPaths:indexArray withRowAnimation:UITableViewRowAnimationAutomatic];
+
 }
 
 /*

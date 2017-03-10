@@ -42,7 +42,9 @@
     [self addSubview:_line];
 
     //不可用提示文字
-    _nocanDescLabel = [Factory createLabelWithFrame:CGRectMake((screenWidth - kWvertical(150))/2, kHvertical(30), kWvertical(150), kHvertical(20)) textColor:RGBA(160, 160, 160, 1) fontSize:kHorizontal(13) Title:@"以下为不可用卡片"];
+//    _nocanDescLabel = [Factory createLabelWithFrame:CGRectMake((screenWidth - kWvertical(150))/2, kHvertical(30), kWvertical(150), kHvertical(20)) textColor:RGBA(160, 160, 160, 1) fontSize:kHorizontal(13) Title:@"以下为不可用卡片"];
+    _nocanDescLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) textColor:RGBA(160, 160, 160, 1) fontSize:kHorizontal(13) Title:nil];
+
     _nocanDescLabel.backgroundColor = RGBA(238, 238, 238, 1);
     _nocanDescLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_nocanDescLabel];
