@@ -1,5 +1,5 @@
 //
-//  JGLSelfScoreViewController.m
+//  
 //  DagolfLa
 //
 //  Created by 黄达明 on 16/7/14.
@@ -9,7 +9,6 @@
 #import "JGLCaddieActiveScoreViewController.h"
 #import "JGHScoresViewController.h"
 
-#import "JGLChooseScoreViewController.h"
 #import "BallParkViewController.h"
 #import "DateTimeViewController.h"
 #import "JGLAddActivePlayViewController.h"

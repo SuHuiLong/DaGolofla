@@ -9,7 +9,6 @@
 #import "JGMeMoreViewController.h"
 #import "MeDetailTableViewCell.h"
 #import "MySetAboutController.h"
-#import "JGHCaddieViewController.h"
 #import "JGHCabbieCertViewController.h"
 #import "JGHCabbieCertSuccessViewController.h"
 
