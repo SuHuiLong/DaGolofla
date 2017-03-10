@@ -66,7 +66,9 @@
     [super viewWillAppear:animated];
     //隐藏上下导航电池栏
     self.tabBarController.tabBar.hidden = YES;
+    self.navigationController.navigationBarHidden = false;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_wbg"] forBarMetrics:UIBarMetricsDefault];
+    [UIApplication sharedApplication].statusBarHidden = NO;
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
@@ -141,7 +143,6 @@
     [_mainCollectionView registerClass:[VipCardHeaderCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"VipCardCollectionViewHeaderId"];
     _mainCollectionView.delegate = self;
     _mainCollectionView.dataSource = self;
-    [self.vipCardView addSubview:_mainCollectionView];
     [self createCardRefresh];
 }
 
@@ -160,13 +161,8 @@
 #pragma mark - LoadData
 //viewWillAppre调用
 -(void)initViewWillApperData{
-    //会员卡列表数据
     _cardPage = 0;
     [self loadCardListData];
-}
-//
--(void)initData{
-
 }
 
 //获取卡片列表数据
@@ -181,6 +177,9 @@
                            @"md5":md5Value,
                            };
     [[JsonHttp jsonHttp] httpRequest:@"league/getUserCardList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (![self.vipCardView.subviews containsObject:_mainCollectionView]) {
+            [self.vipCardView addSubview:_mainCollectionView];
+        }
         [self cardEndRefresh];
     } completionBlock:^(id data) {
         BOOL Success = [[data objectForKey:@"packSuccess"] boolValue];
@@ -207,8 +206,12 @@
                 model.cardId = [listDict objectForKey:@"timeKey"];
                 [self.noCanUseArray addObject:model];
             }
-            [_mainCollectionView reloadData];
         }
+        if (![self.vipCardView.subviews containsObject:_mainCollectionView]) {
+            [self.vipCardView addSubview:_mainCollectionView];
+        }
+        [_mainCollectionView reloadData];
+
         [self cardEndRefresh];
     }];
 }
@@ -420,14 +423,14 @@
     headView.descLabel.hidden = TRUE;
     headView.addNowBtn.hidden = TRUE;
     headView.line.hidden = TRUE;
-    headView.nocanDescLabel.hidden = TRUE;
 
     NSInteger totalCardNum = self.dataArray.count + self.noCanUseArray.count;
     if (indexPath.section==0&&totalCardNum==0) {
+        headView.nocanDescLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) Title:@""];
         //没卡提示图片
         headView.alertImageView.hidden = FALSE;
         //文字描述
-        NSString *noneCard = @"您还未添加任何君高高尔夫联盟会员卡，点击右上角『+』，添加您的联盟会员卡，添加会员卡后，就能在APP中享受联盟会员价预订球场的权益。";
+        NSString *noneCard = @"您还未添加任何君高高尔夫联盟会员卡，点击右上角『+』，添加您的联盟会员卡。添加会员卡后，就能在APP中享受联盟会员价预订球场的权益。";
         headView.descLabel.hidden = FALSE;
         headView.descLabel.text = noneCard;
         
@@ -449,7 +452,9 @@
         
     }else if(indexPath.section == 1){
         headView.line.hidden = FALSE;
-        headView.nocanDescLabel = FALSE;
+        headView.nocanDescLabel = [Factory createLabelWithFrame:CGRectMake((screenWidth - kWvertical(150))/2, kHvertical(30), kWvertical(150), kHvertical(20)) textColor:RGBA(160, 160, 160, 1) fontSize:kHorizontal(13) Title:@"以下为不可用卡片"];
+        headView.nocanDescLabel.textAlignment = NSTextAlignmentCenter;
+
     }
     return headView;
 }
@@ -474,6 +479,7 @@
     vc.linkUrl = urlString;
     //设置电池栏白色
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 
     

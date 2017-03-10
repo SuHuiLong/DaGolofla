@@ -13,7 +13,6 @@
 #import "UIImageView+AFNetworking.h"
 #import "Helper.h"
 
-//#import "SelfDataViewController.h"
 #import "PersonHomeController.h"
 
 @interface AddNoteViewController ()

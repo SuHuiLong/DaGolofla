@@ -1,5 +1,5 @@
 //
-//  JGLChooseScoreViewController.m
+//  
 //  DagolfLa
 //
 //  Created by 黄达明 on 16/7/14.

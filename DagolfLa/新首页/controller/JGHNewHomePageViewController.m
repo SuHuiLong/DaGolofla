@@ -35,6 +35,7 @@
 #import "UseMallViewController.h"
 #import "JGDPersonalCard.h"
 #import "JGHIndexSystemMessageCell.h"
+#import "JGHShadowPhotoAlbumViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHConsultChannelCellIdentifier = @"JGHConsultChannelCell";
@@ -513,6 +514,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
+        [self isLoginUp];
         //系统消息
         if ([_indexModel.Msg objectForKey:@"linkURL"]) {
             [self pushctrlWithUrl:[_indexModel.Msg objectForKey:@"linkURL"]];
@@ -808,11 +810,28 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         NSArray *bodyList = [mallListDict objectForKey:@"bodyList"];
         NSDictionary *ablumListDict = bodyList[btn.tag -300];
 
+        /*
         JGDDPhotoAlbumViewController *photoAlbumCtrl = [[JGDDPhotoAlbumViewController alloc] init];
 //        JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
         photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
         photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
+        */
+        
+        JGHShadowPhotoAlbumViewController *phoVc = [[JGHShadowPhotoAlbumViewController alloc] init];
+        //    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
+        //JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc]init];
+        //model = _dataArray[indexPath.item];
+        
+        //phoVc.strTitle = model.name;
+        phoVc.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
+        //phoVc.power = [NSString stringWithFormat:@"%@", model.power];
+        //phoVc.state = [_dictMember objectForKey:@"state"];
+        //phoVc.teamTimeKey = model.teamKey;
+        //phoVc.dictMember = _dictMember;
+        //phoVc.userKey = model.userKey;
+        
+        [self.navigationController pushViewController:phoVc animated:YES];
     }
 }
 

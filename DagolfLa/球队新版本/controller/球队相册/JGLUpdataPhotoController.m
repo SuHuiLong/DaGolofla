@@ -97,7 +97,7 @@
     
     UILabel* labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(10*ScreenWidth/375, 0, screenWidth-20*ScreenWidth/375, 45*ScreenWidth/375)];
     labelTitle.textAlignment = NSTextAlignmentLeft;
-    labelTitle.text = [NSString stringWithFormat:@"相册名称:%@",_strTitle];
+    labelTitle.text = [NSString stringWithFormat:@"相册名称：%@",_strTitle];
     labelTitle.textColor = [UIColor lightGrayColor];
     labelTitle.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
     [viewTitle addSubview:labelTitle];

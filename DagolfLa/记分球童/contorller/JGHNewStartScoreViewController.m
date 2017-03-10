@@ -827,8 +827,7 @@
 //                }
             }
             else{
-                //                JGLSelfScoreViewController* SsVc = [[JGLSelfScoreViewController alloc]init];
-                //                [self.navigationController pushViewController:SsVc animated:YES];
+
             }
             
         }

@@ -18,7 +18,6 @@
         _shadowImageView.image = [UIImage imageNamed:@"xcback"];
         _shadowImageView.contentMode = UIViewContentModeScaleAspectFill;
         _shadowImageView.clipsToBounds = YES;
-        _shadowImageView.image = [UIImage imageNamed:@"xcback"];
         [self addSubview:_shadowImageView];
         
         _title = [[UILabel alloc]initWithFrame:CGRectMake(_shadowImageView.bounds.origin.x, _shadowImageView.bounds.size.height +kWvertical(5), _shadowImageView.bounds.size.width, kHvertical(20))];
@@ -31,7 +30,7 @@
 }
 
 -(void)configData:(JGLPhotoAlbumModel *)model{
-    [_shadowImageView sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
+    [_shadowImageView sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:NO andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
     
     if (![Helper isBlankString:model.name]) {
         

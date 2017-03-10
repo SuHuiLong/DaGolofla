@@ -133,18 +133,22 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
                 //清除数组数据
                 [_dataArray removeAllObjects];
             }
+            
+            _page++;
             //数据解析
             for (NSDictionary *dicList in [data objectForKey:@"albumList"])
             {
+                
                 JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc] init];
                 [model setValuesForKeysWithDictionary:dicList];
                 [_dataArray addObject:model];
             }
-            _page++;
-            [_collectionView reloadData];
+            
+            //[_collectionView reloadData];
         }else {
             [[ShowHUD showHUD]showToastWithText:[dict objectForKey:@"message"] FromView:self.view];
         }
+        
         [_collectionView reloadData];
         if (isReshing) {
             [_collectionView.header endRefreshing];

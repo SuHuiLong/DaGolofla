@@ -15,7 +15,6 @@
 #import "CommunityViewController.h"
 #import "JKSlideViewController.h"
 #import "MeViewController.h"
-//#import "JGLScoreNewViewController.h"
 
 #import "PersonHomeController.h"
 #import "ChatListViewController.h"
