@@ -13,5 +13,7 @@
 @property(nonatomic,copy)NSString *imagePicUrl;
 //卡片状态
 @property(nonatomic,assign)NSInteger cardState;
+//卡片id
+@property(nonatomic,copy)NSString *cardId;
 
 @end

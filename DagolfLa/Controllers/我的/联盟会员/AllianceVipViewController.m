@@ -16,6 +16,7 @@
 #import "CardHistoryTableViewCell.h"
 #import "CardHIstoryModel.h"
 
+#import "UseMallViewController.h"
 @interface AllianceVipViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDataSource,UITableViewDelegate>
 //背景界面
 @property(nonatomic,strong)UIScrollView *baseScrollView;
@@ -172,9 +173,12 @@
 -(void)loadCardListData{
 
     NSString *page = [NSString stringWithFormat:@"%ld",(long)_cardPage];
+    NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]];
+
     NSDictionary *dict = @{
                            @"userKey":DEFAULF_USERID,
-                           @"off":page
+                           @"off":page,
+                           @"md5":md5Value,
                            };
     [[JsonHttp jsonHttp] httpRequest:@"league/getUserCardList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [self cardEndRefresh];
@@ -192,6 +196,7 @@
                 VipCardModel *model = [[VipCardModel alloc] init];
                 model.imagePicUrl = [listDict objectForKey:@"bigPicURL"];
                 model.cardState = [[listDict objectForKey:@"state"] integerValue];
+                model.cardId = [listDict objectForKey:@"timeKey"];
                 [self.dataArray addObject:model];
             }
             
@@ -199,6 +204,7 @@
                 VipCardModel *model = [[VipCardModel alloc] init];
                 model.imagePicUrl = [listDict objectForKey:@"bigPicURL"];
                 model.cardState = [[listDict objectForKey:@"state"] integerValue];
+                model.cardId = [listDict objectForKey:@"timeKey"];
                 [self.noCanUseArray addObject:model];
             }
             [_mainCollectionView reloadData];
@@ -444,6 +450,29 @@
         headView.nocanDescLabel = FALSE;
     }
     return headView;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    //选中位置
+    NSInteger index = indexPath.item;
+    VipCardModel *model = [[VipCardModel alloc] init];
+    //判定卡片是否有效
+    if (indexPath.section==0) {
+        model = _dataArray[index];
+    }else{
+        model = _noCanUseArray[index];
+    }
+    
+    NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"cardKey=%@&userKey=%@dagolfla.com",model.cardId, DEFAULF_USERID]];
+
+    NSString *urlString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/league/leagueUserCardInfo.html?md5=%@&winzoom=1&cardKey=%@&userKey=%@",md5Value,model.cardId,DEFAULF_USERID];
+    
+    //跳转
+    UseMallViewController *vc = [[UseMallViewController alloc]init];
+    vc.linkUrl = urlString;
+    [self.navigationController pushViewController:vc animated:YES];
+
+    
 }
 
 #pragma mark - UITableViewDelegate

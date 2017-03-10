@@ -43,6 +43,10 @@
 
 @property (nonatomic, assign)NSInteger selectDay;
 
+//选中天所在位置
+@property (nonatomic, assign)NSInteger selectDayIndexPath;
+
+
 @end
 
 @implementation LGLCalenderViewController
@@ -143,6 +147,8 @@
     self.collectionView.delegate=self;
     self.collectionView.dataSource=self;
     self.collectionView.showsVerticalScrollIndicator=NO;
+    
+    
     [self.view addSubview:self.collectionView];
    // [self.collectionView registerClass:[LGLCalenderCell class] forCellWithReuseIdentifier:@"calender"];
     [self.collectionView registerClass:[LGLHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"calenderHeaderView"];
@@ -187,6 +193,15 @@
                         }
                         
                         [self.collectionView reloadData];
+                        //偏移
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+                            CGFloat yOffset = (_selectDayIndexPath/7)*kWvertical(57) ;
+                            
+                            [self.collectionView setContentOffset:CGPointMake(0, yOffset)];
+
+                        });
+                        
                         [_timeListView loadTimeListWithBallKey:_ballKey andDateString:[NSString stringWithFormat:@"%td-%@-%@ 00:00:00", _year, month, day]];
                         return ;
                         //break;
@@ -264,7 +279,8 @@
                     cell.dateL.font = [UIFont systemFontOfSize:18*ProportionAdapter];
                     cell.dateL.text = @"今";
                     cell.dateL.center = CGPointMake(25 *ProportionAdapter, 25 *ProportionAdapter);
-                    [self.collectionView setContentOffset:CGPointMake(0, ((indexPath.item <7)?0:indexPath.item/7 + ((indexPath.item%7 >0)?1:0)) *40*ProportionAdapter)];
+                    _selectDayIndexPath = indexPath.row;
+                    
                 }else{
                     cell.dateL.text = [NSString stringWithFormat:@"%ld",(long)subModel.day];
                 }
