@@ -87,17 +87,18 @@
             //勾选图标
             _checkView = [Factory createButtonWithFrame:CGRectMake(backView.width - backView.height, 0, backView.height, backView.height) NormalImage:@"icn_allianceNormal" SelectedImage:@"icn_allianceSelect" target:self selector:nil];
             _checkView.selected = FALSE;
-            [backView addSubview:_checkView];
+//            [backView addSubview:_checkView];
         }
         //竖线
         UIView *lineView = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:@"#d2d2d2"]  frame:CGRectMake(numberLable.x_width, 0, 1, backView.height)];
         
         [backView addSubview:lineView];
         //输入框
-        UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(lineView.x_width + kWvertical(25), 0, backView.width - lineView.x_width - kWvertical(25)-kWvertical(50), backView.height)];
+        UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(lineView.x_width + kWvertical(25), 0, backView.width - lineView.x_width - kWvertical(25), backView.height)];
         textField.placeholder = placeholderArray[i];
         textField.tag = 101+i;
         textField.tintColor = [UIColor colorWithHexString:@"#32b14d"];
+        textField.clearButtonMode = UITextFieldViewModeAlways;
         if (i!=0) {
             textField.keyboardType = UIKeyboardTypeNumberPad;
         }
@@ -182,7 +183,7 @@
             BOOL packSuccess = [[data objectForKey:@"packSuccess"] boolValue];
             if (!packSuccess) {
                 NSString *packResultMsg = [data objectForKey:@"packResultMsg"];
-                [LQProgressHud showMessage:packResultMsg];
+                [LQProgressHud showLinesMessage:packResultMsg];
             }else{
                 [self popBack];
             }
@@ -204,7 +205,7 @@
     UITextField *nickNameTextField = (UITextField *)[self.view viewWithTag:101];
     NSString *nickName = nickNameTextField.text;
     if (nickName.length<1) {
-        [LQProgressHud showMessage:@"请输入会员姓名！"];
+        [LQProgressHud showLinesMessage:@"请输入会员姓名！"];
         return;
     }
     //手机号
@@ -225,7 +226,7 @@
         //倒计时开始
         [self startTimer];
     }else{
-        [LQProgressHud showMessage:@"手机号码输入错误，请正确输入您会员卡的预留手机号！"];
+        [LQProgressHud showLinesMessage:@"手机号码输入错误，请正确输入您会员卡的预留手机号！"];
     }
 
 }
@@ -235,21 +236,21 @@
     UITextField *nickNameTextField = (UITextField *)[self.view viewWithTag:101];
     NSString *nickName = nickNameTextField.text;
     if (nickName.length<1) {
-        [LQProgressHud showMessage:@"请输入会员姓名！"];
+        [LQProgressHud showLinesMessage:@"请输入会员姓名！"];
         return;
     }
     //手机号
     UITextField *selectTextField = (UITextField *)[self.view viewWithTag:102];
     NSString *phoneStr = selectTextField.text;
     if (phoneStr.length<1) {
-        [LQProgressHud showMessage:@"手机号码输入错误，请正确输入您会员卡的预留手机号！"];
+        [LQProgressHud showLinesMessage:@"手机号码输入错误，请正确输入您会员卡的预留手机号！"];
         return;
     }
     //验证码
     UITextField *codeTextField = (UITextField *)[self.view viewWithTag:103];
     NSString *codeStr = codeTextField.text;
     if (codeStr.length<1) {
-        [LQProgressHud showMessage:@"请输入验证码！"];
+        [LQProgressHud showLinesMessage:@"请输入验证码！"];
         return;
     }
     

@@ -42,6 +42,8 @@ typedef NS_ENUM(NSInteger, LQProgressHUDStatus) {
 
 /** 在 window 上添加一个只显示文字的 HUD */
 + (void)showMessage:(NSString *)text;
+/** 在 window 上添加一个显示自动换行的文字的 HUD */
++ (void)showLinesMessage:(NSString *)text;
 
 /** 在 window 上添加一个提示`信息`的 HUD */
 + (void)showInfoMsg:(NSString *)text;
