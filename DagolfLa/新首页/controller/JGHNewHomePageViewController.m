@@ -452,7 +452,8 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 
     JGHShowSectionTableViewCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSectionTableViewCellIdentifier];
     showSectionCell.delegate = self;
-    showSectionCell.moreBtn.tag = 100 +section;
+    //showSectionCell.moreBtn.tag = 100 +section;
+    showSectionCell.moreClick.tag = 100 +section;
     
     NSDictionary *dict = _indexModel.plateList[section -1];
     NSInteger _more = 0;

@@ -23,6 +23,8 @@
     self.nameLeft.constant = 10 *ProportionAdapter;
     
     self.moreBtn.titleLabel.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    
+    self.moreClickW.constant = 60*ProportionAdapter;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -36,14 +38,17 @@
     self.name.text = name;
     if (hide == 0) {
         self.moreBtn.hidden = YES;
+        self.moreClick.hidden = YES;
         self.moreImageView.hidden = YES;
     }else{
         self.moreBtn.hidden = NO;
+        self.moreClick.hidden = NO;
         self.moreImageView.hidden = NO;
     }
 }
 
 - (IBAction)moreBtn:(UIButton *)sender {
+    /*
     sender.enabled = NO;
     
     if (self.delegate) {
@@ -51,5 +56,17 @@
     }
     
     sender.enabled = YES;
+     */
+}
+
+- (IBAction)moreClick:(UIButton *)sender {
+    sender.enabled = NO;
+    
+    if (self.delegate) {
+        [self.delegate didSelectMoreBtn:sender];
+    }
+    
+    sender.enabled = YES;
+    
 }
 @end
