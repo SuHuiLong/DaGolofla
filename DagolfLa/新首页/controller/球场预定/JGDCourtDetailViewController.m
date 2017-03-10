@@ -584,6 +584,11 @@ static CGFloat ImageHeight  = 210.0;
 - (void)calendarTap{
     LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
     caleVC.ballKey = self.timeKey;
+    if (self.hasLeagueUser) {
+        caleVC.isLeagueUser = YES;
+    }else{
+        caleVC.isLeagueUser = NO;
+    }
     caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney, NSString *leagueMoney){
         _date = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"yyyy年MM月dd日"]];
         _week = [NSString stringWithFormat:@"%@", [Helper stringFromDateString:selectTime withFormater:@"EEE"]];;
@@ -622,10 +627,10 @@ static CGFloat ImageHeight  = 210.0;
 - (void)vipCommitAct{
     
     if (!self.hasLeagueUser) {
-        [LQProgressHud showMessage:@"请先绑定联盟会员卡"];
+        [[ShowHUD showHUD] showToastWithText:@"请先绑定联盟会员卡" FromView:self.view];
         return;
     }else if (self.strPrompt){
-        [LQProgressHud showMessage:self.strPrompt];
+        [[ShowHUD showHUD] showToastWithText:self.strPrompt FromView:self.view];
         return;
     }
     
