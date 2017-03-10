@@ -228,10 +228,10 @@
     _dataArray = [[NSMutableArray alloc]init];
     _arrayTitle = [[NSArray alloc]init];
     _arrayPic = [[NSArray alloc]init];
-//    _arrayTitle = @[@[@"我的聊天",@"我的消息",@"交易中心",@"我的活动",@"推荐有礼"],@[@"设置"]];
+
     _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户",@"联盟会员", @"球场订单", @"交易中心"],@[@"设置",@"更多"]];
     _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu",@"icn_allianceVip", @"icn_order", @"jyIcon"],@[@"sz",@"btn_more"]];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*8*ScreenWidth/375+40*ScreenWidth/375+78*ScreenWidth/375)];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*9*ScreenWidth/375+40*ScreenWidth/375+78*ScreenWidth/375)];
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -259,7 +259,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger count = 1;
+    NSInteger count = 2;
     if (section == 0)
     {
         count = 1;
