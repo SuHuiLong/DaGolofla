@@ -13,7 +13,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _headerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 164*ProportionAdapter)];
-        _headerImageView.image = [UIImage imageNamed:@"home_bg_comp"];
+        _headerImageView.image = [UIImage imageNamed:IndexBallBgImage];
         _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         _headerImageView.clipsToBounds = YES;
         [self addSubview:_headerImageView];
@@ -46,7 +46,7 @@
     _titleLable.frame = CGRectMake(22*ProportionAdapter, imageH*ProportionAdapter +12*ProportionAdapter, imageW*ProportionAdapter -12*ProportionAdapter, 20*ProportionAdapter);
     _detailLable.frame = CGRectMake(22*ProportionAdapter, imageH*ProportionAdapter +36*ProportionAdapter, imageW*ProportionAdapter -12*ProportionAdapter, 40*ProportionAdapter);
     
-    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"imgURL"]] placeholderImage:[UIImage imageNamed:@"home_bg_comp"]];
+    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"imgURL"]] placeholderImage:[UIImage imageNamed:IndexBallBgImage]];
     //_headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     if ([dict objectForKey:@"title"]) {
         _titleLable.text = [dict objectForKey:@"title"];
