@@ -90,9 +90,9 @@
     LQProgressHud *hud = [LQProgressHud sharedHUD];
     [hud show:YES];
     [hud setShowNow:YES];
-    hud.detailsLabelText = text;
+//    hud.detailsLabelText = text;
     //只显示单行文字
-    //[hud setLabelText:text];
+    [hud setLabelText:text];
     [hud setMinSize:CGSizeZero];
     [hud setMode:MBProgressHUDModeText];
     [hud setRemoveFromSuperViewOnHide:YES];

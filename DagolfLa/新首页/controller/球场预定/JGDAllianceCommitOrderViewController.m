@@ -47,6 +47,39 @@
 
 @implementation JGDAllianceCommitOrderViewController
 
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dic setObject:[self.detailDic objectForKey:@"ballKey"] forKey:@"ballKey"];
+    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&ballKey=%@dagolfla.com",DEFAULF_USERID, [self.detailDic objectForKey:@"ballKey"]]] forKey:@"md5"];
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    [[JsonHttp jsonHttp] httpRequest:@"league/getSelectUserCardList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+    } completionBlock:^(id data) {
+        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"userCardList"]) {
+                self.vipCardArray = [NSMutableArray arrayWithArray:[data objectForKey:@"userCardList"]];
+                [self.commitOrderTableView reloadData];
+            }
+            
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            }
+        }
+    }];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -364,13 +397,16 @@
         UILabel *vipSelectLB = [Helper lableRect:CGRectMake(13 * ProportionAdapter, 10 * ProportionAdapter, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:16 * ProportionAdapter text:@"会员优惠" textAlignment:NSTextAlignmentLeft];
         [cell.contentView addSubview:vipSelectLB];
         
-        self.allianceCardLB = [Helper lableRect:CGRectMake(103 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 133 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:16 * ProportionAdapter text:@"请选择会员卡" textAlignment:(NSTextAlignmentRight)];
-
-        UIImageView *accessView = [[UIImageView alloc] initWithFrame:CGRectMake(screenWidth - 20 * ProportionAdapter, 26 * ProportionAdapter, 9 * ProportionAdapter, 16 * ProportionAdapter)];
-        accessView.image = [UIImage imageNamed:@"accessoryHEI"];
-        [cell.contentView addSubview:accessView];
-        
-        [cell.contentView addSubview:self.allianceCardLB];
+        if ([self.vipCardArray count] > 0) {
+            self.allianceCardLB = [Helper lableRect:CGRectMake(103 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 133 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:16 * ProportionAdapter text:[self.vipCardArray[0] objectForKey:@"name"] textAlignment:(NSTextAlignmentRight)];
+            self.vipTimekey = [self.vipCardArray[0] objectForKey:@"timeKey"];
+            
+            UIImageView *accessView = [[UIImageView alloc] initWithFrame:CGRectMake(screenWidth - 20 * ProportionAdapter, 26 * ProportionAdapter, 9 * ProportionAdapter, 16 * ProportionAdapter)];
+            accessView.image = [UIImage imageNamed:@"accessoryHEI"];
+            [cell.contentView addSubview:accessView];
+            
+            [cell.contentView addSubview:self.allianceCardLB];
+        }
         
         return cell;
         
@@ -543,39 +579,9 @@
         [self.view addSubview:cardTaBleView];
         cardTaBleView.tag = 567;
         cardTaBleView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self userVipCardData:cardTaBleView];
     }
 }
 
-- (void)userVipCardData:(UITableView *)tableView{
-    
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dic setObject:[self.detailDic objectForKey:@"ballKey"] forKey:@"ballKey"];
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&ballKey=%@dagolfla.com",DEFAULF_USERID, [self.detailDic objectForKey:@"ballKey"]]] forKey:@"md5"];
-    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
-    [[JsonHttp jsonHttp] httpRequest:@"league/getSelectUserCardList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        
-        [[ShowHUD showHUD] hideAnimationFromView:self.view];
-        
-    } completionBlock:^(id data) {
-        
-        [[ShowHUD showHUD] hideAnimationFromView:self.view];
-        
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
-            if ([data objectForKey:@"userCardList"]) {
-                self.vipCardArray = [NSMutableArray arrayWithArray:[data objectForKey:@"userCardList"]];
-                [tableView reloadData];
-            }
-
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-    }];
-}
 
 
 - (void)closeCardAct:(UIButton *)btn{
