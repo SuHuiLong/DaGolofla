@@ -84,7 +84,7 @@
     //图标数组
     NSArray *iconArray = @[ @"icn_allianceMen",@"",@"icon_login_verify"];
     //输入框默认提示
-    NSArray *placeholderArray = @[@"请输入会员姓名",@"请输入手机号",@"请输入验证码"];
+    NSArray *placeholderArray = @[@"请输入会员姓名",@"请输入手机号码",@"请输入验证码"];
     for (int i = 0; i<3; i++) {
         //白色背景
         UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(10), kHvertical(20) + kWvertical(60)*i, screenWidth - kWvertical(20), kWvertical(50))];
