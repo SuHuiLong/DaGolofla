@@ -489,10 +489,10 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
                 return ((bodyList.count-1)/2+1) *(imgHeight +56 +8) *ProportionAdapter + 8*ProportionAdapter;
             }else if (bodyLayoutType == 4){
                 //精彩赛事
-                return imgHeight +99*ProportionAdapter;
+                return imgHeight*ProportionAdapter +99*ProportionAdapter;
             }else if (bodyLayoutType == 5){
                 //高旅套餐
-                return imgHeight +99*ProportionAdapter;
+                return imgHeight*ProportionAdapter +99*ProportionAdapter;
             }else{
                 //其他  －－－ 更新版本
                 return 0;

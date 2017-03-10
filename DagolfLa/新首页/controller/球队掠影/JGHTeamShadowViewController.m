@@ -18,7 +18,7 @@
 
 #import "JGLPhotoAlbumModel.h"
 
-#import "JGDDPhotoAlbumViewController.h"
+#import "JGHShadowPhotoAlbumViewController.h"
 #import "JGHPhotoShadowCollectionViewCell.h"
 
 static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoShadowCollectionViewCell";
@@ -38,7 +38,7 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
     [super viewDidLoad];
     
     _page = 0;
-    self.title = @"球队相册";
+    self.title = @"球队掠影";
     _dataArray = [[NSMutableArray alloc]init];
     
     [self uiConfig];
@@ -217,63 +217,21 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
+    JGHShadowPhotoAlbumViewController *phoVc = [[JGHShadowPhotoAlbumViewController alloc] init];
     //    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
     JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc]init];
     model = _dataArray[indexPath.item];
     
     phoVc.strTitle = model.name;
     phoVc.albumKey = model.timeKey;
-    phoVc.power = [NSString stringWithFormat:@"%@", model.power];
+    //phoVc.power = [NSString stringWithFormat:@"%@", model.power];
     //phoVc.state = [_dictMember objectForKey:@"state"];
     phoVc.teamTimeKey = model.teamKey;
     //phoVc.dictMember = _dictMember;
     phoVc.userKey = model.userKey;
-    //    phoVc.blockRefresh = ^(){
-    //        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    //        [_collectionView.header beginRefreshing];
-    //        [_collectionView reloadData];
-    //    };
     
     [self.navigationController pushViewController:phoVc animated:YES];
-    /*
-    if (_dictMember != nil) {
-        if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
-            //需要跳转
-            [self.navigationController pushViewController:phoVc animated:YES];
-        }
-        else{
-            if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
-                //需要跳转
-                [self.navigationController pushViewController:phoVc animated:YES];
-            }
-            else
-            {
-                //不要需要跳转
-                //                [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
-                //                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                //                }];
-                [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
-                
-            }
-        }
-    }
-    else
-    {
-        if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
-            //需要跳转
-            [self.navigationController pushViewController:phoVc animated:YES];
-        }
-        else
-        {
-            //不要需要跳转
-            //            [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
-            //                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            //            }];
-            [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
-        }
-    }
-    */
+
     
 }
 

@@ -28,11 +28,13 @@
         _titleLable.text = @"暂无消息";
         [self addSubview:_titleLable];
         
-        _directionImageView = [[UIImageView alloc]initWithFrame:CGRectMake(screenWidth -16*ProportionAdapter, 23*ProportionAdapter, 6*ProportionAdapter, 10*ProportionAdapter)];
-        _directionImageView.image = [UIImage imageNamed:@")"];
-        [self addSubview:_directionImageView];
+        _directionBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _directionBtn.frame = CGRectMake(screenWidth -18*ProportionAdapter, 20*ProportionAdapter, 8*ProportionAdapter, 16*ProportionAdapter);
+        [_directionBtn setImage:[UIImage imageNamed:@"more"] forState:UIControlStateNormal];
+        [_directionBtn setTintColor:[UIColor colorWithHexString:Ba0_Color]];
+        [self addSubview:_directionBtn];
         
-        _detailLable = [[UILabel alloc]initWithFrame:CGRectMake(60*ProportionAdapter, 42*ProportionAdapter, screenWidth -60*ProportionAdapter, 15*ProportionAdapter)];
+        _detailLable = [[UILabel alloc]initWithFrame:CGRectMake(60*ProportionAdapter, 44*ProportionAdapter, screenWidth -60*ProportionAdapter, 15*ProportionAdapter)];
         _detailLable.textColor = [UIColor colorWithHexString:Ba0_Color];
         _detailLable.font = [UIFont systemFontOfSize:14*ProportionAdapter];
         _detailLable.text = @"";
