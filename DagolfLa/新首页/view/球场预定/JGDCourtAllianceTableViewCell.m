@@ -72,7 +72,17 @@
     
     self.courtNameLB.text = [dataDic objectForKey:@"bookName"];
     self.serviceLB.text = [dataDic objectForKey:@"servicePj"];
-    self.remainderBallLB.text = [NSString stringWithFormat:@"年度剩余可预定球位数：%@位", [dataDic objectForKey:@"remoteRemainingNumber"]];
+    
+    
+    NSMutableAttributedString *remainderStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"年度剩余可预订球位数：%@位", [dataDic objectForKey:@"remoteRemainingNumber"]]];
+    NSString *lengthStr = [NSString stringWithFormat:@"%@", [dataDic objectForKey:@"remoteRemainingNumber"]];
+    [remainderStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(11, lengthStr.length)];
+    // 颜色
+    [remainderStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#626262"] range:NSMakeRange(11, lengthStr.length)];
+
+    self.remainderBallLB.attributedText = remainderStr;
+    
+    
     NSMutableAttributedString *leagueStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.leagueMoney]];
     [leagueStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14 * ProportionAdapter] range:NSMakeRange(0, 1)];
     self.vipPriceLB.attributedText = leagueStr;
