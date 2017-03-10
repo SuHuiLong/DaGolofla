@@ -21,7 +21,7 @@
         _shadowImageView.image = [UIImage imageNamed:@"xcback"];
         [self addSubview:_shadowImageView];
         
-        _title = [[UILabel alloc]initWithFrame:CGRectMake(_shadowImageView.bounds.origin.x, _shadowImageView.bounds.size.height +kWvertical(9), _shadowImageView.bounds.size.width, kHvertical(20))];
+        _title = [[UILabel alloc]initWithFrame:CGRectMake(_shadowImageView.bounds.origin.x, _shadowImageView.bounds.size.height +kWvertical(5), _shadowImageView.bounds.size.width, kHvertical(20))];
         _title.font = [UIFont systemFontOfSize:kHorizontal(15)];
         _title.textAlignment = NSTextAlignmentLeft;
         _title.text = @"减肥的咖啡店";
