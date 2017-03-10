@@ -46,6 +46,7 @@ static NSString *const JGHSpectatorSubCellIdentifier = @"JGHSpectatorSubCell";
 - (void)configJGHSpectatorSportsViewData:(NSArray *)dataArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     _imageW = imageW;
     _imageH = imageH;
+    _spectatorTableView.frame = CGRectMake(0, 0, screenWidth, _imageH*ProportionAdapter+ 99*ProportionAdapter);
     _dataArray = dataArray;
     [_spectatorTableView reloadData];
 }
