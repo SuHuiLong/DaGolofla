@@ -830,7 +830,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         //phoVc.teamTimeKey = model.teamKey;
         //phoVc.dictMember = _dictMember;
         //phoVc.userKey = model.userKey;
-        
+        phoVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:phoVc animated:YES];
     }
 }
