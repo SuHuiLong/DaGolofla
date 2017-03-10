@@ -8,7 +8,14 @@
 
 #import "AddVipCardViewController.h"
 
-@interface AddVipCardViewController ()<UITextFieldDelegate>
+@interface AddVipCardViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
+    //城市区号选择
+    UIPickerView *_pickerView;
+    //区号标题
+    NSArray *_titleArray;
+    //区号内容
+    NSArray *_titleCodeArray;
+}
 
 //获取验证码按钮
 @property (nonatomic,strong)UIButton *getCaptchaBtn;
@@ -22,6 +29,12 @@
 @property (nonatomic, assign) int count;
 //验证提示
 @property (nonatomic, strong)MBProgressHUD *progressView;
+//选中区号按钮
+@property (nonatomic, strong)UIButton *cityBtn;
+//选中区号
+@property (nonatomic, copy)NSString *codeing;
+
+
 @end
 
 @implementation AddVipCardViewController
@@ -83,17 +96,21 @@
         iconImageView.userInteractionEnabled = YES;
         [backView addSubview:iconImageView];
         //086
-        UILabel *numberLable = [Factory createLabelWithFrame:CGRectMake(0, 0, kWvertical(50), kWvertical(50)) textColor:[UIColor colorWithHexString:@"#c8c8c8"] fontSize:kHorizontal(17) Title:@"086"];
-        numberLable.textAlignment = NSTextAlignmentCenter;
+        _cityBtn = [Factory createButtonWithFrame:CGRectMake(backView.x, backView.y, kWvertical(50), kWvertical(50)) titleFont:kHorizontal(17) textColor:[UIColor colorWithHexString:@"#c8c8c8"] backgroundColor:ClearColor target:self selector:@selector(selectCity:) Title:nil];
+        [_cityBtn setTitle:@"086" forState:UIControlStateNormal];
+
+        _titleArray = @[@"中国大陆      +0086", @"中国香港      ＋00886", @"中国澳门      ＋00852", @"中国台湾      ＋00853"];
+        _titleCodeArray = @[@"0086", @"00886", @"00852", @"00853"];
+        _codeing = @"0086";
         if (i==1) {
-            [backView addSubview:numberLable];
+            [self.view addSubview:_cityBtn];
             //勾选图标
             _checkView = [Factory createButtonWithFrame:CGRectMake(backView.width - backView.height, 0, backView.height, backView.height) NormalImage:@"icn_allianceNormal" SelectedImage:@"icn_allianceSelect" target:self selector:nil];
             _checkView.selected = FALSE;
 //            [backView addSubview:_checkView];
         }
         //竖线
-        UIView *lineView = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:@"#d2d2d2"]  frame:CGRectMake(numberLable.x_width, 0, 1, backView.height)];
+        UIView *lineView = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:@"#d2d2d2"]  frame:CGRectMake( kWvertical(50), 0, 1, backView.height)];
         
         [backView addSubview:lineView];
         //输入框
@@ -121,9 +138,11 @@
             [backView addSubview:verticalLineView];
 
             //验证并绑定会员卡
-            self.verifyBtn = [Factory createButtonWithFrame:CGRectMake(backView.x, backView.y_height + kWvertical(60), backView.width, backView.height) titleFont:kHorizontal(18) textColor:WhiteColor backgroundColor:[UIColor colorWithHexString:@"#32b14d"] target:self selector:@selector(verifyBtnCLick:) Title:@"验证并绑定会员卡"];
+            self.verifyBtn = [Factory createButtonWithFrame:CGRectMake(backView.x, backView.y_height + kWvertical(60), backView.width, backView.height) titleFont:kHorizontal(18) textColor:WhiteColor backgroundColor:RGBA(210, 210, 210, 1) target:self selector:@selector(verifyBtnCLick:) Title:@"验证并绑定会员卡"];
+//            self.verifyBtn[UIColor colorWithHexString:@"#32b14d"]
             self.verifyBtn.layer.masksToBounds = YES;
             self.verifyBtn.layer.cornerRadius = kHvertical(5);
+            self.verifyBtn.enabled = FALSE;
             [self.view addSubview:self.verifyBtn];
             //底部文字信息
             UILabel *bottomLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), self.verifyBtn.y_height + kHvertical(55), screenWidth - kWvertical(20), kHvertical(100)) textColor:LightGrayColor fontSize:kHorizontal(14) Title:@"*请确保输入信息与会员卡预留信息一致。通过验证后，会绑定会员卡并享受会员预定优惠。"];
@@ -135,7 +154,19 @@
         }
     }
 }
+//创建提示
+-(void)createHUD:(NSString *)text{
+    _progressView = [[MBProgressHUD alloc] initWithView:self.view];
+    _progressView.y = screenHeight/2 - 64;
+    _progressView.alpha = 1;
+    _progressView.mode = MBProgressHUDModeText;
+    _progressView.detailsLabelText = text;
+    _progressView.detailsLabelFont = [UIFont systemFontOfSize:kHorizontal(16)]; //Johnkui - added
+    [_progressView hide:YES afterDelay:1.5];
+    
+    [self.view addSubview:_progressView];
 
+}
 
 #pragma mark - initData
 
@@ -147,7 +178,7 @@
     NSString *phoneStr = phoneTextFeild.text;
     NSDictionary *dict = @{
                            @"telphone":phoneStr,
-                           @"countryCode":@"086"
+                           @"countryCode":_codeing
                            };
     
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"league/doSendBuildUserCardSms" JsonKey:nil withData:dict failedBlock:^(id errType) {
@@ -155,8 +186,9 @@
     } completionBlock:^(id data) {
         NSLog(@"%@",data);
     }];
-
+    
 }
+
 
 //验证用户输入信息
 -(void)verifyInputData:(id)sender{
@@ -195,7 +227,7 @@
             BOOL packSuccess = [[data objectForKey:@"packSuccess"] boolValue];
             if (!packSuccess) {
                 NSString *packResultMsg = [data objectForKey:@"packResultMsg"];
-                [LQProgressHud showLinesMessage:packResultMsg];
+                [self createHUD:packResultMsg];
             }else{
                 [self popBack];
             }
@@ -213,13 +245,6 @@
 }
 //获取验证码点击
 -(void)captchaStart{
-    //会员名
-    UITextField *nickNameTextField = (UITextField *)[self.view viewWithTag:101];
-    NSString *nickName = nickNameTextField.text;
-    if (nickName.length<1) {
-        [LQProgressHud showLinesMessage:@"请输入会员姓名！"];
-        return;
-    }
     //手机号
     UITextField *selectTextField = (UITextField *)[self.view viewWithTag:102];
     NSString *phoneStr = selectTextField.text;
@@ -238,38 +263,42 @@
         //倒计时开始
         [self startTimer];
     }else{
-        [LQProgressHud showLinesMessage:@"手机号码输入错误，请正确输入您会员卡的预留手机号！"];
+        [self createHUD:@"手机号码输入错误，请正确输入您会员卡的预留手机号！"];
     }
 
 }
 //验证信息按钮点击
 -(void)verifyBtnCLick:(id)sender{
-    //会员名
-    UITextField *nickNameTextField = (UITextField *)[self.view viewWithTag:101];
-    NSString *nickName = nickNameTextField.text;
-    if (nickName.length<1) {
-        [LQProgressHud showLinesMessage:@"请输入会员姓名！"];
-        return;
-    }
-    //手机号
-    UITextField *selectTextField = (UITextField *)[self.view viewWithTag:102];
-    NSString *phoneStr = selectTextField.text;
-    if (phoneStr.length<1) {
-        [LQProgressHud showLinesMessage:@"手机号码输入错误，请正确输入您会员卡的预留手机号！"];
-        return;
-    }
-    //验证码
-    UITextField *codeTextField = (UITextField *)[self.view viewWithTag:103];
-    NSString *codeStr = codeTextField.text;
-    if (codeStr.length<1) {
-        [LQProgressHud showLinesMessage:@"请输入验证码！"];
-        return;
+    
+    //调用信息验证
+    
+    [self verifyInputData:sender];
+    
+}
+//区号选择
+-(void)selectCity:(UIButton *)btn{
+    _cityBtn = btn;
+    for (int i = 0; i<3; i++) {
+        UITextField *textField = (UITextField *)[self.view viewWithTag:101+i];
+        [textField resignFirstResponder];
     }
     
-    if (nickName.length>0&&phoneStr.length>0&&codeStr.length>0) {
-        //调用信息验证
-        [self verifyInputData:sender];
+    if (_pickerView == nil) {
+        _pickerView = [[UIPickerView alloc] init];
+        _pickerView.showsSelectionIndicator = YES;
+        _pickerView.frame = CGRectMake(0, (screenHeight/3)*2 -64, screenWidth, screenHeight/3);
+        
+        _pickerView.delegate = self;
+        _pickerView.dataSource = self;
+        [self.view addSubview:_pickerView];
+    }else{
+        if (_pickerView.hidden == NO) {
+            _pickerView.hidden = YES;
+        }else{
+            _pickerView.hidden = NO;
+        }
     }
+
 }
 
 #pragma mark - 计时器
@@ -287,7 +316,9 @@
 {
     _count --;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_getCaptchaBtn setTitle:[NSString stringWithFormat:@"%ds",_count] forState:UIControlStateNormal];
+        [_getCaptchaBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
+        _getCaptchaBtn.titleLabel.font = [UIFont systemFontOfSize:kHorizontal(14)];
+        [_getCaptchaBtn setTitle:[NSString stringWithFormat:@"(%ds)后重新获取", _count] forState:UIControlStateNormal];
     });
     
     
@@ -297,6 +328,10 @@
         _getCaptchaBtn.enabled = TRUE;
         dispatch_async(dispatch_get_main_queue(), ^{
             [_getCaptchaBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+            [_getCaptchaBtn setTitleColor:[UIColor colorWithHexString:Bar_Segment] forState:UIControlStateNormal];
+            _getCaptchaBtn.titleLabel.font = [UIFont systemFontOfSize:kHorizontal(18)];
+
+            
         });
 
     }
@@ -317,18 +352,75 @@
         UITextField *textField = (UITextField *)[self.view viewWithTag:101+i];
         [textField resignFirstResponder];
     }
+    _pickerView.hidden = YES;
+    [_pickerView removeFromSuperview];
+    _pickerView = nil;
 }
 //内容改变
 -(void)textFieldChange:(UITextField *)textField{
-    NSInteger selectTag = textField.tag;
-    if (selectTag==102) {
-        NSString *inputStr = textField.text;
-        _checkView.selected = FALSE;
-        if (inputStr.length==11) {
-            _checkView.selected = TRUE;
+//    NSInteger selectTag = textField.tag;
+//    if (selectTag==102) {
+//        NSString *inputStr = textField.text;
+//        _checkView.selected = FALSE;
+//        if (inputStr.length==11) {
+//            _checkView.selected = TRUE;
+//        }
+//    }
+    NSInteger canClickNum = 0;
+    for (int i = 0; i<3; i++) {
+        UITextField *textField = (UITextField *)[self.view viewWithTag:101+i];
+        NSInteger textStrLen = textField.text.length;
+        if (i==2) {
+            if (textStrLen==6) {
+                canClickNum++;
+            }
+        }else{
+            if (textStrLen>0) {
+                canClickNum++;
+            }
         }
     }
+    if (canClickNum==3) {
+        self.verifyBtn.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
+        self.verifyBtn.enabled = TRUE;
+
+    }else{
+        self.verifyBtn.backgroundColor = RGBA(210, 210, 210, 1);
+        self.verifyBtn.enabled = FALSE;
+    }
+    
+    
 }
+
+#pragma mark - UIPickerView
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return _titleArray.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return _titleArray[row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    NSMutableString *code = [_titleCodeArray[row] mutableCopy];
+    NSString *cddd;
+    if ([code isEqualToString:@"0086"]) {
+        cddd = [code substringFromIndex:1];
+    }else{
+        cddd = [code substringFromIndex:2];
+    }
+    [_cityBtn setTitle:cddd forState:UIControlStateNormal];
+    _codeing = [NSString stringWithFormat:@"%@", _titleCodeArray[row]];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
