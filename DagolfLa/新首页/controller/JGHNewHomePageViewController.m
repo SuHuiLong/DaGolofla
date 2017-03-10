@@ -513,6 +513,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
+        [self isLoginUp];
         //系统消息
         if ([_indexModel.Msg objectForKey:@"linkURL"]) {
             [self pushctrlWithUrl:[_indexModel.Msg objectForKey:@"linkURL"]];
