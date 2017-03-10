@@ -514,7 +514,7 @@
     if (tableView.tag == 567) {
 
         if ([[self.vipCardArray[indexPath.row] objectForKey:@"state"] integerValue] == 5) {
-            [LQProgressHud showMessage:@"会员卡不可用"];
+            [LQProgressHud showMessage:@"该会员卡预订本球场次数已用完"];
             return;
         }
         self.allianceCardLB.text = [self.vipCardArray[indexPath.row] objectForKey:@"name"];
