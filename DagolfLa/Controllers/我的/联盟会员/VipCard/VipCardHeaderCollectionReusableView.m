@@ -26,13 +26,13 @@
     [self   addSubview:_alertImageView];
 
     //文字描述
-    _descLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(22), _alertImageView.y_height+kHvertical(30), screenWidth - kWvertical(44), kHvertical(80)) textColor:LightGrayColor fontSize:kHorizontal(15) Title:nil];
+    _descLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(22), _alertImageView.y_height+kHvertical(30), screenWidth - kWvertical(44), kHvertical(120)) textColor:LightGrayColor fontSize:kHorizontal(15) Title:nil];
     _descLabel.numberOfLines = 0;
     
     [self   addSubview:_descLabel];
     
     //立即添加
-    _addNowBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(10), kHvertical(390), screenWidth - kWvertical(20), kHvertical(45)) titleFont:kHorizontal(16) textColor:WhiteColor backgroundColor:RedColor target:self selector:nil Title:@"立即添加"];
+    _addNowBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(10), kHvertical(390), screenWidth - kWvertical(20), kHvertical(45)) titleFont:kHorizontal(16) textColor:WhiteColor backgroundColor:RGBA(241, 151, 48, 1)  target:self selector:nil Title:@"立即添加"];
     _addNowBtn.layer.cornerRadius = kHvertical(3);
     [self addSubview:_addNowBtn];
     
