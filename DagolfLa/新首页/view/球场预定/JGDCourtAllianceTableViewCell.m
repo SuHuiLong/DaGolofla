@@ -44,7 +44,7 @@
         self.originalPriceLB = [Helper lableRect:CGRectMake(ScreenWidth /2 + 6 * ProportionAdapter, 105 * ProportionAdapter, (ScreenWidth - 31 * ProportionAdapter) / 2, 25 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:11 * ProportionAdapter text:@"" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:self.originalPriceLB];
         
-        self.normalBtn = [[UIButton alloc] initWithFrame:CGRectMake(ScreenWidth / 2 + 50 * ProportionAdapter, 138 * ProportionAdapter, 95 * ProportionAdapter, 55 * ProportionAdapter)];
+        self.normalBtn = [[UIButton alloc] initWithFrame:CGRectMake(ScreenWidth / 2 + 44 * ProportionAdapter, 138 * ProportionAdapter, 95 * ProportionAdapter, 55 * ProportionAdapter)];
         [self.normalBtn setImage:[UIImage imageNamed:@"booking_pay_norcolor"] forState:(UIControlStateNormal)];
         [self.normalBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
         [self.contentView addSubview:self.normalBtn];
