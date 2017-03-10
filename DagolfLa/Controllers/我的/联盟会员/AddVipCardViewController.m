@@ -20,6 +20,8 @@
 @property (nonatomic, strong) NSTimer *countTimer;
 //剩余显示时间
 @property (nonatomic, assign) int count;
+//验证提示
+@property (nonatomic, strong)MBProgressHUD *progressView;
 @end
 
 @implementation AddVipCardViewController
@@ -67,20 +69,21 @@
 //创建各个输入框
 -(void)createTextFeild{
     //图标数组
-    NSArray *iconArray = @[@"icon_login_verify",@"", @"icn_allianceMen"];
+    NSArray *iconArray = @[ @"icn_allianceMen",@"",@"icon_login_verify"];
     //输入框默认提示
     NSArray *placeholderArray = @[@"请输入会员姓名",@"请输入手机号",@"请输入验证码"];
     for (int i = 0; i<3; i++) {
         //白色背景
-        UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(7.5), kHvertical(20) + kHvertical(60)*i, screenWidth - kWvertical(20), kHvertical(50))];
+        UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(10), kHvertical(20) + kWvertical(60)*i, screenWidth - kWvertical(20), kWvertical(50))];
         backView.layer.masksToBounds = YES;
         backView.layer.cornerRadius = kHvertical(5);
         [self.view addSubview:backView];
         //图标
-        UIImageView *iconImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(19), kHvertical(15), kWvertical(17), kHvertical(19)) Image:[UIImage imageNamed:iconArray[i]]];
+        UIButton *iconImageView = [Factory createButtonWithFrame:CGRectMake(0, 0, kWvertical(50), kWvertical(50)) image:[UIImage imageNamed:iconArray[i]] target:self selector:nil Title:nil];
+        iconImageView.userInteractionEnabled = YES;
         [backView addSubview:iconImageView];
         //086
-        UILabel *numberLable = [Factory createLabelWithFrame:CGRectMake(0, 0, kWvertical(55), kHvertical(50)) textColor:[UIColor colorWithHexString:@"#c8c8c8"] fontSize:kHorizontal(17) Title:@"086"];
+        UILabel *numberLable = [Factory createLabelWithFrame:CGRectMake(0, 0, kWvertical(50), kWvertical(50)) textColor:[UIColor colorWithHexString:@"#c8c8c8"] fontSize:kHorizontal(17) Title:@"086"];
         numberLable.textAlignment = NSTextAlignmentCenter;
         if (i==1) {
             [backView addSubview:numberLable];
@@ -113,17 +116,19 @@
             UIView *verticalLineView = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:@"#d2d2d2"] frame:CGRectMake(backView.width - kWvertical(135), kHvertical(16), 1, kHvertical(16))];
             
            //验证码按钮设置
-            self.getCaptchaBtn  = [Factory createButtonWithFrame:CGRectMake(verticalLineView.x_width+1, 0, kWvertical(135), backView.height) titleFont:kHorizontal(18) textColor:[UIColor colorWithHexString:Nav_Color] backgroundColor:WhiteColor target:self selector:@selector(captchaStart) Title:@"获取验证码"];
+            self.getCaptchaBtn  = [Factory createButtonWithFrame:CGRectMake(verticalLineView.x_width+1, 0, kWvertical(135), backView.height) titleFont:kHorizontal(18) textColor:[UIColor colorWithHexString:Bar_Segment] backgroundColor:WhiteColor target:self selector:@selector(captchaStart) Title:@"获取验证码"];
             [backView addSubview:self.getCaptchaBtn];
             [backView addSubview:verticalLineView];
 
             //验证并绑定会员卡
-            self.verifyBtn = [Factory createButtonWithFrame:CGRectMake(backView.x, backView.y_height + kHvertical(60), backView.width, backView.height) titleFont:kHorizontal(18) textColor:WhiteColor backgroundColor:[UIColor colorWithHexString:@"#32b14d"] target:self selector:@selector(verifyBtnCLick:) Title:@"验证并绑定会员卡"];
+            self.verifyBtn = [Factory createButtonWithFrame:CGRectMake(backView.x, backView.y_height + kWvertical(60), backView.width, backView.height) titleFont:kHorizontal(18) textColor:WhiteColor backgroundColor:[UIColor colorWithHexString:@"#32b14d"] target:self selector:@selector(verifyBtnCLick:) Title:@"验证并绑定会员卡"];
             self.verifyBtn.layer.masksToBounds = YES;
             self.verifyBtn.layer.cornerRadius = kHvertical(5);
             [self.view addSubview:self.verifyBtn];
             //底部文字信息
             UILabel *bottomLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), self.verifyBtn.y_height + kHvertical(55), screenWidth - kWvertical(20), kHvertical(100)) textColor:LightGrayColor fontSize:kHorizontal(14) Title:@"*请确保输入信息与会员卡预留信息一致。通过验证后，会绑定会员卡并享受会员预定优惠。"];
+            
+            [bottomLabel changeLineWithSpace:5.0f];
             bottomLabel.numberOfLines = 0;
             [bottomLabel sizeToFit];
             [self.view addSubview:bottomLabel];
@@ -155,6 +160,10 @@
 
 //验证用户输入信息
 -(void)verifyInputData:(id)sender{
+    _progressView = [[MBProgressHUD alloc] initWithView:self.view];
+    _progressView.mode = MBProgressHUDModeIndeterminate;
+    _progressView.labelText = @"添加中...";
+
     //昵称
     UITextField *nickNameTextFeild = (UITextField *)[self.view viewWithTag:101];
     NSString *nickName = nickNameTextFeild.text;
@@ -176,8 +185,11 @@
     senderBtn.userInteractionEnabled = NO;
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"league/doBuildUserCard" JsonKey:nil withData:dict failedBlock:^(id errType) {
         senderBtn.userInteractionEnabled = YES;
+        _progressView.hidden=YES;
+        [_progressView removeFromSuperview];
     } completionBlock:^(id data) {
-        NSLog(@"%@",data);
+        _progressView.hidden=YES;
+        [_progressView removeFromSuperview];
         senderBtn.userInteractionEnabled = YES;
         if ([data isKindOfClass:[NSDictionary class]]) {
             BOOL packSuccess = [[data objectForKey:@"packSuccess"] boolValue];

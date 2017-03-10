@@ -39,7 +39,7 @@
     
     _name.frame = CGRectMake(0, (imageH +5) *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter);
     
-    _price.frame = CGRectMake(0, (imageH +5 + 30) *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter);
+    _price.frame = CGRectMake(0, (imageH +5 + 25) *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter);
     
     [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _name.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];

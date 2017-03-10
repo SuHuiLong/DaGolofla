@@ -132,6 +132,7 @@
                 [user setObject:[[data objectForKey:@"user"] objectForKey:@"msg_team_setting"] forKey:@"msg_team_setting"];
                 [user setObject:[[data objectForKey:@"user"] objectForKey:@"msg_system_setting"] forKey:@"msg_system_setting"];
                 [user setObject:[[data objectForKey:@"user"] objectForKey:@"almost_system_setting"] forKey:@"almost_system_setting"];
+                [user setObject:[[data objectForKey:@"user"] objectForKey:@"mobile"] forKey:@"mobile"];
 
                 if ([[data objectForKey:@"user"] objectForKey:@"sex"]){
                     [user setObject:[[data objectForKey:@"user"] objectForKey:@"sex"] forKey:@"sex"];
