@@ -39,9 +39,9 @@
 
 - (void)configJGHGolfPackageSubCell:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     _headerImageView.frame = CGRectMake(10*ProportionAdapter, 0, imageW*ProportionAdapter, imageH*ProportionAdapter);
-    _golfImageView.frame = CGRectMake(10*ProportionAdapter, imageH*ProportionAdapter+ 16*ProportionAdapter, 12*ProportionAdapter, 17*ProportionAdapter);
+    _golfImageView.frame = CGRectMake(10*ProportionAdapter, imageH*ProportionAdapter+ 17*ProportionAdapter, 12*ProportionAdapter, 17*ProportionAdapter);
     _titleLable.frame = CGRectMake(27*ProportionAdapter, imageH*ProportionAdapter+ 16*ProportionAdapter, imageW*ProportionAdapter -17*ProportionAdapter, 20*ProportionAdapter);
-    _price.frame = CGRectMake(27*ProportionAdapter, imageH*ProportionAdapter+ 48*ProportionAdapter, imageW*ProportionAdapter -17*ProportionAdapter, 20*ProportionAdapter);
+    _price.frame = CGRectMake(27*ProportionAdapter, imageH*ProportionAdapter+ 43*ProportionAdapter, imageW*ProportionAdapter -17*ProportionAdapter, 20*ProportionAdapter);
     
     [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"imgURL"]] placeholderImage:[UIImage imageNamed:@"home_bg_comp"]];
     //_headerImageView.contentMode = UIViewContentModeScaleAspectFill;
