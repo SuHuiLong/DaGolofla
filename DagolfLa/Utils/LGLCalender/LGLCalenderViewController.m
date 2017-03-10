@@ -245,7 +245,7 @@
             NSInteger index = indexPath.item - model.firstday;
             LGLCalenderSubModel * subModel = model.details[index];
             cell.dateL.text = [NSString stringWithFormat:@"%ld",(long)subModel.day];
-            if (_hasUserCard) {
+            if (_isLeagueUser) {
                 cell.priceL.text = [NSString stringWithFormat:@"￥%@", subModel.leagueMoney];
             }else{
                 if (subModel.price.length >0) {
@@ -347,7 +347,7 @@
     
     NSString *dataString = [NSString stringWithFormat:@"%td-%@-%@ 00:00:00", _year, month, day];
     
-    [_timeListView loadTimeListWithBallKey:_ballKey andDateString:dataString];
+    [_timeListView loadTimeListWithBallKey:_ballKey andDateString:dataString andIsLeagueUser:_isLeagueUser];
     
 //    [self.navigationController popViewControllerAnimated:YES];
 }
