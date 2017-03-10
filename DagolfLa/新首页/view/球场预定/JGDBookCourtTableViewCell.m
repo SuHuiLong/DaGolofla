@@ -43,7 +43,7 @@
         self.iconImageView.contentMode = UIViewContentModeScaleAspectFill;
         [self.contentView addSubview:self.iconImageView];
         
-        self.signImageView = [[UIImageView alloc] initWithFrame:CGRectMake(35 * ProportionAdapter, 0, 35 * ProportionAdapter, 35 * ProportionAdapter)];
+        self.signImageView = [[UIImageView alloc] initWithFrame:CGRectMake(43 * ProportionAdapter, 0, 27 * ProportionAdapter, 27 * ProportionAdapter)];
         self.signImageView.image = [UIImage imageNamed:@"icn_team"];
         [self.iconImageView addSubview:self.signImageView];
 

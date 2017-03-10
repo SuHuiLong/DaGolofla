@@ -48,8 +48,18 @@
 @implementation JGDAllianceCommitOrderViewController
 
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.title = @"提交订单";
+    
+    [self commitOrderTable];
+    
+    
+    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"consult"] style:(UIBarButtonItemStyleDone) target:self action:@selector(phoneAct)];
+    rightBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = rightBar;
+    
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -68,6 +78,9 @@
             
             if ([data objectForKey:@"userCardList"]) {
                 self.vipCardArray = [NSMutableArray arrayWithArray:[data objectForKey:@"userCardList"]];
+                _playerArray = [NSMutableArray arrayWithObjects:@"", [[NSUserDefaults standardUserDefaults] objectForKey:Mobile], [self.vipCardArray[0] objectForKey:@"name"] ,nil];
+                self.vipTimekey = [self.vipCardArray[0] objectForKey:@"timeKey"];
+                
                 [self.commitOrderTableView reloadData];
             }
             
@@ -77,20 +90,6 @@
             }
         }
     }];
-    
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.title = @"提交订单";
-    
-    [self commitOrderTable];
-    
-    
-    UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"consult"] style:(UIBarButtonItemStyleDone) target:self action:@selector(phoneAct)];
-    rightBar.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightBar;
     
     // Do any additional setup after loading the view.
 }
@@ -358,13 +357,16 @@
         indexPath.row == 3 ? (title = @"会员姓名：") : (title = @"联系方式：");
         cell.titleLB.text = title;
         if (indexPath.row == 4) {
-            cell.nameTF.text = [def objectForKey:Mobile];
-            self.mobile = [def objectForKey:Mobile];
+            cell.nameTF.text = self.playerArray[1];
+            cell.nameTF.tag = 777;
+            cell.nameTF.delegate = self;
+//            self.mobile = [def objectForKey:Mobile];
         }else {
-            cell.nameTF.text = @"";
-            
+            cell.nameTF.text = self.playerArray[0];
+            cell.nameTF.tag = 888;
+            cell.nameTF.delegate = self;
         }
-
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         
         return cell;
@@ -398,8 +400,7 @@
         [cell.contentView addSubview:vipSelectLB];
         
         if ([self.vipCardArray count] > 0) {
-            self.allianceCardLB = [Helper lableRect:CGRectMake(103 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 133 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:16 * ProportionAdapter text:[self.vipCardArray[0] objectForKey:@"name"] textAlignment:(NSTextAlignmentRight)];
-            self.vipTimekey = [self.vipCardArray[0] objectForKey:@"timeKey"];
+            self.allianceCardLB = [Helper lableRect:CGRectMake(103 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 133 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:16 * ProportionAdapter text:self.playerArray[2] textAlignment:(NSTextAlignmentRight)];
             
             UIImageView *accessView = [[UIImageView alloc] initWithFrame:CGRectMake(screenWidth - 20 * ProportionAdapter, 26 * ProportionAdapter, 9 * ProportionAdapter, 16 * ProportionAdapter)];
             accessView.image = [UIImage imageNamed:@"accessoryHEI"];
@@ -433,7 +434,7 @@
     if (tableView.tag == 567) {
         return [self.vipCardArray count];
     }else{
-        return 6 + [self.playerArray count];
+        return 7;
     }
 }
 
@@ -455,6 +456,9 @@
         [closeBtn setImage:[UIImage imageNamed:@"date_close"] forState:(UIControlStateNormal)];
         [closeBtn addTarget:self action:@selector(closeCardAct:) forControlEvents:(UIControlEventTouchUpInside)];
         
+        UILabel *lineLB = [Helper lableRect:CGRectMake(0, 0, screenWidth, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:17 * ProportionAdapter text:@"" textAlignment:(NSTextAlignmentCenter)];
+        lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        [backView addSubview:lineLB];
         [backView addSubview:titleLB];
         [backView addSubview:closeBtn];
         
@@ -489,10 +493,11 @@
     if (tableView.tag == 567) {
         return 41 * ProportionAdapter;
     }
+    
     if (indexPath.row == 2) {
         return 50 * ProportionAdapter;
     }
-    else if (indexPath.row == 5 + [self.playerArray count]) {
+    else if (indexPath.row == 6) {
         return 60 * ProportionAdapter;
     }
     else{
@@ -591,40 +596,44 @@
 }
 
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    
-    if (textField.tag != 999) {
-        if ([string isEqualToString:@""] && [textField.text length] == 1) {
-            // 全删
-            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-            cell.phoneImageV.hidden = NO;
-            
-        }else{
-            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-            cell.phoneImageV.hidden = YES;
-        }
-    }
-    
-    return YES;
-}
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+//    
+//    if (textField.tag != 999) {
+//        if ([string isEqualToString:@""] && [textField.text length] == 1) {
+//            // 全删
+//            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+//            cell.phoneImageV.hidden = NO;
+//            
+//        }else{
+//            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+//            cell.phoneImageV.hidden = YES;
+//        }
+//    }
+//    
+//    return YES;
+//}
 
-- (BOOL)textFieldShouldClear:(UITextField *)textField{
-    if (textField.tag != 999) {
-        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-        NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
-        cell.phoneImageV.hidden = NO;
-        if (index.row >=5) {
-            self.playerArray[index.row - 5] = @"";
-        }
-    }
-    return YES;
-}
+//- (BOOL)textFieldShouldClear:(UITextField *)textField{
+//    if (textField.tag != 999) {
+//        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+//        NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
+//        cell.phoneImageV.hidden = NO;
+//        if (index.row >=5) {
+//            self.playerArray[index.row - 5] = @"";
+//        }
+//    }
+//    return YES;
+//}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
     
     if (textField.tag == 999) {
         self.remark = textField.text;
+    }else if (textField.tag == 888) {
+        self.playerArray[1] = textField.text;
+    }else if (textField.tag == 777) {
+        self.playerArray[0] = textField.text;
     }else{
         JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
         NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
@@ -642,15 +651,15 @@
     }
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-    if (textField.tag != 999) {
-        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-        if ([textField.text length] > 0) {
-            cell.phoneImageV.hidden = YES;
-        }
-    }
-}
+//- (void)textFieldDidBeginEditing:(UITextField *)textField{
+//    
+//    if (textField.tag != 999) {
+//        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+//        if ([textField.text length] > 0) {
+//            cell.phoneImageV.hidden = YES;
+//        }
+//    }
+//}
 
 
 #pragma mark --- 人数加减
@@ -696,13 +705,14 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSInteger row = 5 + [self.playerArray count];
-    
-    if (indexPath.row > 5 && indexPath.row != row) {
-        return YES;
-    }else{
-        return NO;
-    }
+    return NO;
+//    NSInteger row = 5 + [self.playerArray count];
+//    
+//    if (indexPath.row > 5 && indexPath.row != row) {
+//        return YES;
+//    }else{
+//        return NO;
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -745,15 +755,15 @@
     }
     
     
-    self.payMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] * ([self.playerArray count])];
-    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] * ([self.playerArray count])]];
+    self.payMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue]];
+    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] ]];
     [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
-    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", [self.selectMoney integerValue] * ([self.playerArray count])] length] + 1)];
+    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", [self.selectMoney integerValue]] length] + 1)];
     self.payMoneyLB.attributedText = mutaAttStr;
     
     
-    self.scenePayMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectSceneMoney integerValue] * ([self.playerArray count])];
-    NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%td", [self.selectSceneMoney integerValue] * ([self.playerArray count])]];
+    self.scenePayMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectSceneMoney integerValue]];
+    NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%td", [self.selectSceneMoney integerValue]]];
     [sceneAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
     self.scenePayMoneyLB.attributedText = sceneAttStr;
     
@@ -774,12 +784,11 @@
 }
 
 
-- (NSMutableArray *)playerArray{
-    if (!_playerArray) {
-        _playerArray = [NSMutableArray arrayWithObjects:@"", nil];
-    }
-    return _playerArray;
-}
+//- (NSMutableArray *)playerArray{
+//    if (!_playerArray) {
+//    }
+//    return _playerArray;
+//}
 
 - (NSMutableArray *)vipCardArray{
     if (!_vipCardArray) {

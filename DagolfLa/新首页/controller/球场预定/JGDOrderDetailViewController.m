@@ -155,7 +155,7 @@
                 
                 //                // 底部按钮
                 
-                self.shitaView = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - 114 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
+                self.shitaView = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - 64 - 50 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
                 self.shitaView.backgroundColor = [UIColor colorWithHexString:@"EEEEEE"];
                 NSString *stateString = [self.dataDic objectForKey:@"stateButtonString"];
                 
@@ -245,7 +245,7 @@
 
 - (void)orderTableV{
     
-    self.orderTableViwe = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 114 * ProportionAdapter) style:(UITableViewStyleGrouped)];
+    self.orderTableViwe = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64 - 50 * ProportionAdapter) style:(UITableViewStyleGrouped)];
     self.orderTableViwe.delegate = self;
     self.orderTableViwe.dataSource = self;
     
