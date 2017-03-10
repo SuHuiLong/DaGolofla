@@ -134,7 +134,6 @@ void ContactsChangeCallback (ABAddressBookRef addressBook,
     } completionBlock:^(id data) {
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
             // 是否允许同步通讯录
             if ([[data objectForKey:@"upLoadEnable"] boolValue]) {
                 

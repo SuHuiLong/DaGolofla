@@ -104,6 +104,28 @@
     [NSTimer scheduledTimerWithTimeInterval:1.2f target:self selector:@selector(hide) userInfo:nil repeats:NO];
 }
 
++ (void)showLinesMessage:(NSString *)text {
+    
+    LQProgressHud *hud = [LQProgressHud sharedHUD];
+    [hud show:YES];
+    [hud setShowNow:YES];
+    //显示多行文字
+    hud.detailsLabelText = text;
+    //只显示单行文字
+    //[hud setLabelText:text];
+    [hud setMinSize:CGSizeZero];
+    [hud setMode:MBProgressHUDModeText];
+    [hud setRemoveFromSuperViewOnHide:YES];
+    [hud setLabelFont:[UIFont systemFontOfSize:kHorizontal(16)]];
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:hud];
+    //    [hud hide:YES afterDelay:2.0f];
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.2f target:self selector:@selector(hide) userInfo:nil repeats:NO];
+}
+
+
+
 + (void)showInfoMsg:(NSString *)text {
     
     [self showStatus:LQProgressHUDStatusInfo text:text];

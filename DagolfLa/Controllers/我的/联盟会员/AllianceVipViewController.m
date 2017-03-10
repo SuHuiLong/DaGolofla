@@ -470,6 +470,8 @@
     //跳转
     UseMallViewController *vc = [[UseMallViewController alloc]init];
     vc.linkUrl = urlString;
+    //设置电池栏白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [self.navigationController pushViewController:vc animated:YES];
 
     
@@ -518,7 +520,7 @@
         self.mainTableView.backgroundColor = RGBA(238, 238, 238, 1);
         headerView =  [Factory createViewWithBackgroundColor:RGBA(238, 238, 238, 1) frame:CGRectMake(0, 0, screenWidth, screenHeight/2)];
         //没卡提示图片
-        UIImageView *alertImageView = [Factory createImageViewWithFrame:CGRectMake(screenWidth/2-kWvertical(53.5), kHvertical(50), kWvertical(107), kWvertical(107)) Image:[UIImage imageNamed:@"bg-shy"]];
+        UIImageView *alertImageView = [Factory createImageViewWithFrame:CGRectMake(screenWidth/2-kWvertical(53.5), kHvertical(110), kWvertical(107), kWvertical(107)) Image:[UIImage imageNamed:@"bg-shy"]];
         NSString *noneCard = @"你还没有使用记录哦";
         //文字描述
         UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(22), alertImageView.y_height+kHvertical(15), screenWidth - kWvertical(44), kHvertical(80)) textColor:LightGrayColor fontSize:kHorizontal(15) Title:noneCard];

@@ -95,7 +95,8 @@
     _dictCan = [[NSMutableDictionary alloc]init];
     self.webView.frame=CGRectMake(0, 0, screenWidth, ScreenHeight);
     self.webView.delegate=self;
-    
+    self.webView.opaque = NO;
+    self.webView.backgroundColor = ClearColor;
     [self.view addSubview:self.webView];
     
     //进度条

@@ -22,7 +22,7 @@
 -(void)createUI{
 
     //没卡提示图片
-    _alertImageView = [Factory createImageViewWithFrame:CGRectMake(screenWidth/2-kWvertical(53.5), kHvertical(50), kWvertical(107), kWvertical(107)) Image:[UIImage imageNamed:@"bg-shy"]];
+    _alertImageView = [Factory createImageViewWithFrame:CGRectMake(screenWidth/2-kWvertical(53.5), kHvertical(110), kWvertical(107), kWvertical(107)) Image:[UIImage imageNamed:@"bg-shy"]];
     [self   addSubview:_alertImageView];
 
     //文字描述
