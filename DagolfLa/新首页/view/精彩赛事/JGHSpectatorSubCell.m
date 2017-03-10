@@ -39,10 +39,10 @@
 }
 
 - (void)configJGHSpectatorSubCell:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
-    _headerImageView.frame = CGRectMake(6*ProportionAdapter, 0, imageW, imageH);
-    _point.frame = CGRectMake(6*ProportionAdapter, imageH +20*ProportionAdapter, 5*ProportionAdapter, 5*ProportionAdapter);
-    _titleLable.frame = CGRectMake(18*ProportionAdapter, imageH +12*ProportionAdapter, imageW -12*ProportionAdapter, 20*ProportionAdapter);
-    _detailLable.frame = CGRectMake(18*ProportionAdapter, imageH+36*ProportionAdapter, imageW -12*ProportionAdapter, 40*ProportionAdapter);
+    _headerImageView.frame = CGRectMake(6*ProportionAdapter, 0, imageW*ProportionAdapter, imageH*ProportionAdapter);
+    _point.frame = CGRectMake(6*ProportionAdapter, imageH*ProportionAdapter +20*ProportionAdapter, 5*ProportionAdapter, 5*ProportionAdapter);
+    _titleLable.frame = CGRectMake(18*ProportionAdapter, imageH*ProportionAdapter +12*ProportionAdapter, imageW*ProportionAdapter -12*ProportionAdapter, 20*ProportionAdapter);
+    _detailLable.frame = CGRectMake(18*ProportionAdapter, imageH*ProportionAdapter +36*ProportionAdapter, imageW*ProportionAdapter -12*ProportionAdapter, 40*ProportionAdapter);
     
     [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"imgURL"]] placeholderImage:[UIImage imageNamed:@"home_bg_comp"]];
     //_headerImageView.contentMode = UIViewContentModeScaleAspectFill;

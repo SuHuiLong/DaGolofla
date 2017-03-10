@@ -459,7 +459,7 @@
             
             if ([[self.detailDic objectForKey:@"payType"] integerValue] == 2) {
                 //         球场现付
-                self.selectMoney = pay;
+//                self.selectMoney = pay;
                 
             }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 1) {
                 //         部分预付

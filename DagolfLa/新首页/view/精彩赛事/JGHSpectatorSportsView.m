@@ -60,7 +60,7 @@ static NSString *const JGHSpectatorSubCellIdentifier = @"JGHSpectatorSubCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return _imageW +6*ProportionAdapter;
+    return _imageW*ProportionAdapter +6*ProportionAdapter;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -73,7 +73,7 @@ static NSString *const JGHSpectatorSubCellIdentifier = @"JGHSpectatorSubCell";
     spectatorSubCell.selectionStyle = UITableViewCellSelectionStyleNone;
     spectatorSubCell.transform = CGAffineTransformMakeRotation(M_PI/2);
     //spectatorSubCell.frame = CGRectMake(0, 0, screenWidth -40*ProportionAdapter, 262*ProportionAdapter);
-    spectatorSubCell.frame = CGRectMake(0, 0, _imageW +20*ProportionAdapter, _imageH+ 99*ProportionAdapter);
+    spectatorSubCell.frame = CGRectMake(0, 0, _imageW*ProportionAdapter +20*ProportionAdapter, _imageH*ProportionAdapter+ 99*ProportionAdapter);
     return spectatorSubCell;
 }
 

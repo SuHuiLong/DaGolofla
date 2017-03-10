@@ -547,6 +547,7 @@
 		20D008141E6FF0EB0040883C /* UIView+leoAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D008111E6FF0EB0040883C /* UIView+leoAdd.m */; };
 		20D008181E7128100040883C /* JGHTeamShadowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D008171E7128100040883C /* JGHTeamShadowViewController.m */; };
 		20D0081B1E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D0081A1E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.m */; };
+		20D0081E1E7239890040883C /* JGHShadowPhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D0081D1E7239880040883C /* JGHShadowPhotoAlbumViewController.m */; };
 		20D1E1AB1DD41DE600EB25C3 /* WCLPassWordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D1E1A91DD41DE600EB25C3 /* WCLPassWordView.m */; };
 		20D1E1AE1DD42F7400EB25C3 /* JGHbalanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D1E1AD1DD42F7400EB25C3 /* JGHbalanceView.m */; };
 		20D1E1B01DD4615E00EB25C3 /* WCLPassWordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20D1E1AF1DD4615E00EB25C3 /* WCLPassWordView.xib */; };
@@ -2345,6 +2346,8 @@
 		20D008171E7128100040883C /* JGHTeamShadowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHTeamShadowViewController.m; sourceTree = "<group>"; };
 		20D008191E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHPhotoShadowCollectionViewCell.h; sourceTree = "<group>"; };
 		20D0081A1E712DFB0040883C /* JGHPhotoShadowCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHPhotoShadowCollectionViewCell.m; sourceTree = "<group>"; };
+		20D0081C1E7239880040883C /* JGHShadowPhotoAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHShadowPhotoAlbumViewController.h; sourceTree = "<group>"; };
+		20D0081D1E7239880040883C /* JGHShadowPhotoAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHShadowPhotoAlbumViewController.m; sourceTree = "<group>"; };
 		20D1E1A91DD41DE600EB25C3 /* WCLPassWordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCLPassWordView.m; sourceTree = "<group>"; };
 		20D1E1AA1DD41DE600EB25C3 /* WCLPassWordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCLPassWordView.h; sourceTree = "<group>"; };
 		20D1E1AC1DD42F7400EB25C3 /* JGHbalanceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHbalanceView.h; sourceTree = "<group>"; };
@@ -5834,6 +5837,8 @@
 			children = (
 				20D008161E7128100040883C /* JGHTeamShadowViewController.h */,
 				20D008171E7128100040883C /* JGHTeamShadowViewController.m */,
+				20D0081C1E7239880040883C /* JGHShadowPhotoAlbumViewController.h */,
+				20D0081D1E7239880040883C /* JGHShadowPhotoAlbumViewController.m */,
 			);
 			path = "球队掠影";
 			sourceTree = "<group>";
@@ -10143,6 +10148,7 @@
 				20591C621D22139D003271EC /* JGHWithdrawDetailsViewController.m in Sources */,
 				828A99FC1CE3549900AF9860 /* JGMemDataTableViewCell.m in Sources */,
 				82E6A6F21CF55313009DD179 /* JGLTeamAdviceTableViewCell.m in Sources */,
+				20D0081E1E7239890040883C /* JGHShadowPhotoAlbumViewController.m in Sources */,
 				F55CB1531E5D8FAB00D1798E /* CityPickerView.m in Sources */,
 				368B73341C102A710002A618 /* ScoreProfessViewController.m in Sources */,
 				36BF01A41BC779EA005B3CE2 /* BaseModel.m in Sources */,

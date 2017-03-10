@@ -16,7 +16,7 @@
 
 @property (nonatomic, retain)UILabel *titleLable;
 
-@property (nonatomic, retain)UIImageView *directionImageView;
+@property (nonatomic, retain)UIButton *directionBtn;
 
 @property (nonatomic, retain)UILabel *detailLable;
 
