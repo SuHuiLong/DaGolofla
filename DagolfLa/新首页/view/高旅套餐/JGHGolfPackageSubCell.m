@@ -12,23 +12,23 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        _headerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(6*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 164*ProportionAdapter)];
+        _headerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 164*ProportionAdapter)];
         _headerImageView.image = [UIImage imageNamed:@"home_bg_comp"];
         _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         _headerImageView.clipsToBounds = YES;
         [self addSubview:_headerImageView];
         
-        _golfImageView = [[UIImageView alloc]initWithFrame:CGRectMake(6*ProportionAdapter, 180*ProportionAdapter, 12*ProportionAdapter, 17*ProportionAdapter)];
+        _golfImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 180*ProportionAdapter, 12*ProportionAdapter, 17*ProportionAdapter)];
         _golfImageView.image = [UIImage imageNamed:@"home_hot"];
         [self addSubview:_golfImageView];
         
-        _titleLable = [[UILabel alloc]initWithFrame:CGRectMake(23*ProportionAdapter, 180*ProportionAdapter, screenWidth -66*ProportionAdapter, 20*ProportionAdapter)];
+        _titleLable = [[UILabel alloc]initWithFrame:CGRectMake(27*ProportionAdapter, 180*ProportionAdapter, screenWidth -66*ProportionAdapter, 20*ProportionAdapter)];
         _titleLable.font = [UIFont systemFontOfSize:17*ProportionAdapter];
         _titleLable.textColor = [UIColor colorWithHexString:B31_Color];
         _titleLable.text = @"";
         [self addSubview:_titleLable];
         
-        _price = [[UILabel alloc]initWithFrame:CGRectMake(23*ProportionAdapter, 212*ProportionAdapter, screenWidth -66*ProportionAdapter, 20*ProportionAdapter)];
+        _price = [[UILabel alloc]initWithFrame:CGRectMake(27*ProportionAdapter, 212*ProportionAdapter, screenWidth -66*ProportionAdapter, 20*ProportionAdapter)];
         _price.font = [UIFont systemFontOfSize:16*ProportionAdapter];
         _price.textColor = [UIColor colorWithHexString:SY_PriceColor];
         _price.text = @"";
@@ -38,10 +38,10 @@
 }
 
 - (void)configJGHGolfPackageSubCell:(NSDictionary *)dict andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
-    _headerImageView.frame = CGRectMake(6*ProportionAdapter, 0, imageW*ProportionAdapter, imageH*ProportionAdapter);
-    _golfImageView.frame = CGRectMake(6*ProportionAdapter, imageH*ProportionAdapter+ 16*ProportionAdapter, 12*ProportionAdapter, 17*ProportionAdapter);
-    _titleLable.frame = CGRectMake(23*ProportionAdapter, imageH*ProportionAdapter+ 16*ProportionAdapter, imageW*ProportionAdapter -17*ProportionAdapter, 20*ProportionAdapter);
-    _price.frame = CGRectMake(23*ProportionAdapter, imageH*ProportionAdapter+ 48*ProportionAdapter, imageW*ProportionAdapter -17*ProportionAdapter, 20*ProportionAdapter);
+    _headerImageView.frame = CGRectMake(10*ProportionAdapter, 0, imageW*ProportionAdapter, imageH*ProportionAdapter);
+    _golfImageView.frame = CGRectMake(10*ProportionAdapter, imageH*ProportionAdapter+ 16*ProportionAdapter, 12*ProportionAdapter, 17*ProportionAdapter);
+    _titleLable.frame = CGRectMake(27*ProportionAdapter, imageH*ProportionAdapter+ 16*ProportionAdapter, imageW*ProportionAdapter -17*ProportionAdapter, 20*ProportionAdapter);
+    _price.frame = CGRectMake(27*ProportionAdapter, imageH*ProportionAdapter+ 48*ProportionAdapter, imageW*ProportionAdapter -17*ProportionAdapter, 20*ProportionAdapter);
     
     [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"imgURL"]] placeholderImage:[UIImage imageNamed:@"home_bg_comp"]];
     //_headerImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -50,7 +50,7 @@
     }
     
     if ([dict objectForKey:@"money"]) {
-        _price.text = [NSString stringWithFormat:@"¥%@", [dict objectForKey:@"money"]];
+        _price.text = [NSString stringWithFormat:@"¥%.2f", [[dict objectForKey:@"money"] floatValue]];
     }
 }
 

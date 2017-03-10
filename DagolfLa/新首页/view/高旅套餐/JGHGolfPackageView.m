@@ -59,7 +59,7 @@ static NSString *const JGHGolfPackageSubCellIdentifier = @"JGHGolfPackageSubCell
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return _imageW*ProportionAdapter +6*ProportionAdapter;
+    return _imageW*ProportionAdapter +10*ProportionAdapter;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
