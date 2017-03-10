@@ -202,7 +202,7 @@
 
                         });
                         
-                        [_timeListView loadTimeListWithBallKey:_ballKey andDateString:[NSString stringWithFormat:@"%td-%@-%@ 00:00:00", _year, month, day]];
+                        [_timeListView loadTimeListWithBallKey:_ballKey andDateString:[NSString stringWithFormat:@"%td-%@-%@ 00:00:00", _year, month, day] andIsLeagueUser:_isLeagueUser];
                         return ;
                         //break;
                     }else{
