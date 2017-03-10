@@ -45,6 +45,7 @@ static NSString *const JGHGolfPackageSubCellIdentifier = @"JGHGolfPackageSubCell
 - (void)configJGHGolfPackageViewData:(NSArray *)dataArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     _imageW = imageW;
     _imageH = imageH;
+    _golfPackageView.frame = CGRectMake(0, 0, screenWidth, _imageH*ProportionAdapter+ 89*ProportionAdapter);
     _dataArray = dataArray;
     [_golfPackageView reloadData];
 }
@@ -59,7 +60,7 @@ static NSString *const JGHGolfPackageSubCellIdentifier = @"JGHGolfPackageSubCell
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return _imageW*ProportionAdapter +6*ProportionAdapter;
+    return _imageW*ProportionAdapter +10*ProportionAdapter;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -70,7 +71,7 @@ static NSString *const JGHGolfPackageSubCellIdentifier = @"JGHGolfPackageSubCell
     
     golfPackageSubCell.selectionStyle = UITableViewCellSelectionStyleNone;
     golfPackageSubCell.transform = CGAffineTransformMakeRotation(M_PI/2);
-    golfPackageSubCell.frame = CGRectMake(0, 0, _imageW*ProportionAdapter +20*ProportionAdapter, _imageH*ProportionAdapter+ 99*ProportionAdapter);
+    golfPackageSubCell.frame = CGRectMake(0, 0, _imageW*ProportionAdapter +20*ProportionAdapter, _imageH*ProportionAdapter+ 89*ProportionAdapter);
     return golfPackageSubCell;
 }
 

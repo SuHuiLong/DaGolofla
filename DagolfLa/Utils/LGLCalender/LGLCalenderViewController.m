@@ -262,6 +262,8 @@
                 cell.backgroundColor =  [UIColor colorWithHexString:Bar_Segment];//LGLColor(65, 207, 79)
                 cell.dateL.textColor = [UIColor whiteColor];
                 cell.priceL.textColor = [UIColor whiteColor];
+                
+                _selectDayIndexPath = indexPath.row;
             }else{
                 //周六周天
                 if (indexPath.item %7 == 0 || (indexPath.item +1) %7 == 0) {
@@ -279,7 +281,6 @@
                     cell.dateL.font = [UIFont systemFontOfSize:18*ProportionAdapter];
                     cell.dateL.text = @"今";
                     cell.dateL.center = CGPointMake(25 *ProportionAdapter, 25 *ProportionAdapter);
-                    _selectDayIndexPath = indexPath.row;
                     
                 }else{
                     cell.dateL.text = [NSString stringWithFormat:@"%ld",(long)subModel.day];

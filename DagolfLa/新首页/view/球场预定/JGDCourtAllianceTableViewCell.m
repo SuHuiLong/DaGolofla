@@ -44,7 +44,7 @@
         self.originalPriceLB = [Helper lableRect:CGRectMake(ScreenWidth /2 + 6 * ProportionAdapter, 105 * ProportionAdapter, (ScreenWidth - 31 * ProportionAdapter) / 2, 25 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:11 * ProportionAdapter text:@"" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:self.originalPriceLB];
         
-        self.normalBtn = [[UIButton alloc] initWithFrame:CGRectMake(ScreenWidth / 2 + 50 * ProportionAdapter, 138 * ProportionAdapter, 95 * ProportionAdapter, 55 * ProportionAdapter)];
+        self.normalBtn = [[UIButton alloc] initWithFrame:CGRectMake(ScreenWidth / 2 + 44 * ProportionAdapter, 138 * ProportionAdapter, 95 * ProportionAdapter, 55 * ProportionAdapter)];
         [self.normalBtn setImage:[UIImage imageNamed:@"booking_pay_norcolor"] forState:(UIControlStateNormal)];
         [self.normalBtn setTitleColor:[UIColor colorWithHexString:@"#fc5a01"] forState:(UIControlStateNormal)];
         [self.contentView addSubview:self.normalBtn];
@@ -72,7 +72,17 @@
     
     self.courtNameLB.text = [dataDic objectForKey:@"bookName"];
     self.serviceLB.text = [dataDic objectForKey:@"servicePj"];
-    self.remainderBallLB.text = [NSString stringWithFormat:@"年度剩余可预定球位数：%@位", [dataDic objectForKey:@"remoteRemainingNumber"]];
+    
+    
+    NSMutableAttributedString *remainderStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"年度剩余可预订球位数：%@位", [dataDic objectForKey:@"remoteRemainingNumber"]]];
+    NSString *lengthStr = [NSString stringWithFormat:@"%@", [dataDic objectForKey:@"remoteRemainingNumber"]];
+    [remainderStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(11, lengthStr.length)];
+    // 颜色
+    [remainderStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#626262"] range:NSMakeRange(11, lengthStr.length)];
+
+    self.remainderBallLB.attributedText = remainderStr;
+    
+    
     NSMutableAttributedString *leagueStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.leagueMoney]];
     [leagueStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14 * ProportionAdapter] range:NSMakeRange(0, 1)];
     self.vipPriceLB.attributedText = leagueStr;

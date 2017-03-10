@@ -24,7 +24,7 @@
         _name.text = @"上海CF球队相册";
         [self addSubview:_name];
         
-        _price = [[UILabel alloc]initWithFrame:CGRectMake(0, 143 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
+        _price = [[UILabel alloc]initWithFrame:CGRectMake(0, 140 *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter)];
         _price.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         _price.textColor = [UIColor colorWithHexString:SY_PriceColor];
         _price.text = @"¥";
@@ -39,7 +39,7 @@
     
     _name.frame = CGRectMake(0, (imageH +5) *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter);
     
-    _price.frame = CGRectMake(0, (imageH +5 + 25) *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter);
+    _price.frame = CGRectMake(0, (imageH +5 + 23) *ProportionAdapter, _activityImageView.frame.size.width, 20 *ProportionAdapter);
     
     [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", [dict objectForKey:@"imgURL"]]] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
     _name.text = [NSString stringWithFormat:@"%@", [dict objectForKey:@"title"]];

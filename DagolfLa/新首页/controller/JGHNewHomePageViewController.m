@@ -452,7 +452,8 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 
     JGHShowSectionTableViewCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSectionTableViewCellIdentifier];
     showSectionCell.delegate = self;
-    showSectionCell.moreBtn.tag = 100 +section;
+    //showSectionCell.moreBtn.tag = 100 +section;
+    showSectionCell.moreClick.tag = 100 +section;
     
     NSDictionary *dict = _indexModel.plateList[section -1];
     NSInteger _more = 0;
@@ -476,8 +477,8 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
             NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
             NSInteger imgHeight = [[dict objectForKey:@"imgHeight"] integerValue];
             if (bodyLayoutType == 0) {
-                //精彩推荐
-                return ((bodyList.count-1)/2+1) *(imgHeight +35 +8) *ProportionAdapter + 8*ProportionAdapter;
+                //球队掠影
+                return ((bodyList.count-1)/2+1) *(imgHeight +35 +8) *ProportionAdapter;
             }else if (bodyLayoutType == 1){
                 //用品商城
                 return ((bodyList.count-1)/2+1) *(imgHeight +104) *ProportionAdapter;
@@ -486,13 +487,13 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
                 return ((25 +imgHeight) *ProportionAdapter) *bodyList.count;
             }else if (bodyLayoutType == 3){
                 //订场推荐
-                return ((bodyList.count-1)/2+1) *(imgHeight +56 +8) *ProportionAdapter + 8*ProportionAdapter;
+                return ((bodyList.count-1)/2+1) *(imgHeight +56 +8) *ProportionAdapter;
             }else if (bodyLayoutType == 4){
                 //精彩赛事
                 return imgHeight*ProportionAdapter +99*ProportionAdapter;
             }else if (bodyLayoutType == 5){
                 //高旅套餐
-                return imgHeight*ProportionAdapter +99*ProportionAdapter;
+                return imgHeight*ProportionAdapter +89*ProportionAdapter;
             }else{
                 //其他  －－－ 更新版本
                 return 0;
@@ -512,6 +513,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
+        [self isLoginUp];
         //系统消息
         if ([_indexModel.Msg objectForKey:@"linkURL"]) {
             [self pushctrlWithUrl:[_indexModel.Msg objectForKey:@"linkURL"]];

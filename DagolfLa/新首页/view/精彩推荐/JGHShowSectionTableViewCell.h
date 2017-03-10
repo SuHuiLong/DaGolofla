@@ -26,6 +26,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *moreBtn;
 - (IBAction)moreBtn:(UIButton *)sender;
 
+- (IBAction)moreClick:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *moreClick;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *moreClickW;
+
+
 @property (weak, nonatomic) IBOutlet UIImageView *moreImageView;
 
 @property (weak, nonatomic)id <JGHShowSectionTableViewCellDelegate> delegate;

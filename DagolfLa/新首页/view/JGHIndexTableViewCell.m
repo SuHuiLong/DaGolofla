@@ -76,9 +76,9 @@
     for (int i=0; i<wonderfulArray.count; i++) {
         
         if (i%2 == 0) {
-            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +35) *ProportionAdapter)];
+            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 )*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +35) *ProportionAdapter)];
         }else{
-            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake( screenWidth/2 +4*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +35) *ProportionAdapter)];
+            _wonderfulView = [[JGHWonderfulView alloc]initWithFrame:CGRectMake( screenWidth/2 +4*ProportionAdapter, (i/2 )*8*ProportionAdapter + (i/2)*(imageH +35)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +35) *ProportionAdapter)];
         }
         
         NSLog(@"%d", i/2);
@@ -97,9 +97,9 @@
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for (int i=0; i<array.count; i++) {
         if (i%2 == 0) {
-            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +56) *ProportionAdapter)];
+            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(8*ProportionAdapter, (i/2)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +56) *ProportionAdapter)];
         }else{
-            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(screenWidth/2 +4*ProportionAdapter, (i/2 +1)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +56)*ProportionAdapter)];
+            _recomStadiumView = [[JGHRecomStadiumView alloc]initWithFrame:CGRectMake(screenWidth/2 +4*ProportionAdapter, (i/2)*8*ProportionAdapter + (i/2)*(imageH +56)*ProportionAdapter, screenWidth/2 -12*ProportionAdapter, (imageH +56)*ProportionAdapter)];
         }
         
         [_recomStadiumView configJGHRecomStadiumView:array[i] andImageW:imageW andImageH:imageH];
