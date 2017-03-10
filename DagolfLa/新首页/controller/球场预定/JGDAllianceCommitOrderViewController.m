@@ -456,8 +456,8 @@
         [closeBtn setImage:[UIImage imageNamed:@"date_close"] forState:(UIControlStateNormal)];
         [closeBtn addTarget:self action:@selector(closeCardAct:) forControlEvents:(UIControlEventTouchUpInside)];
         
-        UILabel *lineLB = [Helper lableRect:CGRectMake(0, 0, screenWidth, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:17 * ProportionAdapter text:@"" textAlignment:(NSTextAlignmentCenter)];
-        lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        UILabel *lineLB = [Helper lableRect:CGRectMake(0, 0, screenWidth, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#c9c9c9"] labelFont:17 * ProportionAdapter text:@"" textAlignment:(NSTextAlignmentCenter)];
+        lineLB.backgroundColor = [UIColor colorWithHexString:@"#c9c9c9"];
         [backView addSubview:lineLB];
         [backView addSubview:titleLB];
         [backView addSubview:closeBtn];
