@@ -493,10 +493,11 @@
     if (tableView.tag == 567) {
         return 41 * ProportionAdapter;
     }
+    
     if (indexPath.row == 2) {
         return 50 * ProportionAdapter;
     }
-    else if (indexPath.row == 5 + [self.playerArray count]) {
+    else if (indexPath.row == 6) {
         return 60 * ProportionAdapter;
     }
     else{
@@ -704,13 +705,14 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSInteger row = 5 + [self.playerArray count];
-    
-    if (indexPath.row > 5 && indexPath.row != row) {
-        return YES;
-    }else{
-        return NO;
-    }
+    return NO;
+//    NSInteger row = 5 + [self.playerArray count];
+//    
+//    if (indexPath.row > 5 && indexPath.row != row) {
+//        return YES;
+//    }else{
+//        return NO;
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -753,15 +755,15 @@
     }
     
     
-    self.payMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] * ([self.playerArray count])];
-    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] * ([self.playerArray count])]];
+    self.payMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue]];
+    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] ]];
     [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
-    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", [self.selectMoney integerValue] * ([self.playerArray count])] length] + 1)];
+    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", [self.selectMoney integerValue]] length] + 1)];
     self.payMoneyLB.attributedText = mutaAttStr;
     
     
-    self.scenePayMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectSceneMoney integerValue] * ([self.playerArray count])];
-    NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%td", [self.selectSceneMoney integerValue] * ([self.playerArray count])]];
+    self.scenePayMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectSceneMoney integerValue]];
+    NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%td", [self.selectSceneMoney integerValue]]];
     [sceneAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
     self.scenePayMoneyLB.attributedText = sceneAttStr;
     
