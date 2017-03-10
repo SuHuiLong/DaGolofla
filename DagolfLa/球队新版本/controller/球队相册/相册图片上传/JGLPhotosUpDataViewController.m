@@ -100,7 +100,7 @@
 {
     UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(0, 10 *ProportionAdapter, ScreenWidth, 40*ScreenWidth/375)];
     [self.view addSubview:label];
-    label.text = [NSString stringWithFormat:@"  相册名称:%@", _albumName];
+    label.text = [NSString stringWithFormat:@"  相册名称：%@", _albumName];
     label.font = [UIFont systemFontOfSize:16*ScreenWidth/375];
     label.backgroundColor = [UIColor whiteColor];
     label.textColor = [UIColor lightGrayColor];
