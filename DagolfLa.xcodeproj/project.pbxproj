@@ -17,6 +17,7 @@
 		186856021E5BD776001F44DD /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FB1E5BD776001F44DD /* LocationManager.m */; };
 		186856031E5BD776001F44DD /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FD1E5BD776001F44DD /* UIView+Addition.m */; };
 		186856041E5BD776001F44DD /* UIView+GPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FF1E5BD776001F44DD /* UIView+GPExtension.m */; };
+		1872F3751E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */; };
 		18D5DBCE1E65700F008C87EE /* shake-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18D5DBCD1E65700F008C87EE /* shake-sound.wav */; };
 		18D5DBD41E67A913008C87EE /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DBD11E67A912008C87EE /* NJKWebViewProgress.m */; };
 		18D5DBD51E67A913008C87EE /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DBD31E67A912008C87EE /* NJKWebViewProgressView.m */; };
@@ -1277,6 +1278,8 @@
 		186855FD1E5BD776001F44DD /* UIView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Addition.m"; sourceTree = "<group>"; };
 		186855FE1E5BD776001F44DD /* UIView+GPExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GPExtension.h"; sourceTree = "<group>"; };
 		186855FF1E5BD776001F44DD /* UIView+GPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GPExtension.m"; sourceTree = "<group>"; };
+		1872F3731E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+ChangeLineSpaceAndWordSpace.h"; sourceTree = "<group>"; };
+		1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+ChangeLineSpaceAndWordSpace.m"; sourceTree = "<group>"; };
 		18D5DBCD1E65700F008C87EE /* shake-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "shake-sound.wav"; sourceTree = "<group>"; };
 		18D5DBD01E67A912008C87EE /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgress.h; sourceTree = "<group>"; };
 		18D5DBD11E67A912008C87EE /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgress.m; sourceTree = "<group>"; };
@@ -3761,6 +3764,8 @@
 				186855FF1E5BD776001F44DD /* UIView+GPExtension.m */,
 				1825832E1E5EE4CB00DE1504 /* UITableView+Addition.h */,
 				1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */,
+				1872F3731E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.h */,
+				1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -9578,6 +9583,7 @@
 				20BC97E31E1F6051007DFD34 /* JGHAwardCell.m in Sources */,
 				36BF00AA1BC77326005B3CE2 /* NewsModel.m in Sources */,
 				20591C731D2247BB003271EC /* JGHRefundDetailsViewController.m in Sources */,
+				1872F3751E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m in Sources */,
 				82EDDF7E1D6154A8003D51EB /* JGLCaddieChooseStyleViewController.m in Sources */,
 				20301A021E0E4293005568E2 /* ZXQRCodeAlignmentPatternFinder.m in Sources */,
 				208837991D17D206004C7B5D /* JGHActicityDetailsViewController.m in Sources */,

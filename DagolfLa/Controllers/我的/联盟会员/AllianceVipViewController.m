@@ -427,7 +427,7 @@
         //没卡提示图片
         headView.alertImageView.hidden = FALSE;
         //文字描述
-        NSString *noneCard = @"您还未添加任何君高高尔夫联盟会员卡，点击右上角『+』，添加您的联盟会员卡，添加会员卡后，就能在APP中享受联盟会员价预定球场的权益";
+        NSString *noneCard = @"您还未添加任何君高高尔夫联盟会员卡，点击右上角『+』，添加您的联盟会员卡，添加会员卡后，就能在APP中享受联盟会员价预订球场的权益。";
         headView.descLabel.hidden = FALSE;
         headView.descLabel.text = noneCard;
         
@@ -436,7 +436,8 @@
             
             //用户手机号上有未添加的卡片
             NSString *unAddCardNum = [NSString stringWithFormat:@"%ld",(long)_unAddCardNum];
-            NSString *haveCard = [NSString stringWithFormat:@"您的手机号%@下有 %@ 张联盟卡可绑定，绑定后可通过君高高尔夫APP，以联盟价预定联盟球场，并可随时查看联盟卡使用情况，被绑定的联盟卡可随时解绑",@"18211672654",unAddCardNum];
+            NSString *mobile = [UserDefaults objectForKey:@"mobile"];
+            NSString *haveCard = [NSString stringWithFormat:@"您的手机号%@下有 %@ 张联盟卡可绑定。绑定后可通过君高高尔夫APP，以联盟价预订联盟球场，并可随时查看联盟卡使用情况。被绑定的联盟卡可随时解绑。",mobile,unAddCardNum];
             headView.descLabel.y = kHvertical(105);
             headView.descLabel.text = haveCard;
             headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
@@ -444,6 +445,7 @@
             headView.addNowBtn.hidden = FALSE;
             [headView.addNowBtn addTarget:self action:@selector(addNowBtnClick) forControlEvents:UIControlEventTouchUpInside];
         }
+        [headView.descLabel changeLineWithSpace:5.0f];
         
     }else if(indexPath.section == 1){
         headView.line.hidden = FALSE;
