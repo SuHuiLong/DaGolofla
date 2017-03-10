@@ -49,6 +49,15 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dcJ-yd-pRO">
+                        <rect key="frame" x="260" y="0.0" width="60" height="43"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="1mx-G5-d2z"/>
+                        </constraints>
+                        <connections>
+                            <action selector="moreClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ttt-7O-1aH"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="Zwd-vg-nBg" secondAttribute="bottom" id="0vf-Px-SKB"/>
@@ -56,9 +65,12 @@
                     <constraint firstAttribute="trailing" secondItem="Oxc-bZ-bE6" secondAttribute="trailing" constant="10" id="Kcy-1i-4f6"/>
                     <constraint firstItem="t0o-oN-5qz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="KdA-KB-Gma"/>
                     <constraint firstItem="rTS-4n-n6h" firstAttribute="leading" secondItem="t0o-oN-5qz" secondAttribute="trailing" constant="10" id="RJP-Bf-Cbm"/>
+                    <constraint firstAttribute="trailing" secondItem="dcJ-yd-pRO" secondAttribute="trailing" id="Ryz-i2-Kxu"/>
+                    <constraint firstItem="dcJ-yd-pRO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="T6Z-LX-DsD"/>
                     <constraint firstItem="Oxc-bZ-bE6" firstAttribute="leading" secondItem="Zwd-vg-nBg" secondAttribute="trailing" constant="5" id="WLm-eE-d6R"/>
                     <constraint firstItem="Zwd-vg-nBg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="d8R-eX-kRv"/>
                     <constraint firstItem="Oxc-bZ-bE6" firstAttribute="centerY" secondItem="Zwd-vg-nBg" secondAttribute="centerY" id="nV4-dG-x9v"/>
+                    <constraint firstAttribute="bottom" secondItem="dcJ-yd-pRO" secondAttribute="bottom" id="sdy-8q-Cyt"/>
                     <constraint firstItem="t0o-oN-5qz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uhs-W9-xNV"/>
                 </constraints>
             </tableViewCellContentView>
@@ -67,6 +79,8 @@
                 <outlet property="bgLableH" destination="Sd4-9A-ug1" id="2JH-MW-P4S"/>
                 <outlet property="bgLableLeft" destination="KdA-KB-Gma" id="EOY-Nc-18W"/>
                 <outlet property="moreBtn" destination="Zwd-vg-nBg" id="Hu1-I1-9F7"/>
+                <outlet property="moreClick" destination="dcJ-yd-pRO" id="hSe-z9-e7F"/>
+                <outlet property="moreClickW" destination="1mx-G5-d2z" id="JZZ-kg-tm9"/>
                 <outlet property="moreImageView" destination="Oxc-bZ-bE6" id="hDi-e5-7FT"/>
                 <outlet property="name" destination="rTS-4n-n6h" id="3ZI-gd-b0T"/>
                 <outlet property="nameLeft" destination="RJP-Bf-Cbm" id="WVW-l8-LyH"/>
