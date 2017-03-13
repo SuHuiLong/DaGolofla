@@ -17,6 +17,8 @@
 
 @property (copy, nonatomic) void (^blockTimeWithPrice)(NSString *, NSString *, NSString *, NSString *, NSString *);//时间、价格、线下支付价格、联盟价格
 
+@property (nonatomic, copy) NSString *dateString; // 当前选择的日期
+
 //@property (nonatomic, copy) SelectDateBalock block;
 //- (void)seleDateWithBlock:(SelectDateBalock)block;
 
