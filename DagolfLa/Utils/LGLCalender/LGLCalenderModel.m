@@ -31,6 +31,7 @@
     NSInteger _currentYearArrayCount = 0;
     
     for (NSInteger y = year; y < year + yearMax; y ++) {
+        //当年 -- 月份小于11 ＝＝ 取当年3个月
         if (yearMax == 1) {
             for (NSInteger i = month; i < month +3; i++) {
                 LGLCalenderModel * model = [[LGLCalenderModel alloc] init];
