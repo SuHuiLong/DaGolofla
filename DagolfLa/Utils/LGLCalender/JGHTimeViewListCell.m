@@ -35,7 +35,7 @@
     _timeLable.text = [NSString stringWithFormat:@"%@", [pircedict objectForKey:@"halfHour"]];
     
     if (hasUserCard) {
-        _priceLable.text = [NSString stringWithFormat:@"¥ %@", [pircedict objectForKey:@"leagueMoney"]];
+        _priceLable.text = [NSString stringWithFormat:@"¥ %@", ([pircedict objectForKey:@"leagueMoney"])?[pircedict objectForKey:@"leagueMoney"]:@""];
     }else{
         if ([pircedict objectForKey:@"money"]) {
             _priceLable.text = [NSString stringWithFormat:@"¥ %@", [pircedict objectForKey:@"money"]];

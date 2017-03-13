@@ -71,6 +71,18 @@
     [super viewDidLoad];
     _hasUserCard = NO;
     
+    if (_dateString) {
+        _year = [[Helper stringFromDateString:_dateString withFormater:@"yyyy"] integerValue];
+        _month = [[Helper stringFromDateString:_dateString withFormater:@"M"] integerValue];
+        _day = [[Helper stringFromDateString:_dateString withFormater:@"d"] integerValue];
+        
+        _selectDay = 1;
+    }
+    
+    //    NSLog(@"%td" ,[[Helper stringFromDateString:self.selectDate withFormater:@"yyyy"] integerValue]);
+    //    NSLog(@"%td" ,[[Helper stringFromDateString:self.selectDate withFormater:@"M"] integerValue]);
+    //    NSLog(@"%td" ,[[Helper stringFromDateString:self.selectDate withFormater:@"d"] integerValue]);
+    
     [self initOtherData];
     [self addHeaderWeekView];
     [self getData];
@@ -116,9 +128,9 @@
     self.title = @"选择日期";
     
     //获取当前的年月日
-     _year = [LGLCalendarDate year:[NSDate date]];
-     _month = [LGLCalendarDate month:[NSDate date]];
-     _day = [LGLCalendarDate day:[NSDate date]];
+     //_year = [LGLCalendarDate year:[NSDate date]];
+     //_month = [LGLCalendarDate month:[NSDate date]];
+     //_day = [LGLCalendarDate day:[NSDate date]];
     
     _currentMonth = [LGLCalendarDate month:[NSDate date]];
     _currentDay  = [LGLCalendarDate day:[NSDate date]];
@@ -157,7 +169,6 @@
 
 - (void)getData {
     __weak LGLCalenderViewController *weakSelf = self;
-    _selectDay = 0;
     [LQProgressHud showLoading:@"加载中..."];
     
     [LGLCalenderModel getCalenderDataWithDate:[NSDate date] andBallKey:_ballKey block:^(NSMutableArray *result, BOOL hasUserCard) {
@@ -177,13 +188,14 @@
                             day = [NSString stringWithFormat:@"%td", dayModel.day];
                         }
                         
-                        //可预定时间
+                        //可预定时间 -- 当上一控制器没有传时间，默认选择第一个有价格的时间
                         if (weakSelf.selectDay == 0) {
                             _day = dayModel.day;
                             _month = model.month;
                             _year = model.year;
                             weakSelf.selectDay = 1;
                         }
+                        
                         
                         NSString *month;
                         if (_month < 10) {

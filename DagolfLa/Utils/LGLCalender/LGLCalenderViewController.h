@@ -8,8 +8,6 @@
 
 #import "ViewController.h"
 
-//typedef void(^SelectDateBalock)(NSMutableDictionary * paramas);
-
 @interface LGLCalenderViewController : ViewController
 
 @property (nonatomic, retain)NSNumber *ballKey;
@@ -19,7 +17,5 @@
 
 @property (nonatomic, copy) NSString *dateString; // 当前选择的日期
 
-//@property (nonatomic, copy) SelectDateBalock block;
-//- (void)seleDateWithBlock:(SelectDateBalock)block;
 
 @end
