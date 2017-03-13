@@ -25,8 +25,6 @@
 
 #import "PostDataRequest.h"
 
-#import "ScoreProfessViewController.h"
-
 #import "PersonHomeController.h"
 
 #import "MeViewController.h"
