@@ -583,6 +583,11 @@ static CGFloat ImageHeight  = 210.0;
 //  money 单价（减免后的）     sence 现场价格  deductionMoney 减免
 - (void)calendarTap{
     LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
+    caleVC.dateString = self.selectDate;
+//    NSLog(@"%td" ,[[Helper stringFromDateString:self.selectDate withFormater:@"yyyy"] integerValue]);
+//    NSLog(@"%td" ,[[Helper stringFromDateString:self.selectDate withFormater:@"M"] integerValue]);
+//    NSLog(@"%td" ,[[Helper stringFromDateString:self.selectDate withFormater:@"d"] integerValue]);
+
     caleVC.ballKey = self.timeKey;
     if (self.hasLeagueUser) {
         caleVC.isLeagueUser = YES;
