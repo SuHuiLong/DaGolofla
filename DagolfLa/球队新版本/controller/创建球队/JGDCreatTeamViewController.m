@@ -1,12 +1,13 @@
 //
-//  JGNotTeamMemberDetailViewController.m
+//  JGDCreatTeamViewController.m
 //  DagolfLa
 //
-//  Created by 東 on 16/5/24.
-//  Copyright © 2016年 bhxx. All rights reserved.
+//  Created by 東 on 17/3/14.
+//  Copyright © 2017年 bhxx. All rights reserved.
 //
 
-#import "JGNewCreateTeamTableViewController.h"
+
+#import "JGDCreatTeamViewController.h"
 #import "JGApplyMaterialTableViewCell.h"
 
 #import "JGTableViewCell.h"
@@ -22,13 +23,16 @@
 
 #import "IQKeyboardManager.h"
 
+#import "JGDCreatTeamTableViewCell.h"
+#import "JGDDoubleTextfiledTableViewCell.h"
+
 
 static NSString *const JGTableViewCellIdentifier = @"JGTableViewCell";
 static NSString *const JGHTeamContactCellIdentifier = @"JGHTeamContactTableViewCell";
 static CGFloat ImageHeight  = 210.0;
 
 
-@interface JGNewCreateTeamTableViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate,JGHConcentTextViewControllerDelegate>
+@interface JGDCreatTeamViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JGHConcentTextViewControllerDelegate, NSURLConnectionDownloadDelegate, JGCostSetViewControllerDelegate,JGHConcentTextViewControllerDelegate>
 {
     
     NSArray *_titleArray;//标题数组
@@ -41,6 +45,11 @@ static CGFloat ImageHeight  = 210.0;
     
     UIImageView *_gradientImage;
 }
+
+@property (nonatomic, retain) UIImageView *imgProfile;
+@property (nonatomic, strong)UIButton *headPortraitBtn;//头像
+@property (nonatomic, strong)UITextField *titleField;//球队名称输入框
+
 @property (nonatomic,strong)SXPickPhoto * pickPhoto;//相册类
 @property (nonatomic, strong)UITableView *launchActivityTableView;
 
@@ -55,31 +64,26 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 
-@property (nonatomic, strong)NSMutableDictionary *paraDic; //参数字典
+//@property (nonatomic, strong)NSMutableDictionary *paraDic; //参数字典
+
+@property (nonatomic, strong) NSArray *tilteArray;
+@property (nonatomic, strong) NSArray *iconArray;
 
 @end
 
-@implementation JGNewCreateTeamTableViewController
+@implementation JGDCreatTeamViewController
 
 - (void)viewWillAppear:(BOOL)animated{
+
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
-    if ([self.detailDic objectForKey:@"name"]) {
-        self.titleField.text = [self.detailDic objectForKey:@"name"];
-    }
-    if (self.detailDic) {
-        self.paraDic = self.detailDic;
-    }
-    
-    //    _wasKeyboardManagerEnabled = [[IQKeyboardManager sharedManager] isEnabled];
-    //    [[IQKeyboardManager sharedManager] setEnable:NO];
+
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
-//    [super viewWillDisappear:YES];
+
     [super viewWillDisappear:NO];
     self.navigationController.navigationBarHidden = NO;
-    //     [[IQKeyboardManager sharedManager] setEnable:_wasKeyboardManagerEnabled];
 }
 
 - (instancetype)init{
@@ -94,22 +98,21 @@ static CGFloat ImageHeight  = 210.0;
         self.titleView = [[UIView alloc]init];
         UIImage *image = [UIImage imageNamed:TeamBGImage];
         self.imgProfile = [[UIImageView alloc] initWithImage:image];
-        self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight * screenWidth / 320);
+        self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight * ProportionAdapter);
         self.imgProfile.userInteractionEnabled = YES;
         self.imgProfile.contentMode = UIViewContentModeScaleToFill;
         
         //渐变图
-        _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight * screenWidth / 320)];
+        _gradientImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, ImageHeight * ProportionAdapter)];
         [_gradientImage setImage:[UIImage imageNamed:@"backChange"]];
         [self.imgProfile addSubview:_gradientImage];
         
-        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStylePlain)];
-        [self.launchActivityTableView registerClass:[JGLableAndLableTableViewCell class] forCellReuseIdentifier:@"lbVSlb"];
-        [self.launchActivityTableView registerClass:[JGDisplayInfoTableViewCell class] forCellReuseIdentifier:@"Display"];
-        [self.launchActivityTableView registerClass:[JGApplyMaterialTableViewCell class] forCellReuseIdentifier:@"lbVSTF"];
+        self.launchActivityTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:(UITableViewStyleGrouped)];
+
         
-        
-        
+        [self.launchActivityTableView registerClass:[JGDCreatTeamTableViewCell class] forCellReuseIdentifier:@"JGDCreatTeamTableViewCell"];
+        [self.launchActivityTableView registerClass:[JGDDoubleTextfiledTableViewCell class] forCellReuseIdentifier:@"JGDDoubleTextfiledTableViewCell"];
+
         self.launchActivityTableView.dataSource = self;
         self.launchActivityTableView.delegate = self;
         
@@ -135,7 +138,7 @@ static CGFloat ImageHeight  = 210.0;
     
     //返回按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 10 * screenWidth / 320, 44 * screenWidth / 320, 44 * screenWidth / 320);
+    btn.frame = CGRectMake(0, 10 * ProportionAdapter, 44  * ProportionAdapter, 44 * ProportionAdapter);
     btn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
@@ -143,55 +146,29 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:btn];
     //点击更换
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth-64, 10 * screenWidth / 320, 54, 44);
+    replaceBtn.frame = CGRectMake(screenWidth - 70 * ProportionAdapter, 10  * ProportionAdapter, 60 * ProportionAdapter, 44 * ProportionAdapter);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
-    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
     replaceBtn.tag = 520;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
-    //输入框
-    self.titleField = [[UITextField alloc]initWithFrame:CGRectMake(64, 17 * screenWidth / 320, screenWidth - 128, 30)];
-    //    self.titleField.textColor = [UIColor whiteColor];
-    //    self.titleField.font = [UIFont systemFontOfSize:15];
-    self.titleField.placeholder = @"请输入球队名";
-    self.titleField.delegate = self;
-    self.titleField.textColor = [UIColor whiteColor];
-    [self.titleField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [self.titleField setValue:[UIFont boldSystemFontOfSize:15 * screenWidth / 320] forKeyPath:@"_placeholderLabel.font"];
-    self.titleField.textAlignment = NSTextAlignmentCenter;
-    self.titleField.font = [UIFont systemFontOfSize:15 * screenWidth / 320];
-    self.titleField.tag = 1117;
+
+    
     //头像
-    self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20 * screenWidth / 320, 150 * screenWidth / 320, 50 * screenWidth / 320, 50 * screenWidth / 320)];
+    self.headPortraitBtn = [[UIButton alloc]initWithFrame:CGRectMake(20   * ProportionAdapter, 150  * ProportionAdapter, 50   * ProportionAdapter, 50  * ProportionAdapter)];
     [self.headPortraitBtn setImage:[UIImage imageNamed:TeamLogoImage] forState:UIControlStateNormal];
     [self.headPortraitBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    //    self.headPortraitBtn.backgroundColor = [UIColor redColor];
     self.headPortraitBtn.layer.cornerRadius = 8.0;
     self.headPortraitBtn.tag = 740;
+    self.headPortraitBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.imgProfile addSubview:self.headPortraitBtn];
-    [self.titleView addSubview:self.titleField];
     
-    //地址
-    //    self.addressBtn = [[UIButton alloc]initWithFrame:CGRectMake(70, 170, screenWidth-70, 30)];
-    //    self.addressBtn.tag = 333;
-    //    [self.addressBtn setTitle:@"请添加地址" forState:UIControlStateNormal];
-    //    self.addressBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    //    self.addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    //    [self.addressBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
-    //    [self.imgProfile addSubview:self.addressBtn];
-    
-    //    _titleArray = @[@[], @[@"成立日期", @"所在地区"], @[@"球队简介"], @[@"真实姓名", @"联系方式"]];
+
     
     [self createPreviewBtn];
 }
-//- (void)replaceWithPicture:(UIButton *)Btn{
-//    if (Btn.tag == 333) {
-//        //球场列表
-//
-//    }
-//    [self didSelectPhotoImage:Btn];
-//}
+
 
 - (void)initItemsBtnClick:(UIButton *)btn{
     if (btn.tag == 521) {
@@ -280,9 +257,9 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 保存按钮
 - (void)createPreviewBtn{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, screenHeight - 42 * screenWidth / 320, screenWidth- 20 * screenWidth / 320, 40 * screenWidth / 320)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10  * ProportionAdapter, screenHeight - 72  * ProportionAdapter, screenWidth- 20  * ProportionAdapter, 40  * ProportionAdapter)];
     view.userInteractionEnabled = YES;
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth / 2, 40 * screenWidth / 320)];
+    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth / 2, 40   * ProportionAdapter)];
     [previewBtn setTitle:@"保存" forState:UIControlStateNormal];
     previewBtn.tag = 2001;
     previewBtn.backgroundColor = [UIColor colorWithHexString:@"#f39800"];
@@ -290,7 +267,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [view addSubview:previewBtn];
     
-    UIButton *commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth / 2 - 10 , 0, screenWidth / 2, 40 * screenWidth / 320)];
+    UIButton *commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth / 2 - 10 , 0, screenWidth / 2, 40 * ProportionAdapter)];
     [commitBtn setTitle:@"提交" forState:UIControlStateNormal];
     commitBtn.tag =2002;
     commitBtn.backgroundColor = [UIColor colorWithHexString:@"eb6100"];
@@ -307,12 +284,20 @@ static CGFloat ImageHeight  = 210.0;
 - (void)previewBtnClick:(UIButton *)btn{
     
     [self.view endEditing:YES];
+
+    JGDCreatTeamTableViewCell * cell1 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    [self.detailDic setObject:cell1.teamNameTF.text forKey:@"name"];
+    
+    JGDDoubleTextfiledTableViewCell *cell2 = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:9 inSection:0]];
+    [self.detailDic setObject:cell2.firstTF.text forKey:@"userName"];
+    [self.detailDic setObject:cell2.secondTF.text forKey:@"userMobile"];
+
     
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
     
     if (btn.tag == 2001) {
         
-        [user setObject:self.paraDic forKey:@"cacheCreatTeamDic"];
+        [user setObject:self.detailDic forKey:@"cacheCreatTeamDic"];
         [user synchronize];
         [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
@@ -321,67 +306,25 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         
         
-        if (!self.titleField.text || ([self.titleField.text length] == 0)) {
-            //    if ([[self.paraDic objectForKey:@"name"] length] > 0) {
-            [Helper alertViewNoHaveCancleWithTitle:@"请填写球队名称" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-            return;
-        }else{
-            NSString *name = self.titleField.text;
-            [self.paraDic setObject:name forKey:@"name"];
+        for (NSString *key in [self.detailDic allKeys]) {
+            if ([[self.detailDic objectForKey:key] isEqualToString:@""] && ![key isEqualToString:@"info"]) {
+                [LQProgressHud showMessage:@"请补全资料后提交"];
+                return;
+            }
         }
         
         
-        if ([[self.paraDic objectForKey:@"establishTime"] length] == 0) {
-            [Helper alertViewNoHaveCancleWithTitle:@"请填写球队创建时间" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-            return;
-        }
-        
-        
-        if ([[self.paraDic objectForKey:@"crtyName"] length] == 0) {
-            [Helper alertViewNoHaveCancleWithTitle:@"请填写球队所在地区" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-            return;
-        }
-        
-        
-        if ([[self.paraDic objectForKey:@"userName"] length] == 0) {
-            [Helper alertViewNoHaveCancleWithTitle:@"请填写真实姓名" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-            return;
-        }
-        
-        if ([[self.paraDic objectForKey:@"userMobile"] length] == 0) {
-            
-            [Helper alertViewNoHaveCancleWithTitle:@"请填写联系方式" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-            return;
-        }
-        
-        if (![self.paraDic objectForKey:@"info"] || ([[self.paraDic objectForKey:@"info"] length] == 0)) {
-            [Helper alertViewNoHaveCancleWithTitle:@"请完善球队信息" withBlock:^(UIAlertController *alertView) {
-                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-            }];
-            return;
-        }
-        
-        [self.paraDic setObject:@"" forKey:@"notice"];
-        [self.paraDic setObject:@0 forKey:@"timeKey"];
-        [self.paraDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
-        [self.paraDic setObject:@"1" forKey:@"check"];
-        [self.paraDic setObject:[user objectForKey:@"userName"] forKey:@"createUserName"];
+        [self.detailDic setObject:@"" forKey:@"notice"];
+        [self.detailDic setObject:@0 forKey:@"timeKey"];
+        [self.detailDic setObject:[user objectForKey:@"userId"] forKey:@"createUserKey"];
+        [self.detailDic setObject:@"1" forKey:@"check"];
+        [self.detailDic setObject:[user objectForKey:@"userName"] forKey:@"createUserName"];
         NSDate *dateNew = [NSDate dateWithTimeIntervalSinceNow:0];
         NSDateFormatter * dm = [[NSDateFormatter alloc]init];
         [dm setDateFormat:@"yyyy-MM-dd 00:00:00"];
         NSString * dateString = [dm stringFromDate:dateNew];
-        [self.paraDic setObject:dateString forKey:@"createtime"];
-        [user setObject:self.paraDic forKey:@"cacheCreatTeamDic"];
+        [self.detailDic setObject:dateString forKey:@"createtime"];
+        [user setObject:self.detailDic forKey:@"cacheCreatTeamDic"];
         [user setObject:_dictPhoto forKey:@"teamPhotoDic"];
         
         MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
@@ -389,8 +332,6 @@ static CGFloat ImageHeight  = 210.0;
         progress.labelText = @"正在发布...";
         [self.view addSubview:progress];
         [progress show:YES];
-        
-        
         
         
         [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
@@ -449,9 +390,9 @@ static CGFloat ImageHeight  = 210.0;
                             
                             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
                             
-                            [self.paraDic setObject:strTimeKey forKey:@"timeKey"];
+                            [self.detailDic setObject:strTimeKey forKey:@"timeKey"];
                             //  创建球队
-                            [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
+                            [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:self.detailDic requestMethod:@"POST" failedBlock:^(id errType) {
                                 if ([NSThread isMainThread]) {
                                     [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                                     [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
@@ -548,30 +489,21 @@ static CGFloat ImageHeight  = 210.0;
     }
 }
 
-// 判断是否为空 然后
-- (void)notNil:(NSString *)str SetValueForKey:(NSString *)key{
-    if (!str || ([str length] == 0)) {
-
-    }else{
-        [self.paraDic setValue:str forKey:key];
-    }
-}
-
 
 #pragma mark -- 改变图片位置 放大缩小
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;
     NSLog(@"yOffset:%f",yOffset);
-    CGFloat factor = ((ABS(yOffset)+(ImageHeight * screenWidth / 320))*screenWidth)/(ImageHeight * screenWidth / 320);
+    CGFloat factor = ((ABS(yOffset)+(ImageHeight  * ProportionAdapter))*screenWidth)/(ImageHeight  * ProportionAdapter);
     if (yOffset < 0) {
         
-        CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, (ImageHeight * screenWidth / 320)+ABS(yOffset));
+        CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, (ImageHeight  * ProportionAdapter)+ABS(yOffset));
         self.imgProfile.frame = f;
         
         _gradientImage.frame = self.imgProfile.frame;
         
         CGRect title = self.titleView.frame;
-        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0 * screenWidth / 320, title.size.width, title.size.height);
+        self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0, title.size.width, title.size.height);
         
         self.headPortraitBtn.hidden = YES;
         
@@ -580,9 +512,9 @@ static CGFloat ImageHeight  = 210.0;
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
         self.imgProfile.frame = f;
-                
+        
         CGRect t = self.titleView.frame;
-        t.origin.y = yOffset + 0 * screenWidth / 320;
+        t.origin.y = yOffset + 0;
         self.titleView.frame = t;
         
         if (yOffset == 0.0) {
@@ -598,77 +530,46 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- tableView 代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
-        return 1;
-    }else if (section == 1){
-        return 2;
-    }else if (section == 3){
-        return 2;
-    }else{
-        return 1;
-    }
+
+    return 10;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 0) {
-        return (ImageHeight * screenWidth / 320) -10 * screenWidth / 320;
-    }else if (indexPath.section == 2){
-        //        return [self calculationLabelHeight:[self.paraDic objectForKey:@"info"]] + 40 * screenWidth / 320;
-        return 45 * screenWidth / 320;
-        
+    
+    if (indexPath.row == 0) {
+        return (ImageHeight * ProportionAdapter) + 10 * ProportionAdapter;
+    }else if (indexPath.row == 2 || indexPath.row == 5 || indexPath.row == 7) {
+        return 10 * ProportionAdapter;
     }else{
-        return 45 * screenWidth / 320;
+        return 45 * ProportionAdapter;
     }
 }
 
 - (CGFloat)calculationLabelHeight: (NSString *)LbText{
     
     NSDictionary *dic = [NSDictionary dictionaryWithObject:[UIFont systemFontOfSize:15] forKey:NSFontAttributeName];
-    CGRect bounds = [LbText boundingRectWithSize:(CGSizeMake(screenWidth - 20  * screenWidth / 320 , 10000)) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dic context:nil];
+    CGRect bounds = [LbText boundingRectWithSize:(CGSizeMake(screenWidth - 20 * ProportionAdapter , 10000)) options:(NSStringDrawingUsesLineFragmentOrigin) attributes:dic context:nil];
     return bounds.size.height;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 2 ) {
-        return 0;
-    }else if (section == 4){
-        return 25 * screenWidth / 320;
-    }else{
-        return 10 * screenWidth / 320;
-    }
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.000001;
 }
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+  
+    return 50 * ProportionAdapter;
+}
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     
     
-    if (section == 2) {
-
-        return nil;
-    }else if (section == 4) {
-        UILabel *label=[[UILabel alloc] init] ;
-        label.frame=CGRectMake(10 * screenWidth / 320, 0, 300 * screenWidth / 320, 22 * screenWidth / 320);
-        label.backgroundColor=[UIColor colorWithHexString:@"#EAEAEB"];
-        label.textColor=[UIColor colorWithHexString:@"#f39800"];
-        label.font=[UIFont systemFontOfSize:12 * screenWidth / 320];
-        label.text=@"注：为了球队能够顺利创建，请务必输入真实信息";
-        
-        
-        UIView *sectionView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 18 * screenWidth / 320)];
-        //        [sectionView setBackgroundColor:[UIColor colorWithHexString:@"#EAEAEB"]];
-        sectionView.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
-        
-        [sectionView addSubview:label];
-        return sectionView;
-    }else{
-        return nil;
-    }
+    UILabel *footLB = [Helper lableRect:CGRectMake(12 * ProportionAdapter, 14 * ProportionAdapter, screenWidth - 12 * ProportionAdapter, 15 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:14 * ProportionAdapter text:@"   注：为了球队能够顺利创建，请务必输入真实信息" textAlignment:(NSTextAlignmentLeft)];
+    return footLB;
 }
 
 
@@ -676,124 +577,105 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -------cellForROwAtIndexPath
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *windowReuseIdentifier = @"SectionOneCell";
-    if (indexPath.section == 0) {
-        UITableViewCell *launchImageActivityCell = nil;
-        launchImageActivityCell = [tableView dequeueReusableCellWithIdentifier:windowReuseIdentifier];
-        if (!launchImageActivityCell) {
-            
-            launchImageActivityCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:windowReuseIdentifier];
-        }
-        
-        launchImageActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return launchImageActivityCell;
-    }else if (indexPath.section == 2){
-        
-        JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView dequeueReusableCellWithIdentifier:@"lbVSlb"];
-        launchActivityCell.promptLB.text = @"球队简介";
-        launchActivityCell.contentLB.text = [self.paraDic objectForKey:@"info"];
-        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        launchActivityCell.contentLB.lineBreakMode = NSLineBreakByWordWrapping;
-        //        contactCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return launchActivityCell;
-        
-        
-    }else if (indexPath.section == 1){
-        
-        JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView dequeueReusableCellWithIdentifier:@"lbVSlb"];
-        launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (indexPath.row == 0) {
-            launchActivityCell.promptLB.text = @"成立日期";
-            if ([self.detailDic objectForKey:@"establishTime"]) {
-                launchActivityCell.contentLB.text = [Helper returnDateformatString:[self.detailDic objectForKey:@"establishTime"]] ;
-            }
-            
-        }else{
-            launchActivityCell.promptLB.text = @"所在地区";
-            launchActivityCell.contentLB.text = [self.detailDic objectForKey:@"crtyName"];
-        }
-        launchActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        return launchActivityCell;
-    }else{
-        JGApplyMaterialTableViewCell *launchActivityCell = [self.launchActivityTableView dequeueReusableCellWithIdentifier:@"lbVSTF"];
-        launchActivityCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (indexPath.section == 3) {
-            if (indexPath.row == 0) {
-                launchActivityCell.labell.text = @"申请人资料";
-                launchActivityCell.labell.textColor = [UIColor lightGrayColor];
-                launchActivityCell.textFD.userInteractionEnabled = NO;
-                launchActivityCell.backgroundColor = [UIColor colorWithHexString:@"#EAEAEB"];
-            }else{
-                launchActivityCell.labell.text = @"真实姓名";
-                launchActivityCell.textFD.placeholder = @"请输入真实姓名";
-                launchActivityCell.textFD.delegate = self;
-                launchActivityCell.textFD.tag = 1115;
-                launchActivityCell.textFD.text = [self.detailDic objectForKey:@"userName"];
-            }
-            
-        }else if (indexPath.section == 4){
-            launchActivityCell.labell.text = @"联系方式";
-            launchActivityCell.textFD.placeholder = @"请输入手机号";
-            launchActivityCell.textFD.delegate = self;
-            launchActivityCell.textFD.tag = 1116;
-            launchActivityCell.textFD.text = [self.detailDic objectForKey:@"userMobile"];
-            launchActivityCell.textFD.keyboardType = UIKeyboardTypePhonePad;
-        }
-        return launchActivityCell;
+
+    
+    if (indexPath.row == 0 || indexPath.row == 2 || indexPath.row == 5 || indexPath.row == 7) {
+        UITableViewCell *emptyCell = [[UITableViewCell alloc] init];
+        emptyCell.backgroundColor = [UIColor clearColor];
+        emptyCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return emptyCell;
     }
+    
+    if (indexPath.row == 9) {
+        JGDDoubleTextfiledTableViewCell *tfcell = [tableView dequeueReusableCellWithIdentifier:@"JGDDoubleTextfiledTableViewCell"];
+        tfcell.selectionStyle = UITableViewCellSelectionStyleNone;
+        tfcell.firstTF.text = [self.detailDic objectForKey:@"userName"];
+        tfcell.secondTF.text = [self.detailDic objectForKey:@"userMobile"];
+        return tfcell;
+    }
+    
+    JGDCreatTeamTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGDCreatTeamTableViewCell"];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.titleLB.text = self.tilteArray[indexPath.row];
+    cell.iconImageView.image = [UIImage imageNamed:self.iconArray[indexPath.row]];
+    if (indexPath.row == 1) {
+        cell.teamNameTF.placeholder = @"输入球队名";
+        cell.teamNameTF.text = [self.detailDic objectForKey:@"name"];
+    }else{
+        cell.teamNameTF.hidden = YES;
+        //  3 4 6
+        switch (indexPath.row) {
+            case 3:
+                cell.detailLB.text = [Helper stringFromDateString:[self.detailDic objectForKey:@"establishTime"] withFormater:@"yyyy年MM月dd日"];
+                break;
+                
+            case 4:
+                cell.detailLB.text = [self.detailDic objectForKey:@"crtyName"];
+                break;
+            
+            case 6:
+                cell.detailLB.text = [self.detailDic objectForKey:@"info"];
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+    }
+    
+    if (indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 6) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+    }
+    
+    return cell;
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == 3) {
             //时间选择
             DateTimeViewController *dataCtrl = [[DateTimeViewController alloc]init];
             dataCtrl.typeIndex = @1;
             [dataCtrl setCallback:^(NSString *dateStr, NSString *dateWeek, NSString *str) {
                 
-                JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
+                JGDCreatTeamTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
                 
-                launchActivityCell.contentLB.text = [Helper returnDateformatString:[NSString stringWithFormat:@"%@ 00:00:00", dateStr]];
+                launchActivityCell.detailLB.text = [Helper returnDateformatString:[NSString stringWithFormat:@"%@ 00:00:00", dateStr]];
                 [self.detailDic setObject:[NSString stringWithFormat:@"%@ 00:00:00", dateStr] forKey:@"establishTime"];
             }];
             
             [self.navigationController pushViewController:dataCtrl animated:YES];
-        }else{
+        }else if (indexPath.row == 4) {
             //地区选择
             TeamAreaViewController* areaVc = [[TeamAreaViewController alloc]init];
             areaVc.teamType = @10;
             areaVc.callBackCity = ^(NSString* strPro, NSString* strCity, NSNumber* cityId){
                 
-                JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
-                launchActivityCell.contentLB.text = [NSString stringWithFormat:@"%@ %@", strPro, strCity];
+                JGDCreatTeamTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:indexPath];
+                launchActivityCell.detailLB.text = [NSString stringWithFormat:@"%@ %@", strPro, strCity];
                 [self.detailDic setObject:[NSString stringWithFormat:@"%@ %@", strPro, strCity] forKey:@"crtyName"];
             };
             [self.navigationController pushViewController:areaVc animated:YES];
-        }
-    }else if (indexPath.section == 2){
-        if (indexPath.row == 0) {
+        }else if (indexPath.row == 6) {
             JGHConcentTextViewController *introVC = [[JGHConcentTextViewController alloc] init];
             introVC.delegate = self;
-            introVC.contentTextString = [self.paraDic objectForKey:@"info"];
+            introVC.contentTextString = [self.detailDic objectForKey:@"info"];
             [self.navigationController pushViewController:introVC animated:YES];
         }
+
         
-    }
-    
-    //    [self.launchActivityTableView reloadData];
 }
 
 #pragma mark -- 添加内容详情代理  JGHConcentTextViewControllerDelegate
 - (void)didSelectSaveBtnClick:(NSString *)text{
     
-    JGLableAndLableTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath  indexPathForRow:0 inSection:2]];
+    JGDCreatTeamTableViewCell *launchActivityCell = [self.launchActivityTableView cellForRowAtIndexPath:[NSIndexPath  indexPathForRow:6 inSection:0]];
     
-    launchActivityCell.contentLB.text = text;
+    launchActivityCell.detailLB.text = text;
     
-    [self.paraDic setObject:text forKey:@"info"];
+    [self.detailDic setObject:text forKey:@"info"];
     
     
 }
@@ -807,17 +689,32 @@ static CGFloat ImageHeight  = 210.0;
 - (NSMutableDictionary *)detailDic{
     if (!_detailDic) {
         _detailDic = [[NSMutableDictionary alloc] init];
+        [_detailDic setObject:@"" forKey:@"info"];
+        [_detailDic setObject:@"" forKey:@"crtyName"];
+        [_detailDic setObject:@"" forKey:@"establishTime"];
+        [_detailDic setObject:@"" forKey:@"userName"];
+        [_detailDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:Mobile] forKey:@"userMobile"];
+        [_detailDic setObject:@"" forKey:@"name"];
+
     }
     return _detailDic;
 }
 
-- (NSMutableDictionary *)paraDic{
-    if (!_paraDic) {
-        _paraDic = [[NSMutableDictionary alloc] init];
+
+- (NSArray *)tilteArray{
+    if (!_tilteArray) {
+        _tilteArray = [NSArray arrayWithObjects:@"", @"球队名称", @"", @"成立日期", @"所在地区", @"", @"球队简介", @"", @"申请人资料", @"", nil];
     }
-    return _paraDic;
+    return _tilteArray;
 }
 
+- (NSArray *)iconArray{
+    if (!_iconArray) {
+        _iconArray = [NSArray arrayWithObjects:@"", @"icn_teamname", @"", @"icn_time", @"icn_address", @"", @"icn_teamintr", @"", @"icn_detail", @"", nil];
+
+    }
+    return _iconArray;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

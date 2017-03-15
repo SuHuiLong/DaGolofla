@@ -140,14 +140,13 @@ static CGFloat ImageHeight  = 210.0;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             self.dataDict = [NSDictionary dictionaryWithDictionary:[data objectForKey:@"team"]];
-            
+            self.titleLB.text = [[data objectForKey:@"team"] objectForKey:@"name"];
+
             if ([data objectForKey:@"teamMember"]) {
                 
                 [self createPreviewBtn];
                 self.launchActivityTableView.tableFooterView = self.footBackView;
                 
-                
-                self.titleLB.text = [[data objectForKey:@"team"] objectForKey:@"name"];
                 
                 self.state = [[[data objectForKey:@"team"] objectForKey:@"state"] integerValue];
                 self.power = [[data objectForKey:@"teamMember"] objectForKey:@"power"];

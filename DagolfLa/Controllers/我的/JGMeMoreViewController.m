@@ -8,7 +8,7 @@
 
 #import "JGMeMoreViewController.h"
 #import "MeDetailTableViewCell.h"
-#import "MySetAboutController.h"
+#import "JGDAboutUsViewController.h"
 #import "JGHCabbieCertViewController.h"
 #import "JGHCabbieCertSuccessViewController.h"
 
@@ -102,7 +102,7 @@
         case 1:
         {
             
-            MySetAboutController *abVC = [[MySetAboutController alloc] init];
+            JGDAboutUsViewController *abVC = [[JGDAboutUsViewController alloc] init];
             abVC.title = @"关于我们";
             [self.navigationController pushViewController:abVC animated:YES];
         }

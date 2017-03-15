@@ -185,7 +185,7 @@
     [orderDic setObject:self.noteTF.text forKey:@"remark"];
     [orderDic setObject:self.selectDate forKey:@"teeTime"];
     [orderDic setObject:@([self.playerArray count]) forKey:@"userSum"];
-    [orderDic setObject:self.playerArray[0] forKey:@"userName"];
+    [orderDic setObject:DEFAULF_UserName forKey:@"userName"];
     [orderDic setObject:self.mobile forKey:@"userMobile"];
     UITextField *noteTF = [self.commitOrderTableView viewWithTag:999]; // 备注
     [orderDic setObject:noteTF.text forKey:@"remark"];
