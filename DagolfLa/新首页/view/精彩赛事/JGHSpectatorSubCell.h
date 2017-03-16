@@ -12,6 +12,8 @@
 
 @property (nonatomic, retain)UIImageView *headerImageView;
 
+@property (nonatomic, retain)UIImageView *videoImageView;
+
 @property (nonatomic, retain)UILabel *point;
 
 @property (nonatomic, retain)UILabel *titleLable;

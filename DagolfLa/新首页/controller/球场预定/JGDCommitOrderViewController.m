@@ -185,7 +185,7 @@
     [orderDic setObject:self.noteTF.text forKey:@"remark"];
     [orderDic setObject:self.selectDate forKey:@"teeTime"];
     [orderDic setObject:@([self.playerArray count]) forKey:@"userSum"];
-    [orderDic setObject:self.playerArray[0] forKey:@"userName"];
+    [orderDic setObject:DEFAULF_UserName forKey:@"userName"];
     [orderDic setObject:self.mobile forKey:@"userMobile"];
     UITextField *noteTF = [self.commitOrderTableView viewWithTag:999]; // 备注
     [orderDic setObject:noteTF.text forKey:@"remark"];
@@ -436,6 +436,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 1) {
         LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
+        caleVC.dateString = self.selectDate;
         caleVC.ballKey = self.timeKey;
         caleVC.isLeagueUser = NO;
         caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney, NSString *leagueMoney){

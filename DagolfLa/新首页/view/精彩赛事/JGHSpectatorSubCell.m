@@ -13,10 +13,16 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _headerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 164*ProportionAdapter)];
-        _headerImageView.image = [UIImage imageNamed:@"home_bg_comp"];
+        _headerImageView.image = [UIImage imageNamed:IndexBallBgImage];
         _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         _headerImageView.clipsToBounds = YES;
         [self addSubview:_headerImageView];
+        
+        _videoImageView = [[UIImageView alloc]initWithFrame:CGRectMake((_headerImageView.bounds.size.width -50*ProportionAdapter)/2, (_headerImageView.bounds.size.height -50*ProportionAdapter)/2, 50*ProportionAdapter, 50*ProportionAdapter)];
+        _videoImageView.image = [UIImage imageNamed:@"home_icn_news_video"];
+        _videoImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _videoImageView.clipsToBounds = YES;
+        [_headerImageView addSubview:_videoImageView];
         
         _point = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 184*ProportionAdapter, 5*ProportionAdapter, 5*ProportionAdapter)];
         _point.backgroundColor = [UIColor colorWithHexString:@"#cc3c3c"];
@@ -46,7 +52,17 @@
     _titleLable.frame = CGRectMake(22*ProportionAdapter, imageH*ProportionAdapter +12*ProportionAdapter, imageW*ProportionAdapter -12*ProportionAdapter, 20*ProportionAdapter);
     _detailLable.frame = CGRectMake(22*ProportionAdapter, imageH*ProportionAdapter +36*ProportionAdapter, imageW*ProportionAdapter -12*ProportionAdapter, 40*ProportionAdapter);
     
-    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"imgURL"]] placeholderImage:[UIImage imageNamed:@"home_bg_comp"]];
+    if ([dict objectForKey:@"isVideo"]) {
+        if ([[dict objectForKey:@"isVideo"] integerValue] == 0) {
+            _videoImageView.hidden = YES;
+        }else{
+            _videoImageView.hidden = NO;
+        }
+    }else{
+        _videoImageView.hidden = YES;
+    }
+    
+    [_headerImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"imgURL"]] placeholderImage:[UIImage imageNamed:IndexBallBgImage]];
     //_headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     if ([dict objectForKey:@"title"]) {
         _titleLable.text = [dict objectForKey:@"title"];

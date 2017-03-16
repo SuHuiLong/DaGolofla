@@ -271,7 +271,7 @@
             
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
             }
         }
     }];
@@ -456,8 +456,8 @@
         [closeBtn setImage:[UIImage imageNamed:@"date_close"] forState:(UIControlStateNormal)];
         [closeBtn addTarget:self action:@selector(closeCardAct:) forControlEvents:(UIControlEventTouchUpInside)];
         
-        UILabel *lineLB = [Helper lableRect:CGRectMake(0, 0, screenWidth, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:17 * ProportionAdapter text:@"" textAlignment:(NSTextAlignmentCenter)];
-        lineLB.backgroundColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        UILabel *lineLB = [Helper lableRect:CGRectMake(0, 0, screenWidth, 1 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#c9c9c9"] labelFont:17 * ProportionAdapter text:@"" textAlignment:(NSTextAlignmentCenter)];
+        lineLB.backgroundColor = [UIColor colorWithHexString:@"#c9c9c9"];
         [backView addSubview:lineLB];
         [backView addSubview:titleLB];
         [backView addSubview:closeBtn];
@@ -514,7 +514,7 @@
     if (tableView.tag == 567) {
 
         if ([[self.vipCardArray[indexPath.row] objectForKey:@"state"] integerValue] == 5) {
-            [LQProgressHud showMessage:@"会员卡不可用"];
+            [LQProgressHud showMessage:@"该会员卡预订本球场次数已用完"];
             return;
         }
         self.allianceCardLB.text = [self.vipCardArray[indexPath.row] objectForKey:@"name"];
@@ -526,6 +526,7 @@
     
     if (indexPath.row == 1) {
         LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
+        caleVC.dateString = self.selectDate;
         caleVC.ballKey = self.timeKey;
         caleVC.isLeagueUser = YES;
         caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney, NSString *leagueMoney){
