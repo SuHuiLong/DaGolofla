@@ -34,16 +34,9 @@
 
     }
     
-//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
-//    leftItem.tintColor=[UIColor whiteColor];
-//    self.navigationItem.leftBarButtonItem = leftItem;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
 
     _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64)];
-//    _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-425*ScreenWidth/375 - 15)];
-    //    //添加标注
-    //    [self addPointAnnotation:3];
-    //    _mapView.delegate = self;
     
     [self.view addSubview:_mapView];
 }
@@ -124,11 +117,6 @@
         region.span = co;
         [_mapView setRegion:region animated:YES];
 
-//        
-//        
-//        [Helper alertViewNoHaveCancleWithTitle:@"您还未添加足迹..." withBlock:^(UIAlertController *alertView) {
-//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//        }];
     }else{
     
         [_mapView removeAnnotations:_mapView.annotations];
@@ -202,9 +190,9 @@
         // 设置颜色
         newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
         newAnnotationView.animatesDrop = YES;// 设置该标注点动画显示
-        
-        // 设置可拖拽
-        newAnnotationView.draggable = YES;
+    
+        // 设置不可拖拽
+        newAnnotationView.draggable = NO;
         newAnnotationView.selected = YES;
 
         return newAnnotationView;
@@ -224,10 +212,69 @@
 - (void)mapView:(BMKMapView *)mapView didDeselectAnnotationView:(BMKAnnotationView *)view
 {
     ////NSLog(@"%@", view.annotation.title);
-    
-    
 
 }
+- (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view{
+    BMKPointAnnotation *tt = (BMKPointAnnotation *)view.annotation;
+    if (self.fromWitchVC == 1) {
+    [self AlertShow:tt.coordinate];
+    }
+}
+
+// 百度  高德 苹果
+-(void)AlertShow:(CLLocationCoordinate2D )coordinate{
+    CLLocationCoordinate2D Coordinate = [JZLocationConverter bd09ToGcj02:coordinate];
+    
+
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"选择地图App" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    //判断是否安装了百度地图，如果安装了百度地图，则使用百度地图导航
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]]) {
+        [alertController addAction:[UIAlertAction actionWithTitle:@"百度地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"alertController -- 百度地图");
+            NSString *urlsting =[[NSString stringWithFormat:@"baidumap://map/direction?origin={{我的位置}}&destination=latlng:%f,%f|name=目的地&mode=driving&coord_type=gcj02",Coordinate.latitude,Coordinate.longitude] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlsting]];
+            
+        }]];
+    }
+
+    //判断是否安装了高德地图，如果安装了高德地图，则使用高德地图导航
+    if ( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"iosamap://"]]) {
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"高德地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            NSLog(@"alertController -- 高德地图");
+            NSString *urlsting =[[NSString stringWithFormat:@"iosamap://navi?sourceApplication= &backScheme= &lat=%f&lon=%f&dev=0&style=2",Coordinate.latitude,Coordinate.longitude]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [[UIApplication  sharedApplication]openURL:[NSURL URLWithString:urlsting]];
+        }]];
+    }
+    
+    //自带地图
+    [alertController addAction:[UIAlertAction actionWithTitle:@"苹果地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        NSLog(@"alertController -- 自带地图");
+        
+        //使用自带地图导航
+        MKMapItem *currentLocation =[MKMapItem mapItemForCurrentLocation];
+        
+        MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:Coordinate addressDictionary:nil]];
+        
+        [MKMapItem openMapsWithItems:@[currentLocation,toLocation] launchOptions:@{MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving,MKLaunchOptionsShowsTrafficKey:[NSNumber numberWithBool:YES]}];
+    }]];
+    
+    //添加取消选项
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+        
+    }]];
+    
+    //显示alertController
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
+
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
