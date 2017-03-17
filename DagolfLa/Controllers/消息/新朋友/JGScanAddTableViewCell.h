@@ -10,4 +10,7 @@
 
 @interface JGScanAddTableViewCell : UITableViewCell
 
+@property (nonatomic, strong) UIImageView *scanImageV;
+@property (nonatomic, strong) UILabel *textLB;
+
 @end

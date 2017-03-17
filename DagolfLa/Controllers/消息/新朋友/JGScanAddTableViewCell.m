@@ -25,15 +25,13 @@
         whiteView.backgroundColor = [UIColor whiteColor];
         [self.contentView addSubview:whiteView];
         
-        UIImageView *scanImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30 * ProportionAdapter, 10 * ProportionAdapter, 30 * ProportionAdapter, 30 * ProportionAdapter)];
-        scanImageV.image = [UIImage imageNamed:@"saomaGreen"];
-        [whiteView addSubview:scanImageV];
+        self.scanImageV = [[UIImageView alloc] initWithFrame:CGRectMake(30 * ProportionAdapter, 10 * ProportionAdapter, 30 * ProportionAdapter, 30 * ProportionAdapter)];
+        [whiteView addSubview:self.scanImageV];
         
-        UILabel *textLB = [[UILabel alloc] initWithFrame:CGRectMake(75 * ProportionAdapter, 15 * ProportionAdapter, 100 , 20 * ProportionAdapter)];
-        textLB.text = @"扫描添加";
-        textLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-        textLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-        [whiteView addSubview:textLB];
+        self.textLB = [[UILabel alloc] initWithFrame:CGRectMake(75 * ProportionAdapter, 15 * ProportionAdapter, 100 , 20 * ProportionAdapter)];
+        self.textLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        self.textLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+        [whiteView addSubview:self.textLB];
         
         self.contentView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
         
