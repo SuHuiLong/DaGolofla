@@ -31,7 +31,6 @@
 #import "ChatListViewController.h"
 
 #import "MyNewsBoxViewController.h"
-#import "MySetAboutController.h"
 #import "ContactViewController.h"
 #import "UITabBar+badge.h"
 

@@ -10,6 +10,9 @@
 #import <UIKit/UIKit.h>
 #import "LQProgressHud.h"
 
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+
 @interface Helper : NSObject
 //根据字符串内容的多少  在固定宽度 下计算出实际的行高
 + (CGFloat)textHeightFromTextString:(NSString *)text width:(CGFloat)textWidth fontSize:(CGFloat)size;
@@ -142,5 +145,6 @@
 
 + (UILabel *)lableRect:(CGRect)rect labelColor:(UIColor *)color labelFont:(NSInteger)font text:(NSString *)text textAlignment:(NSTextAlignment )alignment;
 
++(void)CheckAddressBookAuthorization:(void (^)(bool isAuthorized))block;
 
 @end

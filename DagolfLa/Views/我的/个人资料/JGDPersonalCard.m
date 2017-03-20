@@ -147,9 +147,9 @@
             [self changeMaleAct:self.femaleBtn];
         }
         
-        if ([user objectForKey:@"userName"]) {
-            self.nameTF.text = [user objectForKey:@"userName"];
-        }
+//        if ([user objectForKey:@"userName"]) {
+//            self.nameTF.text = [user objectForKey:@"userName"];
+//        }
         
         if ([user objectForKey:@"almost"] && ([[user objectForKey:@"almost"] integerValue] != -10000)) {
             self.pointTF.text = [NSString stringWithFormat:@"%@" ,[user objectForKey:@"almost"]];

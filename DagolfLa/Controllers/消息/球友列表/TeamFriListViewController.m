@@ -34,6 +34,9 @@
 
 #import "JGAddFriendViewController.h"
 
+#import "JGDOpenContactViewController.h"
+#import "JGDAddFromContactViewController.h"
+
 @interface TeamFriListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchResultsUpdating>
 
 @property (strong, nonatomic) UITableView *tableView;
@@ -204,6 +207,7 @@
 // 联系人tableview
 - (void)contantAct:(UIButton *)btn{
     
+   
     if ([self.view.subviews containsObject:self.contactTableView]) {
         return;
     }
@@ -232,7 +236,7 @@
         //获取通讯录权限
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
         ABAddressBookRequestAccessWithCompletion(addressBooks, ^(bool granted, CFErrorRef error){dispatch_semaphore_signal(sema);});
-        
+        NSLog(@"%@" , sema);
         dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
         
     }
@@ -388,7 +392,7 @@
         }
     }else{
 //        self.tableView.footer = nil;
-        return 1;
+        return 2;
     }
 }
 
@@ -445,6 +449,15 @@
             cell=[[JGScanAddTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:flag];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        
+        if (indexPath.row == 0) {
+            cell.scanImageV.image = [UIImage imageNamed:@"saomaGreen"];
+            cell.textLB.text = @"扫描添加";
+        }else{
+            cell.scanImageV.image = [UIImage imageNamed:@"btn_addfri"];
+            cell.textLB.text = @"通讯录添加";
+        }
+        
         //        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
@@ -549,7 +562,6 @@
         
     }];
     
-
 }
 
 
@@ -596,14 +608,29 @@
     else
     {
         
-        
-        JGLBarCodeViewController *barSorVC = [[JGLBarCodeViewController alloc] init];
-        barSorVC.fromWitchVC = 2;
-        [self.navigationController pushViewController:barSorVC animated:YES];
-//        PersonHomeController *selfVC = [[PersonHomeController alloc] init];
-//        MyattenModel *myModel = self.searchArray[indexPath.row];
-//        selfVC.strMoodId = myModel.userId;
-//        [self.navigationController pushViewController:selfVC animated:YES];
+        if (indexPath.row == 0) {
+            JGLBarCodeViewController *barSorVC = [[JGLBarCodeViewController alloc] init];
+            barSorVC.fromWitchVC = 2;
+            [self.navigationController pushViewController:barSorVC animated:YES];
+        }else{
+            
+            
+            [Helper CheckAddressBookAuthorization:^(bool isAuthorized) {
+                NSLog(@"%@" ,isAuthorized ? @"YES" : @"NO");
+                if (isAuthorized) {
+                    JGDAddFromContactViewController *addFromVC = [[JGDAddFromContactViewController alloc] init];
+                    [self.navigationController pushViewController:addFromVC animated:YES];
+                }else{
+                    JGDOpenContactViewController *closedVC = [[JGDOpenContactViewController alloc] init];
+                    [self presentViewController:closedVC animated:YES completion:nil];
+                }
+                
+                
+            }];
+            
+        }
+
+
     }
 }
 
