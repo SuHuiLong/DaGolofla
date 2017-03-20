@@ -819,6 +819,10 @@ static CGFloat ImageHeight  = 210.0;
                     activiyVC.state = self.state;
                     activiyVC.timeKey = [self.timeKey integerValue];
                     activiyVC.isMEActivity = 1;
+                    if ([_dataDict objectForKey:@"name"]) {
+                        activiyVC.teamName = [_dataDict objectForKey:@"name"];
+                    }
+                    
                     [self.navigationController pushViewController:activiyVC animated:YES];
                     
                 }

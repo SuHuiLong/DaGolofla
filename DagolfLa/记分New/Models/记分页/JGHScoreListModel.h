@@ -51,5 +51,10 @@
 
 @property (nonatomic, copy)NSString *region2;
 
+@property (nonatomic, strong)NSDictionary *score;
+
+@property (nonatomic, strong)NSArray *ballAreas;
+
+@property (nonatomic, strong)NSNumber *interval;//定时器间隔时间
 
 @end

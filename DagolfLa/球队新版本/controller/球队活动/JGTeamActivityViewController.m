@@ -10,11 +10,11 @@
 #import "JGTeamAcitivtyModel.h"
 #import "JGTeamActivityCell.h"
 #import "JGHNewActivityDetailViewController.h"
-#import "JGHLaunchActivityViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "MJRefresh.h"
 #import "MJDIYBackFooter.h"
 #import "MJDIYHeader.h"
+#import "JGHNewPublistActivityViewController.h"
 
 @interface JGTeamActivityViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -120,8 +120,9 @@
 
 #pragma mark -- 发布活动
 - (void)launchActivityBtnClick:(UIButton *)btn{
-    JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
+    JGHNewPublistActivityViewController * launchCtrl = [[JGHNewPublistActivityViewController alloc]init];
     launchCtrl.teamKey = _timeKey;
+    launchCtrl.teamName = _teamName;
     launchCtrl.refreshBlock = ^(){
         [self headRereshing];
     };

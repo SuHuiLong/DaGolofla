@@ -33,7 +33,7 @@
     self.timevalueLeft.constant = 8 *ProportionAdapter;
     self.timevlaue.font = [UIFont systemFontOfSize:12*ProportionAdapter];
     
-    self.addressLeft.constant = 10 *ProportionAdapter;
+    self.addressLeft.constant = 12 *ProportionAdapter;
     self.addressVlaueLeft.constant = 8 *ProportionAdapter;
     self.addressVlaue.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     

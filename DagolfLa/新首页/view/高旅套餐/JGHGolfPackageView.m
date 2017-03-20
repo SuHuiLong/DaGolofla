@@ -37,6 +37,11 @@ static NSString *const JGHGolfPackageSubCellIdentifier = @"JGHGolfPackageSubCell
         _golfPackageView.showsHorizontalScrollIndicator = NO;
         _golfPackageView.transform = CGAffineTransformMakeRotation(-M_PI/2);
         _golfPackageView.frame = CGRectMake(0, 0, screenWidth, 262*ProportionAdapter);
+        
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWvertical(262), kHvertical(10))];
+        footer.backgroundColor = [UIColor whiteColor];
+        _golfPackageView.tableFooterView = footer;
+        
         [self addSubview:_golfPackageView];
     }
     return self;
@@ -45,8 +50,10 @@ static NSString *const JGHGolfPackageSubCellIdentifier = @"JGHGolfPackageSubCell
 - (void)configJGHGolfPackageViewData:(NSArray *)dataArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     _imageW = imageW;
     _imageH = imageH;
-    _golfPackageView.frame = CGRectMake(0, 0, screenWidth, _imageH*ProportionAdapter+ 89*ProportionAdapter);
     _dataArray = dataArray;
+    _golfPackageView.frame = CGRectMake(0, 0, screenWidth, _imageH*ProportionAdapter+ 89*ProportionAdapter);
+    _golfPackageView.tableFooterView.frame = CGRectMake(0, 0, _imageH*ProportionAdapter+ 99*ProportionAdapter, kWvertical(10));
+    
     [_golfPackageView reloadData];
 }
 

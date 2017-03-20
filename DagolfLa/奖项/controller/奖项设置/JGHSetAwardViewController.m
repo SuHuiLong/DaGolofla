@@ -116,16 +116,23 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         [self.dataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             _publishPrize = [[data objectForKey:@"publishPrize"] integerValue];
-            if (_publishPrize == 0) {
-                [self.psuhBtn setTitle:@"发布奖项" forState:UIControlStateNormal];
-            }else{
-                [self.psuhBtn setTitle:@"保存奖项" forState:UIControlStateNormal];
-            }
+            //奖项是否发布：0: 未发布  1: 已发布
+            //if (_publishPrize == 0) {
+                [self.psuhBtn setTitle:@"完成" forState:UIControlStateNormal];
+            //}else{
+              //  [self.psuhBtn setTitle:@"保存奖项" forState:UIControlStateNormal];
+            //}
+            
             NSArray *array = [data objectForKey:@"list"];
             for (NSDictionary *dict in array) {
                 JGHAwardModel *model = [[JGHAwardModel alloc]init];
                 [model setValuesForKeysWithDictionary:dict];
                 [self.dataArray addObject:model];
+            }
+            
+            if (array.count >0) {
+                self.psuhBtn.userInteractionEnabled = YES;
+                [self.psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
             }
         }else{
             if ([data objectForKey:@"packResultMsg"]) {
@@ -157,12 +164,13 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
     psuhView.backgroundColor = [UIColor whiteColor];
     self.psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
-    [self.psuhBtn setTitle:@"发布奖项" forState:UIControlStateNormal];
-    [self.psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
+    [self.psuhBtn setTitle:@"完成" forState:UIControlStateNormal];
     self.psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
     self.psuhBtn.layer.masksToBounds = YES;
-    self.psuhBtn.layer.cornerRadius = 8.0;
+    self.psuhBtn.layer.cornerRadius = 8.0*ProportionAdapter;
     [self.psuhBtn addTarget:self action:@selector(psuhAwardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.psuhBtn.userInteractionEnabled = NO;
+    [self.psuhBtn setBackgroundColor:[UIColor lightGrayColor]];
     [psuhView addSubview:self.psuhBtn];
     [self.view addSubview:psuhView];
 }

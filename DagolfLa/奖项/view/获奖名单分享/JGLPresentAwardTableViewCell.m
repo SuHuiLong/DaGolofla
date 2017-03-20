@@ -43,7 +43,7 @@
         [self addSubview:_countLabel];
         
         
-        _viewLine = [[UIView alloc]initWithFrame:CGRectMake(10*screenWidth/320, 60*screenWidth/320, screenWidth - 20*screenWidth/320, 1*screenWidth/375)];
+        _viewLine = [[UIView alloc]initWithFrame:CGRectMake(10*screenWidth/320, 60*screenWidth/320, screenWidth - 20*screenWidth/320, 0.5)];
         _viewLine.backgroundColor = [UIColor lightGrayColor];
         [self addSubview:_viewLine];
         
@@ -54,7 +54,7 @@
         
         
         _chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _chooseBtn.frame = CGRectMake(screenWidth - 80*screenWidth/320, 65*screenWidth/320, 70*screenWidth/320, 35*screenWidth/320);
+        _chooseBtn.frame = CGRectMake(screenWidth - 80*screenWidth/320, 65*screenWidth/320, 75*screenWidth/320, 35*screenWidth/320);
         [_chooseBtn setTitle:@"选择获奖者" forState:UIControlStateNormal];
         _chooseBtn.titleLabel.font = [UIFont systemFontOfSize:14.0*screenWidth/320];
         [_chooseBtn setTintColor:[UIColor orangeColor]];

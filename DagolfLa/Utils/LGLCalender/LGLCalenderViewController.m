@@ -44,8 +44,8 @@
 @property (nonatomic, assign)NSInteger selectDay;
 
 //选中天所在位置
-@property (nonatomic, assign)NSInteger selectDayIndexPath;
-
+//@property (nonatomic, assign)NSInteger selectDayIndexPath;//row
+//@property (nonatomic, assign)NSInteger selectDayIndexPathSection;//section
 
 @end
 
@@ -205,13 +205,45 @@
                         }
                         
                         [self.collectionView reloadData];
-                        //偏移
+                        //偏移 －－ 到指定日期
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-
-                            CGFloat yOffset = (_selectDayIndexPath/7)*kWvertical(57) ;
                             
-                            [self.collectionView setContentOffset:CGPointMake(0, yOffset)];
-
+                            int countOff =0;
+                            int countSection =0;
+                            int forCount = 0;
+                            if (_currentMonth == _month) {
+                                forCount = 0;
+                            }
+                            
+                            if (_month <_currentMonth) {
+                                forCount = 12 - (int)_currentMonth + (int)_month;
+                            }
+                            
+                            if (_month > _currentMonth) {
+                                forCount = (int)(_month -_currentMonth);
+                            }
+                            
+                            for (int i=0; i <= forCount; i++) {
+                                LGLCalenderModel *model = [[LGLCalenderModel alloc]init];
+                                model = _dataSource[i];
+                                if (model.month == _month) {
+                                    countOff += (_day +((model.firstday == 7)?0:model.firstday))/7;
+                                    //if ((_day +(model.firstday +1))%7 != 0) {
+                                      //  countOff += 1;
+                                    //}
+                                }else{
+                                    countOff += (model.details.count +((model.firstday == 7)?0:model.firstday))/7;
+                                    countSection += 1;
+                                }
+                                
+                            }
+                            
+                            [UIView animateWithDuration:0.2f animations:^{
+                                
+                                CGFloat yOffset = countOff*kWvertical(57) +countSection*kWvertical(40);
+                                
+                                [self.collectionView setContentOffset:CGPointMake(0, yOffset)];
+                            }];
                         });
                         
                         [_timeListView loadTimeListWithBallKey:_ballKey andDateString:[NSString stringWithFormat:@"%td-%@-%@ 00:00:00", _year, month, day] andIsLeagueUser:_isLeagueUser];
@@ -275,7 +307,8 @@
                 cell.dateL.textColor = [UIColor whiteColor];
                 cell.priceL.textColor = [UIColor whiteColor];
                 
-                _selectDayIndexPath = indexPath.row;
+                //_selectDayIndexPath = indexPath.row;
+                //_selectDayIndexPathSection = indexPath.section;
             }else{
                 //周六周天
                 if (indexPath.item %7 == 0 || (indexPath.item +1) %7 == 0) {
