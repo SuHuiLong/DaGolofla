@@ -15,7 +15,6 @@
 #import "JGActivityNameBaseCell.h"
 #import "JGHButtonCell.h"
 #import "JGTeamAcitivtyModel.h"
-#import "JGTeamActivityViewController.h"
 #import "JGLCancelDrawbackViewController.h"
 
 #import "JGHNewActivityDetailViewController.h"

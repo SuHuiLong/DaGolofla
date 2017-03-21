@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong)NSString *power;//权限
 
+@property (nonatomic, copy)NSString *teamName;//球队名称
+
 @end

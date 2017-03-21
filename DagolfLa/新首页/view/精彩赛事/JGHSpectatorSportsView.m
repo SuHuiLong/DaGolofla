@@ -38,6 +38,10 @@ static NSString *const JGHSpectatorSubCellIdentifier = @"JGHSpectatorSubCell";
         _spectatorTableView.showsHorizontalScrollIndicator = NO;
         _spectatorTableView.transform = CGAffineTransformMakeRotation(-M_PI/2);
         _spectatorTableView.frame = CGRectMake(0, 0, screenWidth, 262*ProportionAdapter);
+        UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kWvertical(262), kHvertical(10))];
+        footer.backgroundColor = [UIColor whiteColor];
+        _spectatorTableView.tableFooterView = footer;
+        
         [self addSubview:_spectatorTableView];
     }
     return self;
@@ -47,6 +51,7 @@ static NSString *const JGHSpectatorSubCellIdentifier = @"JGHSpectatorSubCell";
     _imageW = imageW;
     _imageH = imageH;
     _spectatorTableView.frame = CGRectMake(0, 0, screenWidth, _imageH*ProportionAdapter+ 99*ProportionAdapter);
+    _spectatorTableView.tableFooterView.frame = CGRectMake(0, 0, _imageH*ProportionAdapter+ 99*ProportionAdapter, kWvertical(10));
     _dataArray = dataArray;
     [_spectatorTableView reloadData];
 }

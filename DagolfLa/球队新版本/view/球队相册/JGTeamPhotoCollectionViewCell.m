@@ -18,7 +18,7 @@
 
 -(void)showData:(JGLPhotoAlbumModel *)model
 {
-    [_iconIngv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
+    [_iconIngv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:NO andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
     _iconIngv.layer.masksToBounds = YES;
     _iconIngv.contentMode = UIViewContentModeScaleAspectFill;
     

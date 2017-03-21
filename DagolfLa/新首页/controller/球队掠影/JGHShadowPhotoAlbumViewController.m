@@ -109,7 +109,7 @@
     if (cell)
     {
         
-        [cell.imageView sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[self.dataArray[indexPath.item] timeKey] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
+        [cell.imageView sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[self.dataArray[indexPath.item] timeKey] integerValue] andIsSetWidth:NO andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
         cell.imageView.tag = indexPath.item + 100;
         cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
         cell.imageView.clipsToBounds = YES;
