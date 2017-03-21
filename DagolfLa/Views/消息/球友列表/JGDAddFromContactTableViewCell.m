@@ -41,12 +41,22 @@
 
 - (void)setState:(NSInteger)state{
     
-    if (state) {
+    if (state == 1) {
+        
         [self.button setTitle:@"添加" forState:(UIControlStateNormal)];
         [self.button setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
         self.button.layer.borderWidth = 0;
         [self.button setBackgroundColor:[UIColor colorWithHexString:@"#32B14D"]];
+        
+    }else if (state == 2) {
+        
+        [self.button setTitle:@"已添加" forState:(UIControlStateNormal)];
+        [self.button setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        self.button.layer.borderWidth = 0;
+        [self.button setBackgroundColor:[UIColor colorWithHexString:@"#E7E7E7"]];
+        
     }else{
+        
         [self.button setTitle:@"邀请" forState:(UIControlStateNormal)];
         [self.button setTitleColor:[UIColor colorWithHexString:@"#F39800"] forState:(UIControlStateNormal)];
         self.button.layer.borderColor = [UIColor colorWithHexString:@"#F39800"].CGColor;
