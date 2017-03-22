@@ -146,7 +146,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
     psuhView.backgroundColor = [UIColor whiteColor];
     UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
-    [psuhBtn setTitle:@"保存奖项" forState:UIControlStateNormal];
+    [psuhBtn setTitle:@"保存" forState:UIControlStateNormal];
     [psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
     psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
     psuhBtn.layer.masksToBounds = YES;
@@ -215,7 +215,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 创建TB
 - (void)createChooseTableView{
-    self.chooseTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -65*ProportionAdapter- 10 *ProportionAdapter) style:UITableViewStylePlain];
+    self.chooseTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -65*ProportionAdapter- 64) style:UITableViewStylePlain];
     self.chooseTableView.delegate = self;
     self.chooseTableView.dataSource = self;
     

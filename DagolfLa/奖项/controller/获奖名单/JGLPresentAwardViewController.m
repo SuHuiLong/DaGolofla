@@ -204,7 +204,7 @@
         }
     }
     
-    if (countAware == _prizeListArray.count) {
+    if (countAware >0) {
         [_psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
         _psuhBtn.userInteractionEnabled = YES;
     }else{
@@ -289,7 +289,7 @@
 #pragma mark --创建TB
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter -15) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter -64) style:UITableViewStyleGrouped];
     if (self.isManager != 1) {
         _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
     }

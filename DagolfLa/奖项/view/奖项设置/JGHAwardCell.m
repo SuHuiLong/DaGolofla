@@ -68,7 +68,8 @@
     if (model.prizeSize == nil) {
         self.awardNumber.text = @"奖品数量：";
     }else{
-        self.awardNumber.text = [NSString stringWithFormat:@"奖品数量：%@", model.prizeSize];
+        self.awardNumber.text = [NSString stringWithFormat:@"奖品数量：%@", ([model.prizeSize integerValue] == 0)?@" ":model.prizeSize];
+        
     }
     
 }
