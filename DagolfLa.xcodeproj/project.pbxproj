@@ -1020,6 +1020,7 @@
 		AAB749E21C7B221A00018467 /* moren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAB749E11C7B221A00018467 /* moren.jpg */; };
 		AACE5E841C7C7D5800966646 /* xiangcemoren.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */; };
 		AAE5CF0F1C60756B00D66086 /* selfBackPic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */; };
+		F50022D91E7F8AE200846D1A /* JGDContactUpdata.m in Sources */ = {isa = PBXBuildFile; fileRef = F50022D81E7F8AE200846D1A /* JGDContactUpdata.m */; };
 		F500DC611DD451EE000E8E90 /* JGDSetBusinessPWDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F500DC601DD451EE000E8E90 /* JGDSetBusinessPWDViewController.m */; };
 		F50B7FB01CE59C8F0065069D /* JGTeamDetailStyleTwoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FAF1CE59C8F0065069D /* JGTeamDetailStyleTwoView.m */; };
 		F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB21CE59E050065069D /* JGTeamDetailStylelTwoViewController.m */; };
@@ -3218,6 +3219,8 @@
 		AAB749E11C7B221A00018467 /* moren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = moren.jpg; sourceTree = "<group>"; };
 		AACE5E831C7C7D5800966646 /* xiangcemoren.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = xiangcemoren.jpg; sourceTree = "<group>"; };
 		AAE5CF0E1C60756B00D66086 /* selfBackPic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = selfBackPic.jpg; sourceTree = SOURCE_ROOT; };
+		F50022D71E7F8AE200846D1A /* JGDContactUpdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDContactUpdata.h; sourceTree = "<group>"; };
+		F50022D81E7F8AE200846D1A /* JGDContactUpdata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDContactUpdata.m; sourceTree = "<group>"; };
 		F500DC5F1DD451EE000E8E90 /* JGDSetBusinessPWDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetBusinessPWDViewController.h; sourceTree = "<group>"; };
 		F500DC601DD451EE000E8E90 /* JGDSetBusinessPWDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSetBusinessPWDViewController.m; sourceTree = "<group>"; };
 		F50B7FAE1CE59C8F0065069D /* JGTeamDetailStyleTwoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDetailStyleTwoView.h; sourceTree = "<group>"; };
@@ -6882,6 +6885,8 @@
 				36D39B301BCCD85C00C0B197 /* UIView+ChangeFrame.m */,
 				36BFFF441BC76D09005B3CE2 /* Helper.h */,
 				36BFFF451BC76D09005B3CE2 /* Helper.m */,
+				F50022D71E7F8AE200846D1A /* JGDContactUpdata.h */,
+				F50022D81E7F8AE200846D1A /* JGDContactUpdata.m */,
 				36BFFF461BC76D09005B3CE2 /* HorButtonSet.h */,
 				36BFFF471BC76D09005B3CE2 /* HorButtonSet.m */,
 				36BFFF481BC76D09005B3CE2 /* IWTextView.h */,
@@ -9760,6 +9765,7 @@
 				36BF01A11BC779D8005B3CE2 /* YueDetailModel.m in Sources */,
 				20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */,
 				18D5DC761E68287A008C87EE /* SDImageCache.m in Sources */,
+				F50022D91E7F8AE200846D1A /* JGDContactUpdata.m in Sources */,
 				36E300ED1C3FF3F9005C3F08 /* MJRefreshComponent.m in Sources */,
 				2053EDB21DBF29610076BFE4 /* JGHShowSectionTableViewCell.m in Sources */,
 				65B596D51CAD43AC007AB83A /* ILRegularExpressionManager.m in Sources */,

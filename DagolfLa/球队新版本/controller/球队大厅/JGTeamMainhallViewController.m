@@ -28,7 +28,7 @@
 
 #import "JGLViewCityChoose.h"
 
-
+#import "JGDCreatTeamViewController.h"
 #import "JGDNewTeamDetailViewController.h"
 
 
@@ -267,22 +267,26 @@
 //创建球队
 - (void)creatTeam{
     _viewCityChoose.hidden = YES;
+    
+    
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-
+    
+    JGDCreatTeamViewController *createVC = [[JGDCreatTeamViewController alloc] init];
+    
     if ([user objectForKey:@"cacheCreatTeamDic"]) {
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [user setObject:0 forKey:@"cacheCreatTeamDic"];
-            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-            [self.navigationController pushViewController:creatteamVc animated:YES];
+            
+            [self.navigationController pushViewController:createVC animated:YES];
         }];
-        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-            creatteamVc.detailDic = [user objectForKey:@"cacheCreatTeamDic"];
-            creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
         
-            [self.navigationController pushViewController:creatteamVc animated:YES];
+        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            createVC.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
+            
+            [self.navigationController pushViewController:createVC animated:YES];
         }];
         
         [alert addAction:action1];
@@ -290,9 +294,37 @@
         [self presentViewController:alert animated:YES completion:nil];
         
     }else{
-        JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-        [self.navigationController pushViewController:creatteamVc animated:YES];
+        [self.navigationController pushViewController:createVC animated:YES];
     }
+    
+    
+    
+//    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+//
+//    if ([user objectForKey:@"cacheCreatTeamDic"]) {
+//        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            [user setObject:0 forKey:@"cacheCreatTeamDic"];
+//            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+//            [self.navigationController pushViewController:creatteamVc animated:YES];
+//        }];
+//        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+//            creatteamVc.detailDic = [user objectForKey:@"cacheCreatTeamDic"];
+//            creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
+//        
+//            [self.navigationController pushViewController:creatteamVc animated:YES];
+//        }];
+//        
+//        [alert addAction:action1];
+//        [alert addAction:action2];
+//        [self presentViewController:alert animated:YES completion:nil];
+//        
+//    }else{
+//        JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+//        [self.navigationController pushViewController:creatteamVc animated:YES];
+//    }
     
     
 }
@@ -459,8 +491,9 @@
     JGTeamChannelTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     //    if (!self.searchController.active || [self.searchArray count] == 0) {
+    // http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o
     if (![Helper isBlankString:_textField.text]) {
-        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", [self.searchArray[indexPath.row] objectForKey:@"timeKey"]];
+        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.searchArray[indexPath.row] objectForKey:@"timeKey"]];
         [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
 
         if ([self.searchArray count] != 0) {
@@ -476,7 +509,7 @@
         return cell;
     }else{
         // TEST
-        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@100w_100h", [self.modelArray[indexPath.row] objectForKey:@"timeKey"]];
+        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.modelArray[indexPath.row] objectForKey:@"timeKey"]];
                 NSLog(@"%@",[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]]);
         [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
         [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];

@@ -30,7 +30,7 @@ static const NSUInteger kTagOfRightSideButton = 999;
 - (void)initValues
 {
     self.topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 75 * screenWidth/375)];
-    self.topView.backgroundColor = [JKSlideSwitchView colorFromHexRGB:@"32b14d"];
+    self.topView.backgroundColor = [JKSlideSwitchView colorFromHexRGB:@"02613C"];
     [self addSubview:self.topView];
     
     //创建顶部可滑动的tab

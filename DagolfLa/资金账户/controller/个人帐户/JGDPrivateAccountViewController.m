@@ -34,6 +34,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"old_Nav_bg"] forBarMetrics:UIBarMetricsDefault];
+
     self.tabBarController.tabBar.hidden = YES;
 
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];

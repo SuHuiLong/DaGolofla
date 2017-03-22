@@ -124,7 +124,7 @@
     }else {
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     }
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav"] forBarMetrics:UIBarMetricsDefault];
     
     _costumBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44 * ProportionAdapter, 44 * ProportionAdapter)];
     [_costumBtn setImage:[UIImage imageNamed:@"qytxl"] forState:(UIControlStateNormal)];

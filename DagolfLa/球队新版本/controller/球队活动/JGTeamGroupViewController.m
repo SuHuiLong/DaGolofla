@@ -282,9 +282,11 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
         NSLog(@"data == %@", data);
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
-            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+            [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+//            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }else{
-            [[ShowHUD showHUD]showToastWithText:@"分组添加成功！" FromView:self.view];
+            [LQProgressHud showMessage:@"分组添加成功！"];
+//            [[ShowHUD showHUD]showToastWithText:@"分组添加成功！" FromView:self.view];
             _addGroup = 1;
         }
         

@@ -6,10 +6,15 @@
 //  Copyright © 2017年 bhxx. All rights reserved.
 //
 
+#import "JGDContactUpdata.h"
+#import "JGLTeamMemberModel.h"
+
 #import "JGDAddFromContactViewController.h"
 #import "JGDAddFromContactTableViewCell.h"
+#import "JGAddFriendViewController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface JGDAddFromContactViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface JGDAddFromContactViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UITableView *searchTable;
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -61,6 +66,48 @@
     [self createSearchTable];
     
     [self contactGet];
+    
+    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+    [JGDContactUpdata contanctUpload:^(NSMutableArray *contactArray) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+
+        [self.addressBookTemp removeAllObjects];
+        if (contactArray.count != 0) {
+            
+            for (NSDictionary*dic in contactArray) {
+                JGLTeamMemberModel *addressBook = [[JGLTeamMemberModel alloc] init];
+                addressBook.userName = [dic objectForKey:@"cName"];
+                addressBook.mobile = [dic objectForKey:@"phone"];
+                addressBook.isFriend = [[dic objectForKey:@"isFriend"] integerValue];
+                addressBook.isAppUser = [[dic objectForKey:@"isAppUser"] integerValue];
+                if ([dic objectForKey:@"userKey"]) {
+                    addressBook.userKey = [dic objectForKey:@"userKey"];
+                }
+                [self.addressBookTemp addObject:addressBook];
+            }
+            
+            
+//            self.addressBookTemp = contactArray;
+            
+//            TKAddressModel *addressBook = self.addressBookTemp[0];
+//            addressBook.isSelectNumber=1;
+            
+            self.listArray = [[NSMutableArray alloc]initWithArray:[JGTeamMemberManager archiveNumbers:self.addressBookTemp]];
+            
+            _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
+            
+            for (int i = (int)self.listArray.count-1; i>=0; i--) {
+                if ([self.listArray[i] count] == 0) {
+                    [self.keyArray removeObjectAtIndex:i];
+                    [self.listArray removeObjectAtIndex:i];
+                }
+            }
+            
+        }
+        [self.searchTable reloadData];
+
+        
+    }];
     // Do any additional setup after loading the view.
 }
 
@@ -173,14 +220,12 @@
             }
         }
         
-        
     }
     [self.searchTable reloadData];
 }
 
 
 - (void)createSearchTable{
-    
     
     self.searchTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 * ProportionAdapter, screenWidth, screenHeight - 64 * ProportionAdapter) style:(UITableViewStylePlain)];
     self.searchTable.delegate = self;
@@ -261,7 +306,6 @@
     
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     header.contentView.backgroundColor = [UIColor colorWithHexString:@"#F5F5F5"];
-    //    header.textLabel.textAlignment=NSTextAlignmentCenter;
     [header.textLabel setTextColor:[UIColor colorWithHexString:@"#a0a0a0"]];
     header.textLabel.font = [UIFont systemFontOfSize:17 * ProportionAdapter];
     
@@ -284,28 +328,161 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.nameLB.text = [self.listArray[indexPath.section][indexPath.row] userName];
     cell.mobileLB.text = [self.listArray[indexPath.section][indexPath.row] mobile];
-    if (indexPath.row > 2) {
-        cell.state = 1;
+    
+    if ([self.listArray[indexPath.section][indexPath.row] isKindOfClass:[TKAddressModel class]]) {
+        cell.button.hidden = YES;
+        
     }else{
-        cell.state = 0;
+        cell.button.hidden = NO;
+        if ([self.listArray[indexPath.section][indexPath.row] isAppUser] == 0) {
+            // 邀请
+            cell.state = 0;
+            [cell.button addTarget:self action:@selector(clickAct:) forControlEvents:(UIControlEventTouchUpInside)];
+
+        }else{
+            if ([self.listArray[indexPath.section][indexPath.row] isFriend] == 0) {
+                // 添加
+                cell.state = 1;
+                [cell.button addTarget:self action:@selector(clickAct:) forControlEvents:(UIControlEventTouchUpInside)];
+
+
+            }else{
+                // 已添加
+                cell.state = 2;
+                
+            }
+        }
+    }
+
+    return cell;
+}
+
+- (void)clickAct:(UIButton *)currentBtn{
+    
+    JGDAddFromContactTableViewCell *cell = (JGDAddFromContactTableViewCell *)[[currentBtn superview] superview];
+    NSIndexPath *indexPath = [self.searchTable indexPathForCell:cell];
+    
+    if ([self.listArray[indexPath.section][indexPath.row] isAppUser] == 0) {
+        // 邀请
+        [self showMessageView:@[[self.listArray[indexPath.section][indexPath.row] mobile]] title:[NSString stringWithFormat:@"是否给%@发短信", [self.listArray[indexPath.section][indexPath.row] userName]] body:@"嗨！我正在使用君高高尔夫APP，感觉很不错，推荐你下载使用。下载链接：https://itunes.apple.com/cn/app/君高高尔夫-打造专业的高尔夫社群平台/id1056048082?mt=8"];
+    }else{
+        if ([self.listArray[indexPath.section][indexPath.row] isFriend] == 0) {
+            // 添加
+            JGAddFriendViewController *addVC = [[JGAddFriendViewController alloc] init];
+            addVC.otherUserKey = [self.listArray[indexPath.section][indexPath.row] userKey];
+            addVC.popToVC = ^(NSInteger sendNum){
+
+            };
+            [self.navigationController pushViewController:addVC animated:YES];
+        }else{
+            // 已添加
+            
+        }
     }
     
-    return cell;
+    
+}
+
+-(void)showMessageView:(NSArray *)phones title:(NSString *)title body:(NSString *)body
+{
+    if( [MFMessageComposeViewController canSendText] )
+    {
+        MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc] init];
+        controller.recipients = phones;
+        controller.navigationBar.tintColor = [UIColor redColor];
+        controller.body = body;
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:nil];
+        [[[[controller viewControllers] lastObject] navigationItem] setTitle:title];//修改短信界面标题
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示信息"
+                                                        message:@"该设备不支持短信功能"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 #pragma mark ------搜索框回调方法
 
--(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
+    NSLog(@"TEXT - %@ - TEXT" ,textField.text);
+    NSLog(@"sting - %@ - string" ,string);
+    
+    NSMutableString *sring = [NSMutableString stringWithFormat:@"%@" ,textField.text];
+   [sring replaceCharactersInRange:range withString:string];
+    NSLog(@"%@" ,sring);
+    [self search:sring];
+    return YES;
+
 }
+
+
+- (void)search:(NSString *)searchStr{
+    NSDictionary *userDic = [NSMutableDictionary dictionary];
+    [userDic setValue:DEFAULF_USERID forKey:@"userKey"];
+    [userDic setValue:searchStr forKey:@"keyword"];
+    [userDic setValue: [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
+    [[JsonHttp jsonHttp] httpRequest:@"mobileContact/getUserMobileContactList" JsonKey:nil withData:userDic requestMethod:@"GET" failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            if ([data objectForKey:@"cList"]) {
+                
+                [self.addressBookTemp removeAllObjects];
+                if ([data objectForKey:@"cList"] != 0) {
+                    
+                    for (NSDictionary*dic in [data objectForKey:@"cList"]) {
+                        JGLTeamMemberModel *addressBook = [[JGLTeamMemberModel alloc] init];
+                        addressBook.userName = [dic objectForKey:@"cName"];
+                        addressBook.mobile = [dic objectForKey:@"phone"];
+                        addressBook.isFriend = [[dic objectForKey:@"isFriend"] integerValue];
+                        addressBook.isAppUser = [[dic objectForKey:@"isAppUser"] integerValue];
+                        
+                        [self.addressBookTemp addObject:addressBook];
+                    }
+                    
+                    
+                    //            self.addressBookTemp = contactArray;
+                    
+                    //            TKAddressModel *addressBook = self.addressBookTemp[0];
+                    //            addressBook.isSelectNumber=1;
+                    
+                    self.listArray = [[NSMutableArray alloc]initWithArray:[JGTeamMemberManager archiveNumbers:self.addressBookTemp]];
+                    
+                    _keyArray = [[NSMutableArray alloc]initWithObjects:@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"#", nil];
+                    
+                    for (int i = (int)self.listArray.count-1; i>=0; i--) {
+                        if ([self.listArray[i] count] == 0) {
+                            [self.keyArray removeObjectAtIndex:i];
+                            [self.listArray removeObjectAtIndex:i];
+                        }
+                    }
+                    
+                }
+                [self.searchTable reloadData];
+
+            }
+        }
+    }];
+}
+
+//-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+//
+//}
 
 - (void)searchAct{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
 - (UIImage *)imageFromColor:(UIColor *)color{
     
@@ -330,6 +507,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+ /**
+ * 获取用户的通讯录列表
+ * @Title: getUserMobileContactList
+ * @param userKey
+ * @param keyword
+ * @param md5
+ * @param response
+ * @throws Throwable
+ * @author lyh
+@HttpService(RequestURL = "/getUserMobileContactList" , method = "get")
+public void getUserMobileContactList(
+                                     @Param(value="userKey",  require=true)  Long    userKey,
+                                     @Param(value="keyword",  require=false) String  keyword,
+                                     @Param(value="md5"    ,  require=true)  String  md5,
+                                     TcpResponse  response
+  */
+
+
 
 /*
 #pragma mark - Navigation
