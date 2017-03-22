@@ -11,7 +11,7 @@
 
 @implementation JGDContactUpdata
 
-+ (void)contanctUpload:(blockContact)contact{
++ (void)contanctUpload:(blockContact)contact error:(blockError)error{
     NSMutableDictionary *DataDic = [NSMutableDictionary dictionary];
     [DataDic setObject:DEFAULF_USERID forKey:@"userKey"];
     [DataDic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
@@ -108,7 +108,8 @@
                 [dic setObject:commitContactArray forKey:@"contactList"];
                 if ([commitContactArray count] != 0) {
                     [[JsonHttp jsonHttp] httpRequestWithMD5:@"mobileContact/doUploadContacts" JsonKey:nil withData:dic failedBlock:^(id errType) {
-                        
+                        error([NSString stringWithFormat:@"%@",errType]);
+
                     } completionBlock:^(id data) {
                         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                             
@@ -127,6 +128,10 @@
                             }];
                             
                             
+                        }else{
+                            if ([data objectForKey:@"packResultMsg"]) {
+                                error([data objectForKey:@"packResultMsg"]);
+                            }
                         }
                     }];
                 }else{
@@ -136,15 +141,19 @@
                     [userDic setValue:DEFAULF_USERID forKey:@"userKey"];
                     [userDic setValue: [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
                     [[JsonHttp jsonHttp] httpRequest:@"mobileContact/getUserMobileContactList" JsonKey:nil withData:userDic requestMethod:@"GET" failedBlock:^(id errType) {
-                        
+                        error([NSString stringWithFormat:@"%@",errType]);
+
                     } completionBlock:^(id data) {
                         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                             if ([data objectForKey:@"cList"]) {
                                 contact([data objectForKey:@"cList"]);
                             }
+                        }else{
+                            if ([data objectForKey:@"packResultMsg"]) {
+                                error([data objectForKey:@"packResultMsg"]);
+                            }
                         }
                     }];
-                    
                     
                 }
             }

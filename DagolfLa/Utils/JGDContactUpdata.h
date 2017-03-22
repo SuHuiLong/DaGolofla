@@ -10,9 +10,10 @@
 
 
 typedef void (^blockContact)(NSMutableArray* contactArray);
+typedef void (^blockError)(NSString* error);
 
 @interface JGDContactUpdata : NSObject
 
-+ (void)contanctUpload:(blockContact)contact;
++ (void)contanctUpload:(blockContact)contact error:(blockError)error;
 
 @end

@@ -107,6 +107,12 @@
         [self.searchTable reloadData];
 
         
+    }error:^(NSString *error) {
+        if (error) {
+            [[ShowHUD showHUD] hideAnimationFromView:self.view];
+            [LQProgressHud showMessage:error];
+
+        }
     }];
     // Do any additional setup after loading the view.
 }
