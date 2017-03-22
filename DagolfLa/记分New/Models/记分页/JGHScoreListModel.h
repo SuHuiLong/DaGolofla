@@ -57,4 +57,8 @@
 
 @property (nonatomic, strong)NSNumber *interval;//定时器间隔时间
 
+@property (nonatomic, copy)NSString *finish;//是否完成
+
+@property (nonatomic, assign)NSInteger switchMode;
+
 @end

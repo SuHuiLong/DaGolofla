@@ -17,6 +17,7 @@
 #import "JGHPoorScoreHoleView.h"
 #import "JGHHistoryAndResultsViewController.h"
 #import "JGHScoreDatabase.h"
+#import "JGHScoreAF.h"
 
 //static NSInteger switchMode;
 
@@ -103,6 +104,9 @@
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
     
+    //创建记分表
+    [[JGHScoreDatabase shareScoreDatabase]initDataBaseTableName:_scorekey];
+    
     _walletMonay = 0;//红包金额
     
     [self.segment setTitle:@"差杆模式" forSegmentAtIndex:0];
@@ -169,6 +173,34 @@
             [self getScoreList];
         });
     }
+    
+    //把所有的scoreKey 列表存在DF里面，供请求队列获取本地数据库数据  userdf
+    NSMutableArray *scoreKeyArray = [NSMutableArray array];
+    if ([userdf objectForKey:@"scoreKeyArray"]) {
+        //本地存在
+        scoreKeyArray = [userdf objectForKey:@"scoreKeyArray"];
+        //插入scoreKey
+        NSInteger content = 0;
+        for (int i=0; i<scoreKeyArray.count; i++) {
+            NSString *scoreKey = scoreKeyArray[i];
+            if ([_scorekey isEqualToString:scoreKey]) {
+                content = 1;
+            }
+        }
+        
+        if (content) {
+            [scoreKeyArray addObject:_scorekey];
+        }
+        
+        [userdf setObject:scoreKeyArray forKey:@"scoreKeyArray"];
+    }else{
+        //本地不存在
+        [scoreKeyArray addObject:_scorekey];
+        
+        [userdf setObject:scoreKeyArray forKey:@"scoreKeyArray"];
+    }
+    
+    [userdf synchronize];
 }
 #pragma mark -- segmentAction 记分模式切换
 - (void)segmentAction:(UISegmentedControl *)segment{
@@ -186,6 +218,9 @@
     }
     
     [userdf synchronize];
+    
+    //更新数据库
+    [[JGHScoreDatabase shareScoreDatabase]updateSwithModel:_switchMode andScoreKey:_scorekey];
     
     JGHScoresMainViewController *sub = (JGHScoresMainViewController *)_pageViewController.viewControllers[0];
     [sub switchScoreModeNote];
@@ -218,7 +253,7 @@
 - (void)changeTimeAtTimeDoClick{
     [[JsonHttp jsonHttp]cancelRequest];
     
-    if (_isEdtor == 1) {
+    if ([[JGHScoreDatabase shareScoreDatabase]getScoreSave:_scorekey]) {
         //保存洞号
         _isEdtor = 0;
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -265,7 +300,7 @@
             NSLog(@"5S  时间保存");
             if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                 
-                //                        [self scoresResult];
+                [[JGHScoreDatabase shareScoreDatabase]updateCommitDataScoreKey:_scorekey andCommitData:@"1"];
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
                     _isEdtor = 1;
@@ -351,6 +386,9 @@
             
             model.interval = [data objectForKey:@"interval"];
             
+            model.switchMode = _switchMode;
+            model.finish = [NSString stringWithFormat:@"%td", _scoreFinish];
+            
             //存数据库
             [[JGHScoreDatabase shareScoreDatabase]addJGHScoreListModel:model];
             
@@ -422,6 +460,7 @@
     }
     
     [self titleBtnClick];
+    
 }
 
 #pragma mark -- 记分详情
@@ -814,7 +853,6 @@
     _item.enabled = NO;
     
     //保存
-    
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     if (_currentPage > 0) {
         [userdef setObject:@(_currentPage -1) forKey:[NSString stringWithFormat:@"%@", _scorekey]];
@@ -823,8 +861,39 @@
     }
     
     [userdef synchronize];
-     
     
+    dispatch_queue_t queueSave = dispatch_queue_create("saveScore", DISPATCH_QUEUE_SERIAL);
+    dispatch_async(queueSave, ^{
+        [[JGHScoreAF shareScoreAF]httpScoreKey:_scorekey failedBlock:^(id errType) {
+            _item.enabled = YES;
+        } completionBlock:^(id data) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _item.enabled = YES;
+                
+                if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+                    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
+                    if (![userdef objectForKey:[NSString stringWithFormat:@"%@list", _scorekey]]) {
+                        [userdef setObject:@1 forKey:[NSString stringWithFormat:@"%@list", _scorekey]];
+                        [userdef synchronize];
+                    }
+                    
+                    if (_scoreFinish == 0) {
+                        [[ShowHUD showHUD]showToastWithText:@"保存成功" FromView:self.view];
+                        
+                        [[JGHScoreDatabase shareScoreDatabase]updateCommitDataScoreKey:_scorekey andCommitData:@"1"];
+                    }else{
+                        [self finishScore];
+                    }
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            });
+        }];
+    });
+    
+    /*
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     NSMutableArray *listArray = [NSMutableArray array];
@@ -885,6 +954,7 @@
             }
         }
     }];
+     */
 }
 #pragma mark -- 结束记分／完成
 - (void)finishScore{
@@ -892,7 +962,55 @@
     [_timer invalidate];
     _timer = nil;
     self.view.userInteractionEnabled = NO;
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     //完成  finishScore
+    dispatch_queue_t queue = dispatch_queue_create("finishScore", DISPATCH_QUEUE_SERIAL);
+    dispatch_async(queue, ^{
+        [[JGHScoreAF shareScoreAF]httpFinishScoreKey:_scorekey failedBlock:^(id errType) {
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            self.view.userInteractionEnabled = YES;
+            _item.enabled = YES;
+        } completionBlock:^(id data) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.view.userInteractionEnabled = YES;
+                _item.enabled = YES;
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
+                if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+                    if ([data objectForKey:@"money"]) {
+                        _walletMonay = [data objectForKey:@"money"];
+                    }
+                    
+                    [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
+                    [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];//TIMESlEEP
+                    
+                    //记分完成后－－－删除本地记分表
+                    [[JGHScoreDatabase shareScoreDatabase]deleteTable:_scorekey];
+                    NSMutableArray *scoreKeyArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"scoreKeyArray"];
+                    NSInteger deleteId =0;
+                    for (int i=0; i<scoreKeyArray.count; i++) {
+                        NSString *userdfScoreKey = [NSString stringWithFormat:@"%@", scoreKeyArray[i]];
+                        if ([userdfScoreKey isEqualToString:_scorekey]) {
+                            deleteId =i;
+                        }
+                    }
+                    
+                    [scoreKeyArray removeObjectAtIndex:deleteId];
+                    
+                    [[NSUserDefaults standardUserDefaults]setObject:scoreKeyArray forKey:@"scoreKeyArray"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
+                    }
+                }
+            });
+            
+        }];
+    });
+    
+    
+    /*
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
     
     NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
@@ -932,6 +1050,7 @@
             }
         }
     }];
+     */
 }
 #pragma mark --历史记分
 - (void)scoresResult{

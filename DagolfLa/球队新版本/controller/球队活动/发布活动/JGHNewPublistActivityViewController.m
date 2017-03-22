@@ -85,6 +85,7 @@ static CGFloat ImageHeight  = 210.0;
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:Mobile]) {
         _model.mobile = [[NSUserDefaults standardUserDefaults] objectForKey:Mobile];
+        _model.userMobile = _model.mobile;
         _model.userName = DEFAULF_UserName;
     }
     
@@ -235,7 +236,7 @@ static CGFloat ImageHeight  = 210.0;
         }else if (indexPath.row == 4){
             CGFloat height;
             height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
-            if (height < 45*ProportionAdapter) {
+            if (0< height && height < 45*ProportionAdapter) {
                 height = 45*ProportionAdapter;
             }
             
@@ -320,7 +321,7 @@ static CGFloat ImageHeight  = 210.0;
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
             [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
             
-            if (indexPath.row == 4) {
+            if (indexPath.row == 3) {
                 titleCell.line.hidden = YES;
             }else{
                 titleCell.line.hidden = NO;
@@ -340,7 +341,7 @@ static CGFloat ImageHeight  = 210.0;
             return titleCell;
         }else if (indexPath.row == 2){
             JGHNewActivityTextAndTextCell *textCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityTextAndTextCellIdentifier];
-            [textCell configJGHNewActivityTextAndTextCellName:_model.userName andMobile:_model.userMobile];
+            [textCell configJGHNewActivityTextAndTextCellName:_model.userName andMobile:_model.mobile];
             textCell.nameText.tag = 23;
             textCell.mobileText.tag = 123;
             textCell.nameText.delegate = self;
@@ -381,14 +382,10 @@ static CGFloat ImageHeight  = 210.0;
                     [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
                     
                     NSDate *destDate= [dateFormatter dateFromString:_model.beginDate];
+                                    
+                    NSDate * nextDay = [[NSDate alloc]initWithTimeInterval:-24*60*60 sinceDate:destDate];
                     
-                    NSTimeZone *zone = [NSTimeZone systemTimeZone];
-                    NSInteger interval = [zone secondsFromGMTForDate:destDate];
-                    NSDate *localeDate = [destDate dateByAddingTimeInterval: interval];
-                    NSDate *nextDay = [NSDate dateWithTimeInterval:24*60*60 sinceDate:localeDate];//后一天
-                    //NSString *signUpEndTime = [NSString ]
-                    
-                    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
                     NSString *signUpEndTime = [dateFormatter stringFromDate:nextDay];
                     NSString *endTime = [[_model.beginDate componentsSeparatedByString:@" "] firstObject];
                     
@@ -429,7 +426,7 @@ static CGFloat ImageHeight  = 210.0;
             }
             
             [self.navigationController pushViewController:costView animated:YES];
-        }else if (indexPath.row == 3){
+        }else if (indexPath.row >= 3){
             JGHConcentTextViewController *concentTextCtrl = [[JGHConcentTextViewController alloc]initWithNibName:@"JGHConcentTextViewController" bundle:nil];
             
             concentTextCtrl.itemText = @"活动说明";
@@ -467,8 +464,8 @@ static CGFloat ImageHeight  = 210.0;
         [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
     }
     
-    if (self.model.userMobile.length == 11) {
-        [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
+    if (self.model.mobile.length == 11) {
+        [dict setObject:self.model.mobile forKey:@"userMobile"];//联系人
     }
     
     if (self.model.ballName != nil) {
@@ -521,7 +518,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    if (self.model.userMobile.length != 11) {
+    if (self.model.mobile.length != 11) {
         [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];
         return;
     }
@@ -567,7 +564,7 @@ static CGFloat ImageHeight  = 210.0;
     NSString *currentTime = [formatter stringFromDate:[NSDate date]];
     [dict setObject:currentTime forKey:@"createTime"];//活动创建时间
     [dict setObject:self.model.userName forKey:@"userName"];//联系人
-    [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
+    [dict setObject:self.model.mobile forKey:@"userMobile"];//联系人
     
     [postDict setObject:dict forKey:@"teamActivity"];
     
@@ -722,7 +719,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if (textField.tag == 23) {
         self.model.userName = textField.text;
     }else if (textField.tag == 123){
-        self.model.userMobile = textField.text;
+        self.model.mobile = textField.text;
     }else if (textField.tag == 345){
         self.model.name = textField.text;
     }

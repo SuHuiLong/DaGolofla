@@ -327,6 +327,7 @@
 		2048E8EB1D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2048E8E91D4B369E00A2C024 /* JGHSetAlmostPromptViewController.xib */; };
 		2048E8EF1D4B528E00A2C024 /* JGHSimpleScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8EE1D4B528E00A2C024 /* JGHSimpleScoreViewController.m */; };
 		2048E8FD1D4F28F900A2C024 /* JGHActivityMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2048E8FC1D4F28F900A2C024 /* JGHActivityMembersViewController.m */; };
+		204FC5011E81077D00452FEC /* JGHScoreAF.m in Sources */ = {isa = PBXBuildFile; fileRef = 204FC5001E81077D00452FEC /* JGHScoreAF.m */; };
 		20513B481CF5D1D8003233FB /* JGHInvoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513B461CF5D1D8003233FB /* JGHInvoiceCell.m */; };
 		20513B491CF5D1D8003233FB /* JGHInvoiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20513B471CF5D1D8003233FB /* JGHInvoiceCell.xib */; };
 		20513B4C1CF5D448003233FB /* InvoiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 20513B4B1CF5D448003233FB /* InvoiceModel.m */; };
@@ -1882,6 +1883,8 @@
 		2048E8EE1D4B528E00A2C024 /* JGHSimpleScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHSimpleScoreViewController.m; sourceTree = "<group>"; };
 		2048E8FB1D4F28F900A2C024 /* JGHActivityMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHActivityMembersViewController.h; sourceTree = "<group>"; };
 		2048E8FC1D4F28F900A2C024 /* JGHActivityMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHActivityMembersViewController.m; sourceTree = "<group>"; };
+		204FC4FF1E81077D00452FEC /* JGHScoreAF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHScoreAF.h; sourceTree = "<group>"; };
+		204FC5001E81077D00452FEC /* JGHScoreAF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHScoreAF.m; sourceTree = "<group>"; };
 		20513B451CF5D1D8003233FB /* JGHInvoiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHInvoiceCell.h; sourceTree = "<group>"; };
 		20513B461CF5D1D8003233FB /* JGHInvoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHInvoiceCell.m; sourceTree = "<group>"; };
 		20513B471CF5D1D8003233FB /* JGHInvoiceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JGHInvoiceCell.xib; sourceTree = "<group>"; };
@@ -3881,6 +3884,8 @@
 		2012AD961D36156400F70E40 /* 记分页 */ = {
 			isa = PBXGroup;
 			children = (
+				204FC4FF1E81077D00452FEC /* JGHScoreAF.h */,
+				204FC5001E81077D00452FEC /* JGHScoreAF.m */,
 				2012AD991D3615AB00F70E40 /* JGHScoresViewController.h */,
 				2012AD9A1D3615AB00F70E40 /* JGHScoresViewController.m */,
 				2012AD9C1D36192F00F70E40 /* JGHScoresMainViewController.h */,
@@ -9636,6 +9641,7 @@
 				F5BDF0A11CEC1B750020175A /* JGTeamDetail.m in Sources */,
 				203019A01E0E4292005568E2 /* ZXDataMatrixWriter.m in Sources */,
 				36F721161BE8ADEB001C02C6 /* FootDetailViewController.m in Sources */,
+				204FC5011E81077D00452FEC /* JGHScoreAF.m in Sources */,
 				36BFFFCC1BC770B1005B3CE2 /* ZanNumViewController.m in Sources */,
 				203019861E0E4292005568E2 /* ZXErrors.m in Sources */,
 				36B9B59B1C3E004C0053B227 /* ProFileViewController.m in Sources */,

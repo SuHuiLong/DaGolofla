@@ -44,7 +44,7 @@
         
         
         _viewLine = [[UIView alloc]initWithFrame:CGRectMake(10*screenWidth/320, 60*screenWidth/320, screenWidth - 20*screenWidth/320, 0.5)];
-        _viewLine.backgroundColor = [UIColor lightGrayColor];
+        _viewLine.backgroundColor = [UIColor colorWithHexString:BG_color];
         [self addSubview:_viewLine];
         
         _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10*screenWidth/320, 60*screenWidth/320, screenWidth - 100*screenWidth/320, 45*screenWidth/320)];
