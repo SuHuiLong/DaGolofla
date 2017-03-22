@@ -165,8 +165,9 @@ static CGFloat ImageHeight  = 210.0;
     [self.imgProfile addSubview:self.headPortraitBtn];
     
 
-    
     [self createPreviewBtn];
+    
+
 }
 
 

@@ -17,7 +17,6 @@
     if (self) {
         
         self.iconImageV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 320, 9 * screenWidth / 320, 60 * screenWidth / 320, 60 * screenWidth / 320)];
-//        self.iconImageV.backgroundColor = [UIColor orangeColor];
         self.iconImageV.layer.cornerRadius = 5 * screenWidth / 320;
         self.iconImageV.clipsToBounds = YES;
         [self.contentView addSubview:self.iconImageV];

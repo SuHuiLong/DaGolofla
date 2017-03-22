@@ -159,12 +159,19 @@ static CGFloat ImageHeight  = 210.0;
                 if (self.state == 1) {
                     
                     if ([[self.memBerDic objectForKey:@"state"] integerValue] == 0) {
+                        
                         [self.previewBtn setTitle:@"正在等待管理员审核" forState:UIControlStateNormal];
+                        self.previewBtn.userInteractionEnabled = NO;
                         self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+                        
                     }else if ([[self.dataDict objectForKey:@"state"] integerValue] == 2){
+                        
                         [self.previewBtn setTitle:@"审核未通过" forState:UIControlStateNormal];
+                        self.previewBtn.userInteractionEnabled = NO;
                         self.previewBtn.backgroundColor = [UIColor lightGrayColor];
+                        
                     }else{
+                        
                         [self.previewBtn setTitle:@"微信招集队友" forState:UIControlStateNormal];
                         self.previewBtn.backgroundColor = [UIColor colorWithHexString:@"#F59826"];
                     }
@@ -172,6 +179,7 @@ static CGFloat ImageHeight  = 210.0;
                 }else if (self.state == 0) {
                     
                     [self.previewBtn setTitle:@"正在等待审核" forState:UIControlStateNormal];
+                    self.previewBtn.userInteractionEnabled = NO;
                     self.previewBtn.backgroundColor = [UIColor lightGrayColor];
                     
                 }else if (self.state == 2) {
@@ -203,7 +211,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     self.navigationController.navigationBarHidden = NO;
-    
+
 }
 
 - (instancetype)init{
@@ -297,7 +305,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.headPortraitBtn setImage:[UIImage imageNamed:DefaultHeaderImage] forState:UIControlStateNormal];
     self.headPortraitBtn.userInteractionEnabled = NO;
     //    [self.headPortraitBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
-    self.headPortraitBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//    self.headPortraitBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.imgProfile addSubview:self.headPortraitBtn];
     [self.titleView addSubview:self.titleLB];
     
@@ -932,7 +940,6 @@ static CGFloat ImageHeight  = 210.0;
 
 #pragma mark -- 咨询
 - (void)askBtnClick:(UIButton *)btn{
-    
     
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", [self.dataDict objectForKey:@"answerMobile"]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
