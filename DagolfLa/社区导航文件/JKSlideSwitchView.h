@@ -19,7 +19,7 @@
 
     NSMutableArray *_viewArray;                     //主视图的子视图数组
 }
-@property (nonatomic, strong)UIView *topView;
+@property (nonatomic, strong)UIImageView *topView;
 @property (nonatomic, strong) UIScrollView *rootScrollView;
 @property (nonatomic, strong) UIScrollView *topScrollView;
 @property (nonatomic, assign) NSInteger userSelectedChannelID;

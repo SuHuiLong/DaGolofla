@@ -39,7 +39,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:NO];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -56,7 +56,7 @@
     [super viewWillAppear:NO];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.navigationBarHidden = YES;
-
+    
 }
 
 
@@ -70,7 +70,7 @@
     [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     [JGDContactUpdata contanctUpload:^(NSMutableArray *contactArray) {
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
-
+        
         [self.addressBookTemp removeAllObjects];
         if (contactArray.count != 0) {
             
@@ -87,10 +87,10 @@
             }
             
             
-//            self.addressBookTemp = contactArray;
+            //            self.addressBookTemp = contactArray;
             
-//            TKAddressModel *addressBook = self.addressBookTemp[0];
-//            addressBook.isSelectNumber=1;
+            //            TKAddressModel *addressBook = self.addressBookTemp[0];
+            //            addressBook.isSelectNumber=1;
             
             self.listArray = [[NSMutableArray alloc]initWithArray:[JGTeamMemberManager archiveNumbers:self.addressBookTemp]];
             
@@ -105,13 +105,13 @@
             
         }
         [self.searchTable reloadData];
-
+        
         
     }error:^(NSString *error) {
         if (error) {
             [[ShowHUD showHUD] hideAnimationFromView:self.view];
             [LQProgressHud showMessage:error];
-
+            
         }
     }];
     // Do any additional setup after loading the view.
@@ -274,7 +274,16 @@
     
     [self.view addSubview:self.searchTable];
     
-
+    /*
+     + (void)animateWithDuration:(NSTimeInterval)duration
+     delay:(NSTimeInterval)delay
+     usingSpringWithDamping:(CGFloat)dampingRatio
+     initialSpringVelocity:(CGFloat)velocity
+     options:(UIViewAnimationOptions)options
+     animations:(void (^)(void))animations
+     completion:(void (^)(BOOL finished))completion
+     */
+    
 }
 
 // 右侧索引
@@ -344,14 +353,14 @@
             // 邀请
             cell.state = 0;
             [cell.button addTarget:self action:@selector(clickAct:) forControlEvents:(UIControlEventTouchUpInside)];
-
+            
         }else{
             if ([self.listArray[indexPath.section][indexPath.row] isFriend] == 0) {
                 // 添加
                 cell.state = 1;
                 [cell.button addTarget:self action:@selector(clickAct:) forControlEvents:(UIControlEventTouchUpInside)];
-
-
+                
+                
             }else{
                 // 已添加
                 cell.state = 2;
@@ -359,7 +368,7 @@
             }
         }
     }
-
+    
     return cell;
 }
 
@@ -370,14 +379,28 @@
     
     if ([self.listArray[indexPath.section][indexPath.row] isAppUser] == 0) {
         // 邀请
-        [self showMessageView:@[[self.listArray[indexPath.section][indexPath.row] mobile]] title:[NSString stringWithFormat:@"是否给%@发短信", [self.listArray[indexPath.section][indexPath.row] userName]] body:@"嗨！我正在使用君高高尔夫APP，感觉很不错，推荐你下载使用。下载链接：https://itunes.apple.com/cn/app/君高高尔夫-打造专业的高尔夫社群平台/id1056048082?mt=8"];
+        UIAlertController *alerT = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"是否给%@发短信", [self.listArray[indexPath.section][indexPath.row] userName]] preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *aler1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
+            [self showMessageView:@[[self.listArray[indexPath.section][indexPath.row] mobile]] title:@"" body:@"嗨！我正在使用君高高尔夫APP，感觉很不错，推荐你下载使用。下载链接：https://itunes.apple.com/cn/app/君高高尔夫-打造专业的高尔夫社群平台/id1056048082?mt=8"];
+        }];
+        [alerT addAction:aler1];
+        
+        UIAlertAction *aler2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        [alerT addAction:aler2];
+        
+        [self.navigationController presentViewController:alerT animated:YES completion:nil];
+        
     }else{
         if ([self.listArray[indexPath.section][indexPath.row] isFriend] == 0) {
             // 添加
             JGAddFriendViewController *addVC = [[JGAddFriendViewController alloc] init];
             addVC.otherUserKey = [self.listArray[indexPath.section][indexPath.row] userKey];
             addVC.popToVC = ^(NSInteger sendNum){
-
+                
             };
             [self.navigationController pushViewController:addVC animated:YES];
         }else{
@@ -412,6 +435,28 @@
     }
 }
 
+#pragma mark messageComposeViewController Deleaget Method
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if(result==MessageComposeResultSent)
+    {
+        NSLog(@"发短信成功");
+    }
+    else if(result==MessageComposeResultCancelled)
+    {
+        NSLog(@"发短信取消");
+    }
+    else if(result==MessageComposeResultFailed)
+    {
+        NSLog(@"发短信失败");
+    }
+    
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 #pragma mark ------搜索框回调方法
 
 
@@ -421,11 +466,11 @@
     NSLog(@"sting - %@ - string" ,string);
     
     NSMutableString *sring = [NSMutableString stringWithFormat:@"%@" ,textField.text];
-   [sring replaceCharactersInRange:range withString:string];
+    [sring replaceCharactersInRange:range withString:string];
     NSLog(@"%@" ,sring);
     [self search:sring];
     return YES;
-
+    
 }
 
 
@@ -472,7 +517,7 @@
                     
                 }
                 [self.searchTable reloadData];
-
+                
             }
         }
     }];
@@ -515,7 +560,7 @@
 }
 
 
- /**
+/**
  * 获取用户的通讯录列表
  * @Title: getUserMobileContactList
  * @param userKey
@@ -524,24 +569,24 @@
  * @param response
  * @throws Throwable
  * @author lyh
-@HttpService(RequestURL = "/getUserMobileContactList" , method = "get")
-public void getUserMobileContactList(
-                                     @Param(value="userKey",  require=true)  Long    userKey,
-                                     @Param(value="keyword",  require=false) String  keyword,
-                                     @Param(value="md5"    ,  require=true)  String  md5,
-                                     TcpResponse  response
-  */
+ @HttpService(RequestURL = "/getUserMobileContactList" , method = "get")
+ public void getUserMobileContactList(
+ @Param(value="userKey",  require=true)  Long    userKey,
+ @Param(value="keyword",  require=false) String  keyword,
+ @Param(value="md5"    ,  require=true)  String  md5,
+ TcpResponse  response
+ */
 
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

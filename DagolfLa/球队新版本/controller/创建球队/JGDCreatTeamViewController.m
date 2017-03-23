@@ -300,9 +300,10 @@ static CGFloat ImageHeight  = 210.0;
         
         [user setObject:self.detailDic forKey:@"cacheCreatTeamDic"];
         [user synchronize];
-        [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
+        [LQProgressHud showMessage:@"保存成功"];
+//        [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
+//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//        }];
         
     }else{
         
@@ -569,7 +570,7 @@ static CGFloat ImageHeight  = 210.0;
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     
     
-    UILabel *footLB = [Helper lableRect:CGRectMake(12 * ProportionAdapter, 14 * ProportionAdapter, screenWidth - 12 * ProportionAdapter, 15 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:14 * ProportionAdapter text:@"   注：为了球队能够顺利创建，请务必输入真实信息" textAlignment:(NSTextAlignmentLeft)];
+    UILabel *footLB = [Helper lableRect:CGRectMake(12 * ProportionAdapter, 14 * ProportionAdapter, screenWidth - 12 * ProportionAdapter, 15 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:14 * ProportionAdapter text:@"   注：为了球队能够顺利创建，请务必输入真实信息。" textAlignment:(NSTextAlignmentLeft)];
     return footLB;
 }
 
@@ -600,7 +601,7 @@ static CGFloat ImageHeight  = 210.0;
     cell.titleLB.text = self.tilteArray[indexPath.row];
     cell.iconImageView.image = [UIImage imageNamed:self.iconArray[indexPath.row]];
     if (indexPath.row == 1) {
-        cell.teamNameTF.placeholder = @"输入球队名";
+        cell.teamNameTF.placeholder = @"请输入球队名称";
         cell.teamNameTF.text = [self.detailDic objectForKey:@"name"];
     }else{
         cell.teamNameTF.hidden = YES;
