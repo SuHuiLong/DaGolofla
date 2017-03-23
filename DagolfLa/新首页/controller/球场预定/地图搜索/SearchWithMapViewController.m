@@ -9,7 +9,9 @@
 #import "SearchWithMapViewController.h"
 #import <BaiduMapAPI/BMapKit.h>
 #import <BaiduMapAPI/BMKMapView.h>
+#import "SearchWithMapOrderListViewController.h"
 #import "SearchWithMapAnnotationView.h"
+#import "JGDCourtDetailViewController.h"
 @interface SearchWithMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate>{
     //MapView
     BMKMapView* _mapView;
@@ -27,6 +29,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [_mapView viewWillAppear];
     _mapView.delegate = self; // 此处记得不用的时候需要置nil，否则影响内存的释放
+    self.navigationController.navigationBarHidden = true;
 }
 
 - (void)viewDidLoad {
@@ -37,6 +40,7 @@
 -(void)viewWillDisappear:(BOOL)animated {
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
+    self.navigationController.navigationBarHidden = false;
 }
 
 - (void)dealloc {
@@ -48,17 +52,30 @@
 
 #pragma mark - CreateView
 -(void)createView{
-    
     //设置地图缩放级别
-    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
+    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
     _mapView.delegate = self;
+    _locService = [[BMKLocationService alloc]init];
+    _locService.delegate = self;
+    [_locService startUserLocationService];
     _mapView.showsUserLocation = YES;//显示自身位置
-    _mapView.centerCoordinate = CLLocationCoordinate2DMake(31.245577, 121.50633) ;
-    _mapView.zoomLevel = 14;
+    _mapView.zoomLevel = 10;
     [self.view addSubview:_mapView];
+    [self getLocation];
+    //设置导航条
+    [self createNavigationView];
+}
+//设置导航条
+-(void)createNavigationView{
+    self.title = @"";
+    //设置导航背景 backAppbarBtn
     
-//    [self addPointAnnotation];
-    [self startLocation];
+    UIButton *backBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(6), 25, kWvertical(34), kWvertical(34)) image:[UIImage imageNamed:@"backAppbarBtn"] target:self selector:@selector(popback) Title:nil];
+    
+    backBtn.backgroundColor = RGBA(0, 0, 0, 0.4);
+    backBtn.layer.cornerRadius = 5;
+    [self.view addSubview:backBtn];
+    
 }
 
 //添加标注
@@ -81,6 +98,9 @@
 // 根据anntation生成对应的View
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation
 {
+    //配置数据
+    SearchWithMapModel *model = self.dataArray[_iii];
+
     NSString *AnnotationViewID = @"SearchWithMapId";
     SearchWithMapAnnotationView *newAnnotation = [[SearchWithMapAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
 
@@ -89,9 +109,11 @@
     // 从天上掉下效果
     newAnnotation.animatesDrop = YES;
     //设置大头针图标
-    newAnnotation.image = [UIImage imageNamed:@"pin"];
-    //配置数据
-    SearchWithMapModel *model = self.dataArray[_iii];
+    NSString *image = @"normalPin";
+    if (model.isLeague==1) {
+        image = @"pin";
+    }
+    newAnnotation.image = [UIImage imageNamed:image];
     [newAnnotation configModel:model];
     
     return newAnnotation;
@@ -103,46 +125,76 @@
 -(void)initData{
 
     self.dataArray = [NSMutableArray array];
-    
-    NSArray *array = @[
-  @[@"121.463669",@"31.237538",@"旗中",@"2000",@"1",@"11"],
-  @[@"121.470568",@"31.246182",@"虹桥",@"3000",@"1",@"12"],
-  @[@"121.494427",@"31.244454",@"佘山",@"4000",@"1",@"13"],
-  @[@"121.473155",@"31.26347@",@"林克斯",@"5000",@"5",@"14"]
-  ];
-    
-    for (int i = 0; i < array.count; i++) {
-        NSArray *arr = array[i];
-        SearchWithMapModel *model = [[SearchWithMapModel alloc] init];
-        model.longtitude = [arr[0] floatValue];
-        model.latitude = [arr[1] floatValue];
-        model.parkName = arr[2];
-        model.orderPrice = arr[3];
-        model.orderNum = [arr[4] integerValue];
-        model.parkId = arr[5];
-        [self.dataArray addObject:model];
-    }
-    [self addPointAnnotation];
+    //md5 加密
+    NSString *md5 = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&provinceName=%@dagolfla.com", DEFAULF_USERID,_cityName]];
+    NSDictionary *dict = @{
+                           @"userKey":DEFAULF_USERID,
+                           @"provinceName":_cityName,
+                           @"md5":md5
+                           };
+    [[JsonHttp jsonHttp] httpRequest:@"bookball/getBookingOrderMapInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    } completionBlock:^(id data) {
+        bool sucess = [[data objectForKey:@"packSuccess"] boolValue];
+        if (sucess) {
+            NSArray *listArray = [data objectForKey:@"list"];
+            for (NSDictionary *listDict in listArray) {
+                SearchWithMapModel *model = [[SearchWithMapModel alloc] init];
+                NSDictionary *latlon = [listDict objectForKey:@"latlon"];
+                model.longtitude = [[latlon objectForKey:@"longitude"] floatValue];
+                model.latitude = [[latlon objectForKey:@"latitude"] floatValue];
+                model.parkName = [listDict objectForKey:@"ballSimpleName"];
+                model.orderPrice = [[listDict objectForKey:@"price"] stringValue];
+                model.orderNum = [[listDict objectForKey:@"bookCount"] integerValue];
+                model.parkFullName = [listDict objectForKey:@"ballName"];
+                model.parkId = [listDict objectForKey:@"ballKey"];
+                model.bookballKey = [listDict objectForKey:@"bookballKey"];
+                model.isLeague = [[listDict objectForKey:@"isLeague"] integerValue];
+                [self.dataArray addObject:model];
+            }
+            [self addPointAnnotation];
+        }
+    }];
+}
+
+#pragma mark - Action
+-(void)popback{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 #pragma mark - 定位代理
-//开始定位
--(void)startLocation{
-    
-    //初始化BMKLocationService
-    [BMKLocationService setLocationDistanceFilter:kCLLocationAccuracyNearestTenMeters];
-    _locService = [[BMKLocationService alloc]init];
-    _locService.delegate = self;
-    //启动LocationService
-    [_locService startUserLocationService];
+//根据地区获取经纬度
+-(void)getLocation{
+
+    NSString *oreillyAddress = _cityName;
+    CLGeocoder *myGeocoder = [[CLGeocoder alloc] init];
+    [myGeocoder geocodeAddressString:oreillyAddress completionHandler:^(NSArray *placemarks, NSError *error) {
+        if ([placemarks count] > 0 && error == nil) {
+            NSLog(@"Found %lu placemark(s).", (unsigned long)[placemarks count]);
+            CLPlacemark *firstPlacemark = [placemarks objectAtIndex:0];
+            NSLog(@"Longitude = %f", firstPlacemark.location.coordinate.longitude);
+            NSLog(@"Latitude = %f", firstPlacemark.location.coordinate.latitude);
+            _mapView.centerCoordinate = firstPlacemark.location.coordinate;
+//            CLLocationCoordinate2DMake(31.245577, 121.50633) ;
+        }
+        else if ([placemarks count] == 0 && error == nil) {
+            NSLog(@"Found no placemarks.");
+            _mapView.centerCoordinate = CLLocationCoordinate2DMake(31.245577, 121.50633) ;
+        } else if (error != nil) {
+            NSLog(@"An error occurred = %@", error);
+            _mapView.centerCoordinate = CLLocationCoordinate2DMake(31.245577, 121.50633) ;
+        }
+    }];  
+
 }
+
 //处理位置坐标更新
 
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
 //    _mapView.centerCoordinate = userLocation.location.coordinate;
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    [_mapView updateLocationData:userLocation];
     [_locService stopUserLocationService];
 }
 //定位失败
@@ -156,8 +208,22 @@
     view.selected = false;
     if ([view isKindOfClass:[SearchWithMapAnnotationView class]]) {
         SearchWithMapAnnotationView *sView = (SearchWithMapAnnotationView *)view;
-        NSString *parkId = sView.pinId;
+        NSString *parkId = sView.dataModel.parkId;
+        NSInteger orderNum = sView.dataModel.orderNum;
+        NSString *pardName = sView.dataModel.parkName;
+        if (orderNum==1) {
+            JGDCourtDetailViewController *courtVC = [[JGDCourtDetailViewController alloc] init];
+            courtVC.timeKey = [NSNumber numberWithInteger:[sView.dataModel.bookballKey integerValue]];
+            [self.navigationController pushViewController:courtVC animated:YES];
+
+        }else{
+            SearchWithMapOrderListViewController *vc = [[SearchWithMapOrderListViewController alloc] init];
+            vc.ballKey = parkId;
+            vc.title = pardName;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
         NSLog(@"%@",parkId);
+        
         
     }
     

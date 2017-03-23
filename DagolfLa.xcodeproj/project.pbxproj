@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1811C8961E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811C8931E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.m */; };
+		1811C8971E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811C8951E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.m */; };
+		1811C8991E8252D4003CA594 /* MakePhotoTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811C8981E8252D4003CA594 /* MakePhotoTextTableViewCell.m */; };
+		1814D8A11E7FB53200F6E063 /* MakePhotoTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814D8A01E7FB53200F6E063 /* MakePhotoTextViewController.m */; };
+		1814D8A51E7FC08F00F6E063 /* RTDragCellTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814D8A41E7FC08F00F6E063 /* RTDragCellTableView.m */; };
+		1814D8AB1E80B75800F6E063 /* MakePhotoTextViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814D8AA1E80B75800F6E063 /* MakePhotoTextViewModel.m */; };
+		1814D8B91E812E3600F6E063 /* MakePhotoTextAddTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814D8B81E812E3600F6E063 /* MakePhotoTextAddTextViewController.m */; };
+		1814D8BD1E821D8D00F6E063 /* ShlTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814D8BC1E821D8D00F6E063 /* ShlTextView.m */; };
 		182583301E5EE4CB00DE1504 /* UITableView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */; };
 		1827B3D41E711AD70049AC26 /* VipCardHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1827B3D31E711AD70049AC26 /* VipCardHeaderCollectionReusableView.m */; };
 		182C029A1E77CDEC001161D7 /* JZLocationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02991E77CDEC001161D7 /* JZLocationConverter.m */; };
@@ -26,6 +34,8 @@
 		182C02C61E78CC46001161D7 /* JGDWKCourtDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02B91E78CC46001161D7 /* JGDWKCourtDetailViewController.m */; };
 		182C02C91E78CC76001161D7 /* SearchWithMapAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02C81E78CC76001161D7 /* SearchWithMapAnnotationView.m */; };
 		182C02CC1E790C4F001161D7 /* SearchWithMapModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02CB1E790C4F001161D7 /* SearchWithMapModel.m */; };
+		182C02CD1E7A6B3A001161D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36BF02041BC78253005B3CE2 /* Images.xcassets */; };
+		182C02D11E7A8E61001161D7 /* SearchWithMapOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02D01E7A8E61001161D7 /* SearchWithMapOrderListViewController.m */; };
 		182CFE641E6D10A0003F711D /* AllianceVipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182CFE631E6D10A0003F711D /* AllianceVipViewController.m */; };
 		182CFE671E6D3835003F711D /* AddVipCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182CFE661E6D3835003F711D /* AddVipCardViewController.m */; };
 		186855751E5AA162001F44DD /* AdvertiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855741E5AA162001F44DD /* AdvertiseView.m */; };
@@ -1224,6 +1234,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1811C8921E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePhotoTextSelectFromAllViewController.h; sourceTree = "<group>"; };
+		1811C8931E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePhotoTextSelectFromAllViewController.m; sourceTree = "<group>"; };
+		1811C8941E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePhotoTextSelectHeaderViewController.h; sourceTree = "<group>"; };
+		1811C8951E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePhotoTextSelectHeaderViewController.m; sourceTree = "<group>"; };
+		1811C8981E8252D4003CA594 /* MakePhotoTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePhotoTextTableViewCell.m; sourceTree = "<group>"; };
+		1814D89F1E7FB53200F6E063 /* MakePhotoTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePhotoTextViewController.h; sourceTree = "<group>"; };
+		1814D8A01E7FB53200F6E063 /* MakePhotoTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePhotoTextViewController.m; sourceTree = "<group>"; };
+		1814D8A31E7FC08F00F6E063 /* RTDragCellTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTDragCellTableView.h; sourceTree = "<group>"; };
+		1814D8A41E7FC08F00F6E063 /* RTDragCellTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTDragCellTableView.m; sourceTree = "<group>"; };
+		1814D8A91E80B75800F6E063 /* MakePhotoTextViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePhotoTextViewModel.h; sourceTree = "<group>"; };
+		1814D8AA1E80B75800F6E063 /* MakePhotoTextViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePhotoTextViewModel.m; sourceTree = "<group>"; };
+		1814D8AC1E80B8D300F6E063 /* MakePhotoTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePhotoTextTableViewCell.h; sourceTree = "<group>"; };
+		1814D8B71E812E3600F6E063 /* MakePhotoTextAddTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePhotoTextAddTextViewController.h; sourceTree = "<group>"; };
+		1814D8B81E812E3600F6E063 /* MakePhotoTextAddTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePhotoTextAddTextViewController.m; sourceTree = "<group>"; };
+		1814D8BB1E821D8D00F6E063 /* ShlTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShlTextView.h; sourceTree = "<group>"; };
+		1814D8BC1E821D8D00F6E063 /* ShlTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShlTextView.m; sourceTree = "<group>"; };
 		1825832E1E5EE4CB00DE1504 /* UITableView+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Addition.h"; sourceTree = "<group>"; };
 		1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Addition.m"; sourceTree = "<group>"; };
 		1827B3D21E711AD70049AC26 /* VipCardHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardHeaderCollectionReusableView.h; sourceTree = "<group>"; };
@@ -1262,6 +1288,8 @@
 		182C02C81E78CC76001161D7 /* SearchWithMapAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithMapAnnotationView.m; sourceTree = "<group>"; };
 		182C02CA1E790C4F001161D7 /* SearchWithMapModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWithMapModel.h; sourceTree = "<group>"; };
 		182C02CB1E790C4F001161D7 /* SearchWithMapModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithMapModel.m; sourceTree = "<group>"; };
+		182C02CF1E7A8E61001161D7 /* SearchWithMapOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWithMapOrderListViewController.h; sourceTree = "<group>"; };
+		182C02D01E7A8E61001161D7 /* SearchWithMapOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithMapOrderListViewController.m; sourceTree = "<group>"; };
 		182CFE621E6D10A0003F711D /* AllianceVipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllianceVipViewController.h; sourceTree = "<group>"; };
 		182CFE631E6D10A0003F711D /* AllianceVipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllianceVipViewController.m; sourceTree = "<group>"; };
 		182CFE651E6D3835003F711D /* AddVipCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddVipCardViewController.h; sourceTree = "<group>"; };
@@ -3622,6 +3650,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1811C8911E8251EA003CA594 /* 选择照片 */ = {
+			isa = PBXGroup;
+			children = (
+				1811C8921E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.h */,
+				1811C8931E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.m */,
+				1811C8941E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.h */,
+				1811C8951E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.m */,
+			);
+			path = "选择照片";
+			sourceTree = "<group>";
+		};
+		1814D89E1E7FB50C00F6E063 /* 照片制作 */ = {
+			isa = PBXGroup;
+			children = (
+				1811C8911E8251EA003CA594 /* 选择照片 */,
+				1814D8B61E812DE200F6E063 /* 编辑文字 */,
+				1814D8A21E7FC08F00F6E063 /* RTDragCellTableView */,
+				1814D8A91E80B75800F6E063 /* MakePhotoTextViewModel.h */,
+				1814D8AA1E80B75800F6E063 /* MakePhotoTextViewModel.m */,
+				1814D8AC1E80B8D300F6E063 /* MakePhotoTextTableViewCell.h */,
+				1811C8981E8252D4003CA594 /* MakePhotoTextTableViewCell.m */,
+				1814D89F1E7FB53200F6E063 /* MakePhotoTextViewController.h */,
+				1814D8A01E7FB53200F6E063 /* MakePhotoTextViewController.m */,
+			);
+			path = "照片制作";
+			sourceTree = "<group>";
+		};
+		1814D8A21E7FC08F00F6E063 /* RTDragCellTableView */ = {
+			isa = PBXGroup;
+			children = (
+				1814D8A31E7FC08F00F6E063 /* RTDragCellTableView.h */,
+				1814D8A41E7FC08F00F6E063 /* RTDragCellTableView.m */,
+			);
+			path = RTDragCellTableView;
+			sourceTree = "<group>";
+		};
+		1814D8B61E812DE200F6E063 /* 编辑文字 */ = {
+			isa = PBXGroup;
+			children = (
+				1814D8B71E812E3600F6E063 /* MakePhotoTextAddTextViewController.h */,
+				1814D8B81E812E3600F6E063 /* MakePhotoTextAddTextViewController.m */,
+			);
+			path = "编辑文字";
+			sourceTree = "<group>";
+		};
+		1814D8BA1E821D8D00F6E063 /* placeholderTextView */ = {
+			isa = PBXGroup;
+			children = (
+				1814D8BB1E821D8D00F6E063 /* ShlTextView.h */,
+				1814D8BC1E821D8D00F6E063 /* ShlTextView.m */,
+			);
+			path = placeholderTextView;
+			sourceTree = "<group>";
+		};
 		182C028F1E77BD29001161D7 /* 地图详情页 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3633,6 +3715,7 @@
 		182C029B1E77D819001161D7 /* 地图搜索 */ = {
 			isa = PBXGroup;
 			children = (
+				182C02CE1E7A8E31001161D7 /* 订场列表 */,
 				182C029C1E77D856001161D7 /* SearchWithMapViewController.h */,
 				182C029D1E77D856001161D7 /* SearchWithMapViewController.m */,
 				182C02C71E78CC76001161D7 /* SearchWithMapAnnotationView.h */,
@@ -3674,6 +3757,15 @@
 				182C02B91E78CC46001161D7 /* JGDWKCourtDetailViewController.m */,
 			);
 			path = "列表搜索预定";
+			sourceTree = "<group>";
+		};
+		182C02CE1E7A8E31001161D7 /* 订场列表 */ = {
+			isa = PBXGroup;
+			children = (
+				182C02CF1E7A8E61001161D7 /* SearchWithMapOrderListViewController.h */,
+				182C02D01E7A8E61001161D7 /* SearchWithMapOrderListViewController.m */,
+			);
+			path = "订场列表";
 			sourceTree = "<group>";
 		};
 		182CFE611E6D107A003F711D /* 联盟会员 */ = {
@@ -6711,6 +6803,7 @@
 		36BFFEEA1BC76D09005B3CE2 /* 第三方库 */ = {
 			isa = PBXGroup;
 			children = (
+				1814D8BA1E821D8D00F6E063 /* placeholderTextView */,
 				18D5DC571E68287A008C87EE /* SDWebImage */,
 				F59D5A661DF50A8500BB376A /* Rong_Cloud_iOS_IMKit_SDK_v2_8_2_Dev */,
 				82F9444E1D89775600A65381 /* XHLaunchAd */,
@@ -8022,6 +8115,7 @@
 		F51944101DFE4A2D0009653B /* 新相册 */ = {
 			isa = PBXGroup;
 			children = (
+				1814D89E1E7FB50C00F6E063 /* 照片制作 */,
 				F51944111DFE4A8E0009653B /* MSSBrowse */,
 				F519443E1DFE4BED0009653B /* MSSCollectionViewCell.h */,
 				F519443F1DFE4BED0009653B /* MSSCollectionViewCell.m */,
@@ -9031,6 +9125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				182C02CD1E7A6B3A001161D7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9152,6 +9247,7 @@
 				36BF00861BC772EF005B3CE2 /* MySetViewController.m in Sources */,
 				F569A1481CE35AA500CD0FD5 /* JGTeamChannelActivityTableViewCell.m in Sources */,
 				200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */,
+				1811C8991E8252D4003CA594 /* MakePhotoTextTableViewCell.m in Sources */,
 				F59A8BA51D5DB95500E8292B /* JGDPlayerModel.m in Sources */,
 				20301A0A1E0E4293005568E2 /* ZXQRCodeMaskUtil.m in Sources */,
 				203019C81E0E4293005568E2 /* ZXCode39Reader.m in Sources */,
@@ -9407,6 +9503,7 @@
 				F554267C1D2277B900233B20 /* JGDCertificationViewController.m in Sources */,
 				82F2545C1D3CCCB2008BE0AF /* JGLFriendAddTableViewCell.m in Sources */,
 				36BFFF5A1BC76D09005B3CE2 /* AFHTTPRequestOperationManager.m in Sources */,
+				1811C8961E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.m in Sources */,
 				20BC97E71E1F6051007DFD34 /* JGDActvityPriziSetTableViewCell.m in Sources */,
 				20BC97EB1E1F6051007DFD34 /* JGLPresentAwardTableViewCell.m in Sources */,
 				36BF004C1BC77213005B3CE2 /* ComDeatailModel.m in Sources */,
@@ -9465,6 +9562,7 @@
 				F5EE488B1D462625001D5E44 /* JGDHistoryScoreShowModel.m in Sources */,
 				203019D81E0E4293005568E2 /* ZXUPCEANExtension2Support.m in Sources */,
 				20FBE46C1E0CE87A00E7419D /* JGHScoreResultWKwebView.m in Sources */,
+				182C02D11E7A8E61001161D7 /* SearchWithMapOrderListViewController.m in Sources */,
 				82FD961F1D3DC4DD0047D7A8 /* JGLBarCodeViewController.m in Sources */,
 				369F7D211CB636C3000BC13D /* MeDetailTableViewCell.m in Sources */,
 				20BEF3C51E29F80200E9AED7 /* JGHNewApplyActivityDetailCell.m in Sources */,
@@ -9506,6 +9604,7 @@
 				203019F81E0E4293005568E2 /* ZXQRCodeDataBlock.m in Sources */,
 				F569A1491CE35AA500CD0FD5 /* JGTeamChannelTableView.m in Sources */,
 				827E12C41DC21D82000BDF65 /* JGLWebUserMallViewController.m in Sources */,
+				1814D8BD1E821D8D00F6E063 /* ShlTextView.m in Sources */,
 				36BFFF8B1BC76D09005B3CE2 /* FDCalendarItem.m in Sources */,
 				F55FABD11E5A9BDB00F68D8A /* JGDPersonalViewController.m in Sources */,
 				203019D11E0E4293005568E2 /* ZXITFWriter.m in Sources */,
@@ -9534,6 +9633,7 @@
 				2030198C1E0E4292005568E2 /* ZXRGBLuminanceSource.m in Sources */,
 				82E6A6EB1CF2FFA3009DD179 /* JGLJoinManageViewController.m in Sources */,
 				F58BD3451DC8657E00C1C0B9 /* JGDHotTeamView.m in Sources */,
+				1814D8B91E812E3600F6E063 /* MakePhotoTextAddTextViewController.m in Sources */,
 				F5EEB1531D1BC1C7009D37CE /* JGActivityMemNonMangerViewController.m in Sources */,
 				2030195E1E0E4292005568E2 /* ZXURIParsedResult.m in Sources */,
 				36BFFFD01BC770B1005B3CE2 /* NewsMessageViewController.m in Sources */,
@@ -9575,6 +9675,7 @@
 				202E05271D7E932200566CA9 /* JGHNewScoresPageCell.m in Sources */,
 				208030441CF7F32E00448BFC /* JGHIvoiceTypeCell.m in Sources */,
 				2030196B1E0E4292005568E2 /* ZXMonochromeRectangleDetector.m in Sources */,
+				1814D8A51E7FC08F00F6E063 /* RTDragCellTableView.m in Sources */,
 				203019851E0E4292005568E2 /* ZXEncodeHints.m in Sources */,
 				200D4C151D95244700DDD51D /* JGHScoreHoleListCell.m in Sources */,
 				2030198B1E0E4292005568E2 /* ZXResultPoint.m in Sources */,
@@ -9711,6 +9812,7 @@
 				36BF008A1BC772EF005B3CE2 /* MySetHelpController.m in Sources */,
 				203019D61E0E4293005568E2 /* ZXUPCAReader.m in Sources */,
 				F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */,
+				1811C8971E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.m in Sources */,
 				203019451E0E4292005568E2 /* ZXAddressBookDoCoMoResultParser.m in Sources */,
 				208030531CF9A79800448BFC /* JGHTotalPriceCell.m in Sources */,
 				3669C28C1C48AAC9006CBAAA /* PublishViewController.m in Sources */,
@@ -9952,6 +10054,7 @@
 				203019701E0E4292005568E2 /* ZXReedSolomonEncoder.m in Sources */,
 				36BFFF641BC76D09005B3CE2 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				F53A05691D518F32009DD489 /* JGHPublishedPeopleView.m in Sources */,
+				1814D8A11E7FB53200F6E063 /* MakePhotoTextViewController.m in Sources */,
 				203019F71E0E4293005568E2 /* ZXQRCodeBitMatrixParser.m in Sources */,
 				F56F0B901CC637A200A222F3 /* AddNoteViewController.m in Sources */,
 				82F9445F1D89775600A65381 /* XHLaunchAd.m in Sources */,
@@ -9985,6 +10088,7 @@
 				82E6A7081CF59F2E009DD179 /* payRequsestHandler.mm in Sources */,
 				2067C6D21CE30CC0002900C8 /* JGTeamActivityCell.m in Sources */,
 				36BFFF821BC76D09005B3CE2 /* Helper.m in Sources */,
+				1814D8AB1E80B75800F6E063 /* MakePhotoTextViewModel.m in Sources */,
 				2030193F1E0E4292005568E2 /* ZXAztecToken.m in Sources */,
 				36BF008F1BC772EF005B3CE2 /* MyAwardViewController.m in Sources */,
 				8225626F1D2DFB8400ABA7F3 /* SDBrowserImageView.m in Sources */,

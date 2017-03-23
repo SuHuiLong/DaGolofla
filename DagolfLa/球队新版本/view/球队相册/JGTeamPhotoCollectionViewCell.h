@@ -17,6 +17,8 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *suoImage;
 @property (weak, nonatomic) IBOutlet UILabel *numLabel;
+//点击添加提示
+@property (weak, nonatomic) IBOutlet UILabel *addLabel;
 
 -(void)showData:(JGLPhotoAlbumModel *)model;
 

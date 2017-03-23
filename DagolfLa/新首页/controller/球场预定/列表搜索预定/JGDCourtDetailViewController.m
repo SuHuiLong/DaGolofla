@@ -282,6 +282,11 @@ static CGFloat ImageHeight  = 210.0;
     }else if (btn.tag == 522) {
         JGDWKCourtDetailViewController *detailVC = [[JGDWKCourtDetailViewController alloc] init];
         detailVC.ballKey = self.timeKey;
+        if (self.isLeague == 1) {
+            detailVC.isLeague = true;
+        }else{
+            detailVC.isLeague = false;
+        }
         [self.navigationController pushViewController:detailVC animated:YES];
     }else if (btn.tag == 530) {
         ShareAlert* alert = [[ShareAlert alloc]initMyAlert];

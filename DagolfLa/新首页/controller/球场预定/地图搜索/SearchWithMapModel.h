@@ -13,11 +13,17 @@
 @property(nonatomic, copy)NSString *parkId;
 //球场名
 @property(nonatomic, copy)NSString *parkName;
+//完整球场名
+@property(nonatomic, copy)NSString *parkFullName;
 //坐标
 @property(nonatomic, assign)CGFloat latitude;
 @property(nonatomic, assign)CGFloat longtitude;
 //价格
 @property(nonatomic, copy)NSString *orderPrice;
-//订单个数
+//是否是联盟会员
+@property(nonatomic, assign)NSInteger isLeague;
+//订场个数
 @property(nonatomic, assign)NSInteger orderNum;
+//订场的key
+@property(nonatomic, copy)NSString *bookballKey;
 @end

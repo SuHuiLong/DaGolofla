@@ -26,19 +26,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    if (self.fromWitchVC == 1) {
-        self.title = @"球场地址";
-
-    }else{
-        self.title = @"地图详情";
-
-    }
-    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
 
     _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64)];
     
     [self.view addSubview:_mapView];
+    if (self.fromWitchVC == 1) {
+        [self createNavigationView];
+        _mapView.height = screenHeight;
+    }else{
+        self.title = @"地图详情";
+        
+    }
+
 }
 // 地图的内存的释放
 -(void)viewWillAppear:(BOOL)animated {
@@ -49,6 +49,28 @@
     
     //添加标注 一定要和代理写在一起
     [self addPointAnnotation:3];
+    if (self.fromWitchVC == 1) {
+        self.navigationController.navigationBarHidden = true;
+    }
+}
+
+//设置导航条
+-(void)createNavigationView{
+    self.title = @"";
+    //设置导航背景 backAppbarBtn
+    
+    //    [self.navigationController.navigationBar setTintColor:WhiteColor];
+    //    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    
+    UIButton *backBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(6), 25, kWvertical(34), kWvertical(34)) image:[UIImage imageNamed:@"backAppbarBtn"] target:self selector:@selector(popback) Title:nil];
+    
+    backBtn.backgroundColor = RGBA(0, 0, 0, 0.4);
+    backBtn.layer.cornerRadius = 5;
+    [self.view addSubview:backBtn];
+}
+//返回
+-(void)popback{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 //添加标注并设置地图
 - (void)addPointAnnotation:(NSInteger)annotationNumber
@@ -81,13 +103,7 @@
         annotation.coordinate = coor;
         annotation.title = [[NSUserDefaults standardUserDefaults] objectForKey:@"定位"];
         [_mapView addAnnotation:annotation];
-        
-        
-        
-        
         // 设定屏幕的可见范围， 根据所有的标注来设定的
-        
-        
         CGFloat minlatitude = 0.0;
         CGFloat maxlatitude = 0.0;
         CGFloat minlongitude = 0.0;
@@ -177,7 +193,9 @@
 - (void)mapView:(BMKMapView *)mapView onClickedMapBlank:(CLLocationCoordinate2D)coordinate
 {
     BMKAnnotationView *vi = (BMKAnnotationView *)[_mapView viewWithTag:1000];
-    vi.selected = NO;
+    if (self.fromWitchVC != 1) {
+            vi.selected = NO;
+    }
     [mapView deselectAnnotation:vi.annotation animated:YES];
 }
 
@@ -185,16 +203,62 @@
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation
 {
     
+    
+    
     if ([annotation isKindOfClass:[BMKPointAnnotation class]]) {
         BMKPinAnnotationView *newAnnotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"myAnnotation"];
         // 设置颜色
         newAnnotationView.pinColor = BMKPinAnnotationColorPurple;
         newAnnotationView.animatesDrop = YES;// 设置该标注点动画显示
-    
         // 设置不可拖拽
         newAnnotationView.draggable = NO;
         newAnnotationView.selected = YES;
 
+        if (self.fromWitchVC == 1) {
+            //设置大头针图标
+            NSString *image = @"normalPin";
+            if (_isLeague) {
+                image = @"pin";
+            }
+            newAnnotationView.image = [UIImage imageNamed:image];
+ 
+        }
+        //设置气泡
+        UIView *paopaoView = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(0, 0, 100, kHvertical(50)) ];
+
+        UIImageView *paopaoBackView = [Factory createImageViewWithFrame:CGRectMake(0, 0, 100, kHvertical(35)) Image:nil];
+        paopaoBackView.backgroundColor = [UIColor whiteColor];
+        paopaoBackView.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
+        paopaoBackView.layer.shadowOffset = CGSizeMake(0,0);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+        paopaoBackView.layer.shadowOpacity = 0.4;//阴影透明度，默认0
+        paopaoBackView.layer.shadowRadius = 4;//阴影半径，默认3
+        paopaoBackView.layer.cornerRadius = 4;
+        [paopaoView addSubview:paopaoBackView];
+        
+        //自定义气泡的内容，添加子控件在popView上
+        UILabel *parkLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, 100, kHvertical(35)) textColor:RGB(49,49,49) fontSize:kHorizontal(13) Title:annotation.title];
+        parkLabel.numberOfLines = 1;
+        parkLabel.backgroundColor = WhiteColor;
+        parkLabel.layer.cornerRadius = 3;
+        
+        [parkLabel sizeToFitSelf];
+        [paopaoView addSubview:parkLabel];
+        //导航按钮
+        UIImageView *navigationView = [Factory createImageViewWithFrame:CGRectMake(parkLabel.x_width + kWvertical(6), 0, kWvertical(60), parkLabel.height) Image:[UIImage imageNamed:@"showMapNavagation"]];
+        [paopaoView addSubview:navigationView];
+        
+        paopaoView.width = navigationView.x_width;
+        paopaoBackView.width = paopaoView.width;
+        //向下尖号
+        UIImageView *bottomArrow = [Factory createImageViewWithFrame:CGRectMake((navigationView.x_width - kWvertical(34))/2, parkLabel.y_height-kHvertical(8), kWvertical(34), kHvertical(16)) Image:[UIImage imageNamed:@"showMapBottom"]];
+        [paopaoView addSubview:bottomArrow];
+        
+        BMKActionPaopaoView *pView = [[BMKActionPaopaoView alloc]initWithCustomView:paopaoView];
+        pView.frame = CGRectMake(0, 0, paopaoView.width, kHvertical(50));
+        newAnnotationView.paopaoView = nil;
+        newAnnotationView.paopaoView = pView;
+        return newAnnotationView;
+        
         return newAnnotationView;
     }
     return nil;
@@ -203,16 +267,12 @@
 //气泡弹窗点击
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
 {
-   
-    ////NSLog(@"%@", view.annotation.title);
     view.tag = 1000;
-
 }
 
 - (void)mapView:(BMKMapView *)mapView didDeselectAnnotationView:(BMKAnnotationView *)view
 {
     ////NSLog(@"%@", view.annotation.title);
-
 }
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view{
     BMKPointAnnotation *tt = (BMKPointAnnotation *)view.annotation;
@@ -280,6 +340,9 @@
 
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
+    if (self.fromWitchVC == 1) {
+        self.navigationController.navigationBarHidden = false;
+    }
 }
 - (void)dealloc {
     

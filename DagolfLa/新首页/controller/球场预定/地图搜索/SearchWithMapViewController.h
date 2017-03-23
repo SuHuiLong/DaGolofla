@@ -9,5 +9,7 @@
 #import "BaseViewController.h"
 
 @interface SearchWithMapViewController : BaseViewController
+//选择城市名
+@property(nonatomic, copy)NSString *cityName;
 
 @end

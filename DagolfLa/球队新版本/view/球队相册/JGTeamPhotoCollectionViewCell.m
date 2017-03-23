@@ -18,25 +18,32 @@
 
 -(void)showData:(JGLPhotoAlbumModel *)model
 {
-    [_iconIngv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
-    _iconIngv.layer.masksToBounds = YES;
-    _iconIngv.contentMode = UIViewContentModeScaleAspectFill;
     
-    _timeLabel.text = [Helper stringFromDateString:model.createTime withFormater:@"yyyy.MM.dd"];
-
-//    NSArray* array1 = [model.createTime componentsSeparatedByString:@" "];
-//    _timeLabel.text = [NSString stringWithFormat:@"%@",array1[0]];
-    if (![Helper isBlankString:model.name]) {
-
-        _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
-    }
-    else
-    {
-        _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    
+    if (model.name==nil) {
+        _manageBtn.hidden = YES;
+        _timeLabel.text = @"";
+        _numLabel.text = @"";
+        _nameLabel.text = @"";
+        _addLabel.text = @"点击『+』创建相册";
+        _iconIngv.image = [UIImage imageNamed:@"teamPhotoGroupAdd"];
+    }else{
+        _addLabel.text = @"";
+        [_iconIngv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"teamPhotoDefault"]];
+        _iconIngv.layer.masksToBounds = YES;
+        _iconIngv.contentMode = UIViewContentModeScaleAspectFill;
+        
+        _timeLabel.text = [Helper stringFromDateString:model.createTime withFormater:@"yyyy.MM.dd"];
+        
+        if (![Helper isBlankString:model.name]) {
+            _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+        }else{
+            _nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+        }
+        
+        _numLabel.text = [NSString stringWithFormat:@"%@张",model.photoNums];
     }
     
-    _numLabel.text = [NSString stringWithFormat:@"%@张",model.photoNums];
-
         
 }
 

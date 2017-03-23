@@ -24,6 +24,35 @@
 {
     _imageView = [[UIImageView alloc]initWithFrame:self.contentView.bounds];
     [self.contentView addSubview:_imageView];
+    //蒙板
+    _coverView = [Factory createViewWithBackgroundColor:RGBA(227,227,227, 0.3) frame:self.contentView.bounds];
+    UIImageView *iconView = [Factory createImageViewWithFrame:CGRectMake(_coverView.width - kWvertical(28), _coverView.height - kWvertical(23) - kHvertical(5), kWvertical(23), kWvertical(23)) Image:[UIImage imageNamed:@"teamPhotoChoice"]];
+    [_coverView addSubview:iconView];
+    [self.contentView addSubview:_coverView];
 }
+
+-(void)configModel:(JGPhotoListModel *)model{
+
+    NSInteger timeKey = [model.timeKey integerValue];
+    if (model.timeKey!=nil) {
+        [self.imageView sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:timeKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"teamPhotoGroupDefault"]];
+    }else{
+        [self.imageView setImage:[UIImage imageNamed:@"teamPhotoAdd"]];
+    }
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imageView.clipsToBounds = YES;
+
+    _coverView.hidden = YES;
+    if (model.isSelect) {
+        _coverView.hidden = false;
+    }
+    
+}
+
+-(void)configSelectModel:(JGPhotoListModel *)model{
+
+}
+
+
 
 @end

@@ -170,7 +170,7 @@
 //地图查看
 -(void)pushMapView{
     SearchWithMapViewController *vc = [[SearchWithMapViewController alloc] init];
-
+    vc.cityName = _cityString;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

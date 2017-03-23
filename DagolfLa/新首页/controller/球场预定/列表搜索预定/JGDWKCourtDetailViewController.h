@@ -11,5 +11,7 @@
 @interface JGDWKCourtDetailViewController : ViewController
 
 @property (nonatomic, strong) NSNumber *ballKey;
+//是否联盟球场
+@property (nonatomic, assign) BOOL isLeague;
 
 @end
