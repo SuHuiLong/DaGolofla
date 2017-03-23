@@ -98,4 +98,6 @@
 
 @property (nonatomic, strong)NSNumber *matchKey;
 
+@property (nonatomic, copy) NSString* teamName;
+
 @end

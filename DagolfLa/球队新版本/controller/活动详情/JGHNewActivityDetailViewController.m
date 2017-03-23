@@ -11,7 +11,6 @@
 #import "JGTeamAcitivtyModel.h"
 #import "BallParkViewController.h"
 #import "JGHCostListTableViewCell.h"
-#import "JGTeamActivityViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
 #import "JGTeamGroupViewController.h"
 
@@ -136,7 +135,7 @@ static CGFloat ImageHeight  = 210.0;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     _titleArray = @[@"参赛费用", @"活动成员及分组", @"查看成绩", @"查看奖项", @"抽奖活动", @"活动说明"];
-    _imageArray = @[@"icn_preferential", @"icn_event_group1", @"icn_event_score", @"icn_awards", @"icn_lottery", @"icn_event_details"];
+    _imageArray = @[@"icn_preferential", @"icn_event_group", @"icn_event_score", @"icn_awards", @"icn_lottery", @"icn_event_details"];
     
     //监听分组页面返回，刷新数据
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
@@ -459,8 +458,12 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 3 || section == 4 || section == 5) {
+    if (section == 3 || section == 4 || section == 5 || section == 7) {
         return 0;
+    }else if (section == 2){
+        if (_costListArray.count == 0) {
+            return 0;
+        }
     }
     return 10*ProportionAdapter;
 }
@@ -469,6 +472,10 @@ static CGFloat ImageHeight  = 210.0;
         return ImageHeight;
     }else if (section == 1){
         return 132 *ProportionAdapter;
+    }else if (section == 2){
+        if (_costListArray.count == 0) {
+            return 0;
+        }
     }
     return 44*ProportionAdapter;
 }
@@ -523,7 +530,12 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         if (section == 3) {
-            NSString *group = [NSString stringWithFormat:@"活动成员及分组(%td/%td)", self.model.sumCount, self.model.maxCount];
+            NSString *group = nil;
+            if (_model.maxCount > 0) {
+                group = [NSString stringWithFormat:@"活动成员及分组(%td/%td)", self.model.sumCount, self.model.maxCount];
+            }else{
+                group = @"活动成员及分组";
+            }
             
             [activityCell configImageName:_imageArray[section -2] withName:group];
         }else{

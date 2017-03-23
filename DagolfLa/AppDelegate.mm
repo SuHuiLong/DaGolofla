@@ -42,7 +42,7 @@
 #import "JGLAnimationViewController.h"
 
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
-
+#import "JGHScoreAF.h"
 
 //启动广告页
 #import "AdvertiseView.h"
@@ -336,6 +336,9 @@
     }
     //调用PHP登录
     [self phpLogin];
+    
+    [self submitLocalScoreData];
+    
     return YES;
 }
 /**
@@ -1183,7 +1186,9 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     return UIInterfaceOrientationMaskPortrait;
 }
 
-
-
+#pragma mark -- 获取本地记分数据，并提交
+- (void)submitLocalScoreData{
+    [[JGHScoreAF shareScoreAF]submitLocalScoreData];
+}
 
 @end

@@ -87,4 +87,9 @@
 
 @property (assign, nonatomic)NSInteger almost_system_setting;//是否开启差点系统
 
+
+@property (assign, nonatomic)NSInteger isAppUser;   //是否是app用户   0: 不是  1: 是
+@property (assign, nonatomic)NSInteger isFriend;    //是否是该好友    0: 不是  1: 是
+
+
 @end

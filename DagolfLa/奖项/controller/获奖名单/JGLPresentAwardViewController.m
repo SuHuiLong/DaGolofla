@@ -22,6 +22,8 @@
     UIView* _viewBack;
     NSMutableArray *_prizeListArray;
     NSString* _strTeamName;
+    UIView *_psuhView;
+    UIButton *_psuhBtn;
 }
 
 @property (nonatomic, strong)UIView *bgView;
@@ -54,17 +56,18 @@
 }
 #pragma mark -- 创建工具栏
 - (void)createPublishAwardNameListBtn{
-    UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
-    psuhView.backgroundColor = [UIColor whiteColor];
-    UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
-    [psuhBtn setTitle:@"发布" forState:UIControlStateNormal];
-    [psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
-    psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
-    psuhBtn.layer.masksToBounds = YES;
-    psuhBtn.layer.cornerRadius = 8.0;
-    [psuhBtn addTarget:self action:@selector(publishAwardNameListClick:) forControlEvents:UIControlEventTouchUpInside];
-    [psuhView addSubview:psuhBtn];
-    [self.view addSubview:psuhView];
+    _psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
+    _psuhView.backgroundColor = [UIColor whiteColor];
+    _psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
+    [_psuhBtn setTitle:@"发布" forState:UIControlStateNormal];
+    _psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+    _psuhBtn.layer.masksToBounds = YES;
+    _psuhBtn.layer.cornerRadius = 8.0 *ProportionAdapter;
+    _psuhBtn.userInteractionEnabled = NO;
+    [_psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
+    [_psuhBtn addTarget:self action:@selector(publishAwardNameListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_psuhView addSubview:_psuhBtn];
+    [self.view addSubview:_psuhView];
 }
 #pragma mark -- 公布获奖名单
 - (void)publishAwardNameListClick:(UIButton *)btn{
@@ -129,6 +132,12 @@
             _strTeamName = [data objectForKey:@"teamName"];
             NSArray *array = [NSMutableArray array];
             array = [data objectForKey:@"list"];
+            if (array.count == 0) {
+                _psuhView.hidden = YES;
+            }else{
+                _psuhView.hidden = NO;
+            }
+            
             for (NSDictionary *dict in array) {
                 JGHAwardModel *model = [[JGHAwardModel alloc]init];
                 [model setValuesForKeysWithDictionary:dict];
@@ -167,6 +176,8 @@
             }
         }
         
+        [self pollingAwareNameList];//轮询奖项是否设置获奖人
+        
         if (_dataArray.count == 0) {
             [self createNoData];
         }else{
@@ -174,6 +185,8 @@
             {
                 [view removeFromSuperview];
             }
+            
+            [_bgView removeFromSuperview];
         }
         
         [_tableView.header endRefreshing];
@@ -181,6 +194,23 @@
         [_tableView reloadData];
         
     }];
+}
+#pragma mark -- 轮询活动奖项是否设置获奖人，如果全部设置，显示发布按钮
+- (void)pollingAwareNameList{
+    NSInteger countAware = 0;
+    for (NSDictionary *dict in _prizeListArray) {
+        if ([[dict objectForKey:@"signupKeyInfo"] length] >0) {
+            countAware += 1;
+        }
+    }
+    
+    if (countAware >0) {
+        [_psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
+        _psuhBtn.userInteractionEnabled = YES;
+    }else{
+        [_psuhBtn setBackgroundColor:[UIColor lightGrayColor]];
+        _psuhBtn.userInteractionEnabled = NO;
+    }
 }
 #pragma mark --未发布
 - (void)createNoData{
@@ -224,7 +254,7 @@
     }
     [_viewBack addSubview:titleLabel];
     
-    UIImageView* timeImgv = [[UIImageView alloc]initWithFrame:CGRectMake(93*screenWidth/375, 35*screenWidth/375, 18*screenWidth/375, 18*screenWidth/375)];
+    UIImageView* timeImgv = [[UIImageView alloc]initWithFrame:CGRectMake(93*screenWidth/375, 38*screenWidth/375, 13*screenWidth/375, 14*screenWidth/375)];
     timeImgv.image = [UIImage imageNamed:@"time"];
     [_viewBack addSubview:timeImgv];
     
@@ -234,11 +264,14 @@
     NSString *timeString = [[_model.beginDate componentsSeparatedByString:@" "]firstObject];
     NSString *monthTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:1];
     NSString *dataTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:2];
-    timeLabel.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
+    if (monthTimeString) {
+        timeLabel.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
+    }
+    
     timeLabel.textColor = [UIColor lightGrayColor];
     [_viewBack addSubview:timeLabel];
     
-    UIImageView* distanceImgv = [[UIImageView alloc]initWithFrame:CGRectMake(95*screenWidth/375, 55*screenWidth/375, 14*screenWidth/375, 18*screenWidth/375)];
+    UIImageView* distanceImgv = [[UIImageView alloc]initWithFrame:CGRectMake(95*screenWidth/375, 58*screenWidth/375, 9*screenWidth/375, 14*screenWidth/375)];
     distanceImgv.image = [UIImage imageNamed:@"juli"];
     [_viewBack addSubview:distanceImgv];
     
@@ -256,7 +289,7 @@
 #pragma mark --创建TB
 -(void)uiConfig
 {
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter -15) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter -64) style:UITableViewStyleGrouped];
     if (self.isManager != 1) {
         _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
     }
@@ -405,9 +438,9 @@
     [_dataArray replaceObjectAtIndex:awardId withObject:model];
     
     [_tableView reloadData];
+    
+    [self pollingAwareNameList];
 }
-
-
 #pragma mark -- 分享
 - (void)saveAwardNameClick:(UIBarButtonItem *)item{
     item.enabled = NO;

@@ -15,7 +15,6 @@
 #import "SXPickPhoto.h"
 #import "BallParkViewController.h"
 #import "JGHCostListTableViewCell.h"
-#import "JGTeamActivityViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
 #import "JGTeamGroupViewController.h"
 #import "JGTableViewCell.h"

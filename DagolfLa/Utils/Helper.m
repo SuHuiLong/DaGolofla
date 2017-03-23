@@ -99,7 +99,7 @@
 //新方法 头像路径
 + (NSURL *)setImageIconUrl:(NSInteger)timeKey {
     //        NSString *imageStr = [NSString stringWithFormat:@"http://192.168.2.18:8080/%@",downloadImageUrl];
-    NSString *imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%td.jpg@100w_100h",timeKey];
+    NSString *imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%td.jpg@200w_200h_2o",timeKey];
     NSURL *imageUrl = [NSURL URLWithString:imageStr];
     return imageUrl;
 }
@@ -868,5 +868,37 @@
 }
 
 
++(void)CheckAddressBookAuthorization:(void (^)(bool isAuthorized))block
+{
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAuthorizationStatus authStatus = ABAddressBookGetAuthorizationStatus();
+    
+    if (authStatus != kABAuthorizationStatusAuthorized)
+    {
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error)
+                                                 {
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         if (error)
+                                                         {
+                                                             NSLog(@"Error: %@", (__bridge NSError *)error);
+                                                         }
+                                                         else if (!granted)
+                                                         {
+                                                             
+                                                             block(NO);
+                                                         }
+                                                         else
+                                                         {
+                                                             block(YES);
+                                                         }
+                                                     });
+                                                 });
+    }
+    else
+    {
+        block(YES);
+    }
+    
+}
 
 @end

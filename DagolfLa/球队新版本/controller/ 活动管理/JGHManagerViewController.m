@@ -9,9 +9,9 @@
 #import "JGHManagerViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGTeamActivityCell.h"
-#import "JGHLaunchActivityViewController.h"
+#import "JGHNewPublistActivityViewController.h"
 #import "JGTeamGroupViewController.h"
-#import "JGHActicityDetailsViewController.h"
+#import "JGHNewEditorActivityViewController.h"
 
 @interface JGHManagerViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -101,8 +101,9 @@
 
 #pragma mark -- 发布活动
 - (void)launchActivityBtnClick:(UIButton *)btn{
-    JGHLaunchActivityViewController * launchCtrl = [[JGHLaunchActivityViewController alloc]init];
+    JGHNewPublistActivityViewController * launchCtrl = [[JGHNewPublistActivityViewController alloc]init];
     launchCtrl.teamKey = _timeKey;
+    launchCtrl.teamName = _teamName;
     launchCtrl.refreshBlock = ^(){
         [self headRereshing];
     };
@@ -240,7 +241,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    JGHActicityDetailsViewController *detailsCtrl = [[JGHActicityDetailsViewController alloc]init];
+    JGHNewEditorActivityViewController *detailsCtrl = [[JGHNewEditorActivityViewController alloc]init];
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
     detailsCtrl.model = model;

@@ -24,4 +24,6 @@
 
 @property (nonatomic, assign) NSInteger fromMine; // 从我的活动进入传 1
 
+@property (nonatomic, copy)NSString *teamName;
+
 @end
