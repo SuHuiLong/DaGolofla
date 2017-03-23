@@ -39,7 +39,7 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(leftBtnClick)];
     leftItem.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftItem;
-
+    
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnCLick)];
     rightItem.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -88,18 +88,19 @@
 //确认返回
 -(void)rightBtnCLick{
     NSString *textStr = _textView.text;
-    if (textStr.length==0) {
-        return;
-    }else{
-        if (_addText!=nil) {
-            _addText(textStr);
+    if (_addText!=nil) {
+        NSString *strUrl = [textStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+        if (strUrl.length!=0) {
+            _addText(strUrl);
+            [self.navigationController popViewControllerAnimated:YES];
+            return;
         }
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    [self leftBtnClick];
 }
 
 -(void)setAddTextBlock:(AddText)AddText{
-
+    
     _addText = AddText;
 }
 
@@ -107,7 +108,7 @@
 -(void)textViewDidChange:(UITextView *)textView{
     NSString *str = textView.text;
     [_textView textViewDidChange:str];
-
+    
     if (_needLimit) {
         NSInteger len = textView.text.length;
         _canEnterNum = 60 - len;
@@ -120,7 +121,7 @@
             _canEnterLabel.text = [NSString stringWithFormat:@"%ld",(long)_canEnterNum];
         }
     }
-
+    
 }
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if (_needLimit) {
@@ -140,13 +141,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
