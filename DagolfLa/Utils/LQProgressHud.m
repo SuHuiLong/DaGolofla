@@ -104,44 +104,6 @@
     [NSTimer scheduledTimerWithTimeInterval:1.2f target:self selector:@selector(hide) userInfo:nil repeats:NO];
 }
 
-+ (void)showLinesMessage:(NSString *)text {
-    
-//    [hud show:YES];
-//    [hud setShowNow:YES];
-    //显示多行文字
-//    hud.detailsLabelText = text;
-    //只显示单行文字
-    //[hud setLabelText:text];
-//    [hud setMinSize:CGSizeZero];
-//    [hud setMode:MBProgressHUDModeText];
-//    [hud setRemoveFromSuperViewOnHide:YES];
-//    [hud setLabelFont:[UIFont systemFontOfSize:kHorizontal(16)]];
-//    
-//    [[UIApplication sharedApplication].keyWindow addSubview:hud];
-//    //    [hud hide:YES afterDelay:2.0f];
-//    
-//    [NSTimer scheduledTimerWithTimeInterval:1.2f target:self selector:@selector(hide) userInfo:nil repeats:NO];
-
-    LQProgressHud *hud = [LQProgressHud sharedHUD];
-
-    hud.mode = MBProgressHUDModeText;
-    hud.margin = 10.f;
-    hud.yOffset = 15.f;
-    hud.removeFromSuperViewOnHide = YES;
-    // HUD.labelText = title; 把这一行 换成这一行就
-    hud.detailsLabelText = text;
-    hud.labelFont = [UIFont systemFontOfSize:kHorizontal(16)]; //Johnkui - added
-    [hud hide:YES afterDelay:1.5];
-    
-    [hud show:YES];
-  
-    [hud setShowNow:YES];
-
-
-}
-
-
-
 + (void)showInfoMsg:(NSString *)text {
     
     [self showStatus:LQProgressHUDStatusInfo text:text];

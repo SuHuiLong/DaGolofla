@@ -13,6 +13,10 @@
 
 #import "JGPhotoListModel.h"
 #import "JGLPhotosUpDataViewController.h" // 上传
+#import <Photos/PHPhotoLibrary.h>
+#import <Photos/Photos.h>
+#import "MakePhotoTextViewController.h"
+#import "MakePhotoTextViewModel.h"
 
 @interface JGDDPhotoAlbumViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UIViewControllerTransitioningDelegate>
 {
@@ -30,37 +34,50 @@
 }
 @property (nonatomic,strong)UICollectionView *collectionView;
 //@property (nonatomic,strong)NSArray *smallUrlArray;
+//数据源
 @property (nonatomic, strong) NSMutableArray* dataArray;
-
+//底部view
+@property (nonatomic, copy) UIView *bottomView;
+//选中照片的数组
+@property (nonatomic, strong) NSMutableArray *selectArray;
 @end
 
 @implementation JGDDPhotoAlbumViewController
+
+-(NSMutableArray *)selectArray{
+    if (!_selectArray) {
+        _selectArray = [NSMutableArray array];
+    }
+    return _selectArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    [self createView];
+}
+#pragma mark - CreateView
+-(void)createView{
     if (![Helper isBlankString:_strTitle]) {
         self.title = _strTitle;
-    }
-    else
-    {
+    }else{
         self.title = @"球队相册";
     }
-    
     self.view.backgroundColor = [UIColor whiteColor]; //
-    
+
+    [self createCollectionView];
+    [self createBottomView];
+}
+//创建列表
+-(void)createCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
-//    flowLayout.minimumLineSpacing = 0;
     flowLayout.sectionInset = UIEdgeInsetsMake(5 , 5 , 5 , 5 );
     flowLayout.itemSize = CGSizeMake((screenWidth - 20)/3, (screenWidth - 20)/3);
-//    flowLayout.itemSize = CGSizeMake((screenWidth - 20)/3, 115);
     flowLayout.minimumLineSpacing = 5 ;
     flowLayout.minimumInteritemSpacing = 5 ;
-
-    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, MSS_SCREEN_WIDTH, MSS_SCREEN_HEIGHT - 64 * ProportionAdapter) collectionViewLayout:flowLayout];
-    NSLog(@"%f", _collectionView.frame.origin.y);
-    NSLog(@"%f", _collectionView.frame.size.height);
+    
+    _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, MSS_SCREEN_WIDTH, MSS_SCREEN_HEIGHT - 64 ) collectionViewLayout:flowLayout];
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _collectionView.backgroundColor = [UIColor clearColor];
@@ -70,128 +87,81 @@
     
     _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _collectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
-    [self dataDownLoad];
-    
+    [_collectionView.header beginRefreshing];
 }
-
-
-- (void)headRereshing{
-    _page = 0;
-    [self dataDownLoad];
-}
-
-- (void)footerRefreshing{
-
-    [self dataDownLoad];
-}
-
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return [self.dataArray count];
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    MSSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSSCollectionViewCell" forIndexPath:indexPath];
-    if (cell)
-    {
-        
-        [cell.imageView sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[self.dataArray[indexPath.item] timeKey] integerValue] andIsSetWidth:NO andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"xcback"]];
-        cell.imageView.tag = indexPath.item + 100;
-        cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        cell.imageView.clipsToBounds = YES;
+//创建选择后底部按钮
+-(void)createBottomView{
+    //弹出的view
+    _bottomView = [Factory createViewWithBackgroundColor:RGBA(248,248,248,0.97) frame:CGRectMake(0, screenHeight, screenWidth, kHvertical(51))];
+    [self.view addSubview:_bottomView];
+    //各个操作按钮
+    NSArray *titleArray = @[@"制作图文",@"保存",@"删除"];
+    for (int i = 0; i < 3; i++) {
+        UIButton *btn = [Factory createButtonWithFrame:CGRectMake(screenWidth*i/3, 0, screenWidth/3, _bottomView.height) titleFont:kHorizontal(18) textColor:RGB(160,160,160) backgroundColor:ClearColor target:self selector:@selector(handleBtnClick:) Title:titleArray[i]];
+        [btn setTitleColor:NormalColor forState:UIControlStateSelected];
+        btn.userInteractionEnabled = false;
+        btn.selected = false;
+        [_bottomView addSubview:btn];
     }
-    return cell;
 }
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    NSMutableArray *browseItemArray = [[NSMutableArray alloc]init];
-    int i = 0;
-    for(i = 0;i < [self.dataArray count];i++)
-    {
-        UIImageView *imageView = [self.view viewWithTag:i + 100];
-        MSSBrowseModel *browseItem = [[MSSBrowseModel alloc]init];
-        browseItem.bigImageUrl = [NSString stringWithFormat:@"%@", [Helper setImageIconUrl:@"album/media" andTeamKey:[[self.dataArray[i] timeKey] integerValue] andIsSetWidth:NO andIsBackGround:NO]];// 加载网络图片大图地址
-        browseItem.smallImageView = imageView;// 小图
-       
-        browseItem.timeKey = _teamTimeKey;
-        browseItem.albumTitle = _strTitle;
-        browseItem.albumKey = [self.dataArray[i] albumKey];
-        browseItem.teamName = _teamName;
-        browseItem.power = _power;
-        browseItem.currentPhotoKey = [self.dataArray[i] timeKey];
-        
-        [browseItemArray addObject:browseItem];
-    }
-    MSSCollectionViewCell *cell = (MSSCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPath];
-    MSSBrowseNetworkViewController *bvc = [[MSSBrowseNetworkViewController alloc]initWithBrowseItemArray:browseItemArray currentIndex:cell.imageView.tag - 100];
-    bvc.blockRef = ^(){
-        if (_collectionView.header.isRefreshing == YES) {
-            [_collectionView.header endRefreshing];
-        }
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-        _isUpdata = YES;
-        [_collectionView.header beginRefreshing];
-        [_collectionView reloadData];
-    };
-    bvc.closeAutorotate = ^(){
-        
-    };
-    //    bvc.isEqualRatio = NO;// 大图小图不等比时需要设置这个属性（建议等比）
-    [bvc showBrowseViewController];
-    
-}
-
-
-//- (BOOL)shouldAutorotate
-//{
-//    // 因为是取反值，所以返回NO的控制器，就可以旋转
-//    // 因为是取反值，不重写这个方法的控制器，默认就不支持旋转
-//        return YES;//不能旋转
-//}
-
+#pragma mark - initData
 - (void)dataDownLoad{
-  
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:_albumKey forKey:@"albumKey"];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
     NSString* strMd = [JGReturnMD5Str getTeamCompeteSignUpListWithAlbumKey:[_albumKey integerValue] userKey:[DEFAULF_USERID integerValue]];
-    [dict setObject:strMd forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMediaRoleList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:@{
+                           @"userKey":DEFAULF_USERID,
+                           }];
+    NSString *request = @"team/getTeamMediaRoleList";
+    
+    if (_isGetAll) {
+        [dict setValue:_teamTimeKey forKey:@"teamKey"];
+        [dict setValue:[NSNumber numberWithInteger:_page] forKey:@"off"];
+        strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%@dagolfla.com",  DEFAULF_USERID,_teamTimeKey]];
+
+        request = @"team/getTeamMediaListAll";
+    }else{
+        [dict setValue:_albumKey forKey:@"albumKey"];
+        [dict setValue:[NSNumber numberWithInteger:_page] forKey:@"offset"];
+    }
+    [dict setValue:strMd forKey:@"md5"];
+    
+    [[JsonHttp jsonHttp]httpRequest:request JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
         [self.collectionView.header endRefreshing];
         [self.collectionView.footer endRefreshing];
         
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            if (_page == 0)
-            {
+            if (_page == 0){
                 //清除数组数据 _smallUrlArray
                 [self.dataArray removeAllObjects];
+                if (!_isGetAll) {
+                    [self.dataArray addObject:[[JGPhotoListModel alloc] init]];
+                }
             }
             //数据解析
-            if ([data objectForKey:@"teamMediaList"]) {
-                for (NSDictionary *dicList in [data objectForKey:@"teamMediaList"]) {
-                    JGPhotoListModel *model = [[JGPhotoListModel alloc] init];
-                    [model setValuesForKeysWithDictionary:dicList];
-                    [self.dataArray addObject:model];
-                    
-                }
-                _page++;
+            NSArray *listArray = [data objectForKey:@"teamMediaList"];
+            if (_isGetAll) {
+                listArray = [data objectForKey:@"mediaList"];
             }
+            for (NSDictionary *dicList in listArray) {
+                JGPhotoListModel *model = [[JGPhotoListModel alloc] init];
+                [model setValuesForKeysWithDictionary:dicList];
+                [self.dataArray addObject:model];
+            }
+
             _teamName = [data objectForKey:@"teamName"];
             _state = [data objectForKey:@"isTeamMemeber"];
             _power = [data objectForKey:@"power"];
-            _teamTimeKey = [data objectForKey:@"teamKey"];
-            _strTitle = [data objectForKey:@"albumName"];
-            self.title = _strTitle;
+            if (!_isGetAll) {
+                _teamTimeKey = [data objectForKey:@"teamKey"];
+                _strTitle = [data objectForKey:@"albumName"];
+                self.title = _strTitle;
+            }else{
+                _strTitle = _teamName;
+            }
             if (!_rightItem) {
-                if ([[data objectForKey:@"isTeamMemeber"] integerValue] == 1) {
-                    _rightItem = [[UIBarButtonItem alloc]initWithTitle:@"上传" style:UIBarButtonItemStylePlain target:self action:@selector(upDataClick)];
+                if ([[data objectForKey:@"isTeamMemeber"] integerValue] == 1||_isGetAll) {
+                    _rightItem = [[UIBarButtonItem alloc]initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:self action:@selector(selectBtnCLick:)];
                     _rightItem.tintColor = [UIColor whiteColor];
                     self.navigationItem.rightBarButtonItem = _rightItem;
                 }
@@ -208,6 +178,72 @@
         [self.collectionView.footer endRefreshing];
     }];
     
+}
+#pragma mark - Action
+//选择取消按钮点击
+-(void)rightButtonCLick{
+    UIBarButtonItem *rightBarButton = self.navigationItem.rightBarButtonItem;
+    [self selectBtnCLick:rightBarButton];
+}
+//选择
+-(void)selectBtnCLick:(UIBarButtonItem *)barBtn{
+    //按钮失效
+    for (NSInteger i = 0; i<3; i++) {
+        UIButton *indexBtn = _bottomView.subviews[i];
+        indexBtn.selected = false;
+        indexBtn.userInteractionEnabled = false;
+    }
+    if ([barBtn.title isEqualToString:@"选择"]) {
+        barBtn.title = @"取消";
+        [UIView animateWithDuration:0.5 animations:^{
+            _bottomView.y = screenHeight - 64 - kHvertical(51);
+            _collectionView.height = _bottomView.y;
+        }];
+    }else{
+        barBtn.title = @"选择";
+        for (int i = 0; i<self.dataArray.count; i++) {
+            JGPhotoListModel *Model = self.dataArray[i];
+            if (Model.isSelect) {
+                Model.isSelect = false;
+            }
+            [self.dataArray replaceObjectAtIndex:i withObject:Model];
+        }
+        self.selectArray = [NSMutableArray array];
+        [self.collectionView reloadData];
+        [UIView animateWithDuration:0.5 animations:^{
+            _bottomView.y = screenHeight;
+            _collectionView.height = screenHeight - 64;
+        }];
+    }
+}
+//操作按钮点击
+-(void)handleBtnClick:(UIButton *)btn{
+    NSInteger index = 0;
+    for (NSInteger i = 0; i<3; i++) {
+        UIButton *indexBtn = _bottomView.subviews[i];
+        if (indexBtn == btn) {
+            index = i;
+        }
+    }
+    
+    switch (index) {
+        case 0:{
+            //图文制作
+            [self takePhotoText];
+        }break;
+        case 1:{
+            //本地保存
+            [self saveLocation];
+        }break;
+        case 2:{
+            //删除
+            [self deleatePhoto];
+        } break;
+            
+        default:
+            break;
+    }
+
 }
 
 // 上传
@@ -228,6 +264,46 @@
     [self.navigationController pushViewController:upVc animated:YES];
     return;
 }
+//选中照片
+-(void)selectPhotoModel:(JGPhotoListModel *)indexModel index:(NSInteger)index{
+
+    if (indexModel.isSelect) {
+        indexModel.isSelect = false;
+        [self.selectArray removeObject:indexModel];
+        if (self.selectArray.count==0) {
+            for (NSInteger i = 0; i<3; i++) {
+                UIButton *indexBtn = _bottomView.subviews[i];
+                indexBtn.selected = false;
+                indexBtn.userInteractionEnabled = false;
+            }
+        }
+    }else{
+//        NSInteger totalSelect = 0;
+//        for (JGPhotoListModel *model in self.dataArray) {
+//            if (model.isSelect) {
+//                totalSelect++;
+//            }
+//        }
+//        if (totalSelect==6) {
+//            return;
+//        }
+        indexModel.isSelect = true;
+        [self.selectArray addObject:indexModel];
+        if (self.selectArray.count==1) {
+            for (NSInteger i = 0; i<3; i++) {
+                UIButton *indexBtn = _bottomView.subviews[i];
+                indexBtn.selected = true;
+                indexBtn.userInteractionEnabled = true;
+            }
+
+        }
+    }
+    
+
+    [self.dataArray replaceObjectAtIndex:index withObject:indexModel];
+    [self.collectionView reloadData];
+
+}
 
 // 清除缓存
 - (void)btnClick
@@ -236,6 +312,169 @@
     [[SDImageCache sharedImageCache]clearDiskOnCompletion:^{
         [_collectionView reloadData];
     }];
+}
+
+#pragma mark - 图文制作&&分享&&本地保存&&删除
+//图文制作
+-(void)takePhotoText{
+    MakePhotoTextViewController *vc = [[MakePhotoTextViewController alloc] init];
+    NSMutableArray *dataArray = [NSMutableArray array];
+    for (JGPhotoListModel *model in self.selectArray) {
+        MakePhotoTextViewModel *Model = [[MakePhotoTextViewModel alloc] init];
+        Model.timeKey = model.timeKey;
+        NSMutableArray *photoArray = [NSMutableArray array];
+        [photoArray addObject:Model];
+        [dataArray addObject:photoArray];
+    }
+    vc.dataArray = dataArray;
+    vc.teamTimeKey = _teamTimeKey;
+    vc.teamName = _teamName;
+    [self.navigationController pushViewController:vc animated:YES];
+    [self rightButtonCLick];
+}
+//分享
+-(void)shareToOther{
+
+}
+//本地保存
+-(void)saveLocation{
+    [self rightButtonCLick];
+    __block int photoNum = 0;
+    for (JGPhotoListModel *model in self.selectArray) {
+        NSURL *imageUrl = [Helper setImageIconUrl:@"album/media" andTeamKey:[model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:NO];// 加载网络图片大图地址
+        NSData *data = [NSData dataWithContentsOfURL:imageUrl];
+        UIImage *image = [UIImage imageWithData:data]; // 取得图片
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            //写入图片到相册 PHAssetChangeRequest *req =
+            [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+            
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            NSLog(@"success = %d, error = %@", success, error);
+            photoNum++;
+            if (photoNum==self.selectArray.count) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSString *dowloadNum = [NSString stringWithFormat:@"第%d张下载完成",photoNum];
+                    [[ShowHUD showHUD] showToastWithText:dowloadNum FromView:self.view];
+                    
+                });
+            }
+        }];
+
+        
+    }
+}
+//删除
+-(void)deleatePhoto{
+    NSMutableArray *photoArray = [NSMutableArray array];
+    for (JGPhotoListModel *model in self.selectArray) {
+        NSString *photoKey =  [NSString stringWithFormat:@"%@",model.timeKey];
+        [photoArray addObject:photoKey];
+    }
+    
+    NSDictionary *dict = @{
+                           @"userKey":DEFAULF_USERID,
+                           @"teamKey":_teamTimeKey,
+                           @"timeKeyList":photoArray
+                           };
+    
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"team/batchDeleteTeamMedia" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        BOOL parkSucess = [[data objectForKey:@"packSuccess"] boolValue];
+        if (parkSucess) {
+            [self.dataArray removeObjectsInArray:self.selectArray];
+            [self.collectionView reloadData];
+            [self rightButtonCLick];
+        }
+    }];
+
+    
+
+}
+#pragma mark - Refresh
+
+- (void)headRereshing{
+    _page = 0;
+    [self dataDownLoad];
+}
+
+- (void)footerRefreshing{
+    _page ++;
+    [self dataDownLoad];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [self.dataArray count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    MSSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSSCollectionViewCell" forIndexPath:indexPath];
+    if (cell)
+    {
+        JGPhotoListModel *model = self.dataArray[indexPath.item];
+        [cell configModel:model];
+        cell.imageView.tag = indexPath.item + 100;
+    }
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSMutableArray *browseItemArray = [[NSMutableArray alloc]init];
+    JGPhotoListModel *indexModel = self.dataArray[indexPath.item];
+    if (_bottomView.y != screenHeight) {
+        if (indexModel.timeKey) {
+            [self selectPhotoModel:indexModel index:indexPath.item];
+        }
+
+        return;
+    }
+    
+    if (indexModel.timeKey==nil) {
+        //上传
+        [self upDataClick];
+        return;
+    }
+    for(int i = 1;i < [self.dataArray count];i++)
+    {
+        JGPhotoListModel *model = self.dataArray[i];
+        UIImageView *imageView = [self.view viewWithTag:i + 100];
+        MSSBrowseModel *browseItem = [[MSSBrowseModel alloc]init];
+        browseItem.bigImageUrl = [NSString stringWithFormat:@"%@", [Helper setImageIconUrl:@"album/media" andTeamKey:[model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:NO]];// 加载网络图片大图地址
+        browseItem.smallImageView = imageView;// 小图
+       
+        browseItem.timeKey = _teamTimeKey;
+        browseItem.albumTitle = _strTitle;
+//        browseItem.albumKey = model.albumKey;
+        browseItem.teamName = _teamName;
+        browseItem.power = _power;
+        browseItem.currentPhotoKey = model.timeKey;
+        
+        [browseItemArray addObject:browseItem];
+    }
+    NSIndexPath *indexPathNext = [NSIndexPath indexPathForItem:indexPath.item-1 inSection:indexPath.section];
+    MSSCollectionViewCell *cell = (MSSCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPathNext];
+    MSSBrowseNetworkViewController *bvc = [[MSSBrowseNetworkViewController alloc]initWithBrowseItemArray:browseItemArray currentIndex:cell.imageView.tag - 100];
+    bvc.blockRef = ^(){
+        if (_collectionView.header.isRefreshing == YES) {
+            [_collectionView.header endRefreshing];
+        }
+        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        _isUpdata = YES;
+        [_collectionView.header beginRefreshing];
+        [_collectionView reloadData];
+    };
+    bvc.closeAutorotate = ^(){
+        
+    };
+    //    bvc.isEqualRatio = NO;// 大图小图不等比时需要设置这个属性（建议等比）
+    [bvc showBrowseViewController];
+    
 }
 
 

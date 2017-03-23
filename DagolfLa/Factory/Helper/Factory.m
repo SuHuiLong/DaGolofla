@@ -45,7 +45,9 @@
 //    button.layer.cornerRadius = 3.f;
 //    button.layer.masksToBounds = YES;
     [button setImage:[UIImage imageNamed:normalName] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:selectedName] forState:UIControlStateSelected];
+    if (selectedName.length>0) {
+        [button setImage:[UIImage imageNamed:selectedName] forState:UIControlStateSelected];
+    }
     
     [button addTarget:target action:selector forControlEvents:UIControlEventTouchDown];
     return button;

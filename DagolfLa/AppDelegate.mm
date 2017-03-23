@@ -967,7 +967,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
             case 0:{
                 NSString *filePath = [self getFilePathWithImageName:imageName];
                 BOOL isExist = [self isFileExistWithFilePath:filePath];
-                if (isExist) {// 图片存在
+                if (isExist&&DEFAULF_USERID) {// 图片存在
                     isExistPic = true;
                     AdvertiseView *advertiseView = [[AdvertiseView alloc] initWithFrame:self.window.bounds];
                     advertiseView.filePath = filePath;
@@ -984,7 +984,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
                 break;
         }
     }
-    if (!isExistPic) {
+    if (!isExistPic||!DEFAULF_USERID) {
         JGLAnimationViewController* aniVc = [[JGLAnimationViewController alloc]init];
         self.window.rootViewController = aniVc;
         [aniVc setCallBack:^{

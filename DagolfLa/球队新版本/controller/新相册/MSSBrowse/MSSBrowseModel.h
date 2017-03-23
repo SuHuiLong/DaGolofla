@@ -13,7 +13,7 @@
 
 
 
-@property (strong, nonatomic) NSNumber* albumKey;
+//@property (strong, nonatomic) NSNumber* albumKey;
 @property (strong, nonatomic) NSNumber* albumTimeKey; // 每一张的timekey
 @property (strong, nonatomic) NSNumber* timeKey;
 @property (strong, nonatomic) NSNumber* userKey;

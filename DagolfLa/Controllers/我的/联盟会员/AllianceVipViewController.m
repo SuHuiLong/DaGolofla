@@ -155,7 +155,6 @@
     [_mainTableView registerClass:[CardHistoryTableViewCell class] forCellReuseIdentifier:@"CardHistoryTableViewCell"];
     _mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_historyView addSubview:_mainTableView];
-    
 }
 
 #pragma mark - LoadData
@@ -194,7 +193,7 @@
             for (NSDictionary *listDict in listArray) {
                 VipCardModel *model = [[VipCardModel alloc] init];
                 model.imagePicUrl = [listDict objectForKey:@"bigPicURL"];
-                model.cardState = [[listDict objectForKey:@"state"] integerValue];
+                model.cardState = 1;
                 model.cardId = [listDict objectForKey:@"timeKey"];
                 [self.dataArray addObject:model];
             }
@@ -202,7 +201,8 @@
             for (NSDictionary *listDict in noCanCardListArray) {
                 VipCardModel *model = [[VipCardModel alloc] init];
                 model.imagePicUrl = [listDict objectForKey:@"bigPicURL"];
-                model.cardState = [[listDict objectForKey:@"state"] integerValue];
+                model.cardState = 0;
+                model.cardStr = [listDict objectForKey:@"stateString"];
                 model.cardId = [listDict objectForKey:@"timeKey"];
                 [self.noCanUseArray addObject:model];
             }
@@ -295,7 +295,6 @@
         case 1:{
         self.baseScrollView.contentOffset = CGPointMake( screenWidth, 0);
         }break;
-    
         default:
             break;
     }
@@ -312,7 +311,7 @@
 -(void)createCardRefresh{
     _mainCollectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRefreshing)];
 //    _mainCollectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(collectionFooterRefreshing)];
-    [_mainCollectionView.header beginRefreshing];
+//    [_mainCollectionView.header beginRefreshing];
 }
 //历史记录刷新
 -(void)createHistoryRefresh{
@@ -482,7 +481,6 @@
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 
-    
 }
 
 #pragma mark - UITableViewDelegate

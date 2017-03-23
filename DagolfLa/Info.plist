@@ -71,6 +71,8 @@
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>iosamap</string>
+		<string>baidumap</string>
 		<string>wechat</string>
 		<string>weixin</string>
 		<string>sinaweibohd</string>

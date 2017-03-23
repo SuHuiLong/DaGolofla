@@ -38,31 +38,13 @@
     _dataArray = [[NSMutableArray alloc]init];
     
     if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
-        UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"创建相册" style:UIBarButtonItemStylePlain target:self action:@selector(createClick)];
+        UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"所有照片" style:UIBarButtonItemStylePlain target:self action:@selector(totalPhotoView)];
         rightBtn.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = rightBtn;
     }
 
     [self uiConfig];
 }
-
-
--(void)createClick
-{
-    JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
-    phoVc.title = @"创建相册";
-    phoVc.isManage = NO;
-    //传非0，1的数
-    phoVc.isShowMem = @3;
-    phoVc.teamKey = _teamKey;
-    phoVc.createBlock = ^(void){
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        [_collectionView.header beginRefreshing];
-        [_collectionView reloadData];
-    };
-    [self.navigationController pushViewController:phoVc animated:YES];
-}
-
 
 
 -(void)uiConfig
@@ -97,6 +79,212 @@
     [_collectionView.header beginRefreshing];
 }
 
+
+
+#pragma mark - 下载数据
+- (void)downLoadData:(NSInteger )page isReshing:(BOOL)isReshing{
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    [dict setObject:_teamKey forKey:@"teamKey"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+    [dict setObject:[NSNumber numberWithInteger:page] forKey:@"offset"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        if (isReshing) {
+            [_collectionView.header endRefreshing];
+        }else {
+            [_collectionView.footer endRefreshing];
+        }
+    } completionBlock:^(id data) {
+        if ([[data objectForKey:@"packSuccess"] boolValue]) {
+            if (page == 0)
+            {
+                //清除数组数据
+                [_dataArray removeAllObjects];
+                if (_dictMember != nil) {
+                    [_dataArray addObject:[[JGLPhotoAlbumModel alloc] init]];
+                }
+            }
+            //数据解析
+            for (NSDictionary *dicList in [data objectForKey:@"teamAlbumList"])
+            {
+                JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc] init];
+                [model setValuesForKeysWithDictionary:dicList];
+                [_dataArray addObject:model];
+            }
+            _page++;
+            [_collectionView reloadData];
+        }else {
+            [[ShowHUD showHUD]showToastWithText:[dict objectForKey:@"message"] FromView:self.view];
+        }
+        [_collectionView reloadData];
+        if (isReshing) {
+            [_collectionView.header endRefreshing];
+        }else {
+            [_collectionView.footer endRefreshing];
+        }
+    }];
+}
+#pragma mark - Action
+//创建相册点击
+-(void)createClick
+{
+    JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
+    phoVc.title = @"创建相册";
+    phoVc.isManage = NO;
+    //传非0，1的数
+    phoVc.isShowMem = @3;
+    phoVc.teamKey = _teamKey;
+    phoVc.createBlock = ^(void){
+        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        [_collectionView.header beginRefreshing];
+        [_collectionView reloadData];
+    };
+    [self.navigationController pushViewController:phoVc animated:YES];
+}
+//所有照片
+-(void)totalPhotoView{
+    JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
+    phoVc.strTitle = @"所有照片";
+    phoVc.isGetAll = true;
+    phoVc.power = _powerPho;
+    phoVc.state = [_dictMember objectForKey:@"state"];
+    phoVc.teamTimeKey = _teamKey;
+    phoVc.dictMember = _dictMember;
+    phoVc.userKey = DEFAULF_USERID;
+    [self.navigationController pushViewController:phoVc animated:YES];
+}
+//管理相册点击
+-(void)manageClick:(UIButton *)btn
+{
+    JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
+    phoVc.title = @"球队相册管理";
+    phoVc.isManage = YES;
+    phoVc.teamKey = _teamKey;
+    phoVc.isShowMem = [_dataArray[btn.tag - 10000] power];
+    phoVc.numPhotoKey = [_dataArray[btn.tag - 10000] mediaKey];
+    phoVc.timeKey = [_dataArray[btn.tag - 10000] timeKey];
+    phoVc.titleStr = [_dataArray[btn.tag - 10000] name];
+    phoVc.createBlock = ^(void){
+        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        [_collectionView.header beginRefreshing];
+        [_collectionView reloadData];
+    };
+    [self.navigationController pushViewController:phoVc animated:YES];
+}
+
+-(void)pushDetailPhotoView:(JGLPhotoAlbumModel *)model{
+    
+    JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
+    phoVc.strTitle = model.name;
+    phoVc.albumKey = model.timeKey;
+    phoVc.power = _powerPho;
+    phoVc.state = [_dictMember objectForKey:@"state"];
+    phoVc.teamTimeKey = _teamKey;
+    phoVc.dictMember = _dictMember;
+    phoVc.userKey = model.userKey;
+    
+    NSInteger power = [model.power integerValue];
+    if (_dictMember != nil) {
+        if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
+            //需要跳转
+            [self.navigationController pushViewController:phoVc animated:YES];
+        }else{
+            if (power == 0) {
+                //需要跳转
+                [self.navigationController pushViewController:phoVc animated:YES];
+            }else{
+                [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
+            }
+        }
+    }else{
+        if (power == 0) {
+            //需要跳转
+            [self.navigationController pushViewController:phoVc animated:YES];
+        }else{
+            //不要需要跳转
+            [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
+        }
+    }
+
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    _page = 0;
+    [self downLoadData:_page isReshing:YES];
+}
+
+- (void)footerRereshing
+{
+    [self downLoadData:_page isReshing:NO];
+}
+
+
+
+
+#pragma mark - UICollectionViewDelegate
+//定义展示的UICollectionViewCell的个数
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return _dataArray.count;
+}
+//定义展示的Section的个数
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+//每个UICollectionView展示的内容
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    JGTeamPhotoCollectionViewCell *cell = [[JGTeamPhotoCollectionViewCell alloc]init];
+    
+    // Set up the reuse identifier
+    cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor whiteColor];
+    [cell showData:_dataArray[indexPath.row]];
+
+    
+    /**
+     *  //POWER == 0，所有人可见，隐藏image    power == 1  仅球队成员可见
+     */
+    if (_dictMember != nil) {
+        if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
+            cell.suoImage.hidden = YES;
+        }else{
+            if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
+                cell.suoImage.hidden = YES;
+            }else{
+                cell.suoImage.hidden = NO;
+            }
+        }
+    }else{
+        if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
+            cell.suoImage.hidden = YES;
+        }else{
+            cell.suoImage.hidden = NO;
+        }
+    }
+    if (_powerPho != nil) {
+        if ([_powerPho containsString:@"1005"] == YES) {
+            if (_manageInter == 1) {
+                cell.manageBtn.hidden = YES;
+            }else{
+                cell.manageBtn.hidden = NO;
+                cell.manageBtn.tag = 10000 + indexPath.row;
+                [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
+            }
+        }else{
+            cell.manageBtn.hidden = YES;
+        }
+    }else{
+        cell.manageBtn.hidden = YES;
+    }
+    
+    return cell;
+}
 // 设置footerView的
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
@@ -135,157 +323,6 @@
     }
     return reusableView;
 }
-
-
-#pragma mark - 下载数据
-- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
-    [dict setObject:_teamKey forKey:@"teamKey"];
-    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
-    [dict setObject:[NSNumber numberWithInt:page] forKey:@"offset"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamAlbumList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        if (isReshing) {
-            [_collectionView.header endRefreshing];
-        }else {
-            [_collectionView.footer endRefreshing];
-        }
-    } completionBlock:^(id data) {
-        if ([[data objectForKey:@"packSuccess"] boolValue]) {
-            if (page == 0)
-            {
-                //清除数组数据
-                [_dataArray removeAllObjects];
-            }
-            //数据解析
-            for (NSDictionary *dicList in [data objectForKey:@"teamAlbumList"])
-            {
-                JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc] init];
-                [model setValuesForKeysWithDictionary:dicList];
-                [_dataArray addObject:model];
-            }
-            _page++;
-            [_collectionView reloadData];
-        }else {
-//            [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
-//                [self presentViewController:alertView animated:YES completion:nil];
-//            }];
-            [[ShowHUD showHUD]showToastWithText:[dict objectForKey:@"message"] FromView:self.view];
-        }
-        [_collectionView reloadData];
-        if (isReshing) {
-            [_collectionView.header endRefreshing];
-        }else {
-            [_collectionView.footer endRefreshing];
-        }
-    }];
-}
-#pragma mark 开始进入刷新状态
-- (void)headerRereshing
-{
-    _page = 0;
-    [self downLoadData:_page isReshing:YES];
-}
-
-- (void)footerRereshing
-{
-    [self downLoadData:_page isReshing:NO];
-}
-
-
-
-
-#pragma mark -- uicollection方法
-//定义展示的UICollectionViewCell的个数
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return _dataArray.count;
-}
-//定义展示的Section的个数
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-//每个UICollectionView展示的内容
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    JGTeamPhotoCollectionViewCell *cell = [[JGTeamPhotoCollectionViewCell alloc]init];
-    
-    // Set up the reuse identifier
-    cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
-    [cell showData:_dataArray[indexPath.row]];
-
-    
-    /**
-     *  //POWER == 0，所有人可见，隐藏image    power == 1  仅球队成员可见
-     */
-    if (_dictMember != nil) {
-        if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
-            cell.suoImage.hidden = YES;
-        }
-        else{
-            if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
-                cell.suoImage.hidden = YES;
-            }
-            else
-            {
-                cell.suoImage.hidden = NO;
-            }
-        }
-    }
-    else
-    {
-        if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
-            cell.suoImage.hidden = YES;
-        }
-        else
-        {
-            cell.suoImage.hidden = NO;
-        }
-    }
-    if (_powerPho != nil) {
-        if ([_powerPho containsString:@"1005"] == YES) {
-            if (_manageInter == 1) {
-                cell.manageBtn.hidden = YES;
-            }
-            else{
-                cell.manageBtn.hidden = NO;
-                cell.manageBtn.tag = 10000 + indexPath.row;
-                [cell.manageBtn addTarget:self action:@selector(manageClick:) forControlEvents:UIControlEventTouchUpInside];
-            }
-        }
-        else
-        {
-            cell.manageBtn.hidden = YES;
-        }
-    }
-    else
-    {
-        cell.manageBtn.hidden = YES;
-    }
-    
-    return cell;
-}
--(void)manageClick:(UIButton *)btn
-{
-    JGTeamCreatePhotoController* phoVc = [[JGTeamCreatePhotoController alloc]init];
-    phoVc.title = @"球队相册管理";
-    phoVc.isManage = YES;
-    phoVc.teamKey = _teamKey;
-    phoVc.isShowMem = [_dataArray[btn.tag - 10000] power];
-    phoVc.numPhotoKey = [_dataArray[btn.tag - 10000] mediaKey];
-    phoVc.timeKey = [_dataArray[btn.tag - 10000] timeKey];
-    phoVc.titleStr = [_dataArray[btn.tag - 10000] name];
-    phoVc.createBlock = ^(void){
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        [_collectionView.header beginRefreshing];
-        [_collectionView reloadData];
-    };
-    [self.navigationController pushViewController:phoVc animated:YES];
-}
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -299,57 +336,14 @@
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
-//    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
-    phoVc.strTitle = [_dataArray[indexPath.row] name];
-    phoVc.albumKey = [_dataArray[indexPath.row] timeKey];
-    phoVc.power = _powerPho;
-    phoVc.state = [_dictMember objectForKey:@"state"];
-    phoVc.teamTimeKey = _teamKey;
-    phoVc.dictMember = _dictMember;
-    phoVc.userKey = [_dataArray[indexPath.row] userKey];
-//    phoVc.blockRefresh = ^(){
-//        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-//        [_collectionView.header beginRefreshing];
-//        [_collectionView reloadData];
-//    };
-    if (_dictMember != nil) {
-        if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
-            //需要跳转
-            [self.navigationController pushViewController:phoVc animated:YES];
-        }
-        else{
-            if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
-                //需要跳转
-                [self.navigationController pushViewController:phoVc animated:YES];
-            }
-            else
-            {
-                //不要需要跳转
-//                [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
-//                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//                }];
-                [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
-                
-            }
-        }
-    }
-    else
-    {
-        if ([[_dataArray[indexPath.row] power] integerValue] == 0) {
-            //需要跳转
-            [self.navigationController pushViewController:phoVc animated:YES];
-        }
-        else
-        {
-            //不要需要跳转
-//            [Helper alertViewWithTitle:@"此相册仅对球队成员开放，请先加入球队再行观看" withBlock:^(UIAlertController *alertView) {
-//                [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//            }];
-            [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
-        }
-    }
+
+    JGLPhotoAlbumModel *model = _dataArray[indexPath.item];
     
+    if (model.name == nil) {
+        [self createClick];
+        return;
+    }
+    [self pushDetailPhotoView:model];
     
 }
 

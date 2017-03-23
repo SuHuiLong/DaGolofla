@@ -38,11 +38,12 @@
         _twoline.backgroundColor = [UIColor colorWithHexString:BG_color];
         [self addSubview:_twoline];
         
+        
         _threeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 99 *ProportionAdapter, 22 *ProportionAdapter, 22 *ProportionAdapter)];
         _threeImageView.image = [UIImage imageNamed:@"icn_address"];
         [self addSubview:_threeImageView];
         
-        _address = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, 98 *ProportionAdapter, screenWidth - 50*ProportionAdapter, 24 *ProportionAdapter)];
+        _address = [[UILabel alloc]initWithFrame:CGRectMake(40 *ProportionAdapter, _twoline.y_height, screenWidth - 50*ProportionAdapter, kHvertical(43))];
         _address.font = [UIFont systemFontOfSize:15 *ProportionAdapter];
         [self addSubview:_address];
         

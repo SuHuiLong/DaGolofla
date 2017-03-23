@@ -102,6 +102,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define NETWORKSTATS @"networkStats"
 
 #define RGBA(r,g,b,a)   [UIColor colorWithRed:(float)r/255.0f green:(float)g/255.0f blue:(float)b/255.0f alpha:a]
+#define RGB(r,g,b)   [UIColor colorWithRed:(float)r/255.0f green:(float)g/255.0f blue:(float)b/255.0f alpha:1]
 #define kScreenHeight ([[UIScreen mainScreen] bounds].size.height)
 
 // 判断是否为空
@@ -129,6 +130,9 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 #define B31_Color @"#313131"
 #define Ba0_Color @"#a0a0a0"
+
+
+#define NormalColor RGB(50,177,77)
 
 #define ProportionAdapter screenWidth/375
 

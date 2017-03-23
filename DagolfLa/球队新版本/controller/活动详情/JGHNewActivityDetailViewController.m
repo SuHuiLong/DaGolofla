@@ -513,6 +513,8 @@ static CGFloat ImageHeight  = 210.0;
     }else if (section == 1) {
         JGHNewActivityCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityCellIdentifier];
         [addressCell configJGTeamAcitivtyModel:_model];
+        addressCell.address.userInteractionEnabled = YES;
+        [addressCell.address addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushMapView)]];
         return (UIView *)addressCell;
     }else{
         JGHActivityAllCell *activityCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityAllCellIdentifier];
@@ -547,6 +549,9 @@ static CGFloat ImageHeight  = 210.0;
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10*ProportionAdapter)];
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
 }
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
@@ -784,6 +789,11 @@ static CGFloat ImageHeight  = 210.0;
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
     }
 }
+
+#pragma mark - 跳转地图详情页
+//-(void)pushMapView{
+//
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

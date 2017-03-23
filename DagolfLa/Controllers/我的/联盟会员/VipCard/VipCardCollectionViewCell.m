@@ -44,10 +44,13 @@
     NSString *picUrl = model.imagePicUrl;
     [_imageView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
     NSInteger cardState = model.cardState;
-    NSArray *stateArray = @[@"待审核",@"审核中",@"审核失败",@"已激活",@"",@"已停用",@"已过期"];
-    
-    if (cardState!=4) {
-        NSString *stateStr = stateArray[cardState];
+    NSString *cardStr = model.cardStr;
+    if (!cardStr) {
+        cardStr = @"未知状态";
+    }
+//  @[@"待审核",@"审核中",@"审核失败",@"已激活",@"",@"已停用",@"已过期"];
+    if (cardState==0) {
+        NSString *stateStr = cardStr;
         _maskingView.hidden = NO;
         _alertLabel.hidden = NO;
         _alertLabel.text = stateStr;

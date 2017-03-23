@@ -42,5 +42,7 @@
 @property (strong, nonatomic) NSNumber* width;
 @property (strong, nonatomic) NSString* teamName;
 
+//照片是否被选中
+@property (assign, nonatomic) BOOL isSelect;
 
 @end

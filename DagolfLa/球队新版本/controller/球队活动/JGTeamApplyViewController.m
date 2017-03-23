@@ -320,6 +320,7 @@ static NSString *const JGHTotalPriceCellIdentifier = @"JGHTotalPriceCell";
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
+
 #pragma mark -- 发票点击事件
 - (void)cellClickBtn:(UIButton *)btn{
     JGHAddInvoiceViewController *invoiceCtrl = [[JGHAddInvoiceViewController alloc]init];

@@ -180,7 +180,6 @@
                            @"telphone":phoneStr,
                            @"countryCode":_codeing
                            };
-    
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"league/doSendBuildUserCardSms" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
