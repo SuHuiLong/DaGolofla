@@ -16,14 +16,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-//        self.selectImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20 *ProportionAdapter, 15 *ProportionAdapter, 0, 0)];
-        
-//        self.read = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 20 *ProportionAdapter, 10 *ProportionAdapter, 10*ProportionAdapter)];
-//        self.read.backgroundColor = [UIColor colorWithHexString:Bar_Color];
-//        self.read.layer.masksToBounds = YES;
-//        self.read.layer.cornerRadius = self.read.frame.size.width/2;
-//        [self addSubview:self.read];
-        
         self.name = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -(30 + 80)*ProportionAdapter, 20 *ProportionAdapter)];
         self.name.font = [UIFont systemFontOfSize:16 *ProportionAdapter];
         self.name.textColor = [UIColor colorWithHexString:@"#313131"];
@@ -61,12 +53,6 @@
 }
 
 - (void)configJGHSysInformCell:(JGHInformModel *)model{
-//    CGSize titleSize = [model.title boundingRectWithSize:CGSizeMake(screenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16*ProportionAdapter]} context:nil].size;
-    
-    
-//    self.name.frame = CGRectMake(10 *ProportionAdapter, 15 *ProportionAdapter, screenWidth -20*ProportionAdapter, titleSize.height);
-    
-//    self.detail.frame = CGRectMake(10 *ProportionAdapter, titleSize.height + 30*ProportionAdapter, screenWidth -20 *ProportionAdapter, contentSize.height);
     
     if (model.linkURL) {
         CGSize contentSize = [[NSString stringWithFormat:@"%@", model.content] boundingRectWithSize:CGSizeMake(screenWidth -50 *ProportionAdapter, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15*ProportionAdapter]} context:nil].size;

@@ -24,6 +24,8 @@
     NSString* _strTeamName;
     UIView *_psuhView;
     UIButton *_psuhBtn;
+    
+    NSInteger _isManager;
 }
 
 @property (nonatomic, strong)UIView *bgView;
@@ -48,10 +50,11 @@
     
     [self uiConfig];
     
-    if (self.isManager == 1) {
-        [self createPublishAwardNameListBtn];
-    }
     
+    dispatch_queue_t queue = dispatch_queue_create("activityQueue", DISPATCH_QUEUE_SERIAL);
+    dispatch_async(queue, ^{
+        [self getActivityManager];
+    });
 //    [self loadData];
 }
 #pragma mark -- 创建工具栏
@@ -105,6 +108,54 @@
 - (void)pushCtrl{
     [self loadData];
 }
+#pragma mark -- 获取活动权限
+- (void)getActivityManager{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:@(_activityKey) forKey:@"activityKey"];
+    
+    [dict setValue:DEFAULF_USERID forKey:@"userKey"];
+    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        NSLog(@"error");
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            
+            if ([data objectForKey:@"teamMember"]) {
+                dict = [data objectForKey:@"teamMember"];
+                if ([dict objectForKey:@"power"]) {
+                    NSString *power = [dict objectForKey:@"power"];
+                    if (power) {
+                        if ([power containsString:@"1001"]) {
+                            _isManager = 1;
+                        }else{
+                            _isManager = 0;
+                        }
+                    }else{
+                        _isManager = 0;
+                    }
+                }
+            }else{
+                _isManager = 0;//非管理员
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_isManager == 1) {
+                    [self createPublishAwardNameListBtn];
+                }
+                
+                [_tableView.header beginRefreshing];
+            });
+            
+        }else{
+            
+        }
+    }];
+}
 #pragma mark -- 下载数据
 - (void)loadData{
     [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
@@ -116,6 +167,7 @@
         urlString = @"getTeamActivityPrizeAllList";
     }else{
         urlString = @"getAwardedInfo";
+        _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
     }
     
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -290,9 +342,6 @@
 -(void)uiConfig
 {
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 65*ProportionAdapter -64) style:UITableViewStyleGrouped];
-    if (self.isManager != 1) {
-        _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-    }
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -305,7 +354,7 @@
 //    [_tableView registerClass:[JGDActvityPriziSetTableViewCell class] forCellReuseIdentifier:@"setCell"];
     
     _tableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-    [_tableView.header beginRefreshing];
+    
     
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
 }
@@ -359,7 +408,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.titleLB.text = [NSString stringWithFormat:@"活动奖项（%td）", _dataArray.count];
         
-        if (self.isManager == 1) {
+        if (_isManager == 1) {
             [cell.contentView addSubview:cell.presentationBtn];
             
             [cell.presentationBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
@@ -374,7 +423,7 @@
             cell = [[JGLPresentAwardTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JGLPresentAwardTableViewCellID];
         }
         
-        if (self.isManager == 1) {
+        if (_isManager == 1) {
             cell.chooseBtn.tag = indexPath.section + 100 -1;
             [cell.chooseBtn addTarget:self action:@selector(chooseAwarderClick:) forControlEvents:UIControlEventTouchUpInside];
         }else{
@@ -390,7 +439,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.isManager == 1) {
+    if (_isManager == 1) {
         if (indexPath.section > 0) {
             JGDActivityListViewController *listerErctrl = [[JGDActivityListViewController alloc]init];
             listerErctrl.activityKey = _activityKey;
@@ -416,7 +465,7 @@
 }
 #pragma mark -- 选择获奖者
 - (void)chooseAwarderClick:(UIButton *)btn{
-    if (self.isManager == 1) {
+    if (_isManager == 1) {
         JGDActivityListViewController *listerErctrl = [[JGDActivityListViewController alloc]init];
         listerErctrl.activityKey = _activityKey;
         listerErctrl.checkdict = _prizeListArray[btn.tag - 100];

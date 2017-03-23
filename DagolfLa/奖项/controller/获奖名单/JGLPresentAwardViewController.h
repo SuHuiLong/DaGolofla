@@ -19,6 +19,6 @@
 
 @property (copy, nonatomic) void (^refreshBlock)();
 
-@property (nonatomic, assign) NSInteger isManager; //1- 管理员，0-非管理员
+//@property (nonatomic, assign) NSInteger isManager; //1- 管理员，0-非管理员
 
 @end

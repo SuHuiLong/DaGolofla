@@ -162,7 +162,7 @@ static JGHPushClass *pushClass = nil;
         JGLPresentAwardViewController *teamGroupCtrl= [[JGLPresentAwardViewController alloc]init];
         teamGroupCtrl.activityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
         teamGroupCtrl.teamKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"] integerValue];
-        teamGroupCtrl.isManager = 0;//0-非管理员
+        //teamGroupCtrl.isManager = 0;//0-非管理员
         if (pushVC) {
             pushVC(teamGroupCtrl);
         }

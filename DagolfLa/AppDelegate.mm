@@ -337,7 +337,35 @@
     //调用PHP登录
     [self phpLogin];
     
-    [self submitLocalScoreData];
+    //开启监听网络状态
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [[AFNetworkReachabilityManager sharedManager ] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case -1:
+                NSLog(@"未知网络");
+                break;
+            case 0:
+                NSLog(@"网络不可达");
+                break;
+            case 1:
+                NSLog(@"GPRS网络");
+                break;
+            case 2:
+                NSLog(@"wifi网络");
+                break;
+            default:
+                break;
+        }
+        
+        if(status ==AFNetworkReachabilityStatusReachableViaWWAN || status == AFNetworkReachabilityStatusReachableViaWiFi)
+        {
+            NSLog(@"有网");
+            [self submitLocalScoreData];
+        }else
+        {
+            NSLog(@"没有网");
+        }
+    }];
     
     return YES;
 }

@@ -295,7 +295,7 @@
         _webView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
         UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
         
-        statusView.image = [UIImage imageNamed:@"nav_bg"];
+        statusView.image = [UIImage imageNamed:@"old_Nav_bg"];
         
         CGRect frame = statusView.frame;
         

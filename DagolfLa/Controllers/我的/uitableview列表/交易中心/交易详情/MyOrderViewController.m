@@ -121,7 +121,7 @@
             self.navigationController.navigationBarHidden = YES;
             _statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
             
-            _statusView.image = [UIImage imageNamed:@"nav_bg"];
+            _statusView.image = [UIImage imageNamed:@"old_Nav_bg"];
             CGRect frame = _statusView.frame;
             
             frame.origin = CGPointMake(0, 0);
@@ -166,7 +166,7 @@
         self.navigationController.navigationBarHidden = YES;
         _statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
         
-        _statusView.image = [UIImage imageNamed:@"nav_bg"];
+        _statusView.image = [UIImage imageNamed:@"old_Nav_bg"];
         CGRect frame = _statusView.frame;
         
         frame.origin = CGPointMake(0, 0);
@@ -458,7 +458,7 @@
 //    if (_header != 1) {
         UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
         
-        statusView.image = [UIImage imageNamed:@"nav_bg"];
+        statusView.image = [UIImage imageNamed:@"old_Nav_bg"];
         
         CGRect frame = statusView.frame;
         

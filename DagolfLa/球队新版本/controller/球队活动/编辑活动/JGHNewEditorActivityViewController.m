@@ -453,7 +453,7 @@ static CGFloat ImageHeight  = 210.0;
             JGLPresentAwardViewController *prizeCtrl = [[JGLPresentAwardViewController alloc]init];
             prizeCtrl.activityKey = _teamKey;
             prizeCtrl.teamKey = _model.teamKey;
-            prizeCtrl.isManager = 1;
+            //prizeCtrl.isManager = 1;
             prizeCtrl.model = _model;
             [self.navigationController pushViewController:prizeCtrl animated:YES];
         }

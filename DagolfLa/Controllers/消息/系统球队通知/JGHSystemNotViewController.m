@@ -204,7 +204,7 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
         
     }else{
         teamInformCell.accessoryType = UITableViewCellAccessoryNone;
-        
+        teamInformCell.accessoryView = [[UIView alloc]init];
     }
 
     

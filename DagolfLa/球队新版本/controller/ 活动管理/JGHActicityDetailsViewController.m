@@ -727,7 +727,7 @@ static CGFloat ImageHeight  = 210.0;
         }
 
         prizeCtrl.teamKey = _model.teamKey;
-        prizeCtrl.isManager = 1;
+        //prizeCtrl.isManager = 1;
         
         prizeCtrl.model = _model;
         [self.navigationController pushViewController:prizeCtrl animated:YES];

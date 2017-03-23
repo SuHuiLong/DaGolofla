@@ -91,9 +91,9 @@
 
     
     
-    self.name.text = [NSString stringWithFormat:@"%@", model.title];
+    self.name.text = [NSString stringWithFormat:@"%@", (model.title)?model.title:@""];
     
-    self.teamName.text = model.nSrcName;
+    self.teamName.text = [NSString stringWithFormat:@"%@", (model.nSrcName)?model.nSrcName:@""];
     
     self.time.text = [NSString stringWithFormat:@"%@", [Helper distanceTimeWithBeforeTimeNotificat:model.createTime]];
 }
