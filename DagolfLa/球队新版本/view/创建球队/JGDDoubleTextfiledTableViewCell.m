@@ -14,20 +14,20 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.firstTF = [[UITextField alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 0, 120 * ProportionAdapter, 45 * ProportionAdapter)];
+        self.firstTF = [[UITextField alloc] initWithFrame:CGRectMake(44 * ProportionAdapter, 0, 120 * ProportionAdapter, 45 * ProportionAdapter)];
         self.firstTF.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         self.firstTF.placeholder = @"请输入真实姓名";
-        self.firstTF.textAlignment = NSTextAlignmentCenter;
+        self.firstTF.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:self.firstTF];
         
         self.secondTF = [[UITextField alloc] initWithFrame:CGRectMake(230 * ProportionAdapter, 0, 120 * ProportionAdapter, 45 * ProportionAdapter)];
         self.secondTF.placeholder = @"请输入手机号";
         self.secondTF.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
         self.secondTF.keyboardType = UIKeyboardTypeNumberPad;
-        self.secondTF.textAlignment = NSTextAlignmentCenter;
+        self.secondTF.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:self.secondTF];
 
-        UILabel *lineLB = [Helper lableRect:CGRectMake(195 * ProportionAdapter, 10 * ProportionAdapter, 1 * ProportionAdapter, 26 * ProportionAdapter) labelColor:[UIColor whiteColor] labelFont:1 text:@"" textAlignment:(NSTextAlignmentCenter)];
+        UILabel *lineLB = [Helper lableRect:CGRectMake(screenWidth / 2, 10 * ProportionAdapter, 1 * ProportionAdapter, 26 * ProportionAdapter) labelColor:[UIColor whiteColor] labelFont:1 text:@"" textAlignment:(NSTextAlignmentCenter)];
         lineLB.backgroundColor = [UIColor colorWithHexString:@"#E5E5E5"];
         [self.contentView addSubview:lineLB];
         

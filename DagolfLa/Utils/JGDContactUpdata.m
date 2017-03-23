@@ -80,7 +80,7 @@
                         //最后一次修改該条记录的时间
                         NSDate *lastknow = (__bridge NSDate*)ABRecordCopyValue(person, kABPersonModificationDateProperty);
                         NSLog(@"最后一次修改該条记录的时间%@\n",lastknow);
-                        ;
+
                         // 最后一次上传的时间  如果第一次上传没有该参数
                         if ([data objectForKey:@"lastTime"]) {
                             // 最后一次修改的时间
@@ -123,6 +123,12 @@
                                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                                     if ([data objectForKey:@"cList"]) {
                                         contact([data objectForKey:@"cList"]);
+                                    }else{
+                                        error(@"暂无联系人");
+                                    }
+                                }else{
+                                    if ([data objectForKey:@"packResultMsg"]) {
+                                        error([data objectForKey:@"packResultMsg"]);
                                     }
                                 }
                             }];
@@ -147,6 +153,8 @@
                         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                             if ([data objectForKey:@"cList"]) {
                                 contact([data objectForKey:@"cList"]);
+                            }else{
+                                error(@"暂无联系人");
                             }
                         }else{
                             if ([data objectForKey:@"packResultMsg"]) {
