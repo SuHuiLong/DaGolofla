@@ -14,13 +14,14 @@
 #import "MakePhotoTextSelectFromAllViewController.h"
 #import "MakePhotoTextAddTextViewController.h"
 #import "JGPhotoListModel.h"
+#import "MakePhotoTextDoneViewController.h"
 @interface MakePhotoTextViewController ()<RTDragCellTableViewDataSource,RTDragCellTableViewDelegate>
 //tableview
 @property(nonatomic, strong)RTDragCellTableView *mainTableView;
 //标题
-@property(nonatomic, copy) UILabel *photoTitleLabel;
+@property(nonatomic, copy) NSString *photoTitleLabelStr;
 //作者
-@property(nonatomic, copy) UILabel *photoWriter;
+@property(nonatomic, copy) NSString *photoWriterStr;
 //封面
 @property(nonatomic, copy) NSNumber *headerViewTimekey;
 @end
@@ -42,7 +43,7 @@
     UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(leftBtnCLick)];
     leftBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBtn;
-
+    
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnCLick)];
     rightBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = rightBtn;
@@ -57,13 +58,13 @@
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.allowsSelection = YES;
     [tableView registerClass:[MakePhotoTextTableViewCell class] forCellReuseIdentifier:@"MakePhotoTextTableViewCellId"];
-
+    
     [self.view addSubview:tableView];
     _mainTableView = tableView;
 }
 //添加照片&&文字
 -(void)createAddPhotoAndTextViewOnView:(UIView *)backView Y:(CGFloat)viewY section:(NSInteger )indexTag{
-
+    
     //添加照片按钮
     UIButton *addPhoto = [Factory createButtonWithFrame:CGRectMake((screenWidth - kWvertical(69))/2, viewY, kWvertical(20), kWvertical(20)) image:[UIImage imageNamed:@"photoTextAddPhoto"] target:self selector:@selector(addPhotoClick:) Title:nil];
     addPhoto.tag = 100+indexTag*2;
@@ -72,12 +73,12 @@
     addText.tag = 100+indexTag*2+1;
     [backView addSubview:addPhoto];
     [backView addSubview:addText];
-
+    
 }
 
 #pragma mark - initData
 -(void)initViewData{
-
+    
 }
 
 
@@ -89,21 +90,47 @@
 //右按钮
 -(void)rightBtnCLick{
     //标题
-    NSString *titleStr = _photoTitleLabel.text;
+    NSString *titleStr = _photoTitleLabelStr;
     //作者
-    NSString *name = _photoWriter.text;
-    if ([titleStr isEqualToString:@"添加个标题吧"]) {
+    NSString *name = _photoWriterStr;
+    if (titleStr.length==0) {
         [[ShowHUD showHUD] showToastWithText:@"请输入标题" FromView:self.view];
         return;
     }
-    
-    
+    NSMutableArray *listArray = [NSMutableArray array];
+    for (NSArray *modelArray in self.dataArray) {
+        MakePhotoTextViewModel *model = modelArray[0];
+        NSNumber *timeKey = model.timeKey;
+        NSDictionary *listDict =[NSDictionary dictionary];
+        if (timeKey) {
+            listDict = [NSDictionary dictionaryWithObject:timeKey forKey:@"mediaKey"];
+        }else{
+            listDict = [NSDictionary dictionaryWithObject:model.textStr forKey:@"describe"];
+        }
+        [listArray addObject:listDict];
+    }
     NSDictionary *dict = @{
                            @"userKey":DEFAULF_USERID,
                            @"title":titleStr,
                            @"name":name,
-//                           @"list":
+                           @"list":listArray
                            };
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"picShare/doCreatePicShare" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        BOOL packSuccess = [[data objectForKey:@"packSuccess"] boolValue];
+        if (packSuccess) {
+            NSString *shareKey = [data objectForKey:@"shareKey"];
+            NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&shareKey=%@dagolfla.com", DEFAULF_USERID,shareKey]];
+            MakePhotoTextDoneViewController *vc = [[MakePhotoTextDoneViewController alloc] init];
+            vc.headerStr = _photoTitleLabelStr;
+            vc.timeKey = _headerViewTimekey;
+            
+            vc.urlStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/picsShare.html?userKey=%@&shareKey=%@&md5=%@",DEFAULF_USERID,shareKey,md5Value];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }];
+    
     
     
 }
@@ -114,19 +141,6 @@
         MakePhotoTextTableViewCell *cell = (MakePhotoTextTableViewCell *)superView;
         NSIndexPath *indexPath = [_mainTableView indexPathForCell:cell];
         NSMutableArray *sectionMarray = self.dataArray[indexPath.section];
-//        MakePhotoTextViewModel *deleateModel = sectionMarray[indexPath.row];
-//        NSInteger totalPic = 0;
-//        for (NSMutableArray *sectionMarry in self.dataArray) {
-//            for (MakePhotoTextViewModel *model in sectionMarry) {
-//                if (model.timeKey) {
-//                    totalPic++;
-//                }
-//            }
-//        }
-//        if (totalPic==1&&deleateModel.timeKey) {
-//            [[ShowHUD showHUD] showToastWithText:@"至少保留一张照片" FromView:self.view];
-//            return;
-//        }
         [sectionMarray removeObjectAtIndex:indexPath.row];
         [self.dataArray replaceObjectAtIndex:indexPath.section withObject:sectionMarray];
         [self deleteEmptyArray];
@@ -188,17 +202,12 @@
     [self pushToTextWriteViewClickIndex:btnIndex row:0 type:2];
 }
 /*
-    跳转至文字
-    index:操作的位置的section
-    indexRow: 操作位置的row
-    pushType: 0:标题 1:作者 2:添加 3:更换
+ 跳转至文字
+ index:操作的位置的section
+ indexRow: 操作位置的row
+ pushType: 0:标题 1:作者 2:添加 3:更换
  */
 -(void)pushToTextWriteViewClickIndex:(NSInteger )index row:(NSInteger)indexRow type:(NSInteger )pushType{
-    BOOL insertBottom = false;
-    if (index==self.dataArray.count) {
-        insertBottom = true;
-        index = index -1;
-    }
     NSMutableArray *indexSectionMarray = self.dataArray[index];
     MakePhotoTextViewModel *rowModel = indexSectionMarray[indexRow];
     NSArray *titleArray = @[@"标题",@"制作方",@"文字描述",@"文字描述"];
@@ -208,27 +217,22 @@
     __weak typeof(self) weakself = self;
     //处理返回值
     [vc setAddTextBlock:^(NSString *textStr) {
-        
-        NSMutableArray *indexMarray = weakself.dataArray[index];
         MakePhotoTextViewModel *model = [[MakePhotoTextViewModel alloc] init];
         model.textStr = textStr;
         switch (pushType) {
             case 0:{//标题
-                weakself.photoTitleLabel.text = textStr;
+                weakself.photoTitleLabelStr = textStr;
             }break;
             case 1:{//作者
-                weakself.photoWriter.text = textStr;
+                weakself.photoWriterStr = textStr;
             }break;
             case 2:{//添加
-                if (insertBottom) {
-                    [indexMarray insertObject:model atIndex:indexMarray.count];
-                }else{
-                    [indexMarray insertObject:model atIndex:0];
-                }
-                [weakself.dataArray replaceObjectAtIndex:index withObject:indexMarray];
+                NSMutableArray *addArray = [NSMutableArray arrayWithObject:model];
+                [weakself.dataArray insertObject:addArray atIndex:index];
             }break;
             case 3:{//更改
-                [indexMarray replaceObjectAtIndex:indexRow withObject:model];
+                NSMutableArray *indexMarray = [NSMutableArray array];
+                [indexMarray addObject:model];
                 [weakself.dataArray replaceObjectAtIndex:index withObject:indexMarray];
             }break;
             default:
@@ -239,7 +243,9 @@
     }];
     vc.title = titleStr;
     vc.teamName = _teamName;
-    if (pushType==1) {
+    if (pushType==0&&_photoTitleLabelStr.length==0){
+        vc.DefaultText = _photoTitleLabelStr;
+    }else if (pushType==1) {
         vc.DefaultText = _teamName;
     }else if (pushType == 3){
         vc.DefaultText = rowModel.textStr;
@@ -272,9 +278,9 @@
                 }
             }break;
             case 1:{//更换
-                NSMutableArray *indexMarray = weakself.dataArray[index];
+                NSMutableArray *indexMarray = [NSMutableArray array];
                 MakePhotoTextViewModel *model = mArray[0][0];
-                [indexMarray replaceObjectAtIndex:indexRow withObject:model];
+                [indexMarray addObject:model];
                 [weakself.dataArray replaceObjectAtIndex:index withObject:indexMarray];
             }break;
             default:
@@ -283,16 +289,20 @@
         [weakself.mainTableView reloadData];
     }];
     [self.navigationController pushViewController:vc animated:YES];
-
+    
 }
 //删除数据源中空数组
 -(void)deleteEmptyArray{
     NSMutableArray *mDataArray = [NSMutableArray arrayWithArray:_dataArray];
+    NSMutableArray *dataMarray = [NSMutableArray array];
     for (NSMutableArray *indexArray in mDataArray) {
-        if (indexArray.count==0) {
-            [_dataArray removeObject:indexArray];
+        for (MakePhotoTextViewModel  *model in indexArray) {
+            NSMutableArray *rowMaaray = [NSMutableArray array];
+            [rowMaaray addObject:model];
+            [dataMarray addObject:rowMaaray];
         }
     }
+    _dataArray = dataMarray;
     [self.mainTableView reloadData];
 }
 
@@ -323,7 +333,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     NSArray *array = self.dataArray[section];
-
+    
     if (section == array.count) {
         return kHvertical(50);
     }
@@ -361,11 +371,14 @@
     [headerView addSubview:headerBackView];
     
     //标题
-    _photoTitleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(20), kHvertical(14), screenWidth - kWvertical(46), kHvertical(36)) textColor:RGB(160, 160, 160) fontSize:kHorizontal(17) Title:@"添加个标题吧"];
-    _photoTitleLabel.userInteractionEnabled = true;
+    UILabel *photoTitleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(20), kHvertical(14), screenWidth - kWvertical(46), kHvertical(36)) textColor:RGB(160, 160, 160) fontSize:kHorizontal(17) Title:_photoTitleLabelStr];
+    if (_photoTitleLabelStr.length==0) {
+        photoTitleLabel.text =  @"添加个标题吧";
+    }
+    photoTitleLabel.userInteractionEnabled = true;
     UITapGestureRecognizer *changeTitleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeTitle)];
-    [_photoTitleLabel addGestureRecognizer:changeTitleTap];
-    [headerBackView addSubview:_photoTitleLabel];
+    [photoTitleLabel addGestureRecognizer:changeTitleTap];
+    [headerBackView addSubview:photoTitleLabel];
     
     //封面
     UIImageView *headerImageView = [Factory createImageViewWithFrame:CGRectMake(0, kHvertical(55), screenWidth, kHvertical(164)) Image:nil];
@@ -398,11 +411,14 @@
     [headerBackView addSubview:parknameBackView];
     
     //球队名输入框
-    _photoWriter = [Factory createLabelWithFrame:CGRectMake(kWvertical(16), 0, parknameBackView.width - kWvertical(32),parknameBackView.height) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:_teamName];
-    _photoWriter.userInteractionEnabled = true;
+    if (_photoWriterStr.length==0) {
+        _photoWriterStr = _teamName;
+    }
+    UILabel *photoWriter = [Factory createLabelWithFrame:CGRectMake(kWvertical(16), 0, parknameBackView.width - kWvertical(32),parknameBackView.height) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:_photoWriterStr];
+    photoWriter.userInteractionEnabled = true;
     UITapGestureRecognizer *changeWriterTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeWriter)];
-    [_photoWriter addGestureRecognizer:changeWriterTap];
-    [parknameBackView addSubview:_photoWriter];
+    [photoWriter addGestureRecognizer:changeWriterTap];
+    [parknameBackView addSubview:photoWriter];
     
     //创建添加按钮
     [self createAddPhotoAndTextViewOnView:headerView Y:headerBackView.y_height+kHvertical(20) section:0];
@@ -415,7 +431,7 @@
 
 - (void)tableView:(RTDragCellTableView *)tableView newArrayDataForDataSource:(NSArray *)newArray{
     _dataArray = [NSMutableArray arrayWithArray:newArray];
-
+    
 }
 -(void)cellDidEndMovingInTableView:(RTDragCellTableView *)tableView{
     //删除空数组
@@ -464,13 +480,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "MakePhotoTextSelectHeaderViewController.h"
+#import "MakePhotoTextViewController.h"
 #import "MakePhotoTextViewModel.h"
 #import "MSSCollectionViewCell.h"
 #import "MakePhotoTextSelectFromAllViewController.h"
@@ -26,6 +27,7 @@
 -(void)createView{
     [self createNavagationView];
     [self createCollectionView];
+    [self createSelectFromAll];
 }
 //创建上导航
 -(void)createNavagationView{
@@ -33,9 +35,6 @@
     leftItem.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftItem;
     self.title = @"选择封面";
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnCLick)];
-    rightItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightItem;
 
 }
 //创建colletionView
@@ -55,6 +54,15 @@
     [self.view addSubview:_collectionView];
     
 }
+//从所有中选择按钮
+-(void)createSelectFromAll{
+    //从所有中选择按钮
+    UIButton *selectFromAllBtn = [Factory createButtonWithFrame:CGRectMake(0, screenHeight - 64 - kHvertical(51), screenWidth, kHvertical(51)) titleFont:kHorizontal(18) textColor:RGB(50,177,77)  backgroundColor:WhiteColor target:self selector:@selector(selectFromAll) Title:@"从所有照片中选择"];
+
+    [self.view addSubview:selectFromAllBtn];
+    
+    
+}
 
 #pragma mark - initData
 
@@ -64,12 +72,31 @@
 
     [self.navigationController popViewControllerAnimated:YES];
 }
-//右按钮点击
--(void)rightBtnCLick{
+//从所有中选择按钮点击
+-(void)selectFromAll{
+    __weak typeof(self) weakself = self;
     MakePhotoTextSelectFromAllViewController *vc = [[MakePhotoTextSelectFromAllViewController alloc] init];
     vc.teamTimeKey = _teamTimeKey;
+    [vc SetSelectPhotoBlock:^(NSMutableArray *mArray) {
+        [weakself blockPopBack:mArray[0][0]];
+    }];
     [self.navigationController pushViewController:vc animated:YES];
 }
+//block返回
+-(void)blockPopBack:(NSNumber *)timeKey{
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[MakePhotoTextViewController class]]) {
+            [self.navigationController popToViewController:vc animated:false];
+            if (_selectBlock!=nil) {
+                _selectBlock(timeKey);
+            }
+            return;
+        }
+    }
+//    [self.navigationController popViewControllerAnimated:YES];
+
+}
+
 
 #pragma mark - ClollectionViewDelegate
 
@@ -107,10 +134,7 @@
         model.isSelect = true;
         [self.dataArray replaceObjectAtIndex:indexPath.item withObject:model];
         [_collectionView reloadData];
-        [self.navigationController popViewControllerAnimated:YES];
-        if (_selectBlock!=nil) {
-            _selectBlock(model.timeKey);
-        }
+        [self blockPopBack:model.timeKey];
     }
 }
 

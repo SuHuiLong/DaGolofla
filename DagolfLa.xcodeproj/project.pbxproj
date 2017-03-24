@@ -62,6 +62,7 @@
 		18D5DC801E68287A008C87EE /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DC701E68287A008C87EE /* UIImageView+HighlightedWebCache.m */; };
 		18D5DC811E68287A008C87EE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DC721E68287A008C87EE /* UIImageView+WebCache.m */; };
 		18D5DC821E68287A008C87EE /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DC741E68287A008C87EE /* UIView+WebCacheOperation.m */; };
+		18D8C1C01E83B14B0089C752 /* MakePhotoTextDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D8C1BF1E83B14B0089C752 /* MakePhotoTextDoneViewController.m */; };
 		18D9405E1E6EAABC00E36DE3 /* CardHIstoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D940561E6EAABC00E36DE3 /* CardHIstoryModel.m */; };
 		18D9405F1E6EAABC00E36DE3 /* CardHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D940581E6EAABC00E36DE3 /* CardHistoryTableViewCell.m */; };
 		18D940601E6EAABC00E36DE3 /* VipCardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D9405B1E6EAABC00E36DE3 /* VipCardCollectionViewCell.m */; };
@@ -1364,6 +1365,8 @@
 		18D5DC721E68287A008C87EE /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		18D5DC731E68287A008C87EE /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		18D5DC741E68287A008C87EE /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		18D8C1BE1E83B14B0089C752 /* MakePhotoTextDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePhotoTextDoneViewController.h; sourceTree = "<group>"; };
+		18D8C1BF1E83B14B0089C752 /* MakePhotoTextDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePhotoTextDoneViewController.m; sourceTree = "<group>"; };
 		18D940551E6EAABC00E36DE3 /* CardHIstoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardHIstoryModel.h; sourceTree = "<group>"; };
 		18D940561E6EAABC00E36DE3 /* CardHIstoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardHIstoryModel.m; sourceTree = "<group>"; };
 		18D940571E6EAABC00E36DE3 /* CardHistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardHistoryTableViewCell.h; sourceTree = "<group>"; };
@@ -3728,6 +3731,7 @@
 		1814D89E1E7FB50C00F6E063 /* 照片制作 */ = {
 			isa = PBXGroup;
 			children = (
+				18D8C1BD1E83B14B0089C752 /* 制作完成 */,
 				1811C8911E8251EA003CA594 /* 选择照片 */,
 				1814D8B61E812DE200F6E063 /* 编辑文字 */,
 				1814D8A21E7FC08F00F6E063 /* RTDragCellTableView */,
@@ -3930,6 +3934,15 @@
 				18D5DC741E68287A008C87EE /* UIView+WebCacheOperation.m */,
 			);
 			path = SDWebImage;
+			sourceTree = "<group>";
+		};
+		18D8C1BD1E83B14B0089C752 /* 制作完成 */ = {
+			isa = PBXGroup;
+			children = (
+				18D8C1BE1E83B14B0089C752 /* MakePhotoTextDoneViewController.h */,
+				18D8C1BF1E83B14B0089C752 /* MakePhotoTextDoneViewController.m */,
+			);
+			path = "制作完成";
 			sourceTree = "<group>";
 		};
 		18D940541E6EAABC00E36DE3 /* CardHistory */ = {
@@ -9691,6 +9704,7 @@
 				36BFFFFA1BC770C4005B3CE2 /* NSString+DocumentPath.m in Sources */,
 				2088379C1D192213004C7B5D /* JGHApplyListView.m in Sources */,
 				F5838D901D4B271200A7FFC6 /* JGTeamHisScoreViewController.m in Sources */,
+				18D8C1C01E83B14B0089C752 /* MakePhotoTextDoneViewController.m in Sources */,
 				2066E88F1D603BA200A3A2B8 /* JGHCabbieWalletViewController.m in Sources */,
 				65B596D81CAD43AC007AB83A /* WFMessageBody.m in Sources */,
 				20DF4FA31E78EA960045333D /* JGHScoreDatabase.m in Sources */,

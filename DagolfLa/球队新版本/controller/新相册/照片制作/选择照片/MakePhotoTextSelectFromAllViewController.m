@@ -43,8 +43,9 @@
     self.title = @"所有照片";
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnCLick)];
     rightItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    
+    if (_canMultipleChoice) {
+        self.navigationItem.rightBarButtonItem = rightItem;
+    }
 }
 //创建colletionView
 -(void)createCollectionView{
@@ -178,23 +179,37 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
     JGPhotoListModel *model = self.dataArray[indexPath.item];
     if (model.isSelect) {
         model.isSelect = false;
+        [self.dataArray replaceObjectAtIndex:indexPath.item withObject:model];
+        [_collectionView reloadData];
     }else{
-        if (!_canMultipleChoice) {
-            for (int i =0; i<self.dataArray.count; i++) {
-                JGPhotoListModel *Model = self.dataArray[i];
-                if (Model.isSelect) {
-                    Model.isSelect = false;
-                }
-                [self.dataArray replaceObjectAtIndex:i withObject:Model];
+        for (int i =0; i<self.dataArray.count; i++) {
+            JGPhotoListModel *Model = self.dataArray[i];
+            if (Model.isSelect) {
+                Model.isSelect = false;
             }
+            [self.dataArray replaceObjectAtIndex:i withObject:Model];
         }
         model.isSelect = true;
+        [self.dataArray replaceObjectAtIndex:indexPath.item withObject:model];
+        [_collectionView reloadData];
+        if (!_canMultipleChoice) {
+            if (_selectPhotoBlock!=nil) {
+                NSMutableArray *mArray = [NSMutableArray array];
+                MakePhotoTextViewModel *Model = [[MakePhotoTextViewModel alloc] init];
+                Model.timeKey = model.timeKey;
+                [mArray addObject:Model];
+                NSMutableArray *dataArray = [NSMutableArray array];
+                [dataArray addObject:mArray];
+                _selectPhotoBlock(dataArray);
+            }
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
-    [self.dataArray replaceObjectAtIndex:indexPath.item withObject:model];
-    [_collectionView reloadData];
+    
 }
 
 - (void)didReceiveMemoryWarning {
