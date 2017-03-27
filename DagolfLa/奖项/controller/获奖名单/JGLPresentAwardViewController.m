@@ -266,15 +266,10 @@
         
         [self pollingAwareNameList];//轮询奖项是否设置获奖人
         
+        [_bgView removeFromSuperview];
+        _bgView = nil;
         if (_dataArray.count == 0) {
-            [self createNoData];
-        }else{
-            for(UIView *view in [self.bgView subviews])
-            {
-                [view removeFromSuperview];
-            }
-            
-            [_bgView removeFromSuperview];
+            [_tableView addSubview:self.bgView];
         }
         
         [_tableView.header endRefreshing];
@@ -312,6 +307,23 @@
         _psuhBtn.userInteractionEnabled = NO;
         
     }
+}
+- (UIView *)bgView{
+    if (_bgView == nil) {
+        _bgView = [[UIView alloc]initWithFrame:CGRectMake(screenWidth/2 - 45*ProportionAdapter, screenHeight/2 - 110*ProportionAdapter, 80*ProportionAdapter, 100*ProportionAdapter)];
+        UIImageView *weifabuImageview = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, self.bgView.frame.size.width-20*ProportionAdapter, self.bgView.frame.size.height - 40*ProportionAdapter)];
+        weifabuImageview.image = [UIImage imageNamed:@"weifabutishi"];
+        [_bgView addSubview:weifabuImageview];
+        
+        UILabel *weifaLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, weifabuImageview.frame.size.height + 15*ProportionAdapter, self.bgView.frame.size.width, 20*ProportionAdapter)];
+        weifaLabel.text = @"暂未发布奖项";
+        weifaLabel.textAlignment = NSTextAlignmentCenter;
+        weifaLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
+        weifaLabel.textColor = [UIColor lightGrayColor];
+        [_bgView addSubview:weifaLabel];
+        
+    }
+    return _bgView;
 }
 #pragma mark --未发布
 - (void)createNoData{

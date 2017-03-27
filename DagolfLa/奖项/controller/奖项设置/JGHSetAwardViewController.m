@@ -24,7 +24,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 @interface JGHSetAwardViewController ()<UITableViewDelegate, UITableViewDataSource, JGHAwardCellDelegate>
 
 {
-    NSInteger _publishPrize;
+    //NSInteger _publishPrize;
     //UIView *_psuhView;
 }
 
@@ -113,7 +113,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 //        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         [self.dataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            _publishPrize = [[data objectForKey:@"publishPrize"] integerValue];
+            //_publishPrize = [[data objectForKey:@"publishPrize"] integerValue];
             //奖项是否发布：0: 未发布  1: 已发布
             //if (_publishPrize == 0) {
                 [self.psuhBtn setTitle:@"完成" forState:UIControlStateNormal];
@@ -184,30 +184,25 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 #pragma mark -- 完成
 - (void)psuhAwardBtnClick:(UIButton *)btn{
     //doPublishPrize
-    if (_publishPrize == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
-        [self performSelector:@selector(backCtrl) withObject:self afterDelay:TIMESlEEP];
-    }else{
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        [dict setObject:@(_activityKey) forKey:@"activityKey"];
-        [[JsonHttp jsonHttp]httpRequest:@"team/doPublishPrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            NSLog(@"%@", errType);
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                if (_publishPrize == 0) {
-                    _refreshBlock();
-                }
-                
-                [self.navigationController popViewControllerAnimated:YES];
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:@(_activityKey) forKey:@"activityKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/doPublishPrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            //if (_publishPrize == 0) {
+            _refreshBlock();
+            //}
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
-        }];
-    }
+        }
+    }];
 }
 #pragma mark -- 返回
 - (void)backCtrl{
