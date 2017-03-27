@@ -292,7 +292,11 @@
             [self.view addSubview:self.psuhView];
         }
         
-        _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -65*ProportionAdapter -64);
+        if (_isManager == 1) {
+            _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -65*ProportionAdapter -64);
+        }else{
+            _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
+        }
     }else{
         _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
         [self.psuhView removeFromSuperview];

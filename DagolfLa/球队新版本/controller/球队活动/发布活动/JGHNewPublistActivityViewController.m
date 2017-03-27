@@ -238,10 +238,10 @@ static CGFloat ImageHeight  = 210.0;
                 CGFloat height;
                 height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
                 if (0< height && height < 20*ProportionAdapter) {
-                    height = 20*ProportionAdapter;
+                    return 25*ProportionAdapter;
+                }else{
+                    return 40*ProportionAdapter;
                 }
-                
-                return (height >0)?height+10*ProportionAdapter : 0;
             }else{
                 return 0;
             }
@@ -504,37 +504,37 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark --提交代理
 - (void)SubmitBtnClick:(UIButton *)btn{
     if (_model.name.length == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"活动名称不能为空！" FromView:self.view];
-        return;
-    }
-    
-    if (self.model.beginDate == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动开球时间不能为空！" FromView:self.view];
-        return;
-    }
-    
-    if (self.model.endDate == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动结束时间不能为空！" FromView:self.view];
-        return;
-    }
-    
-    if (self.model.signUpEndTime == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动报名截止时间不能为空！" FromView:self.view];
-        return;
-    }
-    
-    if (self.model.mobile.length != 11) {
-        [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请输入活动名称" FromView:self.view];
         return;
     }
     
     if (self.model.ballName == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动地址不能为空！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请选择活动场地" FromView:self.view];
         return;
     }
-
+    
+    if (self.model.beginDate == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择开球时间" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.endDate == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择结束时间" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.signUpEndTime == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择报名截止时间" FromView:self.view];
+        return;
+    }
+    
     if (self.model.userName == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动联系人不能为空！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请填写联系人" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.mobile.length != 11) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写联系人电话" FromView:self.view];
         return;
     }
     
@@ -555,6 +555,7 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
+    
     if (_model.info.length >0) {
         [dict setObject:_model.info forKey:@"info"];//活动简介
     }

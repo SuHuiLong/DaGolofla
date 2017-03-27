@@ -27,12 +27,13 @@
 #import "JGHActivityInfoCell.h"
 #import "JGHNewCancelApplyViewController.h"
 #import "UseMallViewController.h"
+#import "JGHNewActivityExplainCell.h"
 
 static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableViewCell";
 static NSString *const JGHNewActivityCellIdentifier = @"JGHNewActivityCell";
 static NSString *const JGHActivityAllCellIdentifier = @"JGHActivityAllCell";
 static NSString *const JGHActivityInfoCellIdentifier = @"JGHActivityInfoCell";
-
+static NSString *const JGHNewActivityExplainCellIdentifier = @"JGHNewActivityExplainCell";
 
 static CGFloat ImageHeight  = 210.0;
 
@@ -156,6 +157,8 @@ static CGFloat ImageHeight  = 210.0;
     
     UINib *activityInfoCellNib = [UINib nibWithNibName:JGHActivityInfoCellIdentifier bundle:[NSBundle mainBundle]];
     [self.teamActibityNameTableView registerNib:activityInfoCellNib forCellReuseIdentifier:JGHActivityInfoCellIdentifier];
+    
+    [self.teamActibityNameTableView registerClass:[JGHNewActivityExplainCell class] forCellReuseIdentifier:JGHNewActivityExplainCellIdentifier];
     
     self.teamActibityNameTableView.dataSource = self;
     self.teamActibityNameTableView.delegate = self;
@@ -446,14 +449,17 @@ static CGFloat ImageHeight  = 210.0;
     if (indexPath.section == 2) {
         return 30*ProportionAdapter;
     }else if (indexPath.section == 7){
-        static JGHActivityInfoCell *cell;
-        if (!cell) {
-            cell = [self.teamActibityNameTableView dequeueReusableCellWithIdentifier:JGHActivityInfoCellIdentifier];
+        if (_model.info.length >0) {
+            CGFloat height;
+            height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
+            if (0< height && height < 20*ProportionAdapter) {
+                return 25*ProportionAdapter;
+            }else{
+                return height +10*ProportionAdapter;
+            }
+        }else{
+            return 0;
         }
-        
-        cell.infoLable.text = self.model.info;
-        cell.infoLable.preferredMaxLayoutWidth = screenWidth -80*ProportionAdapter;
-        return [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
     }
     return 0;
 }
@@ -490,10 +496,10 @@ static CGFloat ImageHeight  = 210.0;
         
         return costListCell;
     }else if (indexPath.section == 7){
-        JGHActivityInfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityInfoCellIdentifier];
-        infoCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        infoCell.infoLable.text = _model.info;
-        return infoCell;
+        JGHNewActivityExplainCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityExplainCellIdentifier];
+        imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [imageCell configActivityContent:_model.info];
+        return imageCell;
     }
     return nil;
 }
@@ -514,7 +520,7 @@ static CGFloat ImageHeight  = 210.0;
         JGHNewActivityCell *addressCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityCellIdentifier];
         [addressCell configJGTeamAcitivtyModel:_model];
         addressCell.address.userInteractionEnabled = YES;
-        [addressCell.address addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushMapView)]];
+        //[addressCell.address addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushMapView)]];
         return (UIView *)addressCell;
     }else{
         JGHActivityAllCell *activityCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityAllCellIdentifier];
