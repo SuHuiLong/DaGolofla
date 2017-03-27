@@ -41,8 +41,8 @@
 //配置数据
 -(void)configModel:(SearchWithMapModel *)model{
     _dataModel = model;
-//    NSString *parkName = model.parkName;
-    NSString *parkName = [NSString stringWithFormat:@"%ld%@",(long)model.orderNum,model.parkName];
+    NSString *parkName = model.parkName;
+//    NSString *parkName = [NSString stringWithFormat:@"%ld%@",(long)model.orderNum,model.parkName];
     NSString *orderPrice = model.orderPrice;
     NSString *descripStr = [NSString stringWithFormat:@"%@ ¥%@",parkName,orderPrice];
     _descripLabel.text = descripStr;

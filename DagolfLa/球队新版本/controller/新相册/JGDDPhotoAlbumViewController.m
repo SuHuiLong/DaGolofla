@@ -13,10 +13,10 @@
 
 #import "JGPhotoListModel.h"
 #import "JGLPhotosUpDataViewController.h" // 上传
-#import <Photos/PHPhotoLibrary.h>
-#import <Photos/Photos.h>
 #import "MakePhotoTextViewController.h"
 #import "MakePhotoTextViewModel.h"
+
+#import "SaveScheduleView.h"
 
 @interface JGDDPhotoAlbumViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UIViewControllerTransitioningDelegate>
 {
@@ -65,7 +65,6 @@
         self.title = @"球队相册";
     }
     self.view.backgroundColor = [UIColor whiteColor]; //
-
     [self createCollectionView];
     [self createBottomView];
 }
@@ -195,6 +194,9 @@
     }
     if ([barBtn.title isEqualToString:@"选择"]) {
         barBtn.title = @"取消";
+        if (!_isGetAll) {
+            [self.dataArray removeObjectAtIndex:0];
+        }
         [UIView animateWithDuration:0.5 animations:^{
             _bottomView.y = screenHeight - 64 - kHvertical(51);
             _collectionView.height = _bottomView.y;
@@ -208,13 +210,18 @@
             }
             [self.dataArray replaceObjectAtIndex:i withObject:Model];
         }
+        if (!_isGetAll) {
+            [self.dataArray insertObject:[[JGPhotoListModel alloc] init] atIndex:0];
+        }
         self.selectArray = [NSMutableArray array];
-        [self.collectionView reloadData];
         [UIView animateWithDuration:0.5 animations:^{
             _bottomView.y = screenHeight;
             _collectionView.height = screenHeight - 64;
         }];
     }
+
+    [self.collectionView reloadData];
+
 }
 //操作按钮点击
 -(void)handleBtnClick:(UIButton *)btn{
@@ -268,6 +275,7 @@
 -(void)selectPhotoModel:(JGPhotoListModel *)indexModel index:(NSInteger)index{
 
     if (indexModel.isSelect) {
+        //选中的取消选中
         indexModel.isSelect = false;
         [self.selectArray removeObject:indexModel];
         if (self.selectArray.count==0) {
@@ -278,15 +286,7 @@
             }
         }
     }else{
-//        NSInteger totalSelect = 0;
-//        for (JGPhotoListModel *model in self.dataArray) {
-//            if (model.isSelect) {
-//                totalSelect++;
-//            }
-//        }
-//        if (totalSelect==6) {
-//            return;
-//        }
+        //未选中的设为选中
         indexModel.isSelect = true;
         [self.selectArray addObject:indexModel];
         if (self.selectArray.count==1) {
@@ -294,8 +294,15 @@
                 UIButton *indexBtn = _bottomView.subviews[i];
                 indexBtn.selected = true;
                 indexBtn.userInteractionEnabled = true;
+                if (i==2) {
+                    for (JGPhotoListModel *model in _selectArray) {
+                        if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
+                            indexBtn.selected = false;
+                            indexBtn.userInteractionEnabled = false;
+                        }
+                    }
+                }
             }
-
         }
     }
     
@@ -332,36 +339,20 @@
     [self.navigationController pushViewController:vc animated:YES];
     [self rightButtonCLick];
 }
-//分享
--(void)shareToOther{
 
-}
+
 //本地保存
 -(void)saveLocation{
+    NSArray *picArray = [NSArray arrayWithArray:_selectArray];
     [self rightButtonCLick];
-    __block int photoNum = 0;
-    for (JGPhotoListModel *model in self.selectArray) {
-        NSURL *imageUrl = [Helper setImageIconUrl:@"album/media" andTeamKey:[model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:NO];// 加载网络图片大图地址
-        NSData *data = [NSData dataWithContentsOfURL:imageUrl];
-        UIImage *image = [UIImage imageWithData:data]; // 取得图片
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            //写入图片到相册 PHAssetChangeRequest *req =
-            [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-            
-        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-            NSLog(@"success = %d, error = %@", success, error);
-            photoNum++;
-            if (photoNum==self.selectArray.count) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    NSString *dowloadNum = [NSString stringWithFormat:@"第%d张下载完成",photoNum];
-                    [[ShowHUD showHUD] showToastWithText:dowloadNum FromView:self.view];
-                    
-                });
-            }
-        }];
+    SaveScheduleView *sv = [[SaveScheduleView alloc] initWithImageArray:picArray];
 
-        
-    }
+    [[UIApplication sharedApplication].keyWindow addSubview:sv];
+    
+    
+    
+//                    NSString *dowloadNum = [NSString stringWithFormat:@"第%d张下载完成",photoNum];
+
 }
 //删除
 -(void)deleatePhoto{
@@ -429,6 +420,7 @@
     JGPhotoListModel *indexModel = self.dataArray[indexPath.item];
     if (_bottomView.y != screenHeight) {
         if (indexModel.timeKey) {
+            //选中照片
             [self selectPhotoModel:indexModel index:indexPath.item];
         }
 

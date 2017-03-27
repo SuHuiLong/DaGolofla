@@ -27,6 +27,7 @@
     //蒙板
     _coverView = [Factory createViewWithBackgroundColor:RGBA(227,227,227, 0.3) frame:self.contentView.bounds];
     UIImageView *iconView = [Factory createImageViewWithFrame:CGRectMake(_coverView.width - kWvertical(28), _coverView.height - kWvertical(23) - kHvertical(5), kWvertical(23), kWvertical(23)) Image:[UIImage imageNamed:@"teamPhotoChoice"]];
+    _coverView.hidden = YES;
     [_coverView addSubview:iconView];
     [self.contentView addSubview:_coverView];
 }
