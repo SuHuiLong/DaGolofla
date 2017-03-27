@@ -141,6 +141,7 @@ static CGFloat ImageHeight  = 210.0;
     btn.tag = 521;
     [btn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [btn bringSubviewToFront:self.imgProfile];
     [self.titleView addSubview:btn];
     //点击更换背景
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -203,7 +204,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 提示信息
 - (void)alertviewString:(NSString *)string{
     [Helper alertViewNoHaveCancleWithTitle:string withBlock:^(UIAlertController *alertView) {
-        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+        [self presentViewController:alertView animated:YES completion:nil];
     }];
 }
 
@@ -461,7 +462,12 @@ static CGFloat ImageHeight  = 210.0;
         }else if (indexPath.row == 3){
             //奖项设置
             JGLPresentAwardViewController *prizeCtrl = [[JGLPresentAwardViewController alloc]init];
-            prizeCtrl.activityKey = _teamKey;
+            if (_model.teamActivityKey == 0) {
+                prizeCtrl.activityKey = [_model.timeKey integerValue];
+            }else{
+                prizeCtrl.activityKey = _model.teamActivityKey;
+            }
+            
             prizeCtrl.teamKey = _model.teamKey;
             //prizeCtrl.isManager = 1;
             prizeCtrl.model = _model;

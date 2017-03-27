@@ -538,7 +538,7 @@ static CGFloat ImageHeight  = 210.0;
         if (section == 3) {
             NSString *group = nil;
             if (_model.maxCount > 0) {
-                group = [NSString stringWithFormat:@"活动成员及分组(%td/%td)", self.model.sumCount, self.model.maxCount];
+                group = (_model.maxCount >0)?[NSString stringWithFormat:@"活动成员及分组(%td/%td)", self.model.sumCount, self.model.maxCount]:@"活动成员及分组";
             }else{
                 group = @"活动成员及分组";
             }
