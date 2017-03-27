@@ -13,7 +13,7 @@
 
 @property (nonatomic, retain) UIImageView *imgProfile;
 
-@property (nonatomic, assign)NSInteger teamKey;//发布活动teamkey
+//@property (nonatomic, assign)NSInteger teamKey;//发布活动teamkey
 
 @property (nonatomic, strong)JGTeamAcitivtyModel *model;
 

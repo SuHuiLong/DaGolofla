@@ -516,12 +516,15 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (indexPath.section == 0) {
         [self isLoginUp];
         //系统消息
+        /*
         if ([_indexModel.Msg objectForKey:@"linkURL"]) {
             [self pushctrlWithUrl:[_indexModel.Msg objectForKey:@"linkURL"]];
         }else{
             //消息无跳转链接－－跳转至消息
             
         }
+        */
+        self.tabBarController.selectedIndex = 2;
     }
 }
 - (void)hotTeam:(NSDictionary *)dict{
