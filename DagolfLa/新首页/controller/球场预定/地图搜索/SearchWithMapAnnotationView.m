@@ -22,7 +22,7 @@
 -(void)createUI{
     
     //设置大头针下部图片
-    _backgroundImageView = [Factory createImageViewWithFrame: CGRectMake(-kWvertical(50) + self.frame.size.width/2, self.frame.size.height + kHvertical(5), kWvertical(100), kHvertical(45)) Image:[UIImage imageNamed:@"mapsearch_backview"]];
+    _backgroundImageView = [Factory createImageViewWithFrame: CGRectMake(-kWvertical(50) + self.frame.size.width/2, self.frame.size.height , kWvertical(100), kHvertical(45)) Image:[UIImage imageNamed:@"mapsearch_backview"]];
     
     //自定义显示的内容
     _descripLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(20), kHvertical(10), 0, kHvertical(25)) textColor:BlackColor fontSize:kHorizontal(12) Title:@"nil"];
@@ -42,7 +42,6 @@
 -(void)configModel:(SearchWithMapModel *)model{
     _dataModel = model;
     NSString *parkName = model.parkName;
-//    NSString *parkName = [NSString stringWithFormat:@"%ld%@",(long)model.orderNum,model.parkName];
     NSString *orderPrice = model.orderPrice;
     NSString *descripStr = [NSString stringWithFormat:@"%@ ¥%@",parkName,orderPrice];
     _descripLabel.text = descripStr;
