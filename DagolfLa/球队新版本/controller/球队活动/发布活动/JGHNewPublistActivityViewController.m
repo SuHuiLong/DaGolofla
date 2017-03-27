@@ -274,9 +274,11 @@ static CGFloat ImageHeight  = 210.0;
     }else if(indexPath.section == 1){
         if (indexPath.row == 0) {
             JGHNewActivitySpaceCell *spaceCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivitySpaceCellIdentifier];
+            spaceCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return spaceCell;
         }else if (indexPath.row == 1){
             JGHNewActivityTextCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityTextCellIdentifier];
+            imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
             imageCell.contentText.delegate = self;
             imageCell.contentText.tag = 345;
             [imageCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row] andContent:_model.name];
@@ -286,6 +288,7 @@ static CGFloat ImageHeight  = 210.0;
             return imageCell;
         }else{
             JGHNewActivityImageCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageCellIdentifier];
+            imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
             NSString *cellString = nil;
             
             if (indexPath.row == 2) {
@@ -309,9 +312,11 @@ static CGFloat ImageHeight  = 210.0;
     }else if(indexPath.section == 2){
         if (indexPath.row == 0) {
             JGHNewActivitySpaceCell *spaceCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivitySpaceCellIdentifier];
+            spaceCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return spaceCell;
         }else if (indexPath.row == 2){
             JGHNewActivityTextCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityTextCellIdentifier];
+            imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [imageCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row] andContent:[NSString stringWithFormat:@"%@", (_model.maxCount >0)?[NSString stringWithFormat:@"%td", _model.maxCount]:@""]];
             imageCell.contentText.placeholder = @"请输入限制人数";
             imageCell.contentText.tag = 234;
@@ -319,11 +324,13 @@ static CGFloat ImageHeight  = 210.0;
             return imageCell;
         }else if (indexPath.row == 4){
             JGHNewActivityExplainCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityExplainCellIdentifier];
+            imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [imageCell configJGHNewActivityExplainCellContent:_model.info];
             imageCell.contentLable.numberOfLines = 2;
             return imageCell;
         }else{
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
+            titleCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
             
             if (indexPath.row == 3) {
@@ -337,15 +344,18 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         if (indexPath.row == 0 || indexPath.row == 3) {
             JGHNewActivitySpaceCell *spaceCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivitySpaceCellIdentifier];
+            spaceCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return spaceCell;
         }else if (indexPath.row == 1){
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
+            titleCell.selectionStyle = UITableViewCellSelectionStyleNone;
             titleCell.direImageView.hidden = YES;
             [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
             
             return titleCell;
         }else if (indexPath.row == 2){
             JGHNewActivityTextAndTextCell *textCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityTextAndTextCellIdentifier];
+            textCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [textCell configJGHNewActivityTextAndTextCellName:_model.userName andMobile:_model.mobile];
             textCell.nameText.tag = 23;
             textCell.mobileText.tag = 123;
@@ -354,6 +364,7 @@ static CGFloat ImageHeight  = 210.0;
             return textCell;
         }else{
             JGHNewActivitySaveAndPublishCell *savePublishCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivitySaveAndPublishCellIdentifier];
+            savePublishCell.selectionStyle = UITableViewCellSelectionStyleNone;
             savePublishCell.delegate = self;
             return savePublishCell;
         }
