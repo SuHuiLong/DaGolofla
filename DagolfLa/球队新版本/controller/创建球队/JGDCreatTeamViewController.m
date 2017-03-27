@@ -339,10 +339,12 @@ static CGFloat ImageHeight  = 210.0;
         [[JsonHttp jsonHttp] httpRequest:@"globalCode/createTimeKey" JsonKey:nil withData:nil requestMethod:@"GET" failedBlock:^(id errType) {
             if ([NSThread isMainThread]) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                [self.detailDic removeObjectForKey:@"notice"];
                 [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
             } else {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                    [self.detailDic removeObjectForKey:@"notice"];
                     [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
                 });
             }
@@ -360,10 +362,12 @@ static CGFloat ImageHeight  = 210.0;
                 
                 if ([NSThread isMainThread]) {
                     [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                    [self.detailDic removeObjectForKey:@"notice"];
                     [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
                 } else {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                        [self.detailDic removeObjectForKey:@"notice"];
                         [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
                     });
                 }
@@ -379,10 +383,12 @@ static CGFloat ImageHeight  = 210.0;
                         NSLog(@"errType===%@", errType);
                         if ([NSThread isMainThread]) {
                             [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                            [self.detailDic removeObjectForKey:@"notice"];
                             [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
                         } else {
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                [self.detailDic removeObjectForKey:@"notice"];
                                 [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
                             });
                         }
@@ -397,10 +403,12 @@ static CGFloat ImageHeight  = 210.0;
                             [[JsonHttp jsonHttp] httpRequest:@"team/createTeam" JsonKey:@"team" withData:self.detailDic requestMethod:@"POST" failedBlock:^(id errType) {
                                 if ([NSThread isMainThread]) {
                                     [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                    [self.detailDic removeObjectForKey:@"notice"];
                                     [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
                                 } else {
                                     dispatch_async(dispatch_get_main_queue(), ^{
                                         [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+                                        [self.detailDic removeObjectForKey:@"notice"];
                                         [[ShowHUD showHUD]showToastWithText:@"球队创建失败，请稍后再试" FromView:self.view];
                                     });
                                 }
@@ -436,6 +444,7 @@ static CGFloat ImageHeight  = 210.0;
                                         });
                                     }
                                     if ([data objectForKey:@"packResultMsg"]) {
+                                        [self.detailDic removeObjectForKey:@"notice"];
                                         [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
                                     }
                                 }
@@ -450,6 +459,7 @@ static CGFloat ImageHeight  = 210.0;
                                 });
                             }
                             if ([data objectForKey:@"packResultMsg"]) {
+                                [self.detailDic removeObjectForKey:@"notice"];
                                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
                             }
                         }
@@ -465,6 +475,7 @@ static CGFloat ImageHeight  = 210.0;
                         });
                     }
                     if ([data objectForKey:@"packResultMsg"]) {
+                        [self.detailDic removeObjectForKey:@"notice"];
                         [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
                     }
                 }
