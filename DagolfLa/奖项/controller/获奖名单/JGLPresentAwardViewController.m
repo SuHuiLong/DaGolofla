@@ -22,13 +22,19 @@
     UIView* _viewBack;
     NSMutableArray *_prizeListArray;
     NSString* _strTeamName;
-    UIView *_psuhView;
-    UIButton *_psuhBtn;
+    //UIView *_psuhView;
+    //UIButton *_psuhBtn;
     
     NSInteger _isManager;
+    
+    
 }
 
 @property (nonatomic, strong)UIView *bgView;
+
+@property (nonatomic, strong)UIView *psuhView;
+
+@property (nonatomic, strong)UIButton *psuhBtn;
 
 @end
 
@@ -39,6 +45,10 @@
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.title = @"颁奖";
     
+    if (!_model) {
+        _model = [[JGTeamAcitivtyModel alloc]init];
+    }
+    
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(saveAwardNameClick:)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
@@ -46,7 +56,7 @@
     _dataArray = [NSMutableArray array];
     _prizeListArray = [NSMutableArray array];
     
-    [self createHeader];
+    //[self createHeader];
     
     [self uiConfig];
     
@@ -56,6 +66,29 @@
         [self getActivityManager];
     });
 //    [self loadData];
+}
+
+- (UIView *)psuhView{
+    if (_psuhView == nil) {
+        _psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
+        _psuhView.backgroundColor = [UIColor whiteColor];
+        [_psuhView addSubview:_psuhBtn];
+        [_psuhView addSubview:self.psuhBtn];
+    }
+    return _psuhView;
+}
+- (UIButton *)psuhBtn{
+    if (_psuhBtn == nil) {
+        _psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
+        [_psuhBtn setTitle:@"发布" forState:UIControlStateNormal];
+        _psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+        _psuhBtn.layer.masksToBounds = YES;
+        _psuhBtn.layer.cornerRadius = 8.0 *ProportionAdapter;
+        _psuhBtn.userInteractionEnabled = NO;
+        [_psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
+        [_psuhBtn addTarget:self action:@selector(publishAwardNameListClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _psuhBtn;
 }
 #pragma mark -- 创建工具栏
 - (void)createPublishAwardNameListBtn{
@@ -143,10 +176,13 @@
                 _isManager = 0;//非管理员
             }
             
+            if ([data objectForKey:@"activity"]) {
+                [_model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
+            }
+            
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (_isManager == 1) {
-                    [self createPublishAwardNameListBtn];
-                }
+                
+                [self createHeader];
                 
                 [_tableView.header beginRefreshing];
             });
@@ -230,15 +266,10 @@
         
         [self pollingAwareNameList];//轮询奖项是否设置获奖人
         
+        [_bgView removeFromSuperview];
+        _bgView = nil;
         if (_dataArray.count == 0) {
-            [self createNoData];
-        }else{
-            for(UIView *view in [self.bgView subviews])
-            {
-                [view removeFromSuperview];
-            }
-            
-            [_bgView removeFromSuperview];
+            [_tableView addSubview:self.bgView];
         }
         
         [_tableView.header endRefreshing];
@@ -256,13 +287,47 @@
         }
     }
     
+    if (_prizeListArray.count >0) {
+        if (_isManager == 1 && _psuhView == nil) {
+            [self.view addSubview:self.psuhView];
+        }
+        
+        if (_isManager == 1) {
+            _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -65*ProportionAdapter -64);
+        }else{
+            _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
+        }
+    }else{
+        _tableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
+        [self.psuhView removeFromSuperview];
+        self.psuhView = nil;
+    }
+    
     if (countAware >0) {
         [_psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
         _psuhBtn.userInteractionEnabled = YES;
     }else{
         [_psuhBtn setBackgroundColor:[UIColor lightGrayColor]];
         _psuhBtn.userInteractionEnabled = NO;
+        
     }
+}
+- (UIView *)bgView{
+    if (_bgView == nil) {
+        _bgView = [[UIView alloc]initWithFrame:CGRectMake(screenWidth/2 - 45*ProportionAdapter, screenHeight/2 - 110*ProportionAdapter, 80*ProportionAdapter, 100*ProportionAdapter)];
+        UIImageView *weifabuImageview = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, self.bgView.frame.size.width-20*ProportionAdapter, self.bgView.frame.size.height - 40*ProportionAdapter)];
+        weifabuImageview.image = [UIImage imageNamed:@"weifabutishi"];
+        [_bgView addSubview:weifabuImageview];
+        
+        UILabel *weifaLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, weifabuImageview.frame.size.height + 15*ProportionAdapter, self.bgView.frame.size.width, 20*ProportionAdapter)];
+        weifaLabel.text = @"暂未发布奖项";
+        weifaLabel.textAlignment = NSTextAlignmentCenter;
+        weifaLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
+        weifaLabel.textColor = [UIColor lightGrayColor];
+        [_bgView addSubview:weifaLabel];
+        
+    }
+    return _bgView;
 }
 #pragma mark --未发布
 - (void)createNoData{
@@ -337,6 +402,8 @@
     }
 
     [_viewBack addSubview:distanceLabel];
+    
+    _tableView.tableHeaderView = _viewBack;
 }
 #pragma mark --创建TB
 -(void)uiConfig
@@ -345,7 +412,7 @@
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.tableHeaderView = _viewBack;
+    
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -407,11 +474,10 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.titleLB.text = [NSString stringWithFormat:@"活动奖项（%td）", _dataArray.count];
+        [cell.presentationBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
         
         if (_isManager == 1) {
-            [cell.contentView addSubview:cell.presentationBtn];
-            
-            [cell.presentationBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
+            cell.presentationBtn.hidden = NO;            
         }else{
             cell.presentationBtn.hidden = YES;
         }

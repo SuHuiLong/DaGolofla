@@ -64,6 +64,9 @@
     NSInteger _shangyici;
     NSInteger _lastBtn;
 }
+
+@property (nonatomic, strong) UIActivityIndicatorView *cityView;
+
 @end
 
 @implementation TeamAreaViewController
@@ -157,9 +160,8 @@
     imgvJu.image = [UIImage imageNamed:@"juli"];
     [viewLocation addSubview:imgvJu];
     
-    
     //定位后的城市
-    NSString* strCity = [[NSUserDefaults standardUserDefaults]objectForKey:@"定位"];
+    NSString* strCity = [[NSUserDefaults standardUserDefaults] objectForKey: CITYNAME];
     _labelLocation = [UIButton buttonWithType:UIButtonTypeCustom];
     _labelLocation.frame = CGRectMake(80*ScreenWidth/375, 30*ScreenWidth/375, 100*ScreenWidth/375, 30*ScreenWidth/375);
     [_labelLocation setTitleColor:[UIColor colorWithRed:0.62f green:0.62f blue:0.62f alpha:1.00f] forState:UIControlStateNormal];
@@ -282,6 +284,10 @@
     
 }
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    
+    [_tableView addSubview:self.cityView];
+    [self.cityView startAnimating];
+
     if ([locations count]>0) {
         CLLocation* loc = [locations objectAtIndex:0];
         CLLocationCoordinate2D pos = [loc coordinate];
@@ -301,7 +307,12 @@
             [_locationManager stopUpdatingLocation];
             //            [self.layer removeAllAnimations];
             
+            [self.cityView stopAnimating];
+            [self.cityView removeFromSuperview];
         } failed:^(NSError *error) {
+            
+            [self.cityView stopAnimating];
+            [self.cityView removeFromSuperview];
             //            ////NSLog(@"111");
             //            ////NSLog(@"%@",error);
         }];
@@ -680,6 +691,13 @@
     //    self.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenHeight);
 }
 
+- (UIActivityIndicatorView *)cityView{
+    if (!_cityView) {
+        _cityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(ScreenWidth-100*ScreenWidth/375, 20*ScreenWidth/375, 20*ScreenWidth/375, 20*ScreenWidth/375)];
+        _cityView.backgroundColor = [UIColor colorWithRed:0.97f green:0.97f blue:0.97f alpha:1.00f];
+        _cityView.color = [UIColor grayColor];    }
+    return  _cityView;
+}
 
 
 

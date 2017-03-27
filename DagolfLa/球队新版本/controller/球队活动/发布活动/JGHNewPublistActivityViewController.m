@@ -234,13 +234,17 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             return 10*ProportionAdapter;
         }else if (indexPath.row == 4){
-            CGFloat height;
-            height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
-            if (0< height && height < 45*ProportionAdapter) {
-                height = 45*ProportionAdapter;
+            if (_model.info.length >0) {
+                CGFloat height;
+                height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
+                if (0< height && height < 20*ProportionAdapter) {
+                    return 25*ProportionAdapter;
+                }else{
+                    return 40*ProportionAdapter;
+                }
+            }else{
+                return 0;
             }
-            
-            return (height >0)?height+10*ProportionAdapter : 0;
         }else{
             return 45*ProportionAdapter;
         }
@@ -316,6 +320,7 @@ static CGFloat ImageHeight  = 210.0;
         }else if (indexPath.row == 4){
             JGHNewActivityExplainCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityExplainCellIdentifier];
             [imageCell configJGHNewActivityExplainCellContent:_model.info];
+            imageCell.contentLable.numberOfLines = 2;
             return imageCell;
         }else{
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
@@ -432,7 +437,7 @@ static CGFloat ImageHeight  = 210.0;
             concentTextCtrl.itemText = @"活动说明";
             concentTextCtrl.delegate = self;
             concentTextCtrl.contentTextString = _model.info;
-            
+            concentTextCtrl.isNull = 1;
             [self.navigationController pushViewController:concentTextCtrl animated:YES];
         }else if (indexPath.row == 3){
             //奖项设置
@@ -493,48 +498,43 @@ static CGFloat ImageHeight  = 210.0;
     [userdef setObject:_costListArray forKey:@"TeamActivityCostListArray"];
     [userdef synchronize];
     [[ShowHUD showHUD]hideAnimationFromView:self.view];
-    [[ShowHUD showHUD]showToastWithText:@"提示：活动保存成功！" FromView:self.view];
+    [[ShowHUD showHUD]showToastWithText:@"保存成功" FromView:self.view];
 }
 
 #pragma mark --提交代理
 - (void)SubmitBtnClick:(UIButton *)btn{
     if (_model.name.length == 0) {
-        [[ShowHUD showHUD]showToastWithText:@"活动名称不能为空！" FromView:self.view];
-        return;
-    }
-    
-    if (self.model.beginDate == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动开球时间不能为空！" FromView:self.view];
-        return;
-    }
-    
-    if (self.model.endDate == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动结束时间不能为空！" FromView:self.view];
-        return;
-    }
-    
-    if (self.model.signUpEndTime == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动报名截止时间不能为空！" FromView:self.view];
-        return;
-    }
-    
-    if (self.model.mobile.length != 11) {
-        [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请输入活动名称" FromView:self.view];
         return;
     }
     
     if (self.model.ballName == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动地址不能为空！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请选择活动场地" FromView:self.view];
         return;
     }
     
-    if (self.model.info == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动说明不能为空！" FromView:self.view];
+    if (self.model.beginDate == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择开球时间" FromView:self.view];
         return;
     }
-
+    
+    if (self.model.endDate == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择结束时间" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.signUpEndTime == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择报名截止时间" FromView:self.view];
+        return;
+    }
+    
     if (self.model.userName == nil) {
-        [[ShowHUD showHUD]showToastWithText:@"活动联系人不能为空！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"请填写联系人" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.mobile.length != 11) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写联系人电话" FromView:self.view];
         return;
     }
     
@@ -555,9 +555,14 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
     [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
-    [dict setObject:self.model.info forKey:@"info"];//活动简介
     
-    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
+    if (_model.info.length >0) {
+        [dict setObject:_model.info forKey:@"info"];//活动简介
+    }
+    
+    if (_model.maxCount > 0) {
+        [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
+    }
     //[dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
     NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];

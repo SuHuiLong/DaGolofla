@@ -9,7 +9,6 @@
 #import "JGLWinnersShareViewController.h"
 #import "JGLWinnersShareTableViewCell.h"
 #import "JGHActivityBaseCell.h"
-#import "JGLPresentAwardViewController.h"
 #import "JGDPrizeViewController.h"
 #import "JGLWinnerShareModel.h"
 #import "JGHLoginViewController.h"

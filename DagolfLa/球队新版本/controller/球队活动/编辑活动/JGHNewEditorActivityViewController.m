@@ -184,7 +184,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.addressBtn bringSubviewToFront:self.imgProfile];
     [self.imgProfile addSubview:self.addressBtn];
     
-    _titleArray = @[@[], @[@"", @"活动名称", @"活动场地", @"开球时间", @"报名截止", @"结束时间"], @[@"", @"活动成员及分组管理", @"成员管理"], @[@"", @"费用设置", @"人数限制", @"活动奖项", @"活动说明", @""], @[@"", @"联系人资料"]];
+    _titleArray = @[@[], @[@"", @"活动名称", @"活动场地", @"开球时间", @"报名截止", @"结束时间"], @[@"", @"活动成员及分组管理", @"成绩管理"], @[@"", @"费用设置", @"人数限制", @"活动奖项", @"活动说明", @""], @[@"", @"联系人资料"]];
     _imageArray = @[@[], @[@"", @"icn_eventname", @"icn_address", @"icn_time", @"icn_registration", @"icn_deadline"], @[@"", @"icn_event_group", @"icn_event_score"], @[@"", @"icn_preferential", @"icn_scale", @"icn_awards", @"icn_event_details", @""], @[@"", @"icn_detail", @"", @"", @""]];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -247,9 +247,17 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             return 10*ProportionAdapter;
         }else if (indexPath.row == 5){
-            CGFloat height;
-            height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
-            return (height >0)?height+10*ProportionAdapter : 0;
+            if (_model.info.length >0) {
+                CGFloat height;
+                height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
+                if (0< height && height < 20*ProportionAdapter) {
+                    return 25*ProportionAdapter;
+                }else{
+                    return 40*ProportionAdapter;
+                }
+            }else{
+                return 0;
+            }
         }else{
             return 45*ProportionAdapter;
         }
@@ -335,6 +343,7 @@ static CGFloat ImageHeight  = 210.0;
         }else if (indexPath.row == 5){
             JGHNewActivityExplainCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityExplainCellIdentifier];
             [imageCell configJGHNewActivityExplainCellContent:_model.info];
+            imageCell.contentLable.numberOfLines = 2;
             return imageCell;
         }else{
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
@@ -445,6 +454,7 @@ static CGFloat ImageHeight  = 210.0;
             
             concentTextCtrl.itemText = @"活动说明";
             concentTextCtrl.delegate = self;
+            concentTextCtrl.isNull = 1;
             concentTextCtrl.contentTextString = _model.info;
             
             [self.navigationController pushViewController:concentTextCtrl animated:YES];
@@ -521,154 +531,131 @@ static CGFloat ImageHeight  = 210.0;
 - (void)editonAttendBtnClick:(UIButton *)btn{
     
     [self.view endEditing:YES];
-    
-    if (!_isEditor) {
-        [[ShowHUD showHUD]showToastWithText:@"未修改信息，无需保存！" FromView:self.view];
-        return;
-    }else{
-        if (_model.name.length == 0) {
-            [[ShowHUD showHUD]showToastWithText:@"活动名称不能为空！" FromView:self.view];
-            return;
-        }
-        
-        if (self.model.beginDate == nil) {
-            [[ShowHUD showHUD]showToastWithText:@"活动开始时间不能为空！" FromView:self.view];
-            return;
-        }
-        
-        if (self.model.endDate == nil) {
-            [[ShowHUD showHUD]showToastWithText:@"活动结束时间不能为空！" FromView:self.view];
-            return;
-        }
-        
-        if (self.model.userMobile.length != 11) {
-            [[ShowHUD showHUD]showToastWithText:@"手机号码格式不正确！" FromView:self.view];
-            return;
-        }
-        
-        if (self.model.ballName == nil) {
-            [[ShowHUD showHUD]showToastWithText:@"活动地址不能为空！" FromView:self.view];
-            return;
-        }
-        
-        if (self.model.info == nil) {
-            [[ShowHUD showHUD]showToastWithText:@"活动说明不能为空！" FromView:self.view];
-            return;
-        }
-        
-        if (self.model.memberPrice < 0) {
-            [[ShowHUD showHUD]showToastWithText:@"请填写活动会员价！" FromView:self.view];
-            return;
-        }
-        
-        if (self.model.guestPrice <= 0) {
-            [[ShowHUD showHUD]showToastWithText:@"请填写活动嘉宾价！" FromView:self.view];
-            return;
-        }
-        
-        if (self.model.userName == nil) {
-            [[ShowHUD showHUD]showToastWithText:@"活动联系人不能为空！" FromView:self.view];
-            return;
-        }
-        
-        [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
-        
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:[NSString stringWithFormat:@"%td", _model.teamKey] forKey:@"teamKey"];//球队key
-        [dict setObject:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"timeKey"];
-        [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//用户key
-        [dict setObject:self.model.name forKey:@"name"];//活动名字
-        [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
-        [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
-        [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
-        [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
-        [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
-        //    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
-        [dict setObject:self.model.info forKey:@"info"];//活动简介
-        [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
-        [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
-        if ([self.model.billNamePrice floatValue] >= 0.0) {
-            [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billNamePrice floatValue]] forKey:@"billNamePrice"];//
-        }
-        
-        if ([self.model.billPrice floatValue] >= 0.0) {
-            [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billPrice floatValue]] forKey:@"billPrice"];//
-        }
-        
-        NSLog(@"%@", self.model.billPrice);
-        [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
-        [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
-        NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString *currentTime = [formatter stringFromDate:[NSDate date]];
-        [dict setObject:currentTime forKey:@"createTime"];//活动创建时间
-        [dict setObject:self.model.userName forKey:@"userName"];//联系人
-        [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
-        
-        //_isEditor = 0;
-        //发布活动
-        [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            NSLog(@"%@", errType);
-            [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            [[ShowHUD showHUD]hideAnimationFromView:self.view];
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
-                [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
-                    [self presentViewController:alertView animated:YES completion:nil];
-                }];
-                return ;
-            }
-            
-            if (!_model.bgImage) {
-                _refreshBlock();
-            }
-            
-            if (_model.bgImage) {
-                NSMutableArray *imageArray = [NSMutableArray array];
-                
-                [imageArray addObject:UIImageJPEGRepresentation(self.model.bgImage, 1.0)];
-                
-                NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
-                // 上传图片
-                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-                [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
-                
-                [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
-                [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
-                [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
-                    NSLog(@"errType===%@", errType);
-                } completionBlock:^(id data) {
-                    NSLog(@"data == %@", data);
-                    _refreshBlock();
-                    
-                    if ([[data objectForKey:@"code"] integerValue] == 1) {
-                        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
-                        
-                        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-                        
-                        NSString *bggUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg", strTimeKey];
-                        
-                        [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES];
 
-                        //获取主线层
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [LQProgressHud showMessage:@"活动更新成功!"];
-                            [self.navigationController popViewControllerAnimated:YES];
-                        });
-                        
-                    }
-                }];
-            }else{
-                [LQProgressHud showMessage:@"活动更新成功!"];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.navigationController popViewControllerAnimated:YES];
-                });
-            }
-        }];
+    if (_model.name.length == 0) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入活动名称" FromView:self.view];
+        return;
     }
+    
+    if (self.model.ballName == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择活动场地" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.beginDate == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择开始时间" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.endDate == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请选择结束时间" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.userName == nil) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写联系人" FromView:self.view];
+        return;
+    }
+    
+    if (self.model.userMobile.length != 11) {
+        [[ShowHUD showHUD]showToastWithText:@"请填写联系人电话" FromView:self.view];
+        return;
+    }
+    
+    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:[NSString stringWithFormat:@"%td", _model.teamKey] forKey:@"teamKey"];//球队key
+    [dict setObject:[NSString stringWithFormat:@"%td", [_model.timeKey integerValue]] forKey:@"timeKey"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];//用户key
+    [dict setObject:self.model.name forKey:@"name"];//活动名字
+    [dict setObject:self.model.signUpEndTime forKey:@"signUpEndTime"];//活动报名截止时间
+    [dict setObject:self.model.beginDate forKey:@"beginDate"];//活动开始时间
+    [dict setObject:self.model.endDate forKey:@"endDate"];//活动结束时间
+    [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
+    [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
+    //    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
+    if (_model.info.length >0) {
+        [dict setObject:_model.info forKey:@"info"];//活动简介
+    }else{
+        [dict setObject:@"" forKey:@"info"];//活动简介
+    }
+    
+    if (_model.maxCount >0) {
+        [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
+    }
+    
+    //[dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
+    NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *currentTime = [formatter stringFromDate:[NSDate date]];
+    [dict setObject:currentTime forKey:@"createTime"];//活动创建时间
+    [dict setObject:self.model.userName forKey:@"userName"];//联系人
+    [dict setObject:self.model.userMobile forKey:@"userMobile"];//联系人
+    
+    //_isEditor = 0;
+    //发布活动
+    [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
+            [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
+                [self presentViewController:alertView animated:YES completion:nil];
+            }];
+            return ;
+        }
+        
+        if (!_model.bgImage) {
+            _refreshBlock();
+        }
+        
+        if (_model.bgImage) {
+            NSMutableArray *imageArray = [NSMutableArray array];
+            
+            [imageArray addObject:UIImageJPEGRepresentation(self.model.bgImage, 1.0)];
+            
+            NSNumber* strTimeKey = [data objectForKey:@"timeKey"];
+            // 上传图片
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+            [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+            
+            [dict setObject:[NSString stringWithFormat:@"%@_background" ,strTimeKey] forKey:@"data"];
+            [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
+            [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
+                NSLog(@"errType===%@", errType);
+            } completionBlock:^(id data) {
+                NSLog(@"data == %@", data);
+                _refreshBlock();
+                
+                if ([[data objectForKey:@"code"] integerValue] == 1) {
+                    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
+                    
+                    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                    
+                    NSString *bggUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg", strTimeKey];
+                    
+                    [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES];
+                    
+                    //获取主线层
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [LQProgressHud showMessage:@"活动更新成功!"];
+                        [self.navigationController popViewControllerAnimated:YES];
+                    });
+                    
+                }
+            }];
+        }else{
+            [LQProgressHud showMessage:@"活动更新成功!"];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        }
+    }];
 }
 
 #pragma mark --添加活动头像

@@ -25,7 +25,7 @@
         
         _contentText = [[UITextField alloc]initWithFrame:CGRectMake(122*ProportionAdapter, 10*ProportionAdapter, screenWidth -152*ProportionAdapter, 22*ProportionAdapter)];
         _contentText.text = @"";
-        _contentText.clearButtonMode = UITextFieldViewModeAlways;
+        //_contentText.clearButtonMode = UITextFieldViewModeAlways;
         _contentText.textAlignment = NSTextAlignmentRight;
         _contentText.font = [UIFont systemFontOfSize:15*ProportionAdapter];
         _contentText.textColor = [UIColor colorWithHexString:Ba0_Color];

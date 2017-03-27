@@ -14,7 +14,7 @@
     if (self == [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.backgroundColor = [UIColor whiteColor];
         
-        _nameText = [[UITextField alloc]initWithFrame:CGRectMake(40*ProportionAdapter, 10*ProportionAdapter, (screenWidth -73*ProportionAdapter)/2, 22*ProportionAdapter)];
+        _nameText = [[UITextField alloc]initWithFrame:CGRectMake(40*ProportionAdapter, 10*ProportionAdapter, screenWidth/2 -40*ProportionAdapter, 22*ProportionAdapter)];
         _nameText.placeholder = @"请输入姓名";
         _nameText.font = [UIFont systemFontOfSize:15*ProportionAdapter];
         _nameText.textColor = [UIColor colorWithHexString:Ba0_Color];
@@ -26,7 +26,7 @@
         _hvrLine.backgroundColor = [UIColor colorWithHexString:@"E5E5E5"];
         [self addSubview:_hvrLine];
         
-        _mobileText = [[UITextField alloc]initWithFrame:CGRectMake(screenWidth/2 -5*ProportionAdapter, 10*ProportionAdapter, screenWidth/2 -38*ProportionAdapter, 22*ProportionAdapter)];
+        _mobileText = [[UITextField alloc]initWithFrame:CGRectMake(screenWidth/2, 10*ProportionAdapter, screenWidth/2 -4*ProportionAdapter, 22*ProportionAdapter)];
         _mobileText.placeholder = @"请输入联系方式";
         _mobileText.clearButtonMode = UITextFieldViewModeAlways;
         _mobileText.font = [UIFont systemFontOfSize:15*ProportionAdapter];

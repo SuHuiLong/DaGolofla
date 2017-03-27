@@ -16,4 +16,6 @@
 
 - (void)configJGHNewActivityExplainCellContent:(NSString *)content;
 
+- (void)configActivityContent:(NSString *)content;
+
 @end
