@@ -60,6 +60,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define BDMAPLAT @"lat"
 #define BDMAPLNG @"lng"
 #define CITYNAME @"cityName"
+#define PROVINCENAME @"provinceName"
 
 #define loadingString @"加载中..."
 

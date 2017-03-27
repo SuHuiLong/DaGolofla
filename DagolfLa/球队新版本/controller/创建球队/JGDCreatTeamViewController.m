@@ -415,11 +415,15 @@ static CGFloat ImageHeight  = 210.0;
                                         });
                                     }
                                     
-                                    [Helper alertViewNoHaveCancleWithTitle:@"球队创建成功" withBlock:^(UIAlertController *alertView) {
-                                        [self.navigationController popViewControllerAnimated:YES];
-                                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                                        
-                                    }];
+                                    [LQProgressHud showMessage:@"球队创建成功"];
+                                    [self.navigationController popViewControllerAnimated:YES];
+
+                                    
+//                                    [Helper alertViewNoHaveCancleWithTitle:@"球队创建成功" withBlock:^(UIAlertController *alertView) {
+//                                        [self.navigationController popViewControllerAnimated:YES];
+//                                        [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//                                        
+//                                    }];
                                     [user setObject:0 forKey:@"cacheCreatTeamDic"];
                                     [user synchronize];
                                     
