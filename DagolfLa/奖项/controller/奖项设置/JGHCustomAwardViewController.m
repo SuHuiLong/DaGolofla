@@ -68,10 +68,14 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
     [dict setObject:_awardName forKey:@"name"];
     if (_prizeName.length > 0) {
         [dict setObject:_prizeName forKey:@"prizeName"];
+    }else{
+        [dict setObject:@"" forKey:@"prizeName"];
     }
     
     if (_prizeNumber != 0) {
         [dict setObject:[NSString stringWithFormat:@"%td", _prizeNumber] forKey:@"prizeSize"];
+    }else{
+        [dict setObject:@0 forKey:@"prizeSize"];
     }
     
     if (_model.timeKey > 0) {

@@ -24,8 +24,8 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 @interface JGHSetAwardViewController ()<UITableViewDelegate, UITableViewDataSource, JGHAwardCellDelegate>
 
 {
-    NSInteger _publishPrize;
-    UIView *_psuhView;
+    //NSInteger _publishPrize;
+    //UIView *_psuhView;
 }
 
 @property (nonatomic, strong)UITableView *awardTableView;
@@ -36,12 +36,15 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 
 @property (nonatomic, strong)UIButton *psuhBtn;
 
+@property (nonatomic, strong)UIView *psuhView;
+
 @end
 
 @implementation JGHSetAwardViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    /*
     if (_dataArray.count == 0) {
         if (self.bgView == nil) {
             [self createNoData];
@@ -50,10 +53,18 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         [self.bgView removeFromSuperview];
         self.bgView = nil;
     }
+     */
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
+    item.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = item;
+}
+- (void)backButtonClcik{
+    _refreshBlock();
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (instancetype)init{
     if (self == [super init]) {
@@ -71,9 +82,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:@"reloadAwardData" object:nil];
     
     [self createAwardTableView];
-    
-    [self createPushAwardBtn];
-    
+        
 //    [self loadData];
 }
 #pragma mark --未发布
@@ -106,7 +115,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 //        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         [self.dataArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            _publishPrize = [[data objectForKey:@"publishPrize"] integerValue];
+            //_publishPrize = [[data objectForKey:@"publishPrize"] integerValue];
             //奖项是否发布：0: 未发布  1: 已发布
             //if (_publishPrize == 0) {
                 [self.psuhBtn setTitle:@"完成" forState:UIControlStateNormal];
@@ -153,48 +162,49 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         [self.awardTableView reloadData];
     }];
 }
-#pragma mark -- 创建工具栏
-- (void)createPushAwardBtn{
-    _psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
-    _psuhView.backgroundColor = [UIColor whiteColor];
-    self.psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
-    [self.psuhBtn setTitle:@"完成" forState:UIControlStateNormal];
-    self.psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
-    self.psuhBtn.layer.masksToBounds = YES;
-    self.psuhBtn.layer.cornerRadius = 8.0*ProportionAdapter;
-    [self.psuhBtn addTarget:self action:@selector(psuhAwardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.psuhBtn.userInteractionEnabled = NO;
-    [self.psuhBtn setBackgroundColor:[UIColor lightGrayColor]];
-    [_psuhView addSubview:self.psuhBtn];
-    [self.view addSubview:_psuhView];
+- (UIView *)psuhView{
+    if (_psuhView == nil) {
+        _psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
+        _psuhView.backgroundColor = [UIColor whiteColor];
+        [_psuhView addSubview:self.psuhBtn];
+    }
+    return _psuhView;
+}
+- (UIButton *)psuhBtn{
+    if (_psuhBtn == nil) {
+        _psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
+        [_psuhBtn setTitle:@"完成" forState:UIControlStateNormal];
+        _psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
+        _psuhBtn.layer.masksToBounds = YES;
+        _psuhBtn.layer.cornerRadius = 8.0*ProportionAdapter;
+        [_psuhBtn addTarget:self action:@selector(psuhAwardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        _psuhBtn.userInteractionEnabled = YES;
+        [_psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
+    }
+    return _psuhBtn;
 }
 #pragma mark -- 完成
 - (void)psuhAwardBtnClick:(UIButton *)btn{
     //doPublishPrize
-    if (_publishPrize == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
-        [self performSelector:@selector(backCtrl) withObject:self afterDelay:TIMESlEEP];
-    }else{
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        [dict setObject:@(_activityKey) forKey:@"activityKey"];
-        [[JsonHttp jsonHttp]httpRequest:@"team/doPublishPrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-            NSLog(@"%@", errType);
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                if (_publishPrize == 0) {
-                    _refreshBlock();
-                }
-                
-                [self.navigationController popViewControllerAnimated:YES];
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-                }
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    [dict setObject:@(_activityKey) forKey:@"activityKey"];
+    [[JsonHttp jsonHttp]httpRequest:@"team/doPublishPrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
+    } completionBlock:^(id data) {
+        NSLog(@"%@", data);
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            //if (_publishPrize == 0) {
+            _refreshBlock();
+            //}
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            if ([data objectForKey:@"packResultMsg"]) {
+                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
-        }];
-    }
+        }
+    }];
 }
 #pragma mark -- 返回
 - (void)backCtrl{
@@ -295,19 +305,12 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 }
 #pragma mark -- 轮询所有奖项是否设置奖品／奖品数量，改变完成按钮状态
 - (void)polingAwareIsSet{
-    NSInteger awardCount =0;
-    for (JGHAwardModel *model in _dataArray) {
-        if ([model.prizeSize integerValue] >0 && model.prizeName != nil) {
-            awardCount += 1;
-        }
-    }
-    
-    if (awardCount == _dataArray.count && awardCount >0) {
-        self.psuhBtn.userInteractionEnabled = YES;
-        [self.psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
+
+    if (_dataArray.count >0) {
+        [self.view addSubview:self.psuhView];
     }else{
-        self.psuhBtn.userInteractionEnabled = NO;
-        [self.psuhBtn setBackgroundColor:[UIColor lightGrayColor]];
+        [self.psuhView removeFromSuperview];
+        _awardTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight -64);
     }
 }
 #pragma mark -- 删除

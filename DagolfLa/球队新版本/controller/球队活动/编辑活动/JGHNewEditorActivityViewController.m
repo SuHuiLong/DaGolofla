@@ -184,7 +184,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.addressBtn bringSubviewToFront:self.imgProfile];
     [self.imgProfile addSubview:self.addressBtn];
     
-    _titleArray = @[@[], @[@"", @"活动名称", @"活动场地", @"开球时间", @"报名截止", @"结束时间"], @[@"", @"活动成员及分组管理", @"成员管理"], @[@"", @"费用设置", @"人数限制", @"活动奖项", @"活动说明", @""], @[@"", @"联系人资料"]];
+    _titleArray = @[@[], @[@"", @"活动名称", @"活动场地", @"开球时间", @"报名截止", @"结束时间"], @[@"", @"活动成员及分组管理", @"成绩管理"], @[@"", @"费用设置", @"人数限制", @"活动奖项", @"活动说明", @""], @[@"", @"联系人资料"]];
     _imageArray = @[@[], @[@"", @"icn_eventname", @"icn_address", @"icn_time", @"icn_registration", @"icn_deadline"], @[@"", @"icn_event_group", @"icn_event_score"], @[@"", @"icn_preferential", @"icn_scale", @"icn_awards", @"icn_event_details", @""], @[@"", @"icn_detail", @"", @"", @""]];
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -247,9 +247,17 @@ static CGFloat ImageHeight  = 210.0;
         if (indexPath.row == 0) {
             return 10*ProportionAdapter;
         }else if (indexPath.row == 5){
-            CGFloat height;
-            height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
-            return (height >0)?height+10*ProportionAdapter : 0;
+            if (_model.info.length >0) {
+                CGFloat height;
+                height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
+                if (0< height && height < 20*ProportionAdapter) {
+                    height = 20*ProportionAdapter;
+                }
+                
+                return (height >0)?height+10*ProportionAdapter : 0;
+            }else{
+                return 0;
+            }
         }else{
             return 45*ProportionAdapter;
         }
@@ -335,6 +343,7 @@ static CGFloat ImageHeight  = 210.0;
         }else if (indexPath.row == 5){
             JGHNewActivityExplainCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityExplainCellIdentifier];
             [imageCell configJGHNewActivityExplainCellContent:_model.info];
+            imageCell.contentLable.numberOfLines = 2;
             return imageCell;
         }else{
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
@@ -445,6 +454,7 @@ static CGFloat ImageHeight  = 210.0;
             
             concentTextCtrl.itemText = @"活动说明";
             concentTextCtrl.delegate = self;
+            concentTextCtrl.isNull = 1;
             concentTextCtrl.contentTextString = _model.info;
             
             [self.navigationController pushViewController:concentTextCtrl animated:YES];
@@ -551,11 +561,6 @@ static CGFloat ImageHeight  = 210.0;
             return;
         }
         
-        if (self.model.info == nil) {
-            [[ShowHUD showHUD]showToastWithText:@"活动说明不能为空！" FromView:self.view];
-            return;
-        }
-        
         if (self.model.memberPrice < 0) {
             [[ShowHUD showHUD]showToastWithText:@"请填写活动会员价！" FromView:self.view];
             return;
@@ -584,20 +589,17 @@ static CGFloat ImageHeight  = 210.0;
         [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.ballKey] forKey:@"ballKey"];//球场id
         [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
         //    [dict setObject:@"" forKey:@"ballGeohash"];//球场坐标
-        [dict setObject:self.model.info forKey:@"info"];//活动简介
-        [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.memberPrice floatValue]] forKey:@"memberPrice"];//会员价
-        [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.guestPrice floatValue]] forKey:@"guestPrice"];//嘉宾价
-        if ([self.model.billNamePrice floatValue] >= 0.0) {
-            [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billNamePrice floatValue]] forKey:@"billNamePrice"];//
+        if (_model.info.length >0) {
+            [dict setObject:_model.info forKey:@"info"];//活动简介
+        }else{
+            [dict setObject:@"" forKey:@"info"];//活动简介
         }
         
-        if ([self.model.billPrice floatValue] >= 0.0) {
-            [dict setObject:[NSString stringWithFormat:@"%.2f", [self.model.billPrice floatValue]] forKey:@"billPrice"];//
+        if (_model.maxCount >0) {
+            [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
         }
         
-        NSLog(@"%@", self.model.billPrice);
-        [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
-        [dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
+        //[dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
         NSDateFormatter *formatter =[[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSString *currentTime = [formatter stringFromDate:[NSDate date]];

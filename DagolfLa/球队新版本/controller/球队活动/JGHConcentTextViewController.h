@@ -19,6 +19,8 @@
 //页面标题问题
 @property (nonatomic, copy)NSString *itemText;
 
+@property (nonatomic, assign)NSInteger isNull;
+
 //保存按钮
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 //保存按钮事件
