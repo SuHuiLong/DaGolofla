@@ -89,13 +89,14 @@
 }
 //右按钮
 -(void)rightBtnCLick{
-    //标题
-    NSString *titleStr = _photoTitleLabelStr;
     //作者
     NSString *name = _photoWriterStr;
-    if (titleStr.length==0) {
-        [[ShowHUD showHUD] showToastWithText:@"请输入标题" FromView:self.view];
-        return;
+    
+    if (_photoTitleLabelStr.length == 0) {
+        _photoTitleLabelStr = @"无题";
+    }
+    if (name.length == 0) {
+        name = _teamName;
     }
     NSMutableArray *listArray = [NSMutableArray array];
     for (NSArray *modelArray in self.dataArray) {
@@ -111,7 +112,7 @@
     }
     NSDictionary *dict = @{
                            @"userKey":DEFAULF_USERID,
-                           @"title":titleStr,
+                           @"title":_photoTitleLabelStr,
                            @"name":name,
                            @"list":listArray
                            };
@@ -125,14 +126,11 @@
             MakePhotoTextDoneViewController *vc = [[MakePhotoTextDoneViewController alloc] init];
             vc.headerStr = _photoTitleLabelStr;
             vc.timeKey = _headerViewTimekey;
-            
+            vc.writerStr = _photoWriterStr;
             vc.urlStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/picsShare.html?userKey=%@&shareKey=%@&md5=%@",DEFAULF_USERID,shareKey,md5Value];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }];
-    
-    
-    
 }
 //删除点击
 -(void)deleateBtnClick:(UIView *)sender{
@@ -208,8 +206,6 @@
  pushType: 0:标题 1:作者 2:添加 3:更换
  */
 -(void)pushToTextWriteViewClickIndex:(NSInteger )index row:(NSInteger)indexRow type:(NSInteger )pushType{
-    NSMutableArray *indexSectionMarray = self.dataArray[index];
-    MakePhotoTextViewModel *rowModel = indexSectionMarray[indexRow];
     NSArray *titleArray = @[@"标题",@"制作方",@"文字描述",@"文字描述"];
     NSString *titleStr = titleArray[pushType];
     
@@ -248,7 +244,11 @@
     }else if (pushType==1) {
         vc.DefaultText = _teamName;
     }else if (pushType == 3){
-        vc.DefaultText = rowModel.textStr;
+        if (index>self.dataArray.count-1) {
+            NSMutableArray *indexSectionMarray = self.dataArray[index-1];
+            MakePhotoTextViewModel *rowModel = indexSectionMarray[indexRow];
+            vc.DefaultText = rowModel.textStr;
+        }
     }
     [self.navigationController pushViewController:vc animated:YES];
     
@@ -260,7 +260,6 @@
  pushType: 0:添加 1:更换
  */
 -(void)pushToPhotoViewClickIndex:(NSInteger )index row:(NSInteger)indexRow type:(NSInteger )pushType{
-    
     MakePhotoTextSelectFromAllViewController *vc = [[MakePhotoTextSelectFromAllViewController alloc] init];
     vc.teamTimeKey = _teamTimeKey;
     if (pushType==0) {
