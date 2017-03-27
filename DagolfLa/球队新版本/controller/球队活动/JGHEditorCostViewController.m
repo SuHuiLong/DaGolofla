@@ -125,16 +125,14 @@ static NSString *const JGHAddCostButtonCellIdentifier = @"JGHAddCostButtonCell";
         }
     }
     
-    [[ShowHUD showHUD]showToastWithText:@"保存中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];
     [dict setObject:costArray forKey:@"costList"];
     [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"team/updateTeamActivityCost" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [LQProgressHud showMessage:@"保存成功！"];
             [self performSelector:@selector(popCtrl) withObject:self afterDelay:TIMESlEEP];
