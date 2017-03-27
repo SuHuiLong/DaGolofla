@@ -44,6 +44,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    /*
     if (_dataArray.count == 0) {
         if (self.bgView == nil) {
             [self createNoData];
@@ -52,6 +53,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         [self.bgView removeFromSuperview];
         self.bgView = nil;
     }
+     */
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
