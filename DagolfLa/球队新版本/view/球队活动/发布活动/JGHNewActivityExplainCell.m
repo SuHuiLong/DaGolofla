@@ -32,21 +32,35 @@
 - (void)configJGHNewActivityExplainCellContent:(NSString *)content{
     _contentLable.text = content;
     _contentLable.frame = CGRectMake(40*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, [Helper textHeightFromTextString:content width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter]);
-    /*
-    if (content.length > 0) {
-        _line.hidden = NO;
+    
+    if (content.length >0) {
         CGFloat height;
         height = [Helper textHeightFromTextString:content width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
-        if (height >0 && height <45*ProportionAdapter) {
-            _line.frame = CGRectMake(0, 45*ProportionAdapter -0.5 +10*ProportionAdapter, screenWidth, 0.5);
+        if (0< height && height < 20*ProportionAdapter) {
+            _contentLable.frame = CGRectMake(40*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 25*ProportionAdapter);
         }else{
-            _line.frame = CGRectMake(0, height -0.5 +10*ProportionAdapter, screenWidth, 0.5);
+            _contentLable.frame = CGRectMake(40*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 40*ProportionAdapter);
         }
-        
     }else{
-        _line.hidden = YES;
+        _contentLable.frame = CGRectMake(40*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 0);
     }
-     */
+}
+
+- (void)configActivityContent:(NSString *)content{
+    _contentLable.text = content;
+    _contentLable.frame = CGRectMake(40*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, [Helper textHeightFromTextString:content width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter]);
+    
+    if (content.length >0) {
+        CGFloat height;
+        height = [Helper textHeightFromTextString:content width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
+        if (0< height && height < 20*ProportionAdapter) {
+            _contentLable.frame = CGRectMake(40*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 25*ProportionAdapter);
+        }else{
+            _contentLable.frame = CGRectMake(40*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, height);
+        }
+    }else{
+        _contentLable.frame = CGRectMake(40*ProportionAdapter, 0, screenWidth -50*ProportionAdapter, 0);
+    }
 }
 
 - (void)awakeFromNib {
