@@ -47,7 +47,7 @@
         self.presentationBtn.layer.cornerRadius = 3.5 * ScreenWidth / 375;
         self.presentationBtn.layer.borderColor = borderColorRef;
         
-//        [self.contentView addSubview:self.presentationBtn];
+        [self.contentView addSubview:self.presentationBtn];
         
 
     }
