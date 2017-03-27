@@ -445,7 +445,7 @@ static CGFloat ImageHeight  = 210.0;
         }
     }
     
-    [self.launchActivityTableView reloadData];
+    //[self.launchActivityTableView reloadData];
 }
 #pragma mark --保存代理
 - (void)SaveBtnClick:(UIButton *)btn{
@@ -528,7 +528,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    if (self.model.userName == nil) {
+    if (self.model.userName == nil || _model.userName.length == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请填写联系人" FromView:self.view];
         return;
     }
@@ -538,7 +538,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    [LQProgressHud showLoading:@"提交中..."];
     btn.userInteractionEnabled = NO;
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -587,16 +587,35 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         [postDict setObject:costArray forKey:@"costList"];
+    }else{
+        NSMutableArray *costArray = [NSMutableArray array];
+        for (int i = 0; i < 4; i++) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setObject:@"" forKey:@"money"];
+            if (i == 0) {
+                [dict setObject:@"球队队员资费" forKey:@"costName"];
+            }else if (i == 1){
+                [dict setObject:@"嘉宾资费" forKey:@"costName"];
+            }else if (i == 2){
+                [dict setObject:@"球场记名会员资费" forKey:@"costName"];
+            }else if (i == 3){
+                [dict setObject:@"球场不记名会员资费" forKey:@"costName"];
+            }
+            
+            [costArray addObject:dict];
+        }
+        
+        [postDict setObject:costArray forKey:@"costList"];
     }
     
     //发布活动
     [[JsonHttp jsonHttp]httpRequest:@"team/createTeamActivity" JsonKey:nil withData:postDict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
         btn.userInteractionEnabled = YES;
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
         btn.userInteractionEnabled = YES;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
             [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
@@ -754,7 +773,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;
     NSLog(@"yOffset:%f",yOffset);
-    CGFloat factor = ((ABS(yOffset)+ImageHeight*ProportionAdapter)*screenWidth)/ImageHeight*ProportionAdapter;
+    CGFloat factor = (((ABS(yOffset)+ImageHeight*ProportionAdapter)*screenWidth))/(ImageHeight*ProportionAdapter);
     if (yOffset < 0) {
         
         CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight*ProportionAdapter+ABS(yOffset));

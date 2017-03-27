@@ -326,7 +326,19 @@ static CGFloat ImageHeight  = 210.0;
             return spaceCell;
         }else{
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
-            [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
+            if (indexPath.row == 1) {
+                NSString *group = nil;
+                if (_model.maxCount > 0) {
+                    group = _titleArray[indexPath.section][indexPath.row];
+                    group = [NSString stringWithFormat:@"活动成员及分组(%td/%td)", self.model.sumCount,_model.maxCount];
+                    
+                    [titleCell configJGHNewActivityTextCellTitle:group andImageName:_imageArray[indexPath.section][indexPath.row]];
+                }else{
+                    [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
+                }
+            }else{
+                [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
+            }
             
             return titleCell;
         }
@@ -475,7 +487,7 @@ static CGFloat ImageHeight  = 210.0;
         }
     }
     
-    [self.launchActivityTableView reloadData];
+    //[self.launchActivityTableView reloadData];
 }
 #pragma mark -- 刷新区域
 - (void)reloadindexPath:(NSIndexPath *)indexPath{
@@ -558,7 +570,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    if (self.model.userName == nil) {
+    if (self.model.userName == nil || _model.userName.length == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请填写联系人" FromView:self.view];
         return;
     }
@@ -568,7 +580,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    [LQProgressHud showLoading:@"提交中..."];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%td", _model.teamKey] forKey:@"teamKey"];//球队key
@@ -589,6 +601,8 @@ static CGFloat ImageHeight  = 210.0;
     
     if (_model.maxCount >0) {
         [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
+    }else{
+        [dict setObject:@0 forKey:@"maxCount"];//最大人员数
     }
     
     //[dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
@@ -603,10 +617,10 @@ static CGFloat ImageHeight  = 210.0;
     //发布活动
     [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
             [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
@@ -750,7 +764,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;
     NSLog(@"yOffset:%f",yOffset);
-    CGFloat factor = ((ABS(yOffset)+ImageHeight*ProportionAdapter)*screenWidth)/ImageHeight*ProportionAdapter;
+    CGFloat factor = ((ABS(yOffset)+ImageHeight*ProportionAdapter)*screenWidth)/(ImageHeight*ProportionAdapter);
     if (yOffset < 0) {
         
         CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight*ProportionAdapter+ABS(yOffset));
