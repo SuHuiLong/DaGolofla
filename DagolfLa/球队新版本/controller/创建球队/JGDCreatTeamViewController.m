@@ -146,10 +146,13 @@ static CGFloat ImageHeight  = 210.0;
     [self.titleView addSubview:btn];
     //点击更换
     UIButton *replaceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    replaceBtn.frame = CGRectMake(screenWidth - 70 * ProportionAdapter, 10  * ProportionAdapter, 60 * ProportionAdapter, 44 * ProportionAdapter);
+    replaceBtn.frame = CGRectMake(screenWidth - 80 * ProportionAdapter, 29  * ProportionAdapter, 66 * ProportionAdapter, 26 * ProportionAdapter);
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:FontSize_Normal];
     [replaceBtn setTitle:@"点击更换" forState:UIControlStateNormal];
     replaceBtn.titleLabel.font = [UIFont systemFontOfSize:13 * ProportionAdapter];
+    replaceBtn.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.3f];
+    replaceBtn.layer.cornerRadius = 3 * ProportionAdapter;
+    replaceBtn.clipsToBounds = YES;
     replaceBtn.tag = 520;
     [replaceBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.titleView addSubview:replaceBtn];
