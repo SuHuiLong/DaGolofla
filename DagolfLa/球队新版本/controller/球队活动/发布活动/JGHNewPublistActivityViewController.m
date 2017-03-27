@@ -320,6 +320,7 @@ static CGFloat ImageHeight  = 210.0;
         }else if (indexPath.row == 4){
             JGHNewActivityExplainCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityExplainCellIdentifier];
             [imageCell configJGHNewActivityExplainCellContent:_model.info];
+            imageCell.contentLable.numberOfLines = 2;
             return imageCell;
         }else{
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
@@ -556,8 +557,6 @@ static CGFloat ImageHeight  = 210.0;
     [dict setObject:self.model.ballName forKey:@"ballName"];//球场名称
     if (_model.info.length >0) {
         [dict setObject:_model.info forKey:@"info"];//活动简介
-    }else{
-        [dict setObject:@"" forKey:@"info"];//活动简介
     }
     
     if (_model.maxCount > 0) {

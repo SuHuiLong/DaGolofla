@@ -343,6 +343,7 @@ static CGFloat ImageHeight  = 210.0;
         }else if (indexPath.row == 5){
             JGHNewActivityExplainCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityExplainCellIdentifier];
             [imageCell configJGHNewActivityExplainCellContent:_model.info];
+            imageCell.contentLable.numberOfLines = 2;
             return imageCell;
         }else{
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
