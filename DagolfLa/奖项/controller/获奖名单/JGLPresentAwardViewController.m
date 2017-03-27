@@ -26,6 +26,8 @@
     UIButton *_psuhBtn;
     
     NSInteger _isManager;
+    
+    
 }
 
 @property (nonatomic, strong)UIView *bgView;
@@ -39,6 +41,10 @@
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.title = @"颁奖";
     
+    if (!_model) {
+        _model = [[JGTeamAcitivtyModel alloc]init];
+    }
+    
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(saveAwardNameClick:)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
@@ -46,7 +52,7 @@
     _dataArray = [NSMutableArray array];
     _prizeListArray = [NSMutableArray array];
     
-    [self createHeader];
+    //[self createHeader];
     
     [self uiConfig];
     
@@ -143,10 +149,16 @@
                 _isManager = 0;//非管理员
             }
             
+            if ([data objectForKey:@"activity"]) {
+                [_model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
+            }
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (_isManager == 1) {
                     [self createPublishAwardNameListBtn];
                 }
+                
+                [self createHeader];
                 
                 [_tableView.header beginRefreshing];
             });
@@ -337,6 +349,8 @@
     }
 
     [_viewBack addSubview:distanceLabel];
+    
+    _tableView.tableHeaderView = _viewBack;
 }
 #pragma mark --创建TB
 -(void)uiConfig
@@ -345,7 +359,7 @@
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.tableHeaderView = _viewBack;
+    
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -407,11 +421,10 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.titleLB.text = [NSString stringWithFormat:@"活动奖项（%td）", _dataArray.count];
+        [cell.presentationBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
         
         if (_isManager == 1) {
-            [cell.contentView addSubview:cell.presentationBtn];
-            
-            [cell.presentationBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
+            cell.presentationBtn.hidden = NO;            
         }else{
             cell.presentationBtn.hidden = YES;
         }

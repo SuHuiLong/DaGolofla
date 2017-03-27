@@ -493,7 +493,7 @@ static CGFloat ImageHeight  = 210.0;
     [userdef setObject:_costListArray forKey:@"TeamActivityCostListArray"];
     [userdef synchronize];
     [[ShowHUD showHUD]hideAnimationFromView:self.view];
-    [[ShowHUD showHUD]showToastWithText:@"提示：活动保存成功！" FromView:self.view];
+    [[ShowHUD showHUD]showToastWithText:@"保存成功" FromView:self.view];
 }
 
 #pragma mark --提交代理
