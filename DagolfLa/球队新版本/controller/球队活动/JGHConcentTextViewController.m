@@ -47,7 +47,7 @@
     }
     */
     
-    if (self.contentText.text.length == 0) {
+    if (self.contentText.text.length == 0 && _isNull == 0) {
         [Helper alertViewWithTitle:@"请输入内容！" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
