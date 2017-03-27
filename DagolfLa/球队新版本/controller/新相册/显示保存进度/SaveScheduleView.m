@@ -132,6 +132,7 @@
 #pragma mark - 连接代理方法
 // 每次写入调用(会调用多次)
 /*
+ 
  totalBytesWritten 已下载的内容
  totalBytesExpectedToWrite 总需要下载内容
  */
