@@ -206,7 +206,7 @@
                         
                         [self.collectionView reloadData];
                         //偏移 －－ 到指定日期
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                             
                             int countOff =0;
                             int countSection =0;
@@ -238,7 +238,7 @@
                                 
                             }
                             
-                            [UIView animateWithDuration:0.2f animations:^{
+                            [UIView animateWithDuration:0.3f animations:^{
                                 
                                 CGFloat yOffset = countOff*kWvertical(57) +countSection*kWvertical(40);
                                 
