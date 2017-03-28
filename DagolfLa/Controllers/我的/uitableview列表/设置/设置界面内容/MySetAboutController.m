@@ -59,7 +59,10 @@
     
     [self.view addSubview:self.webView];
     
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.dagolfla.com:8081/dagaoerfu/html5/AppInfo/appinfo.html?type=0"]];
+    NSString* versionKey = (NSString*)kCFBundleVersionKey;
+    NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
+    
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/about/aboutUs.html?version=%@", version]];
     
     //设置页面禁止滚动
     _webView.scrollView.bounces = NO ;
