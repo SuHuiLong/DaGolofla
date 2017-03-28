@@ -87,6 +87,7 @@
 }
 //确认返回
 -(void)rightBtnCLick{
+    
     NSString *textStr = _textView.text;
     if (_addText!=nil) {
         NSString *strUrl = [textStr stringByReplacingOccurrencesOfString:@" " withString:@""];
