@@ -160,6 +160,7 @@
             if (!_rightItem) {
                 if ([[data objectForKey:@"isTeamMemeber"] integerValue] == 1||_isGetAll) {
                     _rightItem = [[UIBarButtonItem alloc]initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:self action:@selector(selectBtnCLick:)];
+                    [_rightItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
                     _rightItem.tintColor = [UIColor whiteColor];
                     self.navigationItem.rightBarButtonItem = _rightItem;
                 }

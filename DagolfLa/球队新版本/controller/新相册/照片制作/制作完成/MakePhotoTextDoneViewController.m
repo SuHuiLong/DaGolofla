@@ -113,7 +113,7 @@
             [self shareStatisticsDataClick];
             break;
         case 102:
-            
+            [self popBack];
             break;
             
         default:
@@ -192,7 +192,16 @@
         
     }
 }
-
+//删除
+-(void)popBack{
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[JGDDPhotoAlbumViewController class]]) {
+            [self.navigationController popToViewController:vc animated:false];
+            return;
+        }
+    }
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 -(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
 {
