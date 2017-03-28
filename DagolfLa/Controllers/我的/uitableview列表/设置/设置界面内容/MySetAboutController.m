@@ -54,7 +54,7 @@
     
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     
-    self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+    self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-64);
     self.webView.delegate=self;
     
     [self.view addSubview:self.webView];
@@ -62,7 +62,7 @@
     NSString* versionKey = (NSString*)kCFBundleVersionKey;
     NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
     
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/about/aboutUs.html?version=%@", version]];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://res.dagolfla.com/h5/aboutUs/index.html?version=%@", version]];
     
     //设置页面禁止滚动
     _webView.scrollView.bounces = NO ;
@@ -76,9 +76,6 @@
     [self.view addSubview:actIndicator];
     _actIndicatorView = actIndicator;
     
-    //    } failed:^(NSError *error) {
-    //
-    //    }];
     
 }
 

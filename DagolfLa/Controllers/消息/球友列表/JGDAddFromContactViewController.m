@@ -379,20 +379,8 @@
     
     if ([self.listArray[indexPath.section][indexPath.row] isAppUser] == 0) {
         // 邀请
-        UIAlertController *alerT = [UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"是否给%@发短信", [self.listArray[indexPath.section][indexPath.row] userName]] preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *aler1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
+
             [self showMessageView:@[[self.listArray[indexPath.section][indexPath.row] mobile]] title:@"" body:@"嗨！我正在使用君高高尔夫APP，感觉很不错，推荐你下载使用。下载链接：https://itunes.apple.com/cn/app/君高高尔夫-打造专业的高尔夫社群平台/id1056048082?mt=8"];
-        }];
-        [alerT addAction:aler1];
-        
-        UIAlertAction *aler2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-        [alerT addAction:aler2];
-        
-        [self.navigationController presentViewController:alerT animated:YES completion:nil];
         
     }else{
         if ([self.listArray[indexPath.section][indexPath.row] isFriend] == 0) {
@@ -442,15 +430,15 @@
     
     if(result==MessageComposeResultSent)
     {
-        NSLog(@"发短信成功");
+        [LQProgressHud showMessage:@"发短信成功"];
     }
     else if(result==MessageComposeResultCancelled)
     {
-        NSLog(@"发短信取消");
+        [LQProgressHud showMessage:@"发短信取消"];
     }
     else if(result==MessageComposeResultFailed)
     {
-        NSLog(@"发短信失败");
+        [LQProgressHud showMessage:@"发短信失败"];
     }
     
     [controller dismissViewControllerAnimated:YES completion:nil];

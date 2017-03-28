@@ -103,6 +103,7 @@
             
             MySetAboutController *abVC = [[MySetAboutController alloc] init];
             abVC.title = @"关于我们";
+            abVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:abVC animated:YES];
         }
             break;
