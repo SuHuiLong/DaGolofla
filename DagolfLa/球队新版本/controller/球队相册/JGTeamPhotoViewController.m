@@ -199,7 +199,7 @@
                 //需要跳转
                 [self.navigationController pushViewController:phoVc animated:YES];
             }else{
-                [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
+                [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放" FromView:self.view];
             }
         }
     }else{
@@ -208,7 +208,7 @@
             [self.navigationController pushViewController:phoVc animated:YES];
         }else{
             //不要需要跳转
-            [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放" FromView:self.view];
         }
     }
 
