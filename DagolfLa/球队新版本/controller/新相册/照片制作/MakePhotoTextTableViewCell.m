@@ -53,7 +53,7 @@
     _iconImageView.hidden = true;
     _descLabel.hidden = true;
     _textViewLabel.hidden = true;
-    NSURL *iconUrl = [Helper setImageIconUrl:@"album/media" andTeamKey:[model.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO];
+    NSURL *iconUrl = [Helper setImageIconUrl:@"album/media" andTeamKey:[model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:NO];
     NSString *textStr = model.textStr;
     
     if (textStr.length>0) {
