@@ -36,16 +36,7 @@
 @implementation JGDAddFromContactViewController
 
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:NO];
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-}
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:NO];
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-}
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:NO];
