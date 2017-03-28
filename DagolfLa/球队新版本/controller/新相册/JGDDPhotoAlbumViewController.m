@@ -294,7 +294,7 @@
                 UIButton *indexBtn = _bottomView.subviews[i];
                 indexBtn.selected = true;
                 indexBtn.userInteractionEnabled = true;
-                if (i==2) {
+                if (i==2&&![_power containsString:@"1005"]) {
                     for (JGPhotoListModel *model in _selectArray) {
                         if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
                             indexBtn.selected = false;

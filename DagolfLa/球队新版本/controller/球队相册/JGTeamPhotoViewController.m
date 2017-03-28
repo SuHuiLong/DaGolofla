@@ -40,6 +40,8 @@
     if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
         UIBarButtonItem* rightBtn = [[UIBarButtonItem alloc]initWithTitle:@"所有照片" style:UIBarButtonItemStylePlain target:self action:@selector(totalPhotoView)];
         rightBtn.tintColor = [UIColor whiteColor];
+        [rightBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
+
         self.navigationItem.rightBarButtonItem = rightBtn;
     }
 
