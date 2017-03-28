@@ -147,7 +147,6 @@
                 [model setValuesForKeysWithDictionary:dicList];
                 [self.dataArray addObject:model];
             }
-
             _teamName = [data objectForKey:@"teamName"];
             _state = [data objectForKey:@"isTeamMemeber"];
             _power = [data objectForKey:@"power"];
