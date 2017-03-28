@@ -9,6 +9,8 @@
 #import "ViewController.h"
 
 @interface JGTeamPhotoViewController : ViewController
+//球场title
+@property (nonatomic, copy)NSString *titleStr;
 
 //相册中的参数：球队的key
 @property (strong, nonatomic) NSNumber* teamKey;
@@ -19,7 +21,7 @@
 //teamember,判断是不是球队成员
 @property (strong, nonatomic) NSMutableDictionary* dictMember;
 
-//判断球队是不是在审核中
+
 
 
 

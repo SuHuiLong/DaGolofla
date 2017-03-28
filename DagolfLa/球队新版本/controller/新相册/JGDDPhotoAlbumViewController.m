@@ -133,7 +133,7 @@
             if (_page == 0){
                 //清除数组数据 _smallUrlArray
                 [self.dataArray removeAllObjects];
-                if (!_isGetAll) {
+                if (!_isGetAll&&[[data objectForKey:@"isTeamMemeber"] integerValue] == 1) {
                     [self.dataArray addObject:[[JGPhotoListModel alloc] init]];
                 }
             }
@@ -149,8 +149,8 @@
             }
             _teamName = [data objectForKey:@"teamName"];
             _state = [data objectForKey:@"isTeamMemeber"];
-            _power = [data objectForKey:@"power"];
             if (!_isGetAll) {
+                _power = [data objectForKey:@"power"];
                 _teamTimeKey = [data objectForKey:@"teamKey"];
                 _strTitle = [data objectForKey:@"albumName"];
                 self.title = _strTitle;
@@ -415,7 +415,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    int differ = 0;
+    if (!_isGetAll&&[_state integerValue] == 1) {
+        differ = 1;
+    }
     NSMutableArray *browseItemArray = [[NSMutableArray alloc]init];
     JGPhotoListModel *indexModel = self.dataArray[indexPath.item];
     if (_bottomView.y != screenHeight) {
@@ -423,7 +426,6 @@
             //选中照片
             [self selectPhotoModel:indexModel index:indexPath.item];
         }
-
         return;
     }
     
@@ -432,7 +434,7 @@
         [self upDataClick];
         return;
     }
-    for(int i = 1;i < [self.dataArray count];i++)
+    for(int i = differ;i < [self.dataArray count];i++)
     {
         JGPhotoListModel *model = self.dataArray[i];
         UIImageView *imageView = [self.view viewWithTag:i + 100];
@@ -449,7 +451,7 @@
         
         [browseItemArray addObject:browseItem];
     }
-    NSIndexPath *indexPathNext = [NSIndexPath indexPathForItem:indexPath.item-1 inSection:indexPath.section];
+    NSIndexPath *indexPathNext = [NSIndexPath indexPathForItem:indexPath.item-differ inSection:indexPath.section];
     MSSCollectionViewCell *cell = (MSSCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPathNext];
     MSSBrowseNetworkViewController *bvc = [[MSSBrowseNetworkViewController alloc]initWithBrowseItemArray:browseItemArray currentIndex:cell.imageView.tag - 100];
     bvc.blockRef = ^(){

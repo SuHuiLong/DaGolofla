@@ -15,6 +15,8 @@
 #import "JGDWKCourtDetailViewController.h"
 #import "JGDCourtAllianceTableViewCell.h"
 #import "JGDAllianceCommitOrderViewController.h"    // 联盟会员提交界面
+#import "MyfootModel.h"
+#import "ShowMapViewViewController.h"
 
 static CGFloat ImageHeight  = 210.0;
 
@@ -28,6 +30,7 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, strong) UIImageView *gradientImage;
 
 @property (nonatomic, strong) UIButton *detailBtn; // 详情
+@property (nonatomic, strong) UIButton *navigationBtn; // 导航
 
 @property (nonatomic, strong) UILabel *serviceDetail;
 
@@ -174,17 +177,24 @@ static CGFloat ImageHeight  = 210.0;
     //    courtLB.textAlignment = NSTextAlignmentCenter;
     //    [self.titleView addSubview:courtLB];
     
-    
-    
-    self.detailBtn = [[UIButton alloc]initWithFrame:CGRectMake(300 * ProportionAdapter, self.imgProfile.frame.size.height - 30 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter)];
+    self.detailBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, self.imgProfile.frame.size.height - 30 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter)];
     self.detailBtn.tag = 522;
     [self.detailBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.detailBtn setImage:[UIImage imageNamed:@"booking_details"] forState:(UIControlStateNormal)];
     [self.detailBtn setTitle:@"详情" forState:(UIControlStateNormal)];
     self.detailBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10 * ProportionAdapter, 0, 0);
+    [self.imgProfile addSubview:self.detailBtn];
+    
+    self.navigationBtn = [[UIButton alloc]initWithFrame:CGRectMake(300 * ProportionAdapter, self.imgProfile.frame.size.height - 30 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter)];
+
+    [self.navigationBtn addTarget:self action:@selector(pushNavigationView) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.navigationBtn setImage:[UIImage imageNamed:@"mapsearch_location"] forState:(UIControlStateNormal)];
+    [self.navigationBtn setTitle:@"导航" forState:(UIControlStateNormal)];
+    self.navigationBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10 * ProportionAdapter, 0, 0);
     
     //    [self.detailBtn addTarget:self action:@selector(replaceWithPicture:) forControlEvents:UIControlEventTouchUpInside];
-    [self.imgProfile addSubview:self.detailBtn];
+    [self.imgProfile addSubview:self.navigationBtn];
+    
     
     
     self.view.backgroundColor = [UIColor whiteColor];
@@ -281,6 +291,7 @@ static CGFloat ImageHeight  = 210.0;
         
     }else if (btn.tag == 522) {
         JGDWKCourtDetailViewController *detailVC = [[JGDWKCourtDetailViewController alloc] init];
+        detailVC.parkName = [self.detailDic objectForKey:@"ballName"];
         detailVC.ballKey = self.timeKey;
         if (self.isLeague == 1) {
             detailVC.isLeague = true;
@@ -299,6 +310,20 @@ static CGFloat ImageHeight  = 210.0;
         }];    }
 }
 
+//导航
+-(void)pushNavigationView{
+    MyfootModel *model = [[MyfootModel alloc] init];
+    model.xIndex = [self.detailDic objectForKey:@"latitude"];
+    model.yIndex = [self.detailDic objectForKey:@"longitude"];
+    model.golfName = [self.detailDic objectForKey:@"ballName"];
+    ShowMapViewViewController *mapVC = [[ShowMapViewViewController alloc] init];
+    mapVC.fromWitchVC = 1;
+    mapVC.isLeague = _isLeague;
+    mapVC.mapCLLocationCoordinate2DArr = [NSMutableArray arrayWithObjects:model, nil];
+    [self.navigationController pushViewController:mapVC animated:YES];
+
+
+}
 
 #pragma mark -- 改变图片位置 放大缩小
 - (void)updateImg {
@@ -316,6 +341,7 @@ static CGFloat ImageHeight  = 210.0;
         self.titleView.frame = CGRectMake((factor-screenWidth)/2, 0, title.size.width, title.size.height);
         
         self.detailBtn.hidden = YES;
+        self.navigationBtn.hidden = YES;
         //        self.addressBtn.hidden = YES;
     } else {
         CGRect f = self.imgProfile.frame;
@@ -328,6 +354,7 @@ static CGFloat ImageHeight  = 210.0;
         
         if (yOffset == 0.0) {
             self.detailBtn.hidden = NO;
+            self.navigationBtn.hidden = NO;
             //            self.addressBtn.hidden = NO;
         }
     }

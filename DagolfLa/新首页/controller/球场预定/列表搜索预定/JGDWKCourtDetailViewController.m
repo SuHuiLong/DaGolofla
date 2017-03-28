@@ -46,12 +46,12 @@
         NSArray *array = [urlString componentsSeparatedByString:@"="];
         NSString *latitude = [array[1] componentsSeparatedByString:@"&"][0];
         NSString *longitude = [array[2] componentsSeparatedByString:@"&"][0];
-        NSString *adress = array[3];
-        NSLog(@"%@ --- %@ --- %@", latitude, longitude, adress);
+
+        
         MyfootModel *model = [[MyfootModel alloc] init];
         model.xIndex = [self stringNumberValue:latitude];
         model.yIndex = [self stringNumberValue:longitude];
-        model.golfName = adress;
+        model.golfName = _parkName;
         ShowMapViewViewController *mapVC = [[ShowMapViewViewController alloc] init];
         mapVC.fromWitchVC = 1;
         mapVC.isLeague = _isLeague;

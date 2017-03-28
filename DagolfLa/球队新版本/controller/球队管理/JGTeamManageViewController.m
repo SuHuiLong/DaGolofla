@@ -130,6 +130,7 @@
             phoVc.teamKey = [self.detailDic objectForKey:@"timeKey"];
             phoVc.powerPho = self.power;
             phoVc.dictMember = _memberDic;
+            phoVc.titleStr = [self.detailDic objectForKey:@"name"];
             [self.navigationController pushViewController:phoVc animated:YES];
         }
         
