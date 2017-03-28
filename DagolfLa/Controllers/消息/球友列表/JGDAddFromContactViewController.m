@@ -36,16 +36,7 @@
 @implementation JGDAddFromContactViewController
 
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:NO];
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-}
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:NO];
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-}
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:NO];
@@ -62,6 +53,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self createSearchTable];
     
@@ -380,7 +372,7 @@
     if ([self.listArray[indexPath.section][indexPath.row] isAppUser] == 0) {
         // 邀请
 
-            [self showMessageView:@[[self.listArray[indexPath.section][indexPath.row] mobile]] title:@"" body:@"嗨！我正在使用君高高尔夫APP，感觉很不错，推荐你下载使用。下载链接：https://itunes.apple.com/cn/app/君高高尔夫-打造专业的高尔夫社群平台/id1056048082?mt=8"];
+            [self showMessageView:@[[self.listArray[indexPath.section][indexPath.row] mobile]] title:@"" body:@"嗨！我正在使用君高高尔夫APP，感觉很不错，推荐你下载使用。下载链接：https://itunes.apple.com/cn/app/id1056048082?mt=8"];
         
     }else{
         if ([self.listArray[indexPath.section][indexPath.row] isFriend] == 0) {
@@ -434,7 +426,7 @@
     }
     else if(result==MessageComposeResultCancelled)
     {
-        [LQProgressHud showMessage:@"发短信取消"];
+//        [LQProgressHud showMessage:@"发短信取消"];
     }
     else if(result==MessageComposeResultFailed)
     {

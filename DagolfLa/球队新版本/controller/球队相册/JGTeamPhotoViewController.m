@@ -35,6 +35,9 @@
     
     _page = 0;
     self.title = @"球队相册";
+    if (_titleStr) {
+        self.title = _titleStr;
+    }
     _dataArray = [[NSMutableArray alloc]init];
     
     if ([[_dictMember objectForKey:@"state"] integerValue] == 1) {
@@ -196,7 +199,7 @@
                 //需要跳转
                 [self.navigationController pushViewController:phoVc animated:YES];
             }else{
-                [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
+                [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放" FromView:self.view];
             }
         }
     }else{
@@ -205,7 +208,7 @@
             [self.navigationController pushViewController:phoVc animated:YES];
         }else{
             //不要需要跳转
-            [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放，请先加入球队再行观看" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"此相册仅对球队成员开放" FromView:self.view];
         }
     }
 
@@ -246,9 +249,10 @@
     // Set up the reuse identifier
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"JGTeamPhotoCollectionViewCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    [cell showData:_dataArray[indexPath.row]];
+    JGLPhotoAlbumModel *model = _dataArray[indexPath.row];
+    [cell showData:model];
 
-    
+
     /**
      *  //POWER == 0，所有人可见，隐藏image    power == 1  仅球队成员可见
      */
@@ -271,7 +275,7 @@
     }
     if (_powerPho != nil) {
         if ([_powerPho containsString:@"1005"] == YES) {
-            if (_manageInter == 1) {
+            if (_manageInter == 1||!model.timeKey) {
                 cell.manageBtn.hidden = YES;
             }else{
                 cell.manageBtn.hidden = NO;

@@ -85,12 +85,16 @@
     return _listArray;
 }
 
-//- (void)dealloc{
-//    self.searchController = nil;
-//}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+
     self.searchController.searchBar.hidden = NO;
     
     if (_begainSearch == YES) {

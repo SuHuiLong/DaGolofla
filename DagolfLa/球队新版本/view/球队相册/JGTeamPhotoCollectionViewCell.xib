@@ -113,7 +113,7 @@
                 <outlet property="suoImage" destination="16x-72-tZ1" id="yew-Vt-S5e"/>
                 <outlet property="timeLabel" destination="9Mh-bs-OAv" id="Opg-NP-O22"/>
             </connections>
-            <point key="canvasLocation" x="-336" y="12"/>
+            <point key="canvasLocation" x="-471" y="-15"/>
         </collectionViewCell>
     </objects>
     <resources>
