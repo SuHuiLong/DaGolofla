@@ -46,6 +46,7 @@ static JGHPushClass *pushClass = nil;
 }
 
 - (void)URLString:(NSString *)urlString pushVC:(PushClass)pushVC{
+
     if ([urlString containsString:@"teamWithDraw"]) {
         if ([urlString containsString:@"?"]) {
             JGDWithDrawTeamMoneyViewController *vc = [[JGDWithDrawTeamMoneyViewController alloc] init];
@@ -136,16 +137,16 @@ static JGHPushClass *pushClass = nil;
         if (pushVC) {
             pushVC(teamGroupCtrl);
         }
-    }
-    
-    //分组--管理
-    if ([urlString containsString:@"activityGroupAdmin"]) {
-        JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
-        teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
-        if (pushVC) {
-            pushVC(teamGroupCtrl);
+    }else{
+        //分组--管理
+        if ([urlString containsString:@"activityGroupAdmin"]) {
+            JGTeamGroupViewController *teamGroupCtrl= [[JGTeamGroupViewController alloc]init];
+            teamGroupCtrl.teamActivityKey = [[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"] integerValue];
+            if (pushVC) {
+                pushVC(teamGroupCtrl);
+            }
         }
-    }
+    }    
     
     //活动成绩详情 --
     if ([urlString containsString:@"activityScore"]) {
