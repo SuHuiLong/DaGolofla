@@ -629,6 +629,7 @@ static CGFloat ImageHeight  = 210.0;
         [LQProgressHud hide];
         btn.userInteractionEnabled = YES;
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
+            
             [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                 [self.navigationController presentViewController:alertView animated:YES completion:nil];
             }];
@@ -683,14 +684,14 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 创建成功提示
 - (void)popSeeussulCtrl{
-    UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动创建成功!" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:commitAction];
-
     dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"系统提示" message:@"活动创建成功!" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:commitAction];
+        
         [self presentViewController:alertController animated:YES completion:nil];
     });
 }
