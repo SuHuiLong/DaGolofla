@@ -135,6 +135,9 @@
                 [self.dataArray removeAllObjects];
                 if (!_isGetAll&&[[data objectForKey:@"isTeamMemeber"] integerValue] == 1) {
                     [self.dataArray addObject:[[JGPhotoListModel alloc] init]];
+                    if ([_rightItem.title isEqualToString:@"取消"]) {
+                        [self.dataArray removeAllObjects];
+                    }
                 }
             }
             //数据解析
@@ -289,8 +292,8 @@
         //未选中的设为选中
         indexModel.isSelect = true;
         [self.selectArray addObject:indexModel];
-        if (self.selectArray.count==1) {
-            for (NSInteger i = 0; i<3; i++) {
+
+        for (NSInteger i = 0; i<3; i++) {
                 UIButton *indexBtn = _bottomView.subviews[i];
                 indexBtn.selected = true;
                 indexBtn.userInteractionEnabled = true;
@@ -301,8 +304,8 @@
                             indexBtn.userInteractionEnabled = false;
                         }
                     }
+
                 }
-            }
         }
     }
     
@@ -439,7 +442,10 @@
         JGPhotoListModel *model = self.dataArray[i];
         UIImageView *imageView = [self.view viewWithTag:i + 100];
         MSSBrowseModel *browseItem = [[MSSBrowseModel alloc]init];
-        browseItem.bigImageUrl = [NSString stringWithFormat:@"%@", [Helper setImageIconUrl:@"album/media" andTeamKey:[model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:NO]];// 加载网络图片大图地址
+        //browseItem.bigImageUrl = [NSString stringWithFormat:@"%@", [Helper setImageIconUrl:@"album/media" andTeamKey:[model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:NO]];// 加载网络图片大图地址
+        
+        browseItem.bigImageUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/album/media/%@.jpg", model.timeKey];
+        //[self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/album/media/%td.jpg@400w_400h_2o", timeKey]] placeholderImage:[UIImage imageNamed:@"teamPhotoGroupDefault"]];
         browseItem.smallImageView = imageView;// 小图
        
         browseItem.timeKey = _teamTimeKey;

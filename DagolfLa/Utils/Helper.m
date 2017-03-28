@@ -115,7 +115,7 @@
             }
             else
             {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td.jpg",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td.jpg@400w_400h_2o",iconType,timeKey];
             }
             
         }
