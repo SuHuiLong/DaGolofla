@@ -11,7 +11,6 @@
 #import "DateTimeViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "SXPickPhoto.h"
-#import "JGCostSetViewController.h"
 #import "BallParkViewController.h"
 #import "JGHDatePicksViewController.h"
 #import "JGHNewActivityImageCell.h"
@@ -36,7 +35,7 @@ static NSString *const JGHNewActivityImageCellIdentifier = @"JGHNewActivityImage
 
 static CGFloat ImageHeight  = 210.0;
 
-@interface JGHNewEditorActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate,UITextFieldDelegate, JGCostSetViewControllerDelegate, JGHNewEditorSaveBtnCellDelegate, JGLActivityMemberSetViewControllerDelegate>
+@interface JGHNewEditorActivityViewController ()<UITableViewDelegate, UITableViewDataSource, JGHConcentTextViewControllerDelegate,UITextFieldDelegate, JGHNewEditorSaveBtnCellDelegate, JGLActivityMemberSetViewControllerDelegate>
 {
     NSArray *_titleArray;//标题数组
     NSArray *_imageArray;//图片数组
@@ -195,7 +194,9 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 页面按钮事件
 - (void)initItemsBtnClick:(UIButton *)btn{
     if (btn.tag == 521) {
-        [self.navigationController popViewControllerAnimated:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:YES];
+        });
     }else if (btn.tag == 520){
         //更换背景
         [self SelectPhotoImage:btn];
@@ -288,6 +289,7 @@ static CGFloat ImageHeight  = 210.0;
     }else if(indexPath.section == 1){
         if (indexPath.row == 0) {
             JGHNewActivitySpaceCell *spaceCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivitySpaceCellIdentifier];
+            spaceCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return spaceCell;
         }else if (indexPath.row == 1){
             JGHNewActivityTextCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityTextCellIdentifier];
@@ -296,7 +298,7 @@ static CGFloat ImageHeight  = 210.0;
             [imageCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row] andContent:_model.name];
             imageCell.contentText.placeholder = @"请输入活动名称";
             imageCell.contentText.delegate = self;
-            
+            imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return imageCell;
         }else{
             JGHNewActivityImageCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageCellIdentifier];
@@ -318,24 +320,41 @@ static CGFloat ImageHeight  = 210.0;
             
             [imageCell configJGHNewActivityImageCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row] andContent:cellString];
             
+            imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return imageCell;
         }
     }else if (indexPath.section == 2){
         if (indexPath.row == 0) {
             JGHNewActivitySpaceCell *spaceCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivitySpaceCellIdentifier];
+            spaceCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return spaceCell;
         }else{
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
-            [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
+            titleCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            if (indexPath.row == 1) {
+                NSString *group = nil;
+                if (_model.maxCount > 0) {
+                    group = _titleArray[indexPath.section][indexPath.row];
+                    group = [NSString stringWithFormat:@"活动成员及分组(%td/%td)", self.model.sumCount,_model.maxCount];
+                    
+                    [titleCell configJGHNewActivityTextCellTitle:group andImageName:_imageArray[indexPath.section][indexPath.row]];
+                }else{
+                    [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
+                }
+            }else{
+                [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
+            }
             
             return titleCell;
         }
     }else if(indexPath.section == 3){
         if (indexPath.row == 0) {
             JGHNewActivitySpaceCell *spaceCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivitySpaceCellIdentifier];
+            spaceCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return spaceCell;
         }else if (indexPath.row == 2){
             JGHNewActivityTextCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityTextCellIdentifier];
+            imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [imageCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row] andContent:[NSString stringWithFormat:@"%@", (_model.maxCount >0)?[NSString stringWithFormat:@"%td", _model.maxCount]:@""]];
             imageCell.contentText.placeholder = @"请输入限制人数";
             imageCell.contentText.tag = 234;
@@ -343,11 +362,13 @@ static CGFloat ImageHeight  = 210.0;
             return imageCell;
         }else if (indexPath.row == 5){
             JGHNewActivityExplainCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityExplainCellIdentifier];
+            imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [imageCell configJGHNewActivityExplainCellContent:_model.info];
             imageCell.contentLable.numberOfLines = 2;
             return imageCell;
         }else{
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
+            titleCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
             
             if (indexPath.row == 4) {
@@ -361,15 +382,18 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         if (indexPath.row == 0 || indexPath.row == 3) {
             JGHNewActivitySpaceCell *spaceCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivitySpaceCellIdentifier];
+            spaceCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return spaceCell;
         }else if (indexPath.row == 1){
             JGHNewActivityImageAndTitleCell *titleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityImageAndTitleCellIdentifier];
+            titleCell.selectionStyle = UITableViewCellSelectionStyleNone;
             titleCell.direImageView.hidden = YES;
             [titleCell configJGHNewActivityTextCellTitle:_titleArray[indexPath.section][indexPath.row] andImageName:_imageArray[indexPath.section][indexPath.row]];
             
             return titleCell;
         }else if (indexPath.row == 2){
             JGHNewActivityTextAndTextCell *textCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityTextAndTextCellIdentifier];
+            textCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [textCell configJGHNewActivityTextAndTextCellName:_model.userName andMobile:_model.userMobile];
             
             textCell.nameText.tag = 23;
@@ -379,6 +403,8 @@ static CGFloat ImageHeight  = 210.0;
             return textCell;
         }else{
             JGHNewEditorSaveBtnCell *saveCell = [tableView dequeueReusableCellWithIdentifier:JGHNewEditorSaveBtnCellIdentifier];
+            saveCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            saveCell.saveBtn.tag = 1000;
             saveCell.delegate = self;
             [saveCell configJGHNewEditorSaveBtnCell:_isEditor];
             
@@ -475,7 +501,7 @@ static CGFloat ImageHeight  = 210.0;
         }
     }
     
-    [self.launchActivityTableView reloadData];
+    //[self.launchActivityTableView reloadData];
 }
 #pragma mark -- 刷新区域
 - (void)reloadindexPath:(NSIndexPath *)indexPath{
@@ -488,9 +514,13 @@ static CGFloat ImageHeight  = 210.0;
 - (void)reloadSaveBtn{
     _isEditor = YES;
     
-    NSIndexPath *savePath = [NSIndexPath indexPathForRow:4 inSection:4];
-    NSArray *indexSaveArray = [NSArray arrayWithObject:savePath];
-    [_launchActivityTableView reloadRowsAtIndexPaths:indexSaveArray withRowAnimation:UITableViewRowAnimationAutomatic];
+    UIButton *btn = [self.view viewWithTag:1000];
+    btn.userInteractionEnabled = YES;
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#F39800"]];
+    
+    //NSIndexPath *savePath = [NSIndexPath indexPathForRow:4 inSection:4];
+    //NSArray *indexSaveArray = [NSArray arrayWithObject:savePath];
+    //[_launchActivityTableView reloadRowsAtIndexPaths:indexSaveArray withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 #pragma mark -- 添加意向成员返回刷新数据
 - (void)reloadActivityMemberData{
@@ -558,7 +588,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    if (self.model.userName == nil) {
+    if (self.model.userName == nil || _model.userName.length == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请填写联系人" FromView:self.view];
         return;
     }
@@ -568,7 +598,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    [LQProgressHud showLoading:@"提交中..."];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%td", _model.teamKey] forKey:@"teamKey"];//球队key
@@ -589,6 +619,8 @@ static CGFloat ImageHeight  = 210.0;
     
     if (_model.maxCount >0) {
         [dict setObject:[NSString stringWithFormat:@"%ld", (long)self.model.maxCount] forKey:@"maxCount"];//最大人员数
+    }else{
+        [dict setObject:@0 forKey:@"maxCount"];//最大人员数
     }
     
     //[dict setObject:[NSString stringWithFormat:@"%ld", (long)_model.isClose] forKey:@"isClose"];//活动是否结束 0 : 开始 , 1 : 已结束
@@ -603,10 +635,10 @@ static CGFloat ImageHeight  = 210.0;
     //发布活动
     [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        [LQProgressHud hide];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
             [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
@@ -750,7 +782,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)updateImg {
     CGFloat yOffset = _launchActivityTableView.contentOffset.y;
     NSLog(@"yOffset:%f",yOffset);
-    CGFloat factor = ((ABS(yOffset)+ImageHeight*ProportionAdapter)*screenWidth)/ImageHeight*ProportionAdapter;
+    CGFloat factor = ((ABS(yOffset)+ImageHeight*ProportionAdapter)*screenWidth)/(ImageHeight*ProportionAdapter);
     if (yOffset < 0) {
         
         CGRect f = CGRectMake(-(factor-screenWidth)/2, 0, factor, ImageHeight*ProportionAdapter+ABS(yOffset));

@@ -48,7 +48,6 @@
     if (!cardStr) {
         cardStr = @"未知状态";
     }
-//  @[@"待审核",@"审核中",@"审核失败",@"已激活",@"",@"已停用",@"已过期"];
     if (cardState==0) {
         NSString *stateStr = cardStr;
         _maskingView.hidden = NO;

@@ -389,6 +389,8 @@
             model.switchMode = _switchMode;
             model.finish = [NSString stringWithFormat:@"%td", _scoreFinish];
             
+            model.areaArray = _areaArray;
+            
             //存数据库
             [[JGHScoreDatabase shareScoreDatabase]addJGHScoreListModel:model];
             
@@ -409,6 +411,10 @@
     
     if (model.region2 != nil) {
         [_currentAreaArray addObject:model.region2];
+    }
+    
+    if (model.areaArray) {
+        _areaArray = model.areaArray;
     }
     
     self.timer =[NSTimer scheduledTimerWithTimeInterval:[model.interval integerValue] target:self

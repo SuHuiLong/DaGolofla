@@ -15,4 +15,7 @@
 @property(nonatomic, copy)NSNumber *timeKey;
 //title
 @property(nonatomic, copy)NSString *headerStr;
+//作者
+@property(nonatomic, copy)NSString *writerStr;
+
 @end

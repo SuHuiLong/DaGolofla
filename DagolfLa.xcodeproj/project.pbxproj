@@ -45,6 +45,7 @@
 		186856031E5BD776001F44DD /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FD1E5BD776001F44DD /* UIView+Addition.m */; };
 		186856041E5BD776001F44DD /* UIView+GPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FF1E5BD776001F44DD /* UIView+GPExtension.m */; };
 		1872F3751E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */; };
+		189E368D1E84C102004BF082 /* SaveScheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 189E368C1E84C102004BF082 /* SaveScheduleView.m */; };
 		18D5DBCE1E65700F008C87EE /* shake-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18D5DBCD1E65700F008C87EE /* shake-sound.wav */; };
 		18D5DBD41E67A913008C87EE /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DBD11E67A912008C87EE /* NJKWebViewProgress.m */; };
 		18D5DBD51E67A913008C87EE /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DBD31E67A912008C87EE /* NJKWebViewProgressView.m */; };
@@ -1331,6 +1332,8 @@
 		186855FF1E5BD776001F44DD /* UIView+GPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GPExtension.m"; sourceTree = "<group>"; };
 		1872F3731E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+ChangeLineSpaceAndWordSpace.h"; sourceTree = "<group>"; };
 		1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+ChangeLineSpaceAndWordSpace.m"; sourceTree = "<group>"; };
+		189E368B1E84C102004BF082 /* SaveScheduleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveScheduleView.h; sourceTree = "<group>"; };
+		189E368C1E84C102004BF082 /* SaveScheduleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveScheduleView.m; sourceTree = "<group>"; };
 		18D5DBCD1E65700F008C87EE /* shake-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "shake-sound.wav"; sourceTree = "<group>"; };
 		18D5DBD01E67A912008C87EE /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgress.h; sourceTree = "<group>"; };
 		18D5DBD11E67A912008C87EE /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgress.m; sourceTree = "<group>"; };
@@ -3887,6 +3890,15 @@
 				1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		189E368A1E84C076004BF082 /* 显示保存进度 */ = {
+			isa = PBXGroup;
+			children = (
+				189E368B1E84C102004BF082 /* SaveScheduleView.h */,
+				189E368C1E84C102004BF082 /* SaveScheduleView.m */,
+			);
+			path = "显示保存进度";
 			sourceTree = "<group>";
 		};
 		18D5DBCF1E67A912008C87EE /* NJKWebViewProgress */ = {
@@ -8270,6 +8282,7 @@
 				F519443F1DFE4BED0009653B /* MSSCollectionViewCell.m */,
 				F519443B1DFE4BAB0009653B /* JGDDPhotoAlbumViewController.h */,
 				F519443C1DFE4BAB0009653B /* JGDDPhotoAlbumViewController.m */,
+				189E368A1E84C076004BF082 /* 显示保存进度 */,
 			);
 			path = "新相册";
 			sourceTree = "<group>";
@@ -9718,6 +9731,7 @@
 				203019521E0E4292005568E2 /* ZXISBNResultParser.m in Sources */,
 				F53A056E1D518F32009DD489 /* JGHSimpleAndResultsCell.m in Sources */,
 				F59A8BA21D5CA66400E8292B /* JGDResultViewController.m in Sources */,
+				189E368D1E84C102004BF082 /* SaveScheduleView.m in Sources */,
 				F5AEF6E91D408F3F009A8C34 /* JGDNotActivityHisCoreViewController.m in Sources */,
 				F5EB446F1C9957A7008ACD73 /* ChineseString.m in Sources */,
 				F5EE488B1D462625001D5E44 /* JGDHistoryScoreShowModel.m in Sources */,
