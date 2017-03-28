@@ -111,7 +111,7 @@
     if (isSet == 0) {
         if (isBack == 0) {
             if ([iconType isEqualToString:@"user"] == 1) {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@400w_400h_2o",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg",iconType,timeKey];
             }
             else
             {
