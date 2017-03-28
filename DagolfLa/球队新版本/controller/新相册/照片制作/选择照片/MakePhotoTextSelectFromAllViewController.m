@@ -14,6 +14,8 @@
     UICollectionView *_collectionView;
     //页码
     NSInteger _page;
+    //右按钮
+    UIBarButtonItem *_rightItem;
 }
 
 @end
@@ -37,15 +39,15 @@
 }
 //创建上导航
 -(void)createNavagationView{
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(leftBtnClick)];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(leftBtnClick)];
     leftItem.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftItem;
     self.title = @"所有照片";
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnCLick)];
-    rightItem.tintColor = [UIColor whiteColor];
-    [rightItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    _rightItem = [[UIBarButtonItem alloc]initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnCLick)];
+    _rightItem.tintColor = [UIColor lightGrayColor];
+    [_rightItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
     if (_canMultipleChoice) {
-        self.navigationItem.rightBarButtonItem = rightItem;
+        self.navigationItem.rightBarButtonItem = _rightItem;
     }
 }
 //创建colletionView
@@ -116,6 +118,10 @@
 }
 //右按钮点击
 -(void)rightBtnCLick{
+    if ([_rightItem.tintColor isEqual:LightGrayColor]) {
+        return;
+    }
+    
     //block传值
     NSMutableArray *mArray = [NSMutableArray array];
     for (JGPhotoListModel *model in self.dataArray) {
@@ -184,20 +190,31 @@
     JGPhotoListModel *model = self.dataArray[indexPath.item];
     if (model.isSelect) {
         model.isSelect = false;
-        [self.dataArray replaceObjectAtIndex:indexPath.item withObject:model];
-        [_collectionView reloadData];
-    }else{
+        BOOL isSelect = false;
         for (int i =0; i<self.dataArray.count; i++) {
             JGPhotoListModel *Model = self.dataArray[i];
             if (Model.isSelect) {
-                Model.isSelect = false;
+                isSelect = true;
             }
-            [self.dataArray replaceObjectAtIndex:i withObject:Model];
         }
-        model.isSelect = true;
+        if (!isSelect) {
+            _rightItem.tintColor = LightGrayColor;
+        }
         [self.dataArray replaceObjectAtIndex:indexPath.item withObject:model];
         [_collectionView reloadData];
+    }else{
         if (!_canMultipleChoice) {
+            for (int i =0; i<self.dataArray.count; i++) {
+                JGPhotoListModel *Model = self.dataArray[i];
+                if (Model.isSelect) {
+                    Model.isSelect = false;
+                }
+                [self.dataArray replaceObjectAtIndex:i withObject:Model];
+            }
+            _rightItem.tintColor = WhiteColor;
+
+            model.isSelect = true;
+            [self.dataArray replaceObjectAtIndex:indexPath.item withObject:model];
             if (_selectPhotoBlock!=nil) {
                 NSMutableArray *mArray = [NSMutableArray array];
                 MakePhotoTextViewModel *Model = [[MakePhotoTextViewModel alloc] init];
@@ -208,8 +225,14 @@
                 _selectPhotoBlock(dataArray);
             }
             [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            model.isSelect = true;
+            _rightItem.tintColor = WhiteColor;
+            [self.dataArray replaceObjectAtIndex:indexPath.item withObject:model];
         }
+        [_collectionView reloadData];
     }
+
     
 }
 

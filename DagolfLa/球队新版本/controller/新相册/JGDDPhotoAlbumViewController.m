@@ -135,6 +135,9 @@
                 [self.dataArray removeAllObjects];
                 if (!_isGetAll&&[[data objectForKey:@"isTeamMemeber"] integerValue] == 1) {
                     [self.dataArray addObject:[[JGPhotoListModel alloc] init]];
+                    if ([_rightItem.title isEqualToString:@"取消"]) {
+                        [self.dataArray removeAllObjects];
+                    }
                 }
             }
             //数据解析
@@ -289,8 +292,8 @@
         //未选中的设为选中
         indexModel.isSelect = true;
         [self.selectArray addObject:indexModel];
-        if (self.selectArray.count==1) {
-            for (NSInteger i = 0; i<3; i++) {
+
+        for (NSInteger i = 0; i<3; i++) {
                 UIButton *indexBtn = _bottomView.subviews[i];
                 indexBtn.selected = true;
                 indexBtn.userInteractionEnabled = true;
@@ -301,8 +304,8 @@
                             indexBtn.userInteractionEnabled = false;
                         }
                     }
+
                 }
-            }
         }
     }
     

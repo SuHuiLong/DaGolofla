@@ -78,7 +78,8 @@
     MakePhotoTextSelectFromAllViewController *vc = [[MakePhotoTextSelectFromAllViewController alloc] init];
     vc.teamTimeKey = _teamTimeKey;
     [vc SetSelectPhotoBlock:^(NSMutableArray *mArray) {
-        [weakself blockPopBack:mArray[0][0]];
+        MakePhotoTextViewModel *model = mArray[0][0];
+        [weakself blockPopBack:model.timeKey];
     }];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -86,10 +87,10 @@
 -(void)blockPopBack:(NSNumber *)timeKey{
     for (UIViewController *vc in self.navigationController.viewControllers) {
         if ([vc isKindOfClass:[MakePhotoTextViewController class]]) {
-            [self.navigationController popToViewController:vc animated:false];
             if (_selectBlock!=nil) {
                 _selectBlock(timeKey);
             }
+            [self.navigationController popToViewController:vc animated:false];
             return;
         }
     }
