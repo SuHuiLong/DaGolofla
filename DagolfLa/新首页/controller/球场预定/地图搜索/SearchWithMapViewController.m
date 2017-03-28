@@ -205,6 +205,10 @@
 
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+    
+   //设置点击自身位置时不显示气泡
+    [mapView deselectAnnotation:view.annotation
+                           animated:NO];
     view.selected = false;
     if ([view isKindOfClass:[SearchWithMapAnnotationView class]]) {
         SearchWithMapAnnotationView *sView = (SearchWithMapAnnotationView *)view;
