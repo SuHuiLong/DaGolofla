@@ -244,11 +244,11 @@
     }else if (pushType==1) {
         vc.DefaultText = _teamName;
     }else if (pushType == 3){
-        if (index>self.dataArray.count-1) {
-            NSMutableArray *indexSectionMarray = self.dataArray[index-1];
-            MakePhotoTextViewModel *rowModel = indexSectionMarray[indexRow];
-            vc.DefaultText = rowModel.textStr;
-        }
+
+        NSMutableArray *indexSectionMarray = self.dataArray[index];
+        MakePhotoTextViewModel *rowModel = indexSectionMarray[indexRow];
+        vc.DefaultText = rowModel.textStr;
+        
     }
     [self.navigationController pushViewController:vc animated:YES];
     
@@ -445,7 +445,7 @@
     if (textStr) {
         [self pushToTextWriteViewClickIndex:indexPath.section row:indexPath.row type:3];
     }else{
-        [self pushToPhotoViewClickIndex:indexPath.section row:indexPath.row type:1];
+//        [self pushToPhotoViewClickIndex:indexPath.section row:indexPath.row type:1];
     }
 }
 

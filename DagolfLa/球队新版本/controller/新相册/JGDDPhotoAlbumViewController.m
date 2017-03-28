@@ -281,19 +281,8 @@
         //选中的取消选中
         indexModel.isSelect = false;
         [self.selectArray removeObject:indexModel];
-        if (self.selectArray.count==0) {
             for (NSInteger i = 0; i<3; i++) {
-                UIButton *indexBtn = _bottomView.subviews[i];
-                indexBtn.selected = false;
-                indexBtn.userInteractionEnabled = false;
-            }
-        }
-    }else{
-        //未选中的设为选中
-        indexModel.isSelect = true;
-        [self.selectArray addObject:indexModel];
-
-        for (NSInteger i = 0; i<3; i++) {
+                
                 UIButton *indexBtn = _bottomView.subviews[i];
                 indexBtn.selected = true;
                 indexBtn.userInteractionEnabled = true;
@@ -304,8 +293,33 @@
                             indexBtn.userInteractionEnabled = false;
                         }
                     }
-
                 }
+                if (self.selectArray.count==0) {
+                indexBtn.selected = false;
+                indexBtn.userInteractionEnabled = false;
+            }
+        }
+        
+    }else{
+        //未选中的设为选中
+        indexModel.isSelect = true;
+        [self.selectArray addObject:indexModel];
+
+        for (NSInteger i = 0; i<3; i++) {
+            UIButton *indexBtn = _bottomView.subviews[i];
+            indexBtn.selected = true;
+            indexBtn.userInteractionEnabled = true;
+            
+            if (i==2&&![_power containsString:@"1005"]) {
+                for (JGPhotoListModel *model in _selectArray) {
+                    if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
+                        indexBtn.selected = false;
+                        indexBtn.userInteractionEnabled = false;
+                    }
+                }
+            }
+        
+        
         }
     }
     

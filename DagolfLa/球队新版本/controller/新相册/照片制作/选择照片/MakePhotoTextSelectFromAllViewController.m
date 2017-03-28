@@ -39,7 +39,7 @@
 }
 //创建上导航
 -(void)createNavagationView{
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:@selector(leftBtnClick)];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(leftBtnClick)];
     leftItem.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftItem;
     self.title = @"所有照片";
