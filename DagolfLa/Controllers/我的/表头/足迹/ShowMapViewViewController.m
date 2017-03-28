@@ -212,7 +212,7 @@
         // 设置不可拖拽
         newAnnotationView.draggable = NO;
         newAnnotationView.selected = YES;
-
+        
         if (self.fromWitchVC == 1) {
             //设置大头针图标
             NSString *image = @"normalPin";
@@ -220,44 +220,44 @@
                 image = @"pin";
             }
             newAnnotationView.image = [UIImage imageNamed:image];
- 
+            
+            //设置气泡
+            UIView *paopaoView = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(0, 0, 100, kHvertical(50)) ];
+            
+            UIImageView *paopaoBackView = [Factory createImageViewWithFrame:CGRectMake(0, 0, 100, kHvertical(35)) Image:nil];
+            paopaoBackView.backgroundColor = [UIColor whiteColor];
+            paopaoBackView.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
+            paopaoBackView.layer.shadowOffset = CGSizeMake(0,0);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+            paopaoBackView.layer.shadowOpacity = 0.4;//阴影透明度，默认0
+            paopaoBackView.layer.shadowRadius = 4;//阴影半径，默认3
+            paopaoBackView.layer.cornerRadius = 4;
+            [paopaoView addSubview:paopaoBackView];
+            
+            //自定义气泡的内容，添加子控件在popView上
+            UILabel *parkLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, 100, kHvertical(35)) textColor:RGB(49,49,49) fontSize:kHorizontal(13) Title:annotation.title];
+            parkLabel.numberOfLines = 1;
+            parkLabel.backgroundColor = WhiteColor;
+            parkLabel.layer.cornerRadius = 3;
+            
+            [parkLabel sizeToFitSelf];
+            [paopaoView addSubview:parkLabel];
+            //导航按钮
+            UIImageView *navigationView = [Factory createImageViewWithFrame:CGRectMake(parkLabel.x_width + kWvertical(6), 0, kWvertical(60), parkLabel.height) Image:[UIImage imageNamed:@"showMapNavagation"]];
+            [paopaoView addSubview:navigationView];
+            
+            paopaoView.width = navigationView.x_width;
+            paopaoBackView.width = paopaoView.width;
+            //向下尖号
+            UIImageView *bottomArrow = [Factory createImageViewWithFrame:CGRectMake((navigationView.x_width - kWvertical(34))/2, parkLabel.y_height-kHvertical(8), kWvertical(34), kHvertical(16)) Image:[UIImage imageNamed:@"showMapBottom"]];
+            [paopaoView addSubview:bottomArrow];
+            
+            BMKActionPaopaoView *pView = [[BMKActionPaopaoView alloc]initWithCustomView:paopaoView];
+            pView.frame = CGRectMake(0, 0, paopaoView.width, kHvertical(50));
+            newAnnotationView.paopaoView = nil;
+            newAnnotationView.paopaoView = pView;
+            return newAnnotationView;
         }
-        //设置气泡
-        UIView *paopaoView = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(0, 0, 100, kHvertical(50)) ];
 
-        UIImageView *paopaoBackView = [Factory createImageViewWithFrame:CGRectMake(0, 0, 100, kHvertical(35)) Image:nil];
-        paopaoBackView.backgroundColor = [UIColor whiteColor];
-        paopaoBackView.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
-        paopaoBackView.layer.shadowOffset = CGSizeMake(0,0);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
-        paopaoBackView.layer.shadowOpacity = 0.4;//阴影透明度，默认0
-        paopaoBackView.layer.shadowRadius = 4;//阴影半径，默认3
-        paopaoBackView.layer.cornerRadius = 4;
-        [paopaoView addSubview:paopaoBackView];
-        
-        //自定义气泡的内容，添加子控件在popView上
-        UILabel *parkLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, 100, kHvertical(35)) textColor:RGB(49,49,49) fontSize:kHorizontal(13) Title:annotation.title];
-        parkLabel.numberOfLines = 1;
-        parkLabel.backgroundColor = WhiteColor;
-        parkLabel.layer.cornerRadius = 3;
-        
-        [parkLabel sizeToFitSelf];
-        [paopaoView addSubview:parkLabel];
-        //导航按钮
-        UIImageView *navigationView = [Factory createImageViewWithFrame:CGRectMake(parkLabel.x_width + kWvertical(6), 0, kWvertical(60), parkLabel.height) Image:[UIImage imageNamed:@"showMapNavagation"]];
-        [paopaoView addSubview:navigationView];
-        
-        paopaoView.width = navigationView.x_width;
-        paopaoBackView.width = paopaoView.width;
-        //向下尖号
-        UIImageView *bottomArrow = [Factory createImageViewWithFrame:CGRectMake((navigationView.x_width - kWvertical(34))/2, parkLabel.y_height-kHvertical(8), kWvertical(34), kHvertical(16)) Image:[UIImage imageNamed:@"showMapBottom"]];
-        [paopaoView addSubview:bottomArrow];
-        
-        BMKActionPaopaoView *pView = [[BMKActionPaopaoView alloc]initWithCustomView:paopaoView];
-        pView.frame = CGRectMake(0, 0, paopaoView.width, kHvertical(50));
-        newAnnotationView.paopaoView = nil;
-        newAnnotationView.paopaoView = pView;
-        return newAnnotationView;
-        
         return newAnnotationView;
     }
     return nil;

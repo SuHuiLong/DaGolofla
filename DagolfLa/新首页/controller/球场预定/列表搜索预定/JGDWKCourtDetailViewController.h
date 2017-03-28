@@ -13,5 +13,7 @@
 @property (nonatomic, strong) NSNumber *ballKey;
 //是否联盟球场
 @property (nonatomic, assign) BOOL isLeague;
+//球场名
+@property(nonatomic, copy)NSString *parkName;
 
 @end
