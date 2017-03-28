@@ -43,7 +43,7 @@ static JGHScoreDatabase *scoreDatabase = nil;
     [_db open];
     
     // 初始化数据表 -- commitData 保存服务器是否成功
-    NSString *scoreSql = [NSString stringWithFormat:@"CREATE TABLE Table_%@ ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ,'timeKey' VARCHAR(255),'userKey' VARCHAR(255),'userName' VARCHAR(255),'userMobile'VARCHAR(255),'almost'VARCHAR(255),'tTaiwan'VARCHAR(255),'poleNumber'VARCHAR(255),'standardlever'VARCHAR(255),'pushrod'VARCHAR(255),'onthefairway'VARCHAR(255),'poleNameList'VARCHAR(255),'region1'VARCHAR(255),'region2'VARCHAR(255),'score'VARCHAR(255),'ballAreas'VARCHAR(255),'finish'VARCHAR(255),'switchMode'VARCHAR(255), 'commitData'VARCHAR(255))", tableName];
+    NSString *scoreSql = [NSString stringWithFormat:@"CREATE TABLE Table_%@ ('id' INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ,'timeKey' VARCHAR(255),'userKey' VARCHAR(255),'userName' VARCHAR(255),'userMobile'VARCHAR(255),'almost'VARCHAR(255),'tTaiwan'VARCHAR(255),'poleNumber'VARCHAR(255),'standardlever'VARCHAR(255),'pushrod'VARCHAR(255),'onthefairway'VARCHAR(255),'poleNameList'VARCHAR(255),'region1'VARCHAR(255),'region2'VARCHAR(255),'areaArray'VARCHAR(255),'score'VARCHAR(255),'ballAreas'VARCHAR(255),'finish'VARCHAR(255),'switchMode'VARCHAR(255), 'commitData'VARCHAR(255))", tableName];
     
     [_db executeUpdate:scoreSql];
     
@@ -81,9 +81,9 @@ static JGHScoreDatabase *scoreDatabase = nil;
     }else{
         //插入
         NSString *tableName = [NSString stringWithFormat:@"Table_%@", _tableName];
-        NSString *sqlColumnMStr = @"timeKey, userKey, userName, userMobile, almost, tTaiwan, poleNumber, standardlever, pushrod, onthefairway, poleNameList, region1, region2, score, ballAreas, finish, switchMode";
-        NSString *valueString = @"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
-        NSArray *sqlValues = [NSArray arrayWithObjects:scoreModel.timeKey, scoreModel.userKey, scoreModel.userName, (scoreModel.userMobile)?scoreModel.userMobile:@"", (scoreModel.almost)?scoreModel.almost:@"", scoreModel.tTaiwan, [scoreModel.poleNumber componentsJoinedByString:@","], [scoreModel.standardlever componentsJoinedByString:@","], [scoreModel.pushrod componentsJoinedByString:@","], [scoreModel.onthefairway componentsJoinedByString:@","], [scoreModel.poleNameList componentsJoinedByString:@","], scoreModel.region1, scoreModel.region2, [Helper dictionaryToJson:scoreModel.score], [scoreModel.ballAreas componentsJoinedByString:@","], scoreModel.finish, [NSString stringWithFormat:@"%td", scoreModel.switchMode], nil];
+        NSString *sqlColumnMStr = @"timeKey, userKey, userName, userMobile, almost, tTaiwan, poleNumber, standardlever, pushrod, onthefairway, poleNameList, region1, region2, areaArray, score, ballAreas, finish, switchMode";
+        NSString *valueString = @"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+        NSArray *sqlValues = [NSArray arrayWithObjects:scoreModel.timeKey, scoreModel.userKey, scoreModel.userName, (scoreModel.userMobile)?scoreModel.userMobile:@"", (scoreModel.almost)?scoreModel.almost:@"", scoreModel.tTaiwan, [scoreModel.poleNumber componentsJoinedByString:@","], [scoreModel.standardlever componentsJoinedByString:@","], [scoreModel.pushrod componentsJoinedByString:@","], [scoreModel.onthefairway componentsJoinedByString:@","], [scoreModel.poleNameList componentsJoinedByString:@","], scoreModel.region1, scoreModel.region2, [scoreModel.areaArray componentsJoinedByString:@","], [Helper dictionaryToJson:scoreModel.score], [scoreModel.ballAreas componentsJoinedByString:@","], scoreModel.finish, [NSString stringWithFormat:@"%td", scoreModel.switchMode], nil];
         NSString * insertSql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)", tableName, sqlColumnMStr, valueString];
         
         BOOL result = [_db executeUpdate:insertSql withArgumentsInArray:sqlValues];
@@ -211,6 +211,8 @@ static JGHScoreDatabase *scoreDatabase = nil;
         
         scoreModel.region1 = [res stringForColumn:@"region1"];
         scoreModel.region2 = [res stringForColumn:@"region2"];
+        
+        scoreModel.areaArray = [NSArray arrayWithArray:[[res stringForColumn:@"areaArray"] componentsSeparatedByString:@","]];
         
         scoreModel.score = [Helper dictionaryWithJsonString:[res stringForColumn:@"score"]];
         

@@ -44,6 +44,9 @@
 //球洞mingc
 @property (nonatomic, strong)NSArray *poleNameList;
 
+//所有区域
+@property (nonatomic, strong)NSArray *areaArray;
+
 // timeKey
 @property (nonatomic, strong)NSNumber *timeKey;
 
