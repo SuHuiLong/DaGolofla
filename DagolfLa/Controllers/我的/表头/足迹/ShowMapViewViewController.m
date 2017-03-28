@@ -333,7 +333,6 @@
         [alertController dismissViewControllerAnimated:YES completion:nil];
         
     }]];
-    
     //显示alertController
     [self presentViewController:alertController animated:YES completion:nil];
     
