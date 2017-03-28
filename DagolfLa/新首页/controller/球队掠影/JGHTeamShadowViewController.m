@@ -18,7 +18,7 @@
 
 #import "JGLPhotoAlbumModel.h"
 
-#import "JGHShadowPhotoAlbumViewController.h"
+#import "JGDDPhotoAlbumViewController.h"
 #import "JGHPhotoShadowCollectionViewCell.h"
 
 static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoShadowCollectionViewCell";
@@ -221,7 +221,7 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    JGHShadowPhotoAlbumViewController *phoVc = [[JGHShadowPhotoAlbumViewController alloc] init];
+    JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
     //    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
     JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc]init];
     model = _dataArray[indexPath.item];

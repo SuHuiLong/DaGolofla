@@ -127,6 +127,7 @@
         UIImageView *imageView = [self.view viewWithTag:i + 100];
         MSSBrowseModel *browseItem = [[MSSBrowseModel alloc]init];
         browseItem.bigImageUrl = [NSString stringWithFormat:@"%@", [Helper setImageIconUrl:@"album/media" andTeamKey:[[self.dataArray[i] timeKey] integerValue] andIsSetWidth:NO andIsBackGround:NO]];// 加载网络图片大图地址
+        browseItem.bigImageUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/album/media/%ld.jpg", (long)[[self.dataArray[i] timeKey] integerValue]];
         browseItem.smallImageView = imageView;// 小图
         
         browseItem.timeKey = _teamTimeKey;
