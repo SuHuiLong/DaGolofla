@@ -36,7 +36,7 @@
 
     NSInteger timeKey = [model.timeKey integerValue];
     if (model.timeKey!=nil) {
-        [self.imageView sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:timeKey andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"teamPhotoGroupDefault"]];
+        [self.imageView sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:timeKey andIsSetWidth:NO andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"teamPhotoGroupDefault"]];
     }else{
         [self.imageView setImage:[UIImage imageNamed:@"teamPhotoAdd"]];
     }

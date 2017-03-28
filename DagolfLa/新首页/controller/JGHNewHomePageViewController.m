@@ -36,6 +36,7 @@
 #import "JGDPersonalCard.h"
 #import "JGHIndexSystemMessageCell.h"
 #import "JGHShadowPhotoAlbumViewController.h"
+#import "JGHSystemNotViewController.h"
 
 static NSString *const JGHPASHeaderTableViewCellIdentifier = @"JGHPASHeaderTableViewCell";
 static NSString *const JGHConsultChannelCellIdentifier = @"JGHConsultChannelCell";
@@ -516,15 +517,14 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (indexPath.section == 0) {
         [self isLoginUp];
         //系统消息
-        /*
         if ([_indexModel.Msg objectForKey:@"linkURL"]) {
             [self pushctrlWithUrl:[_indexModel.Msg objectForKey:@"linkURL"]];
         }else{
             //消息无跳转链接－－跳转至消息
-            
+            JGHSystemNotViewController *sysCtrl = [[JGHSystemNotViewController alloc]init];
+            sysCtrl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:sysCtrl animated:YES];
         }
-        */
-        self.tabBarController.selectedIndex = 2;
     }
 }
 - (void)hotTeam:(NSDictionary *)dict{

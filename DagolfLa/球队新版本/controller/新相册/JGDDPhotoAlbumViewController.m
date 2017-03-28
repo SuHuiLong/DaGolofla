@@ -147,7 +147,6 @@
                 [model setValuesForKeysWithDictionary:dicList];
                 [self.dataArray addObject:model];
             }
-
             _teamName = [data objectForKey:@"teamName"];
             _state = [data objectForKey:@"isTeamMemeber"];
             _power = [data objectForKey:@"power"];
@@ -161,6 +160,7 @@
             if (!_rightItem) {
                 if ([[data objectForKey:@"isTeamMemeber"] integerValue] == 1||_isGetAll) {
                     _rightItem = [[UIBarButtonItem alloc]initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:self action:@selector(selectBtnCLick:)];
+                    [_rightItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
                     _rightItem.tintColor = [UIColor whiteColor];
                     self.navigationItem.rightBarButtonItem = _rightItem;
                 }
@@ -294,7 +294,7 @@
                 UIButton *indexBtn = _bottomView.subviews[i];
                 indexBtn.selected = true;
                 indexBtn.userInteractionEnabled = true;
-                if (i==2) {
+                if (i==2&&![_power containsString:@"1005"]) {
                     for (JGPhotoListModel *model in _selectArray) {
                         if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
                             indexBtn.selected = false;

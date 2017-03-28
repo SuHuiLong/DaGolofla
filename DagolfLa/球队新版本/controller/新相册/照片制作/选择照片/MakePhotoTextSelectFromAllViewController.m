@@ -43,6 +43,7 @@
     self.title = @"所有照片";
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"选择" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnCLick)];
     rightItem.tintColor = [UIColor whiteColor];
+    [rightItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
     if (_canMultipleChoice) {
         self.navigationItem.rightBarButtonItem = rightItem;
     }

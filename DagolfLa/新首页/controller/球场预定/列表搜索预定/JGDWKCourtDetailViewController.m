@@ -54,7 +54,7 @@
         model.golfName = adress;
         ShowMapViewViewController *mapVC = [[ShowMapViewViewController alloc] init];
         mapVC.fromWitchVC = 1;
-        mapVC.isLeague = 
+        mapVC.isLeague = _isLeague;
         mapVC.mapCLLocationCoordinate2DArr = [NSMutableArray arrayWithObjects:model, nil];
         [self.navigationController pushViewController:mapVC animated:YES];
     }else if ([urlString containsString:@"tel"]) {

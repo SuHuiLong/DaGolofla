@@ -29,7 +29,7 @@
         _iconIngv.image = [UIImage imageNamed:@"teamPhotoGroupAdd"];
     }else{
         _addLabel.text = @"";
-        [_iconIngv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"teamPhotoDefault"]];
+        [_iconIngv sd_setImageWithURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[model.mediaKey integerValue]andIsSetWidth:NO andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"teamPhotoDefault"]];
         _iconIngv.layer.masksToBounds = YES;
         _iconIngv.contentMode = UIViewContentModeScaleAspectFill;
         
