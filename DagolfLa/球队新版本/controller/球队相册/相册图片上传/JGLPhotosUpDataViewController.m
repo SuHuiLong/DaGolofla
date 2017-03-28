@@ -150,7 +150,7 @@
     self.navigationItem.rightBarButtonItem.customView.hidden=YES;
     MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
     progress.mode = MBProgressHUDModeIndeterminate;
-    progress.labelText = @"正在修改...";
+    progress.labelText = @"正在上传...";
     [self.view addSubview:progress];
     [progress show:YES];
     
