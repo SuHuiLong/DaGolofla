@@ -81,6 +81,7 @@
 }
 
 - (void)contanctUpload{
+    //2017年03月29日11:43:11
     NSMutableDictionary *DataDic = [NSMutableDictionary dictionary];
     [DataDic setObject:DEFAULF_USERID forKey:@"userKey"];
     [DataDic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
