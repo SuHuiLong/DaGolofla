@@ -63,8 +63,21 @@
     NSDictionary *dict = @{
                            @"userKey":DEFAULF_USERID,
                            @"ballKey":_ballKey,
-                           @"md5":md5
+                           @"md5":md5,
                            };
+
+    NSString *latitudeStr = [NSString stringWithFormat:@"%f",_userCoord.latitude];
+    NSString *longitudeStr = [NSString stringWithFormat:@"%f",_userCoord.longitude];
+    
+    if (latitudeStr.length>0) {
+        dict = @{
+                 @"userKey":DEFAULF_USERID,
+                 @"ballKey":_ballKey,
+                 @"md5":md5,
+                 @"longitude":longitudeStr,
+                 @"latitude":latitudeStr,
+                 };
+    }
     [[JsonHttp jsonHttp] httpRequest:@"bookball/getBookingOrderListByBallKey" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
     
     } completionBlock:^(id data) {

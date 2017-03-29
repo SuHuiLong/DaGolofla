@@ -315,6 +315,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.dataArray.count==0) {
+        return 0;
+    }
     NSArray *array = self.dataArray[section];
     return array.count;
 }
@@ -331,8 +334,11 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (self.dataArray.count==0) {
+        return 0;
+    }
+
     NSArray *array = self.dataArray[section];
-    
     if (section == array.count) {
         return kHvertical(50);
     }
@@ -354,6 +360,9 @@
 //底部视图
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footerView = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(0, 0, screenWidth, kHvertical(42))];
+    if (self.dataArray.count==0) {
+        return footerView;
+    }
     //创建添加按钮
     [self createAddPhotoAndTextViewOnView:footerView Y:kHvertical(10) section:section+1];
     return footerView;
@@ -418,6 +427,10 @@
     UITapGestureRecognizer *changeWriterTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeWriter)];
     [photoWriter addGestureRecognizer:changeWriterTap];
     [parknameBackView addSubview:photoWriter];
+    
+    UIImageView *addIcon = [Factory createImageViewWithFrame:CGRectMake(parknameBackView.width - kWvertical(17), kWvertical(4), kWvertical(13), kWvertical(13)) Image:[UIImage imageNamed:@"teamPhotoInsertIcon"]];
+    
+    [parknameBackView addSubview:addIcon];
     
     //创建添加按钮
     [self createAddPhotoAndTextViewOnView:headerView Y:headerBackView.y_height+kHvertical(20) section:0];

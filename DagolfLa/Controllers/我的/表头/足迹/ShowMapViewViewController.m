@@ -266,7 +266,7 @@
 //气泡弹窗点击
 - (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
 {
-    view.tag = 1000;
+//    view.tag = 1000;
 }
 
 - (void)mapView:(BMKMapView *)mapView didDeselectAnnotationView:(BMKAnnotationView *)view
@@ -283,10 +283,9 @@
 // 百度  高德 苹果
 -(void)AlertShow:(CLLocationCoordinate2D )coordinate{
     CLLocationCoordinate2D Coordinate = [JZLocationConverter bd09ToGcj02:coordinate];
-    
 
     UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"选择地图App" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
+
     //判断是否安装了百度地图，如果安装了百度地图，则使用百度地图导航
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"baidumap://"]]) {
         [alertController addAction:[UIAlertAction actionWithTitle:@"百度地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -304,16 +303,18 @@
             [[UIApplication  sharedApplication]openURL:[NSURL URLWithString:urlsting]];
         }]];
     }
-    //判断是否安装了腾讯地图，如果安装了腾讯地图，则使用腾讯地图导航
-    if ( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"qqmap://"]]) {
-        
-        [alertController addAction:[UIAlertAction actionWithTitle:@"腾讯地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-            NSString *urlStr = [[NSString stringWithFormat:@"qqmap://map/routeplan?type=drive&from=我的位置&to=%@&tocoord=%f,%f&policy=1&referer=myapp", [_mapCLLocationCoordinate2DArr[0] golfName],Coordinate.latitude,Coordinate.longitude]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            NSURL *r = [NSURL URLWithString:urlStr];
-            [[UIApplication sharedApplication] openURL:r];
-        }]];
-    }
+//    //判断是否安装了腾讯地图，如果安装了腾讯地图，则使用腾讯地图导航
+//    if ( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"qqmap://"]]) {
+//        
+//        [alertController addAction:[UIAlertAction actionWithTitle:@"腾讯地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            
+//            NSString *urlStr = [[NSString stringWithFormat:@"qqmap://map/routeplan?type=drive&from=我的位置&to=%@&tocoord=%f,%f&policy=1&referer=myapp", [_mapCLLocationCoordinate2DArr[0] golfName],Coordinate.latitude,Coordinate.longitude]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//            NSURL *r = [NSURL URLWithString:urlStr];
+//            [[UIApplication sharedApplication] openURL:r];
+//        }]];
+//    }
+    
+    
     //自带地图
     [alertController addAction:[UIAlertAction actionWithTitle:@"苹果地图" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -335,7 +336,7 @@
     }]];
     //显示alertController
     [self presentViewController:alertController animated:YES completion:nil];
-    
+
 }
 
 
@@ -344,6 +345,7 @@
 
     [_mapView viewWillDisappear];
     _mapView.delegate = nil; // 不用时，置nil
+    [_mapView removeFromSuperview];
     if (self.fromWitchVC == 1) {
         self.navigationController.navigationBarHidden = false;
     }

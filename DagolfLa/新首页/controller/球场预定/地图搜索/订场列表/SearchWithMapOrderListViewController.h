@@ -11,4 +11,6 @@
 @interface SearchWithMapOrderListViewController : BaseViewController
 //球场id
 @property(nonatomic,copy)NSString *ballKey;
+//自身坐标
+@property(nonatomic, assign)CLLocationCoordinate2D userCoord;
 @end

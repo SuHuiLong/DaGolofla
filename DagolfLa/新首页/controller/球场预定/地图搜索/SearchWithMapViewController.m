@@ -19,6 +19,8 @@
     BMKLocationService *_locService;
     //定位点与定位描述关联id
     NSInteger _iii;
+    //自身坐标
+    CLLocationCoordinate2D _userCoord;
 }
 //数据源
 @property(nonatomic,strong)NSMutableArray *dataArray;
@@ -45,7 +47,9 @@
 
 - (void)dealloc {
     if (_mapView) {
+        _mapView.delegate = nil;
         _mapView = nil;
+        [_mapView removeFromSuperview];
     }
 }
 
@@ -53,14 +57,15 @@
 #pragma mark - CreateView
 -(void)createView{
     //设置地图缩放级别
-    _mapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
-    _mapView.delegate = self;
+    BMKMapView *mapView =  [[BMKMapView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+    mapView.delegate = self;
     _locService = [[BMKLocationService alloc]init];
     _locService.delegate = self;
     [_locService startUserLocationService];
-    _mapView.showsUserLocation = YES;//显示自身位置
-    _mapView.zoomLevel = 10;
-    [self.view addSubview:_mapView];
+    mapView.showsUserLocation = YES;//显示自身位置
+    mapView.zoomLevel = 10;
+    [self.view addSubview:mapView];
+    _mapView = mapView;
     [self getLocation];
     //设置导航条
     [self createNavigationView];
@@ -116,6 +121,9 @@
     newAnnotation.image = [UIImage imageNamed:image];
     [newAnnotation configModel:model];
     
+    newAnnotation.userInteractionEnabled = true;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushAnination:)];
+    [newAnnotation addGestureRecognizer:tap];
     return newAnnotation;
 }
 
@@ -160,6 +168,33 @@
 -(void)popback{
     [self.navigationController popViewControllerAnimated:YES];
 }
+//点击
+-(void)pushAnination:(UITapGestureRecognizer *)tap{
+    
+    MKAnnotationView *view = (MKAnnotationView *)tap.view;
+    view.selected = false;
+    if ([view isKindOfClass:[SearchWithMapAnnotationView class]]) {
+        SearchWithMapAnnotationView *sView = (SearchWithMapAnnotationView *)view;
+        NSString *parkId = sView.dataModel.parkId;
+        NSInteger orderNum = sView.dataModel.orderNum;
+        NSString *pardName = sView.dataModel.parkName;
+        if (orderNum==1) {
+            JGDCourtDetailViewController *courtVC = [[JGDCourtDetailViewController alloc] init];
+            courtVC.timeKey = [NSNumber numberWithInteger:[sView.dataModel.bookballKey integerValue]];
+            [self.navigationController pushViewController:courtVC animated:YES];
+            
+        }else{
+            SearchWithMapOrderListViewController *vc = [[SearchWithMapOrderListViewController alloc] init];
+            vc.ballKey = parkId;
+            vc.title = pardName;
+            vc.userCoord = _userCoord;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        NSLog(@"%@",parkId);
+        
+    }
+    
+}
 
 
 #pragma mark - 定位代理
@@ -195,6 +230,7 @@
 //    _mapView.centerCoordinate = userLocation.location.coordinate;
     NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     [_mapView updateLocationData:userLocation];
+    _userCoord = userLocation.location.coordinate;
     [_locService stopUserLocationService];
 }
 //定位失败
@@ -205,31 +241,31 @@
 
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
-    
+
    //设置点击自身位置时不显示气泡
     [mapView deselectAnnotation:view.annotation
                            animated:NO];
-    view.selected = false;
-    if ([view isKindOfClass:[SearchWithMapAnnotationView class]]) {
-        SearchWithMapAnnotationView *sView = (SearchWithMapAnnotationView *)view;
-        NSString *parkId = sView.dataModel.parkId;
-        NSInteger orderNum = sView.dataModel.orderNum;
-        NSString *pardName = sView.dataModel.parkName;
-        if (orderNum==1) {
-            JGDCourtDetailViewController *courtVC = [[JGDCourtDetailViewController alloc] init];
-            courtVC.timeKey = [NSNumber numberWithInteger:[sView.dataModel.bookballKey integerValue]];
-            [self.navigationController pushViewController:courtVC animated:YES];
-
-        }else{
-            SearchWithMapOrderListViewController *vc = [[SearchWithMapOrderListViewController alloc] init];
-            vc.ballKey = parkId;
-            vc.title = pardName;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        NSLog(@"%@",parkId);
-        
-        
-    }
+//    view.selected = false;
+//    if ([view isKindOfClass:[SearchWithMapAnnotationView class]]) {
+//        SearchWithMapAnnotationView *sView = (SearchWithMapAnnotationView *)view;
+//        NSString *parkId = sView.dataModel.parkId;
+//        NSInteger orderNum = sView.dataModel.orderNum;
+//        NSString *pardName = sView.dataModel.parkName;
+//        if (orderNum==1) {
+//            JGDCourtDetailViewController *courtVC = [[JGDCourtDetailViewController alloc] init];
+//            courtVC.timeKey = [NSNumber numberWithInteger:[sView.dataModel.bookballKey integerValue]];
+//            [self.navigationController pushViewController:courtVC animated:YES];
+//
+//        }else{
+//            SearchWithMapOrderListViewController *vc = [[SearchWithMapOrderListViewController alloc] init];
+//            vc.ballKey = parkId;
+//            vc.title = pardName;
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }
+//        NSLog(@"%@",parkId);
+//        
+//        
+//    }
     
 }
 
