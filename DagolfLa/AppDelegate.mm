@@ -71,6 +71,7 @@
 @implementation AppDelegate
 
 - (void)umengTrack {
+    
     [MobClick setLogEnabled:YES];// 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
     UMConfigInstance.appKey = @"574c75ed67e58ecb16003314";
     UMConfigInstance.secret = nil;
