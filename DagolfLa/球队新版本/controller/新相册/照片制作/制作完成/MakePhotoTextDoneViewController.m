@@ -38,8 +38,7 @@
 }
 //展示
 -(void)createWebView{
-//    UIView *backLine = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(0, 0, 1, 1)];
-  //  [self.view addSubview:backLine];
+
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-kHvertical(51))];
     //2.创建URL
     NSURL *URL = [NSURL URLWithString:_urlStr];
@@ -138,7 +137,7 @@
 -(void)shareWithInfo:(int)index
 {
     //分享链接
-    NSString*  shareUrl = _urlStr;
+    NSString*  shareUrl = [NSString stringWithFormat:@"%@&share=1",_urlStr];
     //分享图片
     UIImage *iconImageFull = [UIImage imageWithData:[NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[_timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO]]];
     //分享标题
