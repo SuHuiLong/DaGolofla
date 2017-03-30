@@ -1001,7 +1001,9 @@
                         }
                     }
                     
-                    [scoreKeyArray removeObjectAtIndex:deleteId];
+                    if (scoreKeyArray.count >deleteId) {
+                        [scoreKeyArray removeObjectAtIndex:deleteId];
+                    }
                     
                     [[NSUserDefaults standardUserDefaults]setObject:scoreKeyArray forKey:@"scoreKeyArray"];
                     [[NSUserDefaults standardUserDefaults]synchronize];
