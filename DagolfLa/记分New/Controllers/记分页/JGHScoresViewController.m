@@ -993,17 +993,21 @@
                     //记分完成后－－－删除本地记分表
                     [[JGHScoreDatabase shareScoreDatabase]deleteTable:_scorekey];
                     NSMutableArray *scoreKeyArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"scoreKeyArray"];
-                    NSInteger deleteId =0;
-                    for (int i=0; i<scoreKeyArray.count; i++) {
-                        NSString *userdfScoreKey = [NSString stringWithFormat:@"%@", scoreKeyArray[i]];
-                        if ([userdfScoreKey isEqualToString:_scorekey]) {
-                            deleteId =i;
-                        }
-                    }
                     
-                    if (scoreKeyArray.count >deleteId) {
-                        [scoreKeyArray removeObjectAtIndex:deleteId];
+                    if ([scoreKeyArray containsObject:_scorekey]) {
+                        [scoreKeyArray removeObject:_scorekey];
                     }
+//                    NSInteger deleteId =0;
+//                    for (int i=0; i<scoreKeyArray.count; i++) {
+//                        NSString *userdfScoreKey = [NSString stringWithFormat:@"%@", scoreKeyArray[i]];
+//                        if ([userdfScoreKey isEqualToString:_scorekey]) {
+//                            deleteId =i;
+//                        }
+//                    }
+//                    
+//                    if (scoreKeyArray.count >deleteId) {
+//                        [scoreKeyArray removeObjectAtIndex:deleteId];
+//                    }
                     
                     [[NSUserDefaults standardUserDefaults]setObject:scoreKeyArray forKey:@"scoreKeyArray"];
                     [[NSUserDefaults standardUserDefaults]synchronize];
