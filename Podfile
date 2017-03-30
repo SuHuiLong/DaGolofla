@@ -12,5 +12,6 @@ pod 'MBProgressHUD', '~> 1.0.0'
 pod 'MJRefresh', '~> 3.1.12'
 pod 'FMDB', '~> 2.6.2'
 pod 'IQKeyboardManager', '~> 4.0.8'
+pod 'YYKit', '~> 1.0.9'
 
 end
