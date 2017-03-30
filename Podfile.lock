@@ -45,6 +45,9 @@ PODS:
   - SDWebImage/Core (4.0.0)
   - UMengAnalytics (4.1.10)
   - UMengSocial (5.0)
+  - YYKit (1.0.9):
+    - YYKit/no-arc (= 1.0.9)
+  - YYKit/no-arc (1.0.9)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
@@ -57,6 +60,7 @@ DEPENDENCIES:
   - SDWebImage (~> 4.0.0)
   - UMengAnalytics (~> 4.1.0)
   - UMengSocial (~> 5.0)
+  - YYKit (~> 1.0.9)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -69,7 +73,8 @@ SPEC CHECKSUMS:
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   UMengAnalytics: 40585031b7eb085534c68a951b394731e7166257
   UMengSocial: 48b67179c492a8cf7803fbb0438b8f55432e2fc1
+  YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 35e0249f8e141e274b25f0691e3375f2ff552cde
+PODFILE CHECKSUM: 45be3b96ac8163ebb46d6a9515d928d64b746f78
 
 COCOAPODS: 1.2.0
