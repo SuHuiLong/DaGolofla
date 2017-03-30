@@ -10,10 +10,6 @@
 #import "PYTableViewIndexManager.h"
 #import "JGLGuestAddPlayerViewController.h"
 
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
-
 #import "MyattenModel.h"
 
 #import "JGLAddActiivePlayModel.h"
@@ -131,9 +127,9 @@
     addTeamPlaysCtrl.teamKey = [_teamKey integerValue];
     addTeamPlaysCtrl.allListArray = _dataArray;
     addTeamPlaysCtrl.blockRefresh = ^(){
-        [_tableView.header endRefreshing];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-        [_tableView.header beginRefreshing];
+        [_tableView.mj_header endRefreshing];
+        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.mj_header beginRefreshing];
     };
     
     [self.navigationController pushViewController:addTeamPlaysCtrl animated:YES];
@@ -148,8 +144,8 @@
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLGuestActiveMemberTableViewCell class] forCellReuseIdentifier:@"JGLGuestActiveMemberTableViewCell"];
     _tableView.tag = 1001;
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -165,9 +161,9 @@
     [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if (_page == 0)
@@ -200,9 +196,9 @@
             }
         }
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }

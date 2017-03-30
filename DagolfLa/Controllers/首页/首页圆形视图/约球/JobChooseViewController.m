@@ -11,9 +11,7 @@
 #import "PostDataRequest.h"
 #import "Helper.h"
 #import "JobModel.h"
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
+
 
 #define kUserWork_URL @"work/queryAll.do"
 
@@ -49,9 +47,9 @@
 
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellid"];
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 
@@ -75,15 +73,15 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } failed:^(NSError *error) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }

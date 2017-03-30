@@ -60,8 +60,8 @@
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [_dictData setObject:searchBar.text forKey:@"userName"];
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 -(void)uiConfig
@@ -75,8 +75,8 @@
     
     [_tableView registerClass:[JGActivityMemNonmangerTableViewCell class] forCellReuseIdentifier:@"JGActivityMemNonmangerTableViewCell"];
 
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -92,9 +92,9 @@
     
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if (_page == 0)
@@ -127,9 +127,9 @@
             }
         }
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }

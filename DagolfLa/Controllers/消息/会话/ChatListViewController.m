@@ -105,7 +105,7 @@
         
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
-            [self.conversationListTableView.header beginRefreshing];
+            [self.conversationListTableView.mj_header beginRefreshing];
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:@"loadMessageData" object:nil];
         };
@@ -171,7 +171,7 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
         
-        [self.conversationListTableView.header endRefreshing];
+        [self.conversationListTableView.mj_header endRefreshing];
         
         return;
     }
@@ -295,9 +295,9 @@
     self.conversationListTableView.tableHeaderView = _viewHeader;
         self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.conversationListTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [self.conversationListTableView.header beginRefreshing];
-    //    self.conversationListTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
+    self.conversationListTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [self.conversationListTableView.mj_header beginRefreshing];
+    //    self.conversationListTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
 }
 
 #pragma mark -- headRereshing
@@ -317,7 +317,7 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
         
-        [self.conversationListTableView.header endRefreshing];
+        [self.conversationListTableView.mj_header endRefreshing];
         btn.userInteractionEnabled = YES;
         return;
     }
@@ -348,7 +348,7 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
         
-        [self.conversationListTableView.header endRefreshing];
+        [self.conversationListTableView.mj_header endRefreshing];
         btn.userInteractionEnabled = YES;
         
         return;
@@ -391,7 +391,7 @@
     } withBlockSure:^{
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
-            [self.conversationListTableView.header beginRefreshing];
+            [self.conversationListTableView.mj_header beginRefreshing];
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:@"loadMessageData" object:nil];
         };
@@ -536,7 +536,7 @@
             [__weakSelf.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
         
-        [self.conversationListTableView.header endRefreshing];
+        [self.conversationListTableView.mj_header endRefreshing];
     });
 }
 

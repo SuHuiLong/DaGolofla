@@ -66,9 +66,9 @@
     [_collectionView registerClass:[MSSCollectionViewCell class] forCellWithReuseIdentifier:@"MSSCollectionViewCell"];
     [self.view addSubview:_collectionView];
     
-    _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefreshing)];
-    _collectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
-    [_collectionView.header beginRefreshing];
+    _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefreshing)];
+    _collectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
+    [_collectionView.mj_header beginRefreshing];
     
 }
 
@@ -84,8 +84,8 @@
     NSString *request = @"team/getTeamMediaListAll";
     
     [[JsonHttp jsonHttp]httpRequest:request JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        [_collectionView.header endRefreshing];
-        [_collectionView.footer endRefreshing];
+        [_collectionView.mj_header endRefreshing];
+        [_collectionView.mj_footer endRefreshing];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
             if (_page == 0){
@@ -106,8 +106,8 @@
         }
         [_collectionView reloadData];
         
-        [_collectionView.header endRefreshing];
-        [_collectionView.footer endRefreshing];
+        [_collectionView.mj_header endRefreshing];
+        [_collectionView.mj_footer endRefreshing];
     }];
 }
 

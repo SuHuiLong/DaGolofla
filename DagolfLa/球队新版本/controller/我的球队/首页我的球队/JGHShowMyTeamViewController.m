@@ -111,8 +111,8 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     [dict setObject:@(_page) forKey:@"offset"];
     [dict setObject:[NSString stringWithFormat:@"%@", _timeKey] forKey:@"teamKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamActivityList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        [self.showMyTeamTableView.header endRefreshing];
-        [self.showMyTeamTableView.footer endRefreshing];
+        [self.showMyTeamTableView.mj_header endRefreshing];
+        [self.showMyTeamTableView.mj_footer endRefreshing];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
             if (_page == 0)
@@ -133,8 +133,8 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
         }
         
         [self.showMyTeamTableView reloadData];
-        [self.showMyTeamTableView.header endRefreshing];
-        [self.showMyTeamTableView.footer endRefreshing];
+        [self.showMyTeamTableView.mj_header endRefreshing];
+        [self.showMyTeamTableView.mj_footer endRefreshing];
     }];
 }
 #pragma mark -- 下载我的球队
@@ -143,8 +143,8 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamListAll" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        [self.showMyTeamTableView.header endRefreshing];
-        [self.showMyTeamTableView.footer endRefreshing];
+        [self.showMyTeamTableView.mj_header endRefreshing];
+        [self.showMyTeamTableView.mj_footer endRefreshing];
     } completionBlock:^(id data) {
         [self.teamArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -195,8 +195,8 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 //        }
         
         
-        [self.showMyTeamTableView.header endRefreshing];
-        [self.showMyTeamTableView.footer endRefreshing];
+        [self.showMyTeamTableView.mj_header endRefreshing];
+        [self.showMyTeamTableView.mj_footer endRefreshing];
     }];
 }
 
@@ -228,8 +228,8 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     self.showMyTeamTableView.dataSource = self;
     self.showMyTeamTableView.delegate = self;
     self.showMyTeamTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.showMyTeamTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    self.showMyTeamTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    self.showMyTeamTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.showMyTeamTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     
     [self.view addSubview:self.showMyTeamTableView];
 }

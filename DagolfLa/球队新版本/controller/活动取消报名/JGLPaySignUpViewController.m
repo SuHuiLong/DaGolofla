@@ -13,8 +13,6 @@
 
 #import "UITool.h"
 
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
 
 #import "JGTeamAcitivtyModel.h"
 #import "JGHRepeatApplyView.h"
@@ -168,8 +166,8 @@
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 
@@ -180,7 +178,7 @@
     [dict setObject:[NSString stringWithFormat:@"%td", _activityKey] forKey:@"activityKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getUserActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -212,7 +210,7 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     }];
 }

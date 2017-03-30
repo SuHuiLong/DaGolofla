@@ -21,7 +21,7 @@
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
 
-#import "MJDIYBackFooter.h"
+#import "MJRefreshFooter.h"
 #import "MJRefreshComponent.h"
 #import "MJRefreshConst.h"
 #import "UIView+MJExtension.h"
@@ -119,7 +119,7 @@
     
     [_tableView registerNib:[UINib nibWithNibName:@"MyNewsBoxTableCell" bundle:nil] forCellReuseIdentifier:@"MyNewsBoxTableCell"];
     
-    _tableView.footer = [MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(refrenshing1)];
+    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(refrenshing1)];
 }
 
 - (void)refrenshing1{
@@ -150,7 +150,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     } failed:^(NSError *error) {
     }];
 }
@@ -173,7 +173,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     cell.accessoryType = 1;
-    [cell.iconImage sd_setImageWithURL:[Helper imageIconUrl:[_dataArray[indexPath.row] senderPic]] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+    [cell.iconImage sd_setImageWithURL:[Helper imageIconUrl:[_dataArray[indexPath.row] senderPic]] placeholderImage:[UIImage imageNamed:@"moren"]];
     cell.titleLabel.text = [_dataArray[indexPath.row] title];
     cell.newsLabel.text = [_dataArray[indexPath.row] content];
     cell.timeLabel.hidden = NO;

@@ -15,9 +15,7 @@
 
 #import "SXPickPhoto.h"
 
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
+
 
 #import "JGPhotoListModel.h"
 #import "JGTeamPhotoShowViewController.h"
@@ -103,12 +101,12 @@
     upVc.albumName = _teamName;
     upVc.albumKey = _albumKey;
     upVc.blockRefresh = ^(){
-        if (_collectionView.header.isRefreshing == YES) {
-            [_collectionView.header endRefreshing];
+        if (_collectionView.mj_header.isRefreshing == YES) {
+            [_collectionView.mj_header endRefreshing];
         }
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         _isUpdata = YES;
-        [_collectionView.header beginRefreshing];
+        [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
     };
     [self.navigationController pushViewController:upVc animated:YES];
@@ -144,9 +142,9 @@
     //获取含有UICollectionReusableView的class文件。
     [_collectionView registerClass:[JGPhotoTimeReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JGPhotoTimeReusableView"];
     
-    _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    _collectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [_collectionView.header beginRefreshing];
+    _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _collectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [_collectionView.mj_header beginRefreshing];
     
     
 }
@@ -161,9 +159,9 @@
     [dict setObject:strMd forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMediaRoleList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_collectionView.header endRefreshing];
+            [_collectionView.mj_header endRefreshing];
         }else {
-            [_collectionView.footer endRefreshing];
+            [_collectionView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -200,9 +198,9 @@
         }
         [_collectionView reloadData];
         if (isReshing) {
-            [_collectionView.header endRefreshing];
+            [_collectionView.mj_header endRefreshing];
         }else {
-            [_collectionView.footer endRefreshing];
+            [_collectionView.mj_footer endRefreshing];
         }
     }];
 }
@@ -285,9 +283,9 @@
     browser.userKey = _userKey;
     browser.blockRef = ^(){
         
-        [_collectionView.header endRefreshing];
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        [_collectionView.header beginRefreshing];
+        [_collectionView.mj_header endRefreshing];
+        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
     };
     [UIView animateWithDuration:SDPhotoBrowserShowImageAnimationDuration animations:^{

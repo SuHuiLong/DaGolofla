@@ -14,9 +14,7 @@
 #import "PicArrShowViewControllerViewController.h"
 
 #import "ComDetailViewCell.h"
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
+
 
 #import "Helper.h"
 #import "UIImageView+WebCache.h"
@@ -27,7 +25,7 @@
 #import "UserAssistModel.h"
 
 #import "UMSocial.h"
-#import "UMSocialSinaHandler.h"
+
 #import "UMSocialWechatHandler.h"
 #import "ShareAlert.h"
 #import "CommuniteTableViewCell.h"
@@ -186,9 +184,9 @@
     
     [_tableView registerNib:[UINib nibWithNibName:@"ComDetailViewCell" bundle:nil] forCellReuseIdentifier:@"ComDetailViewCell"];
     [_tableView registerClass:[CommuniteTableViewCell class] forCellReuseIdentifier:@"CommuniteTableViewCell"];
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
     // tableview 取消多余的分割线
     //    _tableView.tableFooterView=[[UIView alloc]init];
@@ -240,16 +238,16 @@
             //            [alert show];
         }
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } failed:^(NSError *error) {
         ////NSLog(@"%@",error);
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }
@@ -599,9 +597,9 @@
                 [MBProgressHUD hideHUDForView:self.view  animated:NO];
                 
                 //                [_firstDataArray removeAllObjects];
-                //                [_tableView.header endRefreshing];
-                //                _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-                //                [_tableView.header beginRefreshing];
+                //                [_tableView.mj_header endRefreshing];
+                //                _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                //                [_tableView.mj_header beginRefreshing];
                 //                [_tableView reloadData];
                 
                 UIAlertController *alerT = [UIAlertController alertControllerWithTitle:@"提示" message:@"屏蔽成功!" preferredStyle:UIAlertControllerStyleAlert];
@@ -740,7 +738,7 @@
             NSInteger a = [[_firstDataArray[_firstIndexPath] commentCount] integerValue] + 1;
             [_firstDataArray[_firstIndexPath] setValue:[NSNumber numberWithInteger:a] forKey:@"commentCount"];
             
-            [_tableView.header beginRefreshing];
+            [_tableView.mj_header beginRefreshing];
             
         } failed:^(NSError *error) {
             ////NSLog(@"%@",error);

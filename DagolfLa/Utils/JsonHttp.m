@@ -205,7 +205,7 @@ static JsonHttp *jsonHttp = nil;
     NSLog(@"%@",url);
     
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSMutableDictionary *postDict = [NSMutableDictionary dictionary];
     if (jsonKey == nil) {
@@ -236,24 +236,24 @@ static JsonHttp *jsonHttp = nil;
     NSComparisonResult comparisonResult2 = [httpMethod caseInsensitiveCompare:@"POST"];
     if (comparison1 == NSOrderedSame)//get
     {
-        [manager GET:url parameters:postDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:url parameters:postDict progress:^(NSProgress * _Nonnull downloadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if (completionBlock) {
                 completionBlock(responseObject);
             }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-//            if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
-                [Helper netWorkError];
-//            }else{
-//                [Helper downLoadDataOverrun];
-//            }
 
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            [Helper netWorkError];
+            
             if (failedBlock) {
                 failedBlock(error);
             }
+
         }];
-    }
-    
+
+        
     if (comparisonResult2 == NSOrderedSame)//post
     {
         BOOL isFile = NO;
@@ -267,25 +267,24 @@ static JsonHttp *jsonHttp = nil;
         }
         
         if (!isFile) {//判断是上传数据还是下请求数据
-            [manager POST:url parameters:postDict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [manager POST:url parameters:postDict progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 if (completionBlock) {
                     completionBlock(responseObject);
                 }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
-                    [Helper netWorkError];
-//
-//                }else{
-//                    [Helper downLoadDataOverrun];
-//                }
-                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                [Helper netWorkError];
                 if (failedBlock) {
                     failedBlock(error);
                 }
             }];
+            
+            
+            
         }else
         {
-            [manager POST:url parameters:postDict constructingBodyWithBlock:^(id formData) {
+            [manager POST:url parameters:postDict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 //取出需要上传的图片数据
                 for (NSString *key in postData) {
                     
@@ -303,29 +302,27 @@ static JsonHttp *jsonHttp = nil;
                         
                     }
                 }
-            } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            } progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 if (completionBlock) {
                     completionBlock(responseObject);
                 }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == -2102) {
-                    [Helper netWorkError];
-//                    
-//                }else{
-//                    [Helper downLoadDataOverrun];
-//                }
-                
+
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                [Helper netWorkError];
                 if (failedBlock) {
                     failedBlock(error);
                 }
             }];
         }
     }
+    }
 }
 
 - (void)cancelRequest
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.operationQueue cancelAllOperations];
 }
 
@@ -523,7 +520,7 @@ static JsonHttp *jsonHttp = nil;
 {
     url = [NSString stringWithFormat:@"%@", url];
     NSLog(@"%@",url);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //申明请求的数据是json类型
 //    manager.requestSerializer=[AFJSONRequestSerializer serializer];
     //返回数据格式
@@ -542,15 +539,18 @@ static JsonHttp *jsonHttp = nil;
 
     manager.responseSerializer.acceptableContentTypes =  [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];//设置相应内容类型
 
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:url parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (completionBlock) {
             completionBlock(responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failedBlock) {
             failedBlock(error);
         }
     }];
+    
 }
 
 

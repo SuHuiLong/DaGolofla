@@ -32,9 +32,9 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
         self.tradRecordTableView.dataSource = self;
         self.tradRecordTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
-        self.tradRecordTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-        self.tradRecordTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-        [self.tradRecordTableView.header beginRefreshing];
+        self.tradRecordTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        self.tradRecordTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+        [self.tradRecordTableView.mj_header beginRefreshing];
         
         UINib *recordNib = [UINib nibWithNibName:@"JGHTradRecordCell" bundle: [NSBundle mainBundle]];
         [self.tradRecordTableView registerNib:recordNib forCellReuseIdentifier:JGHTradRecordCellIdentifier];
@@ -94,9 +94,9 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
         [self.tradRecordTableView reloadData];
         
         if (_page == 0) {
-            [self.tradRecordTableView.header endRefreshing];
+            [self.tradRecordTableView.mj_header endRefreshing];
         }else {
-            [self.tradRecordTableView.footer endRefreshing];
+            [self.tradRecordTableView.mj_footer endRefreshing];
         }
         
         [[ShowHUD showHUD]hideAnimationFromView:self.view];

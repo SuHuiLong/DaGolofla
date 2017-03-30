@@ -12,7 +12,7 @@
 #import "RecomeFriendViewController.h"
 #import "NewFriendModel.h"
 #import "NewFriendTableViewCell.h"
-#import "MJDIYBackFooter.h"
+#import "MJRefreshFooter.h"
 
 #import "MJRefreshComponent.h"
 #import "MJRefreshConst.h"
@@ -194,7 +194,7 @@
     self.contactISOpen = NO;
     
     
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
 
     // Do any additional setup after loading the view.
     
@@ -650,10 +650,10 @@
     
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"userFriend/getSearchUser" JsonKey:nil withData:dic failedBlock:^(id errType) {
 //        [[ShowHUD showHUD] hideAnimationFromView:self.view];
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
 
     } completionBlock:^(id data) {
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
 //        [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {

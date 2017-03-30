@@ -82,7 +82,7 @@
             
             _handImgUrl = [data objectForKey:@"handImgUrl"];
             
-            [[SDImageCache sharedImageCache] removeImageForKey:_handImgUrl fromDisk:YES];
+            [[SDImageCache sharedImageCache] removeImageForKey:_handImgUrl fromDisk:YES withCompletion:nil];
 
             [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:_handImgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 

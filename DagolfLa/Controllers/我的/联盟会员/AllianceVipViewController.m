@@ -309,15 +309,15 @@
 #pragma mark - MJRefresh
 //卡片列表刷新
 -(void)createCardRefresh{
-    _mainCollectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRefreshing)];
-//    _mainCollectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(collectionFooterRefreshing)];
-//    [_mainCollectionView.header beginRefreshing];
+    _mainCollectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRefreshing)];
+//    _mainCollectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(collectionFooterRefreshing)];
+//    [_mainCollectionView.mj_header beginRefreshing];
 }
 //历史记录刷新
 -(void)createHistoryRefresh{
-    _mainTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerHeaderRefreshing)];
-    _mainTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(headerFooterRefreshing)];
-    [_mainTableView.header beginRefreshing];
+    _mainTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerHeaderRefreshing)];
+    _mainTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(headerFooterRefreshing)];
+    [_mainTableView.mj_header beginRefreshing];
 
 }
 
@@ -334,9 +334,9 @@
 //卡片结束刷新
 -(void)cardEndRefresh{
     if (_cardPage==0) {
-        [_mainCollectionView.header endRefreshing];
+        [_mainCollectionView.mj_header endRefreshing];
     }else{
-        [_mainCollectionView.footer endRefreshing];
+        [_mainCollectionView.mj_footer endRefreshing];
     }
 }
 
@@ -353,9 +353,9 @@
 //记录结束刷新
 -(void)historyEndRefresh{
     if (_historyPage==0) {
-        [_mainTableView.header endRefreshing];
+        [_mainTableView.mj_header endRefreshing];
     }else{
-        [_mainTableView.footer endRefreshing];
+        [_mainTableView.mj_footer endRefreshing];
     }
 
 }

@@ -156,11 +156,11 @@
 
 -(void)segTypeClick:(UISegmentedControl *)sender
 {
-    if ([_tableView.header isRefreshing] == YES) {
-        [_tableView.header endRefreshing];
+    if ([_tableView.mj_header isRefreshing] == YES) {
+        [_tableView.mj_header endRefreshing];
     }
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 -(void)uiConfig
@@ -171,8 +171,8 @@
     _tableView.tableHeaderView = _viewHeader;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLScoreRankTableViewCell class] forCellReuseIdentifier:@"JGLScoreRankTableViewCell"];
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -195,10 +195,10 @@
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=%@&srcType=1dagolfla.com",_teamKey,DEFAULF_USERID,_activity]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getReleasePolenumberRanking" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
         //        else {
-        //            [_tableView.footer endRefreshing];
+        //            [_tableView.mj_footer endRefreshing];
         //        }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -264,10 +264,10 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
         //        else {
-        //            [_tableView.footer endRefreshing];
+        //            [_tableView.mj_footer endRefreshing];
         //        }
     }];
 }

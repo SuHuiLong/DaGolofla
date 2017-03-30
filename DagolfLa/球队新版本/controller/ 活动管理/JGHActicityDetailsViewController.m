@@ -23,7 +23,6 @@
 #import "UMSocialData.h"
 #import "ShareAlert.h"
 #import "UMSocialConfig.h"
-#import "UMSocialSinaHandler.h"
 #import "UMSocialDataService.h"
 #import "UMSocialWechatHandler.h"
 #import "CommuniteTableViewCell.h"
@@ -86,7 +85,7 @@ static CGFloat ImageHeight  = 210.0;
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%td_background.jpg", [_model.timeKey integerValue]];
-    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
     
     if (_isEditor == 0) {
         //我的球队活动
@@ -487,11 +486,11 @@ static CGFloat ImageHeight  = 210.0;
 //                        UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                             NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
                             
-                            [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                            [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
                             
                             NSString *bggUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg", strTimeKey];
                             
-                            [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES];
+                            [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES withCompletion:nil];
                             
                             _refreshBlock();
 //                            [self.navigationController popViewControllerAnimated:YES];

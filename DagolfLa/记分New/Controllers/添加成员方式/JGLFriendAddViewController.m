@@ -11,10 +11,6 @@
 
 #import "PYTableViewIndexManager.h"
 
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
-
 #import "MyattenModel.h"
 
 #import "ChatDetailViewController.h"
@@ -97,8 +93,8 @@
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 
@@ -115,8 +111,8 @@
     [_tableView registerClass:[JGLFriendAddTableViewCell class] forCellReuseIdentifier:@"JGLFriendAddTableViewCell"];
     
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -131,8 +127,8 @@
 //    [_dictData setObject:@0 forKey:@"rows"];
     [_dictData setObject: [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"userFriend/getUserFriendList" JsonKey:nil withData:_dictData requestMethod:@"GET" failedBlock:^(id errType) {
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     } completionBlock:^(id data) {
         //拿到数据，model接手后存入数组排序
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -165,8 +161,8 @@
             }
         }
         
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     }];
 }
 

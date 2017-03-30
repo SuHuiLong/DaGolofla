@@ -145,7 +145,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
         //轮询所有的奖项
         [self polingAwareIsSet];
         
-        [self.awardTableView.header endRefreshing];
+        [self.awardTableView.mj_header endRefreshing];
         
         if (_dataArray.count == 0) {
             if (self.bgView == nil) {
@@ -225,8 +225,8 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     UINib *activityBaseCellNib = [UINib nibWithNibName:@"JGHActivityBaseCell" bundle: [NSBundle mainBundle]];
     [self.awardTableView registerNib:activityBaseCellNib forCellReuseIdentifier:JGHActivityBaseCellIdentifier];
     
-    self.awardTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreahData)];
-    [self.awardTableView.header beginRefreshing];
+    self.awardTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreahData)];
+    [self.awardTableView.mj_header beginRefreshing];
 
     self.awardTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.awardTableView.backgroundColor = [UIColor colorWithHexString:BG_color];

@@ -117,12 +117,20 @@ static NSString *const NotificationName = @"AFNetworkReachabilityStatusReachable
     _savedPath = [NSTemporaryDirectory() stringByAppendingString:vedioFileName];
     NSLog(@"%@", _savedPath);
     __weak VedioPlayViewController *vedioCtrl = self;
-    [PostDataRequest downloadFileWithOption:nil withInferface:self.vedioURL savedPath:_savedPath downloadSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+    
+    
+    [PostDataRequest downloadFileWithURL:self.vedioURL parameters:nil savedPath:_savedPath downloadSuccess:^(NSURLResponse *response, NSURL *filePath) {
+        NSLog(@"%@", response);
         [vedioCtrl saveVedioForPhotosAssets];
-    } downloadFailure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    } progress:^(float progress) {
+    } downloadFailure:^(NSError *error) {
+        
+    } downloadProgress:^(NSProgress *downloadProgress) {
+        
     }];
+    
+    
+    
+    
 }
 #pragma mark -- 保存视频到相册
 - (void)saveVedioForPhotosAssets{

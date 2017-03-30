@@ -12,9 +12,7 @@
 
 #import "PostDataRequest.h"
 #import "Helper.h"
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
+
 #import "UIImageView+WebCache.h"
 
 #import "ChatDetailViewController.h"
@@ -122,9 +120,9 @@
     [self.view addSubview:_tableView];
     [_tableView registerNib:[UINib nibWithNibName:@"NewsDetailViewCell" bundle:nil] forCellReuseIdentifier:@"NewsDetailViewCell"];
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
@@ -150,15 +148,15 @@
                 [alert show];
             }
             if (isReshing) {
-                [_tableView.header endRefreshing];
+                [_tableView.mj_header endRefreshing];
             }else {
-                [_tableView.footer endRefreshing];
+                [_tableView.mj_footer endRefreshing];
             }
         } failed:^(NSError *error) {
             if (isReshing) {
-                [_tableView.header endRefreshing];
+                [_tableView.mj_header endRefreshing];
             }else {
-                [_tableView.footer endRefreshing];
+                [_tableView.mj_footer endRefreshing];
             }
         }];
 
@@ -192,15 +190,15 @@
 //                [alert show];
 //            }
 //            if (isReshing) {
-//                [_tableView.header endRefreshing];
+//                [_tableView.mj_header endRefreshing];
 //            }else {
-//                [_tableView.footer endRefreshing];
+//                [_tableView.mj_footer endRefreshing];
 //            }
 //        } failed:^(NSError *error) {
 //            if (isReshing) {
-//                [_tableView.header endRefreshing];
+//                [_tableView.mj_header endRefreshing];
 //            }else {
-//                [_tableView.footer endRefreshing];
+//                [_tableView.mj_footer endRefreshing];
 //            }
 //        }];
 //

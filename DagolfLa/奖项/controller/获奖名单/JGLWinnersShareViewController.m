@@ -150,9 +150,9 @@
     
     [_tableView registerClass:[JGLWinnersShareTableViewCell class] forCellReuseIdentifier:@"JGLWinnersShareTableViewCell"];
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
-    [_tableView.header beginRefreshing];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -164,7 +164,7 @@
     [dict setObject:_activeKey forKey:@"activityKey"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getAwardedInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     } completionBlock:^(id data) {
         NSLog(@"%@",data);
@@ -190,7 +190,7 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     }];
 }

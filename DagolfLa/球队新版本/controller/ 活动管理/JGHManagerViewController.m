@@ -144,9 +144,9 @@
     self.teamActivityTableView.dataSource = self;
     self.teamActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.teamActivityTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    self.teamActivityTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-    [self.teamActivityTableView.header beginRefreshing];
+    self.teamActivityTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.teamActivityTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [self.teamActivityTableView.mj_header beginRefreshing];
     
     [self.view addSubview:self.teamActivityTableView];
 }
@@ -173,9 +173,9 @@
     [dict setObject:[NSString stringWithFormat:@"%td", _timeKey] forKey:@"teamKey"];
     [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [self.teamActivityTableView.header endRefreshing];
+            [self.teamActivityTableView.mj_header endRefreshing];
         }else {
-            [self.teamActivityTableView.footer endRefreshing];
+            [self.teamActivityTableView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -200,9 +200,9 @@
         
         [self.teamActivityTableView reloadData];
         if (isReshing) {
-            [self.teamActivityTableView.header endRefreshing];
+            [self.teamActivityTableView.mj_header endRefreshing];
         }else {
-            [self.teamActivityTableView.footer endRefreshing];
+            [self.teamActivityTableView.mj_footer endRefreshing];
         }
     }];
 }

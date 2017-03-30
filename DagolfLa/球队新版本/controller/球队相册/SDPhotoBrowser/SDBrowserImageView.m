@@ -101,8 +101,10 @@
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder
 {
     __weak SDBrowserImageView *imageViewWeak = self;
+
     
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+    
+    [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
         
         //zi
         //
@@ -205,7 +207,7 @@
 -(void)reset : (UIImage*)placeholder{
     
     self.image  =  nil;
-    [self sd_cancelCurrentImageLoad];
+    [self sd_cancelCurrentAnimationImagesLoad];
     if( _scrollImageView != nil ){
         [_scrollImageView setImage:placeholder];
     }

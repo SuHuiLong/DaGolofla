@@ -219,8 +219,8 @@ static CGFloat ImageHeight  = 210.0;
     } completionBlock:^(id data) {
         NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.detailDic objectForKey:@"timeKey"]];
         NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@", [self.detailDic objectForKey:@"timeKey"]];
-        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
-        [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
+        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
+        [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES withCompletion:nil];
         
         [self.navigationController popViewControllerAnimated:YES];
         [Helper alertViewNoHaveCancleWithTitle:@"保存成功" withBlock:^(UIAlertController *alertView) {
@@ -549,10 +549,10 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 清除头像及背景缓存
 - (void)cleakHeaderWithBgImage{
     NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg", [self.detailDic objectForKey:@"timeKey"]];
-    [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+    [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
     
     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
-    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
 }
 //- (BOOL)shouldAutorotate{
 //    return YES;

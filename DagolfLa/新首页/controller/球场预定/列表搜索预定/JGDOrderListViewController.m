@@ -61,12 +61,12 @@
     
     [[JsonHttp jsonHttp]httpRequest:@"bookingOrder/getOrderList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
 //        [[ShowHUD showHUD] hideAnimationFromView:self.view];
-        [self.orderTableView.header endRefreshing];
-        [self.orderTableView.footer endRefreshing];
+        [self.orderTableView.mj_header endRefreshing];
+        [self.orderTableView.mj_footer endRefreshing];
     } completionBlock:^(id data) {
 //        [[ShowHUD showHUD] hideAnimationFromView:self.view];
-        [self.orderTableView.header endRefreshing];
-        [self.orderTableView.footer endRefreshing];
+        [self.orderTableView.mj_header endRefreshing];
+        [self.orderTableView.mj_footer endRefreshing];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if (self.offset == 0) {
@@ -119,9 +119,9 @@
     [self.view addSubview:self.orderTableView];
     [self.orderTableView registerClass:[JGDOrderListTableViewCell class] forCellReuseIdentifier:@"orderListCell"];
 
-    self.orderTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.orderTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
-    [self.orderTableView.header beginRefreshing];
+    self.orderTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    self.orderTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+    [self.orderTableView.mj_header beginRefreshing];
 
 }
 
@@ -273,7 +273,7 @@
 
     }
     
-    [self.orderTableView.header beginRefreshing];
+    [self.orderTableView.mj_header beginRefreshing];
     
 }
 

@@ -41,7 +41,7 @@
         [self.addressAndTimeImageV addSubview:_teamLeaderNameLB];
         
         self.leaderIconV = [[UIImageView alloc] initWithFrame:CGRectMake(200 * screenWidth / 320, 2 * screenWidth / 320, 28 * screenWidth / 320, 28 * screenWidth / 320)];
-        self.leaderIconV.image = [UIImage imageNamed:@"moren.jpg"];
+        self.leaderIconV.image = [UIImage imageNamed:@"moren"];
         self.leaderIconV.layer.cornerRadius = 14 * screenWidth / 320;
         self.leaderIconV.clipsToBounds = YES;
         [self.addressAndTimeImageV addSubview:self.leaderIconV];

@@ -106,9 +106,9 @@
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        tableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-        tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
-        [tableView.header beginRefreshing];
+        tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+        tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+        [tableView.mj_header beginRefreshing];
         
         
         [self.scroller addSubview:tableView];
@@ -213,14 +213,14 @@
         //        [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     }
     [[JsonHttp jsonHttp] httpRequest:@"news/getNewList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        [self.currentTable.header endRefreshing];
-        [self.currentTable.footer endRefreshing];
+        [self.currentTable.mj_header endRefreshing];
+        [self.currentTable.mj_footer endRefreshing];
         
         //        [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
     } completionBlock:^(id data) {
-        [self.currentTable.header endRefreshing];
-        [self.currentTable.footer endRefreshing];
+        [self.currentTable.mj_header endRefreshing];
+        [self.currentTable.mj_footer endRefreshing];
         
         //        [[ShowHUD showHUD] hideAnimationFromView:self.view];
         

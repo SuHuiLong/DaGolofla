@@ -8,11 +8,6 @@
 
 #import "AreaViewController.h"
 #import "PostDataRequest.h"
-
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
-
 #import "Helper.h"
 
 #import "BallParkModel.h"
@@ -100,9 +95,9 @@
     UITextField *tf=(UITextField *)[imageView viewWithTag:888];
     if ([self isBlankString:tf.text]==NO) {
         
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing1)];
-//        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing1)];
-        [_tableView.header beginRefreshing];
+        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing1)];
+//        _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing1)];
+        [_tableView.mj_header beginRefreshing];
         
     }else{
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"123" message:@"请填写搜索信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -135,9 +130,9 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing1)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing1)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing1)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing1)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 
@@ -164,15 +159,15 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } failed:^(NSError *error) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }

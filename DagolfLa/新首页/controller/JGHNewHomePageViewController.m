@@ -146,7 +146,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 
 #pragma mark --刷新页面
 - (void)reloadViewData{
-    [self.homeTableView.header beginRefreshing];
+    [self.homeTableView.mj_header beginRefreshing];
 }
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
@@ -222,7 +222,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     
     [getDict setObject:@1 forKey:@"ballType"];
     [[JsonHttp jsonHttp]httpRequest:@"index/getIndexV1" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
-        [self.homeTableView.header endRefreshing];
+        [self.homeTableView.mj_header endRefreshing];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         _showLineID = 0;
@@ -265,7 +265,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
             }
         }
         
-        [self.homeTableView.header endRefreshing];
+        [self.homeTableView.mj_header endRefreshing];
     }];
 }
 
@@ -293,7 +293,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     self.homeTableView.dataSource = self;
     self.homeTableView.delegate = self;
     self.homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.homeTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.homeTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.homeTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.homeTableView];
 }
@@ -987,7 +987,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         } withBlockSure:^{
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
             vc.reloadCtrlData = ^(){
-                [self.homeTableView.header beginRefreshing];
+                [self.homeTableView.mj_header beginRefreshing];
                 [self loadMessageData];
             };
             

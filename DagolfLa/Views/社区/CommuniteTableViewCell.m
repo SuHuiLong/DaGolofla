@@ -325,7 +325,7 @@
         //找到赋值
         if (i < model.pics.count) {
             picView.hidden = NO;
-            [picView sd_setImageWithURL:[Helper imageIconUrl:model.pics[i]] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+            [picView sd_setImageWithURL:[Helper imageIconUrl:model.pics[i]] placeholderImage:[UIImage imageNamed:@"moren"]];
             _newHeight =_picImage1.frame.origin.y + _picImage1.frame.size.height;
             [picView setContentMode:UIViewContentModeScaleAspectFill];
             picView.clipsToBounds = YES;

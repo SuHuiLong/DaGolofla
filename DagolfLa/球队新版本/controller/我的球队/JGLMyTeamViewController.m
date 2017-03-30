@@ -13,9 +13,7 @@
 
 #import "JGTeamDetailStylelTwoViewController.h"
 
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
+
 #import "JGTeamDetail.h"
 
 
@@ -59,9 +57,9 @@
     
     [_tableView registerClass:[JGLMyTeamTableViewCell class] forCellReuseIdentifier:@"JGLMyTeamTableViewCell"];
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 
@@ -73,9 +71,9 @@
     [dict setObject:[NSNumber numberWithInteger:page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getMyTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -101,9 +99,9 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }

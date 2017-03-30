@@ -50,10 +50,10 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    self.tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    self.tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
 //    [self downLoadData:0];
-//    [self.tableView.header beginRefreshing];
+//    [self.tableView.mj_header beginRefreshing];
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self addSubview:self.tableView];
@@ -164,11 +164,11 @@
     [dic setObject:@"" forKey:@"likeStr"];
     
     [[JsonHttp jsonHttp] httpRequest:@"score/getScoreHistory" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     } completionBlock:^(id data) {
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if (_page == 0) {
@@ -256,8 +256,8 @@
             }
         }
         
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
         
         [self.tableView reloadData];
         

@@ -42,7 +42,7 @@
     _maskingView.hidden = YES;
     _alertLabel.hidden = YES;
     NSString *picUrl = model.imagePicUrl;
-    [_imageView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"moren"]];
     NSInteger cardState = model.cardState;
     NSString *cardStr = model.cardStr;
     if (!cardStr) {

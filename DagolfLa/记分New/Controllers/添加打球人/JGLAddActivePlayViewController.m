@@ -8,9 +8,7 @@
 
 #import "JGLAddActivePlayViewController.h"
 #import "PYTableViewIndexManager.h"
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
+
 #import "MyattenModel.h"
 #import "JGLAddActiivePlayModel.h"
 #import "JGLActiveAddPlayTableViewCell.h"

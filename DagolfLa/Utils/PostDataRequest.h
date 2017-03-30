@@ -49,12 +49,15 @@ typedef void (^GBHEBytesRecvBlock)(unsigned long long length, unsigned long long
  *  @param failure    下载失败回调
  *  @param progress   实时下载进度回调
  */
-+ (void)downloadFileWithOption:(NSDictionary *)paramDic
-                 withInferface:(NSString*)requestURL
-                     savedPath:(NSString*)savedPath
-               downloadSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-               downloadFailure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-                      progress:(void (^)(float progress))progress;
++ (void)downloadFileWithURL:(NSString*)requestURLString
+                 parameters:(NSDictionary *)parameters
+                  savedPath:(NSString*)savedPath
+            downloadSuccess:(void (^)(NSURLResponse *response, NSURL *filePath))success
+            downloadFailure:(void (^)(NSError *error))failure
+           downloadProgress:(void (^)(NSProgress *downloadProgress))progress;
+
+
+
 
 //Json请求
 - (void) httpRequest:(NSString *)url

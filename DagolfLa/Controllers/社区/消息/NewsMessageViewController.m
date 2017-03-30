@@ -11,10 +11,8 @@
 #import "CommunMessageViewCell.h"
 #import "Helper.h"
 #import "PostDataRequest.h"
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
 #import "NewsDetailModel.h"
+
 @interface NewsMessageViewController ()<LazyPageScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     NSArray* _titleArray;
@@ -87,13 +85,13 @@
 - (void)addReshTableView:(NSInteger)tableViewNumber
 {
     if (tableViewNumber == 1) {
-        _tableView1.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing1)];
-        _tableView1.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing1)];
+        _tableView1.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing1)];
+        _tableView1.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing1)];
         
 
     } else {
-        _tableView2.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing2)];
-        _tableView2.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing2)];
+        _tableView2.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing2)];
+        _tableView2.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing2)];
 
     }
 
@@ -131,8 +129,8 @@
         
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         //NSLog(@"%@",dict);
-        [_tableView1.header endRefreshing];
-        [_tableView1.footer endRefreshing];
+        [_tableView1.mj_header endRefreshing];
+        [_tableView1.mj_footer endRefreshing];
 
                 if ([[dict objectForKey:@"success"] boolValue]) {
             if (page == 1)
@@ -160,8 +158,8 @@
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         //NSLog(@"%@",dict);
 
-        [_tableView2.footer endRefreshing];
-        [_tableView2.footer endRefreshing];
+        [_tableView2.mj_footer endRefreshing];
+        [_tableView2.mj_footer endRefreshing];
         if ([[dict objectForKey:@"success"] boolValue]) {
             if (page == 1)
             {

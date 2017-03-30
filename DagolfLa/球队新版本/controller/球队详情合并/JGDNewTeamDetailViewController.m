@@ -31,7 +31,7 @@
 #import "UMSocialData.h"
 #import "ShareAlert.h"
 #import "UMSocialConfig.h"
-#import "UMSocialSinaHandler.h"
+
 #import "UMSocialDataService.h"
 #import "UMSocialWechatHandler.h"
 
@@ -116,8 +116,8 @@ static CGFloat ImageHeight  = 210.0;
     NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", self.timeKey];
     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", self.timeKey];
     
-    [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
-    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+    [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES withCompletion:nil];
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
     
 
     [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:[self.timeKey integerValue] andIsSetWidth:YES andIsBackGround:NO] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:TeamLogoImage]];

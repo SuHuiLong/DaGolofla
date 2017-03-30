@@ -84,9 +84,9 @@
     [_collectionView registerClass:[MSSCollectionViewCell class] forCellWithReuseIdentifier:@"MSSCollectionViewCell"];
     [self.view addSubview:_collectionView];
     
-    _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _collectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
-    [_collectionView.header beginRefreshing];
+    _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _collectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
+    [_collectionView.mj_header beginRefreshing];
 }
 //创建选择后底部按钮
 -(void)createBottomView{
@@ -125,8 +125,8 @@
     
     [[JsonHttp jsonHttp]httpRequest:request JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
-        [self.collectionView.header endRefreshing];
-        [self.collectionView.footer endRefreshing];
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
         
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -176,8 +176,8 @@
         }
         [_collectionView reloadData];
         
-        [self.collectionView.header endRefreshing];
-        [self.collectionView.footer endRefreshing];
+        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_footer endRefreshing];
     }];
     
 }
@@ -263,12 +263,12 @@
     upVc.albumName = _strTitle;
     upVc.albumKey = _albumKey;
     upVc.blockRefresh = ^(){
-        if (_collectionView.header.isRefreshing == YES) {
-            [_collectionView.header endRefreshing];
+        if (_collectionView.mj_header.isRefreshing == YES) {
+            [_collectionView.mj_header endRefreshing];
         }
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
         _isUpdata = YES;
-        [_collectionView.header beginRefreshing];
+        [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
     };
     [self.navigationController pushViewController:upVc animated:YES];
@@ -475,12 +475,12 @@
     MSSCollectionViewCell *cell = (MSSCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPathNext];
     MSSBrowseNetworkViewController *bvc = [[MSSBrowseNetworkViewController alloc]initWithBrowseItemArray:browseItemArray currentIndex:cell.imageView.tag - 100];
     bvc.blockRef = ^(){
-        if (_collectionView.header.isRefreshing == YES) {
-            [_collectionView.header endRefreshing];
+        if (_collectionView.mj_header.isRefreshing == YES) {
+            [_collectionView.mj_header endRefreshing];
         }
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
         _isUpdata = YES;
-        [_collectionView.header beginRefreshing];
+        [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
     };
     bvc.closeAutorotate = ^(){

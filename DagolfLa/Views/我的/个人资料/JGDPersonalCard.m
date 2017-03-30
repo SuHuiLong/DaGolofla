@@ -217,7 +217,7 @@
             [[ShowHUD showHUD] hideAnimationFromView:self];
 
             NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
-            [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+            [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
             if (![Helper isBlankString:headUrl]) {
                 [user setObject:headUrl forKey:@"pic"];

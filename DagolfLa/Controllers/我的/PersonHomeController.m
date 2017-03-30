@@ -362,11 +362,11 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
 
                 dispatch_main_async_safe((^{
                     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
-                    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
                     [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
                     
                     NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
-                    [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
+                    [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES withCompletion:nil];
                     [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     
                 }));
@@ -432,11 +432,11 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                 dispatch_main_async_safe((^{
                     
                     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
-                    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
                     [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
                     
                     NSString *iconUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[_strMoodId integerValue]];
-                    [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES];
+                    [[SDImageCache sharedImageCache] removeImageForKey:iconUrl fromDisk:YES withCompletion:nil];
                     [_iconImg sd_setImageWithURL:[NSURL URLWithString:iconUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
                     
                     
@@ -877,8 +877,8 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:array failedBlock:^(id errType) {
     } completionBlock:^(id data) {
 //        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%td_background.jpg",[_strMoodId integerValue]];
-//        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-//        [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
+
+        //        [_backImg sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"selfBackPic.jpg"]];
         
         dispatch_main_async_safe(^{
             [_backImg setImage:image];

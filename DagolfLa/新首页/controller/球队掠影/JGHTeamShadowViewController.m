@@ -12,10 +12,6 @@
 #import "JGTeamPhotoCollectionViewCell.h"
 #import "JGPhotoAlbumViewController.h"
 
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
-
 #import "JGLPhotoAlbumModel.h"
 
 #import "JGDDPhotoAlbumViewController.h"
@@ -67,9 +63,9 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
     [_collectionView registerClass:[JGHPhotoShadowCollectionViewCell class] forCellWithReuseIdentifier:JGHPhotoShadowCollectionViewCellIdentifier];
 
     
-    _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    _collectionView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [_collectionView.header beginRefreshing];
+    _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _collectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [_collectionView.mj_header beginRefreshing];
 }
 
 // 设置footerView的
@@ -122,9 +118,9 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
     [dict setObject:@(page) forKey:@"off"];
     [[JsonHttp jsonHttp]httpRequest:@"index/getRecommendAlbumList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_collectionView.header endRefreshing];
+            [_collectionView.mj_header endRefreshing];
         }else {
-            [_collectionView.footer endRefreshing];
+            [_collectionView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -151,9 +147,9 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
         
         [_collectionView reloadData];
         if (isReshing) {
-            [_collectionView.header endRefreshing];
+            [_collectionView.mj_header endRefreshing];
         }else {
-            [_collectionView.footer endRefreshing];
+            [_collectionView.mj_footer endRefreshing];
         }
     }];
 }
@@ -201,8 +197,8 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
     phoVc.timeKey = [_dataArray[btn.tag - 10000] timeKey];
     phoVc.titleStr = [_dataArray[btn.tag - 10000] name];
     phoVc.createBlock = ^(void){
-        _collectionView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        [_collectionView.header beginRefreshing];
+        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
     };
     [self.navigationController pushViewController:phoVc animated:YES];

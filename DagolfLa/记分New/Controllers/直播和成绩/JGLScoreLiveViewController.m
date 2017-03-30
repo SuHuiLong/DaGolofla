@@ -49,8 +49,8 @@
     [_tableView registerClass:[JGLScoreLiveHeadTableViewCell class] forCellReuseIdentifier:@"JGLScoreLiveHeadTableViewCell"];
     [_tableView registerClass:[JGLScoreLiveDetailTableViewCell class] forCellReuseIdentifier:@"JGLScoreLiveDetailTableViewCell"];
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -66,10 +66,10 @@
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamActivityKey=%@dagolfla.com", DEFAULF_USERID,_activity]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getScoreDirectSeeding" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
         //        else {
-        //            [_tableView.footer endRefreshing];
+        //            [_tableView.mj_footer endRefreshing];
         //        }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -93,10 +93,10 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
         //        else {
-        //            [_tableView.footer endRefreshing];
+        //            [_tableView.mj_footer endRefreshing];
         //        }
     }];
 }

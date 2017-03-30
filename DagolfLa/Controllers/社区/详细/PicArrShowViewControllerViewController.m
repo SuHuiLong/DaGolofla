@@ -112,7 +112,7 @@
         
         UIImageView *smView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
         
-        [smView sd_setImageWithURL:[Helper imageUrl:[self.selectImages objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"xiangcemoren.jpg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [smView sd_setImageWithURL:[Helper imageUrl:[self.selectImages objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"xiangcemoren"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             [smView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenWidth * (smView.image.size.height/smView.image.size.width))];
             CGFloat offsetX = (smallScrollview.bounds.size.width > smallScrollview.contentSize.width)?(smallScrollview.bounds.size.width - smallScrollview.contentSize.width)/2 : 0.0;
             CGFloat offsetY = (smallScrollview.bounds.size.height > smallScrollview.contentSize.height)?(smallScrollview.bounds.size.height - smallScrollview.contentSize.height)/2 : 0.0;

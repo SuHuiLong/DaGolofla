@@ -225,7 +225,7 @@
         
         if (isClick == NO) {
             NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
-            [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+            [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
             [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 
         }
@@ -236,7 +236,7 @@
             }
             else{
                 NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
-                [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
                 [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             }
         }
@@ -579,7 +579,7 @@
         [self post:@{@"userId": DEFAULF_USERID}];
         
         NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
-        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
         NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
         if (![Helper isBlankString:headUrl]) {
             [user setObject:headUrl forKey:@"pic"];

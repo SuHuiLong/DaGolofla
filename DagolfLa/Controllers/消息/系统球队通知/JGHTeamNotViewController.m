@@ -70,8 +70,8 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
     [dict setObject:@(_page) forKey:@"offset"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&nSrc=1dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"msg/getMsgList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        [self.systemNotTableView.header endRefreshing];
-        [self.systemNotTableView.footer endRefreshing];
+        [self.systemNotTableView.mj_header endRefreshing];
+        [self.systemNotTableView.mj_footer endRefreshing];
 
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
@@ -121,8 +121,8 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
             }
         }        
         
-        [self.systemNotTableView.header endRefreshing];
-        [self.systemNotTableView.footer endRefreshing];
+        [self.systemNotTableView.mj_header endRefreshing];
+        [self.systemNotTableView.mj_footer endRefreshing];
     }];
     
 }
@@ -139,8 +139,8 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
     self.systemNotTableView.tableHeaderView = CCCView;
     
     
-    self.systemNotTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    self.systemNotTableView.footer = [MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
+    self.systemNotTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.systemNotTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
 
     [self.view addSubview:self.systemNotTableView];
 }

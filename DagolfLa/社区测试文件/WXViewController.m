@@ -21,8 +21,8 @@
 
 
 #import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
+
+#import "MJRefreshFooter.h"
 #import "PostDataRequest.h"
 #import "Helper.h"
 
@@ -38,7 +38,7 @@
 #import "UMSocialData.h"
 #import "ShareAlert.h"
 #import "UMSocialConfig.h"
-#import "UMSocialSinaHandler.h"
+
 #import "UMSocialDataService.h"
 #import "UMSocialWechatHandler.h"
 #import "CommuniteTableViewCell.h"
@@ -107,10 +107,10 @@
 
 - (void)returnFirRef{
     
-    self.mainTable.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    self.mainTable.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [self.mainTable.header endRefreshing];
-    [self.mainTable.header beginRefreshing];
+    self.mainTable.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    self.mainTable.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [self.mainTable.mj_header endRefreshing];
+    [self.mainTable.mj_header beginRefreshing];
 }
 
 
@@ -124,8 +124,8 @@
             
         }else {
             
-            [self.mainTable.header endRefreshing];
-            [self.mainTable.footer endRefreshing];
+            [self.mainTable.mj_header endRefreshing];
+            [self.mainTable.mj_footer endRefreshing];
             
             [self loaginOut];
         }
@@ -164,9 +164,9 @@
     [self.view addSubview:self.mainTable];
     [_mainTable setExtraCellLineHidden];
     
-    self.mainTable.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    self.mainTable.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [self.mainTable.header beginRefreshing];
+    self.mainTable.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    self.mainTable.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [self.mainTable.mj_header beginRefreshing];
 }
 
 #pragma mark --MJ刷新方法
@@ -359,9 +359,9 @@
             }
             
             if (isReshing) {
-                [self.mainTable.header endRefreshing];
+                [self.mainTable.mj_header endRefreshing];
             }else {
-                [self.mainTable.footer endRefreshing];
+                [self.mainTable.mj_footer endRefreshing];
             }
             
             //            _page++;
@@ -374,9 +374,9 @@
                 [self.mainTable reloadData];
                 
                 if (isReshing) {
-                    [self.mainTable.header endRefreshing];
+                    [self.mainTable.mj_header endRefreshing];
                 }else {
-                    [self.mainTable.footer endRefreshing];
+                    [self.mainTable.mj_footer endRefreshing];
                 }
             }
         }
@@ -385,9 +385,9 @@
         
         //        NSLog(@"%@",[dic objectForKey:@"message"]);
         if (isReshing) {
-            [self.mainTable.header endRefreshing];
+            [self.mainTable.mj_header endRefreshing];
         }else {
-            [self.mainTable.footer endRefreshing];
+            [self.mainTable.mj_footer endRefreshing];
         }
         [Helper alertViewNoHaveCancleWithTitle:@"您的网络异常,请稍后重试." withBlock:^(UIAlertController *alertView) {
             
@@ -489,7 +489,7 @@
         
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
-            [_mainTable.header beginRefreshing];
+            [_mainTable.mj_header beginRefreshing];
             
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:@"loadMessageData" object:nil];
@@ -556,9 +556,9 @@
             if ([[dict objectForKey:@"success"] boolValue]) {
                 //                [MBProgressHUD hideHUDForView:self.view  animated:NO];
                 [_tableDataSource removeAllObjects];
-                [self.mainTable.header endRefreshing];
-                self.mainTable.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-                [self.mainTable.header beginRefreshing];
+                [self.mainTable.mj_header endRefreshing];
+                self.mainTable.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                [self.mainTable.mj_header beginRefreshing];
                 [self.mainTable reloadData];
                 
                 UIAlertController *alerT = [UIAlertController alertControllerWithTitle:@"提示" message:@"屏蔽成功!" preferredStyle:UIAlertControllerStyleAlert];

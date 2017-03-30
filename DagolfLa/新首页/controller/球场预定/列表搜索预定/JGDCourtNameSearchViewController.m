@@ -268,12 +268,12 @@
     
     [[JsonHttp jsonHttp] httpRequest:@"bookball/getBallBookingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         
-        [self.resultTableView.footer endRefreshing];
+        [self.resultTableView.mj_footer endRefreshing];
         
     } completionBlock:^(id data) {
         
         [self.view addSubview: self.resultTableView];
-        [self.resultTableView.footer endRefreshing];
+        [self.resultTableView.mj_footer endRefreshing];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if ([data objectForKey:@"list"]) {
@@ -334,7 +334,7 @@
         _resultTableView.dataSource = self;
         _resultTableView.tag = 60;
         _resultTableView.rowHeight = 90 * ProportionAdapter;
-        _resultTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+        _resultTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
         [_resultTableView registerClass:[JGDBookCourtTableViewCell class] forCellReuseIdentifier:@"bookCourtCell"];
         
         

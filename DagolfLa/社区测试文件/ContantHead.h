@@ -154,7 +154,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define PHOTO_DAGOLFLA @"dagolfla"
 
 //默认头像
-#define DefaultHeaderImage @"moren.jpg"
+#define DefaultHeaderImage @"moren"
 #define IndexBallBgImage @"indexBallBgImage"
 
 #define TYPE_TEAM_HEAD       @1   // 球队头像类型
@@ -216,7 +216,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //share
 #import "ShareAlert.h"
 #import "UMSocial.h"
-#import "UMSocialSinaHandler.h"
+//#import "UMSocialSinaHandler.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialData.h"
 
@@ -226,8 +226,8 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "UMSocialControllerService.h"
 
 #import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
+
+
 
 #import "FCUUID.h"
 #import "JGHLoginViewController.h"

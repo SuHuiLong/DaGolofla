@@ -42,7 +42,7 @@
 -(void)showData:(ScreenModel *)model
 {
 //    [_btnIcon sd_setBackgroundImageWithURL:[Helper imageIconUrl:model.userPic] forState:UIControlStateNormal];
-    [_btnIcon sd_setBackgroundImageWithURL:[Helper imageIconUrl:model.userPic] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+    [_btnIcon sd_setBackgroundImageWithURL:[Helper imageIconUrl:model.userPic] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"moren"]];
     
     
     if (![Helper isBlankString:model.userName]) {

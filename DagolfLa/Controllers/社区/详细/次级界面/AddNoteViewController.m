@@ -60,7 +60,7 @@
         NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         if ([[dataDic objectForKey:@"success"] boolValue]) {
             NSDictionary *dicModel = [dataDic objectForKey:@"rows"];
-            [self.iconV sd_setImageWithURL:[Helper imageIconUrl:[dicModel objectForKey:@"pic"]] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+            [self.iconV sd_setImageWithURL:[Helper imageIconUrl:[dicModel objectForKey:@"pic"]] placeholderImage:[UIImage imageNamed:@"moren"]];
 
             
             self.nickName.text = [NSString stringWithFormat:@"昵称：%@",[dicModel objectForKey:@"userName"]] ;

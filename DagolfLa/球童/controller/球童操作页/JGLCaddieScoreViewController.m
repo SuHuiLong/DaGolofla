@@ -107,8 +107,8 @@
     self.tableView.rowHeight = 50 * ProportionAdapter;
     [self.view addSubview:self.tableView];
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    MJRefreshHeader *mjHeader =[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [mjHeader beginRefreshing];
     
     
     
@@ -200,7 +200,7 @@
     [dict setObject:strMd forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getCaddieRecord" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([data objectForKey:@"packSuccess"]) {
@@ -238,7 +238,7 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     }];
 }

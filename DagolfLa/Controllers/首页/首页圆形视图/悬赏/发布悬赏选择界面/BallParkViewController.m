@@ -9,9 +9,7 @@
 #import "BallParkViewController.h"
 
 #import "PostDataRequest.h"
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
+
 #import "Helper.h"
 #import "BallParkModel.h"
 #import <RongIMKit/RongIMKit.h>
@@ -186,7 +184,7 @@
 -(void)seachBtnClick{
     [_textField resignFirstResponder];
     if ([Helper isBlankString:_textField.text]==NO) {
-        [_tableView.header beginRefreshing];
+        [_tableView.mj_header beginRefreshing];
     }else{
         [[ShowHUD showHUD]showToastWithText:@"请填写搜索信息" FromView:self.view];
     }
@@ -203,9 +201,9 @@
     _tableView.dataSource = self;
     [_tableView setExtraCellLineHidden];
     [self.view addSubview:_tableView];
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 
@@ -239,9 +237,9 @@
             [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
         }
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 //    [[PostDataRequest sharedInstance] postDataRequest:kBallPark_URL parameter:dict success:^(id respondsData) {
@@ -264,15 +262,15 @@
 //        }
 ////        [_tableView reloadData];
 //        if (isReshing) {
-//            [_tableView.header endRefreshing];
+//            [_tableView.mj_header endRefreshing];
 //        }else {
-//            [_tableView.footer endRefreshing];
+//            [_tableView.mj_footer endRefreshing];
 //        }
 //    } failed:^(NSError *error) {
 //        if (isReshing) {
-//            [_tableView.header endRefreshing];
+//            [_tableView.mj_header endRefreshing];
 //        }else {
-//            [_tableView.footer endRefreshing];
+//            [_tableView.mj_footer endRefreshing];
 //        }
 //    }];
 }

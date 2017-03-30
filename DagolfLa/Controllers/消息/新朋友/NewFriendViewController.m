@@ -11,9 +11,7 @@
 
 #import "PostDataRequest.h"
 #import "Helper.h"
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
+
 
 #import "NewFriendModel.h"
 #import "PersonHomeController.h"
@@ -66,12 +64,9 @@
     
     if (_fromWitchVC == 2) {
         [self downLoawdDataWithNewFriend];
-//        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     }else{
         
         [self downLoawdDataWithRecommend: nil];
-//        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-//        [_tableView.header beginRefreshing];
 
     }
 }
@@ -198,15 +193,15 @@
             [alert show];
         }
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } failed:^(NSError *error) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }

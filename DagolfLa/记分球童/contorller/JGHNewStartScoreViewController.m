@@ -72,8 +72,8 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    [_caddieWithPalyerScoreView.tableView.header beginRefreshing];
-    [_caddieWithCaddieScoreView.tableView.header beginRefreshing];
+    [_caddieWithPalyerScoreView.tableView.mj_header beginRefreshing];
+    [_caddieWithCaddieScoreView.tableView.mj_header beginRefreshing];
     
     [self createItem];
     

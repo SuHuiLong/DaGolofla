@@ -5,7 +5,7 @@
 //  Created by bhxx on 15/8/5.
 //  Copyright (c) 2015年 bhxx. All rights reserved.
 //
-#import "MJDIYBackFooter.h"
+#import "MJRefreshFooter.h"
 #import "MJRefreshComponent.h"
 #import "MJRefreshConst.h"
 #import "UIView+MJExtension.h"
@@ -68,7 +68,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     } failed:^(NSError *error) {
         
     }];
@@ -105,7 +105,7 @@
     
     
     if ([(_likeOrShar == 667 ? _ymModel.assistCount : _ymModel.forwardNum) intValue] > 10) {
-        self.tableView.footer = [MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(refrenshing1)];
+        self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(refrenshing1)];
     }
     
 }
@@ -162,7 +162,7 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
         }
-        [self.tableView.footer endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
     } failed:^(NSError *error) {
         
     }];

@@ -31,7 +31,7 @@
 {
     _btnIcon = [UIButton buttonWithType:UIButtonTypeCustom];
     _btnIcon.frame = CGRectMake(10*ScreenWidth/375, 8.5*ScreenWidth/375, 50*ScreenWidth/375, 50*ScreenWidth/375);
-    [_btnIcon setImage:[UIImage imageNamed:@"moren.jpg"] forState:UIControlStateNormal];
+    [_btnIcon setImage:[UIImage imageNamed:@"moren"] forState:UIControlStateNormal];
     _btnIcon.layer.cornerRadius = 25*ScreenWidth/375;
     _btnIcon.layer.masksToBounds = YES;
 //    _btnIcon.contentMode = UIViewContentModeScaleAspectFill;

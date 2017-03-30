@@ -59,7 +59,7 @@
     
     NSString *url = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
     
-    [[SDImageCache sharedImageCache] removeImageForKey:url fromDisk:YES];
+    [[SDImageCache sharedImageCache] removeImageForKey:url fromDisk:YES withCompletion:nil];
     
     [self.photoImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"cabbieHeader"]];
 }
@@ -76,7 +76,7 @@
     
     NSString *url = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
     
-    [[SDImageCache sharedImageCache] removeImageForKey:url fromDisk:YES];
+    [[SDImageCache sharedImageCache] removeImageForKey:url fromDisk:YES withCompletion:nil];
     
     [self.photoImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"cabbieHeader"]];
 }

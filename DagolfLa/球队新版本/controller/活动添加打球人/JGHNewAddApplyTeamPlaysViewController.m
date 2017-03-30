@@ -8,9 +8,7 @@
 
 #import "JGHNewAddApplyTeamPlaysViewController.h"
 #import "JGHNewMenberTableViewCell.h"
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
+
 #import "JGLTeamMemberModel.h"
 
 #import "ChatDetailViewController.h"
@@ -67,8 +65,8 @@
     [_tableView registerClass:[JGHNewMenberTableViewCell class] forCellReuseIdentifier:@"JGHNewMenberTableViewCell"];
     
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -85,7 +83,7 @@
     
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -144,7 +142,7 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     }];
 }

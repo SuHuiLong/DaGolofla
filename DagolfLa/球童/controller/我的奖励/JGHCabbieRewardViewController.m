@@ -77,8 +77,8 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     [dict setObject:@(_page) forKey:@"offset"];
     [dict setObject:[JGReturnMD5Str getUserTransDetailOrderTypeListUserKey:[DEFAULF_USERID integerValue] andOrderType:7] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserTransDetailOrderTypeList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        [self.cabbieRewardTableView.header endRefreshing];
-        [self.cabbieRewardTableView.footer endRefreshing];
+        [self.cabbieRewardTableView.mj_header endRefreshing];
+        [self.cabbieRewardTableView.mj_footer endRefreshing];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
@@ -112,8 +112,8 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
             }
         }
         
-        [self.cabbieRewardTableView.header endRefreshing];
-        [self.cabbieRewardTableView.footer endRefreshing];
+        [self.cabbieRewardTableView.mj_header endRefreshing];
+        [self.cabbieRewardTableView.mj_footer endRefreshing];
     }];
 }
 - (void)createBarView:(NSInteger)barId andTotalPrice:(NSNumber *)price{
@@ -190,9 +190,9 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     self.cabbieRewardTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.cabbieRewardTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     
-    self.cabbieRewardTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    self.cabbieRewardTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-    [self.cabbieRewardTableView.header beginRefreshing];
+    self.cabbieRewardTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.cabbieRewardTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [self.cabbieRewardTableView.mj_header beginRefreshing];
     
     [self.view addSubview:self.cabbieRewardTableView];
 }

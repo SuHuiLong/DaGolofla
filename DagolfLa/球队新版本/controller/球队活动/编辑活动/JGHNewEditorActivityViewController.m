@@ -672,11 +672,11 @@ static CGFloat ImageHeight  = 210.0;
                 if ([[data objectForKey:@"code"] integerValue] == 1) {
                     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
                     
-                    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+                    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
                     
                     NSString *bggUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg", strTimeKey];
                     
-                    [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES];
+                    [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES withCompletion:nil];
                     
                     //获取主线层
                     dispatch_async(dispatch_get_main_queue(), ^{

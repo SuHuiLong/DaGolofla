@@ -43,7 +43,7 @@
     //替换任务栏
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
     //下载数据
-    [self.historyScoreView.tableView.header beginRefreshing];
+    [self.historyScoreView.tableView.mj_header beginRefreshing];
     
     [self.scoreResultWKwebView loadWebUrl:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]]];
     

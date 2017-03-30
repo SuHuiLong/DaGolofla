@@ -21,9 +21,7 @@
 //#import "JGTeamMemberORManagerViewController.h"
 #import "JGNewCreateTeamTableViewController.h"
 
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
+
 #import "UITool.h"
 
 #import "JGLViewCityChoose.h"
@@ -164,8 +162,8 @@
                 _strProvince = strPro;
                 //        weakSelf.text = strPro;
                 weakSelf.labelCity.text = strPro;
-                weakSelf.tableView.header=[MJDIYHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(headRereshing)];
-                [weakSelf.tableView.header beginRefreshing];
+                weakSelf.tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(headRereshing)];
+                [weakSelf.tableView.mj_header beginRefreshing];
                 
             };
         }
@@ -193,8 +191,8 @@
         _strProvince = strPro;
 //        weakSelf.text = strPro;
         weakSelf.labelCity.text = strPro;
-        weakSelf.tableView.header=[MJDIYHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(headRereshing)];
-        [weakSelf.tableView.header beginRefreshing];
+        weakSelf.tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(headRereshing)];
+        [weakSelf.tableView.mj_header beginRefreshing];
     };
     [self.view addSubview:_viewCityChoose];
 }
@@ -248,9 +246,9 @@
 //    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 40)];
     _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
 
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.mj_header beginRefreshing];
 //    self.view = _tableView;
     [self.view addSubview:_tableView];
     
@@ -361,9 +359,9 @@
     [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if (_page == 0)
@@ -384,9 +382,9 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }
@@ -447,9 +445,9 @@
 //    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
 //    [_locationManager stopUpdatingLocation];
 //    [user synchronize];
-//    //[_tableView.header beginRefreshing];
-//    //_tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-//    //[_tableView.header beginRefreshing];
+//    //[_tableView.mj_header beginRefreshing];
+//    //_tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+//    //[_tableView.mj_header beginRefreshing];
 //
 //}
 
@@ -494,7 +492,7 @@
     // http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o
     if (![Helper isBlankString:_textField.text]) {
         NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.searchArray[indexPath.row] objectForKey:@"timeKey"]];
-        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
 
         if ([self.searchArray count] != 0) {
             [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
@@ -511,7 +509,7 @@
         // TEST
         NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.modelArray[indexPath.row] objectForKey:@"timeKey"]];
                 NSLog(@"%@",[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]]);
-        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
         [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
         NSLog(@"%@", [Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]]);
 

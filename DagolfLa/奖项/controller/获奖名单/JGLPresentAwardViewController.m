@@ -184,7 +184,7 @@
                 
                 [self createHeader];
                 
-                [_tableView.header beginRefreshing];
+                [_tableView.mj_header beginRefreshing];
             });
             
         }else{
@@ -272,7 +272,7 @@
             [_tableView addSubview:self.bgView];
         }
         
-        [_tableView.header endRefreshing];
+        [_tableView.mj_header endRefreshing];
         
         [_tableView reloadData];
         
@@ -420,7 +420,7 @@
     
 //    [_tableView registerClass:[JGDActvityPriziSetTableViewCell class] forCellReuseIdentifier:@"setCell"];
     
-    _tableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    _tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     
     
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -523,9 +523,9 @@
     setAwardVC.teamKey = self.teamKey;
     setAwardVC.model = self.model;
     setAwardVC.refreshBlock = ^(){
-        [_tableView.header endRefreshing];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
-        [_tableView.header beginRefreshing];
+        [_tableView.mj_header endRefreshing];
+        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+        [_tableView.mj_header beginRefreshing];
     };
     [self.navigationController pushViewController:setAwardVC animated:YES];
 }

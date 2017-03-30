@@ -168,7 +168,7 @@
     } withBlockSure:^{
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
-            [_tableView.header beginRefreshing];
+            [_tableView.mj_header beginRefreshing];
             
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:@"loadMessageData" object:nil];
@@ -193,7 +193,7 @@
     if (buttonIndex == 1) {
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
-            [_tableView.header beginRefreshing];
+            [_tableView.mj_header beginRefreshing];
             
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:@"loadMessageData" object:nil];
@@ -290,7 +290,7 @@
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
             
             NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
-            [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
+            [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
             NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:bgUrl]];
             if (data) {
                 cell.iconImgv.image = [UIImage imageWithData:data];

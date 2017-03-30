@@ -20,7 +20,7 @@
 
 @implementation PostDataRequest
 {
-    AFHTTPRequestOperationManager *_httpManager;
+    AFHTTPSessionManager *_httpManager;
 }
 
 + (instancetype)sharedInstance {
@@ -34,7 +34,7 @@
 
 - (id)init {
     if (self = [super init]) {
-        _httpManager = [[AFHTTPRequestOperationManager alloc] init];
+        _httpManager = [[AFHTTPSessionManager alloc] init];
         //返回二进制
         _httpManager.requestSerializer.timeoutInterval = 20.f;
         _httpManager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -53,11 +53,13 @@
     //设置请求超时
     _httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    [_httpManager POST:urlStr parameters:dit success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [_httpManager POST:urlStr parameters:dit progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (successBlock) {
             successBlock(responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
             [Helper downLoadDataOverrun];
         }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
@@ -67,6 +69,7 @@
             faliedBlock(error);
         }
     }];
+    
 }
 
 - (void)postDataAndImageRequest:(NSString *)port parameter:(NSDictionary *)dit imageDataArr:(NSArray *)imageDataArr success:(SuccessBlockType)successBlock failed:(FailedBlockType)faliedBlock {
@@ -75,7 +78,7 @@
     
     _httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
-    [_httpManager POST:urlStr parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [_httpManager POST:urlStr parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (int i = 0; i <imageDataArr.count; i++) {
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             // 设置日期格式
@@ -84,11 +87,13 @@
             NSString *nameStr = @"myPic";
             [formData appendPartWithFileData:imageDataArr[i] name:nameStr fileName:[NSString stringWithFormat:@"%@.png",fileName] mimeType:@"image/png"];
         }
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (successBlock) {
             successBlock(responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
             [Helper downLoadDataOverrun];
         }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
@@ -98,13 +103,15 @@
             faliedBlock(error);
         }
     }];
+    
+    
 }
 - (void)postDataAndVideoDataRequest:(NSString*)port parameter:(NSDictionary*)dit videoData:(NSData *)videoData imageDataArr:(NSArray*)imageDataArr success:(SuccessBlockType)successBlock failed:(FailedBlockType)faliedBlock;
 {
     //设置请求超时
     _httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     //上传视频
-    [_httpManager POST:urlStr parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [_httpManager POST:urlStr parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (int i = 0; i <imageDataArr.count; i++) {
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             // 设置日期格式
@@ -120,11 +127,13 @@
         NSString *nameStr = @"video";
         //        [formData appendPartWithFormData:videoData name:nameStr];
         [formData appendPartWithFileData:videoData name:nameStr fileName:[NSString stringWithFormat:@"%@.mp4", videoFileName] mimeType:@"video/mp4"];
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (successBlock) {
             successBlock(responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
             [Helper downLoadDataOverrun];
         }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
@@ -134,12 +143,11 @@
             faliedBlock(error);
         }
     }];
-    
 }
 
 - (void)postOpenBusinessData:(NSString *)port parameter:(NSDictionary *)dit imageDataArr:(NSArray *)imageDataArr success:(SuccessBlockType)successBlock failed:(FailedBlockType)faliedBlock {
     _httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [_httpManager POST:urlStr parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [_httpManager POST:urlStr parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (int i = 0; i <imageDataArr.count; i++) {
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             // 设置日期格式
@@ -147,11 +155,13 @@
             NSString *fileName = [formatter stringFromDate:[NSDate date]];
             [formData appendPartWithFileData:imageDataArr[i] name:@"myPic" fileName:[NSString stringWithFormat:@"%@.png",fileName] mimeType:@"image/png"];
         }
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (successBlock) {
             successBlock(responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
             [Helper downLoadDataOverrun];
         }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
@@ -161,15 +171,18 @@
             faliedBlock(error);
         }
     }];
+
 }
 - (void)getDataRequest:(NSString *)port success:(SuccessBlockType)successBlock failed:(FailedBlockType)faliedBlock{
     
     _httpManager.responseSerializer.acceptableContentTypes =  [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];//设置相应内容类型
-    [_httpManager GET:port parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [_httpManager GET:port parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (successBlock) {
             successBlock(responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
             [Helper downLoadDataOverrun];
         }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 61) {
@@ -179,11 +192,14 @@
             faliedBlock(error);
         }
     }];
+    
+    
 }
 
 - (void)postDataAndImageRequestBackPic:(NSString *)port parameter:(NSDictionary *)dit imageDataArr:(NSArray *)imageDataArr success:(SuccessBlockType)successBlock failed:(FailedBlockType)faliedBlock {
     _httpManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [_httpManager POST:urlStr parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    
+    [_httpManager POST:urlStr parameters:dit constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (int i = 0; i <imageDataArr.count; i++) {
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             // 设置日期格式
@@ -193,11 +209,13 @@
             
             [formData appendPartWithFileData:imageDataArr[i] name:nameStr fileName:[NSString stringWithFormat:@"%@.png",fileName] mimeType:@"image/png"];
         }
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (successBlock) {
             successBlock(responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
             [Helper downLoadDataOverrun];
         }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
@@ -280,38 +298,61 @@
     return state ;
 }
 
-+ (void)downloadFileWithOption:(NSDictionary *)paramDic
-                 withInferface:(NSString*)requestURL
-                     savedPath:(NSString*)savedPath
-               downloadSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-               downloadFailure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-                      progress:(void (^)(float progress))progress
+- (void)downloadFileWithURL:(NSString*)requestURLString
+                 parameters:(NSDictionary *)parameters
+                  savedPath:(NSString*)savedPath
+            downloadSuccess:(void (^)(NSURLResponse *response, NSURL *filePath))success
+            downloadFailure:(void (^)(NSError *error))failure
+           downloadProgress:(void (^)(NSProgress *downloadProgress))progress
 
 {
+    
     AFHTTPRequestSerializer *serializer = [AFHTTPRequestSerializer serializer];
-    NSMutableURLRequest *request =[serializer requestWithMethod:@"POST" URLString:requestURL parameters:paramDic error:nil];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc]initWithRequest:request];
-    [operation setOutputStream:[NSOutputStream outputStreamToFileAtPath:savedPath append:NO]];
-    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        float p = (float)totalBytesRead / totalBytesExpectedToRead;
-        progress(p);
+    NSMutableURLRequest *request =[serializer requestWithMethod:@"POST" URLString:requestURLString parameters:parameters error:nil];
+    NSURLSessionDownloadTask *task = [[AFHTTPSessionManager manager] downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
+        progress(downloadProgress);
+    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+        return [NSURL fileURLWithPath:savedPath];
+    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+        if(error){
+            failure(error);
+        }else{
+            success(response,filePath);
+        }
     }];
+    [task resume];
     
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(operation,responseObject);
-        NSLog(@"下载成功");
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        success(operation,error);
-        
-        NSLog(@"下载失败");
-        UIAlertView *dowloadFailView = [[UIAlertView alloc]initWithTitle:nil message:@"下载失败！" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [dowloadFailView show];
-        [self performSelector:@selector(hidenDownloadFailView:) withObject:dowloadFailView afterDelay:0.8f];
-    }];
-    
-    [operation start];
 }
+
+    
+    
+    
+    
+//    AFHTTPRequestSerializer *serializer = [AFHTTPRequestSerializer serializer];
+//    NSMutableURLRequest *request =[serializer requestWithMethod:@"POST" URLString:requestURL parameters:paramDic error:nil];
+    
+//    AFHTTPRequestSerializer *operation = [[AFHTTPRequestSerializer alloc] initWithRequest:request];
+//    [operation setOutputStream:[NSOutputStream outputStreamToFileAtPath:savedPath append:NO]];
+//    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+//        float p = (float)totalBytesRead / totalBytesExpectedToRead;
+//        progress(p);
+//    }];
+//    
+//    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        success(operation,responseObject);
+//        NSLog(@"下载成功");
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        success(operation,error);
+//        
+//        NSLog(@"下载失败");
+//        UIAlertView *dowloadFailView = [[UIAlertView alloc]initWithTitle:nil message:@"下载失败！" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+//        [dowloadFailView show];
+//        [self performSelector:@selector(hidenDownloadFailView:) withObject:dowloadFailView afterDelay:0.8f];
+//    }];
+    
+//    [operation start];
+//}
 
 - (void)hidenDownloadFailView:(UIAlertView *)alertView{
     [alertView dismissWithClickedButtonIndex:0 animated:YES];
@@ -325,7 +366,8 @@
 {
     url = [NSString stringWithFormat:@"%@%@", BaseUrl, url];
     NSLog(@"%@",url);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //设置请求格式
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     //返回数据格式
@@ -338,17 +380,16 @@
     NSComparisonResult comparisonResult2 = [httpMethod caseInsensitiveCompare:@"POST"];
     if (comparison1 == NSOrderedSame)
     {
-        [manager GET:url parameters:postData success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:url parameters:postData progress:^(NSProgress * _Nonnull downloadProgress) {
             
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if (completionBlock) {
                 completionBlock(responseObject);
             }
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             if (failedBlock) {
                 failedBlock(error);
             }
-            
         }];
     }
     if (comparisonResult2 == NSOrderedSame)
@@ -364,15 +405,16 @@
         }
         
         if (!isFile) {//判断是上传数据还是下请求数据
-            [manager POST:url parameters:postData success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [manager POST:url parameters:postData progress:^(NSProgress * _Nonnull uploadProgress) {
                 
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
             }];
         }else
         {
-            [manager POST:url parameters:postData constructingBodyWithBlock:^(id formData) {
-                //取出需要上传的图片数据
+            [manager POST:url parameters:postData constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 for (NSString *key in postData) {
                     
                     id value = postData[key];
@@ -386,14 +428,16 @@
                                                 fileName:key
                          
                                                 mimeType:@"image/jpg"];
-                        
                     }
                 }
-            } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+            } progress:^(NSProgress * _Nonnull uploadProgress) {
+                
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 if (completionBlock) {
                     completionBlock(responseObject);
                 }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 60) {
                     [Helper downLoadDataOverrun];
                 }else if ([[error.userInfo objectForKey:@"_kCFStreamErrorCodeKey"] integerValue] == 51) {
@@ -402,14 +446,16 @@
                 if (failedBlock) {
                     failedBlock(error);
                 }
+
             }];
+
         }
     }
 }
 
 - (void)cancelRequest
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.operationQueue cancelAllOperations];
 }
 

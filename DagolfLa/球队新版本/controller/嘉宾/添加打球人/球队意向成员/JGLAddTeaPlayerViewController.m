@@ -9,11 +9,6 @@
 #import "JGLAddTeaPlayerViewController.h"
 #import "JGLAddTeamPlayerTableViewCell.h"
 
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
-
-
 
 #import "JGTeamMemberManager.h"
 #import "JGReturnMD5Str.h"
@@ -69,8 +64,8 @@
     [_tableView registerClass:[JGLAddTeamPlayerTableViewCell class] forCellReuseIdentifier:@"JGLAddTeamPlayerTableViewCell"];
     
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -86,7 +81,7 @@
     
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -137,7 +132,7 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     }];
 }

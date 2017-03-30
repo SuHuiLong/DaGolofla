@@ -12,11 +12,6 @@
 #import "JGDNotActivityHisCoreViewController.h"
 #import "JGHScoresViewController.h"
 
-
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
-
 #import "JGHRetrieveScoreViewController.h" // 取回记分
 #import "JGDHistoryScoreShowViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
@@ -89,9 +84,9 @@
 //    self.tableView.showsVerticalScrollIndicator = NO;
 //    self.tableView.showsHorizontalScrollIndicator = NO;
     
-    self.tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    self.tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-    [self.tableView.header beginRefreshing];
+    self.tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [self.tableView.mj_header beginRefreshing];
     
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
@@ -296,8 +291,8 @@
             }
         }
         
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
         
         [self.tableView reloadData];
         
@@ -341,8 +336,8 @@
             }
         }
         
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
         
         [self.tableView reloadData];
         

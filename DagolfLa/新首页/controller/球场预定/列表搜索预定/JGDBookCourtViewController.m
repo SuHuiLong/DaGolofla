@@ -76,14 +76,14 @@
         [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     }
     [[JsonHttp jsonHttp] httpRequest:@"bookball/getBallBookingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-//        [self.courtTableView.header endRefreshing];
-        [self.courtTableView.footer endRefreshing];
+//        [self.courtTableView.mj_header endRefreshing];
+        [self.courtTableView.mj_footer endRefreshing];
 
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
 
     } completionBlock:^(id data) {
-//        [self.courtTableView.header endRefreshing];
-        [self.courtTableView.footer endRefreshing];
+//        [self.courtTableView.mj_header endRefreshing];
+        [self.courtTableView.mj_footer endRefreshing];
         
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
 
@@ -133,9 +133,9 @@
     self.courtTableView.rowHeight = 90 * ProportionAdapter;
     [self.courtTableView registerClass:[JGDBookCourtTableViewCell class] forCellReuseIdentifier:@"bookCourtCell"];
     
-//    self.courtTableView.header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
-    self.courtTableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
-//    [self.courtTableView.header beginRefreshing];
+//    self.courtTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+    self.courtTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
+//    [self.courtTableView.mj_header beginRefreshing];
     [self dataSet:0];
 
     
@@ -203,7 +203,7 @@
     }
     
     //    [self dataSet:btn.tag - 300];
-    //    [self.courtTableView.header beginRefreshing];
+    //    [self.courtTableView.mj_header beginRefreshing];
 
     self.currentType = btn.tag - 300;
     [btn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];

@@ -9,9 +9,7 @@
 #import "JGActivityMemNonMangerViewController.h"
 #import "JGActivityMemNonmangerTableViewCell.h"
 #import "JGTeamDeatilWKwebViewController.h"
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
+
 
 @interface JGActivityMemNonMangerViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -33,9 +31,9 @@
     [self.tableView registerClass:[JGActivityMemNonmangerTableViewCell class] forCellReuseIdentifier:@"memCell"];
     
     _page = 0;
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
     [self.view addSubview:self.tableView];
     
@@ -84,9 +82,9 @@
     [dict setObject:strMD forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([data objectForKey:@"packSuccess"]) {
@@ -105,9 +103,9 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }

@@ -9,8 +9,7 @@
 #import "JGMenberTableViewCell.h"
 
 #import "PYTableViewIndexManager.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
+
 #import "MyattenModel.h"
 #import "ChatDetailViewController.h"
 #import "JGTeamMemberManager.h"
@@ -93,8 +92,8 @@
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [_dictData setObject:searchBar.text forKey:@"userName"];
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 -(void)uiConfig
@@ -107,8 +106,8 @@
     [_tableView registerClass:[JGLFriendAddTableViewCell class] forCellReuseIdentifier:@"JGLFriendAddTableViewCell"];
     
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -121,8 +120,8 @@
     //    [_dictData setObject:@0 forKey:@"rows"];
     [_dictData setObject: [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"userFriend/getUserFriendList" JsonKey:nil withData:_dictData requestMethod:@"GET" failedBlock:^(id errType) {
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
             NSArray *array = [data objectForKey:@"list"];
@@ -164,8 +163,8 @@
             }
         }
         
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
     }];
 }
 

@@ -8,9 +8,7 @@
 
 #import "JGLJoinManageViewController.h"
 #import "JGLTeamAdviceTableViewCell.h"
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
+
 #import "JGLTeamMemberModel.h"
 
 #import "UITool.h"
@@ -48,9 +46,9 @@
     _tableView.separatorStyle = UITableViewCellAccessoryNone;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLTeamAdviceTableViewCell class] forCellReuseIdentifier:@"JGLTeamAdviceTableViewCell"];
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 
@@ -64,9 +62,9 @@
     [dict setObject:para forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getAuditTeamMemberList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -98,9 +96,9 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     }];
 }

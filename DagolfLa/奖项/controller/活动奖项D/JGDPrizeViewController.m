@@ -14,9 +14,6 @@
 #import "JGHSetAwardViewController.h"
 #import "JGHActivityBaseCell.h"
 
-#import "MJRefresh.h"
-#import "MJDIYBackFooter.h"
-#import "MJDIYHeader.h"
 #import "JGTeamDeatilWKwebViewController.h"
 //#import "EnterViewController.h"
 #import "JGLWinnersShareViewController.h"
@@ -137,9 +134,9 @@
 //    [self.tableView registerNib:activityBaseCellNib forCellReuseIdentifier:@"topCell"];
     [self.tableView registerClass:[JGDActvityPriziSetTableViewCell class] forCellReuseIdentifier:@"setCell"];
     _page = 0;
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
+    [_tableView.mj_header beginRefreshing];
 
     [self.view addSubview:self.tableView];
 }
@@ -217,9 +214,9 @@
     [[JsonHttp jsonHttp]httpRequest:@"team/getPublishPrizeList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errtype == %@", errType);
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } completionBlock:^(id data) {
         
@@ -254,9 +251,9 @@
             }
         }
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
 
     }];
@@ -309,9 +306,9 @@
     setAwardVC.teamKey = self.teamKey;
     setAwardVC.model = self.model;
     setAwardVC.refreshBlock = ^(){
-        [_tableView.header endRefreshing];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-        [_tableView.header beginRefreshing];
+        [_tableView.mj_header endRefreshing];
+        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.mj_header beginRefreshing];
     };
     [self.navigationController pushViewController:setAwardVC animated:YES];
 }
@@ -324,9 +321,9 @@
     preVC.activityKey = _activityKey;
     preVC.model = _model;
     preVC.refreshBlock = ^(){
-        [_tableView.header endRefreshing];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-        [_tableView.header beginRefreshing];
+        [_tableView.mj_header endRefreshing];
+        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        [_tableView.mj_header beginRefreshing];
     };
     [self.navigationController pushViewController:preVC animated:YES];
 

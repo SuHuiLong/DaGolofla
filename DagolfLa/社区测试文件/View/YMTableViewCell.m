@@ -196,11 +196,12 @@
 #pragma mark -  //头像 昵称 简介
 
     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[tempDate.uId integerValue]];
-    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES];
-    [_userHeaderImage sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+
+    [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
+    [_userHeaderImage sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"moren"]];
     
 //    
-//    [_userHeaderImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[tempDate.uId integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+//    [_userHeaderImage sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[tempDate.uId integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:@"moren"]];
     _userHeaderImage.tag = [ymData.uId intValue];
     
     
@@ -296,7 +297,7 @@
         UIImageView *imageNew = [[UIImageView alloc]init];
         imageNew.contentMode = UIViewContentModeScaleAspectFill;
         imageNew.clipsToBounds = YES;
-        [imageNew sd_setImageWithURL:[NSURL URLWithString:ymData.messageBody.thumbnailImageURL] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+        [imageNew sd_setImageWithURL:[NSURL URLWithString:ymData.messageBody.thumbnailImageURL] placeholderImage:[UIImage imageNamed:@"moren"]];
         imageNew.frame = CGRectMake(offSet_X + ((screenWidth - 2 * offSet_X )/3 + 4*screenWidth/375)*(0%3), TableHeader + 4 * ((0/3) + 1*screenWidth/375) + (0/3) *((screenWidth - 2* offSet_X )/3) + shuoshuoHeight + kDistance + (ymData.islessLimit?0:30), (screenWidth - 2* offSet_X ), (screenWidth - 2* offSet_X )/3*2);
         //添加播放控件
         UIImageView *vedioPlayView = [[UIImageView alloc]initWithFrame:CGRectMake((imageNew.frame.size.width-2*20*screenWidth/375)/2, (imageNew.frame.size.height-2*20*screenWidth/375)/2, 2*20*screenWidth/375, 2*20*screenWidth/375)];
@@ -330,7 +331,7 @@
                 //            NSLog(@"%f",imageNew.frame.origin.x);
                 imageNew.contentMode = UIViewContentModeScaleAspectFill;
                 imageNew.clipsToBounds = YES;
-                [imageNew sd_setImageWithURL: [Helper imageUrl:[ymData.showImageArray objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+                [imageNew sd_setImageWithURL: [Helper imageUrl:[ymData.showImageArray objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"moren"]];
                 
             }else{
                 if ([ymData.showImageArray count] == 4 && (i == 2 || i == 3)) {
@@ -340,7 +341,7 @@
                     imageNew.frame = CGRectMake(offSet_X + ((screenWidth - 2 * offSet_X )/3 + 4*screenWidth/375)*(i%3),             TableHeader + 4 * ((i/3) + 1*screenWidth/375) + (i/3) *((screenWidth - 2* offSet_X )/3) + shuoshuoHeight + kDistance + (ymData.islessLimit?0:30),                            (screenWidth - 2* offSet_X )/3,                                   (screenWidth - 2* offSet_X )/3);
                 }
                 imageNew.contentMode = UIViewContentModeScaleAspectFill;
-                [imageNew sd_setImageWithURL: [Helper imageIconUrl:[ymData.showImageArray objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+                [imageNew sd_setImageWithURL: [Helper imageIconUrl:[ymData.showImageArray objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"moren"]];
             }
             
             imageNew.userInteractionEnabled = YES;

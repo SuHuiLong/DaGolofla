@@ -319,7 +319,7 @@
         
     }
     [_tableView reloadData];
-    [_tableView.header endRefreshing];
+    [_tableView.mj_header endRefreshing];
 }
 
 
@@ -334,8 +334,8 @@
     [_tableView registerClass:[JGLAddressAddTableViewCell class] forCellReuseIdentifier:@"JGLAddressAddTableViewCell"];
     
     
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(createAddress)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(createAddress)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 

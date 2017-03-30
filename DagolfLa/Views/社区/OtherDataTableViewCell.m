@@ -48,7 +48,7 @@
     if (deatilModel.picUrl) {
         //NSLog(@"%@",_deatilModel.moodContent);
         _picView.hidden = NO;
-        [_picView sd_setImageWithURL:[Helper imageIconUrl:deatilModel.picUrl] placeholderImage:[UIImage imageNamed:@"moren.jpg"]];
+        [_picView sd_setImageWithURL:[Helper imageIconUrl:deatilModel.picUrl] placeholderImage:[UIImage imageNamed:@"moren"]];
     }else{
         _picView.hidden = YES;
         _picViewWidth.constant = 0;

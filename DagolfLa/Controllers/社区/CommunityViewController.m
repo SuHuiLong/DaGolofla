@@ -19,11 +19,6 @@
 #import "ZanNumViewController.h"
 #import "PublishViewController.h"
 
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
-
-
 #import "PostDataRequest.h"
 #import "Helper.h"
 
@@ -60,9 +55,9 @@
         NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
         [user setObject:@3 forKey:@"isFirstEnter"];
         [user synchronize];
-        [_tableView.header endRefreshing];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        [_tableView.header beginRefreshing];
+        [_tableView.mj_header endRefreshing];
+        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        [_tableView.mj_header beginRefreshing];
     }
     else
     {
@@ -70,9 +65,9 @@
             NSUserDefaults* user = [NSUserDefaults standardUserDefaults];
             [user setObject:@2 forKey:@"isFirstEnter"];
             [user synchronize];
-            [_tableView.header endRefreshing];
-            _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-            [_tableView.header beginRefreshing];
+            [_tableView.mj_header endRefreshing];
+            _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+            [_tableView.mj_header beginRefreshing];
             
         }
     }
@@ -116,9 +111,9 @@
         PublishViewController* pubVc = [[PublishViewController alloc]init];
         //发布完成回调刷新
         pubVc.blockRereshing = ^(){
-            [_tableView.header endRefreshing];
-            _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-            [_tableView.header beginRefreshing];
+            [_tableView.mj_header endRefreshing];
+            _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+            [_tableView.mj_header beginRefreshing];
         };
         [self.navigationController pushViewController:pubVc animated:YES];
         
@@ -158,24 +153,24 @@
     NSInteger selectedIndex = [ _segmentedControl selectedSegmentIndex ];
     /* 添加代码,处理值的变化 */
     if (selectedIndex == 1) {
-        [_tableView.header endRefreshing];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        //        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-        [_tableView.header beginRefreshing];
+        [_tableView.mj_header endRefreshing];
+        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        //        _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        [_tableView.mj_header beginRefreshing];
     }
     else if (selectedIndex == 2)
     {
-        [_tableView.header endRefreshing];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        //        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-        [_tableView.header beginRefreshing];
+        [_tableView.mj_header endRefreshing];
+        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        //        _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        [_tableView.mj_header beginRefreshing];
     }
     else
     {
-        [_tableView.header endRefreshing];
-        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        //        _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-        [_tableView.header beginRefreshing];
+        [_tableView.mj_header endRefreshing];
+        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        //        _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        [_tableView.mj_header beginRefreshing];
     }
 }
 
@@ -191,9 +186,9 @@
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     
     //    addHeaderWithTarget: 是第三方类库中UIScrolView的category。
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    _tableView.footer=[MJDIYBackFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [_tableView.header beginRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+    [_tableView.mj_header beginRefreshing];
     
 }
 
@@ -280,9 +275,9 @@
             }
         }
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
     } failed:^(NSError *error) {
         
@@ -291,9 +286,9 @@
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }else {
-            [_tableView.footer endRefreshing];
+            [_tableView.mj_footer endRefreshing];
         }
         
         
@@ -636,7 +631,7 @@
     } withBlockSure:^{
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
-            [_tableView.header beginRefreshing];
+            [_tableView.mj_header beginRefreshing];
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:@"loadMessageData" object:nil];
         };
@@ -699,9 +694,9 @@
             if ([[dict objectForKey:@"success"] boolValue]) {
                 [MBProgressHUD hideHUDForView:self.view  animated:NO];
                 [_dataArray removeAllObjects];
-                [_tableView.header endRefreshing];
-                _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-                [_tableView.header beginRefreshing];
+                [_tableView.mj_header endRefreshing];
+                _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                [_tableView.mj_header beginRefreshing];
                 [_tableView reloadData];
                 
                 UIAlertController *alerT = [UIAlertController alertControllerWithTitle:@"提示" message:@"屏蔽成功!" preferredStyle:UIAlertControllerStyleAlert];

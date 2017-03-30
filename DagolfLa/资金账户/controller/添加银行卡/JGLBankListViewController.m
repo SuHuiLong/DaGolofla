@@ -11,10 +11,6 @@
 #import "JGLAddBankCardViewController.h"
 #import "JGDWrongViewViewController.h"
 
-#import "MJRefresh.h"
-#import "MJDIYHeader.h"
-#import "MJDIYBackFooter.h"
-
 #import "JGLBankModel.h"
 
 #import "MBProgressHUD.h"
@@ -45,9 +41,9 @@
         [self.view addSubview: _btnDelete];
     }
     
-    [_tableView.header endRefreshing];
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    [_tableView.header beginRefreshing];
+    [_tableView.mj_header endRefreshing];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    [_tableView.mj_header beginRefreshing];
 }
 
 
@@ -92,9 +88,9 @@
         addVc.realName = _realName;
     }
 //    addVc.refreshBlock = ^(){
-//        [_tableView.header endRefreshing];
-//        _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-//        [_tableView.header beginRefreshing];
+//        [_tableView.mj_header endRefreshing];
+//        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+//        [_tableView.mj_header beginRefreshing];
 //    };
     [self.navigationController pushViewController:addVc animated:YES];
 }
@@ -107,9 +103,9 @@
     _tableView.tableHeaderView = _viewHeader;
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
-    [_tableView.header beginRefreshing];
+    [_tableView.mj_header beginRefreshing];
 }
 
 
@@ -120,7 +116,7 @@
     [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserBankCardList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -174,7 +170,7 @@
         }
         [_tableView reloadData];
         if (isReshing) {
-            [_tableView.header endRefreshing];
+            [_tableView.mj_header endRefreshing];
         }
     }];
 }
@@ -252,10 +248,10 @@
         } completionBlock:^(id data) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                [_tableView.header endRefreshing];
-                [_tableView.footer endRefreshing];
-                _tableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-                [_tableView.header beginRefreshing];
+                [_tableView.mj_header endRefreshing];
+                [_tableView.mj_footer endRefreshing];
+                _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                [_tableView.mj_header beginRefreshing];
             }
             else
             {

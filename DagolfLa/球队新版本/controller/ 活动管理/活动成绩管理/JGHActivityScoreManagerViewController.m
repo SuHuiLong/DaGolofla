@@ -120,8 +120,8 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     self.scoreManageTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.scoreManageTableView];
     
-    self.scoreManageTableView.header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    [self.scoreManageTableView.header beginRefreshing];
+    self.scoreManageTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    [self.scoreManageTableView.mj_header beginRefreshing];
     
 }
 
@@ -140,7 +140,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamActivityKey=%@dagolfla.com", DEFAULF_USERID,str]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"score/getTeamActivityScoreMgrList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
-            [self.scoreManageTableView.header endRefreshing];
+            [self.scoreManageTableView.mj_header endRefreshing];
         }
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] boolValue]) {
@@ -192,7 +192,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
         }
         [self.scoreManageTableView reloadData];
         if (isReshing) {
-            [self.scoreManageTableView.header endRefreshing];
+            [self.scoreManageTableView.mj_header endRefreshing];
         }
 
     }];

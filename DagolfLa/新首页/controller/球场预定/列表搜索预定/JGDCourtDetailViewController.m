@@ -71,7 +71,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey];
-    [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
+    [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
     
     [self.imgProfile sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey]] placeholderImage:[UIImage imageNamed:TeamBGImage]];
     

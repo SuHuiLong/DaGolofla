@@ -9,7 +9,7 @@
 #import "MyRecomViewController.h"
 #import "ShareAlert.h"
 #import "UMSocial.h"
-#import "UMSocialSinaHandler.h"
+
 #import "UMSocialWechatHandler.h"
 
 @interface MyRecomViewController ()<UIWebViewDelegate>
