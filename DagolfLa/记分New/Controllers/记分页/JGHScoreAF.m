@@ -66,11 +66,11 @@ static JGHScoreAF *scoreAF = nil;
 
 - (void)httpScoreKey:(NSString *)scoreKey failedBlock:(GBHEFailedBlock)failedBlock completionBlock:(GBHECompletionBlock)completionBlock{
     
-    [[JGHScoreDatabase shareScoreDatabase]initDataBaseTableName:scoreKey];
+    //[[JGHScoreDatabase shareScoreDatabase]initDataBaseTableName:scoreKey];
     
     NSMutableArray *scoreArray = [NSMutableArray array];
     
-    scoreArray = [[JGHScoreDatabase shareScoreDatabase]getAllScore];
+    scoreArray = [[JGHScoreDatabase shareScoreDatabase]getAllScoreKey:scoreKey];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];

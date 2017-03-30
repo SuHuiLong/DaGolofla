@@ -121,7 +121,7 @@
     [self.view addSubview:_bgView];
     //球场
     UILabel *ballName = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 35*ProportionAdapter)];
-    ballName.text = [NSString stringWithFormat:@"%@", [_dict objectForKey:@"ballName"]];
+    ballName.text = [NSString stringWithFormat:@"%@", ([_dict objectForKey:@"ballName"])?[_dict objectForKey:@"ballName"]:@""];
     ballName.backgroundColor = [UIColor colorWithHexString:BG_color];
     ballName.layer.cornerRadius = 3.0*ProportionAdapter;
     ballName.layer.masksToBounds = YES;
@@ -129,7 +129,10 @@
     [_bgView addSubview:ballName];
     //日期
     UILabel *timeLable = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 55*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
-    timeLable.text = [NSString stringWithFormat:@"%@", [[[_dict objectForKey:@"playTimes"] componentsSeparatedByString:@" "] firstObject]];;
+    if ([_dict objectForKey:@"playTimes"]) {
+        timeLable.text = [NSString stringWithFormat:@"%@", [[[_dict objectForKey:@"playTimes"] componentsSeparatedByString:@" "] firstObject]];
+    }
+    
     timeLable.backgroundColor = [UIColor colorWithHexString:BG_color];
     timeLable.layer.cornerRadius = 3.0*ProportionAdapter;
     timeLable.layer.masksToBounds = YES;
@@ -138,7 +141,7 @@
     [_bgView addSubview:timeLable];
     //杆数
     UILabel *poleLable = [[UILabel alloc]initWithFrame:CGRectMake((screenWidth -30*ProportionAdapter)/2 + 20*ProportionAdapter, 55*ProportionAdapter, (screenWidth -30*ProportionAdapter)/2, 25*ProportionAdapter)];
-    poleLable.text = [NSString stringWithFormat:@"%@  杆", [_dict objectForKey:@"poleNum"]];
+    poleLable.text = [NSString stringWithFormat:@"%@  杆", ([_dict objectForKey:@"poleNum"])?[_dict objectForKey:@"poleNum"]:@""];
     poleLable.textAlignment = NSTextAlignmentCenter;
     poleLable.backgroundColor = [UIColor colorWithHexString:BG_color];
     poleLable.layer.cornerRadius = 3.0*ProportionAdapter;
