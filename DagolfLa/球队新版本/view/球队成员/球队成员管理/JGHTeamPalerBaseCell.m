@@ -148,12 +148,12 @@
     
     if (model.almost) {
         if ([model.almost floatValue] == -10000) {
-            _almostValue.text = @"差点  --";
+            _almostValue.text = @" --";
         }else{
-            _almostValue.text = [NSString stringWithFormat:@"差点  %@", model.almost];
+            _almostValue.text = [NSString stringWithFormat:@" %@", model.almost];
         }
     }else{
-        _almostValue.text = @"差点  --";
+        _almostValue.text = @" --";
     }
     
     if (model.industry) {

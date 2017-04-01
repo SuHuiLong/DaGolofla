@@ -85,22 +85,26 @@
     [Helper alertViewWithTitle:@"您是否确定要删除该队员" withBlockCancle:^{
         
     } withBlockSure:^{
+        /*
         MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
         progress.mode = MBProgressHUDModeIndeterminate;
         progress.labelText = @"正在上传...";
         [self.view addSubview:progress];
         [progress show:YES];
-        
+        */
+        [LQProgressHud showLoading:@"删除中..."];
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:DEFAULF_USERID forKey:@"userKey"];
         [dic setObject:_teamKey forKey:@"teamKey"];//球队的timekey
         [dic setObject:_model.timeKey forKey:@"memberKey"];//球队的member的timekey
         [[JsonHttp jsonHttp] httpRequest:@"team/deleteTeamMember" JsonKey:nil withData:dic requestMethod:@"POST" failedBlock:^(id errType) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            //[MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            [LQProgressHud hide];
             [[ShowHUD showHUD]showToastWithText:@"删除失败" FromView:self.view];
         } completionBlock:^(id data) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            //[MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            [LQProgressHud hide];
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 _deleteBlock();
                 [self.navigationController popViewControllerAnimated:YES];

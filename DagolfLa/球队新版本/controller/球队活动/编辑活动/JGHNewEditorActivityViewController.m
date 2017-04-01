@@ -187,7 +187,7 @@ static CGFloat ImageHeight  = 210.0;
     _titleArray = @[@[], @[@"", @"活动名称", @"活动场地", @"开球时间", @"报名截止", @"结束时间"], @[@"", @"活动成员及分组管理", @"成绩管理"], @[@"", @"费用设置", @"人数限制", @"活动奖项", @"活动说明", @""], @[@"", @"联系人资料"]];
     _imageArray = @[@[], @[@"", @"icn_eventname", @"icn_address", @"icn_time", @"icn_registration", @"icn_deadline"], @[@"", @"icn_event_group", @"icn_event_score"], @[@"", @"icn_preferential", @"icn_scale", @"icn_awards", @"icn_event_details", @""], @[@"", @"icn_detail", @"", @"", @""]];
     
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         [self dataSet];
     });
 }

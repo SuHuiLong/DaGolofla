@@ -126,7 +126,8 @@
     [dict setObject:[NSNumber numberWithInteger:_chooseID] forKey:@"identity"];
 
     
-    if (_chooseID >= 0 && _chooseID <= 7) {
+    ////修改BUG :未选择身份不能提交
+    if ((_chooseID >= 0 && _chooseID <= 7) || _identity >0) {
         [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamMemberPower" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             NSLog(@"errType == %@", errType);
         } completionBlock:^(id data) {
@@ -145,14 +146,14 @@
             }
         }];
     }
+    /*
     else
     {
         [Helper alertViewWithTitle:@"请为他选择一个身份" withBlock:^(UIAlertController *alertView) {
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
     }
-    
-    
+    */
     
 }
 
