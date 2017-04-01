@@ -14,6 +14,7 @@
 #import "PostDataRequest.h"
 #import "UserDataInformation.h"
 
+#import "IQKeyboardManager.h"
 
 @interface ChatDetailViewController ()
 
@@ -32,6 +33,16 @@
         // 删除缓存数据
         [[NSFileManager defaultManager] removeItemAtPath:cachesPath error:nil];
     }
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [IQKeyboardManager sharedManager].enable = NO;
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [IQKeyboardManager sharedManager].enable = YES;
 }
 
 - (void)viewDidLoad {
@@ -75,37 +86,6 @@
 
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
     if ([userId integerValue]!=[[user objectForKey:@"userId"] integerValue]) {
-        
-//        AddNoteViewController *addVC = [[AddNoteViewController alloc] init];
-//    
-//    NSMutableDictionary *paraDic = [[NSMutableDictionary alloc] init];
-//    [paraDic setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
-//    [paraDic setObject:userId forKey:@"otherUserId"];
-//    [[PostDataRequest sharedInstance] postDataRequest:@"user/queryByIds.do" parameter:paraDic success:^(id respondsData) {
-//        
-//        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-//        if ([[dict objectForKey:@"success"] boolValue]) {
-//            NSDictionary *dic = [dict objectForKey:@"rows"];
-//            if ( [dic objectForKey:@"followState"]) {
-//                addVC.isFollow = YES;
-//            }else{
-//                addVC.isFollow = NO;
-//            }
-//            
-//            addVC.isInfo = YES;
-//            addVC.otherUid = [NSNumber numberWithInteger:[userId integerValue]];
-//            [self.navigationController pushViewController:addVC animated:YES];
-//            
-//            
-//            
-//
-//        }else {
-//           
-//            
-//        }
-//    } failed:^(NSError *error) {
-//        
-//    }];
         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
         [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
         NSNumber *numTemp = [numberFormatter numberFromString:userId];

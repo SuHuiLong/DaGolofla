@@ -16,7 +16,7 @@ static JGHScoreDatabase *scoreDatabase = nil;
 {
     FMDatabase *_db;
     
-    NSString *_tableName;
+    //NSString *_tableName;
 }
 
 @end
@@ -36,7 +36,7 @@ static JGHScoreDatabase *scoreDatabase = nil;
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *filePath = [documentsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"DATA_%@.sqlite", tableName]];
     
-    _tableName = tableName;
+    //_tableName = tableName;
     
     _db = [FMDatabase databaseWithPath:filePath];
     
@@ -53,7 +53,7 @@ static JGHScoreDatabase *scoreDatabase = nil;
 - (BOOL)selectScoreModel:(NSString *)scorekey{
     [_db open];
     
-    FMResultSet *res = [_db executeQuery:[NSString stringWithFormat:@"SELECT * FROM Table_%@ WHERE timeKey = %@", _tableName, scorekey]];
+    FMResultSet *res = [_db executeQuery:[NSString stringWithFormat:@"SELECT * FROM Table_%@ WHERE timeKey = %@", scorekey, scorekey]];
     
     BOOL result;
     
@@ -68,10 +68,10 @@ static JGHScoreDatabase *scoreDatabase = nil;
     return result;
 }
 
-- (void)addJGHScoreListModel:(JGHScoreListModel *)scoreModel{
+- (void)addJGHScoreListModel:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey{
     [_db open];
     
-    FMResultSet *res = [_db executeQuery:[NSString stringWithFormat:@"SELECT * FROM Table_%@ WHERE timeKey = %@", _tableName, scoreModel.timeKey]];
+    FMResultSet *res = [_db executeQuery:[NSString stringWithFormat:@"SELECT * FROM Table_%@ WHERE timeKey = %@", scoreKey, scoreModel.timeKey]];
     
     //如果在数据库中找到记录, update;否则插入新纪录
     if ([res next]) {
@@ -80,10 +80,10 @@ static JGHScoreDatabase *scoreDatabase = nil;
         //[self updateJGHScoreListModel:scoreModel];
     }else{
         //插入
-        NSString *tableName = [NSString stringWithFormat:@"Table_%@", _tableName];
-        NSString *sqlColumnMStr = @"timeKey, userKey, userName, userMobile, almost, tTaiwan, poleNumber, standardlever, pushrod, onthefairway, poleNameList, region1, region2, areaArray, score, ballAreas, finish, switchMode";
-        NSString *valueString = @"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
-        NSArray *sqlValues = [NSArray arrayWithObjects:scoreModel.timeKey, scoreModel.userKey, scoreModel.userName, (scoreModel.userMobile)?scoreModel.userMobile:@"", (scoreModel.almost)?scoreModel.almost:@"", scoreModel.tTaiwan, [scoreModel.poleNumber componentsJoinedByString:@","], [scoreModel.standardlever componentsJoinedByString:@","], [scoreModel.pushrod componentsJoinedByString:@","], [scoreModel.onthefairway componentsJoinedByString:@","], [scoreModel.poleNameList componentsJoinedByString:@","], scoreModel.region1, scoreModel.region2, [scoreModel.areaArray componentsJoinedByString:@","], [Helper dictionaryToJson:scoreModel.score], [scoreModel.ballAreas componentsJoinedByString:@","], scoreModel.finish, [NSString stringWithFormat:@"%td", scoreModel.switchMode], nil];
+        NSString *tableName = [NSString stringWithFormat:@"Table_%@", scoreKey];
+        NSString *sqlColumnMStr = @"timeKey, userKey, userName, userMobile, almost, tTaiwan, poleNumber, standardlever, pushrod, onthefairway, poleNameList, region1, region2, areaArray, score, ballAreas, finish, switchMode, commitData";
+        NSString *valueString = @"?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+        NSArray *sqlValues = [NSArray arrayWithObjects:scoreModel.timeKey, scoreModel.userKey, scoreModel.userName, (scoreModel.userMobile)?scoreModel.userMobile:@"", (scoreModel.almost)?scoreModel.almost:@"", scoreModel.tTaiwan, [scoreModel.poleNumber componentsJoinedByString:@","], [scoreModel.standardlever componentsJoinedByString:@","], [scoreModel.pushrod componentsJoinedByString:@","], [scoreModel.onthefairway componentsJoinedByString:@","], [scoreModel.poleNameList componentsJoinedByString:@","], scoreModel.region1, scoreModel.region2, [scoreModel.areaArray componentsJoinedByString:@","], [Helper dictionaryToJson:scoreModel.score], [scoreModel.ballAreas componentsJoinedByString:@","], scoreModel.finish, [NSString stringWithFormat:@"%td", scoreModel.switchMode], @"1", nil];
         NSString * insertSql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES (%@)", tableName, sqlColumnMStr, valueString];
         
         BOOL result = [_db executeUpdate:insertSql withArgumentsInArray:sqlValues];
@@ -95,61 +95,61 @@ static JGHScoreDatabase *scoreDatabase = nil;
     [_db close];
 }
 
-- (void)updatePoleNumber:(JGHScoreListModel *)scoreModel{
+- (void)updatePoleNumber:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey{
     [_db open];
     NSString *poleStr = [NSString stringWithFormat:@"%@", [scoreModel.poleNumber componentsJoinedByString:@","]];
     poleStr = [NSString stringWithFormat:@"\"%@\"", poleStr];
-    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET poleNumber = %@ WHERE timeKey = %@ and userKey = %@", _tableName, poleStr, scoreModel.timeKey, scoreModel.userKey]];
-    [self updateCommitDataScoreKey:_tableName andCommitData:@"0"];
+    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET poleNumber = %@ WHERE timeKey = %@ and userKey = %@", scoreKey, poleStr, scoreModel.timeKey, scoreModel.userKey]];
+    [self updateCommitDataScoreKey:scoreKey andCommitData:@"0"];
     [_db close];
 }
 //更新 -- standardlever
-- (void)updateStandardlever:(JGHScoreListModel *)scoreModel{
+- (void)updateStandardlever:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey{
     [_db open];
     NSString *standardlever = [NSString stringWithFormat:@"%@", [scoreModel.standardlever componentsJoinedByString:@","]];
     standardlever = [NSString stringWithFormat:@"\"%@\"", standardlever];
     
-    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET standardlever = %@  WHERE timeKey = %@ and userKey = %@", _tableName, standardlever, scoreModel.timeKey, scoreModel.userKey]];
-    [self updateCommitDataScoreKey:_tableName andCommitData:@"0"];
+    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET standardlever = %@  WHERE timeKey = %@ and userKey = %@", scoreKey, standardlever, scoreModel.timeKey, scoreModel.userKey]];
+    [self updateCommitDataScoreKey:scoreKey andCommitData:@"0"];
     
     [_db close];
 }
 
 //更新 -- pushrod
-- (void)updatePushrod:(JGHScoreListModel *)scoreModel{
+- (void)updatePushrod:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey{
     [_db open];
     
     NSString *pushrod = [NSString stringWithFormat:@"%@", [scoreModel.pushrod componentsJoinedByString:@","]];
     pushrod = [NSString stringWithFormat:@"\"%@\"", pushrod];
     
-    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET pushrod = %@ WHERE timeKey = %@ and userKey = %@", _tableName, pushrod, scoreModel.timeKey, scoreModel.userKey]];
-    [self updateCommitDataScoreKey:_tableName andCommitData:@"0"];
+    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET pushrod = %@ WHERE timeKey = %@ and userKey = %@", scoreKey, pushrod, scoreModel.timeKey, scoreModel.userKey]];
+    [self updateCommitDataScoreKey:scoreKey andCommitData:@"0"];
     
     [_db close];
 }
 
 //更新 -- onthefairway －－ 是否上球道
-- (void)updateOnthefairway:(JGHScoreListModel *)scoreModel{
+- (void)updateOnthefairway:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey{
     [_db open];
     
     NSString *onthefairway = [NSString stringWithFormat:@"%@", [scoreModel.onthefairway componentsJoinedByString:@","]];
     onthefairway = [NSString stringWithFormat:@"\"%@\"", onthefairway];
     
-    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET onthefairway = %@  WHERE timeKey = %@ and userKey = %@", _tableName, onthefairway, scoreModel.timeKey, scoreModel.userKey]];
-    [self updateCommitDataScoreKey:_tableName andCommitData:@"0"];
+    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET onthefairway = %@  WHERE timeKey = %@ and userKey = %@", scoreKey, onthefairway, scoreModel.timeKey, scoreModel.userKey]];
+    [self updateCommitDataScoreKey:scoreKey andCommitData:@"0"];
     
     [_db close];
 }
 
 //更新 -- poleNameList
-- (void)updatePoleNameList:(JGHScoreListModel *)scoreModel{
+- (void)updatePoleNameList:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey{
     [_db open];
     
     NSString *poleNameList = [NSString stringWithFormat:@"%@", [scoreModel.poleNameList componentsJoinedByString:@","]];
     poleNameList = [NSString stringWithFormat:@"\"%@\"", poleNameList];
     
-    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET poleNameList = %@  WHERE timeKey = %@ and userKey = %@", _tableName, poleNameList, scoreModel.timeKey, scoreModel.userKey]];
-    [self updateCommitDataScoreKey:_tableName andCommitData:@"0"];
+    [_db executeUpdate:[NSString stringWithFormat:@"UPDATE Table_%@ SET poleNameList = %@  WHERE timeKey = %@ and userKey = %@", scoreKey, poleNameList, scoreModel.timeKey, scoreModel.userKey]];
+    [self updateCommitDataScoreKey:scoreKey andCommitData:@"0"];
     
     [_db close];
 }
@@ -174,22 +174,22 @@ static JGHScoreDatabase *scoreDatabase = nil;
 
 //查询 －－记分数据是否已经提交成功
 - (BOOL)getScoreSave:(NSString *)scoreKey{
-    
+    [_db open];
     FMResultSet *res = [_db executeQuery:[NSString stringWithFormat:@"SELECT * FROM Table_%@ WHERE commitData = 0", scoreKey]];
-    if ([res next]) {
-        
-        return YES;
-    }
     
-    return NO;
+    BOOL isHave = [res next];
+    
+    [_db close];
+    
+    return isHave;
 }
 
-- (NSMutableArray *)getAllScore{
+- (NSMutableArray *)getAllScoreKey:(NSString *)scoreKey{
     [_db open];
     
     NSMutableArray *dataArray = [[NSMutableArray alloc] init];
     
-    FMResultSet *res = [_db executeQuery:[NSString stringWithFormat:@"SELECT * FROM Table_%@", _tableName]];
+    FMResultSet *res = [_db executeQuery:[NSString stringWithFormat:@"SELECT * FROM Table_%@", scoreKey]];
     
     while ([res next]) {
         JGHScoreListModel *scoreModel = [[JGHScoreListModel alloc] init];
@@ -229,10 +229,10 @@ static JGHScoreDatabase *scoreDatabase = nil;
     return dataArray;
 }
 
-- (BOOL)deleteTable:(NSString *)tableName{
+- (BOOL)deleteTableScoreKey:(NSString *)scoreKey{
     [_db open];
     
-    BOOL res = [_db executeUpdate:[NSString stringWithFormat:@"DROP TABLE Table_%@", _tableName]];
+    BOOL res = [_db executeUpdate:[NSString stringWithFormat:@"DROP TABLE Table_%@", scoreKey]];
     
     [_db close];
     

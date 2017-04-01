@@ -17,25 +17,25 @@
 - (void)initDataBaseTableName:(NSString *)tableName;
 
 //添加
-- (void)addJGHScoreListModel:(JGHScoreListModel *)scoreModel;
+- (void)addJGHScoreListModel:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey;
 
 //查询本地是否存在记录
 - (BOOL)selectScoreModel:(NSString *)scorekey;
 
 //更新 -- PoleNumber
-- (void)updatePoleNumber:(JGHScoreListModel *)scoreModel;
+- (void)updatePoleNumber:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey;
 
 //更新 -- standardlever
-- (void)updateStandardlever:(JGHScoreListModel *)scoreModel;
+- (void)updateStandardlever:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey;
 
 //更新 -- pushrod
-- (void)updatePushrod:(JGHScoreListModel *)scoreModel;
+- (void)updatePushrod:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey;
 
 //更新 -- onthefairway －－ 是否上球道
-- (void)updateOnthefairway:(JGHScoreListModel *)scoreModel;
+- (void)updateOnthefairway:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey;
 
 //更新 -- poleNameList
-- (void)updatePoleNameList:(JGHScoreListModel *)scoreModel;
+- (void)updatePoleNameList:(JGHScoreListModel *)scoreModel andScoreKey:(NSString *)scoreKey;
 
 //更新记分模式
 - (void)updateSwithModel:(NSInteger)scoreModel andScoreKey:(NSString *)scoreKey;
@@ -47,9 +47,9 @@
 - (BOOL)getScoreSave:(NSString *)scoreKey;
 
 //获取所有数据
-- (NSMutableArray *)getAllScore;
+- (NSMutableArray *)getAllScoreKey:(NSString *)scoreKey;
 
 //删除表
-- (BOOL)deleteTable:(NSString *)tableName;
+- (BOOL)deleteTableScoreKey:(NSString *)scoreKey;
 
 @end

@@ -362,9 +362,11 @@
         {
             NSLog(@"有网");
             [self submitLocalScoreData];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"NONetwork" object:@(1)];
         }else
         {
             NSLog(@"没有网");
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"NONetwork" object:@(0)];
         }
     }];
     

@@ -18,7 +18,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-        hud = [[LQProgressHud alloc] initWithWindow:[UIApplication sharedApplication].keyWindow];
+        //hud = [[LQProgressHud alloc] initWithWindow:[UIApplication sharedApplication].keyWindow];
+        
+        hud = [[LQProgressHud alloc]initWithView:[UIApplication sharedApplication].keyWindow];
     });
     return hud;
 }
@@ -26,12 +28,15 @@
 + (void)showStatus:(LQProgressHUDStatus)status text:(NSString *)text {
     
     LQProgressHud *hud = [LQProgressHud sharedHUD];
-    [hud show:YES];
+    [hud showAnimated:YES];//[hud show:YES];
     [hud setShowNow:YES];
-    [hud setLabelText:text];
+    hud.label.text = text;//[hud setLabelText:text];
     [hud setRemoveFromSuperViewOnHide:YES];
-    [hud setLabelFont:[UIFont boldSystemFontOfSize:TEXT_SIZE]];
+    hud.label.font = [UIFont boldSystemFontOfSize:TEXT_SIZE];//[hud setLabelFont:[UIFont boldSystemFontOfSize:TEXT_SIZE]];
     [hud setMinSize:CGSizeMake(BGVIEW_WIDTH, BGVIEW_WIDTH)];
+    //hud.bezelView.color = BlackColor;
+    //hud.label.textColor = [UIColor whiteColor];
+    //hud.activityIndicatorColor = WhiteColor;
     [[UIApplication sharedApplication].keyWindow addSubview:hud];
     
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"LQProgressHUD" ofType:@"bundle"];
@@ -46,7 +51,7 @@
             hud.mode = MBProgressHUDModeCustomView;
             UIImageView *sucView = [[UIImageView alloc] initWithImage:sucImage];
             hud.customView = sucView;
-            [hud hide:YES afterDelay:2.0f];
+            [hud hideAnimated:YES afterDelay:TIMESlEEP];//[hud hide:YES afterDelay:2.0f];
         }
             break;
             
@@ -58,7 +63,7 @@
             hud.mode = MBProgressHUDModeCustomView;
             UIImageView *errView = [[UIImageView alloc] initWithImage:errImage];
             hud.customView = errView;
-            [hud hide:YES afterDelay:2.0f];
+            [hud hideAnimated:YES afterDelay:TIMESlEEP];//[hud hide:YES afterDelay:2.0f];
         }
             break;
             
@@ -76,7 +81,7 @@
             hud.mode = MBProgressHUDModeCustomView;
             UIImageView *infoView = [[UIImageView alloc] initWithImage:infoImage];
             hud.customView = infoView;
-            [hud hide:YES afterDelay:2.0f];
+            [hud hideAnimated:YES afterDelay:TIMESlEEP];//[hud hide:YES afterDelay:2.0f];
         }
             break;
             
@@ -88,15 +93,17 @@
 + (void)showMessage:(NSString *)text {
     
     LQProgressHud *hud = [LQProgressHud sharedHUD];
-    [hud show:YES];
+    [hud showAnimated:YES];//[hud show:YES];
     [hud setShowNow:YES];
 //    hud.detailsLabelText = text;
     //只显示单行文字
-    [hud setLabelText:text];
+    hud.label.text = text;//[hud setLabelText:text];
     [hud setMinSize:CGSizeZero];
     [hud setMode:MBProgressHUDModeText];
     [hud setRemoveFromSuperViewOnHide:YES];
-    [hud setLabelFont:[UIFont boldSystemFontOfSize:TEXT_SIZE]];
+    hud.label.font = [UIFont boldSystemFontOfSize:TEXT_SIZE];//[hud setLabelFont:[UIFont boldSystemFontOfSize:TEXT_SIZE]];
+    hud.bezelView.backgroundColor = [UIColor blackColor];
+    hud.label.textColor = [UIColor whiteColor];
     
     [[UIApplication sharedApplication].keyWindow addSubview:hud];
     //    [hud hide:YES afterDelay:2.0f];
@@ -127,7 +134,7 @@
 + (void)hide {
     
     [[LQProgressHud sharedHUD] setShowNow:NO];
-    [[LQProgressHud sharedHUD] hide:YES];
+    [[LQProgressHud sharedHUD] hideAnimated:YES];//[[LQProgressHud sharedHUD] hide:YES];
 }
 
 @end

@@ -58,6 +58,8 @@
     
     //NSInteger _refreshArea;
     
+    int _status;
+    
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
@@ -103,6 +105,9 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
+    
+    //坚挺网络通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(netWorkStatus:) name:@"NONetwork" object:nil];
     
     //创建记分表
     [[JGHScoreDatabase shareScoreDatabase]initDataBaseTableName:_scorekey];
@@ -178,8 +183,10 @@
     NSMutableArray *scoreKeyArray = [NSMutableArray array];
     if ([userdf objectForKey:@"scoreKeyArray"]) {
         //本地存在
-        scoreKeyArray = [userdf objectForKey:@"scoreKeyArray"];
+        //scoreKeyArray = [userdf objectForKey:@"scoreKeyArray"];
+        scoreKeyArray = [NSMutableArray arrayWithArray:[userdf objectForKey:@"scoreKeyArray"]];
         //插入scoreKey
+        /*
         NSInteger content = 0;
         for (int i=0; i<scoreKeyArray.count; i++) {
             NSString *scoreKey = scoreKeyArray[i];
@@ -189,6 +196,11 @@
         }
         
         if (content) {
+            [scoreKeyArray addObject:_scorekey];
+        }
+        */
+        
+        if (![scoreKeyArray containsObject:_scorekey]) {
             [scoreKeyArray addObject:_scorekey];
         }
         
@@ -249,64 +261,71 @@
     [_timer invalidate];
     _timer = nil;
 }
+#pragma mark -- netWorkStatus
+- (void)netWorkStatus:(NSNotification *)not{
+    _status = [not.object intValue];
+    // 1-有网 0-无网络
+}
 #pragma mark -- 计时器执行
 - (void)changeTimeAtTimeDoClick{
     [[JsonHttp jsonHttp]cancelRequest];
     
-    if ([[JGHScoreDatabase shareScoreDatabase]getScoreSave:_scorekey]) {
-        //保存洞号
-        _isEdtor = 0;
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-        NSMutableArray *listArray = [NSMutableArray array];
-        for (JGHScoreListModel *model in self.userScoreArray) {
-            NSMutableDictionary *listDict = [NSMutableDictionary dictionary];
-            if (model.userKey) {
-                [listDict setObject:model.userKey forKey:@"userKey"];// 用户Key
-            }else{
-                [listDict setObject:@(0) forKey:@"userKey"];// 用户Key
-            }
-            
-            [listDict setObject:model.userName forKey:@"userName"];// 用户名称
-            if (model.userMobile) {
-                [listDict setObject:model.userMobile forKey:@"userMobile"];// 手机号
-            }else{
-                [listDict setObject:@"" forKey:@"userMobile"];// 手机号
-            }
-            
-            if (model.tTaiwan) {
-                [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
-            }else{
-                [listDict setObject:@"" forKey:@"tTaiwan"];// T台
-            }
-            
-            [listDict setObject:_currentAreaArray[0] forKey:@"region1"];//region1
-            [listDict setObject:_currentAreaArray[1] forKey:@"region2"];//region2
-            [listDict setObject:model.poleNameList forKey:@"poleNameList"];// 球洞名称
-            [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
-            [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
-            [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
-            [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
-            [listDict setObject:@(_switchMode) forKey:@"scoreModel"];//记分模式
-            [listArray addObject:listDict];
-        }
-        
-        [dict setObject:listArray forKey:@"list"];
-        
-        [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
-            _isEdtor = 1;
-        } completionBlock:^(id data) {
-            NSLog(@"%@", data);
-            NSLog(@"5S  时间保存");
-            if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-                
-                [[JGHScoreDatabase shareScoreDatabase]updateCommitDataScoreKey:_scorekey andCommitData:@"1"];
-            }else{
-                if ([data objectForKey:@"packResultMsg"]) {
-                    _isEdtor = 1;
+    if (_status == 1) {
+        if ([[JGHScoreDatabase shareScoreDatabase]getScoreSave:_scorekey]) {
+            //保存洞号
+            _isEdtor = 0;
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+            NSMutableArray *listArray = [NSMutableArray array];
+            for (JGHScoreListModel *model in self.userScoreArray) {
+                NSMutableDictionary *listDict = [NSMutableDictionary dictionary];
+                if (model.userKey) {
+                    [listDict setObject:model.userKey forKey:@"userKey"];// 用户Key
+                }else{
+                    [listDict setObject:@(0) forKey:@"userKey"];// 用户Key
                 }
+                
+                [listDict setObject:model.userName forKey:@"userName"];// 用户名称
+                if (model.userMobile) {
+                    [listDict setObject:model.userMobile forKey:@"userMobile"];// 手机号
+                }else{
+                    [listDict setObject:@"" forKey:@"userMobile"];// 手机号
+                }
+                
+                if (model.tTaiwan) {
+                    [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
+                }else{
+                    [listDict setObject:@"" forKey:@"tTaiwan"];// T台
+                }
+                
+                [listDict setObject:_currentAreaArray[0] forKey:@"region1"];//region1
+                [listDict setObject:_currentAreaArray[1] forKey:@"region2"];//region2
+                [listDict setObject:model.poleNameList forKey:@"poleNameList"];// 球洞名称
+                [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
+                [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
+                [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
+                [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
+                [listDict setObject:@(_switchMode) forKey:@"scoreModel"];//记分模式
+                [listArray addObject:listDict];
             }
-        }];
+            
+            [dict setObject:listArray forKey:@"list"];
+            
+            [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
+                _isEdtor = 1;
+            } completionBlock:^(id data) {
+                NSLog(@"%@", data);
+                NSLog(@"5S  时间保存");
+                if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
+                    
+                    [[JGHScoreDatabase shareScoreDatabase]updateCommitDataScoreKey:_scorekey andCommitData:@"1"];
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        _isEdtor = 1;
+                    }
+                }
+            }];
+        }
     }
 }
 
@@ -338,7 +357,7 @@
 }
 #pragma mark -- 本地数据
 - (void)loadLocalData{
-    _userScoreArray = [[JGHScoreDatabase shareScoreDatabase]getAllScore];
+    _userScoreArray = [[JGHScoreDatabase shareScoreDatabase]getAllScoreKey:_scorekey];
     
     [self showViewWithScoreModel];
 }
@@ -392,7 +411,7 @@
             model.areaArray = _areaArray;
             
             //存数据库
-            [[JGHScoreDatabase shareScoreDatabase]addJGHScoreListModel:model];
+            [[JGHScoreDatabase shareScoreDatabase]addJGHScoreListModel:model andScoreKey:_scorekey];
             
             [self.userScoreArray addObject:model];
         }
@@ -417,7 +436,8 @@
         _areaArray = model.areaArray;
     }
     
-    self.timer =[NSTimer scheduledTimerWithTimeInterval:[model.interval integerValue] target:self
+    //interval -- 5秒请求一次，
+    self.timer =[NSTimer scheduledTimerWithTimeInterval:5.0 target:self
                                                selector:@selector(changeTimeAtTimeDoClick) userInfo:nil repeats:YES];
     [self.timer fire];
     
@@ -991,26 +1011,29 @@
                     [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];//TIMESlEEP
                     
                     //记分完成后－－－删除本地记分表
-                    [[JGHScoreDatabase shareScoreDatabase]deleteTable:_scorekey];
-                    NSMutableArray *scoreKeyArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"scoreKeyArray"];
+                    [[JGHScoreDatabase shareScoreDatabase]deleteTableScoreKey:_scorekey];
                     
-                    if ([scoreKeyArray containsObject:_scorekey]) {
-                        [scoreKeyArray removeObject:_scorekey];
+                    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"scoreKeyArray"]) {
+                        NSMutableArray *scoreKeyArray = [NSMutableArray arrayWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"scoreKeyArray"]];
+                        
+                        if ([scoreKeyArray containsObject:_scorekey]) {
+                            [scoreKeyArray removeObject:_scorekey];
+                        }
+                        //                    NSInteger deleteId =0;
+                        //                    for (int i=0; i<scoreKeyArray.count; i++) {
+                        //                        NSString *userdfScoreKey = [NSString stringWithFormat:@"%@", scoreKeyArray[i]];
+                        //                        if ([userdfScoreKey isEqualToString:_scorekey]) {
+                        //                            deleteId =i;
+                        //                        }
+                        //                    }
+                        //
+                        //                    if (scoreKeyArray.count >deleteId) {
+                        //                        [scoreKeyArray removeObjectAtIndex:deleteId];
+                        //                    }
+                        
+                        [[NSUserDefaults standardUserDefaults]setObject:scoreKeyArray forKey:@"scoreKeyArray"];
+                        [[NSUserDefaults standardUserDefaults]synchronize];
                     }
-//                    NSInteger deleteId =0;
-//                    for (int i=0; i<scoreKeyArray.count; i++) {
-//                        NSString *userdfScoreKey = [NSString stringWithFormat:@"%@", scoreKeyArray[i]];
-//                        if ([userdfScoreKey isEqualToString:_scorekey]) {
-//                            deleteId =i;
-//                        }
-//                    }
-//                    
-//                    if (scoreKeyArray.count >deleteId) {
-//                        [scoreKeyArray removeObjectAtIndex:deleteId];
-//                    }
-                    
-                    [[NSUserDefaults standardUserDefaults]setObject:scoreKeyArray forKey:@"scoreKeyArray"];
-                    [[NSUserDefaults standardUserDefaults]synchronize];
                 }else{
                     if ([data objectForKey:@"packResultMsg"]) {
                         [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
@@ -1144,8 +1167,31 @@
                         }
                     }
                 }
+                
+                
                 [_macthDict setObject:@(scoreCount) forKey:@"poleNum"];
+                if (_userScoreArray.count > 0) {
+                    JGHScoreListModel *model = _userScoreArray[0];
+                    NSDictionary *modelDict = model.score;
+                    [_macthDict setObject:[modelDict objectForKey:@"ballName"] forKey:@"ballName"];
+                    [_macthDict setObject:[modelDict objectForKey:@"ballKey"] forKey:@"placeId"];
+                    if ([modelDict objectForKey:@"createtime"]) {
+                        NSArray *timeArray = [[modelDict objectForKey:@"createtime"] componentsSeparatedByString:@" "];
+                        if (timeArray.count >2) {
+                            [_macthDict setObject:[modelDict objectForKey:@"createtime"] forKey:@"playTimes"];
+                        }else{
+                            NSMutableString *string = [NSMutableString stringWithString:[modelDict objectForKey:@"createtime"]];
+                            //NSRange range={11,12};
+                            //[string replaceCharactersInRange:range withString:@" "];
+                            [string insertString:@" " atIndex:10];
+                            [_macthDict setObject:string forKey:@"playTimes"];
+                        }
+                    }
+                    
+                }
+                
                 JGHEndScoresViewController *endScoresCtrl = [[JGHEndScoresViewController alloc]init];
+                
                 endScoresCtrl.dict = _macthDict;
                 [self.navigationController pushViewController:endScoresCtrl animated:YES];
             }    

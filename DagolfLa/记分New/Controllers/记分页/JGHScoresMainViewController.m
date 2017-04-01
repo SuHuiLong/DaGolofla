@@ -312,7 +312,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         self.returnScoresDataArray(_dataArray);
     }
     
-    [[JGHScoreDatabase shareScoreDatabase]updateOnthefairway:model];
+    [[JGHScoreDatabase shareScoreDatabase]updateOnthefairway:model andScoreKey:_scorekey];
     
     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:cellTag-100];
     [self.scoresTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
@@ -342,7 +342,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         self.returnScoresDataArray(_dataArray);
     }
     
-    [[JGHScoreDatabase shareScoreDatabase]updateOnthefairway:model];
+    [[JGHScoreDatabase shareScoreDatabase]updateOnthefairway:model andScoreKey:_scorekey];
     
     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:cellTag-100];
     [self.scoresTableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
@@ -393,7 +393,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         model.poleNumber = poleNumberArray;
         [self.dataArray replaceObjectAtIndex:cellTag-100 withObject:model];
         
-        [[JGHScoreDatabase shareScoreDatabase]updatePoleNumber:model];
+        [[JGHScoreDatabase shareScoreDatabase]updatePoleNumber:model andScoreKey:_scorekey];
     }else{
         NSLog(@"- 推杆");
         JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
@@ -418,7 +418,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         model.pushrod = pushrodArray;
         [self.dataArray replaceObjectAtIndex:cellTag-100 withObject:model];
         
-        [[JGHScoreDatabase shareScoreDatabase]updatePushrod:model];
+        [[JGHScoreDatabase shareScoreDatabase]updatePushrod:model andScoreKey:_scorekey];
     }
     
     if (self.dataArray.count > 0) {
@@ -458,7 +458,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         model.poleNumber = poleNumberArray;
         [self.dataArray replaceObjectAtIndex:cellTag-100 withObject:model];
         
-        [[JGHScoreDatabase shareScoreDatabase]updatePoleNumber:model];
+        [[JGHScoreDatabase shareScoreDatabase]updatePoleNumber:model andScoreKey:_scorekey];
     }else{
         NSLog(@"+ 推杆");//pushrod
         JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
@@ -479,7 +479,7 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         model.pushrod = pushrodArray;
         [self.dataArray replaceObjectAtIndex:cellTag-100 withObject:model];
         
-        [[JGHScoreDatabase shareScoreDatabase]updatePushrod:model];
+        [[JGHScoreDatabase shareScoreDatabase]updatePushrod:model andScoreKey:_scorekey];
     }
     
     if (self.dataArray.count > 0) {
