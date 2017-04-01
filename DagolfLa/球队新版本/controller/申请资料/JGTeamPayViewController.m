@@ -72,6 +72,18 @@
 
 - (void)payBtn{
     
+    UITextField *textField = [self.view viewWithTag:999];
+    
+    if ((textField.text.length == 0)) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入会费金额" FromView:self.view];
+        return;
+    }
+    
+    if (([textField.text isEqualToString:@"0"])) {
+        [[ShowHUD showHUD]showToastWithText:@"请输入会费金额" FromView:self.view];
+        return;
+    }
+    
     [self.view endEditing:YES];
     [[ShowHUD showHUD]showToastWithText:@"加载中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -346,6 +358,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labell.text = @"缴费金额";
         cell.textFD.placeholder = @"请输入应缴金额";
+        cell.textFD.tag = 999;
         cell.textFD.keyboardType = UIKeyboardTypeNumberPad;
         return cell;
     }

@@ -67,7 +67,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    NSLog(@"%@" , indexPath);
     if (indexPath.section == 0 && indexPath.row == 1) {
         JGLTeamChoiseViewController* tcVc = [[JGLTeamChoiseViewController alloc]init];
         tcVc.dataArray = @[@"女",@"男",@"保密"];
@@ -81,6 +81,12 @@
             }
         };
         [self.navigationController pushViewController:tcVc animated:YES];
+    }
+    else if (indexPath.section == 0 && indexPath.row == 3){
+        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+        if ([[user objectForKey:@"almost_system_setting"] integerValue] && ([[user objectForKey:@"almost_system_setting"] integerValue] == 1)) {
+            [LQProgressHud showInfoMsg:@"您启用了君高差点系统，无法手动更改。\n可移步『系统设置』关闭该系统。"];
+        }
     }
     else if (indexPath.section == 1 && indexPath.row == 5)
     {
@@ -156,6 +162,8 @@
             JGApplyMaterialTableViewCell *cell = [self.secondTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:1]];
             if (cell.textFD.text && ([cell.textFD.text length] != 0)) {
                 [self.paraDic setObject:cell.textFD.text  forKey:secArray[i]];
+            }else{
+                [self.paraDic setObject:@""  forKey:secArray[i]];
             }
         }
     }
@@ -177,30 +185,34 @@
                 
             } completionBlock:^(id data) {
 
+                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+                    [LQProgressHud showMessage:@"提交成功"];
+                    
+                }else{
+                    if ([data objectForKey:@"packResultMsg"]) {
+                        [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+                    }
+                }
+                
             }];
             
         }else{
             
-//            [[JsonHttp jsonHttp] httpRequest:@"team/reqJoinTeam" JsonKey:@"teamMemeber" withData:self.paraDic requestMethod:@"POST" failedBlock:^(id errType) {
-//                [Helper alertViewNoHaveCancleWithTitle:@"提交失败 请稍后再试" withBlock:^(UIAlertController *alertView) {
-//                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//                }];
-//            } completionBlock:^(id data) {
-//                NSLog(@"%@", data);
-//                [self.navigationController popViewControllerAnimated:YES];
-//                
-//            }];
+
         }
         
         [self.navigationController popViewControllerAnimated:YES];
 
-        [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
+//        [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
+//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//        }];
     }else{
-        [Helper alertViewNoHaveCancleWithTitle:@"请完善信息" withBlock:^(UIAlertController *alertView) {
-            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-        }];
+        
+        [LQProgressHud showMessage:@"请完善信息"];
+
+//        [Helper alertViewNoHaveCancleWithTitle:@"请完善信息" withBlock:^(UIAlertController *alertView) {
+//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
+//        }];
     }
 }
 
@@ -238,6 +250,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.labell.text = @"姓名";
         cell.labell.textColor = [UIColor lightGrayColor];
+        cell.textFD.delegate = self;
         if ([self.memeDic objectForKey:@"userName"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"userName"];
             return cell;
@@ -282,6 +295,7 @@
         cell.labell.text = @"手机号码";
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textFD.delegate = self;
         if ([self.memeDic objectForKey:@"mobile"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"mobile"];
             return cell;
@@ -296,14 +310,18 @@
         cell.labell.text = @"差点";
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-#warning ------
         cell.textFD.delegate = self;
-        cell.textFD.tag = 1000;
         if ([self.memeDic objectForKey:@"almost"]) {
             if ([[self.memeDic objectForKey:@"almost"] floatValue] == -10000) {
                 cell.textFD.placeholder = @"请输入你的差点";
                 cell.textFD.text = @"";
             }else{
+                
+                NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+                if ([[user objectForKey:@"almost_system_setting"] integerValue] && ([[user objectForKey:@"almost_system_setting"] integerValue] == 1)) {
+                    cell.textFD.userInteractionEnabled = NO;
+                }
+                
                 cell.textFD.text = [NSString stringWithFormat:@"%.0f",[[self.memeDic objectForKey:@"almost"] floatValue]];
             }
             
@@ -318,6 +336,7 @@
         cell.labell.text = @"行业";
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textFD.delegate = self;
         if ([self.memeDic objectForKey:@"industry"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"industry"];
             return cell;
@@ -331,6 +350,7 @@
         cell.labell.text = @"公司";
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textFD.delegate = self;
         if ([self.memeDic objectForKey:@"company"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"company"];
             return cell;
@@ -342,6 +362,7 @@
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"职业";
         cell.labell.textColor = [UIColor lightGrayColor];
+        cell.textFD.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"occupation"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"occupation"];
@@ -354,6 +375,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 3){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"常住地址";
+        cell.textFD.delegate = self;
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"address"]) {
@@ -367,6 +389,7 @@
     }else if (indexPath.section == 1 && indexPath.row == 4){
         JGApplyMaterialTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         cell.labell.text = @"衣服尺码";
+        cell.textFD.delegate = self;
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if ([self.memeDic objectForKey:@"size"]) {
@@ -482,8 +505,13 @@
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-    if (textField.tag == 1000){
-        NSLog(@"差点");
+    
+    JGApplyMaterialTableViewCell *cell = (JGApplyMaterialTableViewCell *)[textField superview] ;
+    NSIndexPath *index = [self.secondTableView indexPathForCell:cell];
+    NSLog(@"%@" ,[self.secondTableView indexPathForCell:cell]);
+    NSLog(@"%ld" , textField.tag);
+    
+    if (index.row == 3 && index.section == 0) {
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         if ([[user objectForKey:@"almost_system_setting"] integerValue]) {
             //队员、球友
@@ -500,6 +528,7 @@
             return YES;
         }
     }
+
     return YES;
 }
 

@@ -327,13 +327,16 @@
     else if (indexPath.row == 2)
     {
         [[SDImageCache sharedImageCache] clearMemory];
-        NSInteger cacha=[[SDImageCache sharedImageCache] getSize];
-        float ca=cacha/1000.0/1000.0;
-        if (ca==0) {
-            _labCache.text=[NSString stringWithFormat:@"%.2fk",ca];
-        }else{
-            _labCache.text=[NSString stringWithFormat:@"%.2fM",ca];
-        }
+        [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+            NSInteger cacha=[[SDImageCache sharedImageCache] getSize];
+            float ca=cacha/1000.0/1000.0;
+            if (ca==0) {
+                _labCache.text=[NSString stringWithFormat:@"%.2fk",ca];
+            }else{
+                _labCache.text=[NSString stringWithFormat:@"%.2fM",ca];
+            }
+        }];
+
     }
     else if (indexPath.row == 3) {
         

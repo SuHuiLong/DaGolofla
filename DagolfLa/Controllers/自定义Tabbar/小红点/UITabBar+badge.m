@@ -104,8 +104,8 @@
     CGRect tabFrame = self.frame;
     //确定小红点的位置
     float percentX = (index +0.5) / TabbarItemNums;
-    CGFloat x = ceilf(percentX * tabFrame.size.width);
-    CGFloat y = ceilf(0.1 * tabFrame.size.height);
+    CGFloat x = ceilf(percentX * tabFrame.size.width) + 3 * ProportionAdapter;
+    CGFloat y = ceilf(0.1 * tabFrame.size.height) - 4 * ProportionAdapter;
     if (badgeValue < 10) {
         [self initUnreadCountButton:CGRectMake(x, y, 18*ProportionAdapter, 18*ProportionAdapter) tag:888+index badgeValue:badgeValue];
     }

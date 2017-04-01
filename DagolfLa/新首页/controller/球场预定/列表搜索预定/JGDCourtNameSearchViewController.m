@@ -285,6 +285,8 @@
                     [model setValuesForKeysWithDictionary:dic];
                     [self.resultDataArray addObject:model];
                 }
+            }else if (![data objectForKey:@"list"] && !self.offset) {
+                [self.resultDataArray removeAllObjects];
             }
             [self.resultTableView reloadData];
             
