@@ -39,6 +39,9 @@ static LQProgressHud *HUD;
     [HUD setRemoveFromSuperViewOnHide:YES];
     
     HUD.mode = MBProgressHUDModeText;
+    HUD.bezelView.backgroundColor = [UIColor blackColor];
+    HUD.bezelView.alpha = 1;
+    HUD.label.textColor = [UIColor whiteColor];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TIMESlEEP * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [HUD hideAnimated:YES];
