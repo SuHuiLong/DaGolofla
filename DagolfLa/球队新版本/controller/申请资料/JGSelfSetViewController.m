@@ -200,19 +200,16 @@
 
         }
         
-        [self.navigationController popViewControllerAnimated:YES];
+        [self performSelector:@selector(popAct) withObject:self afterDelay:0.5];
 
-//        [Helper alertViewNoHaveCancleWithTitle:@"提交成功" withBlock:^(UIAlertController *alertView) {
-//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//        }];
     }else{
         
         [LQProgressHud showMessage:@"请完善信息"];
-
-//        [Helper alertViewNoHaveCancleWithTitle:@"请完善信息" withBlock:^(UIAlertController *alertView) {
-//            [self.navigationController presentViewController:alertView animated:YES completion:nil];
-//        }];
     }
+}
+
+- (void)popAct{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
