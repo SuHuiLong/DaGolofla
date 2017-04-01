@@ -252,7 +252,7 @@ static JsonHttp *jsonHttp = nil;
             }
 
         }];
-
+    }
         
     if (comparisonResult2 == NSOrderedSame)//post
     {
@@ -282,8 +282,7 @@ static JsonHttp *jsonHttp = nil;
             
             
             
-        }else
-        {
+        }else{
             [manager POST:url parameters:postDict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 //取出需要上传的图片数据
                 for (NSString *key in postData) {
@@ -299,7 +298,6 @@ static JsonHttp *jsonHttp = nil;
                                                 fileName:key
                          
                                                 mimeType:@"image/png"];
-                        
                     }
                 }
             } progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -316,7 +314,6 @@ static JsonHttp *jsonHttp = nil;
                 }
             }];
         }
-    }
     }
 }
 

@@ -148,6 +148,8 @@
             [dict setObject:[NSString stringWithFormat:@"%@",_textTitle.text] forKey:@"name"];
         }
         
+        
+        
         [[JsonHttp jsonHttp]httpRequest:@"team/createTeamAlbum" JsonKey:@"teamAlbum" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         } completionBlock:^(id data) {
