@@ -35,17 +35,21 @@ static ShowHUD *showHUD = nil;
  */
 -(void)showToastWithText:(NSString *)text FromView:(UIView *)view;
 {
-    _HUD = [[MBProgressHUD alloc]initWithView:view];
-    [view addSubview:_HUD];
-    _HUD.labelText = text;
-    _HUD.mode = MBProgressHUDModeText;
     
-    [_HUD showAnimated:YES whileExecutingBlock:^{
-        sleep(TIMESlEEP);
-    } completionBlock:^{
-        [_HUD removeFromSuperview];
+    _HUD = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    
+    _HUD.label.text = text;
+    
+    _HUD.mode = MBProgressHUDModeText;
+    _HUD.bezelView.backgroundColor = [UIColor blackColor];
+    _HUD.bezelView.alpha = 1;
+    _HUD.label.textColor = [UIColor whiteColor];
+    
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_HUD hideAnimated:YES];
         _HUD = nil;
-    }];
+    });
 }
 
 /**
@@ -56,13 +60,15 @@ static ShowHUD *showHUD = nil;
  */
 -(void)showAnimationWithText:(NSString *)text FromView:(UIView *)view
 {
-    _HUD = [[MBProgressHUD alloc]initWithView:view];
+    _HUD = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    _HUD.mode = MBProgressHUDModeIndeterminate;
+    _HUD.label.text = text;
     
-    [view addSubview:_HUD];
-    _HUD.labelText = text;
+    _HUD.bezelView.color = BlackColor;
+    _HUD.label.textColor = [UIColor whiteColor];
+    _HUD.activityIndicatorColor = WhiteColor;
     _HUD.delegate = self;//添加代理
     
-    [_HUD show:YES];
 }
 
 /**
@@ -72,7 +78,7 @@ static ShowHUD *showHUD = nil;
  */
 -(void)hideAnimationFromView:(UIView *)view
 {
-    [_HUD hide:YES];
+    [_HUD hideAnimated:YES];
 }
 
 

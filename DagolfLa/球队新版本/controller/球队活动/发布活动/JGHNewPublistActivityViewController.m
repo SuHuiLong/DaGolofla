@@ -401,8 +401,9 @@ static CGFloat ImageHeight  = 210.0;
                                     
                     NSDate * nextDay = [[NSDate alloc]initWithTimeInterval:-24*60*60 sinceDate:destDate];
                     
-                    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
                     NSString *signUpEndTime = [dateFormatter stringFromDate:nextDay];
+                    
                     NSString *endTime = [[_model.beginDate componentsSeparatedByString:@" "] firstObject];
                     
                     [_model setValue:[NSString stringWithFormat:@"%@ 23:59:59", endTime] forKey:@"endDate"];
