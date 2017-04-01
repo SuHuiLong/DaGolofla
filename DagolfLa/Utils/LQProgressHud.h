@@ -11,6 +11,7 @@
 
 @interface LQProgressHud : MBProgressHUD
 
+
 #pragma mark - 建议使用的方法
 
 /** 在 window 上添加一个只显示文字的 HUD */

@@ -336,11 +336,11 @@
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textFD.delegate = self;
+        cell.textFD.placeholder = @"请输入你的行业";
         if ([self.memeDic objectForKey:@"industry"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"industry"];
             return cell;
         }else{
-            cell.textFD.placeholder = @"请输入你的行业";
             return cell;
         }
 
@@ -350,11 +350,11 @@
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.textFD.delegate = self;
+        cell.textFD.placeholder = @"请输入你的公司";
         if ([self.memeDic objectForKey:@"company"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"company"];
             return cell;
         }else{
-            cell.textFD.placeholder = @"请输入你的公司";
             return cell;
         }
     }else if (indexPath.section == 1 && indexPath.row == 2){
@@ -363,11 +363,11 @@
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.textFD.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textFD.placeholder = @"请输入你的职业";
         if ([self.memeDic objectForKey:@"occupation"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"occupation"];
             return cell;
         }else{
-            cell.textFD.placeholder = @"请输入你的职业";
               return cell;
         }
 
@@ -377,11 +377,11 @@
         cell.textFD.delegate = self;
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textFD.placeholder = @"请输入你的常住地址";
         if ([self.memeDic objectForKey:@"address"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"address"];
               return cell;
         }else{
-            cell.textFD.placeholder = @"请输入你的常住地址";
             return cell;
 
         }
@@ -391,13 +391,13 @@
         cell.textFD.delegate = self;
         cell.labell.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textFD.placeholder = @"请输入你的衣服尺码";
         if ([self.memeDic objectForKey:@"size"]) {
             cell.textFD.text = [self.memeDic objectForKey:@"size"];
             return cell;
 
         }else{
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textFD.placeholder = @"请输入你的衣服尺码";
              return cell;
         }
 
