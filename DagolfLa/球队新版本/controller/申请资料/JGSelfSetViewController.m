@@ -186,7 +186,7 @@
             } completionBlock:^(id data) {
 
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    [LQProgressHud showMessage:@"提交成功"];
+                    [LQProgressHud showMessage:@"保存成功"];
                     
                 }else{
                     if ([data objectForKey:@"packResultMsg"]) {
@@ -197,7 +197,6 @@
             }];
             
         }else{
-            
 
         }
         
