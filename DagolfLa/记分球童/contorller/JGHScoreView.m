@@ -401,7 +401,12 @@
             [[ShowHUD showHUD]showToastWithText:@"请先取消一项，再点选 !" FromView:self];
         }
         
-        if (selectCount == 2) {
+        NSInteger newSelectCount = 0;
+        for (int i=0; i<_selectAreaArray.count; i++) {
+            newSelectCount += [_selectAreaArray[i] integerValue];
+        }
+        
+        if (newSelectCount == 2) {
             [_scoreBtn setBackgroundColor:[UIColor orangeColor]];
             _scoreBtn.userInteractionEnabled = YES;
         }else{
