@@ -39,7 +39,7 @@
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     addressBookTemp  = [[NSMutableArray alloc]init];
     [self uiConfig];
-    [self createAddress];
+    //[self createAddress];
     [self createHeadSearch];
     
 }

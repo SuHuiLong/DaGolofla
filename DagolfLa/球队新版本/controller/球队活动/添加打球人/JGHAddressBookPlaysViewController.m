@@ -45,7 +45,7 @@
     _dataAccountDict = [[NSMutableDictionary alloc]init];
     addressBookTemp  = [[NSMutableArray alloc]init];
     [self uiConfig];
-    [self createAddress];
+    //[self createAddress];
     [self createHeadSearch];
     
 }
@@ -314,8 +314,10 @@
         
         
     }
-    [_tableView reloadData];
+    
     [_tableView.mj_header endRefreshing];
+    
+    [_tableView reloadData];
 }
 
 
