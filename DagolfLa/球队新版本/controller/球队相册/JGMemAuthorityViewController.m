@@ -57,7 +57,6 @@
     } completionBlock:^(id data) {
         
         NSString *str = [[data objectForKey:@"member"]objectForKey:@"power"];
-        NSArray *array = [str componentsSeparatedByString:@","];
         
         if ([str containsString:@"1001"]) {
             [self.memberArray addObject:@"1"];
@@ -70,12 +69,6 @@
         }else{
             [self.memberArray addObject:@"0"];
         }
-        
-//        if ([str containsString:@"1003"]){
-//            [self.memberArray addObject:@"1"];
-//        }else{
-//            [self.memberArray addObject:@"0"];
-//        }
         
         
         _identity = [[[data objectForKey:@"member"] objectForKey:@"identity"] integerValue];
@@ -122,8 +115,11 @@
     }
     [dict setObject:_memberKey forKey:@"memberKey"];
     
-
     [dict setObject:[NSNumber numberWithInteger:_chooseID] forKey:@"identity"];
+    if (_chooseID==666) {
+        [dict setObject:[NSNumber numberWithInteger:_identity] forKey:@"identity"];
+    }
+    
 
     
     ////修改BUG :未选择身份不能提交
