@@ -666,7 +666,7 @@ static CGFloat ImageHeight  = 210.0;
                 _refreshBlock();//刷新活动列表
                 
                 NSLog(@"data == %@", data);
-                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
                     if ([[data objectForKey:@"code"] integerValue] == 1) {
                         [self popSeeussulCtrl];
                     }else{

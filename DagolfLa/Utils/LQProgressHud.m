@@ -7,57 +7,60 @@
 
 // 背景视图的宽度/高度
 #define BGVIEW_WIDTH 100.0f
-// 文字大小
+// 定义HUD
+static LQProgressHud *HUD;
 
 @implementation LQProgressHud
 
 + (void)showMessage:(NSString *)text {
     
-    LQProgressHud *hud = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    [hud showAnimated:YES];//[hud show:YES];
-    hud.label.text = text;//[hud setLabelText:text];
-    hud.label.numberOfLines = 1;
+    HUD = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    [HUD showAnimated:YES];//[hud show:YES];
+    HUD.label.text = text;//[hud setLabelText:text];
+    HUD.label.numberOfLines = 1;
     
-    hud.mode = MBProgressHUDModeText;
-    hud.bezelView.backgroundColor = [UIColor blackColor];
-    hud.bezelView.alpha = 1;
-    hud.label.textColor = [UIColor whiteColor];
+    HUD.mode = MBProgressHUDModeText;
+    HUD.bezelView.backgroundColor = [UIColor blackColor];
+    HUD.bezelView.alpha = 1;
+    HUD.label.textColor = [UIColor whiteColor];
     
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TIMESlEEP * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [hud hideAnimated:YES];
+        [HUD hideAnimated:YES];
     });
 }
 
 + (void)showInfoMsg:(NSString *)text {
     
-    LQProgressHud *hud = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    [hud showAnimated:YES];//[hud show:YES];
-    hud.label.text = text;//[hud setLabelText:text];
-    hud.label.numberOfLines = 0;
-    [hud setRemoveFromSuperViewOnHide:YES];
+    HUD = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    [HUD showAnimated:YES];//[hud show:YES];
+    HUD.label.text = text;//[hud setLabelText:text];
+    HUD.label.numberOfLines = 0;
+    [HUD setRemoveFromSuperViewOnHide:YES];
     
-    hud.mode = MBProgressHUDModeText;
+    HUD.mode = MBProgressHUDModeText;
+    HUD.bezelView.backgroundColor = [UIColor blackColor];
+    HUD.bezelView.alpha = 1;
+    HUD.label.textColor = [UIColor whiteColor];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TIMESlEEP * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [hud hideAnimated:YES];
+        [HUD hideAnimated:YES];
     });
 }
 
 
 + (void)showLoading:(NSString *)text {
     
-    LQProgressHud *hud = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    [hud showAnimated:YES];//[hud show:YES];
-    hud.label.text = text;//[hud setLabelText:text];
+    HUD = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    [HUD showAnimated:YES];//[hud show:YES];
+    HUD.label.text = text;//[hud setLabelText:text];
     
-    hud.mode = MBProgressHUDModeIndeterminate;
+    HUD.mode = MBProgressHUDModeIndeterminate;
     
 }
 
 + (void)hide{
-    LQProgressHud *hud = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    [hud hideAnimated:YES];
+    [HUD hideAnimated:YES];
 }
 
 @end
