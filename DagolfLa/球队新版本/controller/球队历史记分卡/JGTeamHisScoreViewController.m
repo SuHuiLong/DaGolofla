@@ -144,7 +144,6 @@
         //    VC.timeKey = @33160;
         VC.isScoreAll = YES;
         VC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=%@&teamKey=%@",DEFAULF_USERID,_teamKey];
-        VC.title = @"成绩总览";
         VC.teamKey = [_teamKey integerValue];
         [self.navigationController pushViewController:VC animated:YES];
     }

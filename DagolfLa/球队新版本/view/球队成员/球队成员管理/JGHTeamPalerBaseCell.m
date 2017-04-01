@@ -133,7 +133,17 @@
     _nameValue.text = model.userName;
     
     if (model.ballage) {
-        _ageValue.text = [NSString stringWithFormat:@"%@", model.ballage];
+        NSString *string = [NSString stringWithFormat:@"%@",model.ballage];
+        if ([string isEqualToString:@"0"]) {
+            string = @"1-2年";
+        }else if ([string isEqualToString:@"1"]) {
+            string = @"3-5年";
+        }else if ([string isEqualToString:@"2"]) {
+            string = @"6-10年";
+        }else{
+            string = @"10年 以上";
+        }
+        _ageValue.text = string;
     }else{
         _ageValue.text = @"";
     }
