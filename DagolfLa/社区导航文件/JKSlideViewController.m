@@ -101,6 +101,7 @@
 {
     WXViewController *vc = _muArray[number];
     [vc viewDidCurrentView];
+    [vc returnFirRef];
     // 请求数据 用了显示的是哪一个
 }
 

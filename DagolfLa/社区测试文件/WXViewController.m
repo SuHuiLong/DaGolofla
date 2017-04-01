@@ -106,19 +106,12 @@
 }
 
 - (void)returnFirRef{
-    
-    self.mainTable.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-    self.mainTable.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-    [self.mainTable.mj_header endRefreshing];
-    [self.mainTable.mj_header beginRefreshing];
+    [self headerRereshing];
 }
 
 
 - (void)viewDidCurrentView{
-    //    NSLog(@"加载为当前视图 = %@",self.title);
-    //    NSLog(@"当前视图Type = %d",self.state);
-    //
-    
+
     if ([self.title isEqualToString:@"球友"]) {
         if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
             
@@ -556,11 +549,9 @@
             if ([[dict objectForKey:@"success"] boolValue]) {
                 //                [MBProgressHUD hideHUDForView:self.view  animated:NO];
                 [_tableDataSource removeAllObjects];
-                [self.mainTable.mj_header endRefreshing];
-                self.mainTable.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+
                 [self.mainTable.mj_header beginRefreshing];
-                [self.mainTable reloadData];
-                
+
                 UIAlertController *alerT = [UIAlertController alertControllerWithTitle:@"提示" message:@"屏蔽成功!" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *aler1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 }];
