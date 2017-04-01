@@ -245,7 +245,7 @@
             }else if ([string isEqualToString:@"2"]) {
                 cell.nameLB.text = @"6-10年";
                 
-            }else if ([string isEqualToString:@"3"]) {
+            }else{
                 cell.nameLB.text = @"10年 以上";
                 
             }
