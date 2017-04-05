@@ -137,12 +137,9 @@
         [hud showAnimationWithText:@"上传中..." FromView:self.view];
         
         [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:self.picImageArray failedBlock:^(id errType) {
-
             [hud hideAnimationFromView:self.view];
         } completionBlock:^(id data) {
-
             [hud hideAnimationFromView:self.view];
-
             NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
             [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
@@ -150,20 +147,12 @@
                 [user setObject:headUrl forKey:@"pic"];
             }
             [user synchronize];
-            
             [self infoCommit];
-            
         }];
     }else{
         
         [self infoCommit];
     }
-    
-    
-    
-    //  - - -
-    
-    
 }
 
 - (void)infoCommit{

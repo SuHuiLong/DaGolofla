@@ -15,9 +15,7 @@ static LQProgressHud *HUD;
 + (void)showMessage:(NSString *)text {
     
     HUD = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [HUD showAnimated:YES];//[hud show:YES];
-    });
+    [HUD showAnimated:YES];//[hud show:YES];
     HUD.label.text = text;//[hud setLabelText:text];
     HUD.label.numberOfLines = 1;
     
@@ -35,9 +33,7 @@ static LQProgressHud *HUD;
 + (void)showInfoMsg:(NSString *)text {
     
     HUD = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [HUD showAnimated:YES];//[hud show:YES];
-    });
+    [HUD showAnimated:YES];//[hud show:YES];
     HUD.label.text = text;//[hud setLabelText:text];
     HUD.label.numberOfLines = 0;
     [HUD setRemoveFromSuperViewOnHide:YES];
@@ -56,9 +52,7 @@ static LQProgressHud *HUD;
 + (void)showLoading:(NSString *)text {
     
     HUD = [LQProgressHud showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [HUD showAnimated:YES];//[hud show:YES];
-    });
+    [HUD showAnimated:YES];//[hud show:YES];
     HUD.label.text = text;//[hud setLabelText:text];
     
     HUD.mode = MBProgressHUDModeIndeterminate;
