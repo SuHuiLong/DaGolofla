@@ -84,6 +84,7 @@ static ShowHUD *showHUD = nil;
 #pragma mark MBProgressHUD代理方法
 -(void)hudWasHidden:(MBProgressHUD *)hud
 {
+    
     [_HUD removeFromSuperview];
     if (_HUD != nil) {
         _HUD = nil;

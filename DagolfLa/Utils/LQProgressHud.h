@@ -13,7 +13,8 @@
 
 
 #pragma mark - 建议使用的方法
-
+/** 返回一个 HUD 的单例 */
++ (instancetype)sharedHUD;
 /** 在 window 上添加一个只显示文字的 HUD */
 + (void)showMessage:(NSString *)text;
 
