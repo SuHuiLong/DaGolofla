@@ -64,9 +64,6 @@ static ShowHUD *showHUD = nil;
     _HUD.mode = MBProgressHUDModeIndeterminate;
     _HUD.label.text = text;
     
-    //_HUD.bezelView.color = BlackColor;
-    //_HUD.label.textColor = [UIColor whiteColor];
-    //_HUD.activityIndicatorColor = WhiteColor;
     _HUD.delegate = self;//添加代理
     
 }
@@ -78,7 +75,9 @@ static ShowHUD *showHUD = nil;
  */
 -(void)hideAnimationFromView:(UIView *)view
 {
-    [_HUD hideAnimated:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_HUD hideAnimated:YES];
+    });
 }
 
 

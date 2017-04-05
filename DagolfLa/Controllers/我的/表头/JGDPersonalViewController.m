@@ -133,14 +133,16 @@
         [dict setObject:strTimeKey forKey:@"data"];
         [dict setObject:TYPE_USER_HEAD forKey:@"nType"];
         [dict setObject:PHOTO_DAGOLFLA forKey:@"tag"];
+        ShowHUD *hud = [ShowHUD showHUD];
+        [hud showAnimationWithText:@"上传中..." FromView:self.view];
         
-        [[ShowHUD showHUD] showAnimationWithText:@"上传中…" FromView:self.view];
         [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:self.picImageArray failedBlock:^(id errType) {
-            [[ShowHUD showHUD] hideAnimationFromView:self.view];
-            
+
+            [hud hideAnimationFromView:self.view];
         } completionBlock:^(id data) {
-            [[ShowHUD showHUD] hideAnimationFromView:self.view];
-            
+
+            [hud hideAnimationFromView:self.view];
+
             NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
             [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
