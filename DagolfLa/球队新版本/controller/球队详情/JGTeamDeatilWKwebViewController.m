@@ -32,7 +32,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"成绩总览";
+    if (self.teamName) {
+        self.navigationItem.title = self.teamName;
+    }
     [self updateNavigationItems];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor=[UIColor whiteColor];

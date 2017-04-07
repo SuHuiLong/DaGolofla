@@ -415,7 +415,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         //判断是不改球队成员
         if (_isTeamMember == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法报名。" FromView:self.view];
         }else{
             JGHNewTeamApplyViewController *teamApplyCtrl = [[JGHNewTeamApplyViewController alloc] init];
             teamApplyCtrl.modelss = self.model;
@@ -562,7 +562,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
     if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
     
@@ -582,7 +582,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
     if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
     
@@ -610,7 +610,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 活动成员及分组
 - (void)getTeamActivitySignUpList:(UIButton *)btn{
     if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
     
@@ -678,7 +678,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 抽奖活动
 - (void)getLuckyDraw:(UIButton *)btn{
     if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
     

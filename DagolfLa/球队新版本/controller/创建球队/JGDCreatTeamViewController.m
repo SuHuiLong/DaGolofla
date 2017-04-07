@@ -309,12 +309,27 @@ static CGFloat ImageHeight  = 210.0;
 //        }];
         
     }else{
-        
-        
+                
         for (NSString *key in [self.detailDic allKeys]) {
             if ([[self.detailDic objectForKey:key] isEqualToString:@""] && ![key isEqualToString:@"info"]) {
-                [LQProgressHud showMessage:@"请补全资料后提交"];
-                return;
+                
+                if ([key isEqualToString:@"establishTime"]) {
+                    [LQProgressHud showMessage:@"请选择球队成立日期"];
+                    return;
+                }else if ([key isEqualToString:@"userMobile"]) {
+                    [LQProgressHud showMessage:@"请输入手机号码"];
+                    return;
+                }else if ([key isEqualToString:@"name"]) {
+                    [LQProgressHud showMessage:@"请输入球队名称"];
+                    return;
+                }else if ([key isEqualToString:@"crtyName"]) {
+                    [LQProgressHud showMessage:@"请选择球队所在地区"];
+                    return;
+                }else if ([key isEqualToString:@"userName"]) {
+                    [LQProgressHud showMessage:@"请填写真实姓名"];
+                    return;
+                }
+
             }
         }
         

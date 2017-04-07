@@ -236,6 +236,8 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
             
             if ([data objectForKey:@"newMsg"]) {
                 self.indexModel.Msg = [data objectForKey:@"newMsg"];
+            }else{
+                self.indexModel.Msg = nil;
             }
             
             [self.indexModel setValuesForKeysWithDictionary:data];
@@ -385,7 +387,12 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (section == _indexModel.plateList.count +1) {
         return 0;
     }
-    return 10 *ProportionAdapter;
+    
+    if (!_indexModel.Msg && (section == 0)) {
+        return 0.0001;
+    }else{
+        return 10 *ProportionAdapter;
+}
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (section == _indexModel.plateList.count +1) {
@@ -471,7 +478,11 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 {
     if (indexPath.section == 0) {
         // 系统消息
-        return 80 *ProportionAdapter;
+        if (_indexModel.Msg) {
+            return 80 *ProportionAdapter;
+        }else{
+            return 0.0001;
+        }
     }else{
         if (_indexModel.plateList.count > 0) {
             NSDictionary *dict = _indexModel.plateList[indexPath.section -1];
