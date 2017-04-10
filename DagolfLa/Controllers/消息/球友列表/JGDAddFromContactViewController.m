@@ -347,22 +347,42 @@
             [cell.button addTarget:self action:@selector(clickAct:) forControlEvents:(UIControlEventTouchUpInside)];
             
         }else{
-            if ([self.listArray[indexPath.section][indexPath.row] isFriend] == 0) {
+            
+            
+            NSInteger isFriend = [self.listArray[indexPath.section][indexPath.row] isFriend];
+            if (isFriend == 0) {
                 // 添加
                 cell.state = 1;
                 [cell.button addTarget:self action:@selector(clickAct:) forControlEvents:(UIControlEventTouchUpInside)];
                 
                 
-            }else{
+            }else if (isFriend == 1) {
                 // 已添加
                 cell.state = 2;
                 
+            }else if (isFriend == 2) {
+                // 等待验证
+                cell.state = 3;
             }
         }
     }
     
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([self.listArray[indexPath.section][indexPath.row] isAppUser] == 1) {
+
+        JGHPersonalInfoViewController *personInfoVC = [[JGHPersonalInfoViewController alloc] init];
+        personInfoVC.personRemark = ^(NSString *remark){
+            
+        };
+        personInfoVC.otherKey = [self.listArray[indexPath.section][indexPath.row] userKey];
+        [self.navigationController pushViewController:personInfoVC animated:YES];
+    
+    }
+}
+
 
 - (void)clickAct:(UIButton *)currentBtn{
     
@@ -380,7 +400,9 @@
             JGAddFriendViewController *addVC = [[JGAddFriendViewController alloc] init];
             addVC.otherUserKey = [self.listArray[indexPath.section][indexPath.row] userKey];
             addVC.popToVC = ^(NSInteger sendNum){
-                
+                JGLTeamMemberModel *model = self.listArray[indexPath.section][indexPath.row];
+                model.isFriend = 2;
+                [self.searchTable reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
             };
             [self.navigationController pushViewController:addVC animated:YES];
         }else{

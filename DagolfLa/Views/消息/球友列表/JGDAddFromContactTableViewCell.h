@@ -14,5 +14,5 @@
 @property (nonatomic, strong) UILabel *mobileLB;
 @property (nonatomic, strong) UIButton *button;
 
-@property (nonatomic, assign) NSInteger state;
+@property (nonatomic, assign) NSInteger state;  // 0 邀请  1 添加  2 已添加  3 等待验证
 @end

@@ -29,4 +29,6 @@
 //是否是获取球队所有的照片
 @property (nonatomic, assign) BOOL isGetAll;
 
+@property (nonatomic, strong) NSNumber *activityKey;
+
 @end

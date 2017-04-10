@@ -925,7 +925,9 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
     NSLog(@"%td", moreBtn.tag);
-    [self isLoginUp];
+    if (moreBtn.tag != 101) {
+        [self isLoginUp];
+    }
     
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *urlString = [dict objectForKey:@"moreLink"];
@@ -952,7 +954,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 }
 #pragma mark -- 精彩赛事
 - (void)selectSpectatorSportsUrlString:(NSInteger)selectID{
-    [self isLoginUp];
+//    [self isLoginUp];
     
     for (NSDictionary *dict in _indexModel.plateList) {
         NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];

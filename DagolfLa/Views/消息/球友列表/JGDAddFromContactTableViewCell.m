@@ -25,7 +25,7 @@
         self.mobileLB = [Helper lableRect:CGRectMake(123 * ProportionAdapter, 0, 150 * ProportionAdapter, 51 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:17 * ProportionAdapter text:@"" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:self.mobileLB];
         
-        self.button = [[UIButton alloc] initWithFrame:CGRectMake(295 * ProportionAdapter, 13 * ProportionAdapter, 51 * ProportionAdapter, 26 * ProportionAdapter)];
+        self.button = [[UIButton alloc] initWithFrame:CGRectMake(295 * ProportionAdapter, 13 * ProportionAdapter, 61 * ProportionAdapter, 26 * ProportionAdapter)];
         self.button.layer.cornerRadius = 3 * ProportionAdapter;
         self.button.clipsToBounds = YES;
         self.button.titleLabel.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
@@ -51,6 +51,13 @@
     }else if (state == 2) {
         
         [self.button setTitle:@"已添加" forState:(UIControlStateNormal)];
+        [self.button setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        self.button.layer.borderWidth = 0;
+        [self.button setBackgroundColor:[UIColor colorWithHexString:@"#E7E7E7"]];
+        
+    }else if (state == 3) {
+        
+        [self.button setTitle:@"等待验证" forState:(UIControlStateNormal)];
         [self.button setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
         self.button.layer.borderWidth = 0;
         [self.button setBackgroundColor:[UIColor colorWithHexString:@"#E7E7E7"]];
