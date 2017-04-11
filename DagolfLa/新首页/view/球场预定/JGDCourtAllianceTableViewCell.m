@@ -88,6 +88,7 @@
     self.vipPriceLB.attributedText = leagueStr;
     
     if (!self.hasUserCard) {
+        self.vipPriceLB.text = @"**";
         [self.vipBtn setImage:[UIImage imageNamed:@"booking_pay_nocolor"] forState:(UIControlStateNormal)];
     }else{
         self.vipPriceLB.textColor = [UIColor colorWithHexString:@"#dd0a14"];

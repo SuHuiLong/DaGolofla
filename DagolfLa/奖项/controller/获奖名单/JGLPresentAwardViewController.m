@@ -346,10 +346,14 @@
 }
 -(void)createHeader
 {
-    _viewBack = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 84*screenWidth/375)];
+    
+    UILabel *backLB = [Helper lableRect:CGRectMake(0, 0, screenWidth, 91 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#F5F5F5"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
+    backLB.backgroundColor = [UIColor colorWithHexString:@"#F5F5F5"];
+    
+    _viewBack = [[UIView alloc]initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 81*screenWidth/375)];
     _viewBack.backgroundColor = [UIColor whiteColor];
     
-    UIImageView* iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 10*screenWidth/375, 64*screenWidth/375, 64*screenWidth/375)];
+    UIImageView* iconImgv = [[UIImageView alloc]initWithFrame:CGRectMake(10*screenWidth/375, 6*screenWidth/375, 69*screenWidth/375, 69*screenWidth/375)];
     iconImgv.image = [UIImage imageNamed:DefaultHeaderImage];
     iconImgv.layer.masksToBounds = YES;
     iconImgv.layer.cornerRadius = 8*screenWidth/375;
@@ -362,7 +366,8 @@
     }
     
     UILabel* titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(94*screenWidth/375, 10*screenWidth/375, 200*screenWidth/375, 25*screenWidth/375)];
-    titleLabel.font = [UIFont systemFontOfSize:16*screenWidth/375];
+    titleLabel.font = [UIFont systemFontOfSize:17*screenWidth/375];
+    titleLabel.textColor = [UIColor colorWithHexString:@"#313131"];
     if (![Helper isBlankString:_model.name]) {
         titleLabel.text = _model.name;
     }
@@ -376,7 +381,7 @@
     [_viewBack addSubview:timeImgv];
     
     UILabel* timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 35*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];
-    timeLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
+    timeLabel.font = [UIFont systemFontOfSize:13*screenWidth/375];
     //活动时间componentsSeparatedByString
     NSString *timeString = [[_model.beginDate componentsSeparatedByString:@" "]firstObject];
     NSString *monthTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:1];
@@ -385,7 +390,7 @@
         timeLabel.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
     }
     
-    timeLabel.textColor = [UIColor lightGrayColor];
+    timeLabel.textColor = [UIColor colorWithHexString:@"#626262"];
     [_viewBack addSubview:timeLabel];
     
     UIImageView* distanceImgv = [[UIImageView alloc]initWithFrame:CGRectMake(95*screenWidth/375, 58*screenWidth/375, 9*screenWidth/375, 14*screenWidth/375)];
@@ -394,6 +399,7 @@
     
     UILabel* distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 55*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];
     distanceLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
+    distanceLabel.textColor = [UIColor colorWithHexString:@"#626262"];
     if (![Helper isBlankString:_model.ballName]) {
         distanceLabel.text = _model.ballName;
     }
@@ -402,8 +408,8 @@
     }
 
     [_viewBack addSubview:distanceLabel];
-    
-    _tableView.tableHeaderView = _viewBack;
+    [backLB addSubview:_viewBack];
+    _tableView.tableHeaderView = backLB;
 }
 #pragma mark --创建TB
 -(void)uiConfig

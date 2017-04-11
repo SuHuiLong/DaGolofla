@@ -26,9 +26,15 @@
     [super viewDidLoad];
     
     self.title = @"高球资讯";
-    
-    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
-    self.urlString = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@", DEFAULF_USERID, _newsId, md5Str];
+    NSString *md5Str;
+    if (DEFAULF_USERID) {
+        md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
+        self.urlString = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@", DEFAULF_USERID, _newsId, md5Str];
+    }else{
+        md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=0&newsId=%@dagolfla.com", _newsId]];
+        self.urlString = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=0&newsId=%@&md5=%@", _newsId, md5Str];
+    }
+//    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
     
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     [self.view addSubview:self.webView];
@@ -46,7 +52,11 @@
 - (void)getNewInfo{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:_newsId forKey:@"newsId"];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    if (DEFAULF_USERID) {
+        [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+    }else{
+        [dict setObject:@0 forKey:@"userKey"];
+    }
     [[JsonHttp jsonHttp]httpRequest:@"news/getNewInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -98,8 +108,16 @@
         obj = [UIImage imageNamed:@"iconlogo"];
     }
     
-    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
-     NSString*  shareUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@&share=1", DEFAULF_USERID, _newsId, md5Str];
+    NSString *md5Str;
+    NSString*  shareUrl;
+    if (DEFAULF_USERID) {
+        md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
+        shareUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@&share=1", DEFAULF_USERID, _newsId, md5Str];
+    }else{
+        md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=0&newsId=%@dagolfla.com", _newsId]];
+        shareUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=0&newsId=%@&md5=%@&share=1", _newsId, md5Str];
+    }
+
 
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:@"title"]];
     if (index == 0){

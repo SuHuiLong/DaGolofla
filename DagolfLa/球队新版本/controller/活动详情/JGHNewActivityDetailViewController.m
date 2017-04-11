@@ -28,6 +28,7 @@
 #import "JGHNewCancelApplyViewController.h"
 #import "UseMallViewController.h"
 #import "JGHNewActivityExplainCell.h"
+#import "JGDDPhotoAlbumViewController.h"
 
 static NSString *const JGHCostListTableViewCellIdentifier = @"JGHCostListTableViewCell";
 static NSString *const JGHNewActivityCellIdentifier = @"JGHNewActivityCell";
@@ -135,8 +136,8 @@ static CGFloat ImageHeight  = 210.0;
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    _titleArray = @[@"参赛费用", @"活动成员及分组", @"查看成绩", @"查看奖项", @"抽奖活动", @"活动说明"];
-    _imageArray = @[@"icn_preferential", @"icn_event_group", @"icn_event_score", @"icn_awards", @"icn_lottery", @"icn_event_details"];
+    _titleArray = @[@"参赛费用", @"活动成员及分组", @"活动相册", @"查看成绩", @"查看奖项", @"抽奖活动", @"活动说明"];
+    _imageArray = @[@"icn_preferential", @"icn_event_group", @"icn_event_photo", @"icn_event_score", @"icn_awards", @"icn_lottery", @"icn_event_details"];
     
     //监听分组页面返回，刷新数据
     NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
@@ -147,7 +148,7 @@ static CGFloat ImageHeight  = 210.0;
     self.imgProfile.frame = CGRectMake(0, 0, screenWidth, ImageHeight);
     self.imgProfile.userInteractionEnabled = YES;
     self.teamActibityNameTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44)];
-
+    
     UINib *costListNib = [UINib nibWithNibName:@"JGHCostListTableViewCell" bundle:[NSBundle mainBundle]];
     [self.teamActibityNameTableView registerNib:costListNib forCellReuseIdentifier:JGHCostListTableViewCellIdentifier];
     
@@ -415,7 +416,7 @@ static CGFloat ImageHeight  = 210.0;
     }else{
         //判断是不改球队成员
         if (_isTeamMember == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+            [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法报名。" FromView:self.view];
         }else{
             JGHNewTeamApplyViewController *teamApplyCtrl = [[JGHNewTeamApplyViewController alloc] init];
             teamApplyCtrl.modelss = self.model;
@@ -437,18 +438,18 @@ static CGFloat ImageHeight  = 210.0;
         //参赛费用列表
         NSLog(@"%td", _costListArray.count + 1);
         return _costListArray.count;
-    }else if (section == 7){
+    }else if (section == 8){
         return 1;
     }
     return 0;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 8;//详情页面
+    return 9;//详情页面
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
         return 30*ProportionAdapter;
-    }else if (indexPath.section == 7){
+    }else if (indexPath.section == 8){
         if (_model.info.length >0) {
             CGFloat height;
             height = [Helper textHeightFromTextString:_model.info width:screenWidth -50*ProportionAdapter fontSize:15*ProportionAdapter];
@@ -464,7 +465,7 @@ static CGFloat ImageHeight  = 210.0;
     return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 3 || section == 4 || section == 5 || section == 7) {
+    if (section == 3 || section == 4 || section == 5 || section == 6 || section == 8) {
         return 0;
     }else if (section == 2){
         if (_costListArray.count == 0) {
@@ -495,7 +496,7 @@ static CGFloat ImageHeight  = 210.0;
         }
         
         return costListCell;
-    }else if (indexPath.section == 7){
+    }else if (indexPath.section == 8){
         JGHNewActivityExplainCell *imageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewActivityExplainCellIdentifier];
         imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
         [imageCell configActivityContent:_model.info];
@@ -526,9 +527,9 @@ static CGFloat ImageHeight  = 210.0;
         JGHActivityAllCell *activityCell = [tableView dequeueReusableCellWithIdentifier:JGHActivityAllCellIdentifier];
         activityCell.clickBtn.tag = 100 +section;
         activityCell.delegate = self;
-        if (section == 2 || section == 7) {
+        if (section == 2 || section == 8) {
             activityCell.accessoryType = UITableViewCellAccessoryNone;
-            if (section == 7) {
+            if (section == 8) {
                 activityCell.line.hidden = YES;
             }
         }else{
@@ -562,7 +563,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 查看奖项
 - (void)getTeamActivityAward:(UIButton *)btn{
     if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
     
@@ -570,19 +571,19 @@ static CGFloat ImageHeight  = 210.0;
     prizeCtrl.activityKey = _teamKey;
     prizeCtrl.teamKey = _model.teamKey;
     /*
-    if ([_power containsString:@"1001"]) {
-        prizeCtrl.isManager = 1;
-    }else{
-        prizeCtrl.isManager = 0;
-    }
-    */
+     if ([_power containsString:@"1001"]) {
+     prizeCtrl.isManager = 1;
+     }else{
+     prizeCtrl.isManager = 0;
+     }
+     */
     prizeCtrl.model = _model;
     [self.navigationController pushViewController:prizeCtrl animated:YES];
 }
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
     if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
     
@@ -610,7 +611,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 活动成员及分组
 - (void)getTeamActivitySignUpList:(UIButton *)btn{
     if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
     
@@ -659,26 +660,42 @@ static CGFloat ImageHeight  = 210.0;
 - (void)newdidselectActivityClick:(UIButton *)btn{
     NSLog(@"newdidselectActivityClick == %td", btn.tag);
     if (btn.tag == 103) {
-//        [self pushGroupCtrl:btn];
+        //        [self pushGroupCtrl:btn];
         [self getTeamActivitySignUpList:btn];
     }
     
     if (btn.tag == 104) {
-        [self getTeamActivityResults:btn];
+        
+        if (_isTeamMember == 1) {
+            [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
+            return;
+        }
+        
+        JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
+        phoVc.strTitle = @"所有照片";
+        phoVc.isGetAll = true;
+        phoVc.teamTimeKey = [NSNumber numberWithInteger:self.model.teamKey];
+        phoVc.userKey = DEFAULF_USERID;
+        phoVc.activityKey  = [NSNumber numberWithInteger:_teamKey];
+        [self.navigationController pushViewController:phoVc animated:YES];
     }
     
     if (btn.tag == 105) {
-        [self getTeamActivityAward:btn];
+        [self getTeamActivityResults:btn];
     }
     
     if (btn.tag == 106) {
+        [self getTeamActivityAward:btn];
+    }
+    
+    if (btn.tag == 107) {
         [self getLuckyDraw:btn];
     }
 }
 #pragma mark -- 抽奖活动
 - (void)getLuckyDraw:(UIButton *)btn{
     if (_isTeamMember == 1) {
-        [[ShowHUD showHUD]showToastWithText:@"您不是该球队队员！" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
     
@@ -820,13 +837,13 @@ static CGFloat ImageHeight  = 210.0;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

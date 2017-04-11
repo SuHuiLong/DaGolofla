@@ -181,7 +181,7 @@
 
 - (void)downLoadData{
     
-    NSInteger offset;
+    NSInteger offset = 0;
     switch (self.currentType) {
         case 1:
             offset = self.matchOffset;
@@ -204,10 +204,15 @@
     }
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+    if (DEFAULF_USERID) {
+        [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+        [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&type=%tddagolfla.com", DEFAULF_USERID, self.currentType]] forKey:@"md5"];
+    }else{
+        [dic setObject:@0 forKey:@"userKey"];
+        [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=0&type=%tddagolfla.com", self.currentType]] forKey:@"md5"];
+    }
     [dic setObject:[NSNumber numberWithInteger:offset] forKey:@"offset"];
     [dic setObject:[NSNumber numberWithInteger:self.currentType] forKey:@"type"];
-    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&type=%tddagolfla.com", DEFAULF_USERID, self.currentType]] forKey:@"md5"];
     
     if (offset == 0) {
         //        [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];

@@ -77,8 +77,9 @@
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
             if ([data objectForKey:@"userCardList"]) {
+                
                 self.vipCardArray = [NSMutableArray arrayWithArray:[data objectForKey:@"userCardList"]];
-                _playerArray = [NSMutableArray arrayWithObjects:@"", [[NSUserDefaults standardUserDefaults] objectForKey:Mobile], [self.vipCardArray[0] objectForKey:@"name"] ,nil];
+                _playerArray = [NSMutableArray arrayWithObjects:[self.vipCardArray[0] objectForKey:@"lUserName"], [[NSUserDefaults standardUserDefaults] objectForKey:Mobile], [self.vipCardArray[0] objectForKey:@"name"] ,nil];
                 self.vipTimekey = [self.vipCardArray[0] objectForKey:@"timeKey"];
                 
                 [self.commitOrderTableView reloadData];
@@ -365,6 +366,7 @@
             cell.nameTF.text = self.playerArray[0];
             cell.nameTF.tag = 888;
             cell.nameTF.delegate = self;
+            cell.nameTF.userInteractionEnabled = NO;
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         

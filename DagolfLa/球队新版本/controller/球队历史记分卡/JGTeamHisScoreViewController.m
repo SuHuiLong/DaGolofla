@@ -137,12 +137,13 @@
 #pragma mark ----- 成绩总览
 - (void)takeCode{
     if (self.isTeamMem == NO) {
-        [[ShowHUD showHUD]showToastWithText:@"您还不是该球队成员" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
     }else{
         //成绩总览
         JGTeamDeatilWKwebViewController * VC = [[JGTeamDeatilWKwebViewController alloc] init];
         //    VC.timeKey = @33160;
         VC.isScoreAll = YES;
+        VC.teamName = @"成绩总览";
         VC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/teamYearScoreOverview.html?userKey=%@&teamKey=%@",DEFAULF_USERID,_teamKey];
         VC.teamKey = [_teamKey integerValue];
         [self.navigationController pushViewController:VC animated:YES];
@@ -346,7 +347,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (self.isTeamMem == NO) {
-        [[ShowHUD showHUD]showToastWithText:@"您还不是该球队成员" FromView:self.view];
+        [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
     }else{
         JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
         

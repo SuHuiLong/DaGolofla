@@ -51,6 +51,7 @@
     return _selectArray;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -115,6 +116,12 @@
         [dict setValue:_teamTimeKey forKey:@"teamKey"];
         [dict setValue:[NSNumber numberWithInteger:_page] forKey:@"off"];
         strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%@dagolfla.com",  DEFAULF_USERID,_teamTimeKey]];
+<<<<<<< HEAD
+=======
+        if (self.activityKey) {
+            [dict setObject:self.activityKey forKey:@"activityKey"];
+        }
+>>>>>>> origin/master
         request = @"team/getTeamMediaListAll";
     }else{
         [dict setValue:_albumKey forKey:@"albumKey"];
@@ -168,6 +175,10 @@
                 }
             }
             [_collectionView reloadData];
+      
+            
+            
+            
         }else {
             [Helper alertViewWithTitle:[dict objectForKey:@"message"] withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
@@ -175,11 +186,24 @@
         }
         [_collectionView reloadData];
         
-        [self.collectionView.mj_header endRefreshing];
+        [self.collectionView.mj_header endRefreshingWithCompletionBlock:^{
+
+            if ([data objectForKey:@"pos"] && ([[data objectForKey:@"pos"] integerValue] != 0)) {
+                
+                NSInteger pos = [[data objectForKey:@"pos"] integerValue];
+                //
+                
+                [_collectionView setContentOffset:CGPointMake(0, ((screenWidth - 20)/3 + 5) * (pos / 3)) animated:NO];
+
+            }
+            
+        }];
         [self.collectionView.mj_footer endRefreshing];
     }];
     
 }
+
+
 #pragma mark - Action
 //选择取消按钮点击
 -(void)rightButtonCLick{

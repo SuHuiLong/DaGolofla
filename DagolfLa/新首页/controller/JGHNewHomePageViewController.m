@@ -236,6 +236,8 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
             
             if ([data objectForKey:@"newMsg"]) {
                 self.indexModel.Msg = [data objectForKey:@"newMsg"];
+            }else{
+                self.indexModel.Msg = nil;
             }
             
             [self.indexModel setValuesForKeysWithDictionary:data];
@@ -385,7 +387,12 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (section == _indexModel.plateList.count +1) {
         return 0;
     }
-    return 10 *ProportionAdapter;
+    
+    if (!_indexModel.Msg && (section == 0)) {
+        return 0.0001;
+    }else{
+        return 10 *ProportionAdapter;
+}
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (section == _indexModel.plateList.count +1) {
@@ -471,7 +478,11 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 {
     if (indexPath.section == 0) {
         // 系统消息
-        return 80 *ProportionAdapter;
+        if (_indexModel.Msg) {
+            return 80 *ProportionAdapter;
+        }else{
+            return 0.0001;
+        }
     }else{
         if (_indexModel.plateList.count > 0) {
             NSDictionary *dict = _indexModel.plateList[indexPath.section -1];
@@ -914,7 +925,9 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 #pragma mark -- 更多
 - (void)didSelectMoreBtn:(UIButton *)moreBtn{
     NSLog(@"%td", moreBtn.tag);
-    [self isLoginUp];
+    if (moreBtn.tag != 101) {
+        [self isLoginUp];
+    }
     
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *urlString = [dict objectForKey:@"moreLink"];
@@ -941,7 +954,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 }
 #pragma mark -- 精彩赛事
 - (void)selectSpectatorSportsUrlString:(NSInteger)selectID{
-    [self isLoginUp];
+//    [self isLoginUp];
     
     for (NSDictionary *dict in _indexModel.plateList) {
         NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
