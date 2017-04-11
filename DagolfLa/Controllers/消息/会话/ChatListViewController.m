@@ -307,13 +307,9 @@
 #pragma mark -- 系统通知
 - (void)sysMessbtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
-    {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]){
         
-    }
-    else
-    {
-        
+    }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
         
@@ -321,7 +317,6 @@
         btn.userInteractionEnabled = YES;
         return;
     }
-    
 //    _systemUnread = 0;
     [[RCIMClient sharedRCIMClient] clearMessagesUnreadStatus:ConversationType_SYSTEM targetId:SYSTEM_ID];
     [_systemRCDbtn removeFromSuperview];
@@ -338,12 +333,11 @@
 #pragma mark -- 球队通知
 - (void)teamNotbtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
+    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
     {
         
-    }
-    else
-    {
+    }else{
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
@@ -353,7 +347,6 @@
         
         return;
     }
-    
 //    _teamUnread = 0;
     [[RCIMClient sharedRCIMClient] clearMessagesUnreadStatus:ConversationType_SYSTEM targetId:TEAM_ID];
     [_teamRCDbtn removeFromSuperview];

@@ -51,31 +51,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //创建视图控制器数组
-    //
-    //    //创建标签
-    //    [self createTabbarItems];
-    
-    //    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"tab_bg1"]];
+
     UIImageView *backImgv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, .5)];
-//    backImgv.backgroundColor = [UITool colorWithHexString:@"8a8b87" alpha:1];
+
     [self.tabBar insertSubview:backImgv atIndex:0];
     self.tabBarController.tabBar.opaque = YES;
-//    [self.tabBar setTitleTextAttributes:[UITool colorWithHexString:@"" alpha:1];
-    
-    
-//    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UITool colorWithHexString:@"929292" alpha:1]} forState:UIControlStateNormal];
-//    [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UITool colorWithHexString:@"32b14d" alpha:1]} forState:UIControlStateSelected];
+
     [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateNormal];
 
     [[UITabBarItem appearance] setTitleTextAttributes:@{ NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#015836"]} forState:UIControlStateSelected];
     
-    // 去掉系统的横线
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6)
-//    {
-//        [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
-//    }
-//    
     [self setUpAllViewControlller];
     
 }
@@ -119,25 +104,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-//- (BOOL)shouldAutorotate
-//{
-//    // 获取当前的控制器
-//    UINavigationController *navC = self.selectedViewController;
-//    UIViewController *currentVC = navC.visibleViewController;
-//    
-//    // 因为默认shouldAutorotate是YES，所以每个不需要支持横屏的控制器都需要重写一遍这个方法
-//    // 一般项目中要支持横屏的界面比较少，为了解决这个问题，就取反值：shouldAutorotate返回为YES的时候不能旋转，返回NO的时候可以旋转
-//    // 所以只要重写了shouldAutorotate方法的控制器，并return了NO，这个控制器就可以旋转
-//    // 当然，如果项目中支持横屏的界面占多数的话，可以不取反值。
-//    NSLog(@"当前控制器：%@  是否支持旋转：%zd", currentVC, !currentVC.shouldAutorotate);
-//    
-//    return !currentVC.shouldAutorotate;
-//}
-//
-//- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-//{
-//    return UIInterfaceOrientationMaskAll;
-//}
 
 @end

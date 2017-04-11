@@ -223,6 +223,12 @@
 
 }
 
+-(void)mapStatusDidChanged:(BMKMapView *)mapView{
+    CLLocationCoordinate2D centerCoordinate = mapView.centerCoordinate;
+    
+    NSLog(@"%f---%f",centerCoordinate.latitude,centerCoordinate.longitude);
+}
+
 //处理位置坐标更新
 
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation

@@ -33,32 +33,6 @@
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
-    
-    /*
-    [[PostDataRequest sharedInstance] postDataRequest:@"user/updateUserSys.do" parameter:self.newDic success:^(id respondsData) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        
-        if ([[dict objectForKey:@"success"] boolValue]) {
-            
-            [[NSUserDefaults standardUserDefaults] setObject:[self.newDic copy] forKey:@"informMessege"];
-            
-            //            [self.tableView reloadData];
-            
-        }else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"修改接收消息设置失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-        
-    } failed:^(NSError *error) {
-        
-        
-    }];
-    */
-    
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 80*ScreenWidth/375 + 44*ScreenWidth/375 * 3) style:(UITableViewStylePlain)];

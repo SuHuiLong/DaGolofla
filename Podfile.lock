@@ -45,6 +45,7 @@ PODS:
   - SDWebImage/Core (4.0.0)
   - UMengAnalytics (4.1.10)
   - UMengSocial (5.0)
+  - YBAttributeTextTapAction (2.0.6)
   - YYKit (1.0.9):
     - YYKit/no-arc (= 1.0.9)
   - YYKit/no-arc (1.0.9)
@@ -60,6 +61,7 @@ DEPENDENCIES:
   - SDWebImage (~> 4.0.0)
   - UMengAnalytics (~> 4.1.0)
   - UMengSocial (~> 5.0)
+  - YBAttributeTextTapAction
   - YYKit (~> 1.0.9)
 
 SPEC CHECKSUMS:
@@ -73,8 +75,9 @@ SPEC CHECKSUMS:
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   UMengAnalytics: 40585031b7eb085534c68a951b394731e7166257
   UMengSocial: 48b67179c492a8cf7803fbb0438b8f55432e2fc1
+  YBAttributeTextTapAction: 650ff36251479f8cfc7b5dd8fb62587c538ce502
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 45be3b96ac8163ebb46d6a9515d928d64b746f78
+PODFILE CHECKSUM: e3ce7ce941bc673ca369e611917828ab5b3cd550
 
 COCOAPODS: 1.2.1.beta.1

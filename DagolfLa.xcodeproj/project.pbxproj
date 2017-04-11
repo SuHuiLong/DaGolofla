@@ -16,6 +16,7 @@
 		1814D8B91E812E3600F6E063 /* MakePhotoTextAddTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814D8B81E812E3600F6E063 /* MakePhotoTextAddTextViewController.m */; };
 		1814D8BD1E821D8D00F6E063 /* ShlTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814D8BC1E821D8D00F6E063 /* ShlTextView.m */; };
 		182583301E5EE4CB00DE1504 /* UITableView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */; };
+		18274AC81E9607380065117E /* VipCardGoodsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18274AC71E9607380065117E /* VipCardGoodsListViewController.m */; };
 		1827B3D41E711AD70049AC26 /* VipCardHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1827B3D31E711AD70049AC26 /* VipCardHeaderCollectionReusableView.m */; };
 		182C029A1E77CDEC001161D7 /* JZLocationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02991E77CDEC001161D7 /* JZLocationConverter.m */; };
 		182C029E1E77D856001161D7 /* SearchWithMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C029D1E77D856001161D7 /* SearchWithMapViewController.m */; };
@@ -38,6 +39,8 @@
 		182C02D11E7A8E61001161D7 /* SearchWithMapOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02D01E7A8E61001161D7 /* SearchWithMapOrderListViewController.m */; };
 		182CFE641E6D10A0003F711D /* AllianceVipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182CFE631E6D10A0003F711D /* AllianceVipViewController.m */; };
 		182CFE671E6D3835003F711D /* AddVipCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182CFE661E6D3835003F711D /* AddVipCardViewController.m */; };
+		1854B91E1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1854B91D1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.m */; };
+		1854B9211E961B14009792A3 /* VipCardGoodsListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1854B9201E961B14009792A3 /* VipCardGoodsListModel.m */; };
 		1862C1431E8BB8A2004E4537 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1862C0E11E8BB8A1004E4537 /* libcrypto.a */; };
 		1862C1441E8BB8A2004E4537 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1862C0E21E8BB8A1004E4537 /* libssl.a */; };
 		1862C1451E8BB8A2004E4537 /* base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 1862C1311E8BB8A2004E4537 /* base64.m */; };
@@ -66,6 +69,9 @@
 		18D9405F1E6EAABC00E36DE3 /* CardHistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D940581E6EAABC00E36DE3 /* CardHistoryTableViewCell.m */; };
 		18D940601E6EAABC00E36DE3 /* VipCardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D9405B1E6EAABC00E36DE3 /* VipCardCollectionViewCell.m */; };
 		18D940611E6EAABC00E36DE3 /* VipCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D9405D1E6EAABC00E36DE3 /* VipCardModel.m */; };
+		18DF0AD31E9B6AE1006EB7FD /* VipCardOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF0AD21E9B6AE1006EB7FD /* VipCardOrderListViewController.m */; };
+		18DF0AD61E9B7082006EB7FD /* VipCardOrderListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF0AD51E9B7082006EB7FD /* VipCardOrderListModel.m */; };
+		18DF0AD91E9B70B9006EB7FD /* VipCardOrderListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF0AD81E9B70B9006EB7FD /* VipCardOrderListTableViewCell.m */; };
 		200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */; };
 		200200FF1D61BC0200308C44 /* JGHCabbieEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200200FE1D61BC0200308C44 /* JGHCabbieEditorViewController.m */; };
 		2006C0651E01729D008B85DF /* JGHAreaListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2006C0641E01729D008B85DF /* JGHAreaListView.m */; };
@@ -1176,6 +1182,8 @@
 		1814D8BC1E821D8D00F6E063 /* ShlTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShlTextView.m; sourceTree = "<group>"; };
 		1825832E1E5EE4CB00DE1504 /* UITableView+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Addition.h"; sourceTree = "<group>"; };
 		1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Addition.m"; sourceTree = "<group>"; };
+		18274AC61E9607380065117E /* VipCardGoodsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardGoodsListViewController.h; sourceTree = "<group>"; };
+		18274AC71E9607380065117E /* VipCardGoodsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardGoodsListViewController.m; sourceTree = "<group>"; };
 		1827B3D21E711AD70049AC26 /* VipCardHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		1827B3D31E711AD70049AC26 /* VipCardHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		182C02981E77CDEC001161D7 /* JZLocationConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JZLocationConverter.h; sourceTree = "<group>"; };
@@ -1218,6 +1226,10 @@
 		182CFE631E6D10A0003F711D /* AllianceVipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AllianceVipViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		182CFE651E6D3835003F711D /* AddVipCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddVipCardViewController.h; sourceTree = "<group>"; };
 		182CFE661E6D3835003F711D /* AddVipCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddVipCardViewController.m; sourceTree = "<group>"; };
+		1854B91C1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardGoodsListCollectionViewCell.h; sourceTree = "<group>"; };
+		1854B91D1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardGoodsListCollectionViewCell.m; sourceTree = "<group>"; };
+		1854B91F1E961B14009792A3 /* VipCardGoodsListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardGoodsListModel.h; sourceTree = "<group>"; };
+		1854B9201E961B14009792A3 /* VipCardGoodsListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardGoodsListModel.m; sourceTree = "<group>"; };
 		1862C0E11E8BB8A1004E4537 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		1862C0E21E8BB8A1004E4537 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		1862C0E41E8BB8A1004E4537 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
@@ -1345,6 +1357,12 @@
 		18D9405B1E6EAABC00E36DE3 /* VipCardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardCollectionViewCell.m; sourceTree = "<group>"; };
 		18D9405C1E6EAABC00E36DE3 /* VipCardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardModel.h; sourceTree = "<group>"; };
 		18D9405D1E6EAABC00E36DE3 /* VipCardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardModel.m; sourceTree = "<group>"; };
+		18DF0AD11E9B6AE1006EB7FD /* VipCardOrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardOrderListViewController.h; sourceTree = "<group>"; };
+		18DF0AD21E9B6AE1006EB7FD /* VipCardOrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardOrderListViewController.m; sourceTree = "<group>"; };
+		18DF0AD41E9B7082006EB7FD /* VipCardOrderListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardOrderListModel.h; sourceTree = "<group>"; };
+		18DF0AD51E9B7082006EB7FD /* VipCardOrderListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardOrderListModel.m; sourceTree = "<group>"; };
+		18DF0AD71E9B70B9006EB7FD /* VipCardOrderListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardOrderListTableViewCell.h; sourceTree = "<group>"; };
+		18DF0AD81E9B70B9006EB7FD /* VipCardOrderListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardOrderListTableViewCell.m; sourceTree = "<group>"; };
 		200200FA1D61B2C900308C44 /* JGHStarScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHStarScoreViewController.h; sourceTree = "<group>"; };
 		200200FB1D61B2C900308C44 /* JGHStarScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGHStarScoreViewController.m; sourceTree = "<group>"; };
 		200200FD1D61BC0200308C44 /* JGHCabbieEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGHCabbieEditorViewController.h; sourceTree = "<group>"; };
@@ -3479,6 +3497,81 @@
 			path = placeholderTextView;
 			sourceTree = "<group>";
 		};
+		18274ABE1E95EFB40065117E /* VipCardStore */ = {
+			isa = PBXGroup;
+			children = (
+				18274ABF1E95EFB40065117E /* Agreement */,
+				18274AC01E95EFB40065117E /* ConfirmAnOrder */,
+				18274AC21E95EFB40065117E /* GoodsDetail */,
+				18274AC41E95EFB40065117E /* GoodsList */,
+				18274AC51E95EFB40065117E /* OrderList */,
+			);
+			path = VipCardStore;
+			sourceTree = "<group>";
+		};
+		18274ABF1E95EFB40065117E /* Agreement */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Agreement;
+			sourceTree = "<group>";
+		};
+		18274AC01E95EFB40065117E /* ConfirmAnOrder */ = {
+			isa = PBXGroup;
+			children = (
+				18274AC11E95EFB40065117E /* PerfectInformation */,
+			);
+			path = ConfirmAnOrder;
+			sourceTree = "<group>";
+		};
+		18274AC11E95EFB40065117E /* PerfectInformation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PerfectInformation;
+			sourceTree = "<group>";
+		};
+		18274AC21E95EFB40065117E /* GoodsDetail */ = {
+			isa = PBXGroup;
+			children = (
+				18274AC31E95EFB40065117E /* SelectCardCombo */,
+			);
+			path = GoodsDetail;
+			sourceTree = "<group>";
+		};
+		18274AC31E95EFB40065117E /* SelectCardCombo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SelectCardCombo;
+			sourceTree = "<group>";
+		};
+		18274AC41E95EFB40065117E /* GoodsList */ = {
+			isa = PBXGroup;
+			children = (
+				18274AC61E9607380065117E /* VipCardGoodsListViewController.h */,
+				18274AC71E9607380065117E /* VipCardGoodsListViewController.m */,
+				1854B91C1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.h */,
+				1854B91D1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.m */,
+				1854B91F1E961B14009792A3 /* VipCardGoodsListModel.h */,
+				1854B9201E961B14009792A3 /* VipCardGoodsListModel.m */,
+			);
+			path = GoodsList;
+			sourceTree = "<group>";
+		};
+		18274AC51E95EFB40065117E /* OrderList */ = {
+			isa = PBXGroup;
+			children = (
+				18DF0AD11E9B6AE1006EB7FD /* VipCardOrderListViewController.h */,
+				18DF0AD21E9B6AE1006EB7FD /* VipCardOrderListViewController.m */,
+				18DF0AD71E9B70B9006EB7FD /* VipCardOrderListTableViewCell.h */,
+				18DF0AD81E9B70B9006EB7FD /* VipCardOrderListTableViewCell.m */,
+				18DF0AD41E9B7082006EB7FD /* VipCardOrderListModel.h */,
+				18DF0AD51E9B7082006EB7FD /* VipCardOrderListModel.m */,
+			);
+			path = OrderList;
+			sourceTree = "<group>";
+		};
 		182C028F1E77BD29001161D7 /* 地图详情页 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3552,6 +3645,7 @@
 				18D940541E6EAABC00E36DE3 /* CardHistory */,
 				182CFE651E6D3835003F711D /* AddVipCardViewController.h */,
 				182CFE661E6D3835003F711D /* AddVipCardViewController.m */,
+				18274ABE1E95EFB40065117E /* VipCardStore */,
 			);
 			path = "联盟会员";
 			sourceTree = "<group>";
@@ -9050,6 +9144,7 @@
 				182C02C91E78CC76001161D7 /* SearchWithMapAnnotationView.m in Sources */,
 				36BFFFCD1BC770B1005B3CE2 /* BrowseImagesViewController.m in Sources */,
 				202E05201D757D6D00566CA9 /* JGHEditorCostViewController.m in Sources */,
+				18DF0AD31E9B6AE1006EB7FD /* VipCardOrderListViewController.m in Sources */,
 				36BFFFFA1BC770C4005B3CE2 /* NSString+DocumentPath.m in Sources */,
 				2088379C1D192213004C7B5D /* JGHApplyListView.m in Sources */,
 				F5838D901D4B271200A7FFC6 /* JGTeamHisScoreViewController.m in Sources */,
@@ -9064,6 +9159,7 @@
 				20301A0B1E0E4293005568E2 /* ZXQRCodeMatrixUtil.m in Sources */,
 				1862C1491E8BB8A2004E4537 /* NSDataEx.m in Sources */,
 				20591C9F1D23A64D003271EC /* JGHTradRecordImageCell.m in Sources */,
+				1854B9211E961B14009792A3 /* VipCardGoodsListModel.m in Sources */,
 				20591C821D226126003271EC /* JGHWithdrawMoneyCell.m in Sources */,
 				203019521E0E4292005568E2 /* ZXISBNResultParser.m in Sources */,
 				F53A056E1D518F32009DD489 /* JGHSimpleAndResultsCell.m in Sources */,
@@ -9250,6 +9346,7 @@
 				203019A61E0E4292005568E2 /* ZXGenericMultipleBarcodeReader.m in Sources */,
 				F53A05361D5079E0009DD489 /* JGTeamHIsScoreTableViewCell.m in Sources */,
 				209B93931D6D858900A5BE10 /* JGHApplyCatoryPriceView.m in Sources */,
+				18DF0AD61E9B7082006EB7FD /* VipCardOrderListModel.m in Sources */,
 				36BFFFC91BC770B1005B3CE2 /* ComDetailViewController.m in Sources */,
 				3613B6511BE3458500C96CD1 /* MyFoodHeadTableViewCell.m in Sources */,
 				36BF01611BC77611005B3CE2 /* AreaChooseViewController.m in Sources */,
@@ -9447,9 +9544,11 @@
 				207F70581DC1952E00667E26 /* JGHNavListView.m in Sources */,
 				F5AEF6EA1D408F3F009A8C34 /* JGDNotActivityHisDetailViewController.m in Sources */,
 				20BEF3C01E29F7C500E9AED7 /* JGHActivityInfoCell.m in Sources */,
+				18DF0AD91E9B70B9006EB7FD /* VipCardOrderListTableViewCell.m in Sources */,
 				20301A731E1269EB005568E2 /* UIView+Frame.m in Sources */,
 				203019E11E0E4293005568E2 /* ZXPDF417BarcodeMetadata.m in Sources */,
 				203019CB1E0E4293005568E2 /* ZXEAN13Reader.m in Sources */,
+				18274AC81E9607380065117E /* VipCardGoodsListViewController.m in Sources */,
 				2016A2EC1E6D39AA0085EFFC /* JGHIndexSystemMessageCell.m in Sources */,
 				203019BA1E0E4292005568E2 /* ZXBitArrayBuilder.m in Sources */,
 				F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */,
@@ -9520,6 +9619,7 @@
 				200CE7151E52A5CC00055A85 /* JGHChancelTableViewCell.m in Sources */,
 				1827B3D41E711AD70049AC26 /* VipCardHeaderCollectionReusableView.m in Sources */,
 				20D564D51DE803A1005535A6 /* JGHUserModel.m in Sources */,
+				1854B91E1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.m in Sources */,
 				36BFFF8A1BC76D09005B3CE2 /* FDCalendar.m in Sources */,
 				20F7D4511D88E7FC00302406 /* FCUUID.m in Sources */,
 				82266D681D4EDFD1001A4F9D /* JGLScoreRankTableViewCell.m in Sources */,

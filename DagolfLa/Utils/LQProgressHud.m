@@ -43,7 +43,7 @@
 }
 
 + (void)showInfoMsg:(NSString *)text {
-    
+
     LQProgressHud *HUD = [LQProgressHud sharedHUD];
     [HUD showAnimated:YES];//[hud show:YES];
     HUD.label.text = text;//[hud setLabelText:text];

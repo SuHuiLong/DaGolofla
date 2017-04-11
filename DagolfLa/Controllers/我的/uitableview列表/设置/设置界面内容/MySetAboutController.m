@@ -58,9 +58,8 @@
     self.webView.delegate=self;
     
     [self.view addSubview:self.webView];
-    
-    NSString* versionKey = (NSString*)kCFBundleVersionKey;
-    NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
+        
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://res.dagolfla.com/h5/aboutUs/index.html?version=%@", version]];
     

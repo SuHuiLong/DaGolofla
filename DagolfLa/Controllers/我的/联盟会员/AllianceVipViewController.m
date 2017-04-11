@@ -15,8 +15,9 @@
 
 #import "CardHistoryTableViewCell.h"
 #import "CardHIstoryModel.h"
-
 #import "UseMallViewController.h"
+#import "VipCardGoodsListViewController.h"
+#import "UILabel+YBAttributeTextTapAction.h"
 @interface AllianceVipViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDataSource,UITableViewDelegate>
 //背景界面
 @property(nonatomic,strong)UIScrollView *baseScrollView;
@@ -137,7 +138,7 @@
 -(void)createColletionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize =CGSizeMake(screenWidth, kHvertical(214));
-    _mainCollectionView = [[UICollectionView alloc] initWithFrame:self.vipCardView.bounds collectionViewLayout:layout];
+    _mainCollectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
     _mainCollectionView.backgroundColor = RGBA(238, 238, 238, 1);
     [_mainCollectionView registerClass:[VipCardCollectionViewCell class] forCellWithReuseIdentifier:@"VipCardCollectionViewCellId"];
     [_mainCollectionView registerClass:[VipCardHeaderCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"VipCardCollectionViewHeaderId"];
@@ -304,14 +305,17 @@
     //获取被添加数据
     [self addUnaddCard];
 }
+//跳转至联盟卡商城
+-(void)clickToGoodsList{
+    VipCardGoodsListViewController *vc = [[VipCardGoodsListViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 
 #pragma mark - MJRefresh
 //卡片列表刷新
 -(void)createCardRefresh{
     _mainCollectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRefreshing)];
-//    _mainCollectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(collectionFooterRefreshing)];
-//    [_mainCollectionView.mj_header beginRefreshing];
 }
 //历史记录刷新
 -(void)createHistoryRefresh{
@@ -405,12 +409,12 @@
 // 设置section头视图的参考大小，
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     NSInteger totalCardNum = self.dataArray.count + self.noCanUseArray.count;
-    if (section == 1) {
-        return CGSizeMake(screenWidth, kHvertical(80));
-    } else if(totalCardNum==0) {
-        return CGSizeMake(0, screenHeight);
-    }
-    return CGSizeMake(0, 0);
+//    if (section == 1) {
+//        return CGSizeMake(screenWidth, kHvertical(80));
+//    } else if(totalCardNum==0) {
+        return CGSizeMake(screenWidth, screenHeight);
+//    }
+//    return CGSizeMake(0, 0);
 }
 // 设置collectionView的头
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
@@ -418,30 +422,34 @@
                                  atIndexPath:(NSIndexPath *)indexPath {
     
     VipCardHeaderCollectionReusableView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"VipCardCollectionViewHeaderId"forIndexPath:indexPath];
+    headView.userInteractionEnabled = TRUE;
     headView.alertImageView.hidden = TRUE;
     headView.descLabel.hidden = TRUE;
     headView.addNowBtn.hidden = TRUE;
     headView.line.hidden = TRUE;
-
+    headView.nocanDescLabel.hidden = TRUE;
+    headView.goodsListButton.hidden = TRUE;
     NSInteger totalCardNum = self.dataArray.count + self.noCanUseArray.count;
+
+    //没有未添加卡片文字描述
+    NSString *noneCard = @"您还未添加任何君高高尔夫联盟会员卡，点击右上角『+』，添加您的联盟会员卡。添加会员卡后，就能在APP中享受联盟会员价预订球场的权益。";
+    //用户手机号上有未添加的卡片
+    NSString *unAddCardNum = [NSString stringWithFormat:@"%ld",(long)_unAddCardNum];
+    NSString *mobile = [UserDefaults objectForKey:@"mobile"];
+    NSString *haveCard = [NSString stringWithFormat:@"您的手机号%@下有 %@ 张联盟卡可绑定。绑定后可通过君高高尔夫APP，以联盟价预订联盟球场，并可随时查看联盟卡使用情况。被绑定的联盟卡可随时解绑。",mobile,unAddCardNum];
+    
     if (indexPath.section==0&&totalCardNum==0) {
-        headView.nocanDescLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) Title:@""];
+        headView.goodsListButton.hidden = FALSE;
         //没卡提示图片
         headView.alertImageView.hidden = FALSE;
-        //文字描述
-        NSString *noneCard = @"您还未添加任何君高高尔夫联盟会员卡，点击右上角『+』，添加您的联盟会员卡。添加会员卡后，就能在APP中享受联盟会员价预订球场的权益。";
         headView.descLabel.hidden = FALSE;
         headView.descLabel.text = noneCard;
         
         if (_unAddCardNum>0) {
             headView.alertImageView.hidden = TRUE;
-            
-            //用户手机号上有未添加的卡片
-            NSString *unAddCardNum = [NSString stringWithFormat:@"%ld",(long)_unAddCardNum];
-            NSString *mobile = [UserDefaults objectForKey:@"mobile"];
-            NSString *haveCard = [NSString stringWithFormat:@"您的手机号%@下有 %@ 张联盟卡可绑定。绑定后可通过君高高尔夫APP，以联盟价预订联盟球场，并可随时查看联盟卡使用情况。被绑定的联盟卡可随时解绑。",mobile,unAddCardNum];
             headView.descLabel.y = kHvertical(105);
             headView.descLabel.text = haveCard;
+            unAddCardNum = @"11";
             headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
             //立即添加按钮
             headView.addNowBtn.hidden = FALSE;
@@ -451,10 +459,31 @@
         
     }else if(indexPath.section == 1){
         headView.line.hidden = FALSE;
-        headView.nocanDescLabel = [Factory createLabelWithFrame:CGRectMake((screenWidth - kWvertical(150))/2, kHvertical(30), kWvertical(150), kHvertical(20)) textColor:RGBA(160, 160, 160, 1) fontSize:kHorizontal(13) Title:@"以下为不可用卡片"];
-        headView.nocanDescLabel.textAlignment = NSTextAlignmentCenter;
-
+        headView.nocanDescLabel.hidden = FALSE;
     }
+    if (indexPath.section==_mainCollectionView.numberOfSections-1) {
+        headView.alertImageView.hidden = TRUE;
+        headView.descLabel.hidden = FALSE;
+        headView.goodsListButton.hidden = FALSE;
+        haveCard = [NSString stringWithFormat:@"%@ 立即绑定",haveCard];
+        headView.descLabel.y = kHvertical(0);
+        headView.descLabel.text = haveCard;
+        headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
+        NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
+        [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
+        headView.descLabel.attributedText = AttributedStr;
+
+        headView.descLabel.enabledTapEffect = NO;
+        [headView.descLabel yb_addAttributeTapActionWithStrings:@[@"立即绑定"] tapClicked:^(NSString *string, NSRange range,NSInteger index) {
+        
+        }];
+
+        [headView.descLabel sizeToFit];
+        headView.goodsListButton.y = headView.descLabel.y_height+kHvertical(55);
+    }
+    [headView.goodsListButton addTarget:self action:@selector(clickToGoodsList) forControlEvents:UIControlEventTouchUpInside];
+
+    
     return headView;
 }
 

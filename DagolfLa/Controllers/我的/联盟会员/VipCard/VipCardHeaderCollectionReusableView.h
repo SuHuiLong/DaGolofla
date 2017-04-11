@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface VipCardHeaderCollectionReusableView : UICollectionReusableView
 
 //提示图片
@@ -20,4 +21,8 @@
 @property(nonatomic, strong)UIView *line;
 //不可用卡片的提示
 @property(nonatomic, strong)UILabel *nocanDescLabel;
+/**
+ 跳转联盟卡商城按钮
+ */
+@property(nonatomic, strong)UIButton *goodsListButton;
 @end
