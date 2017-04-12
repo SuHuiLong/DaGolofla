@@ -30,9 +30,13 @@
  */
 @property(nonatomic, strong)UILabel *singlePriceLabel;
 /**
- 商品数量
+ 商品数量1
  */
-@property(nonatomic, strong)UILabel *cardNumLabel;
+@property(nonatomic, strong)UILabel *cardNumLabel1;
+/**
+ 商品数量2
+ */
+@property(nonatomic, strong)UILabel *cardNumLabel2;
 /**
  总计价格
  */
