@@ -9,6 +9,9 @@
 #import "VipCardConfirmOrderViewController.h"
 #import "VipCardConfirmOrderModel.h"
 #import "VipCardOrderDetailViewController.h"
+
+#import "JGDVipInfoFillViewController.h"
+
 @interface VipCardConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 /**
@@ -367,7 +370,11 @@
  编辑信息
  */
 -(void)editUserInformaion{
-
+    
+    JGDVipInfoFillViewController *infoVipVC = [[JGDVipInfoFillViewController alloc] init];
+    infoVipVC.inputModel = self.inputModel;
+    [self.navigationController pushViewController:infoVipVC animated:YES];
+    
 }
 /**
  提交订单

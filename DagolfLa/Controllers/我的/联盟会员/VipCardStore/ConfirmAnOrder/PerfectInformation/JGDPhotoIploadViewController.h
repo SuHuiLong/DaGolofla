@@ -12,4 +12,5 @@
 
 @property (nonatomic, strong) NSMutableDictionary *infoDic;
 
+
 @end

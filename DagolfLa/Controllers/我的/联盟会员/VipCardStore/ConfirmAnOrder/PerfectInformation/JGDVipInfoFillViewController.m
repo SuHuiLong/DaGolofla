@@ -12,12 +12,14 @@
 #import "JGDPickerView.h"
 
 #import "JGDPhotoIploadViewController.h"
+#import "VipCardConfirmOrderViewController.h"
 
 @interface JGDVipInfoFillViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) UITableView *infoTableView;
 @property (nonatomic, strong) UIButton *nextButton;
 @property (nonatomic, strong) NSArray *placeholderArray;
+@property (nonatomic, strong) NSArray *inputArray;
 
 @property (nonatomic, assign) NSInteger timeNumber;
 @property (nonatomic, strong) NSTimer *timer;
@@ -26,6 +28,16 @@
 @end
 
 @implementation JGDVipInfoFillViewController
+
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:(UIBarButtonItemStyleDone) target:self action:@selector(poptoVipDetail)];
+    self.navigationItem.leftBarButtonItem = leftBar;
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,7 +62,11 @@
     [self.nextButton addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.nextButton];
     self.placeholderArray = @[@[@"请输入会员姓名"], @[@"请选择会员性别"], @[@"请选择证件类型", @"请输入证件号"], @[@"请输入会员手机号", @"请输入验证码"]];
-    
+    if (self.inputModel.userKey) {
+        self.inputArray = @[@[self.inputModel.userName], @[self.inputModel.sex ? @"男" : @"女"], @[@"身份证", self.inputModel.certNumber], @[self.inputModel.mobile, @""]];
+    }else{
+        self.inputArray = @[@[@""], @[@""], @[@"身份证", @""], @[@"", @""]];
+    }
     self.timeNumber = 60;
 
     // Do any additional setup after loading the view.
@@ -78,8 +94,7 @@
 
         }
     }
-    
-    
+
     NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
     [dataDic setObject:[infoDic objectForKey:@"mobile"] forKey:@"telphone"];
     [dataDic setObject:[infoDic objectForKey:@"checkCode"] forKey:@"checkCode"];
@@ -92,11 +107,18 @@
         commitBtn.userInteractionEnabled = YES;
         
     } completionBlock:^(id data) {
+        
         [[ShowHUD showHUD]hideAnimationFromView:self.view];
         commitBtn.userInteractionEnabled = YES;
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
             JGDPhotoIploadViewController * photoVC = [[JGDPhotoIploadViewController alloc] init];
             photoVC.infoDic = infoDic;
+            if (self.inputModel.userKey) {
+                [photoVC.infoDic setObject:self.inputModel.picHeadURL forKey:@"picHeadURL"];
+                [photoVC.infoDic setObject:self.inputModel.picCertURLs forKey:@"picCertURLs"];
+            }
             [self.navigationController pushViewController:photoVC animated:YES];
             
         }else{
@@ -107,7 +129,6 @@
         }
     }];
     
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -124,6 +145,7 @@
         
         JGDInfoTextFieldTableViewCell *icell = [tableView dequeueReusableCellWithIdentifier:@"infoTextField"];
         icell.infoTextField.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
+        icell.infoTextField.text = self.inputArray[indexPath.section][indexPath.row];
         icell.infoTextField.delegate = self;
         if (indexPath.section == 1 && indexPath.row == 0) {
             
@@ -300,10 +322,26 @@
     return 0.00000001;
 }
 
+- (void)poptoVipDetail{
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[VipCardConfirmOrderViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
+}
+
+//- (NSMutableArray *)inputArray{
+//    if (!_inputArray) {
+//        _inputArray = [[NSMutableArray alloc] init];
+//    }
+//    return _inputArray;
+//}
+
 -(void)dealloc
 {
     _timer = nil;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

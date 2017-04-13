@@ -7,7 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "VipCardConfirmOrderModel.h"
 
 @interface JGDVipInfoFillViewController : ViewController
+
+@property (nonatomic, strong)VipCardConfirmOrderModel *inputModel;
 
 @end
