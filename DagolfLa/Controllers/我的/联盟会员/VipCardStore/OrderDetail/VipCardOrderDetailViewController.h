@@ -1,5 +1,5 @@
 //
-//  VipCardOrderListViewController.h
+//  VipCardOrderDetailViewController.h
 //  DagolfLa
 //
 //  Created by SHL on 2017/4/12.
@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface VipCardOrderListViewController : BaseViewController
+@interface VipCardOrderDetailViewController : BaseViewController
 
 @end

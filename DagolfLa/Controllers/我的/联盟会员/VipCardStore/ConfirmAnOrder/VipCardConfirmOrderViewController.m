@@ -8,6 +8,7 @@
 
 #import "VipCardConfirmOrderViewController.h"
 #import "VipCardConfirmOrderModel.h"
+#import "VipCardOrderDetailViewController.h"
 @interface VipCardConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 /**
@@ -96,31 +97,31 @@
     UIView *line = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, kHvertical(50), screenWidth, 1)];
     [backView addSubview:line];
     //用户头像
-    NSURL *userImageUrl = [NSURL URLWithString:@""];
+    NSURL *userImageUrl = [NSURL URLWithString:self.inputModel.picHeadURL];
     UIImageView *headImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(71), kHvertical(61), kHvertical(61)) Image:nil];
     [headImageView sd_setImageWithURL:userImageUrl placeholderImage:nil];
     headImageView.backgroundColor = RandomColor;
     [backView addSubview:headImageView];
     //用户名
-    UILabel *nameLabel = [Factory createLabelWithFrame:CGRectMake(headImageView.x_width + kWvertical(11), kHvertical(70), 0, kHvertical(22)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:@"行走的约翰"];
+    UILabel *nameLabel = [Factory createLabelWithFrame:CGRectMake(headImageView.x_width + kWvertical(11), kHvertical(70), 0, kHvertical(22)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:self.inputModel.userName];
     [nameLabel sizeToFitSelf];
     [backView addSubview:nameLabel];
     //用户性别
-    NSString *sex = @"男";
+    NSInteger sex = self.inputModel.sex;
     NSString *sexImageName = @"xb_n";
-    if ([sex isEqualToString:@"男"]) {
+    if (sex == 1) {
         sexImageName = @"xb_nn";
     }
     UIImageView *sexImageView = [Factory createImageViewWithFrame:CGRectMake(nameLabel.x_width+kWvertical(11), kHvertical(74), 13,13) Image:[UIImage imageNamed:sexImageName]];
     [backView addSubview:sexImageView];
     //用户身份信息
-    NSString *documentsStr = @"326589458756235987";
+    NSString *documentsStr = self.inputModel.certNumber;
     UIImageView *documentsIcon = [Factory createImageViewWithFrame:CGRectMake(nameLabel.x, kHvertical(98), kWvertical(17), kHvertical(12)) Image:[UIImage imageNamed:@"icn_allianceDocuments"]];
     [backView addSubview:documentsIcon];
     UILabel *documentsLable = [Factory createLabelWithFrame:CGRectMake(documentsIcon.x_width + kWvertical(5), kHvertical(99), screenWidth-documentsIcon.x_width-kWvertical(15), kHvertical(10)) textColor:RGB(160,160,160) fontSize:kHorizontal(14) Title:documentsStr];
     [backView addSubview:documentsLable];
     //用户手机号
-    NSString *phoneStr = @"13625894568";
+    NSString *phoneStr = self.inputModel.mobile;
     UIImageView *phoneIcon = [Factory createImageViewWithFrame:CGRectMake(documentsIcon.x, kHvertical(120), kHvertical(13), kHvertical(13)) Image:[UIImage imageNamed:@"icn_alliancePhone"]];
     [backView addSubview:phoneIcon];
     UILabel *phoneLabel = [Factory createLabelWithFrame:CGRectMake(documentsLable.x, kHvertical(120), documentsLable.width, documentsLable.height) textColor:RGB(160, 160, 160) fontSize:kHorizontal(14) Title:phoneStr];
@@ -282,10 +283,36 @@
     } completionBlock:^(id data) {
         BOOL Success = [[data objectForKey:@"packSuccess"] boolValue];
         if (Success) {
+            NSDictionary *luserDict = [data objectForKey:@"luser"];
+            VipCardConfirmOrderModel *model = [VipCardConfirmOrderModel modelWithDictionary:luserDict];
+            self.inputModel = model;
+            [self.mainTableView reloadData];
         }
     }];
-    
-
+}
+/**
+ 提交信息
+ */
+-(void)createOrder{
+    NSString *cardId = self.dataModel.cardId;
+    NSString *cardNumStr = [NSString stringWithFormat:@"%ld",self.dataModel.cardNum];
+    NSDictionary *dict = @{
+                           @"userKey":DEFAULF_USERID,
+                           @"cardKey":cardId,
+                           @"luserKey":@"1",
+                           @"number":cardNumStr
+                           };
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"league/doCreateSystemsCardOrder" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        BOOL parkSucess = [[data objectForKey:@"packSuccess"] boolValue];
+        if (parkSucess) {
+            VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }];
+    VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Action
@@ -337,6 +364,12 @@
 
 }
 /**
+ 编辑信息
+ */
+-(void)editUserInformaion{
+
+}
+/**
  提交订单
  
  @param btn 红色可以提交，灰色无反应
@@ -345,7 +378,7 @@
     if (btn.selected) {
         return;
     }
-    
+    [self createOrder];
 }
 
 #pragma mark - UITableViewDelegate&DataSource
@@ -374,7 +407,14 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *headerView = [UIView new];
     if (section == 0) {
+        
         headerView = [self userInformationView];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
+            [self editUserInformaion];
+        }];
+        headerView.userInteractionEnabled = true;
+        [headerView addGestureRecognizer:tap];
+        
     } else if(section == 1){
         headerView = [self cardInformationView];
     }else{
