@@ -19,7 +19,7 @@
 /**
  图片urlStr
  */
-@property(nonatomic,copy)NSString *picURL;
+@property(nonatomic,copy)NSString *bigPicURL;
 
 /**
  会员卡名

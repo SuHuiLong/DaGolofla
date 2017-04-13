@@ -25,4 +25,5 @@
  2：权益协议
  */
 @property(nonatomic, assign)NSInteger status;
+
 @end

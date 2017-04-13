@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		180464861E9E31330079CAD1 /* VipCardOrderDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 180464851E9E31330079CAD1 /* VipCardOrderDetailTableViewCell.m */; };
 		180464891E9F06C00079CAD1 /* VipCardOrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 180464881E9F06C00079CAD1 /* VipCardOrderDetailModel.m */; };
+		1804648C1E9F5F080079CAD1 /* VipCardOrderDetailFormatData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804648B1E9F5F080079CAD1 /* VipCardOrderDetailFormatData.m */; };
 		1811C8961E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811C8931E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.m */; };
 		1811C8971E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811C8951E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.m */; };
 		1811C8991E8252D4003CA594 /* MakePhotoTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1811C8981E8252D4003CA594 /* MakePhotoTextTableViewCell.m */; };
@@ -1179,6 +1180,8 @@
 		180464851E9E31330079CAD1 /* VipCardOrderDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardOrderDetailTableViewCell.m; sourceTree = "<group>"; };
 		180464871E9F06C00079CAD1 /* VipCardOrderDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardOrderDetailModel.h; sourceTree = "<group>"; };
 		180464881E9F06C00079CAD1 /* VipCardOrderDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardOrderDetailModel.m; sourceTree = "<group>"; };
+		1804648A1E9F5F080079CAD1 /* VipCardOrderDetailFormatData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardOrderDetailFormatData.h; sourceTree = "<group>"; };
+		1804648B1E9F5F080079CAD1 /* VipCardOrderDetailFormatData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardOrderDetailFormatData.m; sourceTree = "<group>"; };
 		1811C8921E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePhotoTextSelectFromAllViewController.h; sourceTree = "<group>"; };
 		1811C8931E8251F8003CA594 /* MakePhotoTextSelectFromAllViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePhotoTextSelectFromAllViewController.m; sourceTree = "<group>"; };
 		1811C8941E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePhotoTextSelectHeaderViewController.h; sourceTree = "<group>"; };
@@ -3913,6 +3916,8 @@
 				180464851E9E31330079CAD1 /* VipCardOrderDetailTableViewCell.m */,
 				180464871E9F06C00079CAD1 /* VipCardOrderDetailModel.h */,
 				180464881E9F06C00079CAD1 /* VipCardOrderDetailModel.m */,
+				1804648A1E9F5F080079CAD1 /* VipCardOrderDetailFormatData.h */,
+				1804648B1E9F5F080079CAD1 /* VipCardOrderDetailFormatData.m */,
 			);
 			path = OrderDetail;
 			sourceTree = "<group>";
@@ -9320,6 +9325,7 @@
 				203019F61E0E4293005568E2 /* ZXPDF417Writer.m in Sources */,
 				8222F49F1D7D771D00627549 /* JGLNewFuncTionViewController.m in Sources */,
 				2030197C1E0E4292005568E2 /* ZXHybridBinarizer.m in Sources */,
+				1804648C1E9F5F080079CAD1 /* VipCardOrderDetailFormatData.m in Sources */,
 				2066E8811D5D64E900A3A2B8 /* JGHCabbieRewardViewController.m in Sources */,
 				F5EB44701C9957A7008ACD73 /* pinyin.m in Sources */,
 				F5843DF91CFCF5EA00547812 /* JGSelfSetViewController.m in Sources */,

@@ -92,7 +92,7 @@
  */
 -(void)createHeader{
     //球场图片
-    NSURL *picUrl = [NSURL URLWithString:self.dataModel.picURL];
+    NSURL *picUrl = [NSURL URLWithString:self.dataModel.bigPicURL];
     self.parkImageView = [Factory createImageViewWithFrame:CGRectMake(0, 0, screenWidth, kHvertical(210)) Image:nil];
     [self.parkImageView sd_setImageWithURL:picUrl placeholderImage:nil];
     [self.mainBackView addSubview:self.parkImageView];

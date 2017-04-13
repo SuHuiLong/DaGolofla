@@ -40,7 +40,7 @@
 }
 //配置数据
 -(void)configModel:(VipCardGoodsListModel *)model{
-    NSString *picUrl = model.picURL;//卡片图片
+    NSString *picUrl = model.bigPicURL;//卡片图片
     NSString *nameStr = model.name;//卡名
     NSString *price = model.price;//卡价格
     NSString *expiry = [NSString stringWithFormat:@"%ld",model.expiry];//有效年数

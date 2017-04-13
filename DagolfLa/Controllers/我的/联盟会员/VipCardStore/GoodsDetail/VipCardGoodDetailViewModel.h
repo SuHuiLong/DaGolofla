@@ -17,7 +17,7 @@
 /**
  图片
  */
-@property(nonatomic, copy)NSString *picURL;
+@property(nonatomic, copy)NSString *bigPicURL;
 /**
  卡名
  */

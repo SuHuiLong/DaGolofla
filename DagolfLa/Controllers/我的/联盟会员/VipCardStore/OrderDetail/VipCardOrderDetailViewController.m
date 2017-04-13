@@ -9,7 +9,7 @@
 #import "VipCardOrderDetailViewController.h"
 #import "VipCardOrderDetailTableViewCell.h"
 #import "VipCardOrderDetailModel.h"
-
+#import "VipCardOrderDetailFormatData.h"
 @interface VipCardOrderDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 /**
  主列表视图
@@ -26,26 +26,6 @@
 -(NSMutableArray *)dataArray{
     if (!_dataArray) {
         _dataArray = [[NSMutableArray alloc] init];
-        NSArray *titleArray = @[@[@"订单号",@"下单时间",@"销售人员",@"支付费用",@"订单状态"],@[@"会籍名称",@"会籍权益",@""],@[@"用户名",@"性别",@"证件号",@"预留号码"]];
-        NSArray *contentArray = @[@[@"201612121565984",@"2016.12.20 16:15",@"周周",@"￥2400",@"未付款"],@[@"君高高尔夫",@"服务年限1年，28次联盟价击球权益，免费使用果岭、球童、球车、衣柜。",@"权益细则请查阅《君高高尔夫联盟会籍服务协议》"],@[@"李晓晓",@"女",@"325689856256235874",@"13654897265"]];
-        for (int i = 0; i<titleArray.count; i++) {
-            NSMutableArray *mArray = [NSMutableArray array];
-            NSArray *titleIndexArray = titleArray[i];
-            NSArray *contentIndexArray = contentArray[i];
-            for (int j = 0; j < titleIndexArray.count; j++) {
-                VipCardOrderDetailModel *model = [[VipCardOrderDetailModel alloc] init];
-                model.title = titleIndexArray[j];
-                model.content = contentIndexArray[j];
-                model.status = 0;
-                if (i==1&&j==0) {
-                    model.status = 1;
-                }else if (i==1&&j==2){
-                    model.status = 2;
-                }
-                [mArray addObject:model];
-            }
-            [_dataArray addObject:mArray];
-        }
     }
     return _dataArray;
 }
@@ -58,7 +38,11 @@
 -(void)createView{
     [self createNavagationBar];
     [self createTableView];
+    [self createPaymentBtn];
 }
+/**
+ 上导航
+ */
 -(void)createNavagationBar{
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     self.title = @"订单详情";
@@ -75,12 +59,46 @@
     mainTableView.dataSource = self;
     mainTableView.delegate = self;
     mainTableView.backgroundColor = RGB(238,238,238);
-    [mainTableView dequeueReusableCellWithIdentifier:@"VipCardOrderDetailTableViewCellId"];
+    [mainTableView registerClass:[VipCardOrderDetailTableViewCell class] forCellReuseIdentifier:@"VipCardOrderDetailTableViewCellId" ];
     [mainTableView setExtraCellLineHidden];
     mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:mainTableView];
     _mainTableView = mainTableView;
 }
+/**
+ 立即支付
+ */
+-(void)createPaymentBtn{
+    UIButton *paymentBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(8), screenHeight - kHvertical(73)-64, screenWidth-kWvertical(16), kHvertical(46)) titleFont:kHorizontal(19) textColor:RGB(255,255,255) backgroundColor:RGB(252,90,1) target:self selector:@selector(paymentBtnClick) Title:@"立即支付"];
+    paymentBtn.layer.cornerRadius = kWvertical(5);
+    [self.view addSubview:paymentBtn];
+}
+
+#pragma mark - initData
+-(void)initViewData{
+    [self initDetailData];
+}
+/**
+ 获取订单详情数据
+ */
+-(void)initDetailData{
+    NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"orderKey=%@dagolfla.com",_orderKey]];
+    NSDictionary *dict = @{
+                           @"orderKey":_orderKey,
+                           @"md5":md5Value,
+                           };
+    [[JsonHttp jsonHttp] httpRequest:@"league/getSystemCardOrderInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    } completionBlock:^(id data) {
+        BOOL Success = [[data objectForKey:@"packSuccess"] boolValue];
+        if (Success) {
+            self.dataArray = [NSMutableArray array];
+            self.dataArray = [VipCardOrderDetailFormatData formatData:data];
+            [_mainTableView reloadData];
+        }
+    }];
+
+}
+
 #pragma mark - Action
 /**
  咨询
@@ -88,6 +106,12 @@
 -(void)rightBtnClick{
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", Company400];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+}
+/**
+ 立即支付
+ */
+-(void)paymentBtnClick{
+    
 }
 
 #pragma mark - UITableViewDelegate&&DataSource
@@ -101,6 +125,9 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return kHvertical(66);
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return kHvertical(5);
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSArray *indexSectionArray = self.dataArray[indexPath.section];
@@ -116,6 +143,7 @@
 
     return contentSize.height;
 }
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     VipCardOrderDetailTableViewCell *cell = [[VipCardOrderDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"VipCardOrderDetailTableViewCellId"];
@@ -143,6 +171,10 @@
     return headerView;
 }
 
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *footerView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(5))];
+    return footerView;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

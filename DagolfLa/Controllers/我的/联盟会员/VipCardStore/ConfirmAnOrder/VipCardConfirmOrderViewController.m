@@ -154,7 +154,7 @@
 -(UIView *)cardInformationView{
     UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(211))];
     //卡片图片
-    NSURL *cardUrl = [NSURL URLWithString:self.dataModel.picURL];
+    NSURL *cardUrl = [NSURL URLWithString:self.dataModel.bigPicURL];
     UIImageView *cardImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(22), kWvertical(92), kHvertical(58)) Image:nil];
     [cardImageView sd_setImageWithURL:cardUrl placeholderImage:nil];
     [backView addSubview:cardImageView];
@@ -261,7 +261,7 @@
     [backView addSubview:agreementBtn];
     //提交订单按钮
     UIButton *sendBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(8), descLabel.y_height + kHvertical(85), screenWidth - kWvertical(16), kHvertical(46)) titleFont:kHorizontal(19) textColor:RGB(255,255,255) backgroundColor:RGB(252,90,1) target:self selector:@selector(sendBtnClick:) Title:@"提交订单"];
-    if (isSelect) {
+    if (isSelect||!_inputModel.userKey) {
         sendBtn.backgroundColor = LightGrayColor;
     }
     sendBtn.layer.cornerRadius = kHvertical(5);
@@ -270,7 +270,8 @@
 }
 
 #pragma mark - InitData
--(void)initViewData{
+//每次进入界面都会调用
+-(void)initViewWillApperData{
     [self initInformationData];
 }
 
@@ -299,26 +300,35 @@
 /**
  提交信息
  */
--(void)createOrder{
+-(void)createOrder:(UIButton *)btn{
+    btn.userInteractionEnabled = false;
+    [[ShowHUD  showHUD] showAnimationWithText:@"提交中..." FromView:self.view];
     NSString *cardId = self.dataModel.cardId;
     NSString *cardNumStr = [NSString stringWithFormat:@"%ld",self.dataModel.cardNum];
+    NSString *sellMobileStr = [[NSString alloc] init];
+    if (_inputModel.sellPhoneStr) {
+        sellMobileStr = _inputModel.sellPhoneStr;
+    }
     NSDictionary *dict = @{
                            @"userKey":DEFAULF_USERID,
-                           @"cardKey":cardId,
-                           @"luserKey":@"1",
-                           @"number":cardNumStr
+                           @"cardTypeKey":cardId,
+                           @"luserKey":_inputModel.timeKey,
+                           @"number":cardNumStr,
+                           @"sellMobile":sellMobileStr
                            };
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"league/doCreateSystemsCardOrder" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        btn.userInteractionEnabled = true;
     } completionBlock:^(id data) {
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+        btn.userInteractionEnabled = true;
         BOOL parkSucess = [[data objectForKey:@"packSuccess"] boolValue];
         if (parkSucess) {
             VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
+            vc.orderKey = [data objectForKey:@"orderKey"];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }];
-    VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Action
@@ -385,10 +395,10 @@
  @param btn 红色可以提交，灰色无反应
  */
 -(void)sendBtnClick:(UIButton *)btn{
-    if (btn.selected) {
+    if ([btn.backgroundColor isEqual:LightGrayColor]) {
         return;
     }
-    [self createOrder];
+    [self createOrder:btn];
 }
 
 #pragma mark - UITableViewDelegate&DataSource

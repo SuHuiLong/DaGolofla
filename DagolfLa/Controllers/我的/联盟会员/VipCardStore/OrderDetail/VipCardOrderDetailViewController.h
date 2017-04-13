@@ -10,4 +10,8 @@
 
 @interface VipCardOrderDetailViewController : BaseViewController
 
+/**
+ 订单key
+ */
+@property(nonatomic, copy)NSString *orderKey;
 @end

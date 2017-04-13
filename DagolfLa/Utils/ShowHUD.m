@@ -62,8 +62,10 @@ static ShowHUD *showHUD = nil;
 {
     _HUD = [MBProgressHUD showHUDAddedTo:view animated:YES];
     _HUD.mode = MBProgressHUDModeIndeterminate;
+    _HUD.color = BlackColor;
+    _HUD.activityIndicatorColor = WhiteColor;
     _HUD.label.text = text;
-    
+    _HUD.label.textColor = WhiteColor;
     _HUD.delegate = self;//添加代理
     
 }

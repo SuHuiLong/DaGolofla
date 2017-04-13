@@ -39,6 +39,10 @@
  */
 @property(nonatomic,copy)NSString *mobile;
 
+/**
+ 用户timeKey
+ */
+@property(nonatomic,copy)NSString *timeKey;
 
 
 /**
