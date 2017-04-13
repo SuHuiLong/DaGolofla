@@ -974,6 +974,7 @@
 		F50B7FB71CE5DBB70065069D /* JGTeamMainhallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50B7FB61CE5DBB70065069D /* JGTeamMainhallViewController.m */; };
 		F50EFF331CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F50EFF321CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m */; };
 		F50EFF361CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50EFF351CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m */; };
+		F5134C1E1E9DB710002AD551 /* JGDPhotoIploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5134C1D1E9DB710002AD551 /* JGDPhotoIploadViewController.m */; };
 		F519442D1DFE4A8E0009653B /* mss_browseLoading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51944121DFE4A8E0009653B /* mss_browseLoading@2x.png */; };
 		F519442E1DFE4A8E0009653B /* mss_browseLoading@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F51944131DFE4A8E0009653B /* mss_browseLoading@3x.png */; };
 		F519442F1DFE4A8E0009653B /* MSSBrowseActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = F51944151DFE4A8E0009653B /* MSSBrowseActionSheet.m */; };
@@ -999,6 +1000,9 @@
 		F51E5EF71D81306800AE254E /* JGDPlayerScoreCardDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F51E5EF61D81306800AE254E /* JGDPlayerScoreCardDetailViewController.m */; };
 		F51E5EFA1D81309200AE254E /* JGDPlayerNotActScoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F51E5EF91D81309200AE254E /* JGDPlayerNotActScoreDetailViewController.m */; };
 		F51E5EFD1D8130AA00AE254E /* JGDPlayerNotActScoreCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F51E5EFC1D8130AA00AE254E /* JGDPlayerNotActScoreCardViewController.m */; };
+		F5247D681E9C744D00EA36F2 /* JGDVipInfoFillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5247D671E9C744D00EA36F2 /* JGDVipInfoFillViewController.m */; };
+		F5247D6B1E9C7AAA00EA36F2 /* JGDInfoTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5247D6A1E9C7AAA00EA36F2 /* JGDInfoTextFieldTableViewCell.m */; };
+		F5247D6E1E9C883300EA36F2 /* JGDTakeCodeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F5247D6D1E9C883300EA36F2 /* JGDTakeCodeTableViewCell.m */; };
 		F526CEFE1E78D9E700E98024 /* JGDDoubleTextfiledTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F526CEFD1E78D9E700E98024 /* JGDDoubleTextfiledTableViewCell.m */; };
 		F526CF041E7A7C5800E98024 /* JGDOpenContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F526CF031E7A7C5800E98024 /* JGDOpenContactViewController.m */; };
 		F526CF071E7B759D00E98024 /* JGDAddFromContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F526CF061E7B759D00E98024 /* JGDAddFromContactViewController.m */; };
@@ -3049,6 +3053,8 @@
 		F50EFF321CF9609100F7AB3F /* JGImageAndLabelAndLabelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGImageAndLabelAndLabelTableViewCell.m; sourceTree = "<group>"; };
 		F50EFF341CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGTeamDeatilWKwebViewController.h; sourceTree = "<group>"; };
 		F50EFF351CF9762C00F7AB3F /* JGTeamDeatilWKwebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGTeamDeatilWKwebViewController.m; sourceTree = "<group>"; };
+		F5134C1C1E9DB710002AD551 /* JGDPhotoIploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPhotoIploadViewController.h; sourceTree = "<group>"; };
+		F5134C1D1E9DB710002AD551 /* JGDPhotoIploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPhotoIploadViewController.m; sourceTree = "<group>"; };
 		F51944121DFE4A8E0009653B /* mss_browseLoading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mss_browseLoading@2x.png"; sourceTree = "<group>"; };
 		F51944131DFE4A8E0009653B /* mss_browseLoading@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mss_browseLoading@3x.png"; sourceTree = "<group>"; };
 		F51944141DFE4A8E0009653B /* MSSBrowseActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSBrowseActionSheet.h; sourceTree = "<group>"; };
@@ -3098,6 +3104,12 @@
 		F51E5EF91D81309200AE254E /* JGDPlayerNotActScoreDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPlayerNotActScoreDetailViewController.m; sourceTree = "<group>"; };
 		F51E5EFB1D8130AA00AE254E /* JGDPlayerNotActScoreCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDPlayerNotActScoreCardViewController.h; sourceTree = "<group>"; };
 		F51E5EFC1D8130AA00AE254E /* JGDPlayerNotActScoreCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDPlayerNotActScoreCardViewController.m; sourceTree = "<group>"; };
+		F5247D661E9C744D00EA36F2 /* JGDVipInfoFillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDVipInfoFillViewController.h; sourceTree = "<group>"; };
+		F5247D671E9C744D00EA36F2 /* JGDVipInfoFillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDVipInfoFillViewController.m; sourceTree = "<group>"; };
+		F5247D691E9C7AAA00EA36F2 /* JGDInfoTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDInfoTextFieldTableViewCell.h; sourceTree = "<group>"; };
+		F5247D6A1E9C7AAA00EA36F2 /* JGDInfoTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDInfoTextFieldTableViewCell.m; sourceTree = "<group>"; };
+		F5247D6C1E9C883300EA36F2 /* JGDTakeCodeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDTakeCodeTableViewCell.h; sourceTree = "<group>"; };
+		F5247D6D1E9C883300EA36F2 /* JGDTakeCodeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDTakeCodeTableViewCell.m; sourceTree = "<group>"; };
 		F526CEFC1E78D9E700E98024 /* JGDDoubleTextfiledTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDDoubleTextfiledTableViewCell.h; sourceTree = "<group>"; };
 		F526CEFD1E78D9E700E98024 /* JGDDoubleTextfiledTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDDoubleTextfiledTableViewCell.m; sourceTree = "<group>"; };
 		F526CF021E7A7C5800E98024 /* JGDOpenContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDOpenContactViewController.h; sourceTree = "<group>"; };
@@ -3527,6 +3539,14 @@
 		18274AC11E95EFB40065117E /* PerfectInformation */ = {
 			isa = PBXGroup;
 			children = (
+				F5247D661E9C744D00EA36F2 /* JGDVipInfoFillViewController.h */,
+				F5247D671E9C744D00EA36F2 /* JGDVipInfoFillViewController.m */,
+				F5247D691E9C7AAA00EA36F2 /* JGDInfoTextFieldTableViewCell.h */,
+				F5247D6A1E9C7AAA00EA36F2 /* JGDInfoTextFieldTableViewCell.m */,
+				F5247D6C1E9C883300EA36F2 /* JGDTakeCodeTableViewCell.h */,
+				F5247D6D1E9C883300EA36F2 /* JGDTakeCodeTableViewCell.m */,
+				F5134C1C1E9DB710002AD551 /* JGDPhotoIploadViewController.h */,
+				F5134C1D1E9DB710002AD551 /* JGDPhotoIploadViewController.m */,
 			);
 			path = PerfectInformation;
 			sourceTree = "<group>";
@@ -8863,6 +8883,7 @@
 				203019C81E0E4293005568E2 /* ZXCode39Reader.m in Sources */,
 				2030194C1E0E4292005568E2 /* ZXEmailDoCoMoResultParser.m in Sources */,
 				203019611E0E4292005568E2 /* ZXVCardResultParser.m in Sources */,
+				F5247D6E1E9C883300EA36F2 /* JGDTakeCodeTableViewCell.m in Sources */,
 				203019EF1E0E4293005568E2 /* ZXPDF417BarcodeRow.m in Sources */,
 				2030193A1E0E4292005568E2 /* ZXAztecCode.m in Sources */,
 				827BD52F1D214A42009AF9CA /* JGLAddBankCardViewController.m in Sources */,
@@ -9395,12 +9416,14 @@
 				20CA13FF1CEAF07100DA15B9 /* SXPickPhoto.m in Sources */,
 				20C1B8B01CE3241C00508ABC /* JGTableViewCell.m in Sources */,
 				2030196D1E0E4292005568E2 /* ZXGenericGF.m in Sources */,
+				F5247D681E9C744D00EA36F2 /* JGDVipInfoFillViewController.m in Sources */,
 				82D595E31CE42E7B00CD9587 /* JGMemHalfTableViewCell.m in Sources */,
 				207F70371DBF59CD00667E26 /* JGHShowActivityPhotoCell.m in Sources */,
 				200200FC1D61B2C900308C44 /* JGHStarScoreViewController.m in Sources */,
 				36B08F711C2D322600CD660E /* UITableViewRowAction+JZExtension.m in Sources */,
 				36BF008A1BC772EF005B3CE2 /* MySetHelpController.m in Sources */,
 				203019D61E0E4293005568E2 /* ZXUPCAReader.m in Sources */,
+				F5134C1E1E9DB710002AD551 /* JGDPhotoIploadViewController.m in Sources */,
 				1862C1461E8BB8A2004E4537 /* DataSigner.m in Sources */,
 				F50B7FB31CE59E050065069D /* JGTeamDetailStylelTwoViewController.m in Sources */,
 				1811C8971E8251F8003CA594 /* MakePhotoTextSelectHeaderViewController.m in Sources */,
@@ -9680,6 +9703,7 @@
 				20CA13961CE97C9C00DA15B9 /* JGHTeamMembersViewController.m in Sources */,
 				36BF00411BC771FB005B3CE2 /* ZanNumTableViewCell.m in Sources */,
 				82636E901D06D18100216DC1 /* JGTeamPhotoShowViewController.m in Sources */,
+				F5247D6B1E9C7AAA00EA36F2 /* JGDInfoTextFieldTableViewCell.m in Sources */,
 				2030194B1E0E4292005568E2 /* ZXEmailAddressResultParser.m in Sources */,
 				20D564BE1DE43B96005535A6 /* JGHSysInformCell.m in Sources */,
 				82ABF1B01D1BC0B3004493DB /* JGLActiveCancelMemViewController.m in Sources */,

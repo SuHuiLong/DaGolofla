@@ -165,6 +165,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define TYPE_USER_CERTIFICATION       @9   // 实名认证
 #define TYPE_FEEDBACK_HEAD       @12   // 用户头像
 #define TYPE_MATCH_HEAD       @15   // 赛事头像
+#define TYPE_CERT       @11   // 会员信息
 
 
 
