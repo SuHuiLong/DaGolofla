@@ -407,14 +407,15 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *headerView = [UIView new];
     if (section == 0) {
-        
-        headerView = [self userInformationView];
+        headerView = [self userInformationNpneView];
+        if (_inputModel.userKey) {
+            headerView = [self userInformationView];
+        }
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
             [self editUserInformaion];
         }];
         headerView.userInteractionEnabled = true;
         [headerView addGestureRecognizer:tap];
-        
     } else if(section == 1){
         headerView = [self cardInformationView];
     }else{
