@@ -116,12 +116,9 @@
         [dict setValue:_teamTimeKey forKey:@"teamKey"];
         [dict setValue:[NSNumber numberWithInteger:_page] forKey:@"off"];
         strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%@dagolfla.com",  DEFAULF_USERID,_teamTimeKey]];
-<<<<<<< HEAD
-=======
         if (self.activityKey) {
             [dict setObject:self.activityKey forKey:@"activityKey"];
         }
->>>>>>> origin/master
         request = @"team/getTeamMediaListAll";
     }else{
         [dict setValue:_albumKey forKey:@"albumKey"];

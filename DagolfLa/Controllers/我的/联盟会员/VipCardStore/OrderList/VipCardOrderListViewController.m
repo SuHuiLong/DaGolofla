@@ -36,9 +36,11 @@
  */
 -(void)createTableView{
     UITableView *mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
+    mainTableView.backgroundColor = RGB(238,238,238);
     mainTableView.dataSource = self;
     mainTableView.delegate = self;
     [mainTableView registerClass:[VipCardOrderListTableViewCell class] forCellReuseIdentifier:@"VipCardOrderListTableViewCellId"];
+    [mainTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:mainTableView];
     _mainTableView = mainTableView;
 }
@@ -54,11 +56,11 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     VipCardOrderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"VipCardOrderListTableViewCellId"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    VipCardOrderListModel *model = [[VipCardOrderListModel alloc] init];
+    [cell configModel:model];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
 }
 
 

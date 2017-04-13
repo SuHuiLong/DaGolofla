@@ -328,7 +328,6 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 改变图片位置 放大缩小
 - (void)updateImg {
     CGFloat yOffset = self.courtDetail.contentOffset.y;
-    NSLog(@"yOffset:%f",yOffset);
     CGFloat factor = ((ABS(yOffset)+ImageHeight)*screenWidth)/ImageHeight;
     if (yOffset < 0) {
         
@@ -342,7 +341,6 @@ static CGFloat ImageHeight  = 210.0;
         
         self.detailBtn.hidden = YES;
         self.navigationBtn.hidden = YES;
-        //        self.addressBtn.hidden = YES;
     } else {
         CGRect f = self.imgProfile.frame;
         f.origin.y = -yOffset;
@@ -355,7 +353,6 @@ static CGFloat ImageHeight  = 210.0;
         if (yOffset == 0.0) {
             self.detailBtn.hidden = NO;
             self.navigationBtn.hidden = NO;
-            //            self.addressBtn.hidden = NO;
         }
     }
 }

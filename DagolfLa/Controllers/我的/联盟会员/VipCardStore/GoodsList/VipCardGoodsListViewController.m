@@ -10,6 +10,8 @@
 #import "VipCardGoodsListCollectionViewCell.h"
 #import "VipCardGoodsListModel.h"
 #import "VipCardOrderListViewController.h"
+#import "VipCardGoodDetailViewController.h"
+
 @interface VipCardGoodsListViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 /**
  主视图
@@ -143,13 +145,18 @@
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     VipCardGoodsListCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"VipCardGoodsListCollectionViewCellId" forIndexPath:indexPath];
-    [cell configModel:nil];
+    VipCardGoodsListModel *model = self.dataArray[indexPath.row];
+    [cell configModel:model];
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     VipCardGoodsListModel *model = self.dataArray[indexPath.item];
     NSString *timeKey = model.timeKey;
+    
+    VipCardGoodDetailViewController *vc = [[VipCardGoodDetailViewController alloc] init];
+    vc.cardTypeKey = timeKey;
+    [self.navigationController pushViewController:vc animated:YES];
 
 }
 
