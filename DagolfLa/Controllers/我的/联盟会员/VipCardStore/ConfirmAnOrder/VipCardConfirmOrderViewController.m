@@ -71,7 +71,7 @@
  */
 -(UIView *)userInformationNpneView{
     //输出的界面
-    UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(160))];
+    UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(61))];
     //标题
     UILabel *titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, kWvertical(200), kHvertical(50)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:@"会员信息"];
     [backView addSubview:titleLabel];
@@ -81,6 +81,9 @@
     [backView addSubview:inputAlertLabel];
     UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(inputAlertLabel.x_width + kWvertical(5), kHvertical(20), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"sildRighth"]];
     [backView addSubview:arrowImageView];
+    //浅灰
+    UIView *bottomView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, backView.y_height-kWvertical(10), screenWidth, kHvertical(10))];
+    [backView addSubview:bottomView];
 
     return backView;
 }
@@ -397,7 +400,10 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return kHvertical(160);
+        if (_inputModel.userKey) {
+            return kHvertical(160);
+        }
+        return kHvertical(61);
     }
     if(section == 1){
         NSString *enjoyService = [NSString stringWithFormat:@"套餐权益：%@",self.dataModel.enjoyService];
