@@ -48,10 +48,6 @@
     
     [_cardImageView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"moren"]];
     
-    nameStr = @"君高联盟卡金卡";
-    price = @"3004";
-    expiry = @"2";
-    schemeMaxCount = @"33";
     //名字和金额文字
     NSString *nameAndPriceText = [NSString stringWithFormat:@"%@ ¥%@",nameStr,price];
     NSMutableAttributedString *nameAndPriceTextStr = [[NSMutableAttributedString alloc]initWithString:nameAndPriceText];
@@ -62,7 +58,7 @@
     _nameAndPrice.attributedText = nameAndPriceTextStr;
     
     //权益文字
-    NSString *equityText = [NSString stringWithFormat:@"%@年会员权益 尊贵会员击球优惠 %@/年",expiry,schemeMaxCount];
+    NSString *equityText = [NSString stringWithFormat:@"%@年会员权益 尊贵会员击球优惠 %@/次",expiry,schemeMaxCount];
     NSMutableAttributedString *equityTextStr = [[NSMutableAttributedString alloc]initWithString:equityText];
     //设置/字号
     [equityTextStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:kHorizontal(17)] range:NSMakeRange(equityText.length-2, 1)];

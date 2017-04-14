@@ -9,7 +9,7 @@
 #import "VipCardGoodDetailViewController.h"
 #import "VipCardGoodDetailViewModel.h"
 #import "VipCardConfirmOrderViewController.h"
-@interface VipCardGoodDetailViewController ()<UIScrollViewDelegate>
+@interface VipCardGoodDetailViewController ()<UIScrollViewDelegate,UMSocialUIDelegate>
 /**
  背景界面
  */
@@ -219,8 +219,16 @@
  分享按钮点击
  */
 -(void)shareBtnClick{
-    
+    ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    [alert setCallBackTitle:^(NSInteger index) {
+        [self shareWithInfo:index];
+    }];
+    [UIView animateWithDuration:0.2 animations:^{
+        [alert show];
+    }];
 }
+
 /**
  君高联盟
  */
@@ -255,6 +263,77 @@
         self.gradientImageView.frame = self.parkImageView.frame;
     }
 }
+
+
+-(void)shareWithInfo:(int)index
+{
+    
+    //分享链接
+    NSString *urlStr = @" http://imgcache.dagolfla.com/share/league/sysLeagueCardInfo.html";
+    NSString*  shareUrl = [NSString stringWithFormat:@"%@&share=1",urlStr];
+    //分享图片
+    UIImage *iconImageFull = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.dataModel.bigPicURL]]];
+    //分享标题
+    NSString *desc = self.dataModel.name;
+    
+    [UMSocialData defaultData].extConfig.title=desc;
+    if (index<2) {
+        NSData *imageData = UIImageJPEGRepresentation(iconImageFull, 0.1);
+        UIImage *iconImage = [UIImage imageWithData:imageData];
+        
+        NSString *type =  UMShareToWechatTimeline;
+        if (index==0) {
+            type = UMShareToWechatSession;
+        }
+        
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        /*
+         发送微博内容到多个微博平台
+         @param platformTypes    分享到的平台，数组的元素是`UMSocialSnsPlatformManager.h`定义的平台名的常量字符串，例如`UMShareToSina`，`UMShareToTencent`等。
+         @param content          分享的文字内容
+         @param image            分享的图片,可以传入UIImage类型或者NSData类型
+         @param location         分享的地理位置信息
+         @param urlResource      图片、音乐、视频等url资源
+         @param completion       发送完成执行的block对象
+         @param presentedController 如果发送的平台微博只有一个并且没有授权，传入要授权的viewController，将弹出授权页面，进行授权。可以传nil，将不进行授权。
+         */
+        UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeImage url: shareUrl];
+        
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[type] content:@""  image:iconImage location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+
+            }
+        }];
+    }else{
+        NSData *imageData = UIImageJPEGRepresentation(iconImageFull, 0.8);
+        UIImage *iconImage = [UIImage imageWithData:imageData];
+        
+        UMSocialData *data = [UMSocialData defaultData];
+        data.title = self.dataModel.name;
+        data.shareImage = iconImage;
+        data.shareText = [NSString stringWithFormat:@"%@%@",desc,shareUrl];
+        
+        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+        [[UMSocialControllerService defaultControllerService] setSocialUIDelegate:self];
+        //2.设置分享平台
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        
+    }
+}
+
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    //根据`responseCode`得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        //得到分享到的微博平台名
+
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
