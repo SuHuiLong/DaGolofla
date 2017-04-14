@@ -111,6 +111,10 @@
  立即支付
  */
 -(void)paymentBtnClick{
+    VipCardOrderDetailModel *model = self.dataArray[0][3];
+    NSString *price = model.content;
+    price = [price stringByReplacingOccurrencesOfString:@"¥" withString:@""];
+    NSLog(@"%@",price);
     
 }
 
