@@ -12,6 +12,7 @@
 #import "JGDCostumTableViewCell.h"
 
 #import "JGDSetBusinessPWDViewController.h"
+#import "VipCardOrderDetailViewController.h"
 
 #import "WCLPassWordView.h"
 #import <AlipaySDK/AlipaySDK.h>
@@ -213,10 +214,15 @@
                 [[ShowHUD showHUD] hideAnimationFromView:self.view];
                 
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
-                    payVC.payORlaterPay = 1;
-                    payVC.orderKey = self.orderKey;
-                    [self.navigationController pushViewController:payVC animated:YES];
+                    
+                    if (_fromWitchVC == 1) {
+                        [self pushToVipOrderDetail];
+                    }else{
+                        JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
+                        payVC.payORlaterPay = 1;
+                        payVC.orderKey = self.orderKey;
+                        [self.navigationController pushViewController:payVC animated:YES];
+                    }
                     
                 }
             }];
@@ -242,11 +248,15 @@
         
         
     }else if (btn.tag == 301) {
-        JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
-        payVC.payORlaterPay = 2;
-        payVC.orderKey = self.orderKey;
-        [self.navigationController pushViewController:payVC animated:YES];
         
+        if (_fromWitchVC == 1) {
+            [self pushToVipOrderDetail];
+        }else{
+            JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
+            payVC.payORlaterPay = 2;
+            payVC.orderKey = self.orderKey;
+            [self.navigationController pushViewController:payVC animated:YES];
+        }
     }
     
     
@@ -302,10 +312,14 @@
     NSInteger secess = [[not.userInfo objectForKey:@"secess"] integerValue];
     if (secess == 1) {
         
-        JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
-        payVC.payORlaterPay = 1;
-        payVC.orderKey = self.orderKey;
-        [self.navigationController pushViewController:payVC animated:YES];
+        if (_fromWitchVC == 1) {
+            [self pushToVipOrderDetail];
+        }else{
+            JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
+            payVC.payORlaterPay = 1;
+            payVC.orderKey = self.orderKey;
+            [self.navigationController pushViewController:payVC animated:YES];
+        }
     }else if (secess == 2){
         [[ShowHUD showHUD]showToastWithText:@"支付已取消！" FromView:self.view];
         [self doCancelOrderPay];
@@ -346,15 +360,19 @@
             NSLog(@"支付宝=====%@",resultDic[@"resultStatus"]);
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 NSLog(@"成功！");
-                JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
-                payVC.payORlaterPay = 1;
-                payVC.orderKey = self.orderKey;
-                [self.navigationController pushViewController:payVC animated:YES];
+                if (_fromWitchVC == 1) {
+                    [self pushToVipOrderDetail];
+                }else{
+                    JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
+                    payVC.payORlaterPay = 1;
+                    payVC.orderKey = self.orderKey;
+                    [self.navigationController pushViewController:payVC animated:YES];
+                }
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"4000"]) {
                 NSLog(@"失败");
                 [[ShowHUD showHUD]showToastWithText:@"支付失败！" FromView:self.view];
                 [self doCancelOrderPay];
-
+                
             } else if ([resultDic[@"resultStatus"] isEqualToString:@"6002"]) {
                 NSLog(@"网络错误");
                 [[ShowHUD showHUD]showToastWithText:@"网络异常，支付失败！" FromView:self.view];
@@ -384,7 +402,6 @@
 - (void)askAct{
     NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"telprompt://%@", Company400];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-
 }
 
 
@@ -409,7 +426,7 @@
             UILabel *titleLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, 260, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(17 * ProportionAdapter) text:@"授权系统从君高账户余额抵扣" textAlignment:(NSTextAlignmentLeft)];
             [cell.contentView addSubview:titleLB];
             
-            // 是否授权从君高抵扣
+            // 是否授权从君高抵扣 20811.45
             self.empowerSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(315 * ProportionAdapter, 10 * ProportionAdapter, 50 * ProportionAdapter, 35 * ProportionAdapter)];
             [self.empowerSwitch addTarget:self action:@selector(empowerAct:) forControlEvents:(UIControlEventTouchUpInside)];
             [cell.contentView addSubview:self.empowerSwitch];
@@ -653,7 +670,11 @@
     return self.numberOfSections;
 }
 
-
+- (void)pushToVipOrderDetail{
+    VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
+    vc.orderKey = [NSString stringWithFormat:@"%@", _orderKey];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 
 

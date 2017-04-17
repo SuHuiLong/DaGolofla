@@ -22,4 +22,6 @@
 
 @property (nonatomic, strong) NSNumber *orderKey;
 
+@property (nonatomic, assign) NSInteger fromWitchVC; // 1 VIP
+
 @end

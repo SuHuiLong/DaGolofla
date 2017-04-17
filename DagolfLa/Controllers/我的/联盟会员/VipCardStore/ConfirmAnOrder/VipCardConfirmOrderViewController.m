@@ -11,6 +11,7 @@
 #import "VipCardOrderDetailViewController.h"
 
 #import "JGDVipInfoFillViewController.h"
+#import "JGDConfirmPayViewController.h"  // 支付界面
 
 @interface VipCardConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -324,9 +325,12 @@
         btn.userInteractionEnabled = true;
         BOOL parkSucess = [[data objectForKey:@"packSuccess"] boolValue];
         if (parkSucess) {
-            VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
-            vc.orderKey = [data objectForKey:@"orderKey"];
-            [self.navigationController pushViewController:vc animated:YES];
+            JGDConfirmPayViewController *confirVC = [[JGDConfirmPayViewController alloc] init];
+            confirVC.orderKey = [data objectForKey:@"orderKey"];
+            confirVC.fromWitchVC = 1;
+            confirVC.payMoney = [[data objectForKey:@"money"] floatValue];
+            [self.navigationController pushViewController:confirVC animated:YES];
+
         }
     }];
 }
