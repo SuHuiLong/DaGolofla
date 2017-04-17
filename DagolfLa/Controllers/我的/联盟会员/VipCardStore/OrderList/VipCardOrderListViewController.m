@@ -17,6 +17,10 @@
  */
 @property(nonatomic, copy)UITableView *mainTableView;
 /**
+ 没有订单view
+ */
+@property(nonatomic, copy)UIView *noneBackView;
+/**
  数据源
  */
 @property(nonatomic, strong)NSMutableArray *dataArray;
@@ -60,6 +64,19 @@
     [self.view addSubview:mainTableView];
     _mainTableView = mainTableView;
 }
+/**
+ 无订单界面
+ */
+-(void)createNoneView{
+    self.noneBackView = [Factory createViewWithBackgroundColor:ClearColor frame:_mainTableView.frame];
+    [self.view addSubview:_noneBackView];
+    //无订单提示图片
+    UIImageView *picImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWvertical(65),kWvertical(167), kWvertical(246), kWvertical(178))];
+    picImageView.image = [UIImage imageNamed:@"bg_set_photo"];
+    [_noneBackView addSubview:picImageView];
+    
+}
+
 /**
  创建刷新
  */

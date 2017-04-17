@@ -195,8 +195,9 @@
     UIView *line1 = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(kWvertical(10), kHvertical(100), screenWidth, 1)];
     [backView addSubview:line1];
     //套餐权益
+    
     NSString *enjoyService = [NSString stringWithFormat:@"套餐权益：%@",self.dataModel.enjoyService];
-    enjoyService = @"套餐权益：服务年限3年，主场14次，客场14次；免费使用果岭、球童、球车、衣柜。";
+    
     CGSize TitleSize= [enjoyService boundingRectWithSize:CGSizeMake(screenWidth - kWvertical(20), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Light" size:kHorizontal(13)]} context:nil].size;
     backView.height = kHvertical(179)+TitleSize.height;
     UILabel *enjoyLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), kHvertical(110), screenWidth - kWvertical(20), TitleSize.height) textColor:RGB(160,160,160) fontSize:kHorizontal(13) Title:enjoyService];
@@ -444,7 +445,7 @@
     }
     if(section == 1){
         NSString *enjoyService = [NSString stringWithFormat:@"套餐权益：%@",self.dataModel.enjoyService];
-        enjoyService = @"套餐权益：服务年限3年，主场14次，客场14次；免费使用果岭、球童、球车、衣柜。";
+        
         CGSize TitleSize= [enjoyService boundingRectWithSize:CGSizeMake(screenWidth - kWvertical(20), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Light" size:kHorizontal(13)]} context:nil].size;
         return kHvertical(179)+TitleSize.height;
     }

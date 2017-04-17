@@ -270,9 +270,13 @@
 -(void)shareWithInfo:(int)index
 {
     
+    NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"cardTypeKey=%@&userKey=%@dagolfla.com",_cardTypeKey,DEFAULF_USERID]];
     //分享链接
-    NSString *urlStr = @" http://imgcache.dagolfla.com/share/league/sysLeagueCardInfo.html";
-    NSString*  shareUrl = [NSString stringWithFormat:@"%@&share=1",urlStr];
+    
+    
+    NSString *shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/league/sysLeagueCardInfo.html?userKey=%@&cardTypeKey=%@&md5=%@&share=1", DEFAULF_USERID,_cardTypeKey,md5Value];
+
+    
     //分享图片
     UIImage *iconImageFull = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.dataModel.bigPicURL]]];
     //分享标题

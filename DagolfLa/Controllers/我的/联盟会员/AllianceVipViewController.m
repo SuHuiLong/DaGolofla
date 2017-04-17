@@ -138,7 +138,7 @@
 -(void)createColletionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize =CGSizeMake(screenWidth, kHvertical(214));
-    _mainCollectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+    _mainCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) collectionViewLayout:layout];
     _mainCollectionView.backgroundColor = RGBA(238, 238, 238, 1);
     [_mainCollectionView registerClass:[VipCardCollectionViewCell class] forCellWithReuseIdentifier:@"VipCardCollectionViewCellId"];
     [_mainCollectionView registerClass:[VipCardHeaderCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"VipCardCollectionViewHeaderId"];
@@ -368,14 +368,14 @@
 #pragma mark - UICollectionViewDelegate
 //section个数
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    NSInteger add = 0;
-    if (self.unAddCardNum>0) {
-        add = 1;
-    }
+
     if (self.noCanUseArray.count>0) {
-        return 2+add;
+        return 3;
     }
-    return 1+add;
+    if (self.dataArray.count>0) {
+        return 2;
+    }
+    return 1;
 }
 //每个section的item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -408,7 +408,6 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
     return 0;
 }
-
 
 // 设置section头视图的参考大小，
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
@@ -469,29 +468,36 @@
         }
         [headView.descLabel changeLineWithSpace:5.0f];
         
-    }else if(indexPath.section == 1){
+    }else if(indexPath.section == 1&&self.noCanUseArray.count>0){
         headView.line.hidden = FALSE;
         headView.nocanDescLabel.hidden = FALSE;
     }
-    if (indexPath.section==_mainCollectionView.numberOfSections-1&&_unAddCardNum>0) {
-        headView.alertImageView.hidden = TRUE;
-        headView.descLabel.hidden = FALSE;
+    if (indexPath.section==_mainCollectionView.numberOfSections-1) {
         headView.goodsListButton.hidden = FALSE;
-        haveCard = [NSString stringWithFormat:@"%@ 立即绑定",haveCard];
-        headView.descLabel.y = kHvertical(0);
-        headView.descLabel.text = haveCard;
-        headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
-        NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
-        [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
-        headView.descLabel.attributedText = AttributedStr;
-        
-        headView.descLabel.enabledTapEffect = NO;
-        [headView.descLabel yb_addAttributeTapActionWithStrings:@[@"立即绑定"] tapClicked:^(NSString *string, NSRange range,NSInteger index) {
+        if (_unAddCardNum>0) {
+            headView.alertImageView.hidden = TRUE;
+            headView.descLabel.hidden = FALSE;
+            haveCard = [NSString stringWithFormat:@"%@ 立即绑定",haveCard];
+            headView.descLabel.y = kHvertical(0);
+            headView.descLabel.text = haveCard;
+            headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
+            NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
+            [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
+            headView.descLabel.attributedText = AttributedStr;
             
-        }];
-        
-        [headView.descLabel sizeToFit];
-        headView.goodsListButton.y = headView.descLabel.y_height+kHvertical(55);
+            headView.descLabel.enabledTapEffect = NO;
+            [headView.descLabel yb_addAttributeTapActionWithStrings:@[@"立即绑定"] tapClicked:^(NSString *string, NSRange range,NSInteger index) {
+                
+            }];
+            [headView.descLabel sizeToFit];
+            headView.goodsListButton.y = headView.descLabel.y_height+kHvertical(55);
+        }else{
+            if (_mainCollectionView.numberOfSections == 1) {
+                headView.goodsListButton.y = screenHeight - 64 - kHvertical(55);
+            }else{
+                headView.goodsListButton.y = kHvertical(23);
+            }
+        }
     }
     [headView.goodsListButton addTarget:self action:@selector(clickToGoodsList) forControlEvents:UIControlEventTouchUpInside];
     

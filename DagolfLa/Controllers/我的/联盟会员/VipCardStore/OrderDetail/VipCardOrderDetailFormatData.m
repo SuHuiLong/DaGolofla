@@ -41,10 +41,10 @@
     NSString *enjoyDetail = @"权益细则请查阅《君高高尔夫联盟会籍服务协议》";
     //用户名
     NSString *userName = [luserDict objectForKey:@"userName"];
-    //性别 0：男 1：女
+    //性别 0：女 1：男
     NSInteger sex = [[luserDict objectForKey:@"sex"] integerValue];
     NSString *sexStr = @"男";
-    if (sex == 1) {
+    if (sex == 0) {
         sexStr = @"女";
     }
     //证件号

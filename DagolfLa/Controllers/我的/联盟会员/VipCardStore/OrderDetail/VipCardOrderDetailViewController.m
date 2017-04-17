@@ -50,6 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self createRefreash];
 }
 #pragma mark - CreateView
 -(void)createView{
@@ -96,6 +97,18 @@
     _paymentBtn.hidden = true;
 }
 
+#pragma mark - MJRefresh
+-(void)createRefreash{
+    self.mainTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefresh)];
+}
+
+/**
+ 刷新
+ */
+-(void)headerRefresh{
+    [self initDetailData];
+}
+
 #pragma mark - initData
 -(void)initViewData{
     [self initDetailData];
@@ -110,7 +123,9 @@
                            @"md5":md5Value,
                            };
     [[JsonHttp jsonHttp] httpRequest:@"league/getSystemCardOrderInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+        [_mainTableView.mj_header endRefreshing];
     } completionBlock:^(id data) {
+        [_mainTableView.mj_header endRefreshing];
         BOOL Success = [[data objectForKey:@"packSuccess"] boolValue];
         if (Success) {
             self.dataArray = [NSMutableArray array];

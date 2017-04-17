@@ -42,7 +42,7 @@
     
     [self.view addSubview:backGrondView];
     //默认提示
-    NSString *placeStr = @"请输入标题";
+    NSString *placeStr = @"请输入销售人员手机号";
 
     if (_defaultText.length>0) {
         placeStr = nil;
