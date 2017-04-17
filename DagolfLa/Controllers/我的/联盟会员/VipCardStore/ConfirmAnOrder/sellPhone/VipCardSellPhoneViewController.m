@@ -22,17 +22,21 @@
 #pragma mark - CreateView
 -(void)createView{
     [self createNavigationView];
+    [self createTextField];
 }
 //导航栏
 -(void)createNavigationView{
-    self.title = @"确认订单";
+    self.title = @"销售人员手机号";
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnClick)];
     self.navigationItem.rightBarButtonItem = rightBtn;
-
+    [rightBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    self.view.backgroundColor = RGB(238,238,238);
 }
 //输入框
 -(void)createTextField{
+    UIView *backView = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(0, 0, 1, 0)];
+    [self.view addSubview:backView];
     //白色背景
     UIView *backGrondView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, kHvertical(10), screenWidth, kHvertical(103))];
     
@@ -40,13 +44,18 @@
     //默认提示
     NSString *placeStr = @"请输入标题";
 
+    if (_defaultText.length>0) {
+        placeStr = nil;
+    }
     UILabel *placeLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), kHvertical(0), kWvertical(20), kHvertical(16)) textColor:RGB(160,160,160) fontSize:kHorizontal(16) Title:placeStr];
     
     _textView = [[ShlTextView alloc] initWithFrame:CGRectMake(0, kHvertical(10), screenWidth, kHvertical(60)) placeLabel:placeLabel];
     _textView.font = [UIFont systemFontOfSize:kHorizontal(16)];
     _textView.delegate = self;
-    _textView.text = _DefaultText;
+    _textView.text = _defaultText;
+    _textView.keyboardType = UIKeyboardTypeNumberPad;
     [backGrondView addSubview:_textView];
+
     
 }
 

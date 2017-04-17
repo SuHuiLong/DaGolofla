@@ -302,7 +302,6 @@
         indexModel.isSelect = false;
         [self.selectArray removeObject:indexModel];
             for (NSInteger i = 0; i<3; i++) {
-                
                 UIButton *indexBtn = _bottomView.subviews[i];
                 indexBtn.selected = true;
                 indexBtn.userInteractionEnabled = true;
@@ -319,7 +318,6 @@
                 indexBtn.userInteractionEnabled = false;
             }
         }
-        
     }else{
         //未选中的设为选中
         indexModel.isSelect = true;

@@ -14,4 +14,10 @@
  订单key
  */
 @property(nonatomic, copy)NSString *orderKey;
+
+/**
+ 是否返回指定界面
+ */
+@property(nonatomic, assign)BOOL ispopAssign;
+
 @end

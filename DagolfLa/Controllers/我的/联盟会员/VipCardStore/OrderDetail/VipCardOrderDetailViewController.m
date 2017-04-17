@@ -15,6 +15,8 @@
 #import "JGDConfirmPayViewController.h"
 #import "VipCardAgreementViewController.h"
 
+#import "VipCardOrderListViewController.h"
+#import "VipCardGoodDetailViewController.h"
 @interface VipCardOrderDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 /**
  主列表视图
@@ -59,9 +61,13 @@
  上导航
  */
 -(void)createNavagationBar{
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(popBack)];
+    self.navigationItem.leftBarButtonItem = leftBtn;
+
     self.title = @"订单详情";
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_serve_phone"] style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnClick)];
+    [rightBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
+
     [rightBtn setTintColor:WhiteColor];
     self.navigationItem.rightBarButtonItem = rightBtn;
 }
@@ -121,6 +127,28 @@
 }
 
 #pragma mark - Action
+/**
+ 返回
+ */
+-(void)popBack{
+
+    if (!_ispopAssign) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        UIViewController *popVC = [[UIViewController alloc] init];
+        
+        NSArray *temArray = self.navigationController.viewControllers;
+        for(UIViewController *temVC in temArray){
+            if ([temVC isKindOfClass:[VipCardGoodDetailViewController class]]){
+                popVC = temVC;
+            }
+            if ([temVC isKindOfClass:[VipCardOrderListViewController class]]){
+                popVC = temVC;
+            }
+        }
+        [self.navigationController popToViewController:popVC animated:YES];
+    }
+}
 /**
  咨询
  */

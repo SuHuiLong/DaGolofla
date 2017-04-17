@@ -410,6 +410,7 @@
 -(void)addSellPhone:(UITapGestureRecognizer *)tap{
     __weak typeof(self) weakself = self;
     VipCardSellPhoneViewController *vc = [[VipCardSellPhoneViewController alloc] init];
+    vc.defaultText = self.inputModel.sellPhoneStr;
     [vc setAddPhoneBlock:^(NSString *phoneStr) {
         weakself.inputModel.sellPhoneStr = phoneStr;
     }];

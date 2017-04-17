@@ -673,6 +673,7 @@
 - (void)pushToVipOrderDetail{
     VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
     vc.orderKey = [NSString stringWithFormat:@"%@", _orderKey];
+    vc.ispopAssign = true;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

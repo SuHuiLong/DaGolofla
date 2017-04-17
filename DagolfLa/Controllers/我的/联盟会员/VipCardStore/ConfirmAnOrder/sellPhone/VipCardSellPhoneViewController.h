@@ -11,7 +11,7 @@ typedef void (^ addPhoneBlock)(NSString *phoneStr);
 @interface VipCardSellPhoneViewController : BaseViewController
 
 //默认填充文字
-@property(nonatomic, copy)NSString *DefaultText;
+@property(nonatomic, copy)NSString *defaultText;
 
 /**
  保存手机号block
