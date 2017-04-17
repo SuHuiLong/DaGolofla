@@ -10,6 +10,8 @@
 #import "VipCardOrderDetailTableViewCell.h"
 #import "VipCardOrderDetailModel.h"
 #import "VipCardOrderDetailFormatData.h"
+
+#import "JGDConfirmPayViewController.h"
 #import "VipCardAgreementViewController.h"
 
 @interface VipCardOrderDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -133,6 +135,12 @@
     NSString *price = model.content;
     price = [price stringByReplacingOccurrencesOfString:@"¥" withString:@""];
     NSLog(@"%@",price);
+    
+    JGDConfirmPayViewController *confirPayVC = [[JGDConfirmPayViewController alloc] init];
+    confirPayVC.orderKey = [Helper returnNumberForString:_orderKey];
+    confirPayVC.payMoney = [price floatValue];
+    confirPayVC.fromWitchVC = 1;
+    [self.navigationController pushViewController:confirPayVC animated:YES];
     
 }
 
