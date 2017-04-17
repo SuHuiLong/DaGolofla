@@ -55,6 +55,10 @@
     
 }
 
+- (void)configJGHIndexSystemMessageCellWithNil{
+    self.contentView.hidden = YES;
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

@@ -19,7 +19,7 @@
 #import "JGTeamDetailViewController.h"
 #import "JGDNewTeamDetailViewController.h"
 //#import "JGTeamMemberORManagerViewController.h"
-#import "JGNewCreateTeamTableViewController.h"
+//#import "JGNewCreateTeamTableViewController.h"
 
 
 #import "UITool.h"

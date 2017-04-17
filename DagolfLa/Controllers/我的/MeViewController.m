@@ -50,7 +50,7 @@
 #import "UseMallViewController.h"
 
 #import "JGMyBarCodeViewController.h"
-#import "JGNewCreateTeamTableViewController.h"
+//#import "JGNewCreateTeamTableViewController.h"
 
 #import "JGMeMoreViewController.h" // 更多
 #import "JGDOrderListViewController.h"

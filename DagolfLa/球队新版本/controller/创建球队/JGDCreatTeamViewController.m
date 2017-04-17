@@ -261,9 +261,9 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 保存按钮
 - (void)createPreviewBtn{
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10  * ProportionAdapter, screenHeight - 72  * ProportionAdapter, screenWidth- 20  * ProportionAdapter, 40  * ProportionAdapter)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10  * ProportionAdapter, screenHeight - 72  * ProportionAdapter, screenWidth- 20  * ProportionAdapter, kHvertical(44))];
     view.userInteractionEnabled = YES;
-    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth / 2, 40   * ProportionAdapter)];
+    UIButton *previewBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, screenWidth / 2, kHvertical(44))];
     [previewBtn setTitle:@"保存" forState:UIControlStateNormal];
     previewBtn.tag = 2001;
     previewBtn.backgroundColor = [UIColor colorWithHexString:@"#f39800"];
@@ -271,7 +271,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [view addSubview:previewBtn];
     
-    UIButton *commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth / 2 - 10 , 0, screenWidth / 2, 40 * ProportionAdapter)];
+    UIButton *commitBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth / 2 - 10 , 0, screenWidth / 2, kHvertical(44))];
     [commitBtn setTitle:@"提交" forState:UIControlStateNormal];
     commitBtn.tag =2002;
     commitBtn.backgroundColor = [UIColor colorWithHexString:@"eb6100"];
@@ -309,24 +309,25 @@ static CGFloat ImageHeight  = 210.0;
 //        }];
         
     }else{
-                
+        
         for (NSString *key in [self.detailDic allKeys]) {
-            if ([[self.detailDic objectForKey:key] isEqualToString:@""] && ![key isEqualToString:@"info"]) {
+            if ([[NSString stringWithFormat:@"%@", [self.detailDic objectForKey:key]] isEqualToString:@""] && ![key isEqualToString:@"info"]) {
+            
                 
-                if ([key isEqualToString:@"establishTime"]) {
-                    [LQProgressHud showMessage:@"请选择球队成立日期"];
+                if ([key isEqualToString:@"name"]) {
+                    [LQProgressHud showMessage:@"请输入球队名称"];
+                    return;
+                }else if ([key isEqualToString:@"establishTime"]) {
+                    [LQProgressHud showMessage:@"请选择成立日期"];
+                    return;
+                }else if ([key isEqualToString:@"crtyName"]) {
+                    [LQProgressHud showMessage:@"请选择所在地区"];
+                    return;
+                }else if ([key isEqualToString:@"userName"]) {
+                    [LQProgressHud showMessage:@"请输入真实姓名"];
                     return;
                 }else if ([key isEqualToString:@"userMobile"]) {
                     [LQProgressHud showMessage:@"请输入手机号码"];
-                    return;
-                }else if ([key isEqualToString:@"name"]) {
-                    [LQProgressHud showMessage:@"请输入球队名称"];
-                    return;
-                }else if ([key isEqualToString:@"crtyName"]) {
-                    [LQProgressHud showMessage:@"请选择球队所在地区"];
-                    return;
-                }else if ([key isEqualToString:@"userName"]) {
-                    [LQProgressHud showMessage:@"请填写真实姓名"];
                     return;
                 }
 
@@ -349,7 +350,7 @@ static CGFloat ImageHeight  = 210.0;
         
         MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
         progress.mode = MBProgressHUDModeIndeterminate;
-        progress.labelText = @"正在发布...";
+        progress.labelText = @"正在提交...";
         [self.view addSubview:progress];
         [progress show:YES];
         

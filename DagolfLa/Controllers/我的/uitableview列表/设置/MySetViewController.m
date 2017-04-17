@@ -244,6 +244,10 @@
         [user setValue:@"1" forKey:@"isExitTag"];
         [user synchronize];
         
+        NSNotification * notice = [NSNotification notificationWithName:@"loadMessageData" object:nil userInfo:nil];
+        //发送消息
+        [[NSNotificationCenter defaultCenter]postNotification:notice];
+        
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.index = 1;
         vc.reloadCtrlData = ^(){

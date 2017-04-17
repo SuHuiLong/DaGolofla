@@ -16,6 +16,7 @@
 
 #import "JGDDPhotoAlbumViewController.h"
 #import "JGHPhotoShadowCollectionViewCell.h"
+#import "JGHShadowPhotoAlbumViewController.h"
 
 static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoShadowCollectionViewCell";
 
@@ -217,18 +218,27 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
+  
+    
+//    JGDDPhotoAlbumViewController *phoVc = [[JGDDPhotoAlbumViewController alloc] init];
     //    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
     JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc]init];
     model = _dataArray[indexPath.item];
     
-    phoVc.strTitle = model.name;
+//    phoVc.strTitle = model.name;
+//    phoVc.albumKey = model.timeKey;
+//    //phoVc.power = [NSString stringWithFormat:@"%@", model.power];
+//    //phoVc.state = [_dictMember objectForKey:@"state"];
+//    phoVc.teamTimeKey = model.teamKey;
+//    //phoVc.dictMember = _dictMember;
+//    phoVc.userKey = model.userKey;
+    
+    
+    JGHShadowPhotoAlbumViewController *phoVc = [[JGHShadowPhotoAlbumViewController alloc] init];
+    
     phoVc.albumKey = model.timeKey;
-    //phoVc.power = [NSString stringWithFormat:@"%@", model.power];
-    //phoVc.state = [_dictMember objectForKey:@"state"];
-    phoVc.teamTimeKey = model.teamKey;
-    //phoVc.dictMember = _dictMember;
-    phoVc.userKey = model.userKey;
+    
+    
     
     [self.navigationController pushViewController:phoVc animated:YES];
 

@@ -409,7 +409,10 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         JGHIndexSystemMessageCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHIndexSystemMessageCellIdentifier];
         showSectionCell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (_indexModel.Msg) {
+            showSectionCell.hidden = NO;
             [showSectionCell configJGHIndexSystemMessageCell:_indexModel.Msg];
+        }else{
+            showSectionCell.hidden = YES;
         }
         
         return showSectionCell;

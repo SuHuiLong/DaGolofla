@@ -13,12 +13,10 @@
 #import "JGHAddMoreTeamTableViewCell.h"
 #import "JGLMyTeamModel.h"
 #import "JGTeamAcitivtyModel.h"
-#import "JGTeamChannelViewController.h"
 #import "JGDNewTeamDetailViewController.h"
 #import "JGHNewActivityDetailViewController.h"
 #import "JGTeamMainhallViewController.h"    // 大厅
 
-#import "JGNewCreateTeamTableViewController.h"
 #import "JGDCreatTeamViewController.h" // new
 #import "UMMobClick/MobClick.h"
 

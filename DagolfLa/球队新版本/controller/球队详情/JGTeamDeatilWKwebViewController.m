@@ -16,7 +16,7 @@
 #import "UMSocial.h"
 
 #import "UMSocialWechatHandler.h"
-#import "JGNewCreateTeamTableViewController.h"
+#import "JGDCreatTeamViewController.h"
 
 @interface JGTeamDeatilWKwebViewController ()<WKNavigationDelegate,WKUIDelegate>
 {
@@ -348,23 +348,26 @@
         }
         //创建球队
         if ([urlString containsString:@"createTeam"]) {
+            
+            
             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+            
+            JGDCreatTeamViewController *createVC = [[JGDCreatTeamViewController alloc] init];
             
             if ([user objectForKey:@"cacheCreatTeamDic"]) {
                 UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     [user setObject:0 forKey:@"cacheCreatTeamDic"];
-                    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-                    [self.navigationController pushViewController:creatteamVc animated:YES];
+                    
+                    [self.navigationController pushViewController:createVC animated:YES];
                 }];
+                
                 UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-                    creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
-                    creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
                     
+                    createVC.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
                     
-                    [self.navigationController pushViewController:creatteamVc animated:YES];
+                    [self.navigationController pushViewController:createVC animated:YES];
                 }];
                 
                 [alert addAction:action1];
@@ -372,9 +375,9 @@
                 [self presentViewController:alert animated:YES completion:nil];
                 
             }else{
-                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-                [self.navigationController pushViewController:creatteamVc animated:YES];
+                [self.navigationController pushViewController:createVC animated:YES];
             }
+            
         }
         
         // 年费设置  setYearMoney

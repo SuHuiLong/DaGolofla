@@ -1064,7 +1064,6 @@
 		F543ACB81CF3F89400C6B111 /* JGButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACB71CF3F89400C6B111 /* JGButtonTableViewCell.m */; };
 		F543ACC41CF4269D00C6B111 /* JGLableAndLableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC31CF4269D00C6B111 /* JGLableAndLableTableViewCell.m */; };
 		F543ACC71CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */; };
-		F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */; };
 		F54564E71DE5228600596211 /* JGAddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F54564E61DE5228600596211 /* JGAddFriendViewController.m */; };
 		F54564EA1DE563E000596211 /* JGScanAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F54564E91DE563E000596211 /* JGScanAddTableViewCell.m */; };
 		F54682481E2C6C4800BA7EF2 /* UserDataInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = F54682471E2C6C4800BA7EF2 /* UserDataInformation.m */; };
@@ -3247,8 +3246,6 @@
 		F543ACC31CF4269D00C6B111 /* JGLableAndLableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLableAndLableTableViewCell.m; sourceTree = "<group>"; };
 		F543ACC51CF42E1200C6B111 /* JGDisplayInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDisplayInfoTableViewCell.h; sourceTree = "<group>"; };
 		F543ACC61CF42E1200C6B111 /* JGDisplayInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDisplayInfoTableViewCell.m; sourceTree = "<group>"; };
-		F543ACC81CF476D400C6B111 /* JGNewCreateTeamTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGNewCreateTeamTableViewController.h; sourceTree = "<group>"; };
-		F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGNewCreateTeamTableViewController.m; sourceTree = "<group>"; };
 		F54564E51DE5228600596211 /* JGAddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGAddFriendViewController.h; sourceTree = "<group>"; };
 		F54564E61DE5228600596211 /* JGAddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGAddFriendViewController.m; sourceTree = "<group>"; };
 		F54564E81DE563E000596211 /* JGScanAddTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGScanAddTableViewCell.h; sourceTree = "<group>"; };
@@ -8040,8 +8037,6 @@
 		F5321AE31CE4492800CAE1EF /* 创建球队 */ = {
 			isa = PBXGroup;
 			children = (
-				F543ACC81CF476D400C6B111 /* JGNewCreateTeamTableViewController.h */,
-				F543ACC91CF476D400C6B111 /* JGNewCreateTeamTableViewController.m */,
 				F5C7E2D11E77E4D70037BD6D /* JGDCreatTeamViewController.h */,
 				F5C7E2D21E77E4D70037BD6D /* JGDCreatTeamViewController.m */,
 			);
@@ -9559,7 +9554,6 @@
 				2088379F1D1A2600004C7B5D /* JGHJustApplyListView.m in Sources */,
 				36BFFF881BC76D09005B3CE2 /* UITool.m in Sources */,
 				20BC97E51E1F6051007DFD34 /* JGHChooseAwardCell.m in Sources */,
-				F543ACCA1CF476D400C6B111 /* JGNewCreateTeamTableViewController.m in Sources */,
 				20BEF3C21E29F7C500E9AED7 /* JGHNewActivityCell.m in Sources */,
 				203019A21E0E4292005568E2 /* ZXMaxiCodeDecodedBitStreamParser.m in Sources */,
 				20301A071E0E4293005568E2 /* ZXQRCode.m in Sources */,
