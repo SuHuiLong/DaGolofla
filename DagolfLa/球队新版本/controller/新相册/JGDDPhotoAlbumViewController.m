@@ -301,23 +301,23 @@
         //选中的取消选中
         indexModel.isSelect = false;
         [self.selectArray removeObject:indexModel];
-            for (NSInteger i = 0; i<3; i++) {
-                UIButton *indexBtn = _bottomView.subviews[i];
-                indexBtn.selected = true;
-                indexBtn.userInteractionEnabled = true;
-                if (i==2&&![_power containsString:@"1005"]) {
-                    for (JGPhotoListModel *model in _selectArray) {
-                        if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
-                            indexBtn.selected = false;
-                            indexBtn.userInteractionEnabled = false;
-                        }
-                    }
-                }
-                if (self.selectArray.count==0) {
-                indexBtn.selected = false;
-                indexBtn.userInteractionEnabled = false;
-            }
-        }
+//            for (NSInteger i = 0; i<3; i++) {
+//                UIButton *indexBtn = _bottomView.subviews[i];
+//                indexBtn.selected = true;
+//                indexBtn.userInteractionEnabled = true;
+//                if (i==2&&![_power containsString:@"1005"]) {
+//                    for (JGPhotoListModel *model in _selectArray) {
+//                        if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
+//                            indexBtn.selected = false;
+//                            indexBtn.userInteractionEnabled = false;
+//                        }
+//                    }
+//                }
+//                if (self.selectArray.count==0) {
+//                indexBtn.selected = false;
+//                indexBtn.userInteractionEnabled = false;
+//            }
+//        }
     }else{
         //未选中的设为选中
         indexModel.isSelect = true;
@@ -328,15 +328,14 @@
             indexBtn.selected = true;
             indexBtn.userInteractionEnabled = true;
             
-            if (i==2&&![_power containsString:@"1005"]) {
-                for (JGPhotoListModel *model in _selectArray) {
-                    if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
-                        indexBtn.selected = false;
-                        indexBtn.userInteractionEnabled = false;
-                    }
-                }
-            }
-        
+//            if (i==2&&![_power containsString:@"1005"]) {
+//                for (JGPhotoListModel *model in _selectArray) {
+//                    if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
+//                        indexBtn.selected = false;
+//                        indexBtn.userInteractionEnabled = false;
+//                    }
+//                }
+//            }
         
         }
     }
@@ -391,6 +390,23 @@
 }
 //删除
 -(void)deleatePhoto{
+    //验证是否有权限
+    if (![_power containsString:@"1005"]) {
+        for (JGPhotoListModel *model in _selectArray) {
+            if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"没有删除权限" preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                    }]];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                });
+                return;
+            }
+        }
+    }
+    
     NSMutableArray *photoArray = [NSMutableArray array];
     for (JGPhotoListModel *model in self.selectArray) {
         NSString *photoKey =  [NSString stringWithFormat:@"%@",model.timeKey];
@@ -414,9 +430,9 @@
         }
     }];
 
-    
 
 }
+
 #pragma mark - Refresh
 
 - (void)headRereshing{
