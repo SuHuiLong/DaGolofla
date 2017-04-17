@@ -10,6 +10,8 @@
 #import "VipCardConfirmOrderModel.h"
 #import "VipCardOrderDetailViewController.h"
 #import "JGDVipInfoFillViewController.h"
+#import "VipCardAgreementViewController.h"
+#import "VipCardSellPhoneViewController.h"
 #import "JGDConfirmPayViewController.h"  // 支付界面
 #import "VipCardAgreementViewController.h"
 @interface VipCardConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -66,7 +68,7 @@
 
 /**
  无会员信息
-
+ 
  @return 会员信息为空的界面
  */
 -(UIView *)userInformationNpneView{
@@ -75,7 +77,7 @@
     //标题
     UILabel *titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, kWvertical(200), kHvertical(50)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:@"会员信息"];
     [backView addSubview:titleLabel];
-
+    
     UILabel *inputAlertLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, screenWidth-kWvertical(25), kHvertical(51)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"请请输入会员信息"];
     [inputAlertLabel setTextAlignment:NSTextAlignmentRight];
     [backView addSubview:inputAlertLabel];
@@ -84,13 +86,13 @@
     //浅灰
     UIView *bottomView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, backView.y_height-kWvertical(10), screenWidth, kHvertical(10))];
     [backView addSubview:bottomView];
-
+    
     return backView;
 }
 
 /**
  会员信息
-
+ 
  @return 会员信息界面
  */
 -(UIView *)userInformationView{
@@ -148,7 +150,7 @@
 }
 /**
  会员卡信息
-
+ 
  @return 会员卡详情界面
  */
 -(UIView *)cardInformationView{
@@ -170,7 +172,7 @@
     NSMutableAttributedString *singlePriceStr = [[NSMutableAttributedString alloc] initWithString:singlePrice];
     [singlePriceStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(15)] range:NSMakeRange(1, singlePrice.length-1)];
     singlePriceLabel.attributedText = singlePriceStr;
-
+    
     [backView addSubview:singlePriceLabel];
     //左按钮
     UIButton *leftBtn = [Factory createButtonWithFrame:CGRectMake(screenWidth - kWvertical(105), kHvertical(54), kWvertical(23), kHvertical(23)) NormalImage:@"icn_cardNumMinusNormal" SelectedImage:@"icn_cardNumMinusSelect" target:self selector:@selector(leftBtnClick:)];
@@ -223,7 +225,7 @@
 }
 /**
  销售手机号与提交按钮
-
+ 
  @return 底部的界面
  */
 -(UIView *)phoneAndsendView{
@@ -231,6 +233,7 @@
     BOOL isSelect = self.inputModel.isSelect;
     
     UIView *backView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, 0, screenWidth, kHvertical(260))];
+    backView.userInteractionEnabled = true;
     //白色背景
     UIView *whiteView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(51))];
     [backView addSubview:whiteView];
@@ -238,11 +241,14 @@
     UILabel *sellPhoneLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, kWvertical(130), kHvertical(51)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:@"销售人员手机号"];
     [whiteView addSubview:sellPhoneLabel];
     //销售人员手机号
-    UILabel *sellPhoneTextLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, screenWidth-kWvertical(25), kHvertical(51)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"请输入销售人员手机号"];
-    if (self.inputModel.sellPhoneStr.length==11) {
+    UILabel *sellPhoneTextLabel = [Factory createLabelWithFrame:CGRectMake(screenWidth/2, 0, screenWidth/2-kWvertical(25), kHvertical(51)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"请输入销售人员手机号"];
+    if (self.inputModel.sellPhoneStr.length>0) {
         sellPhoneTextLabel.text = self.inputModel.sellPhoneStr;
     }
     [sellPhoneTextLabel setTextAlignment:NSTextAlignmentRight];
+    UITapGestureRecognizer *sellPhoneTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addSellPhone:)];
+    sellPhoneTextLabel.userInteractionEnabled = true;
+    [sellPhoneTextLabel addGestureRecognizer:sellPhoneTap];
     [whiteView addSubview:sellPhoneTextLabel];
     UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(sellPhoneTextLabel.x_width + kWvertical(5), kHvertical(20), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"sildRighth"]];
     [whiteView addSubview:arrowImageView];
@@ -292,7 +298,12 @@
         if (Success) {
             NSDictionary *luserDict = [data objectForKey:@"luser"];
             VipCardConfirmOrderModel *model = [VipCardConfirmOrderModel modelWithDictionary:luserDict];
+            NSString *phoneStr = [NSString string];
+            if (self.inputModel.sellPhoneStr) {
+                phoneStr = [NSString stringWithFormat:@"%@",self.inputModel.sellPhoneStr];
+            }
             self.inputModel = model;
+            self.inputModel.sellPhoneStr = phoneStr;
             [self.mainTableView reloadData];
         }
     }];
@@ -363,7 +374,7 @@
 
 /**
  同意条款按钮
-
+ 
  @param btn 点击切换选择与未选中
  */
 -(void)circleBtnClick:(UIButton *)btn{
@@ -376,7 +387,7 @@
 }
 /**
  条款按钮
-
+ 
  @param btn 点击可以查看详情
  */
 -(void)agreementBtnClick:(UIButton *)btn{
@@ -387,11 +398,22 @@
  编辑信息
  */
 -(void)editUserInformaion{
-    
     JGDVipInfoFillViewController *infoVipVC = [[JGDVipInfoFillViewController alloc] init];
     infoVipVC.inputModel = self.inputModel;
     [self.navigationController pushViewController:infoVipVC animated:YES];
-    
+}
+/**
+ 修改销售人员手机号
+ 
+ @param tap 手势
+ */
+-(void)addSellPhone:(UITapGestureRecognizer *)tap{
+    __weak typeof(self) weakself = self;
+    VipCardSellPhoneViewController *vc = [[VipCardSellPhoneViewController alloc] init];
+    [vc setAddPhoneBlock:^(NSString *phoneStr) {
+        weakself.inputModel.sellPhoneStr = phoneStr;
+    }];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 /**
  提交订单
@@ -461,13 +483,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

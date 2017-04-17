@@ -13,7 +13,7 @@
 
 #import "VipCardAgreementViewController.h"
 #import "JGDConfirmPayViewController.h"
-
+#import "VipCardAgreementViewController.h"
 
 @interface VipCardOrderDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 /**
@@ -24,6 +24,16 @@
  数据源
  */
 @property(nonatomic, strong)NSMutableArray *dataArray;
+
+/**
+ 订单实际状态 只有未付款显示支付按钮
+ */
+@property(nonatomic, copy)NSString *stateButtonString;
+
+/**
+ 立即支付按钮
+ */
+@property(nonatomic, strong)UIButton *paymentBtn;
 @end
 
 @implementation VipCardOrderDetailViewController
@@ -74,9 +84,10 @@
  立即支付
  */
 -(void)createPaymentBtn{
-    UIButton *paymentBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(8), screenHeight - kHvertical(73)-64, screenWidth-kWvertical(16), kHvertical(46)) titleFont:kHorizontal(19) textColor:RGB(255,255,255) backgroundColor:RGB(252,90,1) target:self selector:@selector(paymentBtnClick) Title:@"立即支付"];
-    paymentBtn.layer.cornerRadius = kWvertical(5);
-    [self.view addSubview:paymentBtn];
+    _paymentBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(8), screenHeight - kHvertical(73)-64, screenWidth-kWvertical(16), kHvertical(46)) titleFont:kHorizontal(19) textColor:RGB(255,255,255) backgroundColor:RGB(252,90,1) target:self selector:@selector(paymentBtnClick) Title:@"立即支付"];
+    _paymentBtn.layer.cornerRadius = kWvertical(5);
+    [self.view addSubview:_paymentBtn];
+    _paymentBtn.hidden = true;
 }
 
 #pragma mark - initData
@@ -97,7 +108,12 @@
         BOOL Success = [[data objectForKey:@"packSuccess"] boolValue];
         if (Success) {
             self.dataArray = [NSMutableArray array];
-            self.dataArray = [VipCardOrderDetailFormatData formatData:data];
+            VipCardOrderDetailFormatData *formatData = [[VipCardOrderDetailFormatData alloc] init];
+            self.dataArray = [formatData formatData:data];
+            self.stateButtonString =  formatData.stateButtonString;
+            if ([self.stateButtonString isEqualToString:@"未付款"]) {
+                _paymentBtn.hidden = false;
+            }
             [_mainTableView reloadData];
         }
     }];

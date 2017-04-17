@@ -11,7 +11,7 @@
 #import "VipCardOrderDetailModel.h"
 @implementation VipCardOrderDetailFormatData
 
-+(NSMutableArray *)formatData:(id)data{
+-(NSMutableArray *)formatData:(id)data{
     NSMutableArray *dataArray = [NSMutableArray array];
     
     NSDictionary *cardTypeDict = [data objectForKey:@"cardType"];
@@ -31,6 +31,8 @@
     NSString *priceStr = [NSString stringWithFormat:@"¥%@",[orderDict objectForKey:@"unitPrice"]];
     //订单状态
     NSString *stateStr = [orderDict objectForKey:@"stateShowString"];
+    //订单实际状态
+    _stateButtonString = [orderDict objectForKey:@"stateButtonString"];
     //会籍名称
     NSString *name = [cardTypeDict objectForKey:@"name"];
     //权益

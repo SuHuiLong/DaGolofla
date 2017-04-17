@@ -74,6 +74,7 @@
 		18911AA91EA46A6B00B6FAAD /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18911A9F1EA46A6B00B6FAAD /* libWeChatSDK.a */; };
 		18911AAA1EA46A6B00B6FAAD /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18911AA11EA46A6B00B6FAAD /* libSocialWechat.a */; };
 		18911AAB1EA46A6B00B6FAAD /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18911AA21EA46A6B00B6FAAD /* libWeChatSDK.a */; };
+		18911AAF1EA46CB800B6FAAD /* VipCardSellPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18911AAE1EA46CB800B6FAAD /* VipCardSellPhoneViewController.m */; };
 		189E368D1E84C102004BF082 /* SaveScheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 189E368C1E84C102004BF082 /* SaveScheduleView.m */; };
 		18D5DBCE1E65700F008C87EE /* shake-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18D5DBCD1E65700F008C87EE /* shake-sound.wav */; };
 		18D5DBD41E67A913008C87EE /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D5DBD11E67A912008C87EE /* NJKWebViewProgress.m */; };
@@ -1396,6 +1397,8 @@
 		18911AA31EA46A6B00B6FAAD /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
 		18911AA41EA46A6B00B6FAAD /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		18911AA51EA46A6B00B6FAAD /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		18911AAD1EA46CB800B6FAAD /* VipCardSellPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardSellPhoneViewController.h; sourceTree = "<group>"; };
+		18911AAE1EA46CB800B6FAAD /* VipCardSellPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardSellPhoneViewController.m; sourceTree = "<group>"; };
 		189E368B1E84C102004BF082 /* SaveScheduleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveScheduleView.h; sourceTree = "<group>"; };
 		189E368C1E84C102004BF082 /* SaveScheduleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveScheduleView.m; sourceTree = "<group>"; };
 		18D5DBCD1E65700F008C87EE /* shake-sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "shake-sound.wav"; sourceTree = "<group>"; };
@@ -3620,6 +3623,7 @@
 		18274AC01E95EFB40065117E /* ConfirmAnOrder */ = {
 			isa = PBXGroup;
 			children = (
+				18911AAC1EA46CB800B6FAAD /* sellPhone */,
 				18274AC11E95EFB40065117E /* PerfectInformation */,
 				18DF0AE01E9CBC54006EB7FD /* VipCardConfirmOrderViewController.h */,
 				18DF0AE11E9CBC54006EB7FD /* VipCardConfirmOrderViewController.m */,
@@ -3951,6 +3955,15 @@
 				18911AA51EA46A6B00B6FAAD /* WXApiObject.h */,
 			);
 			path = Wechat;
+			sourceTree = "<group>";
+		};
+		18911AAC1EA46CB800B6FAAD /* sellPhone */ = {
+			isa = PBXGroup;
+			children = (
+				18911AAD1EA46CB800B6FAAD /* VipCardSellPhoneViewController.h */,
+				18911AAE1EA46CB800B6FAAD /* VipCardSellPhoneViewController.m */,
+			);
+			path = sellPhone;
 			sourceTree = "<group>";
 		};
 		189E368A1E84C076004BF082 /* 显示保存进度 */ = {
@@ -9000,6 +9013,7 @@
 				82E6A71A1CF68229009DD179 /* JGTeamAdressTableViewCell.m in Sources */,
 				36C39B4E1BDB5AE900712C0A /* CommuniteTableViewCell.m in Sources */,
 				203019A91E0E4292005568E2 /* ZXAI01320xDecoder.m in Sources */,
+				18911AAF1EA46CB800B6FAAD /* VipCardSellPhoneViewController.m in Sources */,
 				36BF019F1BC779D8005B3CE2 /* CityModel.m in Sources */,
 				36BFFFCE1BC770B1005B3CE2 /* PictureGestureView.m in Sources */,
 				65B596EE1CAD43AC007AB83A /* YMTableViewCell.m in Sources */,
