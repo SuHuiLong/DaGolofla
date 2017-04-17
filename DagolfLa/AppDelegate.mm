@@ -12,7 +12,7 @@
 #import "IQKeyboardManager.h"
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
-#import "UMSocialSinaSSOHandler.h"
+//#import "UMSocialSinaSSOHandler.h"
 
 #import "PageViewController.h"
 #import <BaiduMapAPI/BMKMapComponent.h>//引入所有的头文件
@@ -40,6 +40,7 @@
 #import "UMMobClick/MobClick.h"
 #import "JGLAnimationViewController.h"
 
+#import "UMSocialSinaHandler.h"
 #define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
 #import "JGHScoreAF.h"
 
@@ -192,8 +193,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     _pushID = 0;
     
-//    UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
-//    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
     
     if (DEFAULF_USERID) {
         /*
@@ -235,7 +234,7 @@
     //设置微信AppId、appSecret，分享url
     [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:@"http://www.umeng.com/social"];
     //打开新浪微博的SSO开关，设置新浪微博回调地址，这里必须要和你在新浪微博后台设置的回调地址一致。若在新浪后台设置我们的回调地址，“http://sns.whalecloud.com/sina2/callback”，这里可以传nil
-    [UMSocialSinaSSOHandler openNewSinaSSOWithRedirectURL:@"http://www.dagolfla.com"];
+    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://www.dagolfla.com"];
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [_mapManager start:@"BvLmax5esQ8rSrLQbhkYZa1b"  generalDelegate:nil];

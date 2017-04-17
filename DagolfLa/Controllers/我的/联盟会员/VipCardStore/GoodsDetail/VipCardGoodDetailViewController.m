@@ -9,6 +9,7 @@
 #import "VipCardGoodDetailViewController.h"
 #import "VipCardGoodDetailViewModel.h"
 #import "VipCardConfirmOrderViewController.h"
+#import "VipCardAgreementViewController.h"
 @interface VipCardGoodDetailViewController ()<UIScrollViewDelegate,UMSocialUIDelegate>
 /**
  背景界面
@@ -233,7 +234,8 @@
  君高联盟
  */
 -(void)allianceBtnClick{
-
+    VipCardAgreementViewController *vc = [[VipCardAgreementViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 /**
  咨询
@@ -284,6 +286,8 @@
         NSString *type =  UMShareToWechatTimeline;
         if (index==0) {
             type = UMShareToWechatSession;
+        }else if (index==2){
+            type = UMShareToSina;
         }
         
         //微信
@@ -308,7 +312,7 @@
             }
         }];
     }else{
-        NSData *imageData = UIImageJPEGRepresentation(iconImageFull, 0.8);
+        NSData *imageData = UIImageJPEGRepresentation(iconImageFull, 0.3);
         UIImage *iconImage = [UIImage imageWithData:imageData];
         
         UMSocialData *data = [UMSocialData defaultData];
@@ -316,10 +320,27 @@
         data.shareImage = iconImage;
         data.shareText = [NSString stringWithFormat:@"%@%@",desc,shareUrl];
         
+        
         [[UMSocialControllerService defaultControllerService] setSocialData:data];
-        [[UMSocialControllerService defaultControllerService] setSocialUIDelegate:self];
         //2.设置分享平台
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+
+//        [[UMSocialControllerService defaultControllerService] setSocialData:data];
+//        [[UMSocialControllerService defaultControllerService] setSocialUIDelegate:self];
+        //2.设置分享平台
+//        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+        
+        
+        
+//        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:[NSString stringWithFormat:@"%@%@", desc,shareUrl ] image:iconImage location:nil urlResource:[[UMSocialUrlResource alloc]  initWithSnsResourceType:UMSocialUrlResourceTypeImage url:shareUrl]  presentedController:nil completion:^(UMSocialResponseEntity *response){
+//            if (response.responseCode == UMSResponseCodeSuccess) {
+//                NSLog(@"分享成功！");
+//            }
+//        }];
+        
+        
+        
+        
         
     }
 }

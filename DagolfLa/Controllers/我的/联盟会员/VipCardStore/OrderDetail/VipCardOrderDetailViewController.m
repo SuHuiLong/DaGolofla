@@ -10,6 +10,8 @@
 #import "VipCardOrderDetailTableViewCell.h"
 #import "VipCardOrderDetailModel.h"
 #import "VipCardOrderDetailFormatData.h"
+#import "VipCardAgreementViewController.h"
+
 @interface VipCardOrderDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 /**
  主列表视图
@@ -178,6 +180,13 @@
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     UIView *footerView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(5))];
     return footerView;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1&&indexPath.row == 2) {
+        VipCardAgreementViewController *vc = [[VipCardAgreementViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
