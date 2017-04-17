@@ -11,6 +11,7 @@
 #import "VipCardOrderDetailModel.h"
 #import "VipCardOrderDetailFormatData.h"
 
+#import "VipCardAgreementViewController.h"
 #import "JGDConfirmPayViewController.h"
 
 

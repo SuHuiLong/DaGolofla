@@ -191,11 +191,13 @@
         cell.timeLabel.hidden = YES;
         cell.agreeBtn.hidden = NO;
         cell.disMissBtn.hidden = NO;
+        cell.ageLabel.hidden = YES; //
         return cell;
     }
     else{
         JGLTeamAdviceTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"JGLTeamAdviceTableViewCell" forIndexPath:indexPath];
         [cell showData:_dataUpDataArray[indexPath.row]];
+        cell.ageLabel.hidden = YES; //
         cell.iconImage.layer.cornerRadius = cell.iconImage.frame.size.width/2;
         cell.iconImage.layer.masksToBounds = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -11,7 +11,7 @@
 #import "VipCardOrderDetailViewController.h"
 #import "JGDVipInfoFillViewController.h"
 #import "JGDConfirmPayViewController.h"  // 支付界面
-
+#import "VipCardAgreementViewController.h"
 @interface VipCardConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 /**
