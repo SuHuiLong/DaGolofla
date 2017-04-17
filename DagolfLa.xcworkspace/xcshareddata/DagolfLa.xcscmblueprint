@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++1B97A20",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++84EF7B8" : 9223372036854775807,
+    "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++1B97A20" : 9223372036854775807,
+    "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++42576E0" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "467C1DF5-C8C1-4E4E-AA69-C0226AFB1451",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++84EF7B8" : "dagolfla_ios%202\/",
+    "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++1B97A20" : "dagolfla_ios\/",
+    "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++42576E0" : "dagolfla_ios%202\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DagolfLa",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DagolfLa.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/liuyunhua1211\/pods_dagolfla_ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++1B97A20"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/liuyunhua1211\/dagolfla_ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++42576E0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/liuyunhua1211\/pods_dagolfla_ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E98127B46432C83345DD3683DE5DAB9CEA61D32E+++84EF7B8"
+    }
+  ]
+}

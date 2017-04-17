@@ -9,7 +9,6 @@
 #import "VipCardConfirmOrderViewController.h"
 #import "VipCardConfirmOrderModel.h"
 #import "VipCardOrderDetailViewController.h"
-
 #import "JGDVipInfoFillViewController.h"
 #import "JGDConfirmPayViewController.h"  // 支付界面
 
@@ -381,7 +380,8 @@
  @param btn 点击可以查看详情
  */
 -(void)agreementBtnClick:(UIButton *)btn{
-
+    VipCardAgreementViewController *vc = [[VipCardAgreementViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 /**
  编辑信息

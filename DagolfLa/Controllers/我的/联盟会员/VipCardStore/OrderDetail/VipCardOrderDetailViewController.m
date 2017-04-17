@@ -190,6 +190,13 @@
     return footerView;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1&&indexPath.row == 2) {
+        VipCardAgreementViewController *vc = [[VipCardAgreementViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
