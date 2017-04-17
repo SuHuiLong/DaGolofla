@@ -100,7 +100,7 @@
     UIBarButtonItem *backBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@")-2"] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClick)];
     backBtn.tintColor = [UIColor colorWithHexString:Bar_Segment];
     self.navigationItem.leftBarButtonItem = backBtn;
-
+    
     //右按钮
     UIBarButtonItem *addBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_allianceAdd"] style:UIBarButtonItemStylePlain target:self action:@selector(addBtnClick)];
     addBtn.tintColor = [UIColor colorWithHexString:Bar_Segment];
@@ -127,7 +127,7 @@
     _vipCardView = [Factory createViewWithBackgroundColor:RGBA(238, 238, 238, 1) frame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     //使用记录界面
     _historyView = [Factory createViewWithBackgroundColor:RGBA(238, 238, 238, 1) frame:CGRectMake(screenWidth, 0, screenWidth, screenHeight - 64)];
-
+    
     _vipCardView.userInteractionEnabled = YES;
     _historyView.userInteractionEnabled = YES;
     
@@ -167,10 +167,10 @@
 
 //获取卡片列表数据
 -(void)loadCardListData{
-
+    
     NSString *page = [NSString stringWithFormat:@"%ld",(long)_cardPage];
     NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]];
-
+    
     NSDictionary *dict = @{
                            @"userKey":DEFAULF_USERID,
                            @"off":page,
@@ -212,7 +212,7 @@
             [self.vipCardView addSubview:_mainCollectionView];
         }
         [_mainCollectionView reloadData];
-
+        
         [self cardEndRefresh];
     }];
 }
@@ -269,9 +269,9 @@
             [self.mainTableView reloadData];
         }
         [self historyEndRefresh];
-
-    }];
         
+    }];
+    
 }
 
 #pragma mark - Action
@@ -284,17 +284,17 @@
     AddVipCardViewController *vc = [[AddVipCardViewController alloc] init];
     
     [self.navigationController pushViewController:vc animated:YES];
-
+    
 }
 //选择器改变
 -(void)segmentAction:(UISegmentedControl *)segment{
     NSInteger selectIndex = segment.selectedSegmentIndex;
     switch (selectIndex) {
         case 0:{
-        self.baseScrollView.contentOffset = CGPointMake( 0, 0);
+            self.baseScrollView.contentOffset = CGPointMake( 0, 0);
         }break;
         case 1:{
-        self.baseScrollView.contentOffset = CGPointMake( screenWidth, 0);
+            self.baseScrollView.contentOffset = CGPointMake( screenWidth, 0);
         }break;
         default:
             break;
@@ -322,7 +322,7 @@
     _mainTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerHeaderRefreshing)];
     _mainTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(headerFooterRefreshing)];
     [_mainTableView.mj_header beginRefreshing];
-
+    
 }
 
 //卡片下拉刷新
@@ -361,33 +361,37 @@
     }else{
         [_mainTableView.mj_footer endRefreshing];
     }
-
+    
 }
 
 
 #pragma mark - UICollectionViewDelegate
 //section个数
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-
-    if (self.noCanUseArray.count>0) {
-            return 2;
+    NSInteger add = 0;
+    if (self.unAddCardNum>0) {
+        add = 1;
     }
-    return 1;
+    if (self.noCanUseArray.count>0) {
+        return 2+add;
+    }
+    return 1+add;
 }
 //每个section的item个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if (section==0) {
         return self.dataArray.count;
+    } else if (section == 1){
+        return self.noCanUseArray.count;
     }
-    return self.noCanUseArray.count;
+    return 0;
 }
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
     VipCardCollectionViewCell *cell = (VipCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"VipCardCollectionViewCellId" forIndexPath:indexPath];
-        
+    
     //配置cell
     if (indexPath.section==0) {
         [cell configModel:self.dataArray[indexPath.item]];
@@ -409,12 +413,20 @@
 // 设置section头视图的参考大小，
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     NSInteger totalCardNum = self.dataArray.count + self.noCanUseArray.count;
-//    if (section == 1) {
-//        return CGSizeMake(screenWidth, kHvertical(80));
-//    } else if(totalCardNum==0) {
+    if (totalCardNum == 0) {
         return CGSizeMake(screenWidth, screenHeight);
-//    }
-//    return CGSizeMake(0, 0);
+    }
+    if (_unAddCardNum>0) {
+        if (self.noCanUseArray.count==0&&section==1){
+            return CGSizeMake(screenWidth, kHvertical(200));
+        }else if (section==2){
+            return CGSizeMake(screenWidth, kHvertical(200));
+        }
+    }
+    if (section == 1) {
+        return CGSizeMake(screenWidth, kHvertical(80));
+    }
+    return CGSizeMake(0, 0);
 }
 // 设置collectionView的头
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
@@ -430,7 +442,7 @@
     headView.nocanDescLabel.hidden = TRUE;
     headView.goodsListButton.hidden = TRUE;
     NSInteger totalCardNum = self.dataArray.count + self.noCanUseArray.count;
-
+    
     //没有未添加卡片文字描述
     NSString *noneCard = @"您还未添加任何君高高尔夫联盟会员卡，点击右上角『+』，添加您的联盟会员卡。添加会员卡后，就能在APP中享受联盟会员价预订球场的权益。";
     //用户手机号上有未添加的卡片
@@ -461,7 +473,7 @@
         headView.line.hidden = FALSE;
         headView.nocanDescLabel.hidden = FALSE;
     }
-    if (indexPath.section==_mainCollectionView.numberOfSections-1) {
+    if (indexPath.section==_mainCollectionView.numberOfSections-1&&_unAddCardNum>0) {
         headView.alertImageView.hidden = TRUE;
         headView.descLabel.hidden = FALSE;
         headView.goodsListButton.hidden = FALSE;
@@ -472,17 +484,17 @@
         NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
         [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
         headView.descLabel.attributedText = AttributedStr;
-
+        
         headView.descLabel.enabledTapEffect = NO;
         [headView.descLabel yb_addAttributeTapActionWithStrings:@[@"立即绑定"] tapClicked:^(NSString *string, NSRange range,NSInteger index) {
-        
+            
         }];
-
+        
         [headView.descLabel sizeToFit];
         headView.goodsListButton.y = headView.descLabel.y_height+kHvertical(55);
     }
     [headView.goodsListButton addTarget:self action:@selector(clickToGoodsList) forControlEvents:UIControlEventTouchUpInside];
-
+    
     
     return headView;
 }
@@ -499,7 +511,7 @@
     }
     
     NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"cardKey=%@&userKey=%@dagolfla.com",model.cardId, DEFAULF_USERID]];
-
+    
     NSString *urlString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/league/leagueUserCardInfo.html?md5=%@&winzoom=1&cardKey=%@&userKey=%@",md5Value,model.cardId,DEFAULF_USERID];
     
     //跳转
@@ -509,14 +521,14 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
-
+    
 }
 
 #pragma mark - UITableViewDelegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.listArray.count==0) {
-//        return 10;
+        //        return 10;
     }
     return self.listArray.count;
 }
@@ -563,7 +575,7 @@
         
         [headerView addSubview:alertImageView];
         [headerView addSubview:descLabel];
-    
+        
     }
     return headerView;
 }
@@ -582,7 +594,7 @@
     [AttributedStr addAttribute:NSForegroundColorAttributeName value:changeColor range:changeRang];
     
     [AttributedStr addAttribute:NSForegroundColorAttributeName value:changeColor2 range:changeRang2];
-
+    
     
     testLabel.attributedText = AttributedStr;
     return testLabel;
@@ -598,7 +610,7 @@
     NSDate* date = [formatter dateFromString:timeStr];
     [formatter setDateFormat:@"yyyy.MM.dd"];
     NSString * comfromTimeStr = [formatter stringFromDate:date];
-
+    
     return comfromTimeStr;
 }
 
@@ -608,13 +620,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

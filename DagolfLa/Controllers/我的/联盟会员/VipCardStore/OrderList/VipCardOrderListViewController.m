@@ -66,12 +66,11 @@
 -(void)createRefreash{
     self.mainTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefresh)];
     self.mainTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefresh)];
-    [_mainTableView.mj_header beginRefreshing];
 }
 
 #pragma mark - initData;
 -(void)initViewWillApperData{
-    [_mainTableView.mj_header beginRefreshing];
+    [self loadListData:0];
 }
 -(void)initData{
 
