@@ -225,7 +225,7 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [LQProgressHud showLoading:@"加载中..."];
+        [LQProgressHud showLoading:@"删除中..."];
         JGHInformModel *model = [[JGHInformModel alloc]init];
         model = self.dataArray[indexPath.row];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];

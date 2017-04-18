@@ -596,20 +596,17 @@
         _webView.frame = CGRectMake(0, -20, screenWidth, screenHeight +20);
     }else{
         _webView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
-        
         UIImageView *statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
-        
-        statusView.image = [UIImage imageNamed:@"old_Nav_bg"];
-        
+        if (_isNewColor) {
+            statusView.backgroundColor = RGB(5,110,62);
+        }else{
+            statusView.image = [UIImage imageNamed:@"old_Nav_bg"];
+        }
         CGRect frame = statusView.frame;
-        
         frame.origin = CGPointMake(0, 0);
-        
         statusView.frame = frame;
-        
         [self.view addSubview:statusView];
         [_actIndicatorView stopAnimating];
-        
         _canGoBack = webView.canGoBack;
     }
     

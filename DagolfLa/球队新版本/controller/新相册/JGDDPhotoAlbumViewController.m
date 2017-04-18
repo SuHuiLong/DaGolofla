@@ -395,7 +395,7 @@
         for (JGPhotoListModel *model in _selectArray) {
             if ([model.userKey integerValue] != [DEFAULF_USERID integerValue]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"没有删除权限" preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"您只能删除自己上传的照片，如需删除其他照片，请联系球队管理员" preferredStyle:UIAlertControllerStyleAlert];
                     
                     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         

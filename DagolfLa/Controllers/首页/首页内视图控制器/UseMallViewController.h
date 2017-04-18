@@ -13,4 +13,9 @@
 
 @property(nonatomic,copy)NSString *linkUrl;
 
+/**
+ 默认绿色，yes为深色
+ */
+@property(nonatomic,assign)BOOL isNewColor;
+
 @end

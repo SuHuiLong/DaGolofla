@@ -17,10 +17,6 @@
  */
 @property(nonatomic, copy)UITableView *mainTableView;
 /**
- 没有订单view
- */
-@property(nonatomic, copy)UIView *noneBackView;
-/**
  数据源
  */
 @property(nonatomic, strong)NSMutableArray *dataArray;
@@ -47,7 +43,7 @@
  */
 -(void)createNavagationBar{
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
-    self.title = @"联盟卡订单";
+    self.title = @"会籍卡订单";
 }
 /**
  创建tableView
@@ -64,18 +60,7 @@
     [self.view addSubview:mainTableView];
     _mainTableView = mainTableView;
 }
-/**
- 无订单界面
- */
--(void)createNoneView{
-    self.noneBackView = [Factory createViewWithBackgroundColor:ClearColor frame:_mainTableView.frame];
-    [self.view addSubview:_noneBackView];
-    //无订单提示图片
-    UIImageView *picImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWvertical(65),kWvertical(167), kWvertical(246), kWvertical(178))];
-    picImageView.image = [UIImage imageNamed:@"bg_set_photo"];
-    [_noneBackView addSubview:picImageView];
-    
-}
+
 
 /**
  创建刷新
@@ -131,6 +116,7 @@
  刷新
  */
 -(void)headerRefresh{
+     [_mainTableView.mj_footer resetNoMoreData];
     _off = 0;
     [self loadListData:_off];
 }
@@ -138,6 +124,9 @@
  加载
  */
 -(void)footerRefresh{
+    if (self.dataArray.count==0) {
+        [_mainTableView.mj_footer endRefreshing];
+    }
     _off ++ ;
     [self loadListData:_off];
 }
@@ -149,6 +138,12 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return kHvertical(210);
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (self.dataArray.count==0) {
+        return screenHeight-64;
+    }
+    return 0;
+}
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     VipCardOrderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"VipCardOrderListTableViewCellId"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -156,6 +151,19 @@
     [cell configModel:model];
     return cell;
 }
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *backView = [Factory createViewWithBackgroundColor:ClearColor frame:_mainTableView.frame];
+    //无订单提示图片
+    UIImageView *picImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWvertical(75),kWvertical(102), kWvertical(246), kWvertical(178))];
+    picImageView.image = [UIImage imageNamed:@"bg_set_photo"];
+    [backView addSubview:picImageView];
+
+    UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(0, picImageView.y_height + kHvertical(29), screenWidth, kHvertical(15)) textColor:RGB(98,98,98) fontSize:kHorizontal(15) Title:@"暂无君高会籍订单！"];
+    [descLabel setTextAlignment:NSTextAlignmentCenter];
+    [backView addSubview:descLabel];
+    return backView;
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     VipCardOrderListModel *model = self.dataArray[indexPath.row];
     VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];

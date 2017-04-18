@@ -61,9 +61,6 @@
 
 -(void)createHeader
 {
-//    _viewHeader = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 64*screenWidth/375)];
-//    _viewHeader.backgroundColor = [UIColor colorWithHexString:BG_color];
-//    [self.view addSubview:_viewHeader];
     
     _btnDelete = [UIButton buttonWithType:UIButtonTypeCustom];
     _btnDelete.backgroundColor = [UIColor whiteColor];
@@ -78,6 +75,8 @@
     _btnDelete.layer.cornerRadius = 8*screenWidth/375;
     _btnDelete.layer.masksToBounds = YES;
     [_btnDelete addTarget:self action:@selector(addBankCardClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    _btnDelete.hidden = true;
     
 }
 #pragma mark --添加银行卡按钮
@@ -135,8 +134,9 @@
                 [model setValuesForKeysWithDictionary:dicList];
                 [_dataArray addObject:model];
             }
+            _btnDelete.hidden = true;
             if ([_dataArray count] == 0) {
-                
+                _btnDelete.hidden = false;
                 [_tableView removeFromSuperview];
                 [_btnDelete removeFromSuperview];
                 
@@ -150,7 +150,6 @@
                 textLB.numberOfLines = 0;
                 textLB.text = @"您还没有绑定银行卡哦！";
                 [self.view addSubview:textLB];
-                
                 
                 NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"赶快添加吧！"];
                 [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32B14D"] range:NSMakeRange(2, 2)];

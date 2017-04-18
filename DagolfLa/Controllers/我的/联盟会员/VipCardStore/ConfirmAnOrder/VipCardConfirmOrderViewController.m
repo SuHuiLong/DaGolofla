@@ -13,7 +13,7 @@
 #import "VipCardAgreementViewController.h"
 #import "VipCardSellPhoneViewController.h"
 #import "JGDConfirmPayViewController.h"  // 支付界面
-#import "VipCardAgreementViewController.h"
+#import "UseMallViewController.h"
 @interface VipCardConfirmOrderViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 /**
@@ -78,10 +78,10 @@
     UILabel *titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, kWvertical(200), kHvertical(50)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:@"会员信息"];
     [backView addSubview:titleLabel];
     
-    UILabel *inputAlertLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, screenWidth-kWvertical(25), kHvertical(51)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"请请输入会员信息"];
+    UILabel *inputAlertLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, screenWidth-kWvertical(25), kHvertical(51)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"请输入会员信息"];
     [inputAlertLabel setTextAlignment:NSTextAlignmentRight];
     [backView addSubview:inputAlertLabel];
-    UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(inputAlertLabel.x_width + kWvertical(5), kHvertical(20), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"sildRighth"]];
+    UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(inputAlertLabel.x_width + kWvertical(5), kHvertical(20), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"darkArrow"]];
     [backView addSubview:arrowImageView];
     //浅灰
     UIView *bottomView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, backView.y_height-kWvertical(10), screenWidth, kHvertical(10))];
@@ -104,10 +104,15 @@
     //分割线
     UIView *line = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, kHvertical(50), screenWidth, 1)];
     [backView addSubview:line];
+    //头像背景
+    UIView *userImageBackView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(10), kHvertical(71), kHvertical(61), kHvertical(61))];
+    userImageBackView.layer.borderColor = RGB(229,229,229).CGColor;
+    userImageBackView.layer.borderWidth = 1;
+    [backView addSubview:userImageBackView];
     //用户头像
-    NSURL *userImageUrl = [NSURL URLWithString:self.inputModel.picHeadURL];
-    UIImageView *headImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(71), kHvertical(61), kHvertical(61)) Image:nil];
-    [headImageView sd_setImageWithURL:userImageUrl placeholderImage:nil];
+    NSURL *userImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@@200w_200h_2o",self.inputModel.picHeadURL]];
+    UIImageView *headImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(11), kHvertical(72), kHvertical(59), kHvertical(59)) Image:nil];
+    [headImageView sd_setImageWithURL:userImageUrl placeholderImage:[UIImage imageNamed:@"moren"]];
     headImageView.backgroundColor = RandomColor;
     [backView addSubview:headImageView];
     //用户名
@@ -138,7 +143,7 @@
     UILabel *editLabel = [Factory createLabelWithFrame:CGRectMake(screenWidth - kWvertical(80), kHvertical(74), kWvertical(55), kHvertical(13)) textColor:RGB(178,178,178) fontSize:kHorizontal(13) Title:@"编辑信息"];
     [editLabel setTextAlignment:NSTextAlignmentRight];
     [backView addSubview:editLabel];
-    UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(editLabel.x_width + kWvertical(5), kHvertical(74), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"sildRighth"]];
+    UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(editLabel.x_width + kWvertical(5), kHvertical(74), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"darkArrow"]];
     [backView addSubview:arrowImageView];
     //浅灰
     UIView *bottomView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, backView.y_height-kWvertical(20), screenWidth, kHvertical(20))];
@@ -155,12 +160,20 @@
  */
 -(UIView *)cardInformationView{
     UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(211))];
+    //卡片背景
+    UIView *cardBackView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(10), kHvertical(22), kWvertical(92), kHvertical(58))];
+    cardBackView.layer.masksToBounds = true;
+    cardBackView.layer.cornerRadius = kWvertical(4);
+    cardBackView.layer.borderColor = RGB(229,229,229).CGColor;
+    cardBackView.layer.borderWidth = 1;
+    [backView addSubview:cardBackView];
     //卡片图片
     NSURL *cardUrl = [NSURL URLWithString:self.dataModel.bigPicURL];
-    UIImageView *cardImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(22), kWvertical(92), kHvertical(58)) Image:nil];
-    [cardImageView sd_setImageWithURL:cardUrl placeholderImage:nil];
+    UIImageView *cardImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(12), kHvertical(24), kWvertical(88), kHvertical(54)) Image:nil];
+    [cardImageView sd_setImageWithURL:cardUrl placeholderImage:[UIImage imageNamed:@"moren"]];
+    cardImageView.layer.masksToBounds = true;
+    cardImageView.layer.cornerRadius = kWvertical(4);
     [backView addSubview:cardImageView];
-    cardImageView.backgroundColor = RandomColor;
     //卡片名
     NSString *cardName = self.dataModel.name;
     UILabel *cardNameLabel = [Factory createLabelWithFrame:CGRectMake(cardImageView.x_width + kWvertical(11), kHvertical(25), kWvertical(150), kHvertical(26)) textColor:RGB(49, 49, 49) fontSize:kHorizontal(15) Title:cardName];
@@ -251,7 +264,7 @@
     sellPhoneTextLabel.userInteractionEnabled = true;
     [sellPhoneTextLabel addGestureRecognizer:sellPhoneTap];
     [whiteView addSubview:sellPhoneTextLabel];
-    UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(sellPhoneTextLabel.x_width + kWvertical(5), kHvertical(20), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"sildRighth"]];
+    UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(sellPhoneTextLabel.x_width + kWvertical(5), kHvertical(20), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"darkArrow"]];
     [whiteView addSubview:arrowImageView];
     //君高协议
     UIButton *circleBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(10), kHvertical(61), kHvertical(16), kHvertical(16)) NormalImage:@"icn_allianceAgreementSelect" SelectedImage:@"icn_allianceAgreementUnselect" target:self selector:@selector(circleBtnClick:)];
@@ -392,8 +405,10 @@
  @param btn 点击可以查看详情
  */
 -(void)agreementBtnClick:(UIButton *)btn{
-    VipCardAgreementViewController *vc = [[VipCardAgreementViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    UseMallViewController *vc = [[UseMallViewController alloc]init];
+    vc.linkUrl = @"http://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
+    vc.isNewColor = true;
+    [self.navigationController pushViewController:vc animated:YES];    
 }
 /**
  编辑信息
