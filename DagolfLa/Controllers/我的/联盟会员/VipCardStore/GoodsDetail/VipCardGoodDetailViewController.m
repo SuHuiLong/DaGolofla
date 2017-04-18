@@ -150,21 +150,25 @@
     UILabel *equityYears = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), line.y_height + kHvertical(41), screenWidth - kWvertical(20), kHvertical(13)) textColor:RGB(98,98,98) fontSize:kHorizontal(14) Title:nil];
     NSInteger years = self.dataModel.expiry;
     NSInteger schemeCount = self.dataModel.schemeMaxCount;
-    NSMutableAttributedString *equitYearsStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"服务年限： 服务年限：%ld年 / %ld次联盟价击球权益",years,schemeCount]];
-    [equitYearsStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(15)] range:NSMakeRange(0, 6)];
-    [equitYearsStr addAttribute:NSForegroundColorAttributeName value:RGB(160, 160, 160) range:NSMakeRange(0, 6)];
+    NSMutableAttributedString *equitYearsStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"服务年限：%ld年 / %ld次联盟价击球权益",years,schemeCount]];
+    [equitYearsStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(15)] range:NSMakeRange(0, 5)];
+    [equitYearsStr addAttribute:NSForegroundColorAttributeName value:RGB(160, 160, 160) range:NSMakeRange(0, 5)];
     equityYears.attributedText = equitYearsStr;
     [detailBackView addSubview:equityYears];
     //权益详情
-    UILabel *equityDetail = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), equityYears.y_height + kHvertical(12), equityYears.width, equityYears.height) textColor:RGB(98,98,98) fontSize:kHorizontal(15) Title:nil];
+    UILabel *equityDetailTitle = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), equityYears.y_height + kHvertical(12), equityYears.width, equityYears.height+kHvertical(3)) textColor:RGB(160, 160, 160) fontSize:kHorizontal(15) Title:@"特殊权限："];
+    [equityDetailTitle sizeToFitSelf];
+    [detailBackView addSubview:equityDetailTitle];
     NSString *equitDetailString = @"暂无";
     if (self.dataModel.enjoyService) {
         equitDetailString = self.dataModel.enjoyService;
     }
-    NSMutableAttributedString *equityDetailStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"特殊权限： %@",equitDetailString]];
-    [equityDetailStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(15)] range:NSMakeRange(0, 6)];
-    [equityDetailStr addAttribute:NSForegroundColorAttributeName value:RGB(160, 160, 160) range:NSMakeRange(0, 6)];
-    equityDetail.attributedText = equityDetailStr;
+
+    UILabel *equityDetail = [Factory createLabelWithFrame:CGRectMake(equityDetailTitle.x_width, equityYears.y_height + kHvertical(12), screenWidth - equityDetailTitle.x_width, equityYears.height) textColor:RGB(98,98,98) fontSize:kHorizontal(15) Title:equitDetailString];
+    equityDetail.numberOfLines = 0;
+    [equityDetail sizeToFit];
+    detailBackView.height = equityDetail.y_height + kHvertical(15);
+    equityDetail.text = equitDetailString;
     [detailBackView addSubview:equityDetail];
 }
 /**
@@ -272,11 +276,7 @@
     
     NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"cardTypeKey=%@&userKey=%@dagolfla.com",_cardTypeKey,DEFAULF_USERID]];
     //分享链接
-    
-    
     NSString *shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/league/sysLeagueCardInfo.html?userKey=%@&cardTypeKey=%@&md5=%@&share=1", DEFAULF_USERID,_cardTypeKey,md5Value];
-
-    
     //分享图片
     UIImage *iconImageFull = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.dataModel.bigPicURL]]];
     //分享标题
@@ -325,27 +325,9 @@
         data.shareText = [NSString stringWithFormat:@"%@%@",desc,shareUrl];
         
         
-        [[UMSocialControllerService defaultControllerService] setSocialData:data];
-        //2.设置分享平台
-        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-
 //        [[UMSocialControllerService defaultControllerService] setSocialData:data];
-//        [[UMSocialControllerService defaultControllerService] setSocialUIDelegate:self];
-        //2.设置分享平台
+//        //2.设置分享平台
 //        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
-        
-        
-        
-//        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:[NSString stringWithFormat:@"%@%@", desc,shareUrl ] image:iconImage location:nil urlResource:[[UMSocialUrlResource alloc]  initWithSnsResourceType:UMSocialUrlResourceTypeImage url:shareUrl]  presentedController:nil completion:^(UMSocialResponseEntity *response){
-//            if (response.responseCode == UMSResponseCodeSuccess) {
-//                NSLog(@"分享成功！");
-//            }
-//        }];
-        
-        
-        
-        
-        
     }
 }
 

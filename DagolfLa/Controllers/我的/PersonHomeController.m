@@ -176,8 +176,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     _iconImg.contentMode = UIViewContentModeScaleAspectFill;
 
     _iconImg.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageIconACt)];
-//    [_iconImg addGestureRecognizer:tap];
+
     [_profileView addSubview:_iconImg];
     
     //用户名
@@ -371,13 +370,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
                     
                 }));
                 
-                //替换备注名称
-//                NoteModel *model = [NoteHandlle selectNoteWithUID:self.strMoodId];
-//                if ([model.userremarks isEqualToString:@"(null)"] || [model.userremarks isEqualToString:@""] || model.userremarks == nil) {
                     _nameLabel.text = _model.userName;
-//                }else{
-//                    _nameLabel.text = model.userremarks;
-//                }
                  if ([_model.sex integerValue] == 0) {
                     _sexImg.image = [UIImage imageNamed:@"xb_n"];
                 }else{
@@ -473,10 +466,7 @@ static NSString *const orderDetailCellIdentifier = @"OtherDataTableViewCell";
     
     [[PostDataRequest sharedInstance] postDataRequest:@"userMood/getUserMood.do" parameter:@{@"userId":_strMoodId, @"page":@1,@"rows":@10} success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        //NSLog(@">>>>>>>>>>%@",[dict objectForKey:@"rows"]);
         if ([[dict objectForKey:@"success"] boolValue]) {
-            //NSLog(@"chenggong");
-            
             [_dataArray removeAllObjects];
             
             for (NSDictionary *deatilDic in [dict objectForKey:@"rows"]) {

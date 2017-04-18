@@ -122,7 +122,7 @@
         } completionBlock:^(id data) {
             NSLog(@"data == %@", data);
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                [[ShowHUD showHUD]showToastWithText:@"发布成功！" FromView:self.view];
+                [LQProgressHud showMessage:@"发布成功！"];
                 [self performSelector:@selector(pushCtrl) withObject:self afterDelay:TIMESlEEP];
             }else{
                 if ([data objectForKey:@"packResultMsg"]) {
