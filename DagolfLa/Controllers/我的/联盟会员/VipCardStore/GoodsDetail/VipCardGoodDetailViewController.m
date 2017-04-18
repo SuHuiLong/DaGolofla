@@ -95,23 +95,23 @@
  */
 -(void)createHeader{
     //球场图片
-    NSURL *picUrl = [NSURL URLWithString:self.dataModel.bigPicURL];
+    NSURL *picUrl = [NSURL URLWithString:self.dataModel.bgPicURL];
     self.parkImageView = [Factory createImageViewWithFrame:CGRectMake(0, 0, screenWidth, kHvertical(210)) Image:nil];
-    [self.parkImageView sd_setImageWithURL:picUrl placeholderImage:nil];
+    [self.parkImageView sd_setImageWithURL:picUrl placeholderImage:[UIImage imageNamed:@"icn_allianceBackView"]];
     [self.mainBackView addSubview:self.parkImageView];
-    //渐变图
-    self.gradientImageView = [[UIImageView alloc]initWithFrame:self.parkImageView.frame];
-    [self.gradientImageView setImage:[UIImage imageNamed:@"backChange"]];
-    [self.mainBackView addSubview:self.gradientImageView];
+//    //渐变图
+//    self.gradientImageView = [[UIImageView alloc]initWithFrame:self.parkImageView.frame];
+//    [self.gradientImageView setImage:[UIImage imageNamed:@"backChange"]];
+//    [self.mainBackView addSubview:self.gradientImageView];
 
-    //君高联盟
-    UIButton *allianceBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, kHvertical(185),kWvertical(100),  kWvertical(20))];
-    [allianceBtn addTarget:self action:@selector(allianceBtnClick) forControlEvents:(UIControlEventTouchUpInside)];
-    [allianceBtn setImage:[UIImage imageNamed:@"booking_details"] forState:(UIControlStateNormal)];
-    [allianceBtn setTitle:@"君高联盟" forState:(UIControlStateNormal)];
-    allianceBtn.titleLabel.font = [UIFont systemFontOfSize:kHorizontal(15)];
-    allianceBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10 * ProportionAdapter, 0, 0);
-    [self.mainBackView addSubview:allianceBtn];
+//    //君高联盟
+//    UIButton *allianceBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, kHvertical(185),kWvertical(100),  kWvertical(20))];
+//    [allianceBtn addTarget:self action:@selector(allianceBtnClick) forControlEvents:(UIControlEventTouchUpInside)];
+//    [allianceBtn setImage:[UIImage imageNamed:@"booking_details"] forState:(UIControlStateNormal)];
+//    [allianceBtn setTitle:@"君高联盟" forState:(UIControlStateNormal)];
+//    allianceBtn.titleLabel.font = [UIFont systemFontOfSize:kHorizontal(15)];
+//    allianceBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10 * ProportionAdapter, 0, 0);
+//    [self.mainBackView addSubview:allianceBtn];
 
     //标题背景
     UIView *titleBackView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0,  kHvertical(221), screenWidth, kHvertical(81))];

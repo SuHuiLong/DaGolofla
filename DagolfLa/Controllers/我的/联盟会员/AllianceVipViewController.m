@@ -107,7 +107,7 @@
     self.navigationItem.rightBarButtonItem = addBtn;
     
     //选择
-    NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"会籍卡",@"使用记录",nil];
+    NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"联盟会籍",@"使用记录",nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc]initWithItems:segmentedArray];
     [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
     segmentedControl.frame = CGRectMake(screenWidth/2 - kWvertical(60), kHvertical(25), kWvertical(120), kHvertical(25));
@@ -486,10 +486,12 @@
             headView.descLabel.attributedText = AttributedStr;
             
             headView.descLabel.enabledTapEffect = NO;
-            [headView.descLabel yb_addAttributeTapActionWithStrings:@[@"立即绑定"] tapClicked:^(NSString *string, NSRange range,NSInteger index) {
-                
+            __weak typeof(self) weakself = self;
+            [headView.descLabel yb_addAttributeTapActionWithStrings:@[@"立即",@"绑定"] tapClicked:^(NSString *string, NSRange range,NSInteger index) {
+                [weakself addUnaddCard];
             }];
             [headView.descLabel sizeToFit];
+            
             headView.goodsListButton.y = headView.descLabel.y_height+kHvertical(55);
         }else{
             if (_mainCollectionView.numberOfSections == 1) {

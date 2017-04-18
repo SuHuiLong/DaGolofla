@@ -305,12 +305,12 @@
                            @"userKey":DEFAULF_USERID,
                            @"md5":md5Value,
                            };
-    [[JsonHttp jsonHttp] httpRequest:@"league/getSystemLeagueUser" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"league/getSystemLeagueUInfo" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
         BOOL Success = [[data objectForKey:@"packSuccess"] boolValue];
         if (Success) {
-            NSDictionary *luserDict = [data objectForKey:@"luser"];
+            NSDictionary *luserDict = [data objectForKey:@"luInfo"];
             VipCardConfirmOrderModel *model = [VipCardConfirmOrderModel modelWithDictionary:luserDict];
             NSString *phoneStr = [NSString string];
             if (self.inputModel.sellPhoneStr) {
@@ -337,7 +337,7 @@
     NSDictionary *dict = @{
                            @"userKey":DEFAULF_USERID,
                            @"cardTypeKey":cardId,
-                           @"luserKey":_inputModel.timeKey,
+                           @"luinfoKey":_inputModel.timeKey,
                            @"number":cardNumStr,
                            @"sellMobile":sellMobileStr
                            };

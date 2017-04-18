@@ -50,10 +50,10 @@
     [self addSubview:_nocanDescLabel];
     
     //跳转联盟卡商城按钮
-    self.goodsListButton = [Factory createButtonWithFrame:CGRectMake(screenWidth/2-kWvertical(50), screenHeight - kHvertical(58)-kHvertical(64) - kHvertical(10), kWvertical(100), kHvertical(40)) target:self selector:@selector(clickToGoodsList) Title:nil];
+    self.goodsListButton = [Factory createButtonWithFrame:CGRectMake(screenWidth/2-kWvertical(50), screenHeight - kHvertical(58)-kHvertical(64) - kHvertical(10), kWvertical(120), kHvertical(40)) target:self selector:@selector(clickToGoodsList) Title:nil];
     UIImageView *walletView = [Factory createImageViewWithFrame:CGRectMake(0, kHvertical(10), kHorizontal(20), kHorizontal(20)) Image:[UIImage imageNamed:@"icn_allianceCardstore"]];
     [self.goodsListButton addSubview:walletView];
-    UILabel *goodsList = [Factory createLabelWithFrame:CGRectMake(walletView.x_width + kWvertical(8), 0, kWvertical(72), self.goodsListButton.height) textColor:RGB(0,134,73) fontSize:kHorizontal(14) Title:@"会籍卡商城"];
+    UILabel *goodsList = [Factory createLabelWithFrame:CGRectMake(walletView.x_width + kWvertical(8), 0, kWvertical(100), self.goodsListButton.height) textColor:RGB(0,134,73) fontSize:kHorizontal(14) Title:@"联盟会籍商城"];
     [self.goodsListButton addSubview:goodsList];
     [self addSubview:self.goodsListButton];
 }

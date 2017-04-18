@@ -43,7 +43,7 @@
  */
 -(void)createNavagationBar{
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
-    self.title = @"会籍卡订单";
+    self.title = @"联盟会籍订单";
 }
 /**
  创建tableView

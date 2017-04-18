@@ -18,6 +18,11 @@
  图片
  */
 @property(nonatomic, copy)NSString *bigPicURL;
+
+/**
+ 界面头显示照片🔗
+ */
+@property(nonatomic, copy)NSString *bgPicURL;
 /**
  卡名
  */
