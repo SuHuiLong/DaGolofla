@@ -10,6 +10,8 @@
 #import "VipCardGoodDetailViewModel.h"
 #import "VipCardConfirmOrderViewController.h"
 #import "VipCardAgreementViewController.h"
+#import "UseMallViewController.h"
+
 @interface VipCardGoodDetailViewController ()<UIScrollViewDelegate,UMSocialUIDelegate>
 /**
  背景界面
@@ -164,7 +166,7 @@
         equitDetailString = self.dataModel.enjoyService;
     }
 
-    UILabel *equityDetail = [Factory createLabelWithFrame:CGRectMake(equityDetailTitle.x_width, equityYears.y_height + kHvertical(12), screenWidth - equityDetailTitle.x_width, equityYears.height) textColor:RGB(98,98,98) fontSize:kHorizontal(15) Title:equitDetailString];
+    UILabel *equityDetail = [Factory createLabelWithFrame:CGRectMake(equityDetailTitle.x_width, equityYears.y_height + kHvertical(12), screenWidth - equityDetailTitle.x_width - kWvertical(10), equityYears.height) textColor:RGB(98,98,98) fontSize:kHorizontal(14) Title:equitDetailString];
     equityDetail.numberOfLines = 0;
     [equityDetail sizeToFit];
     detailBackView.height = equityDetail.y_height + kHvertical(15);
@@ -238,7 +240,9 @@
  君高联盟
  */
 -(void)allianceBtnClick{
-    VipCardAgreementViewController *vc = [[VipCardAgreementViewController alloc] init];
+    UseMallViewController *vc = [[UseMallViewController alloc]init];
+    vc.linkUrl = @"http://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
+    vc.isNewColor = true;
     [self.navigationController pushViewController:vc animated:YES];
 }
 /**

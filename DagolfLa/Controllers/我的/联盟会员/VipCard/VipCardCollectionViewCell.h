@@ -15,6 +15,10 @@
 @property(nonatomic,copy) UIImageView *maskingView;
 //不可用的提示
 @property(nonatomic,copy) UILabel *alertLabel;
+/**
+ 卡片编号
+ */
+@property(nonatomic,copy) UILabel *cardNumberLabel;
 
 -(void)configModel:(VipCardModel *)model;
 @end

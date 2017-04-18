@@ -17,6 +17,8 @@
 
 #import "VipCardOrderListViewController.h"
 #import "VipCardGoodDetailViewController.h"
+#import "UseMallViewController.h"
+
 @interface VipCardOrderDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 /**
  主列表视图
@@ -252,7 +254,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1&&indexPath.row == 2) {
-        VipCardAgreementViewController *vc = [[VipCardAgreementViewController alloc] init];
+        UseMallViewController *vc = [[UseMallViewController alloc]init];
+        vc.linkUrl = @"http://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
+        vc.isNewColor = true;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

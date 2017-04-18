@@ -44,7 +44,7 @@
  创建导航
  */
 -(void)createNavigation{
-    self.title = @"联盟卡商城";
+    self.title = @"会籍卡商城";
 
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     //设置导航背景

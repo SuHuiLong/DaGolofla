@@ -107,7 +107,7 @@
     self.navigationItem.rightBarButtonItem = addBtn;
     
     //选择
-    NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"会员卡",@"使用记录",nil];
+    NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"会籍卡",@"使用记录",nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc]initWithItems:segmentedArray];
     [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
     segmentedControl.frame = CGRectMake(screenWidth/2 - kWvertical(60), kHvertical(25), kWvertical(120), kHvertical(25));
@@ -305,7 +305,7 @@
     //获取被添加数据
     [self addUnaddCard];
 }
-//跳转至联盟卡商城
+//跳转至会籍卡商城
 -(void)clickToGoodsList{
     VipCardGoodsListViewController *vc = [[VipCardGoodsListViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
@@ -526,6 +526,7 @@
     //设置电池栏白色
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     vc.hidesBottomBarWhenPushed = YES;
+    vc.isNewColor = true;
     [self.navigationController pushViewController:vc animated:YES];
     
 }

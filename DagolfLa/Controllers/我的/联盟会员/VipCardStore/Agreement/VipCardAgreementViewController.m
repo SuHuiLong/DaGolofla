@@ -9,6 +9,10 @@
 #import "VipCardAgreementViewController.h"
 
 @interface VipCardAgreementViewController ()
+/**
+ 可返回
+ */
+@property(nonatomic,readonly,getter=canGoBack)BOOL canGoBack;
 //webView
 @property(nonatomic, strong)WKWebView *webView;
 
@@ -16,9 +20,18 @@
 
 @implementation VipCardAgreementViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = true;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = false;
 }
 #pragma mark - CreateView
 -(void)createView{
@@ -42,7 +55,30 @@
     //5.添加到视图
     self.webView = webView;
     [self.view addSubview:webView];
-    
+
+}
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    NSArray  * arrayBack= [[request.URL absoluteString] componentsSeparatedByString:@":"];
+    ////NSLog(@"%@",arrayBack);
+    NSString *backStr = @"backsys";
+    if (![Helper isBlankString:[request.URL absoluteString]]) {
+        if ([arrayBack[0] isEqual:backStr]) {
+            if(!_canGoBack)
+            {
+                self.navigationController.navigationBarHidden=NO;
+                [self.navigationController popViewControllerAnimated:YES];
+                return NO;
+            }else{
+                [webView goBack];
+            }
+        }
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -17,5 +17,9 @@
 @property(nonatomic,copy)NSString *cardStr;
 //卡片id
 @property(nonatomic,copy)NSString *cardId;
+/**
+ 卡编号
+ */
+@property(nonatomic,copy)NSString *cardNumber;
 
 @end
