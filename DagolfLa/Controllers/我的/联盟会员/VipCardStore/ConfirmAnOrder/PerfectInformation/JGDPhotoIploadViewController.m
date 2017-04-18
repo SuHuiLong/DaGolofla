@@ -170,7 +170,7 @@
     [luserDic setObject:@0 forKey:@"certType"];
     [luserDic setObject:[self.infoDic objectForKey:@"certNumber"] forKey:@"certNumber"];
 
-    [certDic setObject:luserDic forKey:@"luser"];
+    [certDic setObject:luserDic forKey:@"luinfo"];
     
     [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
 
@@ -190,7 +190,7 @@
                 if ([data objectForKey:@"url"]) {
                     [luserDic setObject:[data objectForKey:@"url"] forKey:@"picCertURLs"];
                     
-                    [[JsonHttp jsonHttp] httpRequestHaveSpaceWithMD5:@"league/doSaveSystemLeagueUser" JsonKey:nil withData:certDic failedBlock:^(id errType) {
+                    [[JsonHttp jsonHttp] httpRequestHaveSpaceWithMD5:@"league/doSaveSystemLeagueUInfo" JsonKey:nil withData:certDic failedBlock:^(id errType) {
                         [[ShowHUD showHUD]hideAnimationFromView:self.view];
 
                     } completionBlock:^(id data) {
