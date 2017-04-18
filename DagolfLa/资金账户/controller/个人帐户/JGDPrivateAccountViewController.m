@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSNumber *hasUserBankCard;
 @property (nonatomic, copy) NSString *name;
 
+@property (nonatomic, strong) UIButton *takeMoneyButton;
 
 @end
 
@@ -45,12 +46,18 @@
         NSLog(@"errtype == %@", errType);
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([[data objectForKey:@"hasWithDraw"] integerValue] == 0) {
+                self.takeMoneyButton.hidden = YES;
+            }else{
+                self.takeMoneyButton.hidden = NO;
+            }
             self.money = [data objectForKey:@"money"];
             self.hasUserRealName = [data objectForKey:@"hasUserRealName"];
             self.isSetPayPassWord = [data objectForKey:@"isSetPayPassWord"];
             self.hasUserBankCard = [data objectForKey:@"hasUserBankCard"];
             self.name = [data objectForKey:@"name"];
-
+            
             self.moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",[self.money floatValue]];
             
             UITapGestureRecognizer *gest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeView:)];
@@ -117,16 +124,16 @@
     self.moneyLabel.textColor = [UIColor whiteColor];
     [view addSubview:self.moneyLabel];
     
-    UIButton *button = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    button.frame = CGRectMake(120 * ScreenWidth / 375, 136 * ScreenWidth / 375, 135 * ScreenWidth / 375, 48 * ScreenWidth / 375) ;
-    [button setBackgroundImage:[UIImage imageNamed:@"tixiananniu"] forState:(UIControlStateNormal)];
+    self.takeMoneyButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    self.takeMoneyButton.frame = CGRectMake(120 * ScreenWidth / 375, 136 * ScreenWidth / 375, 135 * ScreenWidth / 375, 48 * ScreenWidth / 375) ;
+    [self.takeMoneyButton setBackgroundImage:[UIImage imageNamed:@"tixiananniu"] forState:(UIControlStateNormal)];
 //    [button setImage:[UIImage imageNamed:@"tixiananniu"] forState:(UIControlStateNormal)];
-    [button addTarget:self action:@selector(takeMoney:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.takeMoneyButton addTarget:self action:@selector(takeMoney:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"sysCell"];
     
     
     [self.view addSubview:self.tableView];
-    [self.view insertSubview:button aboveSubview:self.tableView];
+    [self.view insertSubview:self.takeMoneyButton aboveSubview:self.tableView];
 
 }
 
