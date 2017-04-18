@@ -38,7 +38,7 @@
     //权益
     NSString *enjoyService = [cardTypeDict objectForKey:@"enjoyService"];
     //权益细则
-    NSString *enjoyDetail = @"权益细则请查阅《君高高尔夫联盟会籍服务协议》";
+    NSString *enjoyDetail = @"权益细则请查阅《君高高尔夫会籍入会协议书》";
     //用户名
     NSString *userName = [luserDict objectForKey:@"userName"];
     //性别 0：女 1：男

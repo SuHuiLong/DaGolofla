@@ -49,16 +49,16 @@
     [_cardImageView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"moren"]];
     
     //名字和金额文字
-    NSString *nameAndPriceText = [NSString stringWithFormat:@"%@ ¥%@",nameStr,price];
+    NSString *nameAndPriceText = [NSString stringWithFormat:@"%@  ¥%@",nameStr,price];
     NSMutableAttributedString *nameAndPriceTextStr = [[NSMutableAttributedString alloc]initWithString:nameAndPriceText];
     //设置¥字号
-    [nameAndPriceTextStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:kHorizontal(15)] range:NSMakeRange(nameStr.length+1, 1)];
+    [nameAndPriceTextStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:kHorizontal(15)] range:NSMakeRange(nameStr.length+2, 1)];
     //设置金额颜色
-    [nameAndPriceTextStr addAttribute:NSForegroundColorAttributeName value:RGB(252,90,1) range:NSMakeRange(nameStr.length+1, price.length+1)];
+    [nameAndPriceTextStr addAttribute:NSForegroundColorAttributeName value:RGB(252,90,1) range:NSMakeRange(nameStr.length+2, price.length+1)];
     _nameAndPrice.attributedText = nameAndPriceTextStr;
     
     //权益文字
-    NSString *equityText = [NSString stringWithFormat:@"%@年会员权益 尊贵会员击球优惠 %@/次",expiry,schemeMaxCount];
+    NSString *equityText = [NSString stringWithFormat:@"%@年会员权益  尊贵会员击球优惠  %@次/年",expiry,schemeMaxCount];
     NSMutableAttributedString *equityTextStr = [[NSMutableAttributedString alloc]initWithString:equityText];
     //设置/字号
     [equityTextStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:kHorizontal(17)] range:NSMakeRange(equityText.length-2, 1)];

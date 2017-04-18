@@ -443,11 +443,11 @@
     NSInteger totalCardNum = self.dataArray.count + self.noCanUseArray.count;
     
     //没有未添加卡片文字描述
-    NSString *noneCard = @"您还未添加任何君高高尔夫联盟会员卡，点击右上角『+』，添加您的联盟会员卡。添加会员卡后，就能在APP中享受联盟会员价预订球场的权益。";
+    NSString *noneCard = @"您还没有加入联盟会籍，点击联盟会籍商城，加入君高联盟，立即开始享受联盟优惠吧！";
     //用户手机号上有未添加的卡片
     NSString *unAddCardNum = [NSString stringWithFormat:@"%ld",(long)_unAddCardNum];
     NSString *mobile = [UserDefaults objectForKey:@"mobile"];
-    NSString *haveCard = [NSString stringWithFormat:@"您的手机号%@下有 %@ 张联盟卡可绑定。绑定后可通过君高高尔夫APP，以联盟价预订联盟球场，并可随时查看联盟卡使用情况。被绑定的联盟卡可随时解绑。",mobile,unAddCardNum];
+    NSString *haveCard = [NSString stringWithFormat:@"您的手机号%@下有 %@ 个会籍可绑定，绑定后可通过君高高尔夫APP，以会籍优惠价预订球场，并可随时查看会籍权益使用情况。被绑定的会籍可随时解绑。",mobile,unAddCardNum];
     
     if (indexPath.section==0&&totalCardNum==0) {
         headView.goodsListButton.hidden = FALSE;

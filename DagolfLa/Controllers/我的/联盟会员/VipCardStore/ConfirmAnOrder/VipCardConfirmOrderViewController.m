@@ -262,7 +262,7 @@
     [descLabel sizeToFit];
     [backView addSubview:descLabel];
     //服务协议
-    UILabel *titleTestLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) fontSize:kHorizontal(13) Title:@"《君高高尔夫联盟会籍服务协议》"];
+    UILabel *titleTestLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) fontSize:kHorizontal(13) Title:@"《君高高尔夫会籍入会协议书》"];
     [titleTestLabel sizeToFit];
     UIButton *agreementBtn = [Factory createButtonWithFrame:CGRectMake(descLabel.x_width, descLabel.y+kHvertical(1), titleTestLabel.width, kHorizontal(13)) titleFont:kHorizontal(13) textColor:RGB(0,134,73) backgroundColor:ClearColor target:self selector:@selector(agreementBtnClick:) Title:titleTestLabel.text];
     [backView addSubview:agreementBtn];
