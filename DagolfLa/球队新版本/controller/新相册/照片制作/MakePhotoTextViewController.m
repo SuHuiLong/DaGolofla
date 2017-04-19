@@ -116,6 +116,7 @@
                            @"name":name,
                            @"list":listArray
                            };
+    
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"picShare/doCreatePicShare" JsonKey:nil withData:dict failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {

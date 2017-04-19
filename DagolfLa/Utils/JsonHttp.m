@@ -90,7 +90,7 @@ static JsonHttp *jsonHttp = nil;
     
     paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
     paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"%@dagolfla.com", paraStr]];
     
