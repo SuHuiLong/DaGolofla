@@ -55,8 +55,8 @@
         [self.normalBtn addSubview:self.normalLB];
         
         
-        self.remainderBallLB = [Helper lableRect:CGRectMake(10 * ProportionAdapter, 202 * ProportionAdapter, 170 * ProportionAdapter, 15 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:11 * ProportionAdapter text:@"年度剩余可预定球位数：0位" textAlignment:(NSTextAlignmentCenter)];
-        [self.contentView addSubview:self.remainderBallLB];
+//        self.remainderBallLB = [Helper lableRect:CGRectMake(10 * ProportionAdapter, 202 * ProportionAdapter, 170 * ProportionAdapter, 15 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:11 * ProportionAdapter text:@"年度剩余可预定球位数：0位" textAlignment:(NSTextAlignmentCenter)];
+//        [self.contentView addSubview:self.remainderBallLB];
         
         UILabel *lineLB = [Helper lableRect:CGRectMake(0, 239.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter) labelColor:[UIColor whiteColor] labelFont:1 text:@"" textAlignment:(NSTextAlignmentCenter)];
         lineLB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -74,13 +74,13 @@
     self.serviceLB.text = [dataDic objectForKey:@"servicePj"];
     
     
-    NSMutableAttributedString *remainderStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"年度剩余可预订球位数：%@位", [dataDic objectForKey:@"remoteRemainingNumber"]]];
-    NSString *lengthStr = [NSString stringWithFormat:@"%@", [dataDic objectForKey:@"remoteRemainingNumber"]];
-    [remainderStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(11, lengthStr.length)];
-    // 颜色
-    [remainderStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#626262"] range:NSMakeRange(11, lengthStr.length)];
-
-    self.remainderBallLB.attributedText = remainderStr;
+//    NSMutableAttributedString *remainderStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"年度剩余可预订球位数：%@位", [dataDic objectForKey:@"remoteRemainingNumber"]]];
+//    NSString *lengthStr = [NSString stringWithFormat:@"%@", [dataDic objectForKey:@"remoteRemainingNumber"]];
+//    [remainderStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13 * ProportionAdapter] range:NSMakeRange(11, lengthStr.length)];
+//    // 颜色
+//    [remainderStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#626262"] range:NSMakeRange(11, lengthStr.length)];
+//
+//    self.remainderBallLB.attributedText = remainderStr;
     
     
     NSMutableAttributedString *leagueStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"¥ %@", self.leagueMoney]];
@@ -88,7 +88,7 @@
     self.vipPriceLB.attributedText = leagueStr;
     
     if (!self.hasUserCard) {
-        self.vipPriceLB.text = @"**";
+        self.vipPriceLB.text = @"***";
         [self.vipBtn setImage:[UIImage imageNamed:@"booking_pay_nocolor"] forState:(UIControlStateNormal)];
     }else{
         self.vipPriceLB.textColor = [UIColor colorWithHexString:@"#dd0a14"];
