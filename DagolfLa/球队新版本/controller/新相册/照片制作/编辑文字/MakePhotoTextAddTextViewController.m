@@ -92,7 +92,7 @@
     if (_addText!=nil) {
         NSString *strUrl = [textStr stringByReplacingOccurrencesOfString:@" " withString:@""];
         if (strUrl.length!=0) {
-            _addText(strUrl);
+            _addText(textStr);
             [self.navigationController popViewControllerAnimated:YES];
             return;
         }

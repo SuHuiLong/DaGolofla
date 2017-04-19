@@ -418,13 +418,15 @@
     if (_unAddCardNum>0) {
         if (self.noCanUseArray.count==0&&section==1){
             return CGSizeMake(screenWidth, kHvertical(200));
-        }else if (section==2){
-            return CGSizeMake(screenWidth, kHvertical(200));
         }
     }
     if (section == 1) {
         return CGSizeMake(screenWidth, kHvertical(80));
     }
+    if (section == 2) {
+        return CGSizeMake(screenWidth, kHvertical(200));
+    }
+    
     return CGSizeMake(0, 0);
 }
 // 设置collectionView的头
@@ -470,14 +472,14 @@
     if (indexPath.section==_mainCollectionView.numberOfSections-1) {
         headView.goodsListButton.hidden = FALSE;
         if (_unAddCardNum>0) {
-            headView.alertImageView.hidden = TRUE;
             headView.descLabel.hidden = FALSE;
             headView.addBtn.hidden = FALSE;
-            headView.descLabel.text = haveCard;
-            headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
             CGFloat addListY = screenHeight - 64 - kHvertical(55);
-            if (self.dataArray.count>0) {
-                headView.alertImageView.hidden = FALSE;
+            if (self.dataArray.count == 0) {
+                headView.descLabel.y = headView.alertImageView.y_height+kHvertical(30);
+                headView.descLabel.text = haveCard;
+                headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
+            }else{
                 haveCard = [NSString stringWithFormat:@"%@ 立即绑定",haveCard];
                 headView.descLabel.y = kHvertical(0);
                 headView.descLabel.text = haveCard;
@@ -485,8 +487,7 @@
                 NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
                 [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
                 headView.descLabel.attributedText = AttributedStr;
-                [headView.descLabel changeLineWithSpace:5.0f];
-                addListY = headView.descLabel.y_height+kHvertical(55);
+                addListY = headView.descLabel.y_height+kHvertical(40);
             }
             
             [headView.descLabel sizeToFit];
