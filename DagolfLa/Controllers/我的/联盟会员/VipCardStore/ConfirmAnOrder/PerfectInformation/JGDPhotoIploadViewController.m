@@ -284,13 +284,13 @@
                 if (btn.tag == 520) {
                     self.personView.image = self.uploadImage;
                     
-                                        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 1.0)] forKey:@"picHeadURL"];
+                                        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.7)] forKey:@"picHeadURL"];
                     
                 }else if (btn.tag == 530){
                     
                     self.certificatesView.image = self.uploadImage;
                     
-                                        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 1.0)] forKey:@"picCertURLs"];
+                                        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.7)] forKey:@"picCertURLs"];
                     
                 }
                 
