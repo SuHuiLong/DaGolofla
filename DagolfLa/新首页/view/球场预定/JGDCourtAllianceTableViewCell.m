@@ -55,8 +55,8 @@
         [self.normalBtn addSubview:self.normalLB];
         
         
-//        self.remainderBallLB = [Helper lableRect:CGRectMake(10 * ProportionAdapter, 202 * ProportionAdapter, 170 * ProportionAdapter, 15 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:11 * ProportionAdapter text:@"年度剩余可预定球位数：0位" textAlignment:(NSTextAlignmentCenter)];
-//        [self.contentView addSubview:self.remainderBallLB];
+        self.remainderBallLB = [Helper lableRect:CGRectMake(10 * ProportionAdapter, 202 * ProportionAdapter, 170 * ProportionAdapter, 15 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:11 * ProportionAdapter text:@"年度剩余可预定球位数：0位" textAlignment:(NSTextAlignmentCenter)];
+        [self.contentView addSubview:self.remainderBallLB];
         
         UILabel *lineLB = [Helper lableRect:CGRectMake(0, 239.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter) labelColor:[UIColor whiteColor] labelFont:1 text:@"" textAlignment:(NSTextAlignmentCenter)];
         lineLB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];

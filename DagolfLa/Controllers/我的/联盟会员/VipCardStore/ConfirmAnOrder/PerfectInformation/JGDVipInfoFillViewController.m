@@ -152,6 +152,25 @@
             return icell;
         }
         
+    } else if (indexPath.section == 2) {
+        
+        JGDInfoTextFieldTableViewCell *icell = [tableView dequeueReusableCellWithIdentifier:@"infoTextField"];
+        icell.infoTextField.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
+        icell.infoTextField.text = self.inputArray[indexPath.section][indexPath.row];
+        icell.infoTextField.delegate = self;
+        
+        if (indexPath.row == 1) {
+            icell.infoTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+
+        } else if (indexPath.row == 0){
+            
+            icell.accessoryType = UITableViewCellAccessoryNone;
+            icell.infoTextField.text = @"身份证";
+            icell.infoTextField.enabled = NO;
+            
+        }
+        return icell;
+        
     }else{
         
         JGDInfoTextFieldTableViewCell *icell = [tableView dequeueReusableCellWithIdentifier:@"infoTextField"];
@@ -163,12 +182,6 @@
             icell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             icell.infoTextField.enabled = NO;
             
-        }else if (indexPath.section == 2 && indexPath.row == 0){
-            
-            icell.accessoryType = UITableViewCellAccessoryNone;
-            icell.infoTextField.text = @"身份证";
-            icell.infoTextField.enabled = NO;
-
         }else{
             icell.accessoryType = UITableViewCellAccessoryNone;
         }

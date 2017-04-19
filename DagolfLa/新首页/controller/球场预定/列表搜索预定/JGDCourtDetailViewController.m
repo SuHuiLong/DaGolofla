@@ -56,6 +56,7 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, assign) BOOL hasLeagueUser;   // 是否是联盟会员
 @property (nonatomic, assign) NSInteger isLeague;   // 是否是联盟球场
 @property (nonatomic, copy) NSString *strPrompt;
+@property (nonatomic, copy) NSString *showBookNumber;  // 显示剩余可预订球位数
 
 @end
 
@@ -226,6 +227,10 @@ static CGFloat ImageHeight  = 210.0;
             }
 
             if ([data objectForKey:@"ball"]) {
+                
+                if ([data objectForKey:@"showBookNumber"]) {
+                    self.showBookNumber = [NSString stringWithFormat:@"%@", [data objectForKey:@"showBookNumber"]];
+                }
                 
                 self.detailDic = [[data objectForKey:@"ball"] mutableCopy];
 
@@ -493,6 +498,11 @@ static CGFloat ImageHeight  = 210.0;
                 allianceCell.dataDic = self.detailDic;
                 [allianceCell.vipBtn addTarget:self action:@selector(vipCommitAct) forControlEvents:(UIControlEventTouchUpInside)];
                 [allianceCell.normalBtn addTarget:self action:@selector(payAct) forControlEvents:(UIControlEventTouchUpInside)];
+                if (self.showBookNumber) {
+                    allianceCell.remainderBallLB.text = self.showBookNumber;
+                }else{
+                    allianceCell.remainderBallLB.text = @"";
+                }
                 return allianceCell;
             }
             
