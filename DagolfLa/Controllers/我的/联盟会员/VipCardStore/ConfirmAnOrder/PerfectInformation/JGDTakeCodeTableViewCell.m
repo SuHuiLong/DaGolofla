@@ -14,15 +14,16 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.txFD = [[UITextField alloc] initWithFrame:CGRectMake(20 * screenWidth / 375, 0, 200 * screenWidth / 375, 51 * screenWidth / 375)];
+        self.txFD = [[UITextField alloc] initWithFrame:CGRectMake(20 * screenWidth / 375, 0, kWvertical(160), 51 * screenWidth / 375)];
         self.txFD.font = [UIFont systemFontOfSize:15 * screenWidth / 375];
-        
-        UILabel *lineLB = [Helper lableRect:CGRectMake(267 * ProportionAdapter, 15 * ProportionAdapter, 1, 21 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
+        self.txFD.keyboardType = UIKeyboardTypeNumberPad;
+
+        UILabel *lineLB = [Helper lableRect:CGRectMake(kWvertical(250), 15 * ProportionAdapter, 1, 21 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:0 text:@"" textAlignment:(NSTextAlignmentCenter)];
         lineLB.backgroundColor = [UIColor colorWithHexString:@"#A0A0A0"];
         [self.contentView addSubview:lineLB];
         
-        self.takeBtn = [UIButton buttonWithType:(UIButtonTypeSystem)];
-        self.takeBtn.frame = CGRectMake(277 * ScreenWidth / 375, 0, 90 * ScreenWidth / 375, 51 * ScreenWidth / 375);
+        self.takeBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.takeBtn.frame = CGRectMake(kWvertical(260), 0, kWvertical(110), 51 * ScreenWidth / 375);
         [self.takeBtn setTitle:@"获取验证码" forState:(UIControlStateNormal)];
         self.takeBtn.titleLabel.font = [UIFont systemFontOfSize:17 * ScreenWidth / 375];
         [self.takeBtn setTitleColor:[UIColor colorWithHexString:@"#008649"] forState:(UIControlStateNormal)];

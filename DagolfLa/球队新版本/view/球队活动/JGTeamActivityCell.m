@@ -100,10 +100,11 @@
         }
     }
     //活动时间componentsSeparatedByString
-    NSString *timeString = [[modeel.beginDate componentsSeparatedByString:@" "]firstObject];
-    NSString *monthTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:1];
-    NSString *dataTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:2];
-    self.activityTime.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
+//    NSString *timeString = [[modeel.beginDate componentsSeparatedByString:@" "]firstObject];
+//    NSString *monthTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:1];
+//    NSString *dataTimeString = [[timeString componentsSeparatedByString:@"-"]objectAtIndex:2];
+//    self.activityTime.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
+    self.activityTime.text = [Helper stringFromDateString:modeel.beginDate withFormater:@"yyyy.MM.dd"];
     //活动地址
     self.activityAddress.text = [NSString stringWithFormat:@"%@", modeel.ballName];
     //报名人数

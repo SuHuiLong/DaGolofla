@@ -298,12 +298,12 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 //Cell的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        return 100 *ProportionAdapter;
-    }else if (indexPath.section == 2){
-        return 80 *ProportionAdapter;
-    }
-    return 0;
+//    if (indexPath.section == 0) {
+//        return 100 *ProportionAdapter;
+//    }else if (indexPath.section == 2){
+//        return 81 *ProportionAdapter;
+//    }
+    return kHvertical(81);
 }
 //设置头部高度
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

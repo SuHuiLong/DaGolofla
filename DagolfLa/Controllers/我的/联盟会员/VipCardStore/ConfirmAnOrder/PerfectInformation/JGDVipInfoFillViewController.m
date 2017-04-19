@@ -133,14 +133,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if ((indexPath.section == 3) && (indexPath.row == 1)) {
+    if (indexPath.section == 3) {
         
-        JGDTakeCodeTableViewCell *tcell = [tableView dequeueReusableCellWithIdentifier:@"TakeCode"];
-        tcell.txFD.placeholder = @"请输入验证码";
-        tcell.txFD.delegate = self;
-        [tcell.takeBtn addTarget:self action:@selector(codeGet:) forControlEvents:(UIControlEventTouchUpInside)];
-        return tcell;
+        if (indexPath.row == 1) {
+            JGDTakeCodeTableViewCell *tcell = [tableView dequeueReusableCellWithIdentifier:@"TakeCode"];
+            tcell.txFD.placeholder = @"请输入验证码";
+            tcell.txFD.delegate = self;
+            [tcell.takeBtn addTarget:self action:@selector(codeGet:) forControlEvents:(UIControlEventTouchUpInside)];
+            return tcell;
 
+        }else{
+            JGDInfoTextFieldTableViewCell *icell = [tableView dequeueReusableCellWithIdentifier:@"infoTextField"];
+            icell.infoTextField.placeholder = self.placeholderArray[indexPath.section][indexPath.row];
+            icell.infoTextField.text = self.inputArray[indexPath.section][indexPath.row];
+            icell.infoTextField.delegate = self;
+            icell.infoTextField.keyboardType = UIKeyboardTypeNumberPad;
+            icell.accessoryType = UITableViewCellAccessoryNone;
+            return icell;
+        }
+        
     }else{
         
         JGDInfoTextFieldTableViewCell *icell = [tableView dequeueReusableCellWithIdentifier:@"infoTextField"];
@@ -215,9 +226,10 @@
     JGDTakeCodeTableViewCell *tcell = [self.infoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:3]];
     
     _timeNumber--;
-    [tcell.takeBtn setTitleColor:[UIColor colorWithHexString:@"#626262"] forState:UIControlStateNormal];
-//  tcell.takeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
-    [tcell.takeBtn setTitle:[NSString stringWithFormat:@"%tds", _timeNumber] forState:UIControlStateNormal];
+    [tcell.takeBtn setTitleColor:[UIColor colorWithHexString:Line_Color] forState:UIControlStateNormal];
+    tcell.takeBtn.titleLabel.font = [UIFont systemFontOfSize:14*ProportionAdapter];
+    [tcell.takeBtn setTitle:[NSString stringWithFormat:@"(%tds)后重新获取", _timeNumber] forState:UIControlStateNormal];
+    
     if (_timeNumber == 0) {
         [tcell.takeBtn setTitleColor:[UIColor colorWithHexString:Bar_Color] forState:UIControlStateNormal];
         tcell.takeBtn.titleLabel.font = [UIFont systemFontOfSize:17*ProportionAdapter];
@@ -341,6 +353,8 @@
 {
     _timer = nil;
 }
+
+
 
 
 - (void)didReceiveMemoryWarning {
