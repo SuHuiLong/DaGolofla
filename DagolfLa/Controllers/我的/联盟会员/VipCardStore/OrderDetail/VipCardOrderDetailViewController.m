@@ -221,9 +221,12 @@
     if (model.status==2) {
         textFont = 14;
     }
-    CGSize contentSize= [contentStr boundingRectWithSize:CGSizeMake(screenWidth - kWvertical(100), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Light" size:kHorizontal(textFont)]} context:nil].size;
-
-    return contentSize.height;
+    
+    UILabel *textLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(90), kHvertical(3), screenWidth - kWvertical(100), 20) fontSize:kHorizontal(textFont) Title:contentStr];
+    textLabel.numberOfLines = 0;
+    [textLabel sizeToFit];
+    
+    return textLabel.height+kHvertical(6);
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -237,7 +240,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSArray *titleArray = @[@"订单信息",@"联盟会籍",@"会员信息"];
+    NSArray *titleArray = @[@"订单信息",@"联盟会籍信息",@"会员信息"];
     
     UIView *headerView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(66))];
     //灰色背景

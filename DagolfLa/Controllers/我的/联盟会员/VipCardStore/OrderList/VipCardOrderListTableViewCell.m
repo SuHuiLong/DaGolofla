@@ -86,8 +86,7 @@
     self.statusLabel.text = statuStr;
     //卡片
     NSString *picUrl = model.bigPicURL;
-    _cardImageView.backgroundColor = RandomColor;
-    [self.cardImageView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:nil];
+    [self.cardImageView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"moren"]];
     //卡片名
     NSString *nameStr = model.cardName;
     self.cardNameLabel.text = nameStr;

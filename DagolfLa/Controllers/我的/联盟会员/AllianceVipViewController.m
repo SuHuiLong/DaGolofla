@@ -456,18 +456,12 @@
         headView.alertImageView.hidden = FALSE;
         headView.descLabel.hidden = FALSE;
         headView.descLabel.text = noneCard;
-        
         if (_unAddCardNum>0) {
             headView.alertImageView.hidden = TRUE;
-            headView.descLabel.y = kHvertical(105);
-            headView.descLabel.text = haveCard;
-            unAddCardNum = @"11";
-            headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
             //立即添加按钮
             headView.addNowBtn.hidden = FALSE;
             [headView.addNowBtn addTarget:self action:@selector(addNowBtnClick) forControlEvents:UIControlEventTouchUpInside];
         }
-        [headView.descLabel changeLineWithSpace:5.0f];
         
     }else if(indexPath.section == 1&&self.noCanUseArray.count>0){
         headView.line.hidden = FALSE;
@@ -479,17 +473,27 @@
             headView.alertImageView.hidden = TRUE;
             headView.descLabel.hidden = FALSE;
             headView.addBtn.hidden = FALSE;
-            haveCard = [NSString stringWithFormat:@"%@ 立即绑定",haveCard];
-            headView.descLabel.y = kHvertical(0);
             headView.descLabel.text = haveCard;
             headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
-            NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
-            [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
-            headView.descLabel.attributedText = AttributedStr;
+            CGFloat addListY = screenHeight - 64 - kHvertical(55);
+            if (self.dataArray.count>0) {
+                headView.alertImageView.hidden = FALSE;
+                haveCard = [NSString stringWithFormat:@"%@ 立即绑定",haveCard];
+                headView.descLabel.y = kHvertical(0);
+                headView.descLabel.text = haveCard;
+                headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
+                NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
+                [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
+                headView.descLabel.attributedText = AttributedStr;
+                [headView.descLabel changeLineWithSpace:5.0f];
+                addListY = headView.descLabel.y_height+kHvertical(55);
+            }
+            
             [headView.descLabel sizeToFit];
             headView.addBtn.frame = CGRectMake(headView.descLabel.x, headView.descLabel.y_height - kHorizontal(18), headView.descLabel.width, kHvertical(18));
             [headView.addBtn addTarget:self action:@selector(addUnaddCard) forControlEvents:UIControlEventTouchUpInside];
-            headView.goodsListButton.y = headView.descLabel.y_height+kHvertical(55);
+            headView.goodsListButton.y = addListY;
+
         }else{
             if (_mainCollectionView.numberOfSections == 1) {
                 headView.goodsListButton.y = screenHeight - 64 - kHvertical(55);

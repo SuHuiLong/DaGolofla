@@ -234,7 +234,9 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
         [dict setObject:keyList forKey:@"keyList"];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"msg/batchDeleteMsg" JsonKey:nil withData:dict failedBlock:^(id errType) {
-            [LQProgressHud hide];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [LQProgressHud hide];
+            });
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
             [LQProgressHud hide];
