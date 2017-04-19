@@ -499,7 +499,7 @@
     
     paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\r" withString:@""];
     paraStr = [paraStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    paraStr = [paraStr stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     return paraStr;
 }
