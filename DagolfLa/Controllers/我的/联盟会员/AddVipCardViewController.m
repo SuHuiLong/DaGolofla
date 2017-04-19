@@ -156,13 +156,15 @@
 }
 //创建提示
 -(void)createHUD:(NSString *)text{
-    _progressView = [[MBProgressHUD alloc] initWithView:self.view];
-    _progressView.y = screenHeight/2 - 64;
+    _progressView.hidden = NO;
+    _progressView = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     _progressView.alpha = 1;
     _progressView.mode = MBProgressHUDModeText;
-    _progressView.detailsLabelText = text;
-    _progressView.detailsLabelFont = [UIFont systemFontOfSize:kHorizontal(16)]; //Johnkui - added
-    [_progressView hide:YES afterDelay:1.5];
+    _progressView.detailsLabel.text = text;
+    _progressView.color = BlackColor;
+    _progressView.detailsLabel.textColor = WhiteColor;
+    _progressView.detailsLabel.font = [UIFont systemFontOfSize:kHorizontal(16)]; //Johnkui - added
+    [_progressView hideAnimated:YES afterDelay:1.5];
     
     [self.view addSubview:_progressView];
 
@@ -191,9 +193,11 @@
 
 //验证用户输入信息
 -(void)verifyInputData:(id)sender{
-    _progressView = [[MBProgressHUD alloc] initWithView:self.view];
+    _progressView = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     _progressView.mode = MBProgressHUDModeIndeterminate;
-    _progressView.labelText = @"添加中...";
+    _progressView.label.text = @"添加中...";
+    _progressView.color = BlackColor;
+    _progressView.activityIndicatorColor = WhiteColor;
 
     //昵称
     UITextField *nickNameTextFeild = (UITextField *)[self.view viewWithTag:101];
