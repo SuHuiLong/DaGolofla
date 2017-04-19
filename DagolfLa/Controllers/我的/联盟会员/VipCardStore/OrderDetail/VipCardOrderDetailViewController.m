@@ -135,6 +135,8 @@
         [_mainTableView.mj_header endRefreshing];
         BOOL Success = [[data objectForKey:@"packSuccess"] boolValue];
         if (Success) {
+            _paymentBtn.hidden = true;
+            _mainTableView.height = screenHeight - 64;
             self.dataArray = [NSMutableArray array];
             VipCardOrderDetailFormatData *formatData = [[VipCardOrderDetailFormatData alloc] init];
             self.dataArray = [formatData formatData:data];
