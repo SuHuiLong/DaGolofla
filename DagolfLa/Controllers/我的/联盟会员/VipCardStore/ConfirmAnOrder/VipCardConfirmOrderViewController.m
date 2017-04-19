@@ -113,7 +113,6 @@
     NSURL *userImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@@200w_200h_2o",self.inputModel.picHeadURL]];
     UIImageView *headImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(11), kHvertical(72), kHvertical(59), kHvertical(59)) Image:nil];
     [headImageView sd_setImageWithURL:userImageUrl placeholderImage:[UIImage imageNamed:@"moren"]];
-    headImageView.backgroundColor = RandomColor;
     [backView addSubview:headImageView];
     //用户名
     UILabel *nameLabel = [Factory createLabelWithFrame:CGRectMake(headImageView.x_width + kWvertical(11), kHvertical(70), 0, kHvertical(22)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:self.inputModel.userName];
@@ -159,7 +158,7 @@
  @return 会员卡详情界面
  */
 -(UIView *)cardInformationView{
-    UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(211))];
+    UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(161))];
     //卡片背景
     UIView *cardBackView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(10), kHvertical(22), kWvertical(92), kHvertical(58))];
     cardBackView.layer.masksToBounds = true;
@@ -209,22 +208,22 @@
     [backView addSubview:line1];
     //套餐权益
     
-    NSString *enjoyService = [NSString stringWithFormat:@"套餐权益：%@",self.dataModel.enjoyService];
-    
-    CGSize TitleSize= [enjoyService boundingRectWithSize:CGSizeMake(screenWidth - kWvertical(20), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Light" size:kHorizontal(13)]} context:nil].size;
-    backView.height = kHvertical(179)+TitleSize.height;
-    UILabel *enjoyLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), kHvertical(110), screenWidth - kWvertical(20), TitleSize.height) textColor:RGB(160,160,160) fontSize:kHorizontal(13) Title:enjoyService];
-    enjoyLabel.numberOfLines = 0;
-    [backView addSubview:enjoyLabel];
+//    NSString *enjoyService = [NSString stringWithFormat:@"套餐权益：%@",self.dataModel.enjoyService];
+//    
+//    CGSize TitleSize= [enjoyService boundingRectWithSize:CGSizeMake(screenWidth - kWvertical(20), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Light" size:kHorizontal(13)]} context:nil].size;
+//    backView.height = kHvertical(179)+TitleSize.height;
+//    UILabel *enjoyLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), kHvertical(110), screenWidth - kWvertical(20), TitleSize.height) textColor:RGB(160,160,160) fontSize:kHorizontal(13) Title:enjoyService];
+//    enjoyLabel.numberOfLines = 0;
+//    [backView addSubview:enjoyLabel];
     //分割线2
-    UIView *line2 = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, enjoyLabel.y_height + kHvertical(9), screenWidth, 1)];
-    [backView addSubview:line2];
+//    UIView *line2 = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, enjoyLabel.y_height + kHvertical(9), screenWidth, 1)];
+//    [backView addSubview:line2];
     //卡片数
     NSString *totalCardStr = [NSString stringWithFormat:@"共 %ld 件商品",self.dataModel.cardNum];
-    UILabel *cardNumLabel2 = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), line2.y, screenWidth - kWvertical(20), kHvertical(51)) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:totalCardStr];
+    UILabel *cardNumLabel2 = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), line1.y, screenWidth - kWvertical(20), kHvertical(51)) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:totalCardStr];
     [backView addSubview:cardNumLabel2];
     //总价
-    UILabel *totalPriceLabel = [Factory createLabelWithFrame:CGRectMake(0, line2.y, screenWidth-kWvertical(10), kHvertical(51)) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:nil];
+    UILabel *totalPriceLabel = [Factory createLabelWithFrame:CGRectMake(0, line1.y, screenWidth-kWvertical(10), kHvertical(51)) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:nil];
     NSMutableAttributedString *attributed = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"总计： ¥%ld",[self.dataModel.price integerValue]*self.dataModel.cardNum]];
     [attributed addAttribute:NSForegroundColorAttributeName value:RGB(252,90,1) range:NSMakeRange(3, attributed.length-3)];
     [attributed addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(14)] range:NSMakeRange(4, 1)];
@@ -459,10 +458,11 @@
         return kHvertical(61);
     }
     if(section == 1){
-        NSString *enjoyService = [NSString stringWithFormat:@"套餐权益：%@",self.dataModel.enjoyService];
-        
-        CGSize TitleSize= [enjoyService boundingRectWithSize:CGSizeMake(screenWidth - kWvertical(20), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Light" size:kHorizontal(13)]} context:nil].size;
-        return kHvertical(179)+TitleSize.height;
+//        NSString *enjoyService = [NSString stringWithFormat:@"套餐权益：%@",self.dataModel.enjoyService];
+//        
+//        CGSize TitleSize= [enjoyService boundingRectWithSize:CGSizeMake(screenWidth - kWvertical(20), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Light" size:kHorizontal(13)]} context:nil].size;
+        //        return kHvertical(179)+TitleSize.height;
+        return kHvertical(161);
     }
     return kHvertical(260);
 }
