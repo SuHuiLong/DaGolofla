@@ -128,7 +128,7 @@
     addTeamPlaysCtrl.allListArray = _dataArray;
     addTeamPlaysCtrl.blockRefresh = ^(){
         [_tableView.mj_header endRefreshing];
-        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
         [_tableView.mj_header beginRefreshing];
     };
     
@@ -144,7 +144,7 @@
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLGuestActiveMemberTableViewCell class] forCellReuseIdentifier:@"JGLGuestActiveMemberTableViewCell"];
     _tableView.tag = 1001;
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
     
 }

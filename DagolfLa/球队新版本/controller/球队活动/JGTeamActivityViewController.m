@@ -161,7 +161,7 @@
     self.teamActivityTableView.dataSource = self;
     self.teamActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.teamActivityTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.teamActivityTableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.teamActivityTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [self.teamActivityTableView.mj_header beginRefreshing];
     

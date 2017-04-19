@@ -190,7 +190,7 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
     self.cabbieRewardTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.cabbieRewardTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     
-    self.cabbieRewardTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.cabbieRewardTableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.cabbieRewardTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [self.cabbieRewardTableView.mj_header beginRefreshing];
     

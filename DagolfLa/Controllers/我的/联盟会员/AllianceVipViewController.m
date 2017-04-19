@@ -315,11 +315,11 @@
 #pragma mark - MJRefresh
 //卡片列表刷新
 -(void)createCardRefresh{
-    _mainCollectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRefreshing)];
+    _mainCollectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRefreshing)];
 }
 //历史记录刷新
 -(void)createHistoryRefresh{
-    _mainTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerHeaderRefreshing)];
+    _mainTableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerHeaderRefreshing)];
     _mainTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(headerFooterRefreshing)];
     [_mainTableView.mj_header beginRefreshing];
     
@@ -440,6 +440,7 @@
     headView.line.hidden = TRUE;
     headView.nocanDescLabel.hidden = TRUE;
     headView.goodsListButton.hidden = TRUE;
+    headView.addBtn.hidden = TRUE;
     NSInteger totalCardNum = self.dataArray.count + self.noCanUseArray.count;
     
     //没有未添加卡片文字描述
@@ -477,6 +478,7 @@
         if (_unAddCardNum>0) {
             headView.alertImageView.hidden = TRUE;
             headView.descLabel.hidden = FALSE;
+            headView.addBtn.hidden = FALSE;
             haveCard = [NSString stringWithFormat:@"%@ 立即绑定",haveCard];
             headView.descLabel.y = kHvertical(0);
             headView.descLabel.text = haveCard;
@@ -484,14 +486,9 @@
             NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
             [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
             headView.descLabel.attributedText = AttributedStr;
-            
-            headView.descLabel.enabledTapEffect = NO;
-            __weak typeof(self) weakself = self;
-            [headView.descLabel yb_addAttributeTapActionWithStrings:@[@"立即",@"绑定"] tapClicked:^(NSString *string, NSRange range,NSInteger index) {
-                [weakself addUnaddCard];
-            }];
             [headView.descLabel sizeToFit];
-            
+            headView.addBtn.frame = CGRectMake(headView.descLabel.x, headView.descLabel.y_height - kHorizontal(18), headView.descLabel.width, kHvertical(18));
+            [headView.addBtn addTarget:self action:@selector(addUnaddCard) forControlEvents:UIControlEventTouchUpInside];
             headView.goodsListButton.y = headView.descLabel.y_height+kHvertical(55);
         }else{
             if (_mainCollectionView.numberOfSections == 1) {

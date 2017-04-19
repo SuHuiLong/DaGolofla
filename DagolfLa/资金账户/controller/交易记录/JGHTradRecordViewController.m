@@ -32,7 +32,7 @@ static NSString *const JGHTradRecordCellIdentifier = @"JGHTradRecordCell";
         self.tradRecordTableView.dataSource = self;
         self.tradRecordTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
-        self.tradRecordTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        self.tradRecordTableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
         self.tradRecordTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
         [self.tradRecordTableView.mj_header beginRefreshing];
         

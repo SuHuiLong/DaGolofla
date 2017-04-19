@@ -47,7 +47,7 @@
 
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellid"];
     
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [_tableView.mj_header beginRefreshing];
 }

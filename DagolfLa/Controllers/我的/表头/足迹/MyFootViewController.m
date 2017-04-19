@@ -294,7 +294,7 @@
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     
     //    addHeaderWithTarget: 是第三方类库中UIScrolView的category。
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [_tableView.mj_header beginRefreshing];
 }

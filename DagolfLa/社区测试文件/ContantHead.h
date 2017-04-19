@@ -227,7 +227,7 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "UMSocialControllerService.h"
 
 #import "MJRefresh.h"
-
+#import "MJDIYHeader.h"
 
 
 #import "FCUUID.h"

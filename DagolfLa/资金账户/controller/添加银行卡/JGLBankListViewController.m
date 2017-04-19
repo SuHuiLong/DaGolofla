@@ -42,7 +42,7 @@
     }
     
     [_tableView.mj_header endRefreshing];
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     [_tableView.mj_header beginRefreshing];
 }
 
@@ -88,7 +88,7 @@
     }
 //    addVc.refreshBlock = ^(){
 //        [_tableView.mj_header endRefreshing];
-//        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+//        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
 //        [_tableView.mj_header beginRefreshing];
 //    };
     [self.navigationController pushViewController:addVc animated:YES];
@@ -102,7 +102,7 @@
     _tableView.tableHeaderView = _viewHeader;
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [_tableView.mj_header beginRefreshing];
 }
@@ -249,7 +249,7 @@
             if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                 [_tableView.mj_header endRefreshing];
                 [_tableView.mj_footer endRefreshing];
-                _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
                 [_tableView.mj_header beginRefreshing];
             }
             else

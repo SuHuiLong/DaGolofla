@@ -15,6 +15,8 @@
 @property(nonatomic, strong)UIImageView *alertImageView;
 //提示文字
 @property(nonatomic, strong)UILabel *descLabel;
+//文本上立即添加按钮
+@property(nonatomic, strong)UIButton *addBtn;
 //立即添加按钮
 @property(nonatomic, strong)UIButton *addNowBtn;
 //不可用卡片分割线

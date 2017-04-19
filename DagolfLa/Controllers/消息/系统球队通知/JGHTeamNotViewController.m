@@ -139,7 +139,7 @@ static NSString *const JGHTeamInformCellIdentifier = @"JGHTeamInformCell";
     self.systemNotTableView.tableHeaderView = CCCView;
     
     
-    self.systemNotTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.systemNotTableView.mj_header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.systemNotTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
 
     [self.view addSubview:self.systemNotTableView];

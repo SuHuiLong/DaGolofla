@@ -58,12 +58,8 @@
     _nameAndPrice.attributedText = nameAndPriceTextStr;
     
     //权益文字
-    NSString *equityText = [NSString stringWithFormat:@"%@年会员权益  尊贵会员击球优惠  %@次/年",expiry,schemeMaxCount];
+    NSString *equityText = [NSString stringWithFormat:@"%@年会员权益  尊贵会员击球优惠  %@次",expiry,schemeMaxCount];
     NSMutableAttributedString *equityTextStr = [[NSMutableAttributedString alloc]initWithString:equityText];
-    //设置/字号
-    [equityTextStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:kHorizontal(17)] range:NSMakeRange(equityText.length-2, 1)];
-    //设置/年颜色
-    [equityTextStr addAttribute:NSForegroundColorAttributeName value:RGB(160,160,160) range:NSMakeRange(equityText.length-2, 2)];
     _equity.attributedText = equityTextStr;
 
 }

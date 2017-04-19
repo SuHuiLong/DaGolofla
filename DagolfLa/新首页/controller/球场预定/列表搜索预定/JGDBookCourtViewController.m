@@ -133,7 +133,7 @@
     self.courtTableView.rowHeight = 90 * ProportionAdapter;
     [self.courtTableView registerClass:[JGDBookCourtTableViewCell class] forCellReuseIdentifier:@"bookCourtCell"];
     
-//    self.courtTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+//    self.courtTableView.mj_header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
     self.courtTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
 //    [self.courtTableView.mj_header beginRefreshing];
     [self dataSet:0];

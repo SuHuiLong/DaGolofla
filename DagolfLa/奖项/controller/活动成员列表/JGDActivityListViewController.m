@@ -51,7 +51,7 @@
     [self.tableView registerClass:[JGDactivityListTableViewCell class] forCellReuseIdentifier:@"listCell"];
     
     _page = 0;
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.mj_header beginRefreshing];
     

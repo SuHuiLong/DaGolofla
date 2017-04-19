@@ -151,14 +151,13 @@
     //服务年限
     UILabel *equityYears = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), line.y_height + kHvertical(41), screenWidth - kWvertical(20), kHvertical(13)) textColor:RGB(98,98,98) fontSize:kHorizontal(14) Title:nil];
     NSInteger years = self.dataModel.expiry;
-    NSInteger schemeCount = self.dataModel.schemeMaxCount;
-    NSMutableAttributedString *equitYearsStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"服务年限：%ld年 / %ld次联盟价击球权益",years,schemeCount]];
+    NSMutableAttributedString *equitYearsStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"服务年限：%ld年",years]];
     [equitYearsStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(15)] range:NSMakeRange(0, 5)];
     [equitYearsStr addAttribute:NSForegroundColorAttributeName value:RGB(160, 160, 160) range:NSMakeRange(0, 5)];
     equityYears.attributedText = equitYearsStr;
     [detailBackView addSubview:equityYears];
     //权益详情
-    UILabel *equityDetailTitle = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), equityYears.y_height + kHvertical(12), equityYears.width, equityYears.height+kHvertical(3)) textColor:RGB(160, 160, 160) fontSize:kHorizontal(15) Title:@"特殊权限："];
+    UILabel *equityDetailTitle = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), equityYears.y_height + kHvertical(12), equityYears.width, equityYears.height+kHvertical(3)) textColor:RGB(160, 160, 160) fontSize:kHorizontal(15) Title:@"会籍权益："];
     [equityDetailTitle sizeToFitSelf];
     [detailBackView addSubview:equityDetailTitle];
     NSString *equitDetailString = @"暂无";
@@ -277,12 +276,16 @@
 
 -(void)shareWithInfo:(int)index
 {
-    
+    NSInteger years = self.dataModel.expiry;
+    NSInteger schemeCount = self.dataModel.schemeMaxCount;
+    NSString *contentStr = [NSString  stringWithFormat:@"服务年限：%ld年 / %ld次联盟价击球权益",years,schemeCount];
+
     NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"cardTypeKey=%@&userKey=%@dagolfla.com",_cardTypeKey,DEFAULF_USERID]];
     //分享链接
     NSString *shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/league/sysLeagueCardInfo.html?userKey=%@&cardTypeKey=%@&md5=%@&share=1", DEFAULF_USERID,_cardTypeKey,md5Value];
     //分享图片
     UIImage *iconImageFull = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.dataModel.bigPicURL]]];
+    
     //分享标题
     NSString *desc = self.dataModel.name;
     
@@ -290,14 +293,13 @@
     if (index<2) {
         NSData *imageData = UIImageJPEGRepresentation(iconImageFull, 0.1);
         UIImage *iconImage = [UIImage imageWithData:imageData];
-        
+        iconImage = [self clipWithImageRect:CGRectMake(0, 0, iconImage.size.height, iconImage.size.height) clipImage:iconImage];
         NSString *type =  UMShareToWechatTimeline;
         if (index==0) {
             type = UMShareToWechatSession;
         }else if (index==2){
             type = UMShareToSina;
         }
-        
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
         
@@ -314,7 +316,7 @@
          */
         UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeImage url: shareUrl];
         
-        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[type] content:@""  image:iconImage location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *response){
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[type] content:contentStr  image:iconImage location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
 
             }
@@ -343,6 +345,29 @@
         //得到分享到的微博平台名
 
     }
+}
+
+/**
+ 图片裁剪
+
+ @param clipRect 获取区域的小
+ @param clipImage 原图
+ @return 裁剪之后图片
+ */
+- (UIImage *)clipWithImageRect:(CGRect)clipRect clipImage:(UIImage *)clipImage;
+
+{
+    
+    UIGraphicsBeginImageContext(clipRect.size);
+    
+    [clipImage drawInRect:CGRectMake(0,0,clipRect.size.width,clipRect.size.height)];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return  newImage;
+    
 }
 
 

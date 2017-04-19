@@ -60,7 +60,7 @@
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [_dictData setObject:searchBar.text forKey:@"userName"];
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
 }
 
@@ -75,7 +75,7 @@
     
     [_tableView registerClass:[JGActivityMemNonmangerTableViewCell class] forCellReuseIdentifier:@"JGActivityMemNonmangerTableViewCell"];
 
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
     
 }

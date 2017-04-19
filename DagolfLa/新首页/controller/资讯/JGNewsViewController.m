@@ -106,7 +106,7 @@
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
+        tableView.mj_header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefresh)];
         tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRefresh)];
         [tableView.mj_header beginRefreshing];
         

@@ -157,7 +157,7 @@
     [self.view addSubview:self.mainTable];
     [_mainTable setExtraCellLineHidden];
     
-    self.mainTable.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    self.mainTable.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     self.mainTable.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [self.mainTable.mj_header beginRefreshing];
 }

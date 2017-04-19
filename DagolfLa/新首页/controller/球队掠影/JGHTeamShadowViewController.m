@@ -64,7 +64,7 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
     [_collectionView registerClass:[JGHPhotoShadowCollectionViewCell class] forCellWithReuseIdentifier:JGHPhotoShadowCollectionViewCellIdentifier];
 
     
-    _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _collectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [_collectionView.mj_header beginRefreshing];
 }
@@ -198,7 +198,7 @@ static NSString *const JGHPhotoShadowCollectionViewCellIdentifier = @"JGHPhotoSh
     phoVc.timeKey = [_dataArray[btn.tag - 10000] timeKey];
     phoVc.titleStr = [_dataArray[btn.tag - 10000] name];
     phoVc.createBlock = ^(void){
-        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
     };

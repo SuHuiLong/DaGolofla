@@ -65,7 +65,7 @@
     [_tableView registerClass:[JGHNewMenberTableViewCell class] forCellReuseIdentifier:@"JGHNewMenberTableViewCell"];
     
     
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
     
 }

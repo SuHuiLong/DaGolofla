@@ -246,7 +246,7 @@
 //    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 40)];
     _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
 
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.mj_header beginRefreshing];
 //    self.view = _tableView;
@@ -446,7 +446,7 @@
 //    [_locationManager stopUpdatingLocation];
 //    [user synchronize];
 //    //[_tableView.mj_header beginRefreshing];
-//    //_tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+//    //_tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
 //    //[_tableView.mj_header beginRefreshing];
 //
 //}

@@ -145,7 +145,7 @@
     self.tableView.rowHeight = 80 * screenWidth / 320;
     self.tableView.tableHeaderView = [UIView new];
     self.tableView.tableHeaderView = self.topBackView;
-    self.tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [self.tableView.mj_header beginRefreshing];
     [self.view addSubview:self.tableView];

@@ -426,7 +426,7 @@
     
 //    [_tableView registerClass:[JGDActvityPriziSetTableViewCell class] forCellReuseIdentifier:@"setCell"];
     
-    _tableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    _tableView.mj_header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     
     
     _tableView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -530,7 +530,7 @@
     setAwardVC.model = self.model;
     setAwardVC.refreshBlock = ^(){
         [_tableView.mj_header endRefreshing];
-        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
         [_tableView.mj_header beginRefreshing];
     };
     [self.navigationController pushViewController:setAwardVC animated:YES];

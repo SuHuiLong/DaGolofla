@@ -226,7 +226,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
     self.showMyTeamTableView.dataSource = self;
     self.showMyTeamTableView.delegate = self;
     self.showMyTeamTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.showMyTeamTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.showMyTeamTableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.showMyTeamTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     
     [self.view addSubview:self.showMyTeamTableView];

@@ -61,7 +61,7 @@
 //    [_tableView registerNib:[UINib nibWithNibName:@"JGLActiveCancelTableViewCell" bundle:nil] forCellReuseIdentifier:@"JGLActiveCancelTableViewCell"];
     [_tableView registerClass:[JGLActivityMemberTableViewCell class] forCellReuseIdentifier:@"JGLActivityMemberTableViewCell"];
     
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [_tableView.mj_header beginRefreshing];
     

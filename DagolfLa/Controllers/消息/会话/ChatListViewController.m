@@ -295,7 +295,7 @@
     self.conversationListTableView.tableHeaderView = _viewHeader;
         self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.conversationListTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.conversationListTableView.mj_header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [self.conversationListTableView.mj_header beginRefreshing];
     //    self.conversationListTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
 }

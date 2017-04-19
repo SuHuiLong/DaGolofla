@@ -85,12 +85,12 @@
 - (void)addReshTableView:(NSInteger)tableViewNumber
 {
     if (tableViewNumber == 1) {
-        _tableView1.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing1)];
+        _tableView1.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing1)];
         _tableView1.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing1)];
         
 
     } else {
-        _tableView2.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing2)];
+        _tableView2.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing2)];
         _tableView2.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing2)];
 
     }

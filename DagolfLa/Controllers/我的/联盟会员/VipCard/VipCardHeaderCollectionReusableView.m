@@ -30,8 +30,9 @@
     _descLabel.textColor = LightGrayColor;
     _descLabel.font = [UIFont systemFontOfSize:kHorizontal(15)];
     _descLabel.numberOfLines = 0;
-    
     [self   addSubview:_descLabel];
+    _addBtn = [Factory createButtonWithFrame:CGRectMake(0, 0, 0, 0) target:self selector:nil Title:nil];
+    [self addSubview:_addBtn];
     
     //立即添加
     _addNowBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(10), kHvertical(390), screenWidth - kWvertical(20), kHvertical(45)) titleFont:kHorizontal(16) textColor:WhiteColor backgroundColor:RGBA(241, 151, 48, 1)  target:self selector:@selector(clickToGoodsList) Title:@"立即添加"];

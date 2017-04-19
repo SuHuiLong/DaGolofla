@@ -101,7 +101,7 @@
 }
 
 - (void)returnFirRef{
-    self.mainTable.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    self.mainTable.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
 
     [self.mainTable.mj_header endRefreshing];
     [self.mainTable.mj_header beginRefreshing];
@@ -138,7 +138,7 @@
     self.mainTable.dataSource = self;
     [self.view addSubview:self.mainTable];
     
-    self.mainTable.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    self.mainTable.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
 
     [self.mainTable.mj_header beginRefreshing];
 }
@@ -466,7 +466,7 @@
                 //                [MBProgressHUD hideHUDForView:self.view  animated:NO];
                 [_tableDataSource removeAllObjects];
                 [self.mainTable.mj_header endRefreshing];
-                self.mainTable.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                self.mainTable.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
                 [self.mainTable.mj_header beginRefreshing];
                 [self.mainTable reloadData];
                 
