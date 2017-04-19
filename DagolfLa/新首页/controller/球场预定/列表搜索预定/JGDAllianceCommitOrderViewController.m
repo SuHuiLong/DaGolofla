@@ -521,7 +521,11 @@
         }
         self.allianceCardLB.text = [self.vipCardArray[indexPath.row] objectForKey:@"name"];
         self.vipTimekey = [self.vipCardArray[indexPath.row] objectForKey:@"timeKey"];
+        NSLog(@"%@" , [self.vipCardArray[indexPath.row] objectForKey:@"lUserName"]);
         [tableView removeFromSuperview];
+        // lUserName
+        JGDBallPlayTableViewCell *cell3 = [self.commitOrderTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+        cell3.nameTF.text = [self.vipCardArray[indexPath.row] objectForKey:@"lUserName"];
         return;
     }
     

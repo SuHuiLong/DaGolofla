@@ -521,13 +521,13 @@
     
     //    [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"orderKey=%@dagolfla.com", self.orderKey]] forKey:@"md5"];
     
-    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
+//    [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     
     [[JsonHttp jsonHttp] httpRequestWithMD5:@"bookingOrder/doCancelBookingOrder" JsonKey:nil withData:dic failedBlock:^(id errType) {
-        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
     } completionBlock:^(id data) {
-        [[ShowHUD showHUD] hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
