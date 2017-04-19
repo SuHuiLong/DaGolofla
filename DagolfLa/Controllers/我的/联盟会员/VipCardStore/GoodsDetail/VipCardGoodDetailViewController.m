@@ -277,8 +277,7 @@
 -(void)shareWithInfo:(int)index
 {
     NSInteger years = self.dataModel.expiry;
-    NSInteger schemeCount = self.dataModel.schemeMaxCount;
-    NSString *contentStr = [NSString  stringWithFormat:@"服务年限：%ld年 / %ld次联盟价击球权益",years,schemeCount];
+    NSString *contentStr = [NSString  stringWithFormat:@"服务年限：%ld年",years];
 
     NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"cardTypeKey=%@&userKey=%@dagolfla.com",_cardTypeKey,DEFAULF_USERID]];
     //分享链接
