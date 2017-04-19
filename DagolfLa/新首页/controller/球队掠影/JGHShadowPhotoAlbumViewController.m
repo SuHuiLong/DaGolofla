@@ -75,7 +75,7 @@
     [_collectionView registerClass:[MSSCollectionViewCell class] forCellWithReuseIdentifier:@"MSSCollectionViewCell"];
     [self.view addSubview:_collectionView];
     
-    _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _collectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
     [self dataDownLoad];
     
@@ -145,7 +145,7 @@
         if (_collectionView.mj_header.isRefreshing == YES) {
             [_collectionView.mj_header endRefreshing];
         }
-        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
         _isUpdata = YES;
         [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
@@ -235,7 +235,7 @@
         if (_collectionView.mj_header.isRefreshing == YES) {
             [_collectionView.mj_header endRefreshing];
         }
-        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
         _isUpdata = YES;
         [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];

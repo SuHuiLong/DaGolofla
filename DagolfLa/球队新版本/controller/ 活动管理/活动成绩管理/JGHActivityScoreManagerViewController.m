@@ -120,7 +120,7 @@ static NSString *const JGHCenterBtnTableViewCellIdentifier = @"JGHCenterBtnTable
     self.scoreManageTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
     [self.view addSubview:self.scoreManageTableView];
     
-    self.scoreManageTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.scoreManageTableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [self.scoreManageTableView.mj_header beginRefreshing];
     
 }

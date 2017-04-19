@@ -56,7 +56,7 @@
         [user setObject:@3 forKey:@"isFirstEnter"];
         [user synchronize];
         [_tableView.mj_header endRefreshing];
-        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_tableView.mj_header beginRefreshing];
     }
     else
@@ -66,7 +66,7 @@
             [user setObject:@2 forKey:@"isFirstEnter"];
             [user synchronize];
             [_tableView.mj_header endRefreshing];
-            _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+            _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
             [_tableView.mj_header beginRefreshing];
             
         }
@@ -112,7 +112,7 @@
         //发布完成回调刷新
         pubVc.blockRereshing = ^(){
             [_tableView.mj_header endRefreshing];
-            _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+            _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
             [_tableView.mj_header beginRefreshing];
         };
         [self.navigationController pushViewController:pubVc animated:YES];
@@ -154,21 +154,21 @@
     /* 添加代码,处理值的变化 */
     if (selectedIndex == 1) {
         [_tableView.mj_header endRefreshing];
-        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         //        _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
         [_tableView.mj_header beginRefreshing];
     }
     else if (selectedIndex == 2)
     {
         [_tableView.mj_header endRefreshing];
-        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         //        _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
         [_tableView.mj_header beginRefreshing];
     }
     else
     {
         [_tableView.mj_header endRefreshing];
-        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         //        _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
         [_tableView.mj_header beginRefreshing];
     }
@@ -186,7 +186,7 @@
     // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
     
     //    addHeaderWithTarget: 是第三方类库中UIScrolView的category。
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [_tableView.mj_header beginRefreshing];
     
@@ -695,7 +695,7 @@
                 [MBProgressHUD hideHUDForView:self.view  animated:NO];
                 [_dataArray removeAllObjects];
                 [_tableView.mj_header endRefreshing];
-                _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
                 [_tableView.mj_header beginRefreshing];
                 [_tableView reloadData];
                 

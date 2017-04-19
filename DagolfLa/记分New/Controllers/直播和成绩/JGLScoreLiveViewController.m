@@ -49,7 +49,7 @@
     [_tableView registerClass:[JGLScoreLiveHeadTableViewCell class] forCellReuseIdentifier:@"JGLScoreLiveHeadTableViewCell"];
     [_tableView registerClass:[JGLScoreLiveDetailTableViewCell class] forCellReuseIdentifier:@"JGLScoreLiveDetailTableViewCell"];
     
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
     
 }

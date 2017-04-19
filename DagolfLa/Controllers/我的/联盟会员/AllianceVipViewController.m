@@ -107,7 +107,7 @@
     self.navigationItem.rightBarButtonItem = addBtn;
     
     //选择
-    NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"会籍卡",@"使用记录",nil];
+    NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"联盟会籍",@"使用记录",nil];
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc]initWithItems:segmentedArray];
     [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
     segmentedControl.frame = CGRectMake(screenWidth/2 - kWvertical(60), kHvertical(25), kWvertical(120), kHvertical(25));
@@ -315,11 +315,11 @@
 #pragma mark - MJRefresh
 //卡片列表刷新
 -(void)createCardRefresh{
-    _mainCollectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRefreshing)];
+    _mainCollectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(collectionHeaderRefreshing)];
 }
 //历史记录刷新
 -(void)createHistoryRefresh{
-    _mainTableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerHeaderRefreshing)];
+    _mainTableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerHeaderRefreshing)];
     _mainTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(headerFooterRefreshing)];
     [_mainTableView.mj_header beginRefreshing];
     
@@ -440,6 +440,7 @@
     headView.line.hidden = TRUE;
     headView.nocanDescLabel.hidden = TRUE;
     headView.goodsListButton.hidden = TRUE;
+    headView.addBtn.hidden = TRUE;
     NSInteger totalCardNum = self.dataArray.count + self.noCanUseArray.count;
     
     //没有未添加卡片文字描述
@@ -455,18 +456,12 @@
         headView.alertImageView.hidden = FALSE;
         headView.descLabel.hidden = FALSE;
         headView.descLabel.text = noneCard;
-        
         if (_unAddCardNum>0) {
             headView.alertImageView.hidden = TRUE;
-            headView.descLabel.y = kHvertical(105);
-            headView.descLabel.text = haveCard;
-            unAddCardNum = @"11";
-            headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
             //立即添加按钮
             headView.addNowBtn.hidden = FALSE;
             [headView.addNowBtn addTarget:self action:@selector(addNowBtnClick) forControlEvents:UIControlEventTouchUpInside];
         }
-        [headView.descLabel changeLineWithSpace:5.0f];
         
     }else if(indexPath.section == 1&&self.noCanUseArray.count>0){
         headView.line.hidden = FALSE;
@@ -477,20 +472,28 @@
         if (_unAddCardNum>0) {
             headView.alertImageView.hidden = TRUE;
             headView.descLabel.hidden = FALSE;
-            haveCard = [NSString stringWithFormat:@"%@ 立即绑定",haveCard];
-            headView.descLabel.y = kHvertical(0);
+            headView.addBtn.hidden = FALSE;
             headView.descLabel.text = haveCard;
             headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
-            NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
-            [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
-            headView.descLabel.attributedText = AttributedStr;
+            CGFloat addListY = screenHeight - 64 - kHvertical(55);
+            if (self.dataArray.count>0) {
+                headView.alertImageView.hidden = FALSE;
+                haveCard = [NSString stringWithFormat:@"%@ 立即绑定",haveCard];
+                headView.descLabel.y = kHvertical(0);
+                headView.descLabel.text = haveCard;
+                headView.descLabel = [self AttributedStringLabel:headView.descLabel rang:NSMakeRange(5, 11) changeColor:[UIColor colorWithHexString:Bar_Segment] rang:NSMakeRange(18, unAddCardNum.length+1) changeColor:BlackColor];
+                NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithAttributedString:headView.descLabel.attributedText];
+                [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(AttributedStr.length-4, 4)];
+                headView.descLabel.attributedText = AttributedStr;
+                [headView.descLabel changeLineWithSpace:5.0f];
+                addListY = headView.descLabel.y_height+kHvertical(55);
+            }
             
-            headView.descLabel.enabledTapEffect = NO;
-            [headView.descLabel yb_addAttributeTapActionWithStrings:@[@"立即绑定"] tapClicked:^(NSString *string, NSRange range,NSInteger index) {
-                
-            }];
             [headView.descLabel sizeToFit];
-            headView.goodsListButton.y = headView.descLabel.y_height+kHvertical(55);
+            headView.addBtn.frame = CGRectMake(headView.descLabel.x, headView.descLabel.y_height - kHorizontal(18), headView.descLabel.width, kHvertical(18));
+            [headView.addBtn addTarget:self action:@selector(addUnaddCard) forControlEvents:UIControlEventTouchUpInside];
+            headView.goodsListButton.y = addListY;
+
         }else{
             if (_mainCollectionView.numberOfSections == 1) {
                 headView.goodsListButton.y = screenHeight - 64 - kHvertical(55);

@@ -225,7 +225,7 @@ static NSString *const JGHActivityBaseCellIdentifier = @"JGHActivityBaseCell";
     UINib *activityBaseCellNib = [UINib nibWithNibName:@"JGHActivityBaseCell" bundle: [NSBundle mainBundle]];
     [self.awardTableView registerNib:activityBaseCellNib forCellReuseIdentifier:JGHActivityBaseCellIdentifier];
     
-    self.awardTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreahData)];
+    self.awardTableView.mj_header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreahData)];
     [self.awardTableView.mj_header beginRefreshing];
 
     self.awardTableView.separatorStyle = UITableViewCellSeparatorStyleNone;

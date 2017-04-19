@@ -95,7 +95,7 @@
     UITextField *tf=(UITextField *)[imageView viewWithTag:888];
     if ([self isBlankString:tf.text]==NO) {
         
-        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing1)];
+        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing1)];
 //        _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing1)];
         [_tableView.mj_header beginRefreshing];
         
@@ -130,7 +130,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing1)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing1)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing1)];
     [_tableView.mj_header beginRefreshing];
 }

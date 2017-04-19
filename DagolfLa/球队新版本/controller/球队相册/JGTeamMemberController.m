@@ -60,7 +60,7 @@
     [_tableView registerClass:[JGMenberTableViewCell class] forCellReuseIdentifier:@"JGMenberTableViewCell"];
     
     
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
     
 }
@@ -224,7 +224,7 @@
                     menVc.teamKey = _teamKey;
                     menVc.dictAccount = _dataAccountDict;
                     menVc.deleteBlock = ^(){
-                        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+                        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
                         [_tableView.mj_header beginRefreshing];
                         [_tableView reloadData];
                     };

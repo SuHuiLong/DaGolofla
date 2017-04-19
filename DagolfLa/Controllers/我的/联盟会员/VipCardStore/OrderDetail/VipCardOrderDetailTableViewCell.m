@@ -27,7 +27,7 @@
     [self.titleLabel setTextAlignment:NSTextAlignmentRight];
     [self.contentView addSubview:self.titleLabel];
     //描述
-    self.descLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(90), 0, screenWidth - kWvertical(100), self.size.height) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:nil];
+    self.descLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(90), kHvertical(3), screenWidth - kWvertical(100), self.size.height) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:nil];
     [self.descLabel setNumberOfLines:0];
     [self.contentView addSubview:self.descLabel];
 }
@@ -55,9 +55,8 @@
         [contentStr addAttribute:NSForegroundColorAttributeName value:RGB(0,134,73) range:NSMakeRange(7, content.length-7)];
         self.descLabel.attributedText = contentStr;
     }
-    CGSize contentSize= [content boundingRectWithSize:CGSizeMake(screenWidth - kWvertical(100), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Light" size:kHorizontal(textFont)]} context:nil].size;
+    [self.descLabel sizeToFit];
     self.descLabel.font = [UIFont systemFontOfSize:kHorizontal(textFont)];
-    self.descLabel.height = contentSize.height;
 }
 
 - (void)awakeFromNib {

@@ -77,7 +77,7 @@
         flowLayout.footerReferenceSize = CGSizeMake(_collectionView.frame.size.width, 100 * ProportionAdapter);
     }
     
-    _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _collectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [_collectionView.mj_header beginRefreshing];
 }
@@ -139,7 +139,7 @@
     phoVc.isShowMem = @3;
     phoVc.teamKey = _teamKey;
     phoVc.createBlock = ^(void){
-        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
     };
@@ -169,7 +169,7 @@
     phoVc.timeKey = [_dataArray[btn.tag - 10000] timeKey];
     phoVc.titleStr = [_dataArray[btn.tag - 10000] name];
     phoVc.createBlock = ^(void){
-        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
     };

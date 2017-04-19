@@ -58,13 +58,14 @@
 		1862C14A1E8BB8A2004E4537 /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1862C13C1E8BB8A2004E4537 /* openssl_wrapper.m */; };
 		1862C14B1E8BB8A2004E4537 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1862C13E1E8BB8A2004E4537 /* RSADataSigner.m */; };
 		1862C14C1E8BB8A2004E4537 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 1862C1401E8BB8A2004E4537 /* RSADataVerifier.m */; };
-		186360D31E9E14D4001E20F5 /* VipCardOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186360D21E9E14D4001E20F5 /* VipCardOrderDetailViewController.m */; };
 		186855751E5AA162001F44DD /* AdvertiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855741E5AA162001F44DD /* AdvertiseView.m */; };
 		186856001E5BD776001F44DD /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855F71E5BD776001F44DD /* BaseViewController.m */; };
 		186856011E5BD776001F44DD /* Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855F91E5BD776001F44DD /* Factory.m */; };
 		186856021E5BD776001F44DD /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FB1E5BD776001F44DD /* LocationManager.m */; };
 		186856031E5BD776001F44DD /* UIView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FD1E5BD776001F44DD /* UIView+Addition.m */; };
 		186856041E5BD776001F44DD /* UIView+GPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 186855FF1E5BD776001F44DD /* UIView+GPExtension.m */; };
+		1870EE051EA6ECFA00BFD871 /* MJDIYHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1870EE041EA6ECFA00BFD871 /* MJDIYHeader.m */; };
+		1870EE091EA6FC4F00BFD871 /* VipCardOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1870EE081EA6FC4F00BFD871 /* VipCardOrderDetailViewController.m */; };
 		1872F3751E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */; };
 		188B934F1E8CE1BD00A04D62 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 188B934D1E8CE1BD00A04D62 /* AlipaySDK.bundle */; };
 		188B93501E8CE1BD00A04D62 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188B934E1E8CE1BD00A04D62 /* AlipaySDK.framework */; };
@@ -1366,8 +1367,6 @@
 		1862C13E1E8BB8A2004E4537 /* RSADataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataSigner.m; sourceTree = "<group>"; };
 		1862C13F1E8BB8A2004E4537 /* RSADataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataVerifier.h; sourceTree = "<group>"; };
 		1862C1401E8BB8A2004E4537 /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
-		186360D11E9E14D4001E20F5 /* VipCardOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardOrderDetailViewController.h; sourceTree = "<group>"; };
-		186360D21E9E14D4001E20F5 /* VipCardOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardOrderDetailViewController.m; sourceTree = "<group>"; };
 		186855731E5AA162001F44DD /* AdvertiseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvertiseView.h; sourceTree = "<group>"; };
 		186855741E5AA162001F44DD /* AdvertiseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvertiseView.m; sourceTree = "<group>"; };
 		186855F61E5BD776001F44DD /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -1380,6 +1379,10 @@
 		186855FD1E5BD776001F44DD /* UIView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Addition.m"; sourceTree = "<group>"; };
 		186855FE1E5BD776001F44DD /* UIView+GPExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GPExtension.h"; sourceTree = "<group>"; };
 		186855FF1E5BD776001F44DD /* UIView+GPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GPExtension.m"; sourceTree = "<group>"; };
+		1870EE031EA6ECFA00BFD871 /* MJDIYHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJDIYHeader.h; sourceTree = "<group>"; };
+		1870EE041EA6ECFA00BFD871 /* MJDIYHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJDIYHeader.m; sourceTree = "<group>"; };
+		1870EE071EA6FC4F00BFD871 /* VipCardOrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardOrderDetailViewController.h; sourceTree = "<group>"; };
+		1870EE081EA6FC4F00BFD871 /* VipCardOrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardOrderDetailViewController.m; sourceTree = "<group>"; };
 		1872F3731E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+ChangeLineSpaceAndWordSpace.h"; sourceTree = "<group>"; };
 		1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+ChangeLineSpaceAndWordSpace.m"; sourceTree = "<group>"; };
 		188B934D1E8CE1BD00A04D62 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
@@ -3919,6 +3922,15 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		1870EE021EA6ECFA00BFD871 /* MJRefreshDIY */ = {
+			isa = PBXGroup;
+			children = (
+				1870EE031EA6ECFA00BFD871 /* MJDIYHeader.h */,
+				1870EE041EA6ECFA00BFD871 /* MJDIYHeader.m */,
+			);
+			path = MJRefreshDIY;
+			sourceTree = "<group>";
+		};
 		18911A971EA46A6B00B6FAAD /* 微信支付 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4019,8 +4031,8 @@
 		18DF0AE61E9E0CA4006EB7FD /* OrderDetail */ = {
 			isa = PBXGroup;
 			children = (
-				186360D11E9E14D4001E20F5 /* VipCardOrderDetailViewController.h */,
-				186360D21E9E14D4001E20F5 /* VipCardOrderDetailViewController.m */,
+				1870EE071EA6FC4F00BFD871 /* VipCardOrderDetailViewController.h */,
+				1870EE081EA6FC4F00BFD871 /* VipCardOrderDetailViewController.m */,
 				180464841E9E31330079CAD1 /* VipCardOrderDetailTableViewCell.h */,
 				180464851E9E31330079CAD1 /* VipCardOrderDetailTableViewCell.m */,
 				180464871E9F06C00079CAD1 /* VipCardOrderDetailModel.h */,
@@ -6907,6 +6919,7 @@
 		36BFFEEA1BC76D09005B3CE2 /* 第三方库 */ = {
 			isa = PBXGroup;
 			children = (
+				1870EE021EA6ECFA00BFD871 /* MJRefreshDIY */,
 				18911A971EA46A6B00B6FAAD /* 微信支付 */,
 				18FE10FB1EA08E46001E3B7C /* UMSocial_Sdk_4.2.5 */,
 				1814D8BA1E821D8D00F6E063 /* placeholderTextView */,
@@ -9289,6 +9302,7 @@
 				20BEF3A91E29F25A00E9AED7 /* JGHNewTeamApplyViewController.m in Sources */,
 				207F70511DC0450800667E26 /* JGHSuppliesMallView.m in Sources */,
 				36BFFFFC1BC770C4005B3CE2 /* ChartCell.m in Sources */,
+				1870EE091EA6FC4F00BFD871 /* VipCardOrderDetailViewController.m in Sources */,
 				828A99F21CE32E9300AF9860 /* JGMenberTableViewCell.m in Sources */,
 				F554266E1D224A2A00233B20 /* JGDSetPayPasswordViewController.m in Sources */,
 				203019931E0E4292005568E2 /* ZXDataMatrixASCIIEncoder.m in Sources */,
@@ -9455,6 +9469,7 @@
 				203019751E0E4292005568E2 /* ZXByteArray.m in Sources */,
 				36BF005E1BC77296005B3CE2 /* MyFootViewController.m in Sources */,
 				203019B41E0E4292005568E2 /* ZXRSSExpandedDecodedChar.m in Sources */,
+				1870EE051EA6ECFA00BFD871 /* MJDIYHeader.m in Sources */,
 				18DF0AE51E9DF6C7006EB7FD /* VipCardConfirmOrderModel.m in Sources */,
 				36BF00A71BC77326005B3CE2 /* MeselfModel.m in Sources */,
 				200CE7111E5299E800055A85 /* JGHConsultChannelCell.m in Sources */,
@@ -9797,7 +9812,6 @@
 				F51E5EE71D7E92FE00AE254E /* JGDAlmostScoreTableViewCell.m in Sources */,
 				20FBE4561E0A2D5700E7419D /* JGHCaddieWithCaddieScoreView.m in Sources */,
 				82681C3A1DC9CE3E00AFA070 /* LQProgressHud.m in Sources */,
-				186360D31E9E14D4001E20F5 /* VipCardOrderDetailViewController.m in Sources */,
 				F53A05741D519BC7009DD489 /* JGDTeamShowTableViewCell.m in Sources */,
 				203019D91E0E4293005568E2 /* ZXUPCEANExtension5Support.m in Sources */,
 				827AA0141D1D1BFF00F6B80B /* JGHCancelApplyViewController.m in Sources */,

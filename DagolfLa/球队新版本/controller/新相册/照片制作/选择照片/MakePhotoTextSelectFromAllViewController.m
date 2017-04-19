@@ -66,7 +66,7 @@
     [_collectionView registerClass:[MSSCollectionViewCell class] forCellWithReuseIdentifier:@"MSSCollectionViewCell"];
     [self.view addSubview:_collectionView];
     
-    _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefreshing)];
+    _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRefreshing)];
     _collectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
     [_collectionView.mj_header beginRefreshing];
     

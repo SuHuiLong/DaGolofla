@@ -51,6 +51,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = RGB(238,238,238);
     // Do any additional setup after loading the view.
     [self createRefreash];
 }
@@ -68,18 +69,22 @@
     self.navigationItem.leftBarButtonItem = leftBtn;
 
     self.title = @"订单详情";
-    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icn_serve_phone"] style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnClick)];
-    [rightBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
-
-    [rightBtn setTintColor:WhiteColor];
-    self.navigationItem.rightBarButtonItem = rightBtn;
+    
+    UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,kWvertical(22),kHvertical(22))];
+    [rightButton addTarget:self action:@selector(rightBtnClick)forControlEvents:UIControlEventTouchUpInside];
+    [rightButton setBackgroundImage:[UIImage imageNamed:@"icn_serve_phone"] forState:UIControlStateNormal];
+    UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    [rightItem setTintColor:WhiteColor];
+    self.navigationItem.rightBarButtonItem= rightItem;
 }
 
 /**
  主视图
  */
 -(void)createTableView{
-    UITableView *mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStyleGrouped];
+    UIView *bgView = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(0, 0, 1, 1)];
+    [self.view addSubview:bgView];
+    UITableView *mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64) style:UITableViewStyleGrouped];
     mainTableView.dataSource = self;
     mainTableView.delegate = self;
     mainTableView.backgroundColor = RGB(238,238,238);
@@ -136,6 +141,7 @@
             self.stateButtonString =  formatData.stateButtonString;
             if ([self.stateButtonString isEqualToString:@"未付款"]) {
                 _paymentBtn.hidden = false;
+                _mainTableView.height = screenHeight - kHvertical(83)-64;
             }
             [_mainTableView reloadData];
         }
@@ -215,9 +221,12 @@
     if (model.status==2) {
         textFont = 14;
     }
-    CGSize contentSize= [contentStr boundingRectWithSize:CGSizeMake(screenWidth - kWvertical(100), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Light" size:kHorizontal(textFont)]} context:nil].size;
-
-    return contentSize.height;
+    
+    UILabel *textLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(90), kHvertical(3), screenWidth - kWvertical(100), 20) fontSize:kHorizontal(textFont) Title:contentStr];
+    textLabel.numberOfLines = 0;
+    [textLabel sizeToFit];
+    
+    return textLabel.height+kHvertical(6);
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -231,7 +240,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSArray *titleArray = @[@"订单信息",@"联盟会籍",@"会员信息"];
+    NSArray *titleArray = @[@"订单信息",@"联盟会籍信息",@"会员信息"];
     
     UIView *headerView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(66))];
     //灰色背景

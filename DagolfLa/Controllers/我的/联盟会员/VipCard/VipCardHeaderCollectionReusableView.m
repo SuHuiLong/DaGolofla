@@ -30,8 +30,9 @@
     _descLabel.textColor = LightGrayColor;
     _descLabel.font = [UIFont systemFontOfSize:kHorizontal(15)];
     _descLabel.numberOfLines = 0;
-    
     [self   addSubview:_descLabel];
+    _addBtn = [Factory createButtonWithFrame:CGRectMake(0, 0, 0, 0) target:self selector:nil Title:nil];
+    [self addSubview:_addBtn];
     
     //立即添加
     _addNowBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(10), kHvertical(390), screenWidth - kWvertical(20), kHvertical(45)) titleFont:kHorizontal(16) textColor:WhiteColor backgroundColor:RGBA(241, 151, 48, 1)  target:self selector:@selector(clickToGoodsList) Title:@"立即添加"];
@@ -50,10 +51,10 @@
     [self addSubview:_nocanDescLabel];
     
     //跳转联盟卡商城按钮
-    self.goodsListButton = [Factory createButtonWithFrame:CGRectMake(screenWidth/2-kWvertical(50), screenHeight - kHvertical(58)-kHvertical(64) - kHvertical(10), kWvertical(100), kHvertical(40)) target:self selector:@selector(clickToGoodsList) Title:nil];
+    self.goodsListButton = [Factory createButtonWithFrame:CGRectMake(screenWidth/2-kWvertical(50), screenHeight - kHvertical(58)-kHvertical(64) - kHvertical(10), kWvertical(120), kHvertical(40)) target:self selector:@selector(clickToGoodsList) Title:nil];
     UIImageView *walletView = [Factory createImageViewWithFrame:CGRectMake(0, kHvertical(10), kHorizontal(20), kHorizontal(20)) Image:[UIImage imageNamed:@"icn_allianceCardstore"]];
     [self.goodsListButton addSubview:walletView];
-    UILabel *goodsList = [Factory createLabelWithFrame:CGRectMake(walletView.x_width + kWvertical(8), 0, kWvertical(72), self.goodsListButton.height) textColor:RGB(0,134,73) fontSize:kHorizontal(14) Title:@"会籍卡商城"];
+    UILabel *goodsList = [Factory createLabelWithFrame:CGRectMake(walletView.x_width + kWvertical(8), 0, kWvertical(100), self.goodsListButton.height) textColor:RGB(0,134,73) fontSize:kHorizontal(14) Title:@"联盟会籍商城"];
     [self.goodsListButton addSubview:goodsList];
     [self addSubview:self.goodsListButton];
 }

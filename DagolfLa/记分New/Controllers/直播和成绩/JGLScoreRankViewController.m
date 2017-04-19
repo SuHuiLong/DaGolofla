@@ -159,7 +159,7 @@
     if ([_tableView.mj_header isRefreshing] == YES) {
         [_tableView.mj_header endRefreshing];
     }
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
 }
 
@@ -171,7 +171,7 @@
     _tableView.tableHeaderView = _viewHeader;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[JGLScoreRankTableViewCell class] forCellReuseIdentifier:@"JGLScoreRankTableViewCell"];
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
     
 }

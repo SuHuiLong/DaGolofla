@@ -134,7 +134,7 @@
 //    [self.tableView registerNib:activityBaseCellNib forCellReuseIdentifier:@"topCell"];
     [self.tableView registerClass:[JGDActvityPriziSetTableViewCell class] forCellReuseIdentifier:@"setCell"];
     _page = 0;
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.mj_header beginRefreshing];
 
@@ -307,7 +307,7 @@
     setAwardVC.model = self.model;
     setAwardVC.refreshBlock = ^(){
         [_tableView.mj_header endRefreshing];
-        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
         [_tableView.mj_header beginRefreshing];
     };
     [self.navigationController pushViewController:setAwardVC animated:YES];
@@ -322,7 +322,7 @@
     preVC.model = _model;
     preVC.refreshBlock = ^(){
         [_tableView.mj_header endRefreshing];
-        _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+        _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
         [_tableView.mj_header beginRefreshing];
     };
     [self.navigationController pushViewController:preVC animated:YES];

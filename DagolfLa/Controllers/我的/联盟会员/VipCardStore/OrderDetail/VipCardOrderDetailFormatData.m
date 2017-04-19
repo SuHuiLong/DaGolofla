@@ -22,6 +22,7 @@
     //下单时间
     NSString *orderTimeStr = [orderDict objectForKey:@"ts"];
     orderTimeStr = [orderTimeStr stringByReplacingOccurrencesOfString:@"-" withString:@"."];
+    orderTimeStr = [orderTimeStr substringToIndex:orderTimeStr.length-3];
     //销售人员手机号
     NSString *sellMobile = [orderDict objectForKey:@"sellMobile"];
     if (sellMobile.length==0) {

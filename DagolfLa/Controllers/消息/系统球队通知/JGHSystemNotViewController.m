@@ -138,7 +138,7 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
     self.systemNotTableView.tableHeaderView = CCCView;
     
     
-    self.systemNotTableView.mj_header = [MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    self.systemNotTableView.mj_header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.systemNotTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
     self.systemNotTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:self.systemNotTableView];
@@ -234,7 +234,9 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
         [dict setObject:keyList forKey:@"keyList"];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
         [[JsonHttp jsonHttp]httpRequestWithMD5:@"msg/batchDeleteMsg" JsonKey:nil withData:dict failedBlock:^(id errType) {
-            [LQProgressHud hide];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [LQProgressHud hide];
+            });
         } completionBlock:^(id data) {
             NSLog(@"%@", data);
             [LQProgressHud hide];

@@ -37,7 +37,14 @@
     UIView *headerLine = [Factory createViewWithBackgroundColor:RGB(213,213,213) frame:CGRectMake(0, kHvertical(50), screenWidth, 1)];
     [whiteView addSubview:headerLine];
     //图片
-    self.cardImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(71), kWvertical(92), kHvertical(58)) Image:nil];
+    UIView *cardBackView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(10), kHvertical(71), kWvertical(92), kHvertical(58))];
+    cardBackView.layer.masksToBounds = true;
+    cardBackView.layer.cornerRadius = kWvertical(4);
+    cardBackView.layer.borderColor = RGB(229,229,229).CGColor;
+    cardBackView.layer.borderWidth = 1;
+    [whiteView addSubview:cardBackView];
+    self.cardImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(12), kHvertical(73), kWvertical(88), kHvertical(54)) Image:nil];
+    
     [whiteView addSubview:self.cardImageView];
     //卡片名
     self.cardNameLabel = [Factory createLabelWithFrame:CGRectMake(self.cardImageView.x_width + kWvertical(11), headerLine.y_height + kHvertical(33), screenWidth - kWvertical(123), kHvertical(14)) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:nil];
@@ -46,7 +53,7 @@
     self.singlePriceLabel = [Factory createLabelWithFrame:CGRectMake(self.cardNameLabel.x, self.cardNameLabel.y_height + kHvertical(11), self.cardNameLabel.width, kHorizontal(12)) textColor:RGB(252,90,1) fontSize:kHorizontal(12) Title:nil];
     [whiteView addSubview:self.singlePriceLabel];
     //数量1
-    self.cardNumLabel1 = [Factory createLabelWithFrame:CGRectMake(self.singlePriceLabel.x, self.singlePriceLabel.y, self.singlePriceLabel.width, kHvertical(12)) textColor:RGB(49,49,49) fontSize:kHorizontal(12) Title:nil];
+    self.cardNumLabel1 = [Factory createLabelWithFrame:CGRectMake(self.singlePriceLabel.x, self.singlePriceLabel.y, self.singlePriceLabel.width, kHvertical(12)) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:nil];
     [self.cardNumLabel1 setTextAlignment:NSTextAlignmentRight];
     [whiteView addSubview:self.cardNumLabel1];
     //下线
@@ -71,14 +78,15 @@
     //下单时间
     NSString *timeStr = [NSString stringWithFormat:@"下单时间：%@",model.createTime];
     timeStr = [timeStr stringByReplacingOccurrencesOfString:@"-" withString:@"."];
+    timeStr = [timeStr substringToIndex:timeStr.length-3];
     self.timeLabel.text = timeStr;
+    
     //状态
     NSString *statuStr = model.stateShowString;
     self.statusLabel.text = statuStr;
     //卡片
     NSString *picUrl = model.bigPicURL;
-    _cardImageView.backgroundColor = RandomColor;
-    [self.cardImageView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:nil];
+    [self.cardImageView sd_setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"moren"]];
     //卡片名
     NSString *nameStr = model.cardName;
     self.cardNameLabel.text = nameStr;
@@ -95,7 +103,7 @@
     self.cardNumLabel2.text = cardNumStr2;
     //总价
     NSString *totalPrice = model.totalMoney;
-    NSMutableAttributedString *attributed = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"总计： ¥%@",totalPrice]];
+    NSMutableAttributedString *attributed = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"总计： ¥ %@",totalPrice]];
     [attributed addAttribute:NSForegroundColorAttributeName value:RGB(252,90,1) range:NSMakeRange(3, attributed.length-3)];
     [attributed addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(14)] range:NSMakeRange(4, 1)];
     [attributed addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(18)] range:NSMakeRange(5, attributed.length-5)];

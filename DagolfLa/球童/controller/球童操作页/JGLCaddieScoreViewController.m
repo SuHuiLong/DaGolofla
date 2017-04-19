@@ -107,7 +107,7 @@
     self.tableView.rowHeight = 50 * ProportionAdapter;
     [self.view addSubview:self.tableView];
     
-    MJRefreshHeader *mjHeader =[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    MJRefreshHeader *mjHeader =[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [mjHeader beginRefreshing];
     
     

@@ -104,7 +104,7 @@
         if (_collectionView.mj_header.isRefreshing == YES) {
             [_collectionView.mj_header endRefreshing];
         }
-        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         _isUpdata = YES;
         [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
@@ -142,7 +142,7 @@
     //获取含有UICollectionReusableView的class文件。
     [_collectionView registerClass:[JGPhotoTimeReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"JGPhotoTimeReusableView"];
     
-    _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _collectionView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [_collectionView.mj_header beginRefreshing];
     
@@ -284,7 +284,7 @@
     browser.blockRef = ^(){
         
         [_collectionView.mj_header endRefreshing];
-        _collectionView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+        _collectionView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         [_collectionView.mj_header beginRefreshing];
         [_collectionView reloadData];
     };

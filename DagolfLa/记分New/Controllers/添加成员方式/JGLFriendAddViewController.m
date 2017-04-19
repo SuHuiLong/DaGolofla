@@ -93,7 +93,7 @@
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
 }
 
@@ -111,7 +111,7 @@
     [_tableView registerClass:[JGLFriendAddTableViewCell class] forCellReuseIdentifier:@"JGLFriendAddTableViewCell"];
     
     
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     [_tableView.mj_header beginRefreshing];
     
 }

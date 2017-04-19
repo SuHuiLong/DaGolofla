@@ -184,7 +184,7 @@
     
     [_tableView registerNib:[UINib nibWithNibName:@"ComDetailViewCell" bundle:nil] forCellReuseIdentifier:@"ComDetailViewCell"];
     [_tableView registerClass:[CommuniteTableViewCell class] forCellReuseIdentifier:@"CommuniteTableViewCell"];
-    _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+    _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
     [_tableView.mj_header beginRefreshing];
     
@@ -598,7 +598,7 @@
                 
                 //                [_firstDataArray removeAllObjects];
                 //                [_tableView.mj_header endRefreshing];
-                //                _tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
+                //                _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
                 //                [_tableView.mj_header beginRefreshing];
                 //                [_tableView reloadData];
                 
