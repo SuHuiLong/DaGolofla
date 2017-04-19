@@ -675,12 +675,16 @@
     if (!isLaterPay) {
         [LQProgressHud showInfoMsg:@"支付成功"];
     }
+    [self performSelector:@selector(pushAct) withObject:self afterDelay:1];
+
+}
+
+- (void)pushAct{
     VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
     vc.orderKey = [NSString stringWithFormat:@"%@", _orderKey];
     vc.ispopAssign = true;
     [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 
 
