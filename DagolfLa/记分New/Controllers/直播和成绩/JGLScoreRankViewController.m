@@ -65,13 +65,13 @@
     NSArray *segmentedArray = [[NSArray alloc]initWithObjects:@"总杆排名",@"净杆排名",nil];
     _seg = [[UISegmentedControl alloc]initWithItems:segmentedArray];
     _seg = [[UISegmentedControl alloc]initWithItems:segmentedArray];
-    _seg.frame = CGRectMake(screenWidth-130*ScreenWidth/375, 35*ScreenWidth/375, 120*ScreenWidth/375, 35*ScreenWidth/375);
+    _seg.frame = CGRectMake(screenWidth-130*ScreenWidth/375, 37*ScreenWidth/375, 120*ScreenWidth/375, 30*ScreenWidth/375);
     _seg.selectedSegmentIndex = 0;//设置默认选择项索引
     _seg.backgroundColor = [UIColor whiteColor];
     _seg.tintColor = [UITool colorWithHexString:@"#32b14d" alpha:1];
     [_viewHeader addSubview:_seg];
     UIFont *font = [UIFont boldSystemFontOfSize:13.0f*ScreenWidth/375];
-    NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:UITextAttributeFont];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
     [_seg setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [_seg addTarget:self action:@selector(segTypeClick:) forControlEvents:UIControlEventValueChanged];
     
