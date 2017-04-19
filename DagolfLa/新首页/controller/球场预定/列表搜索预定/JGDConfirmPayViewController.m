@@ -671,6 +671,8 @@
 }
 
 - (void)pushToVipOrderDetail{
+    
+    [LQProgressHud showInfoMsg:@"支付成功"];
     VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
     vc.orderKey = [NSString stringWithFormat:@"%@", _orderKey];
     vc.ispopAssign = true;
