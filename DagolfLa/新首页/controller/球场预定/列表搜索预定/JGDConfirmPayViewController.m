@@ -216,7 +216,7 @@
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
                     
                     if (_fromWitchVC == 1) {
-                        [self pushToVipOrderDetail];
+                        [self pushToVipOrderDetail:NO];
                     }else{
                         JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
                         payVC.payORlaterPay = 1;
@@ -250,7 +250,7 @@
     }else if (btn.tag == 301) {
         
         if (_fromWitchVC == 1) {
-            [self pushToVipOrderDetail];
+            [self pushToVipOrderDetail:YES];
         }else{
             JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
             payVC.payORlaterPay = 2;
@@ -313,7 +313,7 @@
     if (secess == 1) {
         
         if (_fromWitchVC == 1) {
-            [self pushToVipOrderDetail];
+            [self pushToVipOrderDetail: NO];
         }else{
             JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
             payVC.payORlaterPay = 1;
@@ -361,7 +361,7 @@
             if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) {
                 NSLog(@"成功！");
                 if (_fromWitchVC == 1) {
-                    [self pushToVipOrderDetail];
+                    [self pushToVipOrderDetail:NO];
                 }else{
                     JGDPaySuccessViewController *payVC = [[JGDPaySuccessViewController  alloc] init];
                     payVC.payORlaterPay = 1;
@@ -670,9 +670,11 @@
     return self.numberOfSections;
 }
 
-- (void)pushToVipOrderDetail{
+- (void)pushToVipOrderDetail: (BOOL)isLaterPay{
     
-    [LQProgressHud showInfoMsg:@"支付成功"];
+    if (!isLaterPay) {
+        [LQProgressHud showInfoMsg:@"支付成功"];
+    }
     VipCardOrderDetailViewController *vc = [[VipCardOrderDetailViewController alloc] init];
     vc.orderKey = [NSString stringWithFormat:@"%@", _orderKey];
     vc.ispopAssign = true;
