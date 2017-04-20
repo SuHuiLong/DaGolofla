@@ -35,7 +35,10 @@
     //订单实际状态
     _stateButtonString = [orderDict objectForKey:@"stateButtonString"];
     //会籍编号
-    NSString *cardNum = [orderDict objectForKey:@"userCardIds"];
+    NSString *cardNum = [NSString string];
+    if ([data objectForKey:@"userCardIds"]) {
+        cardNum = [NSString stringWithFormat:@"%@",[data objectForKey:@"userCardIds"]];
+    }
     //会籍名称
     NSString *name = [cardTypeDict objectForKey:@"name"];
     //权益
@@ -61,10 +64,8 @@
     if (cardNum.length>0) {
         titleArray = @[@[@"订单号",@"下单时间",@"销售人员",@"支付费用",@"订单状态"],@[@"会籍编号",@"会籍名称",@"会籍权益",@""],@[@"用户名",@"性别",@"证件号",@"预留号码"]];
         contentArray = @[@[orderNumberStr,orderTimeStr,sellMobile,priceStr,stateStr],@[cardNum,name,enjoyService,enjoyDetail],@[userName,sexStr,certNumber,mobileStr]];
- 
-    }
 
-    
+    }
     
     for (int i = 0; i<titleArray.count; i++) {
         NSMutableArray *mArray = [NSMutableArray array];

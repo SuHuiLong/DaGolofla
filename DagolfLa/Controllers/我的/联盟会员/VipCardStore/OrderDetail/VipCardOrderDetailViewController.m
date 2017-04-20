@@ -48,6 +48,10 @@
     }
     return _dataArray;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden=NO;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -264,12 +268,14 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 1&&indexPath.row == 2) {
-        UseMallViewController *vc = [[UseMallViewController alloc]init];
-        NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"orderKey=%@dagolfla.com",_orderKey]];
-        vc.linkUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/league/sysOrderLeagueAgreement.html?orderKey=%@&md5=%@",_orderKey,md5Value];
-        vc.isNewColor = true;
-        [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.section == 1) {
+        NSArray *indexSectionArray = self.dataArray[1];
+        if (indexPath.row==indexSectionArray.count-1) {
+            UseMallViewController *vc = [[UseMallViewController alloc]init];
+            vc.linkUrl = @"http://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
+            vc.isNewColor = true;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 

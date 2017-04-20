@@ -11,7 +11,6 @@
 @interface ShowHUD ()<MBProgressHUDDelegate>
 
 @property (strong, nonatomic) MBProgressHUD *HUD;
-
 @end
 
 @implementation ShowHUD
@@ -21,12 +20,10 @@ static ShowHUD *showHUD = nil;
 +(instancetype)showHUD
 {
     @synchronized(self){
-        
         if (showHUD == nil) {
             showHUD = [[self alloc]init];
         }
     }
-    
     return showHUD;
 }
 /**
