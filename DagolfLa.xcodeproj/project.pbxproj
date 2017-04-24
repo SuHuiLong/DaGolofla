@@ -46,6 +46,7 @@
 		182C02D11E7A8E61001161D7 /* SearchWithMapOrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02D01E7A8E61001161D7 /* SearchWithMapOrderListViewController.m */; };
 		182CFE641E6D10A0003F711D /* AllianceVipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182CFE631E6D10A0003F711D /* AllianceVipViewController.m */; };
 		182CFE671E6D3835003F711D /* AddVipCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182CFE661E6D3835003F711D /* AddVipCardViewController.m */; };
+		184182341EADDFEC0040820B /* DagolfLaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 184182331EADDFEC0040820B /* DagolfLaUITests.m */; };
 		1854B91E1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1854B91D1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.m */; };
 		1854B9211E961B14009792A3 /* VipCardGoodsListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1854B9201E961B14009792A3 /* VipCardGoodsListModel.m */; };
 		1862C1431E8BB8A2004E4537 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1862C0E11E8BB8A1004E4537 /* libcrypto.a */; };
@@ -1185,6 +1186,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		184182361EADDFEC0040820B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 36BFFD201BC76C8D005B3CE2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 36BFFD271BC76C8D005B3CE2;
+			remoteInfo = DagolfLa;
+		};
 		36BFFD421BC76C8D005B3CE2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 36BFFD201BC76C8D005B3CE2 /* Project object */;
@@ -1269,6 +1277,9 @@
 		182CFE631E6D10A0003F711D /* AllianceVipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AllianceVipViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		182CFE651E6D3835003F711D /* AddVipCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddVipCardViewController.h; sourceTree = "<group>"; };
 		182CFE661E6D3835003F711D /* AddVipCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddVipCardViewController.m; sourceTree = "<group>"; };
+		184182311EADDFEB0040820B /* DagolfLaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DagolfLaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		184182331EADDFEC0040820B /* DagolfLaUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DagolfLaUITests.m; sourceTree = "<group>"; };
+		184182351EADDFEC0040820B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1854B91C1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardGoodsListCollectionViewCell.h; sourceTree = "<group>"; };
 		1854B91D1E961ADE009792A3 /* VipCardGoodsListCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardGoodsListCollectionViewCell.m; sourceTree = "<group>"; };
 		1854B91F1E961B14009792A3 /* VipCardGoodsListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardGoodsListModel.h; sourceTree = "<group>"; };
@@ -3473,6 +3484,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1841822E1EADDFEB0040820B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		36BFFD251BC76C8D005B3CE2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3761,6 +3779,15 @@
 				18274ABE1E95EFB40065117E /* VipCardStore */,
 			);
 			path = "联盟会员";
+			sourceTree = "<group>";
+		};
+		184182321EADDFEC0040820B /* DagolfLaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				184182331EADDFEC0040820B /* DagolfLaUITests.m */,
+				184182351EADDFEC0040820B /* Info.plist */,
+			);
+			path = DagolfLaUITests;
 			sourceTree = "<group>";
 		};
 		1862C0DE1E8BB8A1004E4537 /* zhifu */ = {
@@ -6843,6 +6870,7 @@
 				1862C0DE1E8BB8A1004E4537 /* zhifu */,
 				36BFFD2A1BC76C8D005B3CE2 /* DagolfLa */,
 				36BFFD441BC76C8D005B3CE2 /* DagolfLaTests */,
+				184182321EADDFEC0040820B /* DagolfLaUITests */,
 				36BFFD291BC76C8D005B3CE2 /* Products */,
 				20451C271DF15224003B2FC8 /* Frameworks */,
 				50B7FD4C03E9C55EFA383F01 /* Pods */,
@@ -6854,6 +6882,7 @@
 			children = (
 				36BFFD281BC76C8D005B3CE2 /* DagolfLa.app */,
 				36BFFD411BC76C8D005B3CE2 /* DagolfLaTests.xctest */,
+				184182311EADDFEB0040820B /* DagolfLaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8686,6 +8715,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		184182301EADDFEB0040820B /* DagolfLaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 184182381EADDFEC0040820B /* Build configuration list for PBXNativeTarget "DagolfLaUITests" */;
+			buildPhases = (
+				1841822D1EADDFEB0040820B /* Sources */,
+				1841822E1EADDFEB0040820B /* Frameworks */,
+				1841822F1EADDFEB0040820B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				184182371EADDFEC0040820B /* PBXTargetDependency */,
+			);
+			name = DagolfLaUITests;
+			productName = DagolfLaUITests;
+			productReference = 184182311EADDFEB0040820B /* DagolfLaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		36BFFD271BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36BFFD4B1BC76C8D005B3CE2 /* Build configuration list for PBXNativeTarget "DagolfLa" */;
@@ -8734,6 +8781,12 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = bhxx;
 				TargetAttributes = {
+					184182301EADDFEB0040820B = {
+						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = 5P6JNXBH3C;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 36BFFD271BC76C8D005B3CE2;
+					};
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = 5P6JNXBH3C;
@@ -8773,11 +8826,19 @@
 			targets = (
 				36BFFD271BC76C8D005B3CE2 /* DagolfLa */,
 				36BFFD401BC76C8D005B3CE2 /* DagolfLaTests */,
+				184182301EADDFEB0040820B /* DagolfLaUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1841822F1EADDFEB0040820B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		36BFFD261BC76C8D005B3CE2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -8977,6 +9038,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1841822D1EADDFEB0040820B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				184182341EADDFEC0040820B /* DagolfLaUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		36BFFD241BC76C8D005B3CE2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9982,6 +10051,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		184182371EADDFEC0040820B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 36BFFD271BC76C8D005B3CE2 /* DagolfLa */;
+			targetProxy = 184182361EADDFEC0040820B /* PBXContainerItemProxy */;
+		};
 		36BFFD431BC76C8D005B3CE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 36BFFD271BC76C8D005B3CE2 /* DagolfLa */;
@@ -10010,6 +10084,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		184182391EADDFEC0040820B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = DagolfLaUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gaopeng.DagolfLaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DagolfLa;
+			};
+			name = Debug;
+		};
+		1841823A1EADDFEC0040820B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = DagolfLaUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gaopeng.DagolfLaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DagolfLa;
+			};
+			name = Release;
+		};
 		36BFFD491BC76C8D005B3CE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -10276,6 +10387,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		184182381EADDFEC0040820B /* Build configuration list for PBXNativeTarget "DagolfLaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				184182391EADDFEC0040820B /* Debug */,
+				1841823A1EADDFEC0040820B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		36BFFD231BC76C8D005B3CE2 /* Build configuration list for PBXProject "DagolfLa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

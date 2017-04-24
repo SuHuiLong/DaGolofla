@@ -157,12 +157,12 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 - (void)leftScoreBtn:(UIButton *)btn{
    
     
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(btnRepeatClick:) object:btn];
-    
-    [self performSelector:@selector(btnRepeatClick:) withObject:btn afterDelay:0.3f];
-}
-
-- (void)btnRepeatClick:(UIButton *)btn{
+//    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(btnRepeatClick:) object:btn];
+//    
+//    [self performSelector:@selector(btnRepeatClick:) withObject:btn afterDelay:0.3f];
+//}
+//
+//- (void)btnRepeatClick:(UIButton *)btn{
     
     btn.enabled = NO;
     
@@ -237,7 +237,6 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
         return (screenHeight-64-82*ProportionAdapter)/2;
     }else{
         return (screenHeight-64-102*ProportionAdapter)/4;
-        //return 125*ProportionAdapter;
     }
 }
 

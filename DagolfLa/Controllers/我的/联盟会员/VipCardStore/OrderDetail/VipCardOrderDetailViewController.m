@@ -71,12 +71,11 @@
 -(void)createNavagationBar{
     UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(popBack)];
     self.navigationItem.leftBarButtonItem = leftBtn;
-
     self.title = @"订单详情";
-    
-    UIButton*rightButton = [[UIButton alloc]initWithFrame:CGRectMake(0,0,kWvertical(22),kHvertical(22))];
-    [rightButton addTarget:self action:@selector(rightBtnClick)forControlEvents:UIControlEventTouchUpInside];
-    [rightButton setBackgroundImage:[UIImage imageNamed:@"icn_serve_phone"] forState:UIControlStateNormal];
+    UIButton*rightButton = [Factory createButtonWithFrame:CGRectMake(0,0,kWvertical(22),kHvertical(22)) image:[UIImage imageNamed:@"icn_serve_phone"] target:self selector:@selector(rightBtnClick) Title:nil];
+//    [[UIButton alloc]initWithFrame:CGRectMake(0,0,kWvertical(22),kHvertical(22))];
+//    [rightButton addTarget:self action:@selector(rightBtnClick)forControlEvents:UIControlEventTouchUpInside];
+//    [rightButton setBackgroundImage:[UIImage imageNamed:@"icn_serve_phone"] forState:UIControlStateNormal];
     UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     [rightItem setTintColor:WhiteColor];
     self.navigationItem.rightBarButtonItem= rightItem;
@@ -112,7 +111,6 @@
 -(void)createRefreash{
     self.mainTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefresh)];
 }
-
 /**
  刷新
  */
@@ -142,9 +140,11 @@
             _paymentBtn.hidden = true;
             _mainTableView.height = screenHeight - 64;
             self.dataArray = [NSMutableArray array];
+            //格式化数据
             VipCardOrderDetailFormatData *formatData = [[VipCardOrderDetailFormatData alloc] init];
             self.dataArray = [formatData formatData:data];
             self.stateButtonString =  formatData.stateButtonString;
+            //设置付款按钮
             if ([self.stateButtonString isEqualToString:@"未付款"]) {
                 _paymentBtn.hidden = false;
                 _mainTableView.height = screenHeight - kHvertical(83)-64;

@@ -146,6 +146,9 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     VipCardOrderListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"VipCardOrderListTableViewCellId"];
+    if (cell == nil) {
+        cell = [[VipCardOrderListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"VipCardOrderListTableViewCellId"];
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     VipCardOrderListModel *model = self.dataArray[indexPath.row];
     [cell configModel:model];

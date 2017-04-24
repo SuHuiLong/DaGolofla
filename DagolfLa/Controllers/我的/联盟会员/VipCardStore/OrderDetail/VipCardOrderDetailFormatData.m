@@ -83,7 +83,6 @@
                     }else if (j==3){
                         model.status = 2;
                     }
-                
                 }else{
                     if (j==0) {
                         model.status = 1;

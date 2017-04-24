@@ -185,20 +185,6 @@
         //本地存在
         //scoreKeyArray = [userdf objectForKey:@"scoreKeyArray"];
         scoreKeyArray = [NSMutableArray arrayWithArray:[userdf objectForKey:@"scoreKeyArray"]];
-        //插入scoreKey
-        /*
-        NSInteger content = 0;
-        for (int i=0; i<scoreKeyArray.count; i++) {
-            NSString *scoreKey = scoreKeyArray[i];
-            if ([_scorekey isEqualToString:scoreKey]) {
-                content = 1;
-            }
-        }
-        
-        if (content) {
-            [scoreKeyArray addObject:_scorekey];
-        }
-        */
         
         if (![scoreKeyArray containsObject:_scorekey]) {
             [scoreKeyArray addObject:_scorekey];
@@ -919,68 +905,6 @@
         }];
     });
     
-    /*
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    NSMutableArray *listArray = [NSMutableArray array];
-    for (JGHScoreListModel *model in self.userScoreArray) {
-        NSMutableDictionary *listDict = [NSMutableDictionary dictionary];
-        if (model.userKey) {
-            [listDict setObject:model.userKey forKey:@"userKey"];// 用户Key
-        }else{
-            [listDict setObject:@(0) forKey:@"userKey"];// 用户Key
-        }
-        
-        [listDict setObject:model.userName forKey:@"userName"];// 用户名称
-        if (model.userMobile) {
-            [listDict setObject:model.userMobile forKey:@"userMobile"];// 手机号
-        }else{
-            [listDict setObject:@"" forKey:@"userMobile"];// 手机号
-        }
-        if (model.tTaiwan) {
-            [listDict setObject:model.tTaiwan forKey:@"tTaiwan"];// T台
-        }else{
-            [listDict setObject:@"" forKey:@"tTaiwan"];// T台
-        }
-        
-        [listDict setObject:_currentAreaArray[0] forKey:@"region1"];//region1
-        [listDict setObject:_currentAreaArray[1] forKey:@"region2"];//region2
-        [listDict setObject:model.poleNameList forKey:@"poleNameList"];// 球洞名称
-        [listDict setObject:model.poleNumber forKey:@"poleNumber"];// 球队杆数
-        [listDict setObject:model.pushrod forKey:@"pushrod"];// 推杆
-        [listDict setObject:model.onthefairway forKey:@"onthefairway"];// 是否上球道
-        [listDict setObject:model.timeKey forKey:@"timeKey"];// 是否上球道
-        [listDict setObject:@(_switchMode) forKey:@"scoreModel"];//记分模式
-        
-        [listArray addObject:listDict];
-    }
-    
-    [dict setObject:listArray forKey:@"list"];
-    
-    [[JsonHttp jsonHttp]httpRequestHaveSpaceWithMD5:@"score/saveScore" JsonKey:nil withData:dict failedBlock:^(id errType) {
-        _item.enabled = YES;
-    } completionBlock:^(id data) {
-        _item.enabled = YES;
-        NSLog(@"%@", data);
-        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-            NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-            if (![userdef objectForKey:[NSString stringWithFormat:@"%@list", _scorekey]]) {
-                [userdef setObject:@1 forKey:[NSString stringWithFormat:@"%@list", _scorekey]];
-                [userdef synchronize];
-            }
-            
-            if (_scoreFinish == 0) {
-                [[ShowHUD showHUD]showToastWithText:@"保存成功" FromView:self.view];
-            }else{
-                [self finishScore];
-            }
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-    }];
-     */
 }
 #pragma mark -- 结束记分／完成
 - (void)finishScore{
@@ -1019,17 +943,6 @@
                         if ([scoreKeyArray containsObject:_scorekey]) {
                             [scoreKeyArray removeObject:_scorekey];
                         }
-                        //                    NSInteger deleteId =0;
-                        //                    for (int i=0; i<scoreKeyArray.count; i++) {
-                        //                        NSString *userdfScoreKey = [NSString stringWithFormat:@"%@", scoreKeyArray[i]];
-                        //                        if ([userdfScoreKey isEqualToString:_scorekey]) {
-                        //                            deleteId =i;
-                        //                        }
-                        //                    }
-                        //
-                        //                    if (scoreKeyArray.count >deleteId) {
-                        //                        [scoreKeyArray removeObjectAtIndex:deleteId];
-                        //                    }
                         
                         [[NSUserDefaults standardUserDefaults]setObject:scoreKeyArray forKey:@"scoreKeyArray"];
                         [[NSUserDefaults standardUserDefaults]synchronize];
@@ -1045,47 +958,6 @@
     });
     
     
-    /*
-    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
-    
-    NSMutableDictionary *finishDict = [NSMutableDictionary dictionary];
-    [finishDict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [finishDict setObject:_scorekey forKey:@"scoreKey"];
-    [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/finishScore" JsonKey:nil withData:finishDict failedBlock:^(id errType) {
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        self.view.userInteractionEnabled = YES;
-        _item.enabled = YES;
-    } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        
-        self.view.userInteractionEnabled = YES;
-        _item.enabled = YES;
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-        if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
-            if ([data objectForKey:@"money"]) {
-                _walletMonay = [data objectForKey:@"money"];
-            }
-     // ----------------------11111
-            //获取主线层
-            if ([NSThread isMainThread]) {
-                NSLog(@"Yay!");
-                [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
-                [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];//TIMESlEEP
-            } else {
-                NSLog(@"Humph, switching to main");
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[ShowHUD showHUD]showToastWithText:@"记分结束！" FromView:self.view];
-                    [self performSelector:@selector(pushJGHEndScoresViewController) withObject:self afterDelay:1.0];//TIMESlEEP
-                });
-            }
-            
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-    }];
-     */
 }
 #pragma mark --历史记分
 - (void)scoresResult{
@@ -1306,8 +1178,7 @@
                     model.standardlever = standardlever;
                     [self.userScoreArray replaceObjectAtIndex:j withObject:model];
                 }
-            }
-            
+            }            
             //刷新
             [_scoresView reloadViewData:self.userScoreArray andCurrentAreaArrat:_currentAreaArray];
             [_poorScoreView reloadPoorViewData:self.userScoreArray andCurrentAreaArrat:_currentAreaArray];
@@ -1316,20 +1187,6 @@
                 [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
             }
         }
-        
-        //[self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:_selectPage -1], [self returnStandardlever:_selectPage -1]] forState:UIControlStateNormal];
-        
-        //========================
-        //_refreshArea = 1;
-        
-        NSLog(@"_selectPage == %td", _selectPage);
-        //NSMutableDictionary *userDict = [NSMutableDictionary dictionary];
-        //[userDict setObject:@(_currentPage) forKey:@"index"];
-        //创建一个消息对象
-        //NSNotification * notice = [NSNotification notificationWithName:@"noticePushScores" object:nil userInfo:userDict];
-        
-        //发送消息
-        //[[NSNotificationCenter defaultCenter]postNotification:notice];
         
     }];
 }
