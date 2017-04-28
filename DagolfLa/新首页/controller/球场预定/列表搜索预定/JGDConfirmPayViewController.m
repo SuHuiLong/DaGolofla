@@ -558,8 +558,6 @@
             }
         }];
         
-
-        
     }else{
         
         if (self.section2Num == 2) {
@@ -674,9 +672,11 @@
     
     if (!isLaterPay) {
         [LQProgressHud showInfoMsg:@"支付成功"];
+        [self performSelector:@selector(pushAct) withObject:self afterDelay:1];
+    }else{
+        [self pushAct];
     }
-    [self performSelector:@selector(pushAct) withObject:self afterDelay:1];
-
+    
 }
 
 - (void)pushAct{

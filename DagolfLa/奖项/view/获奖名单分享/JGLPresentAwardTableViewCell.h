@@ -27,6 +27,9 @@
 
 @property (strong, nonatomic) UIButton*    chooseBtn;
 
+@property (strong, nonatomic) UIImageView *chooseImageV;
+
+@property (nonatomic, assign) NSInteger isManager;
 
 - (void)configJGHAwardModel:(JGHAwardModel *)model;
 

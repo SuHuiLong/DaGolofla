@@ -68,30 +68,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 创建数据
 - (void)createData{
-    /**
-    [_selectArray removeAllObjects];
-    for (int i=0; i<_titleArray.count; i++) {
-        JGHAwardModel *model = [[JGHAwardModel alloc]init];
-        model.name = _titleArray[i];
-        
-        for (int j=0; j<_selectChooseArray.count; j++) {
-            JGHAwardModel *modelChoose = [[JGHAwardModel alloc]init];
-            modelChoose = _selectChooseArray[j];
-            if ([model.name isEqualToString:modelChoose.name]) {
-                model.select = 1;
-                [_selectArray addObject:model.name];
-                NSLog(@"select == %td", model.select);
-                break;
-            }else{
-                model.select = 0;
-            }
-        }
-        
-        [self.dataArray addObject:model];
-    }
-    
-    [self.chooseTableView reloadData];
-     */
+
     [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];
@@ -141,49 +118,27 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         [self.chooseTableView reloadData];
     }];
 }
+
 #pragma mark -- 创建工具栏
 - (void)createSaveAwardBtn{
-    UIView *psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
-    psuhView.backgroundColor = [UIColor whiteColor];
-    UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, screenWidth - 20*ProportionAdapter, 65*ProportionAdapter - 20*ProportionAdapter)];
+
+    UIButton *psuhBtn = [[UIButton alloc]initWithFrame:CGRectMake(kWvertical(10), kHvertical(550), screenWidth - kWvertical(20), kHvertical(45))];
     [psuhBtn setTitle:@"保存" forState:UIControlStateNormal];
     [psuhBtn setBackgroundColor:[UIColor colorWithHexString:Click_Color]];
     psuhBtn.titleLabel.font = [UIFont systemFontOfSize:20*ProportionAdapter];
     psuhBtn.layer.masksToBounds = YES;
     psuhBtn.layer.cornerRadius = 8.0;
     [psuhBtn addTarget:self action:@selector(saveAwardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [psuhView addSubview:psuhBtn];
-    [self.view addSubview:psuhView];
+    [self.view addSubview:psuhBtn];
 }
+
 #pragma mark -- 保存奖项
 - (void)saveAwardBtnClick:(UIButton *)btn{
-    btn.enabled = NO;
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@(_teamKey) forKey:@"teamKey"];
-    [dict setObject:@(_activityKey) forKey:@"activityKey"];
-    [dict setObject:_selectArray forKey:@"defaultList"];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doSaveDefaultPrize" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
-        
-    } completionBlock:^(id data) {
-        NSLog(@"data = %@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
-            NSNotification * notice = [NSNotification notificationWithName:@"reloadAwardData" object:nil userInfo:nil];
-            //发送消息
-            [[NSNotificationCenter defaultCenter]postNotification:notice];
-            
-            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:1.0];
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
-        }
-    }];
-    
-    btn.enabled = YES;
+    [self performSelector:@selector(pushCtrl) withObject:self afterDelay:0.3];
+
 }
 - (void)pushCtrl{
+    self.refreshBlock(_selectArray);
     [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark -- 全选
@@ -215,7 +170,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 #pragma mark -- 创建TB
 - (void)createChooseTableView{
-    self.chooseTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -65*ProportionAdapter- 64) style:UITableViewStylePlain];
+    self.chooseTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - kHvertical(60) - 64) style:UITableViewStylePlain];
     self.chooseTableView.delegate = self;
     self.chooseTableView.dataSource = self;
     
@@ -261,17 +216,18 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         JGHAddAwardImageCell *addAwardImageCell = [tableView dequeueReusableCellWithIdentifier:JGHAddAwardImageCellIdentifier];
-        [addAwardImageCell configAddAwardImageName:@"zidingyibianji" andTiles:@"自定义添加奖项"];
+        [addAwardImageCell configAddAwardImageName:@"icn_addawards" andTiles:@"自定义添加奖项"];
         return addAwardImageCell;
     }else{
         if (indexPath.section == _dataArray.count + 1) {
             JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier];
-            [signUoPromptCell configAllPromptString:@"提示：选择好奖项后，请对每个奖项的奖品和数量进行设置" andLeftCon:10 andRightCon:10];
+            [signUoPromptCell configAllPromptString:@"选择好奖项后，请对每个奖项的奖品和数量进行设置" andLeftCon:10 andRightCon:10];
             return signUoPromptCell;
         }else{
             JGHChooseAwardCell *chooseAwardCell = [tableView dequeueReusableCellWithIdentifier:JGHChooseAwardCellIdentifier];
             chooseAwardCell.delegate = self;
             chooseAwardCell.chooseBtn.tag = indexPath.section + 100;
+            chooseAwardCell.chooseBtn.enabled = NO;
             if (_dataArray.count > 0) {
                 NSLog(@"%td", _dataArray.count);
                 NSLog(@"%td", indexPath.section);
@@ -284,7 +240,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
+    if (section == 1 || section == 0) {
         return 10*ProportionAdapter;
     }
     return 1;
@@ -331,30 +287,11 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
         [self.chooseTableView reloadData];
     }
 }
+
 #pragma mark -- 勾选
 - (void)selectChooseAwardBtnClick:(UIButton *)btn{
-    NSLog(@"%td", btn.tag);
-    for (int i =0; i<_dataArray.count; i++) {
-        if (btn.tag-101 == i) {
-            JGHAwardModel *model = [[JGHAwardModel alloc]init];
-            model = _dataArray[i];
-            if (model.select == 1) {
-                model.select = 0;
-            }else{
-                model.select = 1;
-            }
-            
-            [_dataArray replaceObjectAtIndex:i withObject:model];
-            if (![_selectArray containsObject:model.name]) {
-                [_selectArray addObject:model.name];
-            }else{
-                [_selectArray removeObject:model.name];
-            }
-        }
-    }
-    
-    [self.chooseTableView reloadData];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

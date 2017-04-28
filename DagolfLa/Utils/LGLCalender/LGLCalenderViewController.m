@@ -181,11 +181,18 @@
                 //if (model.month == _month) {
                     if (dayModel.price.length > 0) {
                         
+//                        NSString *day;
+//                        if (dayModel.day < 10) {
+//                            day = [NSString stringWithFormat:@"0%td", dayModel.day];
+//                        }else{
+//                            day = [NSString stringWithFormat:@"%td", dayModel.day];
+//                        }
+                        
                         NSString *day;
-                        if (dayModel.day < 10) {
-                            day = [NSString stringWithFormat:@"0%td", dayModel.day];
+                        if (_day < 10) {
+                            day = [NSString stringWithFormat:@"0%td", _day];
                         }else{
-                            day = [NSString stringWithFormat:@"%td", dayModel.day];
+                            day = [NSString stringWithFormat:@"%td", _day];
                         }
                         
                         //可预定时间 -- 当上一控制器没有传时间，默认选择第一个有价格的时间

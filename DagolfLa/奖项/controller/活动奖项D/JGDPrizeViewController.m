@@ -281,8 +281,8 @@
                 
                 [cell.contentView addSubview:cell.presentationBtn];
 //                [cell.contentView addSubview:cell.prizeBtn];
-                
-                [cell.presentationBtn addTarget:self action:@selector(present) forControlEvents:(UIControlEventTouchUpInside)];
+#warning XXXXXXXXXX
+//                [cell.presentationBtn addTarget:self action:@selector(present) forControlEvents:(UIControlEventTouchUpInside)];
 //                [cell.prizeBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
             }
             return cell;

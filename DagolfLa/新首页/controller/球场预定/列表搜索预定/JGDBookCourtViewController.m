@@ -65,7 +65,7 @@
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
+//    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     [dic setObject:[NSNumber numberWithInteger:self.offset] forKey:@"offset"];
     [dic setObject:[NSNumber numberWithInteger:type] forKey:@"sortType"];
     [dic setObject:self.cityString forKey:@"cityName"];
@@ -169,6 +169,8 @@
 
 //地图查看
 -(void)pushMapView{
+    
+    [self isLogin];
     SearchWithMapViewController *vc = [[SearchWithMapViewController alloc] init];
     vc.cityName = _cityString;
     [self.navigationController pushViewController:vc animated:YES];
@@ -213,6 +215,9 @@
 
 // 最右搜索按钮
 - (void)searchAct{
+    
+    [self isLogin];
+    
     JGDCourtNameSearchViewController *nameSearchVC = [[JGDCourtNameSearchViewController alloc] init];
 
     [self.navigationController pushViewController:nameSearchVC animated:YES];
@@ -244,9 +249,35 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    [self isLogin];
+
     JGDCourtDetailViewController *courtVC = [[JGDCourtDetailViewController alloc] init];
     courtVC.timeKey = [self.dataArray[indexPath.row] timeKey];
     [self.navigationController pushViewController:courtVC animated:YES];
+}
+
+- (void)isLogin{
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
+        
+    }
+    else
+    {
+        [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+        } withBlockSure:^{
+            JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+            vc.reloadCtrlData = ^(){
+                
+                
+            };
+            
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } withBlock:^(UIAlertController *alertView) {
+            [self presentViewController:alertView animated:YES completion:nil];
+        }];
+        
+        return;
+    }
 }
 
 #pragma mark --- @"推荐排序",@"距离优先",@"价格优先"

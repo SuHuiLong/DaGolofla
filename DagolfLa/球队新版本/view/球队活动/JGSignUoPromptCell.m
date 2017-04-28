@@ -40,7 +40,8 @@
     self.pamapLabelRight.constant = rightCon * ProportionAdapter;
     
     self.pamaptLabel.text = str;
-    self.pamaptLabel.font = [UIFont systemFontOfSize:13 *ProportionAdapter];
+    self.pamaptLabel.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+    self.pamaptLabel.font = [UIFont systemFontOfSize:kHorizontal(14)];
     self.backgroundColor = [UIColor colorWithHexString:BG_color];
 }
 

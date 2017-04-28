@@ -10,6 +10,8 @@
 
 @interface JGHChooseAwardViewController : ViewController
 
+@property (copy, nonatomic) void (^refreshBlock)(NSMutableArray *);
+
 
 @property (nonatomic, assign)NSInteger activityKey;
 

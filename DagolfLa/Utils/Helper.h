@@ -147,4 +147,15 @@
 
 +(void)CheckAddressBookAuthorization:(void (^)(bool isAuthorized))block;
 
+
+// 设置label的行间距
++ (void)setLabelSpace:(UILabel*)label withValue:(NSString*)str withFont:(UIFont*)font;
+
+// 获取带有行间距的label的高度
++ (CGFloat)getSpaceLabelHeight:(NSString*)str withFont:(UIFont*)font withWidth:(CGFloat)width;
+
+
+
+
+
 @end

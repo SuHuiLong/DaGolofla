@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    // Initialization code icn_addawards
     self.backgroundColor = [UIColor whiteColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
@@ -28,7 +28,7 @@
     self.headerImageViewLeft.constant = 10 *ProportionAdapter;
     
     self.vlaue.text = title;
-    self.vlaue.font = [UIFont systemFontOfSize:17.0 *ProportionAdapter];
+    self.vlaue.font = [UIFont systemFontOfSize:kHorizontal(15)];
     self.vlaueLeft.constant = 10 *ProportionAdapter;
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }

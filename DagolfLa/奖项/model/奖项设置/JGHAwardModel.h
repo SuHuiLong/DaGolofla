@@ -28,4 +28,6 @@
 
 @property (nonatomic, strong)NSString *userInfo;
 
+@property (nonatomic, strong) NSNumber *isDefault;
+
 @end

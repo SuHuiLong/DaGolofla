@@ -13,7 +13,8 @@
 #import "JGLWinnersShareViewController.h"
 #import "JGTeamAcitivtyModel.h"
 #import "JGDActvityPriziSetTableViewCell.h"
-#import "JGHSetAwardViewController.h"
+//#import "JGHSetAwardViewController.h"
+#import "JGDAwardSetViewController.h"
 
 @interface JGLPresentAwardViewController ()<UITableViewDelegate,UITableViewDataSource, JGDActivityListViewControllerDelegate>
 {
@@ -56,10 +57,7 @@
     _dataArray = [NSMutableArray array];
     _prizeListArray = [NSMutableArray array];
     
-    //[self createHeader];
-    
     [self uiConfig];
-    
     
     dispatch_queue_t queue = dispatch_queue_create("activityQueue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(queue, ^{
@@ -71,7 +69,7 @@
 - (UIView *)psuhView{
     if (_psuhView == nil) {
         _psuhView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight - 65*ProportionAdapter - 64, screenWidth, 65*ProportionAdapter)];
-        _psuhView.backgroundColor = [UIColor whiteColor];
+//        _psuhView.backgroundColor = [UIColor whiteColor];
         [_psuhView addSubview:_psuhBtn];
         [_psuhView addSubview:self.psuhBtn];
     }
@@ -194,7 +192,7 @@
 }
 #pragma mark -- 下载数据
 - (void)loadData{
-    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
+//    [[ShowHUD showHUD]showAnimationWithText:@"加载中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@(_activityKey) forKey:@"activityKey"];    
     [dict setObject:@(_teamKey) forKey:@"teamKey"];
@@ -209,11 +207,11 @@
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"team/%@", urlString] JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         [_dataArray removeAllObjects];
         [_prizeListArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
@@ -314,36 +312,23 @@
 }
 - (UIView *)bgView{
     if (_bgView == nil) {
-        _bgView = [[UIView alloc]initWithFrame:CGRectMake(screenWidth/2 - 45*ProportionAdapter, screenHeight/2 - 110*ProportionAdapter, 80*ProportionAdapter, 100*ProportionAdapter)];
-        UIImageView *weifabuImageview = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, self.bgView.frame.size.width-20*ProportionAdapter, self.bgView.frame.size.height - 40*ProportionAdapter)];
-        weifabuImageview.image = [UIImage imageNamed:@"weifabutishi"];
+        
+        _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, kHorizontal(220), screenWidth, 300)];
+        UIImageView *weifabuImageview = [[UIImageView alloc]initWithFrame:CGRectMake(kWvertical(65), 0, screenWidth - kWvertical(106), kHvertical(153))];
+        weifabuImageview.image = [UIImage imageNamed:@"bg_set_awards"];
         [_bgView addSubview:weifabuImageview];
         
-        UILabel *weifaLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, weifabuImageview.frame.size.height + 15*ProportionAdapter, self.bgView.frame.size.width, 20*ProportionAdapter)];
+        UILabel *weifaLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kHvertical(190), screenWidth, 20*ProportionAdapter)];
         weifaLabel.text = @"暂未发布奖项";
         weifaLabel.textAlignment = NSTextAlignmentCenter;
-        weifaLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-        weifaLabel.textColor = [UIColor lightGrayColor];
+        weifaLabel.font = [UIFont systemFontOfSize:kHorizontal(15)];
+        weifaLabel.textColor = [UIColor colorWithHexString:@"#A0A0A0"];
         [_bgView addSubview:weifaLabel];
         
     }
     return _bgView;
 }
-#pragma mark --未发布
-- (void)createNoData{
-    self.bgView = [[UIView alloc]initWithFrame:CGRectMake(screenWidth/2 - 45*ProportionAdapter, screenHeight/2 - 110*ProportionAdapter, 80*ProportionAdapter, 100*ProportionAdapter)];
-    UIImageView *weifabuImageview = [[UIImageView alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, self.bgView.frame.size.width-20*ProportionAdapter, self.bgView.frame.size.height - 40*ProportionAdapter)];
-    weifabuImageview.image = [UIImage imageNamed:@"weifabutishi"];
-    [self.bgView addSubview:weifabuImageview];
-    
-    UILabel *weifaLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, weifabuImageview.frame.size.height + 15*ProportionAdapter, self.bgView.frame.size.width, 20*ProportionAdapter)];
-    weifaLabel.text = @"暂未发布奖项";
-    weifaLabel.textAlignment = NSTextAlignmentCenter;
-    weifaLabel.font = [UIFont systemFontOfSize:13.0*ProportionAdapter];
-    weifaLabel.textColor = [UIColor lightGrayColor];
-    [self.bgView addSubview:weifaLabel];
-    [_tableView addSubview:self.bgView];
-}
+
 -(void)createHeader
 {
     
@@ -422,10 +407,6 @@
     [self.view addSubview:_tableView];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-//    [_tableView registerClass:[JGLPresentAwardTableViewCell class] forCellReuseIdentifier:@"JGLPresentAwardTableViewCell"];
-    
-//    [_tableView registerClass:[JGDActvityPriziSetTableViewCell class] forCellReuseIdentifier:@"setCell"];
-    
     _tableView.mj_header = [MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
     
     
@@ -434,9 +415,7 @@
 #pragma MARK -- tableview
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 1) {
-        return 1.0;
-    }
+
     return 10*screenWidth/320;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -450,14 +429,15 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height;
-    JGHAwardModel *model = [[JGHAwardModel alloc]init];
     if (indexPath.section == 0) {
-        return 44*ProportionAdapter;
+        return kHvertical(50);
     }else{
-        model = _dataArray[indexPath.section-1];
-        height = [Helper textHeightFromTextString:model.name width:screenWidth - 54*screenWidth/320 fontSize:15*screenWidth/320];
-        return 85*screenWidth/320 + height;
+        
+        JGHAwardModel *model = _dataArray[indexPath.row];
+//        CGFloat rowHeigth = [Helper textHeightFromTextString:model.userInfo width:screenWidth - kWvertical(140) fontSize:kHorizontal(15)];
+        CGFloat rowHeigth = [Helper getSpaceLabelHeight:model.userInfo withFont:[UIFont systemFontOfSize:kHorizontal(15)] withWidth:screenWidth - kWvertical(140)];
+
+        return _isManager ? kHvertical(152) : kHvertical(132) + rowHeigth;
     }
 }
 
@@ -477,15 +457,15 @@
         if (cell == nil) {
              cell = [[JGDActvityPriziSetTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JGDActvityPriziSetTableViewCellID];
         }
-        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.titleLB.text = [NSString stringWithFormat:@"活动奖项（%td）", _dataArray.count];
-        [cell.presentationBtn addTarget:self action:@selector(prizeSet) forControlEvents:(UIControlEventTouchUpInside)];
-        
+        cell.titleLB.text = [NSString stringWithFormat:@"（%td）", _dataArray.count];
+       
         if (_isManager == 1) {
-            cell.presentationBtn.hidden = NO;            
+            cell.presentationBtn.hidden = NO;
+            cell.chooseImageV.hidden = NO;
         }else{
             cell.presentationBtn.hidden = YES;
+            cell.chooseImageV.hidden = YES;
         }
         return cell;
     }else{
@@ -494,12 +474,15 @@
         if (cell == nil) {
             cell = [[JGLPresentAwardTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:JGLPresentAwardTableViewCellID];
         }
+        cell.isManager = _isManager;
         
         if (_isManager == 1) {
             cell.chooseBtn.tag = indexPath.section + 100 -1;
             [cell.chooseBtn addTarget:self action:@selector(chooseAwarderClick:) forControlEvents:UIControlEventTouchUpInside];
+            cell.chooseImageV.hidden = NO;
         }else{
             cell.chooseBtn.hidden = YES;
+            cell.chooseImageV.hidden = YES;
         }
         
         [cell configJGHAwardModel:_dataArray[indexPath.section -1]];
@@ -513,18 +496,16 @@
 {
     if (_isManager == 1) {
         if (indexPath.section > 0) {
-            JGDActivityListViewController *listerErctrl = [[JGDActivityListViewController alloc]init];
-            listerErctrl.activityKey = _activityKey;
-            listerErctrl.checkdict = _prizeListArray[indexPath.section-1];
-            listerErctrl.delegate = self;
-            listerErctrl.awardId = indexPath.section-1;
-            [self.navigationController pushViewController:listerErctrl animated:YES];
+
+        }else{
+            [self prizeSet];
         }
     }
 }
 #pragma mark -- 奖项设置
 - (void)prizeSet{
-    JGHSetAwardViewController *setAwardVC = [[JGHSetAwardViewController alloc] init];
+    
+    JGDAwardSetViewController *setAwardVC = [[JGDAwardSetViewController alloc] init];
     setAwardVC.activityKey = self.activityKey;
     setAwardVC.teamKey = self.teamKey;
     setAwardVC.model = self.model;

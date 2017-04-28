@@ -330,7 +330,7 @@
             tipView.blockManual = ^{
                 NSMutableArray *array = [NSMutableArray array];
                 
-                for (NSInteger i = -10; i <= 30; i ++) {
+                for (NSInteger i = -10; i <= 36; i ++) {
                     [array addObject:[NSString stringWithFormat:@"%td", i]];
                 }
                 

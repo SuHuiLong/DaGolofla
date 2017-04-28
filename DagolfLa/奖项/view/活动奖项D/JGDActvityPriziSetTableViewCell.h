@@ -13,8 +13,10 @@
 
 //@property (nonatomic, strong) UIButton *prizeBtn; // 奖项设置
 
-@property (nonatomic, strong) UIButton *presentationBtn; // 颁奖
+@property (nonatomic, strong) UILabel *presentationBtn; // 颁奖
 
 @property (nonatomic, strong) UILabel *titleLB;
+
+@property (nonatomic, strong) UIImageView *chooseImageV;
 
 @end

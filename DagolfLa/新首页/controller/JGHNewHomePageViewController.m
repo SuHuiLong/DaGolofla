@@ -777,7 +777,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 
 #pragma mark -- 球场预定
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
-    [self isLoginUp];
+//    [self isLoginUp];
 
     JGDBookCourtViewController *bookVC = [[JGDBookCourtViewController alloc] init];
     bookVC.hidesBottomBarWhenPushed = YES;

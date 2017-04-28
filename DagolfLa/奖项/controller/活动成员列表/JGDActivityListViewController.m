@@ -188,9 +188,15 @@
         cell.selectImage.image = [UIImage imageNamed:@"kuang"];
         model.isSelect = NO;
         if ([_signupKeyInfo containsString:[NSString stringWithFormat:@"%@", model.timeKey]]) {
-            _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@,", model.timeKey] withString:@""]];
             
-            _signupNameInfo = [NSMutableString stringWithString:[_signupNameInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/", model.name] withString:@""]];
+            //            _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@,", model.timeKey] withString:@""]];
+            //
+            //            _signupNameInfo = [NSMutableString stringWithString:[_signupNameInfo stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@ | ", model.name] withString:@""]];
+            
+            _signupKeyInfo = [self string:_signupKeyInfo ByRepalcingFirstOccurrencesOfString:[NSString stringWithFormat:@"%@,", model.timeKey] withString:@""];
+            
+            _signupNameInfo = [self string:_signupNameInfo ByRepalcingFirstOccurrencesOfString:[NSString stringWithFormat:@"%@ | ", model.name] withString:@""];
+            
         }
         
     }else{
@@ -198,7 +204,7 @@
         model.isSelect = YES;
         _signupKeyInfo = [NSMutableString stringWithString:[_signupKeyInfo stringByAppendingString:[NSString stringWithFormat:@"%@,", model.timeKey]]];
         
-        _signupNameInfo = [NSMutableString stringWithString:[_signupNameInfo stringByAppendingString:[NSString stringWithFormat:@"%@/", model.name]]];
+        _signupNameInfo = [NSMutableString stringWithString:[_signupNameInfo stringByAppendingString:[NSString stringWithFormat:@"%@ | ", model.name]]];
     }
     
     
@@ -208,6 +214,16 @@
     }
     
 }
+
+- (NSMutableString *)string:(NSMutableString *)string ByRepalcingFirstOccurrencesOfString:(NSString *)replacedString withString:(NSString *)byString{
+    
+    NSString *string_chara = [NSString stringWithFormat:@"%@", string];
+    NSRange range = [string_chara rangeOfString:replacedString];
+    string_chara = [string_chara stringByReplacingCharactersInRange:range withString:byString];
+    
+    return [NSMutableString stringWithString:string_chara];
+}
+
 
 - (NSMutableArray *)dataArray{
     if (!_dataArray) {

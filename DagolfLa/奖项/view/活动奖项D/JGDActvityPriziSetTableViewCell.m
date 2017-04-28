@@ -21,34 +21,28 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.titleLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 0, 200 * ProportionAdapter, 44 * ProportionAdapter)];
-        self.titleLB.text = @"活动奖项（20）";
+        
+        
+        
+        UIImageView *iconImageV = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(14), kWvertical(22), kHvertical(22)) Image:[UIImage imageNamed:@"add_awards"]];
+        [self.contentView addSubview:iconImageV];
+        
+        UILabel *actvivityTiltleLB = [Helper lableRect:CGRectMake(kWvertical(42), 0, 70 * ProportionAdapter, kHvertical(50)) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:kHorizontal(17) text:@"活动奖项" textAlignment:(NSTextAlignmentLeft)];
+        [self.contentView addSubview:actvivityTiltleLB];
+
+        
+        self.titleLB = [Helper lableRect:CGRectMake(kWvertical(112), 0, 100 * ProportionAdapter, kHvertical(50)) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:kHorizontal(15) text:@"" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:self.titleLB];
-//
-//        self.prizeBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-//        self.prizeBtn.frame = CGRectMake(220 * ProportionAdapter, 10 * ProportionAdapter, 70 * ProportionAdapter, 25 * ProportionAdapter);
-//        [self.prizeBtn setTitle:@"奖项设置" forState:(UIControlStateNormal)];
-//        [self.prizeBtn setTitleColor:[UIColor colorWithHexString:@"#f39800"] forState:(UIControlStateNormal)];
-//        self.prizeBtn.titleLabel.font = [UIFont systemFontOfSize:13 * ScreenWidth / 375];
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-        CGColorRef borderColorRef = CGColorCreate(colorSpace,(CGFloat[]){ 0.96, 0.61, 0.03, 1.00 });
-//        self.prizeBtn.layer.borderColor = borderColorRef;
-//        self.prizeBtn.layer.borderWidth = 1.00 * ScreenWidth / 375;
-//        self.prizeBtn.layer.cornerRadius = 3.5 * ScreenWidth / 375;
-//        [self.contentView addSubview:self.prizeBtn];
-        
-        self.presentationBtn = [UIButton buttonWithType:(UIButtonTypeCustom)];
-        self.presentationBtn.frame = CGRectMake(300 * ProportionAdapter, 10 * ProportionAdapter, 70 * ProportionAdapter, 25 * ProportionAdapter);
-        [self.presentationBtn setTitle:@"奖项设置" forState:(UIControlStateNormal)];
-        
-        self.presentationBtn.titleLabel.font = [UIFont systemFontOfSize:13 * ScreenWidth / 375];
-        [self.presentationBtn setTitleColor:[UIColor colorWithHexString:@"#f39800"] forState:(UIControlStateNormal)];
-        self.presentationBtn.layer.borderWidth = 1.00 * ScreenWidth / 375;
-        self.presentationBtn.layer.cornerRadius = 3.5 * ScreenWidth / 375;
-        self.presentationBtn.layer.borderColor = borderColorRef;
-        
+
+
+
+        self.presentationBtn = [Helper lableRect:CGRectMake(kWvertical(285), 0, 70 * ProportionAdapter, kHvertical(50)) labelColor:[UIColor colorWithHexString:@"#F39800"] labelFont:kHorizontal(16) text:@"奖项设置" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:self.presentationBtn];
         
+        self.chooseImageV = [Factory createImageViewWithFrame:CGRectMake(kWvertical(356), kHvertical(19), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@")"]];
+        
+        
+        [self.contentView addSubview:self.chooseImageV];
 
     }
     return self;

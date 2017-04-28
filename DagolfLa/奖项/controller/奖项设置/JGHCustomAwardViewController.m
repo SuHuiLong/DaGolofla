@@ -11,6 +11,8 @@
 #import "JGHTextFiledCell.h"
 #import "JGHAwardModel.h"
 #import "JGHSetAwardViewController.h"
+#import "JGDCustomAwardTableViewCell.h"
+#import "JGDAwardSetViewController.h"
 
 static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
 static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
@@ -33,11 +35,11 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#F5F5F5"];
     self.navigationItem.title = @"自定义奖项";
     
-    _titleArray = @[@"奖项设置", @"", @"奖品名称", @"奖品数量"];
-    _placerArray = @[@"请输入您要自定义添加的奖项名称", @"", @"请输入奖品名称", @"请输入奖品数量"];
+    _titleArray = @[@"奖项名称", @"奖品", @"数量"];
+    _placerArray = @[@"请输入您要添加的奖项名称", @"请输入奖品名称", @"请输入奖品数量"];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnClick)];
     item.tintColor=[UIColor whiteColor];
@@ -55,80 +57,38 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
 }
 #pragma mark -- 保存
 - (void)saveBtnClick{
-    NSLog(@"保存");
+
     [self.view endEditing:YES];
+    
     if (_awardName.length == 0) {
         [[ShowHUD showHUD]showToastWithText:@"请输入奖项名称" FromView:self.view];
         return;
     }
     
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@(_teamKey) forKey:@"teamKey"];
-    [dict setObject:@(_activityKey) forKey:@"teamActivityKey"];
-    [dict setObject:_awardName forKey:@"name"];
-    if (_prizeName.length > 0) {
-        [dict setObject:_prizeName forKey:@"prizeName"];
-    }else{
-        [dict setObject:@"" forKey:@"prizeName"];
-    }
+    NSMutableDictionary *customDic = [NSMutableDictionary dictionary];
+    [customDic setObject:_awardName forKey:@"name"];
+    [customDic setObject:_prizeName.length > 0 ? _prizeName : @"" forKey:@"prizeName"];
+    [customDic setObject:_prizeNumber != 0 ? [NSString stringWithFormat:@"%td", _prizeNumber] : @"0" forKey:@"prizeSize"];
     
-    if (_prizeNumber != 0) {
-        [dict setObject:[NSString stringWithFormat:@"%td", _prizeNumber] forKey:@"prizeSize"];
-    }else{
-        [dict setObject:@0 forKey:@"prizeSize"];
-    }
+    NSNotification *notice = [NSNotification notificationWithName:@"customPrize" object:customDic];
+    [[NSNotificationCenter defaultCenter]postNotification:notice];
     
-    if (_model.timeKey > 0) {
-        [dict setObject:_model.timeKey forKey:@"timeKey"];
-    }else{
-        [dict setObject:@0 forKey:@"timeKey"];
-    }
-    
-    NSMutableDictionary *pataDict = [NSMutableDictionary dictionary];
-    [pataDict setObject:dict forKey:@"prize"];
-    [pataDict setObject:DEFAULF_USERID forKey:@"userKey"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/doSavePrize" JsonKey:nil withData:pataDict requestMethod:@"POST" failedBlock:^(id errType) {
-        NSLog(@"errType == %@", errType);
-    } completionBlock:^(id data) {
-        NSLog(@"data == %@", data);
-        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            [[ShowHUD showHUD]showToastWithText:@"保存成功！" FromView:self.view];
-            [self performSelector:@selector(pushCtrl) withObject:self afterDelay:TIMESlEEP];
-//            _awardName = @"";
-//            _prizeName = @"";
-//            _prizeNumber = 0;
-//            
-//            [self.customAwardTableView reloadData];
-        }else{
-            if ([data objectForKey:@"packResultMsg"]) {
-                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-            }
+    for (UIViewController *vc in self.navigationController.viewControllers) {
+        
+        if ([vc isKindOfClass:[JGDAwardSetViewController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+
         }
-    }];
+    }
 }
 
-- (void)pushCtrl{
-    for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[JGHSetAwardViewController class]]) {
-            //创建一个消息对象
-            NSNotification * notice = [NSNotification notificationWithName:@"reloadAwardData" object:nil userInfo:nil];
-            //发送消息
-            [[NSNotificationCenter defaultCenter]postNotification:notice];
-            [self.navigationController popToViewController:controller animated:YES];
-        }
-    }
-}
 #pragma mark -- 创建TB
 - (void)createCustomAwardTableView{
     self.customAwardTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStylePlain];
     self.customAwardTableView.delegate = self;
     self.customAwardTableView.dataSource = self;
     
-    UINib *textFiledCellNib = [UINib nibWithNibName:@"JGHTextFiledCell" bundle: [NSBundle mainBundle]];
-    [self.customAwardTableView registerNib:textFiledCellNib forCellReuseIdentifier:JGHTextFiledCellIdentifier];
-    
-    UINib *signUoPromptCellNib = [UINib nibWithNibName:@"JGSignUoPromptCell" bundle: [NSBundle mainBundle]];
-    [self.customAwardTableView registerNib:signUoPromptCellNib forCellReuseIdentifier:JGSignUoPromptCellIdentifier];
+    [self.customAwardTableView registerClass:[JGDCustomAwardTableViewCell class] forCellReuseIdentifier:@"JGDCustomAwardTableViewCell"];
     
     self.customAwardTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.customAwardTableView.backgroundColor = [UIColor colorWithHexString:BG_color];
@@ -136,81 +96,46 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
 }
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == 1) {
-        return 20*ProportionAdapter;
+    if (indexPath.row == 0) {
+        return kHvertical(50);
     }else{
-        return 55 * ProportionAdapter;
+        return kHvertical(45);
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 1) {
-        JGSignUoPromptCell *signUoPromptCell = [tableView dequeueReusableCellWithIdentifier:JGSignUoPromptCellIdentifier];
-        [signUoPromptCell configAllPromptString:@"提示：请设置您要发布的奖品名称与数量" andLeftCon:10 andRightCon:10];
-        return signUoPromptCell;
+    
+    JGDCustomAwardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"JGDCustomAwardTableViewCell"];
+    if (indexPath.row == 0) {
+        cell.lineLB.frame = CGRectMake(0, kHvertical(49), screenWidth, 1);
+        cell.iconImageView.image = [UIImage imageNamed:@"add_awards"];
+        cell.rowHeight = kHvertical(50);
     }else{
-        JGHTextFiledCell *chooseAwardCell = [tableView dequeueReusableCellWithIdentifier:JGHTextFiledCellIdentifier];
-        [chooseAwardCell conFigAllTitle:_titleArray[indexPath.section] andPlacerString:_placerArray[indexPath.section]];
-        chooseAwardCell.titlefileds.tag = indexPath.section + 100;
-        chooseAwardCell.titlefileds.delegate = self;
-        if (_model.timeKey == nil) {
-            chooseAwardCell.titlefileds.text = nil;
-        }else{
-            if (indexPath.section == 0) {
-                chooseAwardCell.titlefileds.text = _model.name;
-            }else if (indexPath.section == 2){
-                if (_model.prizeName == nil) {
-                    chooseAwardCell.titlefileds.text = @"";
-                }else{
-                    chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeName];
-                }
-            }else if (indexPath.section == 3){
-                if (_model.prizeSize <= 0) {
-                    chooseAwardCell.titlefileds.text = @"";
-                }else{
-                    if ([_model.prizeSize integerValue] == 0) {
-                        chooseAwardCell.titlefileds.text = @"";
-                    }else{
-                        chooseAwardCell.titlefileds.text = [NSString stringWithFormat:@"%@", _model.prizeSize];
-                    }
-                }
-            }
-        }
         
-        return chooseAwardCell;
+        CGFloat lineX;
+        indexPath.row == 1 ? (lineX = kWvertical(65)) : (lineX = 0);
+        cell.lineLB.frame = CGRectMake(lineX, kHvertical(44), screenWidth - lineX, 1);
+        cell.iconImageView.image = [UIImage imageNamed:@""];
+        cell.rowHeight = kHvertical(45);
+
     }
+    cell.inputTF.delegate = self;
+    cell.inputTF.tag = indexPath.row + 100;
+    cell.titleLB.text = _titleArray[indexPath.row];
+    cell.inputTF.placeholder = _placerArray[indexPath.row];
+
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 3) {
-        return 1;
-    }
-    return 10*ProportionAdapter;
+    return kHvertical(10);
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section == 3) {
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 1)];
-        view.backgroundColor = [UIColor whiteColor];
-        UILabel *viewLabel = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 0, screenWidth - 20*ProportionAdapter, 1)];
-        viewLabel.backgroundColor = [UIColor colorWithHexString:BG_color];
-        [view addSubview:viewLabel];
-        return view;
-    }else{
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 10*ProportionAdapter)];
-        view.backgroundColor = [UIColor colorWithHexString:BG_color];
-        return view;
-    }
-}
 
 #pragma mark -- titlefile
 - (void)textFieldDidEndEditing:(UITextField *)textField{
@@ -221,14 +146,14 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
             _model.name = _awardName;
         }
         
-    }else if (textField.tag == 102){
+    }else if (textField.tag == 101){
         NSLog(@"奖品名称");
         _prizeName = textField.text;
         if (_model.timeKey != nil) {
             _model.prizeName = _prizeName;
         }
         
-    }else if (textField.tag == 103){
+    }else if (textField.tag == 102){
         NSLog(@"奖品数量");
         _prizeNumber = [textField.text integerValue];
         if (_model.timeKey != nil) {
@@ -240,7 +165,7 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
 //实现UITextField的代理方法
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField.tag == 103) {
+    if (textField.tag == 102) {
         NSCharacterSet *cs;
         cs = [[NSCharacterSet characterSetWithCharactersInString:NUMBERS] invertedSet];
         NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];

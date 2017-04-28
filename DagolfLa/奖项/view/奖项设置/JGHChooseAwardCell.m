@@ -33,7 +33,7 @@
 
 -(void)configJGHAwardModel:(JGHAwardModel *)model{
     self.jiangbeiLeft.constant = 10 *ProportionAdapter;
-    self.awardName.font = [UIFont systemFontOfSize:17*ProportionAdapter];
+    self.awardName.font = [UIFont systemFontOfSize:15*ProportionAdapter];
     self.awardNameLeft.constant = 10 *ProportionAdapter;
     self.chooseBtnRight.constant = 10 *ProportionAdapter;
     
@@ -43,9 +43,12 @@
     [self.chooseBtn setImage:nil forState:UIControlStateNormal];
     
     if (model.select == 0) {
-        [self.chooseBtn setImage:[UIImage imageNamed:@"kuang"] forState:UIControlStateNormal];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"unselect"] forState:UIControlStateNormal];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"unselect"] forState:UIControlStateDisabled];
+
     }else{
-        [self.chooseBtn setImage:[UIImage imageNamed:@"kuang_xz"] forState:UIControlStateNormal];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"select"] forState:UIControlStateNormal];
+        [self.chooseBtn setImage:[UIImage imageNamed:@"select"] forState:UIControlStateDisabled];
     }
 
 }

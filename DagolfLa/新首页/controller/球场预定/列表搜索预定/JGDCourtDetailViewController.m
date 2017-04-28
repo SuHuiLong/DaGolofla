@@ -398,7 +398,7 @@ static CGFloat ImageHeight  = 210.0;
         CGFloat height = [Helper textHeightFromTextString:self.serviceDetail.text width:screenWidth - 20 * ProportionAdapter fontSize:15 * ProportionAdapter];
         
         CGFloat row1heght;
-        self.isLeague == 1 ? (row1heght = 240 * ProportionAdapter) : (row1heght = 100 * ProportionAdapter);
+        (self.isLeague == 1 && [[self.detailDic objectForKey:@"instapaper"] integerValue] == 1) ? (row1heght = 240 * ProportionAdapter) : (row1heght = 100 * ProportionAdapter);
         
         return indexPath.row == 0 ? row1heght : 50 * ProportionAdapter + height;
         
@@ -486,7 +486,7 @@ static CGFloat ImageHeight  = 210.0;
         
         if (indexPath.row == 0) {
             
-            if (self.isLeague == 1) { // 联盟球场
+            if (self.isLeague == 1 && [[self.detailDic objectForKey:@"instapaper"] integerValue] == 1) { // 联盟球场
                 JGDCourtAllianceTableViewCell *allianceCell = [tableView dequeueReusableCellWithIdentifier:@"CourtAlliance"];
                 allianceCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 allianceCell.unitPrice = self.unitPrice;
