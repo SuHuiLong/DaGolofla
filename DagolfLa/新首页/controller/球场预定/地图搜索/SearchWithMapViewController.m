@@ -108,7 +108,6 @@
 
     NSString *AnnotationViewID = @"SearchWithMapId";
     SearchWithMapAnnotationView *newAnnotation = [[SearchWithMapAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
-
     // 设置颜色
     newAnnotation.pinColor = BMKPinAnnotationColorPurple;
     // 从天上掉下效果
@@ -131,7 +130,7 @@
 
 //获取选择城市的球场
 -(void)initData{
-
+    _cityName = @"";
     self.dataArray = [NSMutableArray array];
     //md5 加密
     NSString *md5 = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&provinceName=%@dagolfla.com", DEFAULF_USERID,_cityName]];
@@ -190,10 +189,7 @@
             vc.userCoord = _userCoord;
             [self.navigationController pushViewController:vc animated:YES];
         }
-        NSLog(@"%@",parkId);
-        
     }
-    
 }
 
 
@@ -210,7 +206,6 @@
             NSLog(@"Longitude = %f", firstPlacemark.location.coordinate.longitude);
             NSLog(@"Latitude = %f", firstPlacemark.location.coordinate.latitude);
             _mapView.centerCoordinate = firstPlacemark.location.coordinate;
-//            CLLocationCoordinate2DMake(31.245577, 121.50633) ;
         }
         else if ([placemarks count] == 0 && error == nil) {
             NSLog(@"Found no placemarks.");

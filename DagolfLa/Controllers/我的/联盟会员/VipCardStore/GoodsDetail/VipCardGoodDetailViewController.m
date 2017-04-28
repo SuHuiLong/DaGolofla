@@ -287,7 +287,6 @@
     
     //分享标题
     NSString *desc = self.dataModel.name;
-    
     [UMSocialData defaultData].extConfig.title=desc;
     if (index<2) {
         NSData *imageData = UIImageJPEGRepresentation(iconImageFull, 0.1);
@@ -301,7 +300,6 @@
         }
         //微信
         [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
-        
         [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
         /*
          发送微博内容到多个微博平台
@@ -313,8 +311,8 @@
          @param completion       发送完成执行的block对象
          @param presentedController 如果发送的平台微博只有一个并且没有授权，传入要授权的viewController，将弹出授权页面，进行授权。可以传nil，将不进行授权。
          */
-        UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeImage url: shareUrl];
         
+        UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeImage url: shareUrl];
         [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[type] content:contentStr  image:iconImage location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *response){
             if (response.responseCode == UMSResponseCodeSuccess) {
 
@@ -329,10 +327,6 @@
         data.shareImage = iconImage;
         data.shareText = [NSString stringWithFormat:@"%@%@",desc,shareUrl];
         
-        
-//        [[UMSocialControllerService defaultControllerService] setSocialData:data];
-//        //2.设置分享平台
-//        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
     }
 }
 

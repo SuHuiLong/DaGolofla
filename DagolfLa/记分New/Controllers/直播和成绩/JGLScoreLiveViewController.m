@@ -56,7 +56,6 @@
 
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    
     [self getTeamActivity];
     
     NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
@@ -121,19 +120,6 @@
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             
-//            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//            
-//            if ([data objectForKey:@"teamMember"]) {
-//                dict = [data objectForKey:@"teamMember"];
-//                self.teamMemberDic = dict;
-//                _userName = [dict objectForKey:@"userName"];//获取用户在球队的真实姓名
-//                if ([dict objectForKey:@"power"]) {
-//                    _power = [dict objectForKey:@"power"];
-//                }
-//            }else{
-//                _isTeamMember = 1;//非球队成员
-//                [self.applyBtn setBackgroundColor:[UIColor lightGrayColor]];
-//            }
             
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             [_tableView reloadData];

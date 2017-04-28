@@ -322,7 +322,6 @@
     _mainTableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerHeaderRefreshing)];
     _mainTableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(headerFooterRefreshing)];
     [_mainTableView.mj_header beginRefreshing];
-    
 }
 
 //卡片下拉刷新

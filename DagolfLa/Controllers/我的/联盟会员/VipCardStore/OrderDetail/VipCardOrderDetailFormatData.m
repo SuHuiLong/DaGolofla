@@ -29,11 +29,16 @@
         sellMobile = @"无";
     }
     //费用
-    NSString *priceStr = [NSString stringWithFormat:@"¥%@",[orderDict objectForKey:@"unitPrice"]];
+    NSString *priceStr = [NSString stringWithFormat:@"¥%@",[orderDict objectForKey:@"totalMoney"]];
     //订单状态
     NSString *stateStr = [orderDict objectForKey:@"stateShowString"];
     //订单实际状态
     _stateButtonString = [orderDict objectForKey:@"stateButtonString"];
+    //会籍编号
+    NSString *cardNum = [NSString string];
+    if ([data objectForKey:@"userCardIds"]) {
+        cardNum = [NSString stringWithFormat:@"%@",[data objectForKey:@"userCardIds"]];
+    }
     //会籍名称
     NSString *name = [cardTypeDict objectForKey:@"name"];
     //权益
@@ -56,6 +61,12 @@
     NSArray *titleArray = @[@[@"订单号",@"下单时间",@"销售人员",@"支付费用",@"订单状态"],@[@"会籍名称",@"会籍权益",@""],@[@"用户名",@"性别",@"证件号",@"预留号码"]];
     NSArray *contentArray = @[@[orderNumberStr,orderTimeStr,sellMobile,priceStr,stateStr],@[name,enjoyService,enjoyDetail],@[userName,sexStr,certNumber,mobileStr]];
 
+    if (cardNum.length>0) {
+        titleArray = @[@[@"订单号",@"下单时间",@"销售人员",@"支付费用",@"订单状态"],@[@"会籍编号",@"会籍名称",@"会籍权益",@""],@[@"用户名",@"性别",@"证件号",@"预留号码"]];
+        contentArray = @[@[orderNumberStr,orderTimeStr,sellMobile,priceStr,stateStr],@[cardNum,name,enjoyService,enjoyDetail],@[userName,sexStr,certNumber,mobileStr]];
+
+    }
+    
     for (int i = 0; i<titleArray.count; i++) {
         NSMutableArray *mArray = [NSMutableArray array];
         NSArray *titleIndexArray = titleArray[i];
@@ -65,10 +76,20 @@
             model.title = titleIndexArray[j];
             model.content = contentIndexArray[j];
             model.status = 0;
-            if (i==1&&j==0) {
-                model.status = 1;
-            }else if (i==1&&j==2){
-                model.status = 2;
+            if (i==1) {
+                if (titleIndexArray.count==4) {
+                    if (j==0||j==1) {
+                        model.status = 1;
+                    }else if (j==3){
+                        model.status = 2;
+                    }
+                }else{
+                    if (j==0) {
+                        model.status = 1;
+                    }else if (j==2){
+                        model.status = 2;
+                    }
+                }
             }
             [mArray addObject:model];
         }

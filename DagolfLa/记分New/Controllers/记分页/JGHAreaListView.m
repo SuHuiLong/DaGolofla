@@ -21,20 +21,8 @@ static NSString *const JGHNewAreaListCellIdentifier = @"JGHNewAreaListCell";
 
 @implementation JGHAreaListView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
 - (instancetype)initWithFrame:(CGRect)frame{
     if ([super initWithFrame:frame]) {
-//        _oneLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 2*ProportionAdapter)];
-//        _oneLine.backgroundColor = [UIColor blackColor];
-//        _oneLine.alpha = 0.1;
-//        [self addSubview:_oneLine];
         _areString = nil;
         
         _twoLine = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 2*ProportionAdapter)];
@@ -64,24 +52,11 @@ static NSString *const JGHNewAreaListCellIdentifier = @"JGHNewAreaListCell";
 {
     return _listArray.count;
 }
-////
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    if (tableView.tag == 1001) {
-//        if ([self.listArray[section] count] == 0) {
-//            return nil;
-//        }else{
-//            return self.keyArray[section];
-//        }
-//    }
-//    else{
-//        return nil;
-//    }
-//    
-//}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JGHNewAreaListCell *scoresPageCell = [tableView dequeueReusableCellWithIdentifier:JGHNewAreaListCellIdentifier];

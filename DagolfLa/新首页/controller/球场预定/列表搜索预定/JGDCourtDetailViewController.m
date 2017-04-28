@@ -178,7 +178,7 @@ static CGFloat ImageHeight  = 210.0;
     //    courtLB.textAlignment = NSTextAlignmentCenter;
     //    [self.titleView addSubview:courtLB];
     
-    self.detailBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, self.imgProfile.frame.size.height - 30 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter)];
+    self.detailBtn = [[UIButton alloc]initWithFrame:CGRectMake(kWvertical(10), self.imgProfile.frame.size.height - 30 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter)];
     self.detailBtn.tag = 522;
     [self.detailBtn addTarget:self action:@selector(initItemsBtnClick:) forControlEvents:(UIControlEventTouchUpInside)];
     [self.detailBtn setImage:[UIImage imageNamed:@"booking_details"] forState:(UIControlStateNormal)];
