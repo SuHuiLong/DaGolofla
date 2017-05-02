@@ -132,9 +132,9 @@
         
         browseItem.timeKey = _teamTimeKey;
         browseItem.albumTitle = _strTitle;
-//        browseItem.albumKey = [self.dataArray[i] albumKey];
+//      browseItem.albumKey = [self.dataArray[i] albumKey];
         browseItem.teamName = _teamName;
-        //browseItem.power = _power;
+        browseItem.power = @"";
         browseItem.currentPhotoKey = [self.dataArray[i] timeKey];
         
         [browseItemArray addObject:browseItem];

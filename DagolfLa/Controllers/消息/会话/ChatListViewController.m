@@ -205,6 +205,8 @@
 //导航栏右按钮点击事件
 -(void)teamFClick
 {
+    [MobClick event:@"msg_ball_friends_address_book_click"];
+
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         ContactViewController* tVc = [[ContactViewController alloc]init];
         tVc.hidesBottomBarWhenPushed = YES;
@@ -307,6 +309,10 @@
 #pragma mark -- 系统通知
 - (void)sysMessbtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
+    
+    [MobClick event:@"msg_system_click"];
+
+    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]){
         
     }else{
@@ -334,6 +340,8 @@
 - (void)teamNotbtn:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
     
+    [MobClick event:@"msg_team_click"];
+
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
     {
         

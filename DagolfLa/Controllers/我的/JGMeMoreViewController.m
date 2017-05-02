@@ -64,7 +64,7 @@
     switch (indexPath.row) {
         case 0:
         {
-            //hasCaddieRecord
+            [MobClick event:@"mine_more_caddie_click"];
             NSMutableDictionary *cabbieDict = [NSMutableDictionary dictionary];
             [cabbieDict setObject:DEFAULF_USERID forKey:@"userKey"];
             [[JsonHttp jsonHttp]httpRequestWithMD5:@"score/hasCaddieRecord" JsonKey:nil withData:cabbieDict failedBlock:^(id errType) {
@@ -75,11 +75,7 @@
                     if ([[data objectForKey:@"has"] integerValue] == 0) {
                         JGHCabbieCertViewController *caddieCtrl = [[JGHCabbieCertViewController alloc]init];
                         caddieCtrl.blockCabbie = ^(){
-                            //        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-                            //        if ([userdef objectForKey:@"isCaddie"]) {
-                            //            //认证球童
-                            //            [self createCaddieView];
-                            //        }
+
                         };
 
                         [self.navigationController pushViewController:caddieCtrl animated:YES];

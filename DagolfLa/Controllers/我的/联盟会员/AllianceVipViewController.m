@@ -307,6 +307,8 @@
 }
 //跳转至会籍卡商城
 -(void)clickToGoodsList{
+    [MobClick event:@"mine_league_member_card_shop_click"];
+
     VipCardGoodsListViewController *vc = [[VipCardGoodsListViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }

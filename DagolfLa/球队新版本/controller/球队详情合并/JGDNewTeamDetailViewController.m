@@ -769,13 +769,16 @@ static CGFloat ImageHeight  = 210.0;
             
         }else if (indexPath.section == 2){
             if (indexPath.row == 0) {
-                
+                [MobClick event:@"team_main_activity_click"];
+
                 JGTeamActivityViewController *activity = [[JGTeamActivityViewController alloc] init];
                 activity.isMEActivity = 1;
                 activity.timeKey = [[self.dataDict objectForKey:@"timeKey"] integerValue];
                 [self.navigationController pushViewController:activity animated:YES];
                 
             }else if (indexPath.row == 1){
+                [MobClick event:@"team_main_album_click"];
+
                 JGTeamPhotoViewController *photo = [[JGTeamPhotoViewController alloc] init];
                 photo.manageInter = 1;
                 photo.teamKey = [self.dataDict objectForKey:@"timeKey"];
@@ -893,6 +896,8 @@ static CGFloat ImageHeight  = 210.0;
             /**
              球队管理点击跳转
              */
+            [MobClick event:@"team_main_manage_click"];
+
             JGTeamManageViewController* tmVc = [[JGTeamManageViewController alloc]init];
             tmVc.teamKey = [self.timeKey integerValue];
             tmVc.detailDic = [self.dataDict mutableCopy];

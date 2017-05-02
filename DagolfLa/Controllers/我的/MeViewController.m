@@ -370,7 +370,8 @@
         }
         
         if (indexPath.section == 0) {
-            
+            [MobClick event:@"mine_info_click"];
+
             JGDPersonalViewController *personVC = [[JGDPersonalViewController alloc] init];
             personVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:personVC animated:YES];
@@ -382,6 +383,7 @@
             switch (indexPath.row) {
                 case 0:
                 {
+                    [MobClick event:@"mine_ball_friends_click"];
                     ContactViewController *VC = arr[1];
                     VC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:VC animated:YES];
@@ -394,6 +396,8 @@
                 }
                 case 2:
                 {
+                    [MobClick event:@"mine_qr_code_click"];
+
                     [self.navigationController pushViewController:arr[2] animated:YES];
                     break;
                 }
@@ -407,21 +411,26 @@
             switch (indexPath.row) {
                 case 0:
                 {
+                    [MobClick event:@"mine_account_click"];
+
                     [self.navigationController pushViewController:arr[4] animated:YES];
                     break;
                 }
                 case 1:
                 {
+                    [MobClick event:@"mine_league_member_click"];
                     [self.navigationController pushViewController:arr[5] animated:YES];
                     break;
                 }
                 case 2:
                 {
+                    [MobClick event:@"mine_booking_order_click"];
                     [self.navigationController pushViewController:arr[6] animated:YES];
                     break;
                 }
                 case 3:
                 {
+                    [MobClick event:@"mine_trade_center_click"];
                     [self.navigationController pushViewController:arr[7] animated:YES];
                     break;
                 }
@@ -441,7 +450,8 @@
                     
                 case 1:{
                     
-                    
+                    [MobClick event:@"mine_more_click"];
+
                     [self.navigationController pushViewController:arr[9] animated:YES];
                     
                     break;

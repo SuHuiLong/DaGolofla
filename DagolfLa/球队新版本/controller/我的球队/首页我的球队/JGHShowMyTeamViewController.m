@@ -70,6 +70,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 
 //创建球队
 - (void)createTeam{
+    [MobClick event:@"team_create_click"];
 
     NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
 
@@ -381,7 +382,7 @@ static NSString *const JGHAddMoreTeamTableViewCellIdentifier = @"JGHAddMoreTeamT
 - (void)didSelectAddMoreBtn:(UIButton *)btn{
     NSLog(@"添加更多球队");
     btn.enabled = NO;
-    [MobClick event:@"teamLobby"];
+    [MobClick event:@"team_join_more_team_click"];
     JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
     if (![Helper isBlankString:[[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"]]) {
         teamMainCtrl.strProvince = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentCity"];

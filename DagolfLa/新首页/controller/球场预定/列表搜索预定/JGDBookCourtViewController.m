@@ -169,7 +169,7 @@
 
 //地图查看
 -(void)pushMapView{
-    
+    [MobClick event:@"booking_map_click"];
     [self isLogin];
     SearchWithMapViewController *vc = [[SearchWithMapViewController alloc] init];
     vc.cityName = _cityString;
@@ -178,6 +178,7 @@
 
 //搜索点击
 - (void)citySearchAct{
+    [MobClick event:@"booking_exchange_province_click"];
     JGDCitySearchViewController *citySearchVC = [[JGDCitySearchViewController alloc] init];
     citySearchVC.blockAddress = ^(NSString *city){
         CGFloat width = [Helper textWidthFromTextString:city height:screenWidth - 20 * ProportionAdapter fontSize:17];
@@ -216,6 +217,8 @@
 // 最右搜索按钮
 - (void)searchAct{
     
+    [MobClick event:@"booking_search_click"];
+
     [self isLogin];
     
     JGDCourtNameSearchViewController *nameSearchVC = [[JGDCourtNameSearchViewController alloc] init];
@@ -250,6 +253,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [self isLogin];
+    [MobClick event:@"booking_ball_park_item_click"];
 
     JGDCourtDetailViewController *courtVC = [[JGDCourtDetailViewController alloc] init];
     courtVC.timeKey = [self.dataArray[indexPath.row] timeKey];

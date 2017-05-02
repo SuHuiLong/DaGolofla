@@ -38,6 +38,16 @@
                ReferencedContainer = "container:DagolfLa.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "184182301EADDFEB0040820B"
+               BuildableName = "DagolfLaUITests.xctest"
+               BlueprintName = "DagolfLaUITests"
+               ReferencedContainer = "container:DagolfLa.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

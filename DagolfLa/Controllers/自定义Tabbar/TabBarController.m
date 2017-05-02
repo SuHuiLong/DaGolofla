@@ -24,7 +24,7 @@
 
 //融云
 #import <RongIMKit/RongIMKit.h>
-@interface TabBarController ()<UINavigationControllerDelegate, UITabBarControllerDelegate>
+@interface TabBarController ()<UINavigationControllerDelegate, UITabBarControllerDelegate, UITabBarDelegate>
 {
     UIImageView *_tabbar;
 }
@@ -44,10 +44,20 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    ////NSLog(@"100");
 }
 
 
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+    if ([item.title isEqualToString:@"首页"]) {
+        [MobClick event:@"tab_home_click"];
+    }else if ([item.title isEqualToString:@"球友圈"]) {
+        [MobClick event:@"tab_ball_friends_click"];
+    }else if ([item.title isEqualToString:@"消息"]) {
+        [MobClick event:@"tab_msg_click"];
+    }else if ([item.title isEqualToString:@"我的"]) {
+        [MobClick event:@"tab_mine_click"];
+    };
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

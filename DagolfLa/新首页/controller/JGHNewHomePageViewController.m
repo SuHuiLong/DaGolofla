@@ -332,7 +332,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     [dict setValue:@0 forKey:@"nType"];
     [dict setValue:@0 forKey:@"page"];
     [dict setValue:@20 forKey:@"rows"];
-    
+    //
     [[JsonHttp jsonHttp] httpRequest:@"adv/getAdvertList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -355,8 +355,11 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
                 [self.topScrollView config:arrayIcon data:arrayUrl title:arrayTitle ts:arrayTs];
                 __weak JGHNewHomePageViewController *weakSelf = self;
                 [self.topScrollView setClick:^(NSString *urlString) {
+
+                    [MobClick event:@"home_banner_click"];
+
                     [weakSelf isLoginUp];
-                    
+                   
                     if ([urlString containsString:@"dagolfla://"]) {
                         [[JGHPushClass pushClass]URLString:urlString pushVC:^(UIViewController *vc) {
                             vc.hidesBottomBarWhenPushed = YES;
@@ -448,10 +451,8 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
                 [indexTableViewCell configJGHGolfPackageView:bodyList andImageW:imgWidth andImageH:imgHeight];
             }else{
                 //其他  －－－ 更新版本
-                
             }
         }
-        
         return indexTableViewCell;
     }
 }
@@ -705,14 +706,15 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     
     if (btn.tag == 700) {
         // 历史成绩
-        [MobClick event:@"historyScore"];
+        [MobClick event:@"home_history_score_click"];
         JGHHistoryAndResultsViewController *historyCtrl = [[JGHHistoryAndResultsViewController alloc]init];
         historyCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:historyCtrl animated:YES];
     }else if (btn.tag == 701) {
         
         NSString *urlRequest = @"http://www.dagolfla.com/app/index.html"; // 用品商城
-        
+        [MobClick event:@"home_shop_click"];
+
         JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
         mallCtrl.urlRequest = urlRequest;
         mallCtrl.hidesBottomBarWhenPushed = YES;
@@ -720,7 +722,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         
     }else if (btn.tag == 702) {
         
-//        NSString *urlRequest = @"http://www.dagolfla.com/app/Packbookserch.html"; // 商旅套餐
+        [MobClick event:@"home_traver_package_click"];
         NSString *urlRequest = @"http://www.dagolfla.com/app/golftourism.html"; // 商旅套餐
     
         JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
@@ -731,6 +733,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     } else{
         
         // 服务定制
+        [MobClick event:@"home_service_custom_click"];
         JGDServiceViewController *serviceVC = [[JGDServiceViewController alloc] init];
         serviceVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:serviceVC animated:YES];
@@ -742,7 +745,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 - (void)didSelectMyTeamBtn:(UIButton *)btn{
     [self isLoginUp];
     // 友盟埋点
-    [MobClick event:@"teamTribe"];
+    [MobClick event:@"home_team_click"];
     if (_indexModel.isHaveTeam == 0) {
         JGTeamMainhallViewController *teamMainCtrl = [[JGTeamMainhallViewController alloc]init];
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
@@ -767,7 +770,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     
     btn.userInteractionEnabled = NO;
     
-    [MobClick event:@"beginKeepScore"];
+    [MobClick event:@"home_start_score_click"];
     JGHNewStartScoreViewController *scoreCtrl = [[JGHNewStartScoreViewController alloc]init];
     scoreCtrl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:scoreCtrl animated:YES];
@@ -778,18 +781,17 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 #pragma mark -- 球场预定
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
 //    [self isLoginUp];
+    [MobClick event:@"home_ball_park_booking_click"];
 
     JGDBookCourtViewController *bookVC = [[JGDBookCourtViewController alloc] init];
     bookVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:bookVC animated:YES];
     
 //    NSString *urlRequest = @"http://www.dagolfla.com/app/bookserch.html";
-//    
 //    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
 //    mallCtrl.urlRequest = urlRequest;
 //    mallCtrl.hidesBottomBarWhenPushed = YES;
 //    [self.navigationController pushViewController:mallCtrl animated:YES];
-
 }
 
 #pragma mark -- 活动点击事件
@@ -837,7 +839,8 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
         */
-        
+        [MobClick event:@"home_plate_click" attributes:@{@"球队掠影":[ablumListDict objectForKey:@"title"]}];
+
         JGHShadowPhotoAlbumViewController *phoVc = [[JGHShadowPhotoAlbumViewController alloc] init];
         //    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
         //JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc]init];
@@ -872,6 +875,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         NSArray *bodyList = [NSArray array];
         bodyList = [recomListDict objectForKey:@"bodyList"];
         NSString *mallUrl = [bodyList[btn.tag -400] objectForKey:@"weblinks"];
+        [MobClick event:@"home_plate_click" attributes:@{@"订场推荐":[bodyList[btn.tag -400] objectForKey:@"weblinks"]}];
         [self pushctrlWithUrl:mallUrl];
     }else{
         return;
@@ -895,6 +899,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         NSArray *bodyList = [NSArray array];
         bodyList = [mallListDict objectForKey:@"bodyList"];
         NSString *mallUrl = [bodyList[btn.tag -500] objectForKey:@"weblinks"];
+        [MobClick event:@"home_plate_click" attributes:@{@"用品商城":[bodyList[btn.tag -500] objectForKey:@"weblinks"]}];
         [self pushctrlWithUrl:mallUrl];
     }else{
         return;
@@ -931,9 +936,12 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (moreBtn.tag != 101) {
         [self isLoginUp];
     }
-    
+    NSArray *titleArray = [NSArray arrayWithObjects:@"精彩赛事-更多", @"球队掠影-更多", @"高旅套餐-更多", @"订场推荐-更多", @"用品商城-更多", nil];
+
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *urlString = [dict objectForKey:@"moreLink"];
+    [MobClick event:@"home_plate_more_click" attributes:@{titleArray[moreBtn.tag -101]:urlString}];
+
     [self pushctrlWithUrl:urlString];
 }
 #pragma mark -- 高旅套餐
@@ -948,6 +956,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
             NSDictionary *bodyDict = bodyListArray[selectID];
             if ([bodyDict objectForKey:@"weblinks"]) {
                 [[JGHPushClass pushClass] URLString:[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]] pushVC:^(UIViewController *vc) {
+                    [MobClick event:@"home_plate_click" attributes:@{@"高旅套餐":[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]]}];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }];
@@ -958,7 +967,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 #pragma mark -- 精彩赛事
 - (void)selectSpectatorSportsUrlString:(NSInteger)selectID{
 //    [self isLoginUp];
-    
     for (NSDictionary *dict in _indexModel.plateList) {
         NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
         if (bodyLayoutType == 4) {
@@ -967,6 +975,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
             NSDictionary *bodyDict = bodyListArray[selectID];
             if ([bodyDict objectForKey:@"weblinks"]) {
                 [[JGHPushClass pushClass] URLString:[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]] pushVC:^(UIViewController *vc) {
+                    [MobClick event:@"home_plate_click" attributes:@{@"精彩赛事":[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]]}];
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }];
