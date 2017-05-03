@@ -67,7 +67,7 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
         [whiteHeaderView addSubview:closeBtn];
         
         UILabel *eagleColor = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
-        eagleColor.backgroundColor = [UIColor colorWithHexString:@"#FDBB53"];
+        eagleColor.backgroundColor = [UIColor colorWithHexString:@"#84fffe"];
         eagleColor.layer.masksToBounds = YES;
         eagleColor.layer.cornerRadius = eagleColor.bounds.size.width/2;
         [whiteHeaderView addSubview:eagleColor];
@@ -79,7 +79,7 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
         [whiteHeaderView addSubview:eagleValue];
         
         UILabel *birdieColor = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
-        birdieColor.backgroundColor = [UIColor colorWithHexString:@"#FC5D2B"];
+        birdieColor.backgroundColor = [UIColor colorWithHexString:@"#82c0fd"];
         birdieColor.layer.masksToBounds = YES;
         birdieColor.layer.cornerRadius = eagleColor.bounds.size.width/2;
         [whiteHeaderView addSubview:birdieColor];
@@ -91,7 +91,7 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
         [whiteHeaderView addSubview:birdieValue];
         
         UILabel *parColor = [[UILabel alloc]initWithFrame:CGRectMake(130 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
-        parColor.backgroundColor = [UIColor colorWithHexString:@"#5A5856"];
+        parColor.backgroundColor = [UIColor colorWithHexString:@"#fed1a9"];
         parColor.layer.masksToBounds = YES;
         parColor.layer.cornerRadius = eagleColor.bounds.size.width/2;
         [whiteHeaderView addSubview:parColor];
@@ -103,7 +103,7 @@ static NSString *const JGHNewScoresHoleCellIdentifier = @"JGHNewScoresHoleCell";
         [whiteHeaderView addSubview:parValue];
         
         UILabel *bogeyColor = [[UILabel alloc]initWithFrame:CGRectMake(180 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
-        bogeyColor.backgroundColor = [UIColor colorWithHexString:@"#54A5FC"];
+        bogeyColor.backgroundColor = [UIColor colorWithHexString:@"#fdaaa6"];
         bogeyColor.layer.masksToBounds = YES;
         bogeyColor.layer.cornerRadius = eagleColor.bounds.size.width/2;
         [whiteHeaderView addSubview:bogeyColor];

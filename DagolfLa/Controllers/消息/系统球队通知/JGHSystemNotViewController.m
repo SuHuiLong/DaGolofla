@@ -132,7 +132,7 @@ static NSString *const JGHSysInformCellIdentifier = @"JGHSysInformCell";
     self.systemNotTableView.delegate = self;
     self.systemNotTableView.dataSource = self;
     [self.systemNotTableView registerClass:[JGHSysInformCell class] forCellReuseIdentifier:JGHSysInformCellIdentifier];
-    
+    [self.systemNotTableView setExtraCellLineHidden];
     UIView *CCCView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
     CCCView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.systemNotTableView.tableHeaderView = CCCView;

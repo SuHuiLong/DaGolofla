@@ -108,7 +108,15 @@
     
     //坚挺网络通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(netWorkStatus:) name:@"NONetwork" object:nil];
-    
+    [self createMainView];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (self.isAlertView) {
+            [[ShowHUD showHUD] showToastWithText:@"左右滑屏，可切换球洞" FromView:self.view];
+        }
+    });
+}
+#pragma mark - CreateView
+-(void)createMainView{
     //创建记分表
     [[JGHScoreDatabase shareScoreDatabase]initDataBaseTableName:_scorekey];
     
@@ -361,7 +369,6 @@
         [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"playTimes"];
         [_ballDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
         _switchMode = [[scoreDict objectForKey:@"scoreModel"] integerValue];
-        
     }
     
     if ([data objectForKey:@"score"]) {
@@ -470,19 +477,19 @@
             }
         }
     }
-    
-    [self titleBtnClick];
-    
+    if (!_isAlertView) {
+        [self titleBtnClick];
+    }
 }
 
 #pragma mark -- 记分详情
 - (void)titleBtnClick{
-    NSLog(@"XXX dong");
     _item.enabled = YES;
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UIButton *holeDireBtn = [window viewWithTag:15000];
-    
+    holeDireBtn.selected = true;
+
     if (_selectHole == 0) {
         _selectHole = 1;
         if (_scoreFinish == 1) {
@@ -490,8 +497,6 @@
         }else{
             [_item setTitle:@"保存"];//结束记分
         }
-        
-        [holeDireBtn setImage:[UIImage imageNamed:@"zk"] forState:UIControlStateNormal];
         
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
@@ -547,7 +552,7 @@
             [self showViewAnimate:_poorScoreView];
         }
     }else{
-        [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
+        holeDireBtn.selected = false;
         _selectHole = 0;
         if (_scoreFinish == 1) {
             [_item setTitle:@"完成"];
@@ -594,14 +599,13 @@
 - (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn{
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UIButton *holeDireBtn = [window viewWithTag:15000];
-    [holeDireBtn setImage:[UIImage imageNamed:@"zk1"] forState:UIControlStateNormal];
+    holeDireBtn.selected = false;
     _selectHole = 0;
     if (_scoreFinish == 1) {
         [_item setTitle:@"完成"];
     }else{
         [_item setTitle:@"保存"];
     }
-    
     [self removeALlView];
 }
 - (void)removeAnimateView{

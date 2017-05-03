@@ -57,14 +57,20 @@
         _alertLabel.text = stateStr;
         [_alertLabel setTextAlignment:NSTextAlignmentCenter];
     }
+    //卡编号
     if (model.cardNumber) {
-        NSString *cardNumber = [NSString stringWithFormat:@"ID.%@",model.cardNumber];
+        NSString *cardNumber = [NSString stringWithFormat:@"%@",model.cardNumber];
         NSString *newNumber = [NSString string];
         NSInteger num = cardNumber.length/4;
-        for (NSInteger i = 0; i<num; i++) {
-            NSString *rangStr = [cardNumber substringWithRange:NSMakeRange(i*4, 4)];
+        for (NSInteger i = 0; i<num+1; i++) {
+            NSInteger cutLength = 4;
+            if (i==num) {
+                cutLength = cardNumber.length%4;
+            }
+            NSString *rangStr = [cardNumber substringWithRange:NSMakeRange(i*4, cutLength)];
             newNumber = [NSString stringWithFormat:@"%@%@ ",newNumber,rangStr];
         }
+        newNumber = [NSString stringWithFormat:@"ID.%@",newNumber];
         _cardNumberLabel.text = newNumber;
     }
 }

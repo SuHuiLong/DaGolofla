@@ -22,7 +22,8 @@
 @implementation JGHHistoryScoreView
 
 - (instancetype)initWithFrame:(CGRect)frame{
-    if ([super initWithFrame:frame]) {
+   self = [super initWithFrame:frame];
+    if (self) {
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
         
         [self createTableView];

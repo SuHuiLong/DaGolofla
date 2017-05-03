@@ -26,4 +26,11 @@
 @property(nonatomic, assign)NSInteger orderNum;
 //订场的key
 @property(nonatomic, copy)NSString *bookballKey;
+
+//省份名
+@property (nonatomic,copy) NSString *name;
+//数量
+@property (nonatomic,assign) NSInteger count;
+
+
 @end

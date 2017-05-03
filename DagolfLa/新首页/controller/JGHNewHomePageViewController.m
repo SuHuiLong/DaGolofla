@@ -52,18 +52,13 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     NSInteger _showLineID;//0-活动，1-相册，2-成绩
     NSInteger _showEventID;//0-赛事，1-球技，2-活动，3-视频
 }
-@property (nonatomic, strong)HomeHeadView *topScrollView;//BANNAER图
 
-@property (nonatomic, strong)UITableView *homeTableView;//TB
-
-@property (nonatomic, strong)JGHIndexModel *indexModel;
-
-@property (nonatomic, strong)JGHNavListView *navListView;
-
-@property (nonatomic, strong)UIView *toolView;
-//是否为启动请求数据接口 0： 非启动   1：启动
 @property (nonatomic, copy)NSString *isBoot;
-
+@property (nonatomic, strong)HomeHeadView *topScrollView;//BANNAER图
+@property (nonatomic, strong)JGHIndexModel *indexModel;
+@property (nonatomic, strong)JGHNavListView *navListView;
+@property (nonatomic, strong)UITableView *homeTableView;//TB
+@property (nonatomic, strong)UIView *toolView;//是否为启动请求数据接口 0： 非启动   1：启动
 @end
 
 @implementation JGHNewHomePageViewController

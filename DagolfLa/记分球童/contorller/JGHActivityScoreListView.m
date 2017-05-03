@@ -67,6 +67,7 @@
 - (void)deleteBtn:(UIButton *)deleteBtn{
     [self removeFromSuperview];
 }
+
 - (void)loadActivityListData:(NSString *)userKey{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     
@@ -116,8 +117,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell configJGLChooseScoreModel:_dataArray[indexPath.section]];
     
-    NSLog(@"indexPath.row ==%td", indexPath.row);
-    NSLog(@"indexPath.row1 == %td", _dataArray.count -1);
     if (indexPath.section == _dataArray.count -1) {
         cell.line.hidden = YES;
     }else{

@@ -154,11 +154,11 @@
         if ((__bridge id)abFullName != nil) {
             nameString = (__bridge NSString *)abFullName;
         } else {
-            if ((__bridge id)abLastName != nil)
-            {
+            if ((__bridge id)abLastName != nil){
                 nameString = [NSString stringWithFormat:@"%@ %@", nameString, lastNameString];
             }
         }
+        
         addressBook.userName = nameString;
         addressBook.recordID = (int)ABRecordGetRecordID(person);;
         addressBook.isSelectNumber = 0;
@@ -173,7 +173,6 @@
             ABMultiValueRef valuesRef = ABRecordCopyValue(person, property);
             NSInteger valuesCount = 0;
             if (valuesRef != nil) valuesCount = ABMultiValueGetCount(valuesRef);
-            
             if (valuesCount == 0) {
                 CFRelease(valuesRef);
                 continue;

@@ -474,7 +474,7 @@
     return cell;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *headerView = [UIView new];
+    UIView *headerView = nil;
     if (section == 0) {
         headerView = [self userInformationNpneView];
         if (_inputModel.userKey) {

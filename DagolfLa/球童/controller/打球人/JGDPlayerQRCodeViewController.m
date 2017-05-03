@@ -365,14 +365,14 @@
     layer.borderWidth = 2.0f;
     NSString* strMd = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%tddagolfla.com",[DEFAULF_USERID integerValue] ]];
     //清楚缓存
-    NSString *bgUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
+    NSString *bgUrl = [NSString stringWithFormat:@"https://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
     UIImageView* shadowImageV = [[UIImageView alloc]initWithFrame:CGRectMake(self.imgvBar.frame.size.width / 2 - 25, self.imgvBar.frame.size.height / 2 - 30, 50*screenWidth/375, 55*screenWidth/375)];
     shadowImageV.image = [UIImage imageNamed:@"Shadow"];
 //    shadowImageV.backgroundColor = [UIColor orangeColor];
     [self.imgvBar addSubview:shadowImageV];
     
-    NSString* strUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
+    NSString* strUrl = [NSString stringWithFormat:@"https://mobile.dagolfla.com/qcode/userQCode?userKey=%@&md5=%@",DEFAULF_USERID,strMd];
     
     [self.imgvBar sd_setImageWithURL:[NSURL URLWithString:strUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [self readQRCodeFromImageWithFileURL:[NSURL URLWithString:strUrl]];

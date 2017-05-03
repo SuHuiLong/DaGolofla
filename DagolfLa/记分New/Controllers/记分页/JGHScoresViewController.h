@@ -18,5 +18,7 @@
 
 @property (nonatomic, assign)NSInteger isCabbie;//1-球童
 
+//首次进入会有一个提示弹窗
+@property (nonatomic,assign) BOOL isAlertView;
 
 @end
