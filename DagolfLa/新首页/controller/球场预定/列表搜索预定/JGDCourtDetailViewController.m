@@ -17,6 +17,7 @@
 #import "JGDAllianceCommitOrderViewController.h"    // 联盟会员提交界面
 #import "MyfootModel.h"
 #import "ShowMapViewViewController.h"
+#import "VipCardGoodsListViewController.h"
 
 static CGFloat ImageHeight  = 210.0;
 
@@ -666,11 +667,20 @@ static CGFloat ImageHeight  = 210.0;
 // 联盟会员付款
 - (void)vipCommitAct{
     
-    if (!self.hasLeagueUser) {
-        [[ShowHUD showHUD] showToastWithText:@"请先绑定联盟会员卡" FromView:self.view];
-        return;
-    }else if (self.strPrompt){
+    //    if (!self.hasLeagueUser) {
+    //        [[ShowHUD showHUD] showToastWithText:@"请先开通君高会籍" FromView:self.view];
+    //        return;
+    //    }else
+    
+    if (self.strPrompt){
         [[ShowHUD showHUD] showToastWithText:self.strPrompt FromView:self.view];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TIMESlEEP * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+            VipCardGoodsListViewController *vipGoodListVC = [[VipCardGoodsListViewController alloc] init];
+            [self.navigationController pushViewController:vipGoodListVC animated:YES];
+        
+        });
+
         return;
     }
     

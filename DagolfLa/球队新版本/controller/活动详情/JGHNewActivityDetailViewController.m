@@ -616,7 +616,6 @@ static CGFloat ImageHeight  = 210.0;
 - (void)getTeamActivitySignUpList:(UIButton *)btn{
     
     [MobClick event:@"team_activity_members_click"];
-
     
     if (_isTeamMember == 1 && [_isApply integerValue] == 0) {
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
