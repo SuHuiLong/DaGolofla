@@ -848,6 +848,7 @@ static CGFloat ImageHeight  = 210.0;
                 }                 break;
                 case 2:
                 {
+                    [MobClick event:@"team_main_album_click"];
                     JGTeamPhotoViewController* phoVc = [[JGTeamPhotoViewController alloc]init];
                     phoVc.teamKey = self.timeKey;
                     phoVc.powerPho = self.power;
