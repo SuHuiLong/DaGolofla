@@ -16,17 +16,15 @@ static NSString *const JGHNewFourScoresPageCellIdentifier = @"JGHNewFourScoresPa
 static NSString *const JGHScoresPageCellIdentifier = @"JGHScoresPageCell";
 static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
-@interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHNewScoresPageCellDelegate,JGHNewFourScoresPageCellDelegate>
-{
-
+@interface JGHScoresMainViewController ()<UITableViewDelegate, UITableViewDataSource, JGHNewScoresPageCellDelegate,JGHNewFourScoresPageCellDelegate>{
     UILabel *_holeLable;
-    
     UILabel *_areaLable;
-    
-    UIButton *_holeDirebtn;
 }
 
 @property (nonatomic, strong)UITableView *scoresTableView;
+
+//箭头图标
+@property (nonatomic, strong)UIButton *holeDirebtn;
 
 @end
 
@@ -57,6 +55,15 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noticePushScoresCtrl:) name:@"noticePushScores" object:nil];
     
+    //箭头变化
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scoresArrowChange:) name:@"scoresArrowChange" object:nil];
+     
+    [self createView];
+}
+
+
+#pragma mark - CreateView
+-(void)createView{
     self.scoresTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:UITableViewStylePlain];
     self.scoresTableView.delegate = self;
     self.scoresTableView.dataSource = self;
@@ -97,24 +104,21 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
     model = _dataArray[0];
     if ([model.standardlever objectAtIndex:_index]) {
-        _holeLable.text = [NSString stringWithFormat:@"%tdHole PAR %@", _index +1, [model.standardlever objectAtIndex:_index]];
+        _holeLable.text = [NSString stringWithFormat:@"%tdHole  Par%@", _index +1, [model.standardlever objectAtIndex:_index]];
     }else{
-        _holeLable.text = [NSString stringWithFormat:@"%tdHole PAR ", _index +1];
+        _holeLable.text = [NSString stringWithFormat:@"%tdHole  Par", _index +1];
     }
     [_holeLable sizeToFitSelf];
     [view addSubview:_holeLable];
     
     //向下&&向上箭头
     _holeDirebtn = [Factory createButtonWithFrame:CGRectMake(0, kHvertical(20), kWvertical(18), kHvertical(10)) NormalImage:@"zk" SelectedImage:@"zk1" target:self selector:nil];
-    _holeDirebtn.tag = 15000;
+    _holeDirebtn.selected = false;
     [view addSubview:_holeDirebtn];
-    
     //设置坐标
-    
-    _areaLable.x = (screenWidth - _areaLable.width - _holeLable.width - _holeDirebtn.width)/2;
+    _areaLable.x = (screenWidth - _areaLable.width - _holeLable.width - _holeDirebtn.width - kWvertical(20))/2;
     _holeLable.x =  _areaLable.x_width + kWvertical(10);
     _holeDirebtn.x = _holeLable.x_width + kWvertical(10);
-    
     
     //线
     UIView *line = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:Bar_Color] frame:CGRectMake(_areaLable.x-kWvertical(10), kHvertical(49), _holeDirebtn.x_width + kWvertical(20) - _areaLable.x, 1)];
@@ -130,24 +134,19 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     return view;
 }
-#pragma mark -- 阅历成绩
+#pragma mark -- Action
+//阅历成绩
 - (void)holeBtnClick:(UIButton *)btn{
-    
-//    [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(btnClickedOperations) object:nil];
-//    
-//    [self performSelector:@selector(btnClickedOperations) withObject:nil afterDelay:0.2f];
-//}
-//- (void)btnClickedOperations{
+    _holeDirebtn.selected = false;
     _selectHoleBtnClick();
 }
-
-
-#pragma mark -- 记分模式切换
+//记分模式切换
 - (void)switchScoreModeNote{
     NSLog(@"记分模式");
     [self.scoresTableView reloadData];
 }
-#pragma mark -- 跳转指定记分几页通知
+#pragma mark -- notification
+//跳转指定记分几页通知
 - (void)noticePushScoresCtrl:(NSNotification *)not{
     //weChatNotice
     NSLog(@"%@", not.userInfo);
@@ -160,6 +159,22 @@ static NSString *const JGHNewScoresPageCellIdentifier = @"JGHNewScoresPageCell";
     
     [self.scoresTableView reloadData];
 }
+
+/**
+ 处理箭头方向
+ 
+ @param notic 返回参数 0：默认 1：选中
+ */
+-(void)scoresArrowChange:(NSNotification *)notic{
+    
+    if ([notic.object isEqual:@"1"]) {
+        self.holeDirebtn.selected = false;
+    }else{
+        self.holeDirebtn.selected = true;
+    }
+    
+}
+
 #pragma mark -- tableView代理
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;

@@ -19,7 +19,11 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
-//- (void)downLoadData:(NSInteger)page;
+//数据源
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
+
+//每次进入刷新数据
+- (void)refreshData;
 
 @end

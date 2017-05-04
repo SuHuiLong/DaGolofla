@@ -120,7 +120,31 @@
 }
 
 -(void)dealloc {
-//    NSLog(@"%@ dealloc", NSStringFromClass(self.class));
+    NSString *deallocClass =  [NSString stringWithFormat:@"%@ dealloc",NSStringFromClass(self.class)];
+    NSLog(@"%@ dealloc", NSStringFromClass(self.class));
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        
+//        MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithWindow:[UIApplication sharedApplication].keyWindow];
+//        HUD.mode = MBProgressHUDModeText;
+//        HUD.color = BlackColor;
+//        HUD.label.text = deallocClass;
+//        HUD.label.textColor = WhiteColor;
+//        [HUD showAnimated:true];
+//        [[UIApplication sharedApplication].keyWindow addSubview:HUD];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [HUD setHidden:YES];
+//        });
+//        
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
+//            [HUD setHidden:YES];
+//        }];
+//        HUD.userInteractionEnabled = true;
+//        [HUD addGestureRecognizer:tap];
+//        
+//        
+//    });
+
 }
 
 @end

@@ -32,24 +32,26 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-    
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];    
     [self createItem];
+
+    [self.historyScoreView.searchController dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
     //替换任务栏
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
-    //下载数据
-    [self.historyScoreView.tableView.mj_header beginRefreshing];
     
     [self.scoreResultWKwebView loadWebUrl:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]]];
-    
+    if (_historyScoreView.dataArray.count>0) {
+        [self.historyScoreView.tableView.mj_header beginRefreshing];
+    }
     [self createItem];
 }
 -(void)backButtonClcik{
+    
     [self.historyScoreView.searchController dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -84,13 +86,13 @@
     self.navigationItem.rightBarButtonItem = rightBtn;
 }
 - (void)segmentAction:(UISegmentedControl *)segment{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"hideHistoryDataSearch" object:nil];
+
     if (segment.selectedSegmentIndex == 0) {
         self.baseScrollView.contentOffset = CGPointMake( 0, 0);
-//        _segment.selectedSegmentIndex = 0;
         [self createRetrieveBtn];
     }else{
         self.baseScrollView.contentOffset = CGPointMake( screenWidth, 0);
-//        _segment.selectedSegmentIndex = 1;
         UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"fenxiangScore"] style:(UIBarButtonItemStylePlain) target:self action:@selector(shareStatisticsDataClick)];
         bar.tintColor = [UIColor colorWithHexString:Bar_Segment];
         self.navigationItem.rightBarButtonItem = bar;
@@ -157,6 +159,8 @@
 }
 #pragma mark -- 创建历史记分
 - (void)createHistoryScoreView{
+    
+    
     _historyScoreView = [[JGHHistoryScoreView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64)];
     __weak JGHHistoryAndResultsViewController *weakSelf = self;
     _historyScoreView.blockSelectHistoryScore = ^(JGDHistoryScoreModel *model){
@@ -171,7 +175,6 @@
                 }
                 NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]);
                 scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
-//                scoreVC.backHistory = 1;
                 [weakSelf.navigationController pushViewController:scoreVC animated:YES];
             }else if ([model.scoreFinish integerValue] == 2) {
                 
@@ -180,7 +183,6 @@
                     JGDNotActScoreViewController *notAciVC = [[JGDNotActScoreViewController alloc] init];
                     notAciVC.timeKey = model.timeKey;
                     notAciVC.ballkid = 10;   //  未完成
-                    //       notAciVC.ballkid = 11;
                     [weakSelf.navigationController pushViewController:notAciVC animated:YES];
                     
                 }else{

@@ -67,18 +67,21 @@
         MyattenModel *model = chineseStringsArray[i];
         
         for (int j = 0; j < letters.count; j++) {
-            
-            if ([[model.chineseString.pinYin substringToIndex:1] isEqualToString:letters[j]]) {
-                [datas[j] insertObject:model atIndex:0];
-                addd = NO;
+            if ([model.chineseString.pinYin length]>0) {
+                if ([[model.chineseString.pinYin substringToIndex:1] isEqualToString:letters[j]]) {
+                    [datas[j] insertObject:model atIndex:0];
+                    addd = NO;
+                }
+                
             }
         }
         for (int k = 0; k < 10; k ++) {
-            
-            if ([[model.chineseString.pinYin substringToIndex:1] isEqualToString:numbers[k]]) {
-                
-                [datas[26] insertObject:model atIndex:0];
-                addd = NO;
+            if ([model.chineseString.pinYin length]>0) {
+                if ([[model.chineseString.pinYin substringToIndex:1] isEqualToString:numbers[k]]) {
+                    
+                    [datas[26] insertObject:model atIndex:0];
+                    addd = NO;
+                }
             }
         }
         if (addd == YES) {

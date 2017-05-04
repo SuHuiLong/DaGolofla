@@ -179,9 +179,6 @@
             label.attributedText = lbStr;
         }
         
-//        NSMutableAttributedString *lbStr = [[NSMutableAttributedString alloc] initWithString:@"球童 王二狗 正在为您记分"];
-//        [lbStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#32b14d"] range:NSMakeRange(3, lbStr.length - 10)];
-//        label.attributedText = lbStr;
         label.textAlignment = NSTextAlignmentCenter;
         [headerView addSubview:label];
         
@@ -310,13 +307,7 @@
         greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
         [viewTitle addSubview:greenView];
         [headerView addSubview:viewTitle];
-        
-//        
-//        UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(0, 169 * ProportionAdapter, screenWidth, 2 * ProportionAdapter)];
-//        greenView.backgroundColor = [UIColor colorWithHexString:@"#32b14d"];
-//        [viewTitle addSubview:greenView];
-//        [headerView addSubview:viewTitle];
-        
+                
         return headerView;
     }else{
         

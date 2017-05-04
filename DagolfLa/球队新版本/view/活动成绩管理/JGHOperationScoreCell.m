@@ -50,7 +50,7 @@
 }
 
 - (void)configStandPar:(NSInteger)par andHole:(NSInteger)hole andPole:(NSInteger)pole{
-    self.holeName.text = [NSString stringWithFormat:@"%td Hole PAR %td", hole+1, par];
+    self.holeName.text = [NSString stringWithFormat:@"%td  Hole  PAR %td", hole+1, par];
     
     self.sildLeft.image = [UIImage imageNamed:@"sildLeft"];
     self.sildRight.image = [UIImage imageNamed:@"sildRight"];

@@ -118,25 +118,6 @@
     }
 }
 
-#pragma mark - 设置导航栏按钮
-//- (void)setNavigationBarItem {
-//
-//    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, KBARITEN_WH, KBARITEN_WH)];
-//    [backBtn setImage:[UIImage imageNamed:@"btn_back"] forState:UIControlStateNormal];
-//
-//    @weakify(self)
-//    [[backBtn rac_signalForControlEvents:UIControlEventTouchUpInside]
-//     subscribeNext:^(id x) {
-//         @strongify(self);
-//         [self.timer invalidate];
-//         self.timer = nil;
-//         [self.navigationController popViewControllerAnimated:YES];
-//     }];
-//
-//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
-//    self.navigationItem.leftBarButtonItem = leftItem;
-//}
-
 - (void)setupMaskView
 {
     //设置统一的视图颜色和视图的透明度
@@ -332,7 +313,6 @@
         NSString *str = metadataObject.stringValue;
         if ([str containsString:@"dagolfla"] == YES) {
             [_session stopRunning];
-            //dagolfla://qcode/user?userKey=191&qcodeID=5986859029096433&md5=EDB4A1EED2AD1DE49E2C478420A680B6
             NSMutableDictionary* dict =[[NSMutableDictionary alloc]init];
             NSLog(@"%@",[Helper returnUrlString:str WithKey:@"qcodeID"]);
             [dict setObject:[Helper returnUrlString:str WithKey:@"qcodeID"] forKey:@"qCodeID"];
@@ -341,22 +321,14 @@
                 
             } completionBlock:^(id data) {
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//              acBoolean == 1 有活动
-//                    _blockData([Helper returnUrlString:str WithKey:@"qcodeID"]);
-//                    [self.navigationController popViewControllerAnimated:YES];
                     if ([data objectForKey:@"bean"]) {
                         
                         NSDictionary *dataDic = [data objectForKey:@"bean"];
                         if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
-//                            JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
                             if ([[dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
-//                                choVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
-//                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
                                 _blockQcodeActivityScore([dataDic objectForKey:@"scanUserKey"], [dataDic objectForKey:@"scanUserName"], [[dataDic objectForKey:@"sex"] integerValue]);
                             }else{//客户扫码
                                 _blockQcodeActivityScore([dataDic objectForKey:@"qcodeUserKey"], [dataDic objectForKey:@"qcodeUserName"], [[dataDic objectForKey:@"sex"] integerValue]);
-//                                choVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
-//                                choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
                                 
                             }
 //                            [self.navigationController pushViewController:choVc animated:YES];
@@ -365,18 +337,12 @@
                         else{
                             
                             
-//                            JGLCaddieSelfScoreViewController* selfVc = [[JGLCaddieSelfScoreViewController alloc]init];
                             if ([[dataDic objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
                                 _blockQcodeScore([dataDic objectForKey:@"scanUserKey"], [dataDic objectForKey:@"scanUserName"], [[dataDic objectForKey:@"sex"] integerValue]);
-//                                selfVc.userKeyPlayer = [dataDic objectForKey:@"scanUserKey"];
-//                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"scanUserName"]];//
                             }
                             else{//客户扫码
                                 _blockQcodeScore([dataDic objectForKey:@"qcodeUserKey"], [dataDic objectForKey:@"qcodeUserName"], [[dataDic objectForKey:@"sex"] integerValue]);
-//                                selfVc.userKeyPlayer = [dataDic objectForKey:@"qcodeUserKey"];
-//                                selfVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dataDic objectForKey:@"qcodeUserName"]];
                             }
-//                            [self.navigationController pushViewController:selfVc animated:YES];
                             [self.navigationController popViewControllerAnimated:YES];
                         }
                         
@@ -391,12 +357,10 @@
                         JGLScoreSureViewController* suVc = [[JGLScoreSureViewController alloc]init];
                         suVc.errorState = 2;
                         [self.navigationController pushViewController:suVc animated:YES];
-                    }
-                    else if ([[data objectForKey:@"errorState"] integerValue] == 3)
-                    {
+                        return ;
+                    }else if ([[data objectForKey:@"errorState"] integerValue] == 3){
                         
-                    }
-                    else{
+                    }else{
                         [[ShowHUD showHUD]showToastWithText:@"二维码失效" FromView:self.view];
                     }
                     [_session startRunning];

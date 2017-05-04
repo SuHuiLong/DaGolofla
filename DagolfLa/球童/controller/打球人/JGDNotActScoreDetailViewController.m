@@ -70,7 +70,14 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 75 * ProportionAdapter)];
-    UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(37.5 * ProportionAdapter, 30 * ProportionAdapter, 300 * ProportionAdapter, 45 * ProportionAdapter)];
+    
+    UILabel *tipLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 5 * ProportionAdapter, 300 * ProportionAdapter, 20 * ProportionAdapter)];
+    tipLB.text = @"注：长按杆数区，进入编辑页，可修改成绩！";
+    tipLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
+    [view addSubview:tipLB];
+    
+    
+    UIView *lightV = [[UIView alloc] initWithFrame:CGRectMake(37.5 * ProportionAdapter, tipLB.y_height + kWvertical(5), 300 * ProportionAdapter, 45 * ProportionAdapter)];
     view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     lightV.backgroundColor = [UIColor whiteColor];
     lightV.layer.cornerRadius = 5 * ProportionAdapter;
@@ -80,11 +87,7 @@
     allLB.text = @"记分卡密钥：";
     allLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
     [lightV addSubview:allLB];
-    
-    UILabel *tipLB = [[UILabel alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 5 * ProportionAdapter, 300 * ProportionAdapter, 20 * ProportionAdapter)];
-    tipLB.text = @"注：长按杆数区，进入编辑页，可修改成绩！";
-    tipLB.font = [UIFont systemFontOfSize:12 * ProportionAdapter];
-    [view addSubview:tipLB];
+
     
     UILabel *keyLB = [[UILabel alloc] initWithFrame:CGRectMake(170 * ProportionAdapter, 0 * ProportionAdapter, 100 * ProportionAdapter, 45 * ProportionAdapter)];
     keyLB.text = [NSString stringWithFormat:@"%@", self.model.invitationCode];

@@ -14,10 +14,6 @@
 
 @implementation JGDOpenContactViewController
 
-//- (void)viewDidDisappear:(BOOL)animated{
-//    [super viewDidDisappear:animated];
-//    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
-//}
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:NO];

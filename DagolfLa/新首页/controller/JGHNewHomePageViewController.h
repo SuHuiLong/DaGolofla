@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <RongIMKit/RongIMKit.h>
 
-@interface JGHNewHomePageViewController : ViewController
+@interface JGHNewHomePageViewController : BaseViewController
 
 //定义枚举类型
 typedef enum {

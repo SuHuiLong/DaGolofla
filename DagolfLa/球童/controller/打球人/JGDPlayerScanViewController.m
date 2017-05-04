@@ -32,7 +32,8 @@
 
 @property (strong, nonatomic) AVCaptureMetadataOutput * output;
 @property (assign, nonatomic) BOOL cameraIsValid, cameraIsAuthorised;
-
+//所有扫描结果只处理一次
+@property (nonatomic,assign) BOOL isGetResult;
 @end
 
 @implementation JGDPlayerScanViewController
@@ -325,8 +326,13 @@
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
 
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
+    
     if (metadataObjects.count>0) {
-        
+        if (_isGetResult) {
+            _isGetResult = false;
+            return;
+        }
+        _isGetResult = true;
         //得到二维码上的所有数据
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex :0 ];
         NSString *str = metadataObject.stringValue;
@@ -341,9 +347,6 @@
                 
             } completionBlock:^(id data) {
                 if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                    //                    NSMutableDictionary* dictDa = [[NSMutableDictionary alloc]init];
-                    //                    [dictDa setObject:[[data objectForKey:@"user"] objectForKey:@"userName"] forKey:[Helper returnUrlString:str WithKey:@"userKey"]];
-//                    _blockData();
                     if ([[data objectForKey:@"errorState"] intValue] == 3) {
                         JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
                         if ([data objectForKey:@"bean"]) {
@@ -360,11 +363,8 @@
                             [self.navigationController popViewControllerAnimated:YES];
 
                         }
-                        //                        self.loopTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(loopAct) userInfo:nil repeats:YES];
-//                        [self.loopTimer fire];
                     }
-                }
-                else{
+                } else{
                     if ([[data objectForKey:@"errorState"] intValue] == 3) {
                         JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
                         if ([data objectForKey:@"bean"]) {
@@ -394,9 +394,6 @@
                     // 1 扫码成功  2 同意  3 拒绝
                     [self.loopTimer invalidate];
                     self.loopTimer = nil;
-//                    JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
-//                    resultVC.qcodeUserName = [dataDic objectForKey:@"qcodeUserName"];
-//                    [self.navigationController pushViewController:resultVC animated:YES];
                     [[ShowHUD showHUD]showToastWithText:@"对方取消记分" FromView:self.view];
                     [self.navigationController popViewControllerAnimated:YES];
                     /*

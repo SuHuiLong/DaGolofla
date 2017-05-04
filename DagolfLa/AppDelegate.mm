@@ -193,6 +193,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     _pushID = 0;
     
+    //禁止隐藏时间栏
+    [[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     if (DEFAULF_USERID) {
         /*
@@ -213,8 +215,6 @@
     [user setObject:@"上海" forKey:CITYNAME];//城市名
     [user synchronize];
     
-    //设置状态栏字体颜色
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     //---------------------------友盟-------------------------------
     [self umengTrack];
     //-------------------------定位-------------------------
@@ -285,15 +285,6 @@
         [self startApp];
         
         if ([pushInfo objectForKey:APPDATA]) {
-           // [self pushData:[pushInfo objectForKey:APPDATA]];
-            
-//            [Helper alertViewWithTitle:@"22222" withBlock:^(UIAlertController *alertView) {
-//                UIWindow   *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//                alertWindow.rootViewController = [[UIViewController alloc] init];
-//                alertWindow.windowLevel = UIWindowLevelAlert + 1;
-//                [alertWindow makeKeyAndVisible];
-//                [alertWindow.rootViewController presentViewController:alertView animated:YES completion:nil];
-//            }];
         }
         
         [self updateBadgeValueForTabBarItem];
