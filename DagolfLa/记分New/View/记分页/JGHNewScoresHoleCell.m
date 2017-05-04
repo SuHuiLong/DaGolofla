@@ -10,6 +10,16 @@
 
 #define BGScoreColor @"#B3E4BF"
 
+#define Par_jian @"#3586d8"
+#define Par_jia @"#e8625a"
+#define Par_b @"#b4b3b3"
+
+#define Par_Eagle @"#84fffe"
+#define Par_Birdie @"#82c0fd"
+#define Par_Par @"#fed1a9"
+#define Par_Bogey @"#fdaaa6"
+
+
 @implementation JGHNewScoresHoleCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -32,6 +42,7 @@
         _Taiwan = [[UILabel alloc]initWithFrame:CGRectMake(10*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
         _Taiwan.hidden = YES;
         [self addSubview:_Taiwan];
+        
         
         //----------第1洞--------------
         _one = [[UIButton alloc]initWithFrame:CGRectMake(_name.frame.origin.x +_name.bounds.size.width +1, 0, 30*ProportionAdapter, 30*ProportionAdapter)];
@@ -165,6 +176,9 @@
 
 
 - (void)configAllViewBgColor:(NSString *)colorString andCellTag:(NSInteger)tag{
+    
+    
+    
     self.bgLable.backgroundColor = [UIColor colorWithHexString:colorString];
     self.name.backgroundColor = [UIColor colorWithHexString:colorString];
     self.one.backgroundColor = [UIColor colorWithHexString:colorString];

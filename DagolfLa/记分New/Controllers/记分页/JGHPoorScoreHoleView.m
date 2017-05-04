@@ -44,83 +44,110 @@ static NSString *const JGHNewPoorBarHoleCellIdentifier = @"JGHNewPoorBarHoleCell
 - (instancetype)init{
     if (self == [super init]) {
         self.backgroundColor = [UIColor whiteColor];
-        _colorArray = @[@"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8"];
-        self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (200 +20 +20 +60)*ProportionAdapter) style:UITableViewStylePlain];
-        self.scoreTableView.backgroundColor = [UIColor whiteColor];
-        self.scoreTableView.scrollEnabled = NO;
-        self.scoreTableView.delegate = self;
-        self.scoreTableView.dataSource = self;
-        
-        [self.scoreTableView registerClass:[JGHNewPoorBarHoleCell class] forCellReuseIdentifier:JGHNewPoorBarHoleCellIdentifier];
-        
-        [self.scoreTableView registerClass:[JGHNewScoresHoleCell class] forCellReuseIdentifier:JGHNewScoresHoleCellIdentifier];
-        
-        self.scoreTableView.separatorStyle = UITableViewCellSelectionStyleNone;
-        [self addSubview:self.scoreTableView];
-        
-        UIView *whiteHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 80 * ProportionAdapter)];
-        whiteHeaderView.backgroundColor = [UIColor whiteColor];
-        
-        //关闭按钮
-        UIButton *closeBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth -50*ProportionAdapter, 8*ProportionAdapter, 32*ProportionAdapter, 32*ProportionAdapter)];
-        [closeBtn setImage:[UIImage imageNamed:@"date_close"] forState:UIControlStateNormal];
-        [closeBtn addTarget:self action:@selector(closeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [whiteHeaderView addSubview:closeBtn];
-        //Par -
-        UILabel *eagleColor = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
-        eagleColor.backgroundColor = [UIColor colorWithHexString:@"#54A5FC"];
-        eagleColor.layer.masksToBounds = YES;
-        eagleColor.layer.cornerRadius = eagleColor.bounds.size.width/2;
-        [whiteHeaderView addSubview:eagleColor];
-        
-        UILabel *eagleValue = [[UILabel alloc]initWithFrame:CGRectMake(25 *ProportionAdapter, 38*ProportionAdapter, 25*ProportionAdapter, 14*ProportionAdapter)];
-        eagleValue.text = @"Par";
-        eagleValue.textColor = [UIColor colorWithHexString:B31_Color];
-        eagleValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        [whiteHeaderView addSubview:eagleValue];
-        
-        UILabel *oneline = [[UILabel alloc]initWithFrame:CGRectMake(50 *ProportionAdapter, 38 *ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
-        oneline.text = @"-";
-        oneline.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        oneline.textColor = [UIColor colorWithHexString:B31_Color];
-        [whiteHeaderView addSubview:oneline];
-        
-        //Par
-        UILabel *parColor = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
-        parColor.backgroundColor = [UIColor colorWithHexString:@"#5A5856"];
-        parColor.layer.masksToBounds = YES;
-        parColor.layer.cornerRadius = parColor.bounds.size.width/2;
-        [whiteHeaderView addSubview:parColor];
-        
-        UILabel *parValue = [[UILabel alloc]initWithFrame:CGRectMake(85 *ProportionAdapter, 38*ProportionAdapter, 25*ProportionAdapter, 14*ProportionAdapter)];
-        parValue.text = @"Par";
-        parValue.textColor = [UIColor colorWithHexString:B31_Color];
-        parValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        [whiteHeaderView addSubview:parValue];
-        
-        //Par +
-        UILabel *birdieColor = [[UILabel alloc]initWithFrame:CGRectMake(120 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
-        birdieColor.backgroundColor = [UIColor colorWithHexString:@"#FC5D2B"];
-        birdieColor.layer.masksToBounds = YES;
-        birdieColor.layer.cornerRadius = birdieColor.bounds.size.width/2;
-        [whiteHeaderView addSubview:birdieColor];
-        
-        UILabel *birdieValue = [[UILabel alloc]initWithFrame:CGRectMake(135 *ProportionAdapter, 38*ProportionAdapter, 25*ProportionAdapter, 14*ProportionAdapter)];
-        birdieValue.text = @"Par";
-        birdieValue.textColor = [UIColor colorWithHexString:B31_Color];
-        birdieValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        [whiteHeaderView addSubview:birdieValue];
-        
-        UILabel *twoline = [[UILabel alloc]initWithFrame:CGRectMake(160 *ProportionAdapter, 38 *ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
-        twoline.text = @"+";
-        twoline.font = [UIFont systemFontOfSize:13*ProportionAdapter];
-        twoline.textColor = [UIColor colorWithHexString:B31_Color];
-        [whiteHeaderView addSubview:twoline];
-        
-        self.scoreTableView.tableHeaderView = whiteHeaderView;
+        [self createView];
     }
     return self;
 }
+#pragma mark - CreateView
+-(void)createView{
+    _colorArray = @[@"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8", @"#FFFFFF", @"#f4f6f8"];
+    //创建数据列表
+    self.scoreTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, (200 +20 +20 +60)*ProportionAdapter) style:UITableViewStylePlain];
+    self.scoreTableView.backgroundColor = [UIColor whiteColor];
+    self.scoreTableView.scrollEnabled = NO;
+    self.scoreTableView.delegate = self;
+    self.scoreTableView.dataSource = self;
+    
+    [self.scoreTableView registerClass:[JGHNewPoorBarHoleCell class] forCellReuseIdentifier:JGHNewPoorBarHoleCellIdentifier];
+    
+    [self.scoreTableView registerClass:[JGHNewScoresHoleCell class] forCellReuseIdentifier:JGHNewScoresHoleCellIdentifier];
+
+    self.scoreTableView.separatorStyle = UITableViewCellSelectionStyleNone;
+    [self addSubview:self.scoreTableView];
+
+    //白色头部
+    UIView *whiteHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 80 * ProportionAdapter)];
+    whiteHeaderView.backgroundColor = [UIColor whiteColor];
+    
+    //关闭按钮
+    UIButton *closeBtn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth -50*ProportionAdapter, 8*ProportionAdapter, 32*ProportionAdapter, 32*ProportionAdapter)];
+    [closeBtn setImage:[UIImage imageNamed:@"date_close"] forState:UIControlStateNormal];
+    [closeBtn addTarget:self action:@selector(closeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [whiteHeaderView addSubview:closeBtn];
+    
+    /*
+    NSArray *titleArray = @[@"Eagle",@"Birdie",@"Par",@"Bogey"];
+    NSArray *colorArray = @[RGB(255,188,72),RGB(255,92,27),RGB(90,88,86),RGB(80,163,255)];
+    //距离左边的距离
+    CGFloat off_x = kWvertical(12);
+    for (int i = 0; i < titleArray.count; i++) {
+        UIView *colorView = [Factory createViewWithBackgroundColor:colorArray[i] frame:CGRectMake(off_x, kHvertical(54), kHvertical(13), kHvertical(13))];
+        colorView.layer.masksToBounds = true;
+        colorView.layer.cornerRadius = kHvertical(6.5);
+        [whiteHeaderView addSubview:colorView];
+        
+        UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(colorView.x_width + kWvertical(5), kHvertical(40), kWvertical(40), kHvertical(41)) textColor:RGB(49,49,49) fontSize:kHorizontal(14) Title:titleArray[i]];
+        [descLabel sizeToFitSelf];
+        off_x = descLabel.x_width + kWvertical(15);
+        [whiteHeaderView addSubview:descLabel];
+    }
+    */
+    
+    
+    //Par -
+    UILabel *eagleColor = [[UILabel alloc]initWithFrame:CGRectMake(10 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
+    eagleColor.backgroundColor = [UIColor colorWithHexString:@"#54A5FC"];
+    eagleColor.layer.masksToBounds = YES;
+    eagleColor.layer.cornerRadius = eagleColor.bounds.size.width/2;
+    [whiteHeaderView addSubview:eagleColor];
+    
+    UILabel *eagleValue = [[UILabel alloc]initWithFrame:CGRectMake(25 *ProportionAdapter, 38*ProportionAdapter, 25*ProportionAdapter, 14*ProportionAdapter)];
+    eagleValue.text = @"Par";
+    eagleValue.textColor = [UIColor colorWithHexString:B31_Color];
+    eagleValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+    [whiteHeaderView addSubview:eagleValue];
+    
+    UILabel *oneline = [[UILabel alloc]initWithFrame:CGRectMake(50 *ProportionAdapter, 38 *ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
+    oneline.text = @"-";
+    oneline.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+    oneline.textColor = [UIColor colorWithHexString:B31_Color];
+    [whiteHeaderView addSubview:oneline];
+    
+    //Par
+    UILabel *parColor = [[UILabel alloc]initWithFrame:CGRectMake(70 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
+    parColor.backgroundColor = [UIColor colorWithHexString:@"#5A5856"];
+    parColor.layer.masksToBounds = YES;
+    parColor.layer.cornerRadius = parColor.bounds.size.width/2;
+    [whiteHeaderView addSubview:parColor];
+    
+    UILabel *parValue = [[UILabel alloc]initWithFrame:CGRectMake(85 *ProportionAdapter, 38*ProportionAdapter, 25*ProportionAdapter, 14*ProportionAdapter)];
+    parValue.text = @"Par";
+    parValue.textColor = [UIColor colorWithHexString:B31_Color];
+    parValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+    [whiteHeaderView addSubview:parValue];
+    
+    //Par +
+    UILabel *birdieColor = [[UILabel alloc]initWithFrame:CGRectMake(120 *ProportionAdapter, 42*ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
+    birdieColor.backgroundColor = [UIColor colorWithHexString:@"#FC5D2B"];
+    birdieColor.layer.masksToBounds = YES;
+    birdieColor.layer.cornerRadius = birdieColor.bounds.size.width/2;
+    [whiteHeaderView addSubview:birdieColor];
+    
+    UILabel *birdieValue = [[UILabel alloc]initWithFrame:CGRectMake(135 *ProportionAdapter, 38*ProportionAdapter, 25*ProportionAdapter, 14*ProportionAdapter)];
+    birdieValue.text = @"Par";
+    birdieValue.textColor = [UIColor colorWithHexString:B31_Color];
+    birdieValue.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+    [whiteHeaderView addSubview:birdieValue];
+    
+    UILabel *twoline = [[UILabel alloc]initWithFrame:CGRectMake(160 *ProportionAdapter, 38 *ProportionAdapter, 10*ProportionAdapter, 10*ProportionAdapter)];
+    twoline.text = @"+";
+    twoline.font = [UIFont systemFontOfSize:13*ProportionAdapter];
+    twoline.textColor = [UIColor colorWithHexString:B31_Color];
+    [whiteHeaderView addSubview:twoline];
+    
+    self.scoreTableView.tableHeaderView = whiteHeaderView;
+}
+
 #pragma mark -- 关闭事件
 - (void)closeBtnClick:(UIButton *)btn{
     if ([self.delegate respondsToSelector:@selector(scoresHoleViewDelegateCloseBtnClick:)]) {

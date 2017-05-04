@@ -29,10 +29,10 @@
     NSString *md5Str;
     if (DEFAULF_USERID) {
         md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
-        self.urlString = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@", DEFAULF_USERID, _newsId, md5Str];
+        self.urlString = [NSString stringWithFormat:@"https://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@", DEFAULF_USERID, _newsId, md5Str];
     }else{
         md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=0&newsId=%@dagolfla.com", _newsId]];
-        self.urlString = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=0&newsId=%@&md5=%@", _newsId, md5Str];
+        self.urlString = [NSString stringWithFormat:@"https://mobile.dagolfla.com/news/getHtmlBody?userKey=0&newsId=%@&md5=%@", _newsId, md5Str];
     }
 //    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
     
@@ -112,10 +112,10 @@
     NSString*  shareUrl;
     if (DEFAULF_USERID) {
         md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
-        shareUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@&share=1", DEFAULF_USERID, _newsId, md5Str];
+        shareUrl = [NSString stringWithFormat:@"https://mobile.dagolfla.com/news/getHtmlBody?userKey=%@&newsId=%@&md5=%@&share=1", DEFAULF_USERID, _newsId, md5Str];
     }else{
         md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=0&newsId=%@dagolfla.com", _newsId]];
-        shareUrl = [NSString stringWithFormat:@"http://mobile.dagolfla.com/news/getHtmlBody?userKey=0&newsId=%@&md5=%@&share=1", _newsId, md5Str];
+        shareUrl = [NSString stringWithFormat:@"https://mobile.dagolfla.com/news/getHtmlBody?userKey=0&newsId=%@&md5=%@&share=1", _newsId, md5Str];
     }
 
 

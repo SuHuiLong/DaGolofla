@@ -43,20 +43,37 @@
 //配置数据
 -(void)configModel:(SearchWithMapModel *)model{
     _dataModel = model;
-    NSString *parkName = model.parkName;
-    NSString *orderPrice = model.orderPrice;
-    NSString *descripStr = [NSString stringWithFormat:@"%@ ¥%@",parkName,orderPrice];
-    _descripLabel.text = descripStr;
-    UIColor *changeColor = RGBA(61,161,255,1);
-    if (model.isLeague==1) {
-        changeColor = RGBA(236,45,51,1);
+    if (model.name) {
+        NSString *provinceName = model.name;
+        NSString *parkCount = [NSString stringWithFormat:@"%ld",model.count];
+        NSString *titleStr = [NSString stringWithFormat:@"%@ %@ 家",provinceName,parkCount];
+
+        
+        NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:titleStr];
+        
+        [AttributedStr addAttribute:NSForegroundColorAttributeName value:RedColor range:NSMakeRange(provinceName.length+1, parkCount.length)];
+        [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(160,160,160) range:NSMakeRange(AttributedStr.length-1, 1)];
+        [AttributedStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(10)] range:NSMakeRange(AttributedStr.length-1, 1)];
+        
+        _descripLabel.attributedText = AttributedStr;
+
+        
+    }else{
+        NSString *parkName = model.parkName;
+        NSString *orderPrice = model.orderPrice;
+        NSString *descripStr = [NSString stringWithFormat:@"%@ ¥%@",parkName,orderPrice];
+        _descripLabel.text = descripStr;
+        UIColor *changeColor = RGBA(61,161,255,1);
+        if (model.isLeague==1) {
+            changeColor = RGBA(236,45,51,1);
+        }
+        _descripLabel = [self AttributedStringLabel:_descripLabel rang:NSMakeRange(parkName.length+1, orderPrice.length+1) changeColor:changeColor];
     }
-    _descripLabel = [self AttributedStringLabel:_descripLabel rang:NSMakeRange(parkName.length+1, orderPrice.length+1) changeColor:changeColor];
+    
     [_descripLabel sizeToFitSelf];
     _descripLabel.x = kWvertical(25);
     _backgroundImageView.width = _descripLabel.width+kWvertical(50);
     _backgroundImageView.x =  (self.frame.size.width - _backgroundImageView.width)/2 ;
-
 }
 
 //富文本
@@ -66,11 +83,10 @@
         return testLabel;
     }
     NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:testLabel.text];
-    
+
     [AttributedStr addAttribute:NSForegroundColorAttributeName value:changeColor range:changeRang];
     [AttributedStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(11)] range:changeRang];
     [AttributedStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(10)] range:NSMakeRange(changeRang.location, 1)];
-    
     
     testLabel.attributedText = AttributedStr;
     return testLabel;

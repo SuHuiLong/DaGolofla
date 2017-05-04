@@ -197,7 +197,8 @@
             }
         }
     }else{
-        return nil;
+        UITableViewCell *cell = [[UITableViewCell alloc] init];
+        return cell;
     }
     
     

@@ -166,6 +166,7 @@
     _scoreView.blockSelectScore = ^(NSString *scorekey){
         JGHScoresViewController *scoresCtrl = [[JGHScoresViewController alloc]init];
         scoresCtrl.scorekey = scorekey;
+        scoresCtrl.isAlertView = true;
         [weakNewStartCtrl.navigationController pushViewController:scoresCtrl animated:YES];
     };
     

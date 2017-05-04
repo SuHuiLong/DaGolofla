@@ -70,6 +70,7 @@
 }
 //返回
 -(void)popback{
+    [self clearMapView];
     [self.navigationController popViewControllerAnimated:YES];
 }
 //添加标注并设置地图
@@ -337,6 +338,15 @@
     //显示alertController
     [self presentViewController:alertController animated:YES completion:nil];
 
+}
+
+//pop自后清空界面
+-(void)clearMapView{
+    _mapView = nil;
+    _mapView.delegate = nil;
+    _mapView.showsUserLocation = NO;
+    [_mapView   removeAnnotations:_mapView.annotations];
+    [_mapView   removeOverlays:_mapView.overlays];
 }
 
 

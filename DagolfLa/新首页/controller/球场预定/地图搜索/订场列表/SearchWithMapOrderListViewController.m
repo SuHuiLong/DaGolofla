@@ -32,8 +32,6 @@
     [self.navigationController.navigationBar setTintColor:WhiteColor];
 //    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
 //                                                         forBarMetrics:UIBarMetricsDefault];
-
-
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -11,7 +11,7 @@
 @interface VipCardModel : BaseModel
 //图片url
 @property(nonatomic,copy)NSString *imagePicUrl;
-//卡片状态
+//卡片状态 1:可用 0:不可用
 @property(nonatomic,assign)NSInteger cardState;
 //卡片状态描述
 @property(nonatomic,copy)NSString *cardStr;

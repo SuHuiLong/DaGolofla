@@ -102,7 +102,7 @@
     for (NSArray *modelArray in self.dataArray) {
         MakePhotoTextViewModel *model = modelArray[0];
         NSNumber *timeKey = model.timeKey;
-        NSDictionary *listDict =[NSDictionary dictionary];
+        NSDictionary *listDict = nil;
         if (timeKey) {
             listDict = [NSDictionary dictionaryWithObject:timeKey forKey:@"mediaKey"];
         }else{
@@ -114,6 +114,7 @@
                            @"userKey":DEFAULF_USERID,
                            @"title":_photoTitleLabelStr,
                            @"name":name,
+                           @"teamKey":_teamTimeKey,
                            @"list":listArray
                            };
     
@@ -475,7 +476,7 @@
                 if (model.timeKey) {
                     JGPhotoListModel *Model = [[JGPhotoListModel alloc] init];
                     Model.timeKey = model.timeKey;
-                    if (model.timeKey>0) {
+                    if (model.timeKey.integerValue>0) {
                         _headerViewTimekey = model.timeKey;
                         return [Helper setImageIconUrl:@"album/media" andTeamKey:[model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:NO];// 加载网络图片大图地址
                     }

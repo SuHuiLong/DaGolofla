@@ -109,12 +109,11 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     MSSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MSSCollectionViewCell" forIndexPath:indexPath];
-    if (cell)
-    {
-        JGPhotoListModel *model = self.dataArray[indexPath.item];
-        [cell configModel:model];
-        cell.imageView.tag = indexPath.item + 100;
-    }
+    JGPhotoListModel *model = self.dataArray[indexPath.item];
+    [cell configModel:model];
+    cell.imageView.tag = indexPath.item + 100;
+    
+
     return cell;
 }
 

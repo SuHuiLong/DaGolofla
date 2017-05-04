@@ -196,6 +196,7 @@
                 model.imagePicUrl = [listDict objectForKey:@"bigPicURL"];
                 model.cardState = 1;
                 model.cardId = [listDict objectForKey:@"timeKey"];
+                model.cardNumber = [NSString stringWithFormat:@"%@",[listDict objectForKey:@"cardNumber"]];
                 [self.dataArray addObject:model];
             }
             
@@ -205,6 +206,7 @@
                 model.cardState = 0;
                 model.cardStr = [listDict objectForKey:@"stateString"];
                 model.cardId = [listDict objectForKey:@"timeKey"];
+                model.cardNumber = [NSString stringWithFormat:@"%@",[listDict objectForKey:@"cardNumber"]];
                 [self.noCanUseArray addObject:model];
             }
         }
@@ -513,7 +515,7 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     //选中位置
     NSInteger index = indexPath.item;
-    VipCardModel *model = [[VipCardModel alloc] init];
+    VipCardModel *model = nil;
     //判定卡片是否有效
     if (indexPath.section==0) {
         model = _dataArray[index];

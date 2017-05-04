@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 //#define PORTOCOL_APP_ROOT_URL   @"http://192.168.1.104:8888/"
-#define PORTOCOL_APP_ROOT_URL   @"http://mobile.dagolfla.com/"
+#define PORTOCOL_APP_ROOT_URL   @"https://mobile.dagolfla.com/"
 
 @interface JsonHttp : NSObject
 

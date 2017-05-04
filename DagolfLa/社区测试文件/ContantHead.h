@@ -119,13 +119,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define Bar_Color @"#008649"
 #define Line_Color @"#d2d2d2"
 
-#define Par_jian @"#3586d8"
-#define Par_jia @"#e8625a"
-#define Par_b @"#b4b3b3"
-#define Par_Eagle @"#7fffff"
-#define Par_Birdie @"#7fbfff"
-#define Par_Par @"#ffd2a6"
-#define Par_Bogey @"#ffaaa5"
 
 #define Bar_Segment @"#008649"
 
