@@ -72,13 +72,11 @@
     UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(popBack)];
     self.navigationItem.leftBarButtonItem = leftBtn;
     self.title = @"订单详情";
-    UIButton*rightButton = [Factory createButtonWithFrame:CGRectMake(0,0,kWvertical(22),kHvertical(22)) image:[UIImage imageNamed:@"icn_serve_phone"] target:self selector:@selector(rightBtnClick) Title:nil];
-//    [[UIButton alloc]initWithFrame:CGRectMake(0,0,kWvertical(22),kHvertical(22))];
-//    [rightButton addTarget:self action:@selector(rightBtnClick)forControlEvents:UIControlEventTouchUpInside];
-//    [rightButton setBackgroundImage:[UIImage imageNamed:@"icn_serve_phone"] forState:UIControlStateNormal];
-    UIBarButtonItem*rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
-    [rightItem setTintColor:WhiteColor];
-    self.navigationItem.rightBarButtonItem= rightItem;
+
+    //电话图标
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"consult"] style:(UIBarButtonItemStylePlain) target:self action:@selector(rightBtnClick)];
+    rightBtn.tintColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = rightBtn;
 }
 
 /**

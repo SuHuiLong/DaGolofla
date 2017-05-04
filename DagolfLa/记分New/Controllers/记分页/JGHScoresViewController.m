@@ -58,13 +58,12 @@
     
     //NSInteger _refreshArea;
     
-    int _status;
+    //网络状态 false:默认有网 true:无网
+    BOOL _status;
     
 }
 
 @property (nonatomic, strong)NSMutableArray *userScoreArray;
-
-//@property (nonatomic, strong)UIButton *titleBtn;
 
 @property (nonatomic, weak)NSTimer *timer;//计时器
 
@@ -106,14 +105,11 @@
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
     
-    //坚挺网络通知
+    //监听网络通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(netWorkStatus:) name:@"NONetwork" object:nil];
+    //监听左右切换弹窗
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(createAlert) name:@"alertSegementAlertView" object:nil];
     [self createMainView];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (self.isAlertView) {
-            [[ShowHUD showHUD] showToastWithText:@"左右滑屏，可切换球洞" FromView:self.view];
-        }
-    });
 }
 #pragma mark - CreateView
 -(void)createMainView{
@@ -182,9 +178,7 @@
         [self loadLocalData];
     }else{
         //网络数据
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [self getScoreList];
-        });
+        [self getScoreList];
     }
     
     //把所有的scoreKey 列表存在DF里面，供请求队列获取本地数据库数据  userdf
@@ -208,6 +202,27 @@
     
     [userdf synchronize];
 }
+
+//提示左右切换弹窗
+-(void)createAlert{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (self.isAlertView) {
+            self.isAlertView = false;
+            NSDate *date = [NSDate date];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"YYYY:MM:dd"];
+            NSString *confromTimespStr = [dateFormatter stringFromDate:date];
+            NSString *lastDate = [UserDefaults objectForKey:@"lastAlertSwitchTime"];
+            if (![lastDate isEqualToString:confromTimespStr]) {
+                [UserDefaults setValue:confromTimespStr forKey:@"lastAlertSwitchTime"];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[ShowHUD showHUD] showToastWithText:@"左右滑屏，可切换球洞" FromView:self.view];
+                });
+            }
+        }
+    });
+}
+
 #pragma mark -- segmentAction 记分模式切换
 - (void)segmentAction:(UISegmentedControl *)segment{
     NSLog(@"%td", segment.selectedSegmentIndex);
@@ -231,7 +246,8 @@
     JGHScoresMainViewController *sub = (JGHScoresMainViewController *)_pageViewController.viewControllers[0];
     [sub switchScoreModeNote];
 }
-#pragma mark -- 返回首页
+#pragma mark --  Action
+//返回首页
 - (void)backHome{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
@@ -257,14 +273,20 @@
 }
 #pragma mark -- netWorkStatus
 - (void)netWorkStatus:(NSNotification *)not{
-    _status = [not.object intValue];
+    NSInteger intager = [not.object intValue];
     // 1-有网 0-无网络
+    if (intager == 1) {
+        _status = false;
+    }else{
+        _status = true;
+    }
+    
 }
 #pragma mark -- 计时器执行
 - (void)changeTimeAtTimeDoClick{
     [[JsonHttp jsonHttp]cancelRequest];
     
-    if (_status == 1) {
+    if (!_status) {
         if ([[JGHScoreDatabase shareScoreDatabase]getScoreSave:_scorekey]) {
             //保存洞号
             _isEdtor = 0;
@@ -328,7 +350,7 @@
     _scoreFinish = 1;
     [_item setTitle:@"完成"];
 }
-#pragma mark -- getScoreList 获取活动计分列表
+// 获取活动计分列表
 - (void)getScoreList{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -349,13 +371,13 @@
         }
     }];
 }
-#pragma mark -- 本地数据
+// 本地数据
 - (void)loadLocalData{
     _userScoreArray = [[JGHScoreDatabase shareScoreDatabase]getAllScoreKey:_scorekey];
     
     [self showViewWithScoreModel];
 }
-#pragma mark -- 处理下载的数据
+// 处理下载的数据
 - (void)loadScoreView:(id)data{
     if ([data objectForKey:@"ballAreas"]) {
         _areaArray = [data objectForKey:@"ballAreas"];
@@ -367,7 +389,6 @@
         [_macthDict setObject:[scoreDict objectForKey:@"ballName"] forKey:@"ballName"];
         [_macthDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"placeId"];
         [_macthDict setObject:[scoreDict objectForKey:@"createtime"] forKey:@"playTimes"];
-        [_ballDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
         _switchMode = [[scoreDict objectForKey:@"scoreModel"] integerValue];
     }
     
@@ -416,6 +437,10 @@
 - (void)showViewWithScoreModel{
     JGHScoreListModel *model = [[JGHScoreListModel alloc]init];
     model = _userScoreArray[0];
+    //获取球场数据
+    NSDictionary *scoreDict = [NSDictionary dictionaryWithDictionary:model.score];
+    [_ballDict setObject:[scoreDict objectForKey:@"ballKey"] forKey:@"ballKey"];
+
     
     if (model.region1 != nil) {
         [_currentAreaArray addObject:model.region1];
@@ -477,19 +502,15 @@
             }
         }
     }
-    if (!_isAlertView) {
-        [self titleBtnClick];
-    }
+    [self titleBtnClick];
 }
 
 #pragma mark -- 记分详情
 - (void)titleBtnClick{
     _item.enabled = YES;
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    UIButton *holeDireBtn = [window viewWithTag:15000];
-    holeDireBtn.selected = true;
-
+    //箭头按钮是否选中状态；0默认 1选中
+    NSString *isSelect = @"0";
     if (_selectHole == 0) {
         _selectHole = 1;
         if (_scoreFinish == 1) {
@@ -500,28 +521,28 @@
         
         NSUserDefaults *userdf = [NSUserDefaults standardUserDefaults];
         _switchMode = [[userdf objectForKey:[NSString stringWithFormat:@"switchMode%@", _scorekey]] integerValue];
+        
+        //遮罩
+        _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, screenHeight+64)];
+        _tranView.backgroundColor = [UIColor blackColor];
+        _tranView.alpha = 0.3;
+        
+        UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
+        [tag addTarget:self action:@selector(titleBtnClick)];
+        [_tranView addGestureRecognizer:tag];
+        [[UIApplication sharedApplication].keyWindow addSubview:_tranView];
+
         if (_switchMode == 0) {
             
             _scoresView = [[JGHScoresHoleView alloc]init];
             _scoresView.delegate = self;
-            _scoresView.frame = CGRectMake(0, screenHeight +(screenHeight-(35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            _scoresView.frame = CGRectMake(0, screenHeight, screenWidth, (35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
             
             _scoresView.dataArray = self.userScoreArray;
             _scoresView.scorekey = _scorekey;
             _scoresView.curPage = _selectPage;
-            
-            [self.view addSubview:_scoresView];
-            
+            [[UIApplication sharedApplication].keyWindow addSubview:_scoresView];
             [_scoresView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
-            //遮罩
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, screenHeight-(35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
-            _tranView.backgroundColor = [UIColor blackColor];
-            _tranView.alpha = 0.3;
-            
-            UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
-            [tag addTarget:self action:@selector(titleBtnClick)];
-            [_tranView addGestureRecognizer:tag];
-            [[UIApplication sharedApplication].keyWindow addSubview:_tranView];
             
             [self showViewAnimate:_scoresView];
         }else{
@@ -533,26 +554,14 @@
             _poorScoreView.scorekey = _scorekey;
             _poorScoreView.curPage = _selectPage;
             // _poorScoreView.curPage = [[userdf objectForKey:[NSString stringWithFormat:@"%@", _scorekey]] integerValue];
-            [self.view addSubview:_poorScoreView];
+            [[UIApplication sharedApplication].keyWindow addSubview:_poorScoreView];
             
             [_poorScoreView reloadScoreList:_currentAreaArray andAreaArray:_areaArray];//更新UI位置
-            
             [self.view setUserInteractionEnabled:NO];
-
-            
-            _tranView = [[UIView alloc]initWithFrame:CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter)];
-            _tranView.backgroundColor = [UIColor blackColor];
-            _tranView.alpha = 0.3;
-            
-            UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]init];
-            [tag addTarget:self action:@selector(titleBtnClick)];
-            [_tranView addGestureRecognizer:tag];
-            [[UIApplication sharedApplication].keyWindow addSubview:_tranView];
-            
             [self showViewAnimate:_poorScoreView];
         }
     }else{
-        holeDireBtn.selected = false;
+        isSelect = @"1";
         _selectHole = 0;
         if (_scoreFinish == 1) {
             [_item setTitle:@"完成"];
@@ -563,15 +572,22 @@
         [self removeALlView];
     }
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"scoresArrowChange" object:isSelect];
+    
     [userdef synchronize];
 }
+//显示当前详情界面
 - (void)showViewAnimate:(UIView *)animateView{
+    _tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
+    _tranView.alpha = 0;
     [UIView animateWithDuration:0.3f animations:^{
-        _tranView.frame = CGRectMake(0, 0, screenWidth, screenHeight-(35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
-        animateView.frame = CGRectMake(0, screenHeight -((35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter +64), screenWidth, (35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        _tranView.alpha = 0.3;
+        animateView.frame = CGRectMake(0, screenHeight -((35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*3 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        
         [self.view setUserInteractionEnabled:YES];
     }];
 }
+//移除当前详情界面
 - (void)removeALlView{
     [self.view setUserInteractionEnabled:NO];
     [_scoresView setUserInteractionEnabled:NO];
@@ -579,27 +595,27 @@
         if (_scoresView != nil) {
             [[[UIApplication sharedApplication].keyWindow viewWithTag:34567]removeFromSuperview];
             [[[UIApplication sharedApplication].keyWindow viewWithTag:45678]removeFromSuperview];
-            //[[UIApplication sharedApplication].keyWindow.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-            _scoresView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
-        }
-        
+            _scoresView.hidden = true;
+            _scoresView = nil;
+    }
         if (_poorScoreView != nil) {
-            //[[UIApplication sharedApplication].keyWindow.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
             [[[UIApplication sharedApplication].keyWindow viewWithTag:34567]removeFromSuperview];
             [[[UIApplication sharedApplication].keyWindow viewWithTag:45678]removeFromSuperview];
-            _poorScoreView.frame = CGRectMake(0, screenHeight +((screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter), screenWidth, (35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+            _poorScoreView.hidden = true;
+            _poorScoreView = nil;
         }
         
-        _tranView.frame = CGRectMake(0, screenHeight, screenWidth, (screenHeight -52*ProportionAdapter)-(35*2 +80 +60*2 + self.userScoreArray.count * 30*2)*ProportionAdapter);
+        _tranView.hidden = true;
+        _tranView = nil;
+        [_tranView removeFromSuperview];
+        [self.view.window makeKeyAndVisible];
         [self.view setUserInteractionEnabled:YES];
-        [self performSelector:@selector(removeAnimateView) withObject:nil afterDelay:0.4f];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"alertSegementAlertView" object:nil];
     }];
 }
 #pragma mark -- 关闭成绩列表视图
 - (void)scoresHoleViewDelegateCloseBtnClick:(UIButton *)btn{
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    UIButton *holeDireBtn = [window viewWithTag:15000];
-    holeDireBtn.selected = false;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"scoresArrowChange" object:@"1"];
     _selectHole = 0;
     if (_scoreFinish == 1) {
         [_item setTitle:@"完成"];
@@ -608,46 +624,19 @@
     }
     [self removeALlView];
 }
-- (void)removeAnimateView{
-    if (_scoresView != nil) {
-        //[_scoresView.areaListView removeFromSuperview];
-        [_scoresView removeFromSuperview];
-        _scoresView = nil;
-    }
-    
-    if (_poorScoreView != nil) {
-        
-        [_poorScoreView removeFromSuperview];
-        _poorScoreView = nil;
-    }
-    
-    if (_tranView != nil) {
-        [_tranView removeFromSuperview];
-        _tranView = nil;
-    }
-}
-#pragma mark -- 点击杆数跳转到指定的积分页面
+
+//点击杆数跳转到指定的积分页面
 - (void)noticePushScoresCtrl:(NSNotification *)not{
 
-    //if (_refreshArea == 0) {
-        _selectHole = 0;
-        
-        [self removeALlView];
-    //}else{
-      //  _selectHole = 1;
-    //}
+    _selectHole = 0;
+    
+    [self removeALlView];
     
     if (_scoreFinish == 1) {
         [_item setTitle:@"完成"];
     }else{
         [_item setTitle:@"保存"];
     }
-    
-    //_refreshArea = 0;
-    
-    //[self.titleBtn setTitle:[NSString stringWithFormat:@"%td Hole PAR %td", [self returnPoleNameList:[[not.userInfo objectForKey:@"index"] integerValue]], [self returnStandardlever:[[not.userInfo objectForKey:@"index"] integerValue]]] forState:UIControlStateNormal];
-    //当前页
-    //NSInteger currentingPage = _currentPage;
     
     _currentPage = [[not.userInfo objectForKey:@"index"] integerValue];
     JGHScoresMainViewController *vc2;
@@ -867,6 +856,9 @@
 #pragma mark -- 保存／结束记分
 - (void)saveScoresClick{
     _item.enabled = NO;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TIMESlEEP * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        _item.enabled = YES;
+    });
     
     //保存
     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
@@ -881,10 +873,8 @@
     dispatch_queue_t queueSave = dispatch_queue_create("saveScore", DISPATCH_QUEUE_SERIAL);
     dispatch_async(queueSave, ^{
         [[JGHScoreAF shareScoreAF]httpScoreKey:_scorekey failedBlock:^(id errType) {
-            _item.enabled = YES;
         } completionBlock:^(id data) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                _item.enabled = YES;
                 
                 if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                     NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
@@ -913,6 +903,9 @@
 #pragma mark -- 结束记分／完成
 - (void)finishScore{
     _item.enabled = NO;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TIMESlEEP * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        _item.enabled = YES;
+    });
     [_timer invalidate];
     _timer = nil;
     self.view.userInteractionEnabled = NO;
@@ -923,12 +916,10 @@
         [[JGHScoreAF shareScoreAF]httpFinishScoreKey:_scorekey failedBlock:^(id errType) {
             [[ShowHUD showHUD]hideAnimationFromView:self.view];
             self.view.userInteractionEnabled = YES;
-            _item.enabled = YES;
         } completionBlock:^(id data) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.view.userInteractionEnabled = YES;
-                _item.enabled = YES;
                 [[ShowHUD showHUD]hideAnimationFromView:self.view];
                 if ([[data objectForKey:@"packSuccess"]integerValue] == 1) {
                     if ([data objectForKey:@"money"]) {
@@ -995,8 +986,6 @@
 - (void)pushJGHEndScoresViewController{
     
     if (_backHistory == 1) {// 长按返回历史记分卡
-//        JGDHistoryScoreViewController *historyCtrl = [[JGDHistoryScoreViewController alloc]init];
-//        [self.navigationController pushViewController:historyCtrl animated:YES];
         for (UIViewController *controller in self.navigationController.viewControllers) {
             if ([controller isKindOfClass:[JGHHistoryAndResultsViewController class]]) {
                 [self.navigationController popToViewController:controller animated:YES];
@@ -1107,14 +1096,31 @@
     NSLog(@"%@", btnString);
     //getOperationScoreList
     
-    [[ShowHUD showHUD]showAnimationWithText:@"切换中..." FromView:self.view];
+    //切换提示框
+    MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithWindow:[UIApplication sharedApplication].keyWindow];
+    HUD.mode = MBProgressHUDModeIndeterminate;
+    HUD.color = BlackColor;
+    HUD.activityIndicatorColor = WhiteColor;
+    HUD.label.text = @"切换中...";
+    HUD.label.textColor = WhiteColor;
+    [HUD showAnimated:true];
+    [self.view.window addSubview:HUD];
+
+    
     [_ballDict setObject:btnString forKey:@"area"];// 区域名
     [_ballDict setObject:[JGReturnMD5Str getHoleNameAndPolesBallKey:[[_ballDict objectForKey:@"ballKey"] integerValue] andArea:btnString] forKey:@"md5"];
+    
+    
     [[JsonHttp jsonHttp]httpRequest:@"ball/getHoleNameAndPoles" JsonKey:nil withData:_ballDict requestMethod:@"GET" failedBlock:^(id errType) {
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [HUD hideAnimated:true];
+        });
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [HUD hideAnimated:true];
+        });
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             NSArray *holeNamesArray = [NSArray array];//球洞名称
             holeNamesArray = [data objectForKey:@"holeNames"];

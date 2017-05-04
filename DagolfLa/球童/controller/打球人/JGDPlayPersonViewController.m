@@ -16,7 +16,6 @@
 #import "JGDNotActScoreViewController.h" // 非活动记分
 
 #import "JGDPlayerQRCodeViewController.h" // 我的二维码
-#import "JGDResultViewController.h" // 扫描结果
 
 #import "JGDPlayerModel.h"
 
@@ -324,8 +323,6 @@
         self.throw = throw;
     };
     [self.navigationController pushViewController:scanVC animated:YES];
-//    JGDResultViewController *resultVC = [[JGDResultViewController alloc] init];
-//    [self.navigationController pushViewController:resultVC animated:YES];
 }
 
 #pragma mark ---查看更多

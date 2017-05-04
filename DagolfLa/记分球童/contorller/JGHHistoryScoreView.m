@@ -11,11 +11,7 @@
 #import "JGDHistoryScore2TableViewCell.h"
 
 @interface JGHHistoryScoreView ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,UISearchResultsUpdating>
-
-
-
 @property (nonatomic, assign) NSInteger page;
-@property (nonatomic, strong) NSMutableArray *dataArray;
 
 @end
 
@@ -25,27 +21,35 @@
    self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithHexString:BG_color];
-        
+        [self createHeaderView];
         [self createTableView];
-        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideHistoryDataSearch) name:@"hideHistoryDataSearch" object:nil];
+
     }
     return self;
 }
-
-- (void)createTableView{
-    //x
+#pragma mark - CreateView
+//搜索界面
+-(void)createHeaderView{
+    UIView *headerView = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:BG_color] frame:CGRectMake(0, 0, screenWidth, 44)];
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.barTintColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0 * ProportionAdapter);
+    self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0 );
     self.searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
     self.searchController.searchBar.placeholder = @"搜索你需要的内容";
     self.searchController.searchBar.delegate = self;
+    [headerView addSubview:self.searchController.searchBar];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight -64) style:(UITableViewStylePlain)];
+    [self addSubview:headerView];
+}
+//tableview
+- (void)createTableView{
+    //x
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, screenWidth, screenHeight -64 - 44) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -53,25 +57,15 @@
     
     self.tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     self.tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
-//    [self downLoadData:0];
-//    [self.tableView.mj_header beginRefreshing];
     
-    self.tableView.tableHeaderView = self.searchController.searchBar;
     [self addSubview:self.tableView];
     
     [self.tableView registerClass:[JGDHistoryScoreTableViewCell class] forCellReuseIdentifier:@"cell"];
     [self.tableView registerClass:[JGDHistoryScore2TableViewCell class] forCellReuseIdentifier:@"cell2"];
-    
+    [self downLoadData:0];
 }
 
 
-//#pragma mark ----- 取回记分／成绩总览
-//
-//- (void)takeMyCode{
-//    
-//    JGHRetrieveScoreViewController *retriveveVC = [[JGHRetrieveScoreViewController alloc] init];
-//    [self.navigationController pushViewController:retriveveVC animated:YES];
-//}
 
 
 
@@ -128,14 +122,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-//    JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
-    
-//    if ([model.srcType integerValue] == 0) {
-//        return 65 * ProportionAdapter;
-//    }else{
         return 85 * ProportionAdapter;
-//    }
 }
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
@@ -156,6 +143,14 @@
     [self downLoadData:_page];
 }
 
+
+#pragma mark - initData
+//刷新
+-(void)refreshData{
+    [self downLoadData:0];
+}
+
+//请求数据
 - (void)downLoadData:(NSInteger)page {
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -303,7 +298,6 @@
         
         [alert addAction:action1];
         [alert addAction:action2];
-//        [self presentViewController:alert animated:YES completion:nil];
         _blockSelectHistoryScoreAlert(alert);
     }else{
         
@@ -323,12 +317,34 @@
             }
         }];
     }
-    
 }
 
-//- (void)backBtn{
-//    [self.navigationController popToRootViewControllerAnimated:YES];
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0;
+}
+
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+//    UIView *headerView = [Factory createViewWithBackgroundColor:[UIColor colorWithHexString:BG_color] frame:CGRectMake(0, 0, screenWidth, 44)];
+//    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+//    self.searchController.searchResultsUpdater = self;
+//    self.searchController.searchBar.barTintColor = [UIColor colorWithHexString:@"#EEEEEE"];
+//    self.searchController.dimsBackgroundDuringPresentation = NO;
+//    self.searchController.hidesNavigationBarDuringPresentation = NO;
+//    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+//    self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0 );
+//    self.searchController.searchBar.tintColor = [UIColor colorWithRed:0.36f green:0.66f blue:0.31f alpha:1.00f];
+//    self.searchController.searchBar.placeholder = @"搜索你需要的内容";
+//    self.searchController.searchBar.delegate = self;
+//    [headerView addSubview:self.searchController.searchBar];
+    
+//    return headerView;
 //}
+
+//隐藏searchBar
+-(void)hideHistoryDataSearch{
+    [self.searchController dismissViewControllerAnimated:YES completion:nil];
+    
+}
 
 - (NSMutableArray *)dataArray{
     if (!_dataArray) {

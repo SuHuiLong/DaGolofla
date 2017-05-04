@@ -155,6 +155,7 @@
 #pragma mark - initData
 -(void)initData{
     [self initCityData];
+    [self initProvinceData];
 }
 //获取省份的数据
 -(void)initProvinceData{
@@ -180,7 +181,7 @@
                 model.count = [[listDict objectForKey:@"count"] integerValue];
                 [self.provinceDataArray addObject:model];
             }
-            [self addPointAnnotation];
+//            [self addPointAnnotation];
         }
     }];
 }

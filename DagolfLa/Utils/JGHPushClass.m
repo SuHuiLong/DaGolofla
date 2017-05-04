@@ -29,6 +29,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "JGHTeamShadowViewController.h"
 
+#import "VipCardGoodsListViewController.h"
 static JGHPushClass *pushClass = nil;
 
 @implementation JGHPushClass
@@ -245,42 +246,6 @@ static JGHPushClass *pushClass = nil;
             }
         }
         
-        
-        
-//        NSUserDefaults *user = [NSUserDefaults standardUserDefaults];       
-        
-//        if ([user objectForKey:@"cacheCreatTeamDic"]) {
-//            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
-//            
-//            UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//                [user setObject:0 forKey:@"cacheCreatTeamDic"];
-//                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-//                if (pushVC) {
-//                    pushVC(creatteamVc);
-//                }
-//            }];
-//            UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//                JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-//                creatteamVc.detailDic = [[user objectForKey:@"cacheCreatTeamDic"] mutableCopy];
-//                creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
-//                if (pushVC) {
-//                    pushVC(creatteamVc);
-//                }
-//            }];
-//            
-//            [alert addAction:action1];
-//            [alert addAction:action2];
-//            if (pushVC) {
-//                pushVC(alert);
-//            }
-//            
-//        }else{
-//            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-//            if (pushVC) {
-//                pushVC(creatteamVc);
-//            }
-//        }
-        
     }
     
     if ([urlString containsString:@"shakeSound"]) {
@@ -317,6 +282,14 @@ static JGHPushClass *pushClass = nil;
             pushVC(moreCtrl);
         }
     }
+    //联盟商城
+    if ([urlString containsString:@"weblink/leagueShop"]) {
+        VipCardGoodsListViewController *vc = [[VipCardGoodsListViewController alloc]init];
+        if (pushVC) {
+            pushVC(vc);
+        }
+    }
+
 }
 
 

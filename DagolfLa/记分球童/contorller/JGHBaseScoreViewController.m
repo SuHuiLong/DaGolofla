@@ -43,6 +43,9 @@
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@")-2"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     item.tintColor = [UIColor colorWithHexString:Bar_Segment];
     self.navigationItem.leftBarButtonItem = item;
+    
+    
+
 }
 
 - (void)viewDidLoad {

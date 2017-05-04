@@ -66,6 +66,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication]setStatusBarHidden:false];
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationController.navigationBarHidden = YES;
     

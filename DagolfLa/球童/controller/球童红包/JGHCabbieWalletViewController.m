@@ -33,10 +33,6 @@
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
     
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
-//    item.tintColor=[UIColor whiteColor];
-//    self.navigationItem.leftBarButtonItem = item;
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -52,7 +48,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     _barView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, 64)];
-    _barView.backgroundColor = [UIColor colorWithHexString:@"#3AAF55"];
+    _barView.backgroundColor = [UIColor colorWithHexString:Bar_Color];
     UIButton *barBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 44, 44)];
     [barBtn setImage:[UIImage imageNamed:@"backL"] forState:UIControlStateNormal];
     [barBtn addTarget:self action:@selector(BackBtnClick:) forControlEvents:UIControlEventTouchUpInside];
