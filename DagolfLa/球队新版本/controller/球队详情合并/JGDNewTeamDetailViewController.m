@@ -825,6 +825,8 @@ static CGFloat ImageHeight  = 210.0;
                 case 0:
                 {
                     //获取球队活动列表
+                    [MobClick event:@"team_main_activity_click"];
+                    
                     JGTeamActivityViewController *activiyVC = [[JGTeamActivityViewController alloc] init];
                     activiyVC.power = self.power;
                     activiyVC.state = self.state;
