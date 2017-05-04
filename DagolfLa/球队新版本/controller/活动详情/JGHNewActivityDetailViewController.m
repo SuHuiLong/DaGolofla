@@ -565,7 +565,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [MobClick event:@"team_activity_award_prize_click"];
 
-    if (_isTeamMember == 1 && _isApply == 0) {
+    if (_isTeamMember == 1 && [_isApply integerValue] == 0) {
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
@@ -585,7 +585,7 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 查看成绩
 - (void)getTeamActivityResults:(UIButton *)btn{
-    if (_isTeamMember == 1 && _isApply == 0) {
+    if (_isTeamMember == 1 && [_isApply integerValue] == 0) {
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
@@ -618,7 +618,7 @@ static CGFloat ImageHeight  = 210.0;
     [MobClick event:@"team_activity_members_click"];
 
     
-    if (_isTeamMember == 1) {
+    if (_isTeamMember == 1 && [_isApply integerValue] == 0) {
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
@@ -666,6 +666,7 @@ static CGFloat ImageHeight  = 210.0;
     [self.navigationController  pushViewController:nonMangerVC animated:YES];
 }
 - (void)newdidselectActivityClick:(UIButton *)btn{
+    
     if (btn.tag == 103) {
         //        [self pushGroupCtrl:btn];
         [self getTeamActivitySignUpList:btn];
@@ -673,7 +674,7 @@ static CGFloat ImageHeight  = 210.0;
     
     if (btn.tag == 104) {
         [MobClick event:@"team_activity_album_click"];
-        if (_isTeamMember == 1) {
+        if (_isTeamMember == 1 && [_isApply integerValue] == 0) {
             [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
             return;
         }
@@ -704,7 +705,7 @@ static CGFloat ImageHeight  = 210.0;
     
     [MobClick event:@"team_activity_withdraw_click"];
 
-    if (_isTeamMember == 1 && _isApply == 0) {
+    if (_isTeamMember == 1 && [_isApply integerValue] == 0) {
         [[ShowHUD showHUD]showToastWithText:@"您不是该球队成员，无法查看。" FromView:self.view];
         return;
     }
