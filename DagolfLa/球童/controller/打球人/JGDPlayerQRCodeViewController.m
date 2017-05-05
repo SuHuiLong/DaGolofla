@@ -188,17 +188,6 @@
                                     }else{//客户扫码
                                         _blockCaddieAcitivtyScore([dictData objectForKey:@"qcodeUserKey"], [dictData objectForKey:@"qcodeUserName"], [[dictData objectForKey:@"sex"] integerValue]);
                                     }
-                                    
-//                                    JGLCaddieChooseStyleViewController* choVc = [[JGLCaddieChooseStyleViewController alloc]init];
-//                                    if ([[dictData objectForKey:@"isQCodeCaddie"] integerValue] == 1) {//球童扫码
-//                                        choVc.userKeyPlayer = [dictData objectForKey:@"scanUserKey"];
-//                                        choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"scanUserName"]];//
-//                                    }
-//                                    else{//客户扫码
-//                                        choVc.userKeyPlayer = [dictData objectForKey:@"qcodeUserKey"];
-//                                        choVc.userNamePlayer = [NSString stringWithFormat:@"%@",[dictData objectForKey:@"qcodeUserName"]];
-//                                    }
-//                                    [self.navigationController pushViewController:choVc animated:YES];
                                 }
                                 else{
                                     //普通
@@ -333,10 +322,8 @@
     imgvIcon.layer.cornerRadius = 6*screenWidth/375;
     imgvIcon.layer.masksToBounds = YES;
     [imgvIcon sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[DEFAULF_USERID integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
+
     
-    /**
-     
-     */
     UIImageView* imgvSex = [[UIImageView alloc]initWithFrame:CGRectMake(80*screenWidth/375, 54*screenWidth/375, 14*screenWidth/375, 17*screenWidth/375)];
     [viewBack addSubview:imgvSex];
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"sex"] integerValue] == 0) {

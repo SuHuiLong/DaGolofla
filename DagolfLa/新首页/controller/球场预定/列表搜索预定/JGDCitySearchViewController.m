@@ -62,9 +62,6 @@
         if ([dic objectForKey:@"hotList"]) {
             self.hotCityArray = [dic objectForKey:@"hotList"];
         }
-        
-        
-        
         if ([dic objectForKey:@"list"]) {
             
             self.cityDic = [dic objectForKey:@"list"];
@@ -75,7 +72,6 @@
                     [arr addObject:[dict objectForKey:@"cName"]];
                 }
             }
-            
             self.keyArray = [ChineseString IndexArray:arr];
             self.cityArray = [ChineseString LetterSortArray:arr];
         }
@@ -127,34 +123,6 @@
         }
         [self searchVCSet];
 
-//        [[JsonHttp jsonHttp]httpRequest:@"http://res.dagolfla.com/download/json/ballCity.json" failedBlock:^(id errType) {
-//            NSLog(@"%@", errType);
-//        } completionBlock:^(id data) {
-//            NSLog(@"%@", data);
-//            if (data) {
-//                if ([data objectForKey:@"hotList"]) {
-//                    self.hotCityArray = [data objectForKey:@"hotList"];
-//                }
-//                //写入缓存数据
-//                [data writeToFile:filePath atomically:YES];
-//                
-//                if ([data objectForKey:@"list"]) {
-//                    
-//                    self.cityDic = [data objectForKey:@"list"];
-//                    
-//                    NSMutableArray *arr = [NSMutableArray array];
-//                    for (NSDictionary *dic in [data objectForKey:@"list"]) {
-//                        if ([dic objectForKey:@"cName"]) {
-//                            [arr addObject:[dic objectForKey:@"cName"]];
-//                        }
-//                    }
-//                    self.keyArray = [ChineseString IndexArray:arr];
-//                    self.cityArray = [ChineseString LetterSortArray:arr];
-//                    
-//                    [self.searchTable reloadData];
-//                }
-//            }
-//        }];
     }
     
     
@@ -214,9 +182,6 @@
     cityIcon.image = [UIImage imageNamed:@"address"];
     [tableheaderView addSubview:cityIcon];
 
-    
-//    self.cityLB = [self lablerect:CGRectMake(30 * ProportionAdapter,  45 * ProportionAdapter, 100, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(15 * ProportionAdapter) text:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] textAlignment:(NSTextAlignmentLeft)];
-//    [tableheaderView addSubview:self.cityLB];
     
     self.cityBtn = [[UIButton alloc] initWithFrame:CGRectMake(30 * ProportionAdapter,  45 * ProportionAdapter, 200, 30 * ProportionAdapter)];
     [self.cityBtn setTitle:[[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME] forState:(UIControlStateNormal)];
@@ -504,8 +469,6 @@
              if ([city containsString:@"市"] || [city containsString:@"省"]) {
                  city = [city substringToIndex:[city length] - 1];
              }
-
-//             self.cityLB.text = city;
              [self.cityBtn setTitle:city forState:(UIControlStateNormal)];
              [user setObject:city forKey:CITYNAME];
              [user synchronize];

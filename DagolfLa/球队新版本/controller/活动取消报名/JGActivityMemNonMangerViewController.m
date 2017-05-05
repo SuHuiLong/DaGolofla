@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:(UITableViewStylePlain)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
@@ -51,7 +51,7 @@
     NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@dagolfla.com",self.teamKey, self.activityKey, DEFAULF_USERID]];
     
     WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?teamKey=%td&activityKey=%@&userKey=%@&md5=%@", self.teamKey, self.activityKey, DEFAULF_USERID, str];
-    WKCtrl.teamName = @"报名人列表";
+    WKCtrl.teamName = [NSString stringWithFormat:@"活动总人数(%td人)", self.sumCount];
     WKCtrl.isShareBtn = 1;
     WKCtrl.activeTimeKey = [self.activityKey integerValue];
     WKCtrl.activeName = _activityName;
@@ -123,14 +123,6 @@
     }else{
         cell.phoneLB.text = @"";
     }
-    
-//    cell.signLB.textColor = [UIColor colorWithHexString:@"#7fc1ff"];
-//    if ([[self.dataArray[indexPath.row] objectForKey:@"signUpInfoKey"] integerValue] == -1) {
-//        cell.signLB.text = @"意向成员";
-//    }else{
-//        cell.signLB.text = @"线上报名";
-//    }
-    
     [cell.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[[self.dataArray[indexPath.row] objectForKey:@"userKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

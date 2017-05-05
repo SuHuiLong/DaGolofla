@@ -59,7 +59,6 @@
         self.activityListTableView.tableHeaderView = headerView;
         [self.whiteBG addSubview:self.activityListTableView];
         
-//        [self loadActivityListData];
     }
     return self;
 }

@@ -67,13 +67,13 @@
     [self getBallCode];
     [self getUserInfo];
 }
-
+//获取打球人信息
 -(void)getUserInfo
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
     [dict setObject:_model.timeKey forKey:@"activityKey"];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    //    [dict setObject:_model.teamKey forKey:@"teamKey"];
+
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivity" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -279,7 +279,6 @@
         //将数组显示至每行
         cell.textLabel.text = [allValues objectAtIndex:indexPath.row];
         cell.textLabel.font = [UIFont systemFontOfSize:15*ScreenWidth/375];
-//        cell.backgroundColor = [UIColor colorWithRed:0.93f green:0.93f blue:0.93f alpha:1.00f];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }

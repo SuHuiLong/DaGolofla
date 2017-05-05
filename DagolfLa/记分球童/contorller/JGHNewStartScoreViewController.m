@@ -269,26 +269,6 @@
         
         //创建球童记分页面
         
-//        if ([userdef objectForKey:@"isCaddie"]) {//本地是否记录
-//            if ([data objectForKey:@"has"]) {
-//                _caddie = [[data objectForKey:@"has"] integerValue];
-//                
-//                //                [userdef setObject:@1 forKey:@"isCaddie"];
-//            }else{
-//                _caddie = 0;
-//                //                [userdef setObject:@0 forKey:@"isCaddie"];
-//            }
-//            
-//            if (_caddie == 1) {
-//                //球童
-//                [self createCaddieView];
-//            }else{
-//                //打球人
-//                [self createPalyerView];
-//            }
-//        }else{
-//            
-//        }
     }];
 }
 #pragma mark -- 活动记分
@@ -339,18 +319,6 @@
     _optionView = [[JGHOptionCaddieOrPalyView alloc]initWithFrame:CGRectMake(screenWidth, 0, screenWidth, screenHeight -64)];
     __weak JGHNewStartScoreViewController *weakSelf = self;
     _optionView.blockSelectCaddie = ^(){
-//        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-//        [def setObject:@1 forKey:@"isCaddie"];
-//        [def synchronize];
-//        [weakSelf.optionView removeFromSuperview];
-//        weakSelf.optionView = nil;
-//        if (_caddie == 1) {
-//            //球童
-//            [weakSelf.optionView removeFromSuperview];
-//            weakSelf.optionView = nil;
-//            [weakSelf createCaddieView];
-//            [weakSelf createRightItem:1];
-//        }else{
             //球童认证
             JGHCabbieCertViewController* cadVc = [[JGHCabbieCertViewController alloc]init];
             cadVc.blockCabbie = ^(){
@@ -480,9 +448,6 @@
     [self.caddieWithCaddieScoreView removeFromSuperview];
     
     self.caddieScoreView = [[JGHCaddieScoreView alloc]initWithFrame:CGRectMake(screenWidth, 0, screenWidth, screenHeight -64)];
-//    self.caddieScoreView.userKeyPlayer = [NSNumber numberWithInteger:[userKey integerValue]];
-//    self.caddieScoreView.userNamePlayer = userName;
-    //self.caddieScoreView.frame = CGRectMake(screenWidth, 0, screenWidth, screenHeight -64);
     
     [self.caddieScoreView reloadCaddieDefaultUserKeyPlayer:userKey andUserNamePlayer:userName andSex:sex];
     
@@ -743,13 +708,6 @@
     
     __weak JGHNewStartScoreViewController *weakSelf = self;
     cabVC.blockCabbie = ^(){
-//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//        if ([userdef objectForKey:@"isCaddie"]) {
-//            //认证球童
-//            [self createCaddieView];
-//            [self createRightItem:1];
-//            [self.optionView removeFromSuperview];
-//        }
         NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
         if ([[userdef objectForKey:@"isCaddie"] integerValue] == 1) {
             //认证球童
@@ -783,40 +741,9 @@
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//            if ([data objectForKey:@"has"]) {
-//                _caddie = [[data objectForKey:@"has"] integerValue];
-//                
-//                NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//                [userdef setObject:@1 forKey:@"isCaddie"];
-//                [userdef synchronize];
-//            }else{
-//                _caddie = 0;
-//            }
             
             if ([[data objectForKey:@"scoreKey"] integerValue] != 0) {
-                
-                /*
-                [Helper alertViewWithTitle:@"您还有记分尚未完成，是否前往继续记分" withBlockCancle:^{
-                    if ([[data objectForKey:@"acBoolean"] integerValue] == 1){
-                        [self.caddieActivityScoreListView loadAnimate];
-                    }
-                    
-                } withBlockSure:^{
-                    JGHScoresViewController* scrVc = [[JGHScoresViewController alloc]init];
-                    scrVc.scorekey = [NSString stringWithFormat:@"%@",[data objectForKey:@"scoreKey"]];
-                    NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-                    
-                    if ([userdef objectForKey:[NSString stringWithFormat:@"%@", [data objectForKey:@"scoreKey"]]]) {
-                        scrVc.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", [data objectForKey:@"scoreKey"]]] integerValue];
-                    }
-                    
-                    NSLog(@"%@", [userdef objectForKey:[data objectForKey:@"scoreKey"]]);
-                    scrVc.isCabbie = 1;
-                    [self.navigationController pushViewController:scrVc animated:YES];
-                } withBlock:^(UIAlertController *alertView) {
-                    [self.navigationController presentViewController:alertView animated:YES completion:nil];
-                }];
-                 */
+
             }
             
             if ([[data objectForKey:@"acBoolean"] integerValue] == 1) {
@@ -833,21 +760,6 @@
             
         }
         
-        //创建球童记分页面
-//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//        if ([userdef objectForKey:@"isCaddie"]) {//本地是否记录
-//            if (_caddie == 1) {
-//                //球童
-//                [self createCaddieView];
-//            }else{
-//                //打球人
-//                [self createPalyerView];
-//            }
-//        }else{
-//            if (_optionView == nil) {
-//                [self createCaddieAndPalyerView];//选择身份
-//            }
-//        }
     }];
 }
 

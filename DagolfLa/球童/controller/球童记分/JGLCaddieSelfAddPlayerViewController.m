@@ -57,7 +57,6 @@
 
 -(void)finishAction
 {
-    //    [_dictFin setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"userName"] forKey:DEFAULF_USERID];
     _blockSurePlayer(_palyArray);//返回用户数据倒上一层页面
     [self.navigationController popViewControllerAnimated:YES];
     

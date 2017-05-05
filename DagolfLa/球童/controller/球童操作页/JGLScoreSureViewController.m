@@ -11,7 +11,7 @@
 #import "JGLCaddieSelfScoreViewController.h"
 #import "JGLCaddieScoreViewController.h"
 #import "JGHNewStartScoreViewController.h"
-
+#import "JGHCabbieRewardViewController.h"
 //扫描而二维码后跳转的页面
 @interface JGLScoreSureViewController ()
 
@@ -26,6 +26,17 @@
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backCaddieClick)];
         item.tintColor=[UIColor whiteColor];
         self.navigationItem.leftBarButtonItem = item;
+        
+        self.title = @"球童记分";
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(0, 0, 44, 44);
+        [btn setImage:[UIImage imageNamed:@"cabbArwed_Score"] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(pushRewardCtrl:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tintColor = [UIColor colorWithHexString:Bar_Segment];
+        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+        self.navigationItem.rightBarButtonItem = rightItem;        
+        
     }
 }
 
@@ -126,6 +137,13 @@
         }
     }];
 }
+
+#pragma mark -- 奖励
+- (void)pushRewardCtrl:(UIButton *)btn{
+    JGHCabbieRewardViewController *cabbieRewardCtrl = [[JGHCabbieRewardViewController alloc]init];
+    [self.navigationController pushViewController:cabbieRewardCtrl animated:YES];
+}
+
 #pragma mark --球童相互扫描返回按钮
 -(void)backCaddieClick
 {

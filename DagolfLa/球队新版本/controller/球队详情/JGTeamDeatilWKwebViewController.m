@@ -101,7 +101,6 @@
     }
     
     
-//    self.title = self.teamName;
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     [self.view addSubview:self.webView];
     self.webView.UIDelegate = self;
@@ -141,9 +140,7 @@
 - (void)updateNavigationItems{
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithImage:[[UIImage imageNamed:@"btn_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
     
-    UIBarButtonItem *closeItem = [[UIBarButtonItem alloc]initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:self action:@selector(popViewController)];
-    [closeItem setTintColor:[UIColor whiteColor]];
-    self.navigationItem.leftBarButtonItems = @[backItem, closeItem];
+    self.navigationItem.leftBarButtonItem = backItem;
 }
 
 - (void)popViewController{

@@ -17,7 +17,9 @@
 
 #import "JGDOrderListViewController.h"   // 订单列表
 
-#import "JGDCitySearchViewController.h"
+//#import "JGDCitySearchViewController.h"
+
+#import "SearchWithCityViewController.h"
 
 #import "JGDCourtModel.h"
 
@@ -178,9 +180,8 @@
 
 //搜索点击
 - (void)citySearchAct{
-    [MobClick event:@"booking_exchange_province_click"];
-    JGDCitySearchViewController *citySearchVC = [[JGDCitySearchViewController alloc] init];
-    citySearchVC.blockAddress = ^(NSString *city){
+    SearchWithCityViewController *vc = [[SearchWithCityViewController alloc] init];
+    vc.blockAddress = ^(NSString *city){
         CGFloat width = [Helper textWidthFromTextString:city height:screenWidth - 20 * ProportionAdapter fontSize:17];
         self.cityLitleLB.text = city;
         self.cityString = city;
@@ -191,7 +192,7 @@
         self.offset = 0;
         [self dataSet:self.currentType];
     };
-    [self.navigationController pushViewController:citySearchVC animated:YES];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark -- 排序方式

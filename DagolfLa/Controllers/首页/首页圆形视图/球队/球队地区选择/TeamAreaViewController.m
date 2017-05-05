@@ -13,7 +13,6 @@
 
 #import "CityModel.h"
 #import <BaiduMapAPI/BMapKit.h>
-//#import <BaiduMapAPI/BMKReverseGeoCodeOption.h>
 #import "PostDataRequest.h"
 #import "MJRefresh.h"
 #import "Helper.h"
@@ -75,15 +74,7 @@
     [super viewDidLoad];
     self.title = @"地区";
     
-    
     {
-        
-        //        _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, self.frame.size.height)];
-        //        _scrollView.delegate = self;
-        //        [self addSubview:_scrollView];
-        ////        _scrollView.backgroundColor = [UIColor redColor];
-        //        _scrollView.contentSize = CGSizeMake(0, 0);
-        //
         
         _isShowCity = YES;
         self.view.backgroundColor = [UIColor colorWithRed:0.97f green:0.97f blue:0.97f alpha:1.00f];

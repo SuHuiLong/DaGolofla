@@ -70,6 +70,11 @@
 		1872F3751E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */; };
 		188B934F1E8CE1BD00A04D62 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 188B934D1E8CE1BD00A04D62 /* AlipaySDK.bundle */; };
 		188B93501E8CE1BD00A04D62 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188B934E1E8CE1BD00A04D62 /* AlipaySDK.framework */; };
+		188D593D1EBC1C2B0086A73D /* SearchWithCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188D593C1EBC1C2B0086A73D /* SearchWithCityViewController.m */; };
+		188D594C1EBC30960086A73D /* SearchWithCityDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 188D59491EBC30960086A73D /* SearchWithCityDetailModel.m */; };
+		188D594D1EBC30960086A73D /* SearchWIthCityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 188D594B1EBC30960086A73D /* SearchWIthCityModel.m */; };
+		188D59511EBC42080086A73D /* SearchWithCityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188D59501EBC42080086A73D /* SearchWithCityTableViewCell.m */; };
+		188D59571EBC43DD0086A73D /* SearchWithCityCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 188D59561EBC43DD0086A73D /* SearchWithCityCollectionViewCell.m */; };
 		18911AA61EA46A6B00B6FAAD /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18911A9A1EA46A6B00B6FAAD /* ApiXml.mm */; };
 		18911AA71EA46A6B00B6FAAD /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18911A9C1EA46A6B00B6FAAD /* payRequsestHandler.mm */; };
 		18911AA81EA46A6B00B6FAAD /* WXUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18911A9E1EA46A6B00B6FAAD /* WXUtil.mm */; };
@@ -1403,6 +1408,16 @@
 		1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+ChangeLineSpaceAndWordSpace.m"; sourceTree = "<group>"; };
 		188B934D1E8CE1BD00A04D62 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		188B934E1E8CE1BD00A04D62 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		188D593B1EBC1C2B0086A73D /* SearchWithCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWithCityViewController.h; sourceTree = "<group>"; };
+		188D593C1EBC1C2B0086A73D /* SearchWithCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithCityViewController.m; sourceTree = "<group>"; };
+		188D59481EBC30960086A73D /* SearchWithCityDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWithCityDetailModel.h; sourceTree = "<group>"; };
+		188D59491EBC30960086A73D /* SearchWithCityDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithCityDetailModel.m; sourceTree = "<group>"; };
+		188D594A1EBC30960086A73D /* SearchWIthCityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWIthCityModel.h; sourceTree = "<group>"; };
+		188D594B1EBC30960086A73D /* SearchWIthCityModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWIthCityModel.m; sourceTree = "<group>"; };
+		188D594F1EBC42080086A73D /* SearchWithCityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWithCityTableViewCell.h; sourceTree = "<group>"; };
+		188D59501EBC42080086A73D /* SearchWithCityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithCityTableViewCell.m; sourceTree = "<group>"; };
+		188D59551EBC43DD0086A73D /* SearchWithCityCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWithCityCollectionViewCell.h; sourceTree = "<group>"; };
+		188D59561EBC43DD0086A73D /* SearchWithCityCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithCityCollectionViewCell.m; sourceTree = "<group>"; };
 		18911A991EA46A6B00B6FAAD /* ApiXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiXml.h; sourceTree = "<group>"; };
 		18911A9A1EA46A6B00B6FAAD /* ApiXml.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApiXml.mm; sourceTree = "<group>"; };
 		18911A9B1EA46A6B00B6FAAD /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
@@ -3742,6 +3757,7 @@
 		182C029F1E78CC46001161D7 /* 列表搜索预定 */ = {
 			isa = PBXGroup;
 			children = (
+				188D593A1EBC1C2B0086A73D /* 城市选择 */,
 				182C02A01E78CC46001161D7 /* JGDAllianceCommitOrderViewController.h */,
 				182C02A11E78CC46001161D7 /* JGDAllianceCommitOrderViewController.m */,
 				182C02A21E78CC46001161D7 /* JGDBookCourtViewController.h */,
@@ -3970,6 +3986,39 @@
 				1870EE041EA6ECFA00BFD871 /* MJDIYHeader.m */,
 			);
 			path = MJRefreshDIY;
+			sourceTree = "<group>";
+		};
+		188D593A1EBC1C2B0086A73D /* 城市选择 */ = {
+			isa = PBXGroup;
+			children = (
+				188D594E1EBC42080086A73D /* View */,
+				188D59471EBC30960086A73D /* Model */,
+				188D593B1EBC1C2B0086A73D /* SearchWithCityViewController.h */,
+				188D593C1EBC1C2B0086A73D /* SearchWithCityViewController.m */,
+			);
+			path = "城市选择";
+			sourceTree = "<group>";
+		};
+		188D59471EBC30960086A73D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				188D59481EBC30960086A73D /* SearchWithCityDetailModel.h */,
+				188D59491EBC30960086A73D /* SearchWithCityDetailModel.m */,
+				188D594A1EBC30960086A73D /* SearchWIthCityModel.h */,
+				188D594B1EBC30960086A73D /* SearchWIthCityModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		188D594E1EBC42080086A73D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				188D594F1EBC42080086A73D /* SearchWithCityTableViewCell.h */,
+				188D59501EBC42080086A73D /* SearchWithCityTableViewCell.m */,
+				188D59551EBC43DD0086A73D /* SearchWithCityCollectionViewCell.h */,
+				188D59561EBC43DD0086A73D /* SearchWithCityCollectionViewCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		18911A971EA46A6B00B6FAAD /* 微信支付 */ = {
@@ -9314,6 +9363,7 @@
 				82E6A6F61CF5812C009DD179 /* JGLAuthorityTableViewCell.m in Sources */,
 				203019841E0E4292005568E2 /* ZXDimension.m in Sources */,
 				203019BD1E0E4293005568E2 /* ZXRSSExpandedRow.m in Sources */,
+				188D594C1EBC30960086A73D /* SearchWithCityDetailModel.m in Sources */,
 				65B596EC1CAD43AC007AB83A /* YMReplyInputView.m in Sources */,
 				203019AE1E0E4292005568E2 /* ZXAI01AndOtherAIs.m in Sources */,
 				2010561B1D59C92800C90FDE /* JGHSexCell.m in Sources */,
@@ -9338,6 +9388,7 @@
 				182C02C31E78CC46001161D7 /* JGDOrderDetailViewController.m in Sources */,
 				20591C5E1D220EE0003271EC /* JGDPrivateAccountViewController.m in Sources */,
 				F5AEF74D1D423E54009A8C34 /* JGDWrongViewViewController.m in Sources */,
+				188D59511EBC42080086A73D /* SearchWithCityTableViewCell.m in Sources */,
 				203019CF1E0E4293005568E2 /* ZXEANManufacturerOrgSupport.m in Sources */,
 				200CE70C1E51AE1600055A85 /* JGHNewApplyerHeaderCell.m in Sources */,
 				203019D51E0E4293005568E2 /* ZXOneDReader.m in Sources */,
@@ -9531,6 +9582,7 @@
 				20D564B41DE4216F005535A6 /* JGHSystemNotViewController.m in Sources */,
 				F55CB1541E5D8FAB00D1798E /* GPProvince.m in Sources */,
 				F52A49E51C969F79002A4973 /* ScreenTableViewCell.m in Sources */,
+				188D594D1EBC30960086A73D /* SearchWIthCityModel.m in Sources */,
 				F54564E71DE5228600596211 /* JGAddFriendViewController.m in Sources */,
 				2030196F1E0E4292005568E2 /* ZXReedSolomonDecoder.m in Sources */,
 				20BC97DD1E1F6051007DFD34 /* JGDActivityList.m in Sources */,
@@ -9654,6 +9706,7 @@
 				F5EB44671C995788008ACD73 /* BallFriListCell.m in Sources */,
 				36BF004E1BC77213005B3CE2 /* OtherDataModel.m in Sources */,
 				203019CC1E0E4293005568E2 /* ZXEAN13Writer.m in Sources */,
+				188D593D1EBC1C2B0086A73D /* SearchWithCityViewController.m in Sources */,
 				203019A81E0E4292005568E2 /* ZXAI013103decoder.m in Sources */,
 				AA857EE01C5F48AA0034B4C8 /* SelfDataViewController.m in Sources */,
 				200CE7011E51574000055A85 /* JGHNewMenberTableViewCell.m in Sources */,
@@ -9889,6 +9942,7 @@
 				F5AEF6EA1D408F3F009A8C34 /* JGDNotActivityHisDetailViewController.m in Sources */,
 				20BEF3C01E29F7C500E9AED7 /* JGHActivityInfoCell.m in Sources */,
 				18DF0AD91E9B70B9006EB7FD /* VipCardOrderListTableViewCell.m in Sources */,
+				188D59571EBC43DD0086A73D /* SearchWithCityCollectionViewCell.m in Sources */,
 				20301A731E1269EB005568E2 /* UIView+Frame.m in Sources */,
 				203019E11E0E4293005568E2 /* ZXPDF417BarcodeMetadata.m in Sources */,
 				203019CB1E0E4293005568E2 /* ZXEAN13Reader.m in Sources */,
