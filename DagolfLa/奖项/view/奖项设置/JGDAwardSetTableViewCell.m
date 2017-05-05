@@ -35,7 +35,7 @@
         lineLB.backgroundColor = [UIColor colorWithHexString:@"#F5F5F5"];
         [backView addSubview:lineLB];
         
-        UILabel *prizeLB = [Helper lableRect:CGRectMake(kWvertical(42), kHvertical(66), kWvertical(45), kHvertical(16)) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:kHorizontal(15) text:@"奖品：" textAlignment:(NSTextAlignmentLeft)];
+        UILabel *prizeLB = [Helper lableRect:CGRectMake(kWvertical(42), kHvertical(66), kWvertical(55), kHvertical(16)) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:kHorizontal(15) text:@"奖品：" textAlignment:(NSTextAlignmentLeft)];
         [backView addSubview:prizeLB];
         
         
@@ -45,7 +45,7 @@
         [backView addSubview:self.prizeTF];
         
         
-        UILabel *prizeCountLB = [Helper lableRect:CGRectMake(kWvertical(244), kHvertical(66), kWvertical(45), kHvertical(16)) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:kHorizontal(15) text:@"数量：" textAlignment:(NSTextAlignmentLeft)];
+        UILabel *prizeCountLB = [Helper lableRect:CGRectMake(kWvertical(244), kHvertical(66), kWvertical(55), kHvertical(16)) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:kHorizontal(15) text:@"数量：" textAlignment:(NSTextAlignmentLeft)];
         [backView addSubview:prizeCountLB];
         
         

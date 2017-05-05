@@ -38,7 +38,7 @@
         _awardLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWvertical(42), kHvertical(51), 150*screenWidth/320, kHvertical(50))];
         _awardLabel.text = @"奖品：纯银奖杯";
         _awardLabel.textColor = [UIColor colorWithHexString:@"#A0A0A0"];
-        _awardLabel.font = [UIFont systemFontOfSize:14*screenWidth/320];
+        _awardLabel.font = [UIFont systemFontOfSize:kHorizontal(15)];
         [self addSubview:_awardLabel];
         
         
@@ -54,7 +54,7 @@
         [self addSubview:_viewLine];
         
         
-        UILabel *nameTitleLB = [Helper lableRect:CGRectMake(kWvertical(42), kHvertical(102), kWvertical(60), kWvertical(50)) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:kHorizontal(15) text:@"获奖人：" textAlignment:(NSTextAlignmentCenter)];
+        UILabel *nameTitleLB = [Helper lableRect:CGRectMake(kWvertical(42), kHvertical(102), kWvertical(65), kWvertical(50)) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:kHorizontal(15) text:@"获奖人：" textAlignment:(NSTextAlignmentLeft)];
         [self.contentView addSubview:nameTitleLB];
         
         _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWvertical(102), kHvertical(102), screenWidth - kWvertical(140), kWvertical(50))];

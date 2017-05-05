@@ -365,7 +365,7 @@
     timeImgv.image = [UIImage imageNamed:@"time"];
     [_viewBack addSubview:timeImgv];
     
-    UILabel* timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 35*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];
+    UILabel* timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 35*screenWidth/375, 230*screenWidth/375, 20*screenWidth/375)];
     timeLabel.font = [UIFont systemFontOfSize:13*screenWidth/375];
     //活动时间componentsSeparatedByString
     NSString *timeString = [[_model.beginDate componentsSeparatedByString:@" "]firstObject];
@@ -382,7 +382,7 @@
     distanceImgv.image = [UIImage imageNamed:@"juli"];
     [_viewBack addSubview:distanceImgv];
     
-    UILabel* distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 55*screenWidth/375, 200*screenWidth/375, 20*screenWidth/375)];
+    UILabel* distanceLabel = [[UILabel alloc]initWithFrame:CGRectMake(115*screenWidth/375, 55*screenWidth/375, 250*screenWidth/375, 20*screenWidth/375)];
     distanceLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
     distanceLabel.textColor = [UIColor colorWithHexString:@"#626262"];
     if (![Helper isBlankString:_model.ballName]) {
