@@ -30,4 +30,7 @@
 
 @property (nonatomic, strong) NSNumber *isDefault;
 
+@property (nonatomic, strong)NSNumber *isPublish;
+
+
 @end

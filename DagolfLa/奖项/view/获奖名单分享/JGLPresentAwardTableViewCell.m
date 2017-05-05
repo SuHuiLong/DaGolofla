@@ -54,8 +54,8 @@
         [self addSubview:_viewLine];
         
         
-        UILabel *nameTitleLB = [Helper lableRect:CGRectMake(kWvertical(42), kHvertical(102), kWvertical(65), kWvertical(50)) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:kHorizontal(15) text:@"获奖人：" textAlignment:(NSTextAlignmentLeft)];
-        [self.contentView addSubview:nameTitleLB];
+        self.nameTitleLB = [Helper lableRect:CGRectMake(kWvertical(42), kHvertical(102), kWvertical(65), kWvertical(50)) labelColor:[UIColor colorWithHexString:@"#A0A0A0"] labelFont:kHorizontal(15) text:@"获奖人：" textAlignment:(NSTextAlignmentLeft)];
+        [self.contentView addSubview:self.nameTitleLB];
         
         _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWvertical(102), kHvertical(102), screenWidth - kWvertical(140), kWvertical(50))];
         _nameLabel.text = @"";
@@ -105,15 +105,32 @@
             [model.userInfo isEqualToString:@""] ? [_chooseBtn setTitle:@"选择获奖人" forState:UIControlStateNormal] : [_chooseBtn setTitle:@"" forState:UIControlStateNormal];
         }else{
             
-            //            CGFloat rowHeigth = [Helper textHeightFromTextString:model.userInfo width:screenWidth - kWvertical(140) fontSize:kHorizontal(15)];
-            CGFloat rowHeigth = [Helper getSpaceLabelHeight:model.userInfo withFont:[UIFont systemFontOfSize:kHorizontal(15)] withWidth:screenWidth - kWvertical(140)];
-            _nameLabel.numberOfLines = 0;
-            //            _nameLabel.text = [NSString stringWithFormat:@"%@", model.userInfo];
-            [Helper setLabelSpace:_nameLabel withValue:[NSString stringWithFormat:@"%@", model.userInfo] withFont:[UIFont systemFontOfSize:kHorizontal(15)]];
-            _nameLabel.frame = CGRectMake(kWvertical(102), kHvertical(117), screenWidth - kWvertical(140), rowHeigth);
+            if ([model.isPublish integerValue] == 0) {
+                _nameLabel.hidden = YES;
+                _nameTitleLB.hidden = YES;
+            }else{
+                _nameTitleLB.hidden = NO;
+                _nameLabel.hidden = NO;
+                CGFloat rowHeigth = [Helper getSpaceLabelHeight:model.userInfo withFont:[UIFont systemFontOfSize:kHorizontal(15)] withWidth:screenWidth - kWvertical(140)];
+                _nameLabel.numberOfLines = 0;
+                
+                [Helper setLabelSpace:_nameLabel withValue:[NSString stringWithFormat:@"%@", model.userInfo] withFont:[UIFont systemFontOfSize:kHorizontal(15)]];
+                _nameLabel.frame = CGRectMake(kWvertical(102), kHvertical(117), screenWidth - kWvertical(140), rowHeigth);
+            }
+            
+
         }
         
     }else{
+        
+        if (([model.isPublish integerValue] == 0) && !_isManager) {
+            _nameLabel.hidden = YES;
+            _nameTitleLB.hidden = YES;
+        }else{
+            _nameTitleLB.hidden = NO;
+            _nameLabel.hidden = NO;
+        }
+        
          _nameLabel.text = @"";
         [_chooseBtn setTitle:@"选择获奖人" forState:UIControlStateNormal];
     }

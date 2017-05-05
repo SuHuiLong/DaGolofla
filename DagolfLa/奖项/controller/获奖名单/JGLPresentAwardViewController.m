@@ -434,10 +434,13 @@
     }else{
         
         JGHAwardModel *model = _dataArray[indexPath.row];
-//        CGFloat rowHeigth = [Helper textHeightFromTextString:model.userInfo width:screenWidth - kWvertical(140) fontSize:kHorizontal(15)];
         CGFloat rowHeigth = [Helper getSpaceLabelHeight:model.userInfo withFont:[UIFont systemFontOfSize:kHorizontal(15)] withWidth:screenWidth - kWvertical(140)];
 
-        return _isManager ? kHvertical(152) : kHvertical(132) + rowHeigth;
+        if ([model.isPublish integerValue] == 0) {
+            return _isManager ? kHvertical(152) : kHvertical(101);
+        }else{
+            return _isManager ? kHvertical(152) : kHvertical(152) + rowHeigth;
+        }
     }
 }
 

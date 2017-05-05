@@ -12,6 +12,8 @@
 
 @interface JGLPresentAwardTableViewCell : UITableViewCell
 
+@property (strong, nonatomic) UILabel *nameTitleLB;
+
 
 @property (strong, nonatomic) UIImageView* iconImgv;
 
