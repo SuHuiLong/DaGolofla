@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JGHAwardModel.h"
 
-@interface JGDAwardSetTableViewCell : UITableViewCell
+@interface JGDAwardSetTableViewCell : UITableViewCell<UITextFieldDelegate>
 
 @property (nonatomic, strong) UILabel *awardNameLB;
 

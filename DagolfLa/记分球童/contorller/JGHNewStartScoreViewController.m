@@ -281,6 +281,7 @@
     _activityScoreView.blockSelectActivityScore = ^(NSString *scoreKey){
         JGHScoresViewController *scoresCtrl = [[JGHScoresViewController alloc]init];
         scoresCtrl.scorekey = scoreKey;
+        scoresCtrl.isAlertView = true;
         [weakSelf.navigationController pushViewController:scoresCtrl animated:YES];
     };
     //时间
@@ -549,6 +550,7 @@
         JGHScoresViewController *scoresCtrl = [[JGHScoresViewController alloc]init];
         scoresCtrl.scorekey = scoreKey;
         scoresCtrl.isCabbie = 1;
+        scoresCtrl.isAlertView = true;
         [weakSelf.navigationController pushViewController:scoresCtrl animated:YES];
     };
     //选择时机

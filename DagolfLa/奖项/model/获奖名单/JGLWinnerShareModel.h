@@ -10,9 +10,6 @@
 
 @interface JGLWinnerShareModel : BaseModel
 
-
-
-
 @property (strong, nonatomic) NSNumber* teamKey;
 
 @property (strong, nonatomic) NSNumber* index;

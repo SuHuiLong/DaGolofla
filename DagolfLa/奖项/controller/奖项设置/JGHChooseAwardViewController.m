@@ -47,7 +47,7 @@ static NSString *const JGSignUoPromptCellIdentifier = @"JGSignUoPromptCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    self.navigationItem.title = @"选择奖项";
+    self.navigationItem.title = @"添加奖项";
     _titleArray = [NSMutableArray array];
     self.item = [UIButton buttonWithType:UIButtonTypeCustom];
     self.item.frame = CGRectMake(0, 0, 64, 44);

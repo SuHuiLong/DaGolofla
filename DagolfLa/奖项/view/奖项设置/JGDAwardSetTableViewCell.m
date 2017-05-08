@@ -52,7 +52,7 @@
         self.prizeCountTF = [[UITextField alloc] initWithFrame:CGRectMake(kWvertical(289), kHvertical(67), kWvertical(70), kHvertical(16))];
         self.prizeCountTF.font = [UIFont systemFontOfSize:kHorizontal(15)];
         self.prizeCountTF.placeholder = @"奖品数量";
-        self.prizeCountTF.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+        self.prizeCountTF.keyboardType = UIKeyboardTypePhonePad;
         [backView addSubview:self.prizeCountTF];
     }
     return self;

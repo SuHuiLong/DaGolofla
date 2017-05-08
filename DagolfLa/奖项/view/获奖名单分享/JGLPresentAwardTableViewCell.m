@@ -91,10 +91,10 @@
     
     if (model.prizeName && ![model.prizeName isEqualToString:@""]) {
         _awardLabel.attributedText = [self returnMutableString:[NSString stringWithFormat:@"奖品：%@", model.prizeName]];
-        _titleLabel.frame = CGRectMake(kWvertical(42), 0, 250*screenWidth/320, kHvertical(50));
+        _titleLabel.width = kWvertical(250);
     }else{
         _awardLabel.text = _isManager ? @"奖品：奖品名称" : @"奖品：暂无";
-        _titleLabel.frame = CGRectMake(kWvertical(42), 0, 150*screenWidth/320, kHvertical(50));
+        _titleLabel.width = kWvertical(150);
     }
     
     
@@ -117,8 +117,6 @@
                 [Helper setLabelSpace:_nameLabel withValue:[NSString stringWithFormat:@"%@", model.userInfo] withFont:[UIFont systemFontOfSize:kHorizontal(15)]];
                 _nameLabel.frame = CGRectMake(kWvertical(102), kHvertical(117), screenWidth - kWvertical(140), rowHeigth);
             }
-            
-
         }
         
     }else{

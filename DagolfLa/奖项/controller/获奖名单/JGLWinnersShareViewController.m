@@ -175,8 +175,8 @@
                 [_dataArray removeAllObjects];
             }
             //数据解析
-            for (NSDictionary *dicList in [data objectForKey:@"list"])
-            {
+            for (NSDictionary *dicList in [data objectForKey:@"list"]){
+                
                 JGLWinnerShareModel *model = [[JGLWinnerShareModel alloc] init];
                 [model setValuesForKeysWithDictionary:dicList];
                 [_dataArray addObject:model];

@@ -33,7 +33,6 @@
         _nameLabel.font = [UIFont systemFontOfSize:14*screenWidth/375];
         [self addSubview:_nameLabel];
         _nameLabel.numberOfLines = 0;
-        _nameLabel.text = @"获奖人：奥查呀/奥查亚/查得-坎贝尔/宫里圣志/杰欧夫-奥格威/古斯塔娜";
         
         
     }
@@ -51,6 +50,7 @@
     }
     if (![Helper isBlankString:model.userInfo]) {
         _nameLabel.text = model.userInfo;
+        
     }
     else{
         _nameLabel.text = @"暂无获奖人名单";

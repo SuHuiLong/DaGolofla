@@ -207,11 +207,8 @@
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [[JsonHttp jsonHttp]httpRequest:[NSString stringWithFormat:@"team/%@", urlString] JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         NSLog(@"errType == %@", errType);
-//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+
     } completionBlock:^(id data) {
-        NSLog(@"%@", data);
-        
-//        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         [_dataArray removeAllObjects];
         [_prizeListArray removeAllObjects];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
@@ -563,7 +560,6 @@
 }
 #pragma mark -- 分享
 -(void)shareInfo:(NSInteger)index{
-//    http://imgcache.dagolfla.com/share/team/awardedPrize.html?teamKey=587857&activityKey=587860&userKey=529&from=groupmessage&isappinstalled=1
     NSData *fiData = [[NSData alloc]init];
     NSString*  shareUrl;
     if ([_model.timeKey integerValue] == 0) {

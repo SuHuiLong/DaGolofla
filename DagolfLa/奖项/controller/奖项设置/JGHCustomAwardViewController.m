@@ -61,7 +61,11 @@ static NSString *const JGHTextFiledCellIdentifier = @"JGHTextFiledCell";
     [self.view endEditing:YES];
     
     if (_awardName.length == 0) {
+        self.navigationItem.rightBarButtonItem.enabled = NO;
         [[ShowHUD showHUD]showToastWithText:@"请输入奖项名称" FromView:self.view];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(TIMESlEEP * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.navigationItem.rightBarButtonItem.enabled = true;
+        });
         return;
     }
     

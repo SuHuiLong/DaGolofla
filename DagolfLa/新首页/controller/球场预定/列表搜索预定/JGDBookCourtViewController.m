@@ -43,7 +43,10 @@
 
 @property (nonatomic, strong) UIView *backTitleView;
 
+//城市
 @property (nonatomic, copy) NSString *cityString;
+//省份
+@property (nonatomic,copy) NSString *provinceName;
 
 @end
 
@@ -55,7 +58,6 @@
     
     self.cityString = [[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME];
     self.offset = 0;
-//    [self dataSet:0];
     [self  tableViewSet];
     
     // Do any additional setup after loading the view. type  [def objectForKey:CITYNAME]
@@ -65,26 +67,25 @@
 - (void)dataSet:(NSInteger) type{
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//    [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     [dic setObject:[NSNumber numberWithInteger:self.offset] forKey:@"offset"];
     [dic setObject:[NSNumber numberWithInteger:type] forKey:@"sortType"];
-    [dic setObject:self.cityString forKey:@"cityName"];
+    if (self.provinceName.length>0) {
+        [dic setObject:self.provinceName forKey:@"province"];
+    }else{
+        [dic setObject:self.cityString forKey:@"cityName"];
+    }
     [dic setObject:[def objectForKey:BDMAPLAT] forKey:@"latitude"];
     [dic setObject:[def objectForKey:BDMAPLNG] forKey:@"longitude"];
-    //    [dic setObject:DEFAULF_USERID forKey:@"ballName"];
     if (self.offset == 0) {
         [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     }
     [[JsonHttp jsonHttp] httpRequest:@"bookball/getBallBookingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-//        [self.courtTableView.mj_header endRefreshing];
         [self.courtTableView.mj_footer endRefreshing];
 
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
 
     } completionBlock:^(id data) {
-//        [self.courtTableView.mj_header endRefreshing];
         [self.courtTableView.mj_footer endRefreshing];
         
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
@@ -184,8 +185,7 @@
     vc.blockAddress = ^(NSString *city){
         CGFloat width = [Helper textWidthFromTextString:city height:screenWidth - 20 * ProportionAdapter fontSize:17];
         self.cityLitleLB.text = city;
-        self.cityString = city;
-        
+        self.provinceName = city;
         self.backTitleView.frame =  CGRectMake((screenWidth - width + 30 * ProportionAdapter ) / 2, 0, width + 30 * ProportionAdapter, 30 * ProportionAdapter);
         self.cityLitleLB.frame = CGRectMake(0, 0, width, 30 * ProportionAdapter);
         self.titleBtn.frame = CGRectMake(width, 0, 30 * ProportionAdapter, 30 * ProportionAdapter);
@@ -205,9 +205,6 @@
             [sBtn setTitleColor:[UIColor colorWithHexString:@"#313131"] forState:(UIControlStateNormal)];
         }
     }
-    
-    //    [self dataSet:btn.tag - 300];
-    //    [self.courtTableView.mj_header beginRefreshing];
 
     self.currentType = btn.tag - 300;
     [btn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];

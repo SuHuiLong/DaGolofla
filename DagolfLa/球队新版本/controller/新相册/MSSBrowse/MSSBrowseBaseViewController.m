@@ -336,11 +336,11 @@
 #pragma mark StatusBar Method
 - (BOOL)prefersStatusBarHidden
 {
-    if(!_collectionView.userInteractionEnabled)
-    {
+//    if(!_collectionView.userInteractionEnabled)
+//    {
         return NO;
-    }
-    return YES;
+//    }
+//    return YES;
 }
 
 #pragma mark Orientation Method
