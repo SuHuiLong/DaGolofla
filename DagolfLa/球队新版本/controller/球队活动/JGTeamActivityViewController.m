@@ -81,24 +81,6 @@
         //getMyTeamActivityAll
         _urlString = @"team/getMyTeamActivityList";
     }
-    
-//    [[JsonHttp jsonHttp]httpRequest:_urlString JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-//        NSLog(@"errType == %@", errType);
-//    } completionBlock:^(id data) {
-//        NSLog(@"data == %@", data);
-//        [self.dataArray removeAllObjects];
-//        
-//        NSArray *array = [data objectForKey:@"activityList"];
-//        
-//        for (NSDictionary *dict in array) {
-//            JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
-//            
-//            [model setValuesForKeysWithDictionary:dict];
-//            [self.dataArray addObject:model];
-//        }
-//        
-//        [self.teamActivityTableView reloadData];
-//    }];
 }
 
 #pragma mark -- 创建发布活动

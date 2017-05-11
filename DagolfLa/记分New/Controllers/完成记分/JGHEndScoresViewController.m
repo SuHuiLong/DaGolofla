@@ -11,9 +11,6 @@
 #import "ZYQAssetPickerController.h"
 #import "BrowseImagesViewController.h"
 #import "BallParkViewController.h"
-#import "Helper.h"
-#import "PostDataRequest.h"
-#import "MBProgressHUD.h"
 #import "CommunityViewController.h"
 #import <TAESDK/TaeSDK.h>
 #import "JGHHistoryAndResultsViewController.h"

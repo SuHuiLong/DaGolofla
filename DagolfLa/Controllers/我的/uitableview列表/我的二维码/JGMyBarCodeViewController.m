@@ -8,7 +8,6 @@
 
 #import "JGMyBarCodeViewController.h"
 #import "UITool.h"
-#import "PostDataRequest.h"
 @interface JGMyBarCodeViewController ()
 
 @end

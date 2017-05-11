@@ -9,9 +9,6 @@
 #import "MJRefreshComponent.h"
 #import "MJRefreshConst.h"
 #import "UIView+MJExtension.h"
-
-#import "PostDataRequest.h"
-
 #import "ZanNumViewController.h"
 #import "ZanNumTableViewCell.h"
 #import "UserAssistModel.h"

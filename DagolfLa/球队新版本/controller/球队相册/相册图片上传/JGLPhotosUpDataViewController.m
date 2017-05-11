@@ -9,11 +9,8 @@
 #import "JGLPhotosUpDataViewController.h"
 
 #import "ZYQAssetPickerController.h"
-#import "Helper.h"
 #import "TeamBrowseViewController.h"
 #define LINE_COUNT 4
-#import "PostDataRequest.h"
-#import "MBProgressHUD.h"
 
 @interface JGLPhotosUpDataViewController ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZYQAssetPickerControllerDelegate,UIScrollViewDelegate,UIPickerViewAccessibilityDelegate>
 {

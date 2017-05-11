@@ -781,18 +781,12 @@
 }
 
 + (void)requestRCIMWithToken:(NSString *)token{
-    [[RCIM sharedRCIM] initWithAppKey:RongYunAPPKEY];
-    [RCIM sharedRCIM].globalConversationPortraitSize = CGSizeMake(40*ScreenWidth/375, 40*ScreenWidth/375);
-    
-    [RCIM sharedRCIM].globalConversationAvatarStyle=RC_USER_AVATAR_CYCLE;
-    [RCIM sharedRCIM].globalMessageAvatarStyle=RC_USER_AVATAR_CYCLE;
-    [[RCIM sharedRCIM] setUserInfoDataSource:[UserDataInformation sharedInstance]];
-    
-    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
-    [dataDic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [dataDic setObject:DEFAULF_USERID forKey:@"seeUserKey"];
-    [dataDic setObject:[NSString stringWithFormat:@"userKey=%@&seeUserKey=%@dagolfla.com",DEFAULF_USERID, DEFAULF_USERID] forKey:@"md5"];
-    
+    NSString *md5 = [NSString stringWithFormat:@"userKey=%@&seeUserKey=%@dagolfla.com",DEFAULF_USERID, DEFAULF_USERID];
+    NSDictionary *dataDic = @{
+                              @"userKey":DEFAULF_USERID,
+                              @"seeUserKey":DEFAULF_USERID,
+                              @"md5":md5,
+                              };
     [[JsonHttp jsonHttp]httpRequest:@"user/getUserMainInfo" JsonKey:nil withData:dataDic requestMethod:@"GET" failedBlock:^(id errType) {
         
     } completionBlock:^(id data) {
@@ -812,27 +806,15 @@
                 
                 UserInformationModel *model = [[UserInformationModel alloc] init];
                 [model setValuesForKeysWithDictionary:[data objectForKey:@"user"]];
-                /*
-                 * 2017年02月21日11:50:26
-                 * 聊天界面后台之后图片显示错误
-                 */
-//                [[UserDataInformation sharedInstance] saveUserInformation:model];
-                
                 [[RCIM sharedRCIM] refreshUserInfoCache:userInfo  withUserId:userInfo.userId];
-                
-                //completion(userInfo);
                 [RCIM sharedRCIM].currentUserInfo=userInfo;
                 [RCIM sharedRCIM].enableMessageAttachUserInfo=NO;
-                
-
                 // 快速集成第二步，连接融云服务器
                 [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
                     
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"RongTKChat" object:nil];
                     //自动登录   连接融云服务器
                     [[UserDataInformation sharedInstance] synchronizeUserInfoRCIM];
-
-                    
                 }error:^(RCConnectErrorCode status) {
                     // Connect 失败
                     NSLog(@"status === %td", status);

@@ -8,9 +8,6 @@
 
 #import "Setbutton.h"
 #import "ViewController.h"
-
-#import "UIImageView+WebCache.h"
-#import "Helper.h"
 @implementation Setbutton
 
 - (instancetype)initWithFrame:(CGRect)frame

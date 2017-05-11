@@ -8,13 +8,11 @@
 
 #import "PersonHomeController.h"
 
-#import "Helper.h"
 #import "UIView+Extension.h"
 #import "LazyPageScrollView.h"
 #import <BaiduMapAPI/BMapKit.h>
 #import "UIView+ChangeFrame.h"
 #import "OtherDataTableViewCell.h"
-#import "PostDataRequest.h"
 #import "OtherDataModel.h"
 #import "DeatilModel.h"
 
@@ -23,9 +21,6 @@
 #import "ChatDetailViewController.h"
 #import "AddFootViewController.h"
 
-#import "PostDataRequest.h"
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
 
 #import "OtherDataModel.h"
 #import "MeselfModel.h"
@@ -38,7 +33,6 @@
 #import "MyfootModel.h"
 #import "PicArrShowViewControllerViewController.h"
 
-#import "MBProgressHUD.h"
 
 #import "SelfViewController.h"
 #import "DetailViewController.h"

@@ -7,8 +7,6 @@
 //
 
 #import "ProFileViewController.h"
-#import "Helper.h"
-#import "PostDataRequest.h"
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
 
@@ -104,10 +102,6 @@
         _webView.scrollView.bounces = NO ;
         //设置web占满屏幕
         _webView.scalesPageToFit = YES ;
-//111
-//        NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-//        NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
-//        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
         [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
         
         
@@ -124,10 +118,6 @@
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    //111
-//    NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-//    NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
-//    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
     
     ////NSLog(@"%@",[request.URL absoluteString]);
     NSString *str = [[request.URL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -197,12 +187,9 @@
         [_actionView addAction:zhifubaoAction];
         [_actionView addAction:cancelAction];
         [self presentViewController:_actionView animated:YES completion:nil];
+       
+        return NO;
     }
-    else
-    {
-        
-    }
-    
     
     
     return YES;

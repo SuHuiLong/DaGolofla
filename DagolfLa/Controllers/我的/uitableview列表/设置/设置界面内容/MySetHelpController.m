@@ -9,10 +9,6 @@
 #import "MySetHelpController.h"
 #import "IWTextView.h"
 
-#import "Helper.h"
-#import "PostDataRequest.h"
-
-
 @interface MySetHelpController ()<UITextViewDelegate,UITextFieldDelegate>
 {
     IWTextView* _textView;

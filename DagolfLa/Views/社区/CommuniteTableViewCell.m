@@ -11,7 +11,6 @@
 
 #import "PersonHomeController.h"
 #import "ZanNumViewController.h"
-#import "PostDataRequest.h"
 
 //#import "ComDetailViewController.h"
 

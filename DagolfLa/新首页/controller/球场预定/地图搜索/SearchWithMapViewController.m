@@ -232,6 +232,8 @@
     if ([view isKindOfClass:[SearchWithMapAnnotationView class]]) {
         SearchWithMapAnnotationView *sView = (SearchWithMapAnnotationView *)view;
         if (sView.dataModel.name) {
+            _blockProvince(sView.dataModel.name);
+            [self.navigationController popViewControllerAnimated:YES];
             return;
         }
         NSString *parkId = sView.dataModel.parkId;
@@ -304,15 +306,6 @@
     }
     NSString *province = result.addressDetail.province;
     if (province.length>1) {
-        //如果获取省份名包含城市名则为省份名，不包含要移除省份名之外的其他字符
-//        if ([province containsString:_cityName]) {
-//            province = _cityName;
-//        }else{
-//            NSArray *removeArray = @[@"省",@"市",@"自治区",@"壮族",@"回族",@"维吾尔",@"特别行政区"];
-//            for (int i = 0; i<removeArray.count; i++) {
-//                province = [province stringByReplacingOccurrencesOfString:removeArray[i] withString:@""];
-//            }
-//        }
         NSLog(@"%@",[NSString stringWithFormat:@"省份名：%@", province]);
         //位置移动超出省份和放大系数改变之后请求省份数据
         if (![province isEqualToString:_cityName]||[self.dataArray isEqual:self.provinceDataArray]) {

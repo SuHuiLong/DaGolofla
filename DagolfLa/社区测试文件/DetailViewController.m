@@ -21,9 +21,6 @@
 #define dataCount 10
 #define kLocationToBottom 20
 
-#import "PostDataRequest.h"
-#import "Helper.h"
-
 #import "MyNewsBoxViewController.h"
 #import "PublishViewController.h"
 #import "ZanNumViewController.h"

@@ -13,7 +13,6 @@
 
 #import "JGLBankModel.h"
 
-#import "MBProgressHUD.h"
 @interface JGLBankListViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UIView* _viewHeader;

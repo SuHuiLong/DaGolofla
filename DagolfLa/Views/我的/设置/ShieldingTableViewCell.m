@@ -7,8 +7,6 @@
 //
 
 #import "ShieldingTableViewCell.h"
-#import "Helper.h"
-#import "UIButton+WebCache.h"
 @implementation ShieldingTableViewCell
 
 - (void)awakeFromNib {

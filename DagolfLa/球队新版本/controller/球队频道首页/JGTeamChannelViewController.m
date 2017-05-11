@@ -24,7 +24,6 @@
 #import "JGDNewTeamDetailViewController.h"
 #import "JGTeamActivityCell.h"
 #import <CoreLocation/CLLocation.h>
-#import "Helper.h"
 
 #import "HomeHeadView.h"  // topscrollView
 #import "ChangePicModel.h"

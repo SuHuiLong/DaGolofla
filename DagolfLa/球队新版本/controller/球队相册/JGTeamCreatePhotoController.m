@@ -10,9 +10,7 @@
 #import "UITool.h"
 #import "SXPickPhoto.h"
 
-#import "MBProgressHUD.h"
-@interface JGTeamCreatePhotoController ()
-{
+@interface JGTeamCreatePhotoController (){
     UIButton* _btnAll;
     UIButton* _btnSome;
     UIImageView* _imgvAll;

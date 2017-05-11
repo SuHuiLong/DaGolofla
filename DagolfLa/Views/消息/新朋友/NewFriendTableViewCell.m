@@ -7,9 +7,6 @@
 //
 
 #import "NewFriendTableViewCell.h"
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
-#import "UIButton+WebCache.h"
 @implementation NewFriendTableViewCell
 
 - (void)awakeFromNib {

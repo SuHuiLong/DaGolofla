@@ -7,8 +7,7 @@
 //
 
 #import "NewsDetailViewCell.h"
-#import "UIImageView+WebCache.h"
-#import "Helper.h"
+
 @implementation NewsDetailViewCell
 
 - (void)awakeFromNib {

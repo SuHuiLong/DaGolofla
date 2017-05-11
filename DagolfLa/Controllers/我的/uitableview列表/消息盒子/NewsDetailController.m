@@ -10,11 +10,6 @@
 #import "NewsDetailViewCell.h"
 #import "NewsDetailModel.h"
 
-#import "PostDataRequest.h"
-#import "Helper.h"
-
-#import "UIImageView+WebCache.h"
-
 #import "ChatDetailViewController.h"
 
 //#import "YueDetailViewController.h"
@@ -53,7 +48,6 @@
     _rightBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = _rightBtn;
     
-//    //NSLog(@"%@",_messType);
     _messType = @0;
     _indexType = 0;
     _dict = [[NSMutableDictionary alloc]init];
@@ -63,25 +57,19 @@
     [self uiConfig];
 
 }
-///**
-// *  导航栏上清空按钮
-// */
+//导航栏上清空按钮
 -(void)removeAllClick
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您确定清空所有信息，删除后无法恢复" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alert show];
-    
-    
 }
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         
         if (_dataArray.count == 0) {
             return;
-        }
-        else
-        {
+        }else{
             NewsDetailModel* model = _dataArray[0];
             [_dict setValue:model.mId forKey:@"mId"];
             [_dict setValue:@0 forKey:@"type"];
@@ -93,7 +81,7 @@
             if ([[dict objectForKey:@"success"] boolValue]) {
                 [_dataArray removeAllObjects];
                 [_tableView reloadData];
-            }else {
+            }else{
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"删除失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertView show];
             }
@@ -104,7 +92,6 @@
                 [alertView dismissWithClickedButtonIndex:0 animated:YES];
             });
         }];
-        
     }
 }
 
@@ -161,51 +148,6 @@
         }];
 
     }
-//    else
-//    {
-//        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-//        [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"] forKey:@"userId"];
-//        [dict setObject:@10 forKey:@"rows"];
-//        [dict setObject:[NSNumber numberWithInt:page] forKey:@"page"];
-//        if (_messType != nil) {
-//            [dict setObject:_messType forKey:@"messType"];
-//        }
-//        else
-//        {
-//            [dict setObject:@0 forKey:@"messType"];
-//        }
-//        [[PostDataRequest sharedInstance] postDataRequest:@"mess/querybyChats.do" parameter:dict success:^(id respondsData) {
-//            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-//            if ([[dict objectForKey:@"success"] boolValue]) {
-//                if (page == 1)[_dataArray removeAllObjects];
-//                for (NSDictionary *dataDict in [dict objectForKey:@"rows"]) {
-//                    NewsDetailModel *model = [[NewsDetailModel alloc] init];
-//                    [model setValuesForKeysWithDictionary:dataDict];
-//                    [_dataArray addObject:model];
-//                }
-//                _page ++;
-//                [_tableView reloadData];
-//            }else {
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[dict objectForKey:@"message"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//                [alert show];
-//            }
-//            if (isReshing) {
-//                [_tableView.mj_header endRefreshing];
-//            }else {
-//                [_tableView.mj_footer endRefreshing];
-//            }
-//        } failed:^(NSError *error) {
-//            if (isReshing) {
-//                [_tableView.mj_header endRefreshing];
-//            }else {
-//                [_tableView.mj_footer endRefreshing];
-//            }
-//        }];
-//
-//    }
-//    
-//    
-//    
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing

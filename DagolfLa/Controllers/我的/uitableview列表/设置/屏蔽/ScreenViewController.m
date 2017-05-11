@@ -8,11 +8,6 @@
 
 #import "ScreenViewController.h"
 #import "ShieldingTableViewCell.h"
-
-#import "PostDataRequest.h"
-#import "Helper.h"
-
-
 #import "ScreenModel.h"
 
 @interface ScreenViewController ()<UITableViewDataSource,UITableViewDelegate>

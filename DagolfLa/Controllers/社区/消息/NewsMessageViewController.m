@@ -9,8 +9,6 @@
 #import "NewsMessageViewController.h"
 #import "LazyPageScrollView.h"
 #import "CommunMessageViewCell.h"
-#import "Helper.h"
-#import "PostDataRequest.h"
 #import "NewsDetailModel.h"
 
 @interface NewsMessageViewController ()<LazyPageScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>

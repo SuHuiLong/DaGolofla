@@ -144,10 +144,8 @@
 }
 
 - (void)commitBtnClick{
- 
     
     if (![_dictPhoto objectForKey:@"picHeadURL"] || ![_dictPhoto objectForKey:@"picCertURLs"]) {
-        
         [LQProgressHud showMessage:@"请选择照片后提交"];
         return;
     }
@@ -248,25 +246,22 @@
         
         //打开相机
         [_pickPhoto ShowTakePhotoWithController:self andWithBlock:^(NSObject *Data) {
-            if ([Data isKindOfClass:[UIImage class]])
-            {
+            if ([Data isKindOfClass:[UIImage class]]){
                 
                 [btn setImage:[UIImage imageNamed:@"photoCamera"] forState:(UIControlStateNormal)];
+                NSData *imageData = UIImageJPEGRepresentation(self.uploadImage, 0.3);
+                NSLog(@"%ld",imageData.length/1024);
 
                 self.uploadImage = (UIImage *)Data;
                 if (btn.tag == 520) {
                     self.personView.image = self.uploadImage;
-                    
-                                        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.7)] forKey:@"picHeadURL"];
+        
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.3)] forKey:@"picHeadURL"];
                     
                 }else if (btn.tag == 530){
                     self.certificatesView.image = self.uploadImage;
-                    
-                                        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.7)] forKey:@"picCertURLs"];
-                    
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.3)] forKey:@"picCertURLs"];
                 }
-                
-                
             }
         }];
     }];
@@ -280,17 +275,14 @@
                 self.uploadImage = (UIImage *)Data;
                 [btn setImage:[UIImage imageNamed:@"photoCamera"] forState:(UIControlStateNormal)];
 
-                
+                NSData *imageData = UIImageJPEGRepresentation(self.uploadImage, 0.3);
+                NSLog(@"%ld",imageData.length/1024);
                 if (btn.tag == 520) {
                     self.personView.image = self.uploadImage;
-                    
-                                        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.7)] forKey:@"picHeadURL"];
-                    
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.3)] forKey:@"picHeadURL"];
                 }else if (btn.tag == 530){
-                    
                     self.certificatesView.image = self.uploadImage;
-                    
-                                        [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.7)] forKey:@"picCertURLs"];
+                    [_dictPhoto setObject:[NSArray arrayWithObject:UIImageJPEGRepresentation(self.uploadImage, 0.3)] forKey:@"picCertURLs"];
                     
                 }
                 

@@ -9,9 +9,6 @@
 #import "ShowMapViewViewController.h"
 #import <BaiduMapAPI/BMapKit.h>
 #import "MyfootModel.h"
-
-
-#import "Helper.h"
 @interface ShowMapViewViewController ()<BMKMapViewDelegate>
 {
     BMKMapView *_mapView;

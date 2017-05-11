@@ -7,10 +7,6 @@
 //
 
 #import "PicArrShowViewControllerViewController.h"
-
-
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
 @interface PicArrShowViewControllerViewController ()<UIScrollViewDelegate>
 @property (assign, nonatomic) NSInteger lastIndex;
 

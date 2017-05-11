@@ -23,11 +23,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self createView];
+}
+#pragma mark - CreateView
+-(void)createView{
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
+    [self.tableView setExtraCellLineHidden];
     [self.tableView registerClass:[JGActivityMemNonmangerTableViewCell class] forCellReuseIdentifier:@"memCell"];
     
     _page = 0;

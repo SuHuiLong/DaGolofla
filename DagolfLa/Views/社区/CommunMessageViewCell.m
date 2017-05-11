@@ -7,8 +7,6 @@
 //
 
 #import "CommunMessageViewCell.h"
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
 @implementation CommunMessageViewCell
 
 - (void)awakeFromNib {

@@ -8,17 +8,9 @@
 
 #import "TeamFriListViewController.h"
 #import "ContactViewController.h"
-#import "PostDataRequest.h"
 #import "RecomeFriendViewController.h"
 #import "NewFriendModel.h"
 #import "NewFriendTableViewCell.h"
-#import "MJRefreshFooter.h"
-
-#import "MJRefreshComponent.h"
-#import "MJRefreshConst.h"
-#import "UIView+MJExtension.h"
-#import "UIScrollView+MJExtension.h"
-#import "UIScrollView+MJRefresh.h"
 
 #import "PersonHomeController.h"
 #import "MyattenModel.h"

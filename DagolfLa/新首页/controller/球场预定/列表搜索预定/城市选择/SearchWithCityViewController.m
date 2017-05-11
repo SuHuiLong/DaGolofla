@@ -196,6 +196,12 @@
 }
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    UIActivityIndicatorView *cityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(screenWidth - kWvertical(105), kHvertical(50),kHvertical(27), kHvertical(27))];
+    [self.mainTableView addSubview:cityView];
+    cityView.backgroundColor = [UIColor whiteColor];
+    cityView.color = [UIColor grayColor];
+    [cityView startAnimating];
+
     CLLocation *currLocation = [locations lastObject];
     //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
     // 获取当前所在的城市名
@@ -203,8 +209,7 @@
     //根据经纬度反向地理编译出地址信息
     [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
      {
-         if (array.count > 0)
-         {
+         if (array.count > 0){
              CLPlacemark *placemark = [array objectAtIndex:0];
              //将获得的所有信息显示到label上
              //获取城市
@@ -215,11 +220,11 @@
              }
              [self.localCityBtn setTitle:city forState:(UIControlStateNormal)];
          }
+         [cityView stopAnimating];
+         [cityView removeFromSuperview];
      }];
     [_locationManager stopUpdatingLocation];
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

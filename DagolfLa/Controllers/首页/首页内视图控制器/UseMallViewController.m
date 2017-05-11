@@ -7,8 +7,6 @@
 //
 
 #import "UseMallViewController.h"
-#import "PostDataRequest.h"
-#import "Helper.h"
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
 
@@ -351,14 +349,13 @@
                 }
             }
         }];
+        return NO;
     }
     
     
     if ([str containsString:@"dagolfla://"]) {
         
         [[JGHPushClass pushClass] URLString:str pushVC:^(UIViewController *vc) {
-//            vc.hidesBottomBarWhenPushed = YES;
-//            self.navigationController.navigationBarHidden = NO;
             if (vc == nil) {
                 [self.navigationController popViewControllerAnimated:YES];
             }else{

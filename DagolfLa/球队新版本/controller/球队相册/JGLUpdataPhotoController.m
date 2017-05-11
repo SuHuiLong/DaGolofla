@@ -16,7 +16,6 @@
 
 #import "BallParkViewController.h"
 
-#import "PostDataRequest.h"
 @interface JGLUpdataPhotoController ()<UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZYQAssetPickerControllerDelegate,UIScrollViewDelegate,UIPickerViewAccessibilityDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 {
     

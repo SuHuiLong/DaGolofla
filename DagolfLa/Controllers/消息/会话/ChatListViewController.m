@@ -29,11 +29,6 @@
     
     UIButton* _btnInvite;
     
-//    NSInteger _teamUnread;
-//    NSInteger _systemUnread;
-    
-//    NSInteger _newFriendUnread;
-    
     int _newFriendUnreadCount;
     
     UILabel *_sysDetailLable;
@@ -58,42 +53,22 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    
     [self reloadRongTKChet];
 }
+//更新融云数据
 - (void)reloadRongTKChet{
     self.isShowNetworkIndicatorView = NO;
-    /*
-     *2017年02月21日11:48:43 
-     解决聊天界面显示tabbar
-     */
-//    self.tabBarController.tabBar.hidden = NO;
-    
     [[RCIM sharedRCIM] clearUserInfoCache];
-    //    [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
-    //    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
-    {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]){
         [self loadMessageData];
-        
         if ([[RCIMClient sharedRCIMClient]getUnreadCount:self.displayConversationTypeArray] == 0) {
             [self.tabBarController.tabBar hideBadgeOnItemIndex:2];
         }
-        //        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
         [self refreshConversationTableViewIfNeeded];
-        //        [self.tabBarController.tabBar hideBadgeOnItemIndex:4];
-        //        [self.tabBarController.tabBar showBadgeOnItemIndex:4];
-    }
-    else
-    {
-        
-        //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        //        [alertView show];
-        
+    }else{
         [self refreshConversationTableViewIfNeeded];
-        
     }
-    
+    [[UIApplication sharedApplication]setStatusBarHidden:false];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
@@ -102,14 +77,12 @@
 };
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        
         JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
         vc.reloadCtrlData = ^(){
             [self.conversationListTableView.mj_header beginRefreshing];
             NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
             [center postNotificationName:@"loadMessageData" object:nil];
         };
-        
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -117,13 +90,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue] >7.0) {
-        [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor, nil]];
-    }else {
-        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    }
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav"] forBarMetrics:UIBarMetricsDefault];
     
     _costumBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44 * ProportionAdapter, 44 * ProportionAdapter)];
@@ -132,10 +99,6 @@
     UIBarButtonItem *itm = [[UIBarButtonItem alloc] initWithCustomView:_costumBtn];
     
     self.navigationItem.rightBarButtonItem = itm;
-    
-    //    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"qytxl"] style:UIBarButtonItemStylePlain target:self action:@selector(teamFClick)];
-    //    item.tintColor = [UIColor whiteColor];
-    //    self.navigationItem.rightBarButtonItem = item;
     
     self.conversationListTableView.backgroundColor=[UIColor whiteColor];
     self.conversationListTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
@@ -148,31 +111,20 @@
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(rongTKChat) name:@"RongTKChat" object:nil];
-    
-    
-    
-    //聚合会话类型
-    //   [self setCollectionConversationType:@[@(ConversationType_GROUP),@(ConversationType_PRIVATE)]];
-    
 }
+
 - (void)rongTKChat{
-//    [self refreshConversationTableViewIfNeeded];
+
     [self reloadRongTKChet];
 }
 #pragma mark -- 下载未读消息数量
 - (void)loadMessageData{
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
-    {
+    if (!DEFAULF_USERID){
         
-    }
-    else
-    {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
-        
         [self.conversationListTableView.mj_header endRefreshing];
-        
         return;
     }
     
@@ -189,7 +141,6 @@
             if ([data objectForKey:@"teamMsgNewest"]) {
                 _teamNotDetailLable.text = [NSString stringWithFormat:@"%@", [[data objectForKey:@"teamMsgNewest"] objectForKey:@"title"]];
             }
-            
             if ([data objectForKey:@"systemMsgNewest"]) {
                 _sysDetailLable.text = [NSString stringWithFormat:@"%@", [[data objectForKey:@"systemMsgNewest"] objectForKey:@"title"]];
             }
@@ -212,9 +163,7 @@
         tVc.hidesBottomBarWhenPushed = YES;
         tVc.addFriendSum = [NSNumber numberWithInt:_newFriendUnreadCount];
         [self.navigationController pushViewController:tVc animated:YES];
-    }
-    else
-    {
+    }else{
         [self loginOut];
     }
 }
@@ -323,11 +272,9 @@
         btn.userInteractionEnabled = YES;
         return;
     }
-//    _systemUnread = 0;
     [[RCIMClient sharedRCIMClient] clearMessagesUnreadStatus:ConversationType_SYSTEM targetId:SYSTEM_ID];
     [_systemRCDbtn removeFromSuperview];
     _systemRCDbtn = nil;
-//clearMessagesUnreadStatus
     [self updateBadgeValueForTabBarItem];
     
     JGHSystemNotViewController *sysCtrl = [[JGHSystemNotViewController alloc]init];
@@ -355,7 +302,6 @@
         
         return;
     }
-//    _teamUnread = 0;
     [[RCIMClient sharedRCIMClient] clearMessagesUnreadStatus:ConversationType_SYSTEM targetId:TEAM_ID];
     [_teamRCDbtn removeFromSuperview];
     _teamRCDbtn = nil;
@@ -369,17 +315,14 @@
     btn.userInteractionEnabled = YES;
 }
 
--(void)messageCLick
-{
+-(void)messageCLick{
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"])
     {
         NewsDetailController* myVc = [[NewsDetailController alloc]init];
         myVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:myVc animated:YES];
-    }
-    else
-    {
+    }else{
         [self loginOut];
         
     }

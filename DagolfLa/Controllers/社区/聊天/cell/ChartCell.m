@@ -8,8 +8,6 @@
 
 #import "ChartCell.h"
 #import "ChartContentView.h"
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
 @interface ChartCell()<ChartContentViewDelegate>
 @property (nonatomic,strong) UIImageView *icon;
 @property (nonatomic,strong) ChartContentView *chartView;

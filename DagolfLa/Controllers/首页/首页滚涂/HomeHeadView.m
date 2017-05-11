@@ -7,9 +7,6 @@
 //
 
 #import "HomeHeadView.h"
-#import "AppDelegate.h"
-#import "UIImageView+WebCache.h"
-#import "Helper.h"
 
 @implementation HomeHeadView
 {

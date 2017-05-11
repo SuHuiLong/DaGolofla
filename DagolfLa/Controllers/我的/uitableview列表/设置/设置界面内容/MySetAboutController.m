@@ -7,8 +7,6 @@
 //
 
 #import "MySetAboutController.h"
-#import "Helper.h"
-#import "PostDataRequest.h"
 @interface MySetAboutController ()<UIWebViewDelegate>
 
 @property(nonatomic,retain)UIWebView *webView;

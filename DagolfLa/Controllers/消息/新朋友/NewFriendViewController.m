@@ -8,11 +8,6 @@
 
 #import "NewFriendViewController.h"
 #import "NewFriendTableViewCell.h"
-
-#import "PostDataRequest.h"
-#import "Helper.h"
-
-
 #import "NewFriendModel.h"
 #import "PersonHomeController.h"
 #import "ChatDetailViewController.h"

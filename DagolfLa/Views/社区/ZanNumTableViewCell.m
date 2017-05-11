@@ -8,9 +8,6 @@
 
 #import "ZanNumTableViewCell.h"
 
-#import "UIImageView+WebCache.h"
-#import "Helper.h"
-
 @implementation ZanNumTableViewCell
 
 - (void)awakeFromNib {

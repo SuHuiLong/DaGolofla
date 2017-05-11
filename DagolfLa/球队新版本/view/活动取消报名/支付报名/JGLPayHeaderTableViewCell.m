@@ -96,12 +96,9 @@
     _timeLabel.text = [NSString stringWithFormat:@"%@月%@日", monthTimeString, dataTimeString];
     
     _peopleLabel.text = [NSString stringWithFormat:@"已报名人数(%td/%td人)",model.sumCount,model.maxCount];
-    if (![Helper isBlankString:model.ballName])
-    {
+    if (![Helper isBlankString:model.ballName]){
         _addressLabel.text = [NSString stringWithFormat:@"%@",model.ballName];
-    }
-    else
-    {
+    }else{
         _addressLabel.text = [NSString stringWithFormat:@"暂无地址"];
     }
     

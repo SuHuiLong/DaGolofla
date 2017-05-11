@@ -8,7 +8,6 @@
 
 #import "JGDPlayerQRCodeViewController.h"
 #import "UITool.h"
-#import "PostDataRequest.h"
 #import <CoreImage/CoreImage.h>
 #import "JGLCaddieChooseStyleViewController.h"
 #import "JGLCaddieSelfScoreViewController.h"

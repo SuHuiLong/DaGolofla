@@ -8,7 +8,6 @@
 
 #import "InformViewController.h"
 #import "ScreenTableViewCell.h"
-#import "PostDataRequest.h"
 #import "InformSetmodel.h"
 
 

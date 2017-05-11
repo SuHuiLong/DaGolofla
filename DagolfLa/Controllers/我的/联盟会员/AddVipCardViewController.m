@@ -73,7 +73,6 @@
     //设置导航背景
     [self.navigationController.navigationBar setTintColor:WhiteColor];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-
 //backL
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(popBack)];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];

@@ -10,22 +10,13 @@
 
 #import "ZYQAssetPickerController.h"
 #import "IWTextView.h"
-#import "Helper.h"
 #import "BrowseImagesViewController.h"
-
-
-
-#import "Helper.h"
-#import "PostDataRequest.h"
-//#import "MBProgressHUD.h"
 #define LINE_COUNT 4
 #define kUsersave_URL @"userMood/save.do"
 
 #import "AreaViewController.h"
 #import "DateTimeViewController.h"
 #import "UIView+ChangeFrame.h"
-
-#import "MBProgressHUD.h"
 
 #import "BallParkViewController.h"
 @interface AddFootViewController ()<UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ZYQAssetPickerControllerDelegate,UIScrollViewDelegate,UIPickerViewAccessibilityDelegate,UIPickerViewDataSource,UIPickerViewDelegate>

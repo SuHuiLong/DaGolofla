@@ -7,8 +7,6 @@
 //
 
 #import "CollectViewController.h"
-#import "Helper.h"
-#import "PostDataRequest.h"
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
 
@@ -101,8 +99,6 @@
     }
     
     [[PostDataRequest sharedInstance] getDataRequest:strUrl success:^(id respondsData) {
-//        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-        ////NSLog(@"%@",[dict objectForKey:@"msg"]);
         
         NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com/app/Collection.html"];
         
@@ -263,10 +259,7 @@
                 }
             }
         }];
-    }
-    else
-    {
-        
+        return NO;
     }
     
     return YES;

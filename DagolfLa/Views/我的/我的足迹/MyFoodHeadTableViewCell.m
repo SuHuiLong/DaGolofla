@@ -7,8 +7,6 @@
 //
 
 #import "MyFoodHeadTableViewCell.h"
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 @implementation MyFoodHeadTableViewCell

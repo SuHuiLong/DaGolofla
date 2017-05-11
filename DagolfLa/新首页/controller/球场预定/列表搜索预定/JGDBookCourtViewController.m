@@ -176,6 +176,16 @@
     [self isLogin];
     SearchWithMapViewController *vc = [[SearchWithMapViewController alloc] init];
     vc.cityName = _cityString;
+    vc.blockProvince = ^(NSString *province) {
+        CGFloat width = [Helper textWidthFromTextString:province height:screenWidth - 20 * ProportionAdapter fontSize:17];
+        self.cityLitleLB.text = province;
+        self.provinceName = province;
+        self.backTitleView.frame =  CGRectMake((screenWidth - width + 30 * ProportionAdapter ) / 2, 0, width + 30 * ProportionAdapter, 30 * ProportionAdapter);
+        self.cityLitleLB.frame = CGRectMake(0, 0, width, 30 * ProportionAdapter);
+        self.titleBtn.frame = CGRectMake(width, 0, 30 * ProportionAdapter, 30 * ProportionAdapter);
+        self.offset = 0;
+        [self dataSet:self.currentType];
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 

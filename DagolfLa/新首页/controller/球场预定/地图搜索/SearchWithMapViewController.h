@@ -7,9 +7,15 @@
 //
 
 #import "BaseViewController.h"
-
+typedef void (^blockProvince)(NSString *province);
 @interface SearchWithMapViewController : BaseViewController
 //选择城市名
 @property(nonatomic, copy)NSString *cityName;
+
+
+/**
+ 选中城市的block
+ */
+@property (copy, nonatomic) blockProvince blockProvince;
 
 @end

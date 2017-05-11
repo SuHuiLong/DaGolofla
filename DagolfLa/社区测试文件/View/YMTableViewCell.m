@@ -19,9 +19,6 @@
 #import "WFHudView.h"
 
 #import "UIImageView+WebCache.h"
-#import "Helper.h"
-#import "PostDataRequest.h"
-
 
 #import "JKSlideSwitchView.h"
 #import "PersonHomeController.h"

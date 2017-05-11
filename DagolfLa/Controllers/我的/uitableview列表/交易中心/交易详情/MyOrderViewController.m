@@ -7,8 +7,6 @@
 //
 
 #import "MyOrderViewController.h"
-#import "Helper.h"
-#import "PostDataRequest.h"
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
 
@@ -57,14 +55,12 @@
     return _imageView;
 }
 
-
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=YES;
 }
--(void)viewDidDisappear:(BOOL)animated
-{
+
+-(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     self.navigationController.navigationBarHidden=NO;
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
@@ -73,6 +69,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _dictCan = [[NSMutableDictionary alloc]init];
+    [self createView];
+}
+
+#pragma mark - CreateView
+-(void)createView{
     self.webView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-7*ScreenWidth/375+64);
     self.webView.delegate=self;
     
@@ -96,14 +97,11 @@
     NSString* strUrl;
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"isWeChat"] integerValue] == 1) {
         strUrl = [[NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=AppToUserOathBind&method=login&openid=%@&uid=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"openId"],[[NSUserDefaults standardUserDefaults] objectForKey:@"uid"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    }
-    else
-    {
+    }else{
         strUrl = [NSString stringWithFormat:@"http://www.dagolfla.com/app/api/client/api.php?Action=UserLogin&uid=%@&psw=%@&url=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"],[[NSUserDefaults standardUserDefaults] objectForKey:@"passWord"],@"index.jsp"];
     }
     
     [[PostDataRequest sharedInstance] getDataRequest:strUrl success:^(id respondsData) {
-//        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         ////NSLog(@"%@",[dict objectForKey:@"msg"]);
         
         NSURL* url = [NSURL URLWithString:@"http://www.dagolfla.com/app/MyOrder.html"];
@@ -112,9 +110,11 @@
         //设置web占满屏幕
         _webView.scalesPageToFit = YES ;
 //111
+//
         NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
         NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
         [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customUserAgent}];
+//
         [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
         
         if ([[url query] containsString:@"www.dagolfla.com"] || [[url query] containsString:@"dagolfla://"]) {
@@ -148,9 +148,8 @@
     self.navigationController.navigationBarHidden=NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    NSLog(@"%@",request);
     //111
     NSString *userAgent = [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     NSString *customUserAgent = [userAgent stringByAppendingFormat:@" dagolfla/2.0"];
@@ -162,7 +161,7 @@
     NSArray  * arrayUrl= [[request.URL absoluteString] componentsSeparatedByString:@"privatemsg:"];
     NSString *xinWenURL = @"privatemsg";
     
-    if ([str containsString:@"www.dagolfla.com"] || [str containsString:@"dagolfla://"]) {
+    if ([str containsString:@"www.dagolfla.com"] || [str containsString:@"dagolfla://"]||[str containsString:@"tel:"]) {
         self.navigationController.navigationBarHidden = YES;
         _statusView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, ScreenWidth, 20)];
         
@@ -232,6 +231,7 @@
         [LQProgressHud showLoading:@""];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         [dict setObject:DEFAULF_USERID forKey:@"userKey"];
+
         [[JsonHttp jsonHttp]httpRequest:@"user/getUserBalance" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
             [LQProgressHud hide];
         } completionBlock:^(id data) {
@@ -252,6 +252,8 @@
                 
                 // 分别3个创建操作
                 UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    
                 }];
                 UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     //添加微信支付请求
@@ -288,14 +290,9 @@
             }
         }];
         
-    }
-    else
-    {
+        return NO;
         
     }
-    
-    
-    
     return YES;
 }
 
@@ -480,6 +477,5 @@
     ////NSLog(@"webview下载失败，error = %@",[error localizedDescription]);
     self.imageView.image = [UIImage imageNamed:DefaultHeaderImage];
 }
-
 
 @end

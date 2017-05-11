@@ -19,10 +19,6 @@
 
 #import "MySetViewController.h"
 
-#import "MBProgressHUD.h"
-
-#import "PostDataRequest.h"
-#import "Helper.h"
 #import "MeselfModel.h"
 #import "UIImageView+WebCache.h"
 

@@ -49,6 +49,7 @@
         numberLine ++ ;
     }
     self.cityView.height = kHvertical(40)*numberLine + kHvertical(10);
+    [self.cityView reloadData];
 }
 
 

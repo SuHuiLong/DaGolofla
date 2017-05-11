@@ -82,6 +82,8 @@
 		18911AAA1EA46A6B00B6FAAD /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18911AA11EA46A6B00B6FAAD /* libSocialWechat.a */; };
 		18911AAB1EA46A6B00B6FAAD /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18911AA21EA46A6B00B6FAAD /* libWeChatSDK.a */; };
 		18911AAF1EA46CB800B6FAAD /* VipCardSellPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18911AAE1EA46CB800B6FAAD /* VipCardSellPhoneViewController.m */; };
+		189A82AA1EC16725006D16B2 /* InitAdvertiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 189A82A91EC16725006D16B2 /* InitAdvertiseView.m */; };
+		189A82AE1EC18B6F006D16B2 /* BMCurrentLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 189A82AD1EC18B6F006D16B2 /* BMCurrentLocation.m */; };
 		189E368D1E84C102004BF082 /* SaveScheduleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 189E368C1E84C102004BF082 /* SaveScheduleView.m */; };
 		18C062061EB1E8770011F26A /* BYFoundationLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C062051EB1E8770011F26A /* BYFoundationLog.m */; };
 		18D5DBCE1E65700F008C87EE /* shake-sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18D5DBCD1E65700F008C87EE /* shake-sound.wav */; };
@@ -1432,6 +1434,10 @@
 		18911AA51EA46A6B00B6FAAD /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		18911AAD1EA46CB800B6FAAD /* VipCardSellPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VipCardSellPhoneViewController.h; sourceTree = "<group>"; };
 		18911AAE1EA46CB800B6FAAD /* VipCardSellPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VipCardSellPhoneViewController.m; sourceTree = "<group>"; };
+		189A82A81EC16725006D16B2 /* InitAdvertiseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitAdvertiseView.h; sourceTree = "<group>"; };
+		189A82A91EC16725006D16B2 /* InitAdvertiseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitAdvertiseView.m; sourceTree = "<group>"; };
+		189A82AC1EC18B6F006D16B2 /* BMCurrentLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCurrentLocation.h; sourceTree = "<group>"; };
+		189A82AD1EC18B6F006D16B2 /* BMCurrentLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCurrentLocation.m; sourceTree = "<group>"; };
 		189E368B1E84C102004BF082 /* SaveScheduleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveScheduleView.h; sourceTree = "<group>"; };
 		189E368C1E84C102004BF082 /* SaveScheduleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveScheduleView.m; sourceTree = "<group>"; };
 		18C062051EB1E8770011F26A /* BYFoundationLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYFoundationLog.m; sourceTree = "<group>"; };
@@ -3944,6 +3950,8 @@
 			children = (
 				186855731E5AA162001F44DD /* AdvertiseView.h */,
 				186855741E5AA162001F44DD /* AdvertiseView.m */,
+				189A82A81EC16725006D16B2 /* InitAdvertiseView.h */,
+				189A82A91EC16725006D16B2 /* InitAdvertiseView.m */,
 			);
 			path = "启动广告页";
 			sourceTree = "<group>";
@@ -4063,6 +4071,15 @@
 				18911AAE1EA46CB800B6FAAD /* VipCardSellPhoneViewController.m */,
 			);
 			path = sellPhone;
+			sourceTree = "<group>";
+		};
+		189A82AB1EC18AF4006D16B2 /* 百度地图定位类 */ = {
+			isa = PBXGroup;
+			children = (
+				189A82AC1EC18B6F006D16B2 /* BMCurrentLocation.h */,
+				189A82AD1EC18B6F006D16B2 /* BMCurrentLocation.m */,
+			);
+			path = "百度地图定位类";
 			sourceTree = "<group>";
 		};
 		189E368A1E84C076004BF082 /* 显示保存进度 */ = {
@@ -7027,6 +7044,7 @@
 		36BFFEEA1BC76D09005B3CE2 /* 第三方库 */ = {
 			isa = PBXGroup;
 			children = (
+				189A82AB1EC18AF4006D16B2 /* 百度地图定位类 */,
 				18C062041EB1E8770011F26A /* 控制台输出中文 */,
 				1870EE021EA6ECFA00BFD871 /* MJRefreshDIY */,
 				18911A971EA46A6B00B6FAAD /* 微信支付 */,
@@ -9295,6 +9313,7 @@
 				F5EBBDA31EAEE9FA00580237 /* JGDAwardSetViewController.m in Sources */,
 				203019681E0E4292005568E2 /* ZXCGImageLuminanceSource.m in Sources */,
 				203019AC1E0E4292005568E2 /* ZXAI013x0x1xDecoder.m in Sources */,
+				189A82AE1EC18B6F006D16B2 /* BMCurrentLocation.m in Sources */,
 				36A9B6921CA37D9200A120EE /* UITabBar+badge.m in Sources */,
 				36E1FBB11C7D7DA2006B1456 /* ChangePicModel.m in Sources */,
 				20BC97D51E1F6051007DFD34 /* JGHCustomAwardViewController.m in Sources */,
@@ -9722,6 +9741,7 @@
 				20301A151E1104F1005568E2 /* JGHCaddieActivityScoreView.m in Sources */,
 				36DC9D5C1C994E6E003E4FCC /* RecomeFriendViewController.m in Sources */,
 				203019B31E0E4292005568E2 /* ZXRSSExpandedCurrentParsingState.m in Sources */,
+				189A82AA1EC16725006D16B2 /* InitAdvertiseView.m in Sources */,
 				36BF01DB1BC77BB0005B3CE2 /* EnrollModel.m in Sources */,
 				2088379F1D1A2600004C7B5D /* JGHJustApplyListView.m in Sources */,
 				36BFFF881BC76D09005B3CE2 /* UITool.m in Sources */,

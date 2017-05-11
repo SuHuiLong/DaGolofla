@@ -19,13 +19,6 @@
 #define dataCount 10
 #define kLocationToBottom 20
 
-
-#import "MJRefresh.h"
-
-#import "MJRefreshFooter.h"
-#import "PostDataRequest.h"
-#import "Helper.h"
-
 #import "MyNewsBoxViewController.h"
 #import "PublishViewController.h"
 #import "ZanNumViewController.h"
@@ -544,10 +537,8 @@
         
         [[PostDataRequest sharedInstance] postDataRequest:@"moodShield/save.do" parameter:@{@"shieldUserId":shieldUserId,@"userId":dqId} success:^(id respondsData) {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
-            //            [MBProgressHUD hideHUDForView:self.view  animated:NO];
             
             if ([[dict objectForKey:@"success"] boolValue]) {
-                //                [MBProgressHUD hideHUDForView:self.view  animated:NO];
                 [_tableDataSource removeAllObjects];
 
                 [self.mainTable.mj_header beginRefreshing];
@@ -560,16 +551,12 @@
                 [self presentViewController:alerT animated:YES completion:nil];
                 
             }else {
-                //                [MBProgressHUD hideHUDForView:self.view  animated:NO];
-                
                 [Helper alertViewNoHaveCancleWithTitle:@"网络状况不佳,请稍后再试!" withBlock:^(UIAlertController *alertView) {
                     
                     [self presentViewController:alertView animated:YES completion:nil];
                 }];
             }
         } failed:^(NSError *error) {
-            //            [MBProgressHUD hideHUDForView:self.view  animated:NO];
-            //            NSLog(@"%@",error);
             [Helper alertViewNoHaveCancleWithTitle:@"网络状况不佳,请稍后再试!" withBlock:^(UIAlertController *alertView) {
                 
                 [self presentViewController:alertView animated:YES completion:nil];

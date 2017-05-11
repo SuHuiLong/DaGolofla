@@ -46,10 +46,11 @@
 -(void)createNavigation{
     
     self.title = @"联盟商城";
-    [self.navigationController.navigationBar setTintColor:WhiteColor];
+    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     //设置导航背景
-    [self.navigationController.navigationBar setTintColor:WhiteColor];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
     //backL

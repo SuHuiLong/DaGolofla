@@ -194,10 +194,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #define ImageName(...) [UIImage imageNamed:\\_VA_ARGS__)]
 
 
-
-
-
-
 #import "UIColor+ColorTransfer.h"
 #import "JsonHttp.h"
 #import "Helper.h"
@@ -210,7 +206,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 //share
 #import "ShareAlert.h"
 #import "UMSocial.h"
-//#import "UMSocialSinaHandler.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialData.h"
 
@@ -221,7 +216,6 @@ typedef NS_ENUM(NSInteger, GestureType) {
 
 #import "MJRefresh.h"
 #import "MJDIYHeader.h"
-
 
 #import "FCUUID.h"
 #import "JGHLoginViewController.h"

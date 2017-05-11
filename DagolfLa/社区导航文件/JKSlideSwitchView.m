@@ -11,7 +11,6 @@
 #import "JKSlideSwitchView.h"
 
 #import "MyNewsBoxViewController.h"
-#import "Helper.h"
 #import "PublishViewController.h"
 #import "MyNewsBoxViewController.h"
 

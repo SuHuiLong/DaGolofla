@@ -7,8 +7,6 @@
 //
 
 #import "ShopCarViewController.h"
-#import "Helper.h"
-#import "PostDataRequest.h"
 #import "ChatDetailViewController.h"
 #import "RCDraggableButton.h"
 #import <AlipaySDK/AlipaySDK.h>
@@ -250,12 +248,9 @@
                 }
             }
         }];
-    }
-    else
-    {
-        
-    }
+        return NO;
 
+    }
     return YES;
 }
 

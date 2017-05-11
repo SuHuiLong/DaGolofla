@@ -54,7 +54,10 @@
  */
 -(void)createNavigation{
     self.title = @"确认订单";
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 }
 /**
  主视图

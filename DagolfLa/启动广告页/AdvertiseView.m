@@ -121,8 +121,7 @@ static int const showtime = 3;
     }
 }
 //开始计时
-- (void)show
-{
+- (void)show{
     // 倒计时方法1：GCD
 //    [self startCoundown];
     
@@ -140,8 +139,7 @@ static int const showtime = 3;
 }
 
 // GCD倒计时
-- (void)startCoundown
-{
+- (void)startCoundown{
     __block int timeout = showtime + 1; //倒计时时间 + 1
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
@@ -174,12 +172,7 @@ static int const showtime = 3;
     [self.countTimer invalidate];
     self.countTimer = nil;
     _callBack();
-//    [UIView animateWithDuration:1.0f animations:^{
-//        self.alpha = 0.f;
-//        
-//    } completion:^(BOOL finished) {
-        [self removeFromSuperview];
-//    }];
+    [self removeFromSuperview];
 
 }
 

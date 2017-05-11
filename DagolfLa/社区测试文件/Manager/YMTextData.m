@@ -12,7 +12,6 @@
 #import "NSString+NSString_ILExtension.h"
 #import "WFReplyBody.h"
 #import "WFTextView.h"
-#import "Helper.h"
 @implementation YMTextData{
     
     TypeView typeview;

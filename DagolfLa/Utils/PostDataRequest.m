@@ -14,10 +14,6 @@
 #define TEST  YES   //可自由切-换生产和测试环境
 #define BaseUrl TEST?@"http://www.dagolfla.com:8081/dagaoerfu/":@"http://www.dagolfla.com:8081/dagaoerfu/"
 
-
-#import "PostDataRequest.h"
-#import "Helper.h"
-
 @implementation PostDataRequest
 {
     AFHTTPSessionManager *_httpManager;

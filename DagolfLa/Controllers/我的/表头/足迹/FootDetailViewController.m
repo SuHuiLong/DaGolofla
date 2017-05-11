@@ -9,8 +9,6 @@
 #import "FootDetailViewController.h"
 #import "UIView+ChangeFrame.h"
 #import "PicArrShowViewControllerViewController.h"
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
 @interface FootDetailViewController ()
 {
     

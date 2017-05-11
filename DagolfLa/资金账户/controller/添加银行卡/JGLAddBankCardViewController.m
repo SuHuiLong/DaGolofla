@@ -12,7 +12,6 @@
 #import "JGLBankTypeView.h"
 #import "JGDWrongViewViewController.h"
 
-#import "MBProgressHUD.h"
 
 @interface JGLAddBankCardViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {

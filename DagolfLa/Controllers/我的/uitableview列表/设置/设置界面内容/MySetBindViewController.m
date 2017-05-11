@@ -7,10 +7,6 @@
 //
 
 #import "MySetBindViewController.h"
-
-#import "Helper.h"
-#import "PostDataRequest.h"
-#import "MBProgressHUD.h"
 #import "UserInformationModel.h"
 
 //#import "APService.h"

@@ -8,13 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CommunityModel.h"
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
 #import "ViewController.h"
-
-
 #import "UMSocial.h"
-
 #import "UMSocialWechatHandler.h"
 #import "ShareAlert.h"
 

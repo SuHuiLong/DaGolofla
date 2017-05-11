@@ -8,8 +8,6 @@
 
 #import "UserDataInformation.h"
 #import <RongIMLib/RongIMLib.h>
-#import "Helper.h"
-#import "PostDataRequest.h"
 #import "AppDelegate.h"
 
 @implementation UserDataInformation

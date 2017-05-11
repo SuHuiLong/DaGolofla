@@ -16,10 +16,6 @@
 #import "MyFootBodyTableViewCell.h"
 #import "MyfootModel.h"
 
-#import "Helper.h"
-
-#import "PostDataRequest.h"
-
 #import "PersonHomeController.h"
 
 #import "MeViewController.h"

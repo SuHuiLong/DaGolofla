@@ -7,14 +7,12 @@
 //
 
 #import "ContactViewController.h"
-#import "PostDataRequest.h"
 #import "MyattenModel.h"
 #import "ChineseString.h"
 #import "PYTableViewIndexManager.h"
 #import "UIImageView+WebCache.h"
 #import "UIImageView+AFNetworking.h"
 #import "BallFriListCell.h"
-#import "Helper.h"
 #import "TeamFriListViewController.h"
 #import "PersonHomeController.h"
 #import "NewFriendViewController.h"

@@ -7,10 +7,6 @@
 //
 
 #import "BallParkViewController.h"
-
-#import "PostDataRequest.h"
-
-#import "Helper.h"
 #import "BallParkModel.h"
 #import <RongIMKit/RongIMKit.h>
 #define kBallPark_URL @"ballInfo/queryPage.do"

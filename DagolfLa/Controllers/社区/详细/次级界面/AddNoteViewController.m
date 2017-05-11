@@ -7,11 +7,7 @@
 //
 
 #import "AddNoteViewController.h"
-#import "PostDataRequest.h"
 
-#import "UIImageView+WebCache.h"
-#import "UIImageView+AFNetworking.h"
-#import "Helper.h"
 
 #import "PersonHomeController.h"
 

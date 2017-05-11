@@ -15,11 +15,6 @@
 
 #import "ComDetailViewCell.h"
 
-
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
-#import "UIButton+WebCache.h"
-#import "PostDataRequest.h"
 #import "ComDeatailModel.h"
 #import "UIView+ChangeFrame.h"
 #import "UserAssistModel.h"
@@ -32,7 +27,6 @@
 
 #import "ReportViewController.h"
 
-#import "MBProgressHUD.h"
 
 #import "YMTableViewCell.h"
 

@@ -7,9 +7,6 @@
 //
 
 #import "AreaViewController.h"
-#import "PostDataRequest.h"
-#import "Helper.h"
-
 #import "BallParkModel.h"
 
 #define kBallPark_URL @"ballInfo/queryPage.do"

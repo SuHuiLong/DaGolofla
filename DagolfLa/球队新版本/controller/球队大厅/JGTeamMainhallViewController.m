@@ -36,8 +36,8 @@
     NSString* _strSearch;//搜索的字符串
     
     
-   // NSString* _strProvince;//省份的字符串
-//    UILabel* _labelCity;
+    // NSString* _strProvince;//省份的字符串
+    //    UILabel* _labelCity;
 }
 
 @property (strong, nonatomic) UITableView *tableView;
@@ -61,7 +61,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     _viewCityChoose.hidden = YES;
-
+    
 }
 
 //自定义searchbar
@@ -90,7 +90,7 @@
     [btnCity addSubview:_labelCity];
     
     //默认城市名称
-//    _strProvince = [[NSUserDefaults standardUserDefaults]objectForKey:CITYNAME];
+    //    _strProvince = [[NSUserDefaults standardUserDefaults]objectForKey:CITYNAME];
     
     if (![Helper isBlankString:_strProvince]) {
         _labelCity.text = _strProvince;
@@ -108,7 +108,7 @@
     UIView* viewLine = [[UIView alloc]initWithFrame:CGRectMake(50*ScreenWidth/375, 0, 1*ScreenWidth/375, 34*ScreenWidth/375)];
     viewLine.backgroundColor = [UITool colorWithHexString:@"d9d9d9" alpha:1];
     [btnCity addSubview:viewLine];
-
+    
     
     
     /**
@@ -189,7 +189,7 @@
     __weak JGTeamMainhallViewController* weakSelf = self;
     _viewCityChoose.blockStrPro = ^(NSString* strPro){
         _strProvince = strPro;
-//        weakSelf.text = strPro;
+        //        weakSelf.text = strPro;
         weakSelf.labelCity.text = strPro;
         weakSelf.tableView.mj_header=[MJRefreshHeader headerWithRefreshingTarget:weakSelf refreshingAction:@selector(headRereshing)];
         [weakSelf.tableView.mj_header beginRefreshing];
@@ -243,23 +243,23 @@
     _page = 0;
     self.title = @"搜索球队";
     _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 44, screenWidth, screenHeight-90 * ProportionAdapter) style:(UITableViewStylePlain)];
-//    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 40)];
+    //    _tableView = [[JGTeamChannelTableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 40)];
     _tableView.separatorStyle = UITableViewCellAccessoryDisclosureIndicator;
-
+    
     _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
     _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.mj_header beginRefreshing];
-//    self.view = _tableView;
+    //    self.view = _tableView;
     [self.view addSubview:_tableView];
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
-//    [self getCurPosition];
+    //    [self getCurPosition];
     [self createSeachBar];
     
     _tableView.rowHeight = 80 * ScreenWidth/320;
-
+    
 }
 
 //创建球队
@@ -297,32 +297,32 @@
     
     
     
-//    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-//
-//    if ([user objectForKey:@"cacheCreatTeamDic"]) {
-//        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
-//        
-//        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            [user setObject:0 forKey:@"cacheCreatTeamDic"];
-//            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-//            [self.navigationController pushViewController:creatteamVc animated:YES];
-//        }];
-//        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-//            creatteamVc.detailDic = [user objectForKey:@"cacheCreatTeamDic"];
-//            creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
-//        
-//            [self.navigationController pushViewController:creatteamVc animated:YES];
-//        }];
-//        
-//        [alert addAction:action1];
-//        [alert addAction:action2];
-//        [self presentViewController:alert animated:YES completion:nil];
-//        
-//    }else{
-//        JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
-//        [self.navigationController pushViewController:creatteamVc animated:YES];
-//    }
+    //    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    //
+    //    if ([user objectForKey:@"cacheCreatTeamDic"]) {
+    //        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:@"是否继续上次编辑" preferredStyle:UIAlertControllerStyleAlert];
+    //
+    //        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    //            [user setObject:0 forKey:@"cacheCreatTeamDic"];
+    //            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+    //            [self.navigationController pushViewController:creatteamVc animated:YES];
+    //        }];
+    //        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    //            JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+    //            creatteamVc.detailDic = [user objectForKey:@"cacheCreatTeamDic"];
+    //            creatteamVc.titleField.text = [[user objectForKey:@"cacheCreatTeamDic"] objectForKey:@"name"];
+    //
+    //            [self.navigationController pushViewController:creatteamVc animated:YES];
+    //        }];
+    //
+    //        [alert addAction:action1];
+    //        [alert addAction:action2];
+    //        [self presentViewController:alert animated:YES completion:nil];
+    //
+    //    }else{
+    //        JGNewCreateTeamTableViewController *creatteamVc = [[JGNewCreateTeamTableViewController alloc] init];
+    //        [self.navigationController pushViewController:creatteamVc animated:YES];
+    //    }
     
     
 }
@@ -355,7 +355,7 @@
     if (![Helper isBlankString:_strProvince]) {
         [dict setObject:_strProvince forKey:@"province"];
     }
-
+    
     [dict setObject:[NSNumber numberWithInteger:_page] forKey:@"offset"];
     [[JsonHttp jsonHttp]httpRequest:@"team/getTeamList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         if (isReshing) {
@@ -376,9 +376,6 @@
             _page++;
             [_tableView reloadData];
         }else {
-//            [Helper alertViewWithTitle:@"没有更多球队" withBlock:^(UIAlertController *alertView) {
-//                [self presentViewController:alertView animated:YES completion:nil];
-//            }];
         }
         [_tableView reloadData];
         if (isReshing) {
@@ -390,81 +387,6 @@
 }
 
 
-//
-//-(void)getCurPosition{
-//    
-//    if (_locationManager==nil) {
-//        _locationManager=[[CLLocationManager alloc] init];
-//    }
-//    if ([CLLocationManager locationServicesEnabled]) {
-//        _locationManager.delegate=self;
-//        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-//        _locationManager.distanceFilter=10.0f;
-//        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-//        {
-//            [_locationManager requestWhenInUseAuthorization];  //调用了这句,就会弹出允许框了.
-//        }
-//        [_locationManager startUpdatingLocation];
-//    }
-//}
-//
-//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-//{
-//    CLLocation *currLocation = [locations lastObject];
-//    //NSLog(@"经度=%f 纬度=%f 高度=%f", currLocation.coordinate.latitude, currLocation.coordinate.longitude, currLocation.altitude);
-//    NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
-//    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-//    //根据经纬度反向地理编译出地址信息
-//    [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array, NSError *error)
-//     {
-//         if (array.count > 0)
-//         {
-//             CLPlacemark *placemark = [array objectAtIndex:0];
-//             //将获得的所有信息显示到label上
-//             NSLog(@"%@",placemark.name);
-//             //获取城市
-//             NSString *city = placemark.locality;
-//             if (!city) {
-//                 city = placemark.administrativeArea;
-//             }
-//             _strProvince = city;
-//             _labelCity.text = city;
-//         }
-//         else if (error == nil && [array count] == 0)
-//         {
-//             NSLog(@"No results were returned.");
-//         }
-//         else if (error != nil)
-//         {
-//             NSLog(@"An error occurred = %@", error);
-//         }
-//     }];
-//    
-////    [self.paraDic setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"likeName"];
-//    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:@"lat"];
-//    [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:@"lng"];
-//    [_locationManager stopUpdatingLocation];
-//    [user synchronize];
-//    //[_tableView.mj_header beginRefreshing];
-//    //_tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-//    //[_tableView.mj_header beginRefreshing];
-//
-//}
-
-//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-//{
-//    if ([error code] == kCLErrorDenied)
-//    {
-//        //访问被拒绝
-//        //NSLog(@"访问被拒绝");
-//    }
-//    if ([error code] == kCLErrorLocationUnknown) {
-//        //无法获取位置信息
-//        //NSLog(@"无法获取位置信息");
-//    }
-//}
-
-
 //设置区域的行数
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (![Helper isBlankString:_textField.text]) {
@@ -474,7 +396,6 @@
             return 0;
         }
     }else{
-//        self.tableView.footer = nil;
         if (self.modelArray) {
             return [self.modelArray count];
         }else{
@@ -493,7 +414,7 @@
     if (![Helper isBlankString:_textField.text]) {
         NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.searchArray[indexPath.row] objectForKey:@"timeKey"]];
         [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
-
+        
         if ([self.searchArray count] != 0) {
             [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.searchArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
             //            cell.nameLabel.text = [self.searchArray[indexPath.row] objectForKey:@"name"];
@@ -508,11 +429,11 @@
     }else{
         // TEST
         NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.modelArray[indexPath.row] objectForKey:@"timeKey"]];
-                NSLog(@"%@",[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]]);
+        NSLog(@"%@",[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]]);
         [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
         [cell.iconImageV sd_setImageWithURL:[Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]] placeholderImage:[UIImage imageNamed:TeamLogoImage]];
         NSLog(@"%@", [Helper setImageIconUrl:[[self.modelArray[indexPath.row] objectForKey:@"timeKey"] integerValue]]);
-
+        
         cell.nameLabel.text = [NSString stringWithFormat:@"%@ (%@)",[self.modelArray[indexPath.row] objectForKey:@"name"],[self.modelArray[indexPath.row] objectForKey:@"userSum"]];
         cell.adressLabel.text = [self.modelArray[indexPath.row] objectForKey:@"crtyName"];
         cell.describLabel.text = [self.modelArray[indexPath.row] objectForKey:@"info"];
@@ -534,12 +455,6 @@
     return _searchArray;
 }
 
-//- (NSMutableDictionary *)paraDic{
-//    if (!_paraDic) {
-//        _paraDic = [[NSMutableDictionary alloc] init];
-//    }
-//    return _paraDic;
-//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -557,58 +472,7 @@
     JGDNewTeamDetailViewController *teamDetailVC = [[JGDNewTeamDetailViewController alloc] init];
     teamDetailVC.timeKey = [dic objectForKey:@"teamKey"];
     [self.navigationController pushViewController:teamDetailVC animated:YES];
-    
-//    [[JsonHttp jsonHttp] httpRequest:@"team/getTeamInfo" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
-//
-//    } completionBlock:^(id data) {
-//
-//        
-//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//
-//            if (![data objectForKey:@"teamMember"]) {
-//                JGNotTeamMemberDetailViewController *detailVC = [[JGNotTeamMemberDetailViewController alloc] init];
-//                if (![Helper isBlankString:_textField.text]) {
-//                    detailVC.detailDic = self.searchArray[indexPath.row];
-//                }else{
-//                    detailVC.detailDic = self.modelArray[indexPath.row];
-//                }
-//                [self.navigationController pushViewController:detailVC animated:YES];
-//            }else{
-//                
-//                if ([[[data objectForKey:@"teamMember"] objectForKey:@"power"] containsString:@"1005"]){
-//                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                    if (![Helper isBlankString:_textField.text]) {
-//                        detailVC.detailDic = self.searchArray[indexPath.row];
-//                    }else{
-//                        detailVC.detailDic = self.modelArray[indexPath.row];
-//                    }
-//                    detailVC.isManager = YES;
-//                    [self.navigationController pushViewController:detailVC animated:YES];
-//                }else{
-//                    JGTeamMemberORManagerViewController *detailVC = [[JGTeamMemberORManagerViewController alloc] init];
-//                    if (![Helper isBlankString:_textField.text]) {
-//                        
-//                        if ([self.searchArray count] > 0) {
-//                            detailVC.detailDic = self.searchArray[indexPath.row];
-//                        }
-//                    }else{
-//                        if ([self.modelArray count] > 0) {
-//                            detailVC.detailDic = self.modelArray[indexPath.row];
-//                        }
-//                    }
-//                    detailVC.isManager = NO;
-//                    [self.navigationController pushViewController:detailVC animated:YES];
-//                }
-//            }
-//            
-//        }else{
-//            if ([data objectForKey:@"packResultMsg"]) {
-//                [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-//            }
-//        }
-//
-//    }];
-
+        
 }
 
 
@@ -625,13 +489,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

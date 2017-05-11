@@ -7,8 +7,6 @@
 //
 
 #import "MyselfChooseViewCell.h"
-#import "PostDataRequest.h"
-#import "Helper.h"
 #import "ViewController.h"
 
 #define kUpDateData_URL @"user/updateUserInfo.do"

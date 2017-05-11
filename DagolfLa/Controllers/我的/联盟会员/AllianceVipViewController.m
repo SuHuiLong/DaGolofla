@@ -65,7 +65,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //隐藏上下导航电池栏
+    //隐藏上下导航栏
     self.tabBarController.tabBar.hidden = YES;
     self.navigationController.navigationBarHidden = false;
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_wbg"] forBarMetrics:UIBarMetricsDefault];

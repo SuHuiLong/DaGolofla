@@ -14,12 +14,6 @@
 #import "MySelfTableViewCell.h"
 #import "MyselfImpotTableViewCell.h"
 #import "MyselfChooseViewCell.h"
-
-#import "PostDataRequest.h"
-#import "MJRefresh.h"
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
-
 #import "MeselfModel.h"
 #import "JobChooseViewController.h"
 #import "DateTimeViewController.h"

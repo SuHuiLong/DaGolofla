@@ -122,7 +122,7 @@
     titleLabel.text = nameStr;
     [titleBackView addSubview:titleLabel];
     //价格
-    UILabel *priceLabel = [Factory createLabelWithFrame:CGRectMake(titleLabel.x, kHvertical(49), kWvertical(80), kHvertical(17)) textColor:RGB(252,90,1) fontSize:kHorizontal(22) Title:nil];
+    UILabel *priceLabel = [Factory createLabelWithFrame:CGRectMake(titleLabel.x, kHvertical(47), kWvertical(80), kHvertical(22)) textColor:RGB(252,90,1) fontSize:kHorizontal(22) Title:nil];
     NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"￥%@",self.dataModel.price]];
     [priceStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(14)] range:NSMakeRange(0, 1)];
     priceLabel.attributedText = priceStr;

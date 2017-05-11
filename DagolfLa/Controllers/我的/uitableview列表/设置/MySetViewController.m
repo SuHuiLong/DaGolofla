@@ -15,8 +15,6 @@
 #import "MySetUpDateViewController.h"
 #import "MySetReceiveController.h"
 #import "MySetApplyController.h"
-#import "PostDataRequest.h"
-#import "Helper.h"
 #define kUpDateData_URL @"user/updateUserInfo.do"
 
 #import "SDImageCache.h"

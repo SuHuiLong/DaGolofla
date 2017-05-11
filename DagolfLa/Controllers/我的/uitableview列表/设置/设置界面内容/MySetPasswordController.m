@@ -8,9 +8,6 @@
 
 #import "MySetPasswordController.h"
 
-#import "Helper.h"
-#import "PostDataRequest.h"
-
 #define kReseve_URL @"user/updatePassWord.do"
 
 @interface MySetPasswordController ()<UITextFieldDelegate, UIAlertViewDelegate>

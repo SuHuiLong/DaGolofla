@@ -18,6 +18,14 @@
 -(void)showToastWithText:(NSString *)text FromView:(UIView *)view;
 
 /**
+ 显示多行文本
+
+ @param text 要显示的文本
+ @param view 所在view
+ */
+-(void)showLinesToastWithText:(NSString *)text FromView:(UIView *)view;
+
+/**
  *  显示菊花加载动画和文字
  *
  *  @param text 要显示的文字

@@ -6,10 +6,6 @@
 //  Copyright © 2016年 bhxx. All rights reserved.
 //
 #import "BallFriListCell.h"
-#import <UIKit/UIKit.h>
-#import "UIImageView+WebCache.h"
-#import "UIImageView+AFNetworking.h"
-#import "Helper.h"
 
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width

@@ -7,12 +7,7 @@
 //
 
 #import "JobChooseViewController.h"
-
-#import "PostDataRequest.h"
-#import "Helper.h"
 #import "JobModel.h"
-
-
 #define kUserWork_URL @"work/queryAll.do"
 
 

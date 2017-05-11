@@ -8,7 +8,6 @@
 
 #import "FDCalendar.h"
 #import "FDCalendarItem.h"
-#import "Helper.h"
 #define Weekdays @[@"日", @"一", @"二", @"三", @"四", @"五", @"六"]
 #define WeekNum @[@"星期日", @"星期一", @"星期二", @"星期三", @"星期四", @"星期五", @"星期六"]
 

@@ -13,11 +13,6 @@
 #import "ChatDetailViewController.h"
 #import "ChatDetailViewController.h"
 #import "AddFootViewController.h"
-
-#import "PostDataRequest.h"
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
-
 #import "OtherDataModel.h"
 #import "OtherDataTableViewCell.h"
 
@@ -27,8 +22,6 @@
 #import "ShowMapViewViewController.h"
 #import "MyfootModel.h"
 #import "PicArrShowViewControllerViewController.h"
-
-#import "MBProgressHUD.h"
 
 #import "SelfViewController.h"
 #import "AddNoteViewController.h"

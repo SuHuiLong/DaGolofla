@@ -7,14 +7,10 @@
 //
 
 #import "PublishViewController.h"
-#import "Helper.h"
 #import "IWTextView.h"
 #import "ZYQAssetPickerController.h"
 #import "BrowseImagesViewController.h"
 #import "BallParkViewController.h"
-#import "Helper.h"
-#import "PostDataRequest.h"
-#import "MBProgressHUD.h"
 #import "CommunityViewController.h"
 #import <TAESDK/TaeSDK.h>
 //数据

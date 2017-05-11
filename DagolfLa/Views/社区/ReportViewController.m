@@ -9,13 +9,6 @@
 
 #define kRegist_URL @"shileAndRep/repeaboutball.do"
 
-#import "Helper.h"
-#import "PostDataRequest.h"
-
-#import "MBProgressHUD.h"
-
-
-
 #import "ReportViewController.h"
 
 @interface ReportViewController ()<UITextViewDelegate>

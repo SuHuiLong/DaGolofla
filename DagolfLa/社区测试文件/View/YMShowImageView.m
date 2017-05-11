@@ -8,15 +8,7 @@
 
 #define screenWidth  [UIScreen mainScreen].bounds.size.width
 #define screenHeight  [UIScreen mainScreen].bounds.size.height
-
-
 #import "YMShowImageView.h"
-
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
-
-
-
 @implementation YMShowImageView{
 
     UIScrollView *_scrollView;

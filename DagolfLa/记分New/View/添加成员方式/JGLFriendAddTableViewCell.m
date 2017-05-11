@@ -7,9 +7,6 @@
 //
 
 #import "JGLFriendAddTableViewCell.h"
-#import "UIImageView+WebCache.h"
-#import "UIImageView+AFNetworking.h"
-#import "Helper.h"
 
 @implementation JGLFriendAddTableViewCell
 

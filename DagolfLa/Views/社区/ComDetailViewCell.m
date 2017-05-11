@@ -7,9 +7,6 @@
 //
 
 #import "ComDetailViewCell.h"
-
-#import "Helper.h"
-#import "UIImageView+WebCache.h"
 #import "ComDeatailModel.h"
 
 

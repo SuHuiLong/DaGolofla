@@ -18,6 +18,9 @@
 @property (nonatomic, strong) UITableView *listTableView;
 @property (nonatomic, strong)NSMutableArray *dataArray;
 @property (nonatomic, strong) UIView *bgView;
+
+//完成按钮
+@property (nonatomic,strong) UIButton *commitButton;
 @end
 
 @implementation JGDAwardSetViewController
@@ -27,9 +30,6 @@
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#F5F5F5"];
 
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClcik)];
-//    item.tintColor=[UIColor whiteColor];
-//    self.navigationItem.leftBarButtonItem = item;
     self.title = @"奖项设置";
     [self createTableView];
     
@@ -48,9 +48,6 @@
     [self.listTableView reloadData];
 }
 
-//- (void)backButtonClcik{
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
 
 - (void)createTableView{
     
@@ -98,15 +95,14 @@
     [whiteView addSubview:chooseImageV];
     // 529
     
-    UIButton *commitButton = [[UIButton alloc] initWithFrame:CGRectMake(kWvertical(10), kHvertical(550), screenWidth - kWvertical(20), kHvertical(45))];
-    [commitButton setBackgroundColor:[UIColor colorWithHexString:@"#F39800"]];
-    commitButton.layer.masksToBounds = YES;
-    commitButton.layer.cornerRadius = kWvertical(8);
-    [commitButton setTitle:@"完成" forState:(UIControlStateNormal)];
-    [commitButton addTarget:self action:@selector(commitAct) forControlEvents:(UIControlEventTouchUpInside)];
-    [self.view addSubview:commitButton];
+    self.commitButton = [[UIButton alloc] initWithFrame:CGRectMake(kWvertical(10), ScreenHeight - kHvertical(60)-64, screenWidth - kWvertical(20), kHvertical(45))];
+    [self.commitButton setBackgroundColor:[UIColor colorWithHexString:@"#F39800"]];
+    self.commitButton.layer.masksToBounds = YES;
+    self.commitButton.layer.cornerRadius = kWvertical(8);
+    [self.commitButton setTitle:@"完成" forState:(UIControlStateNormal)];
+    [self.commitButton addTarget:self action:@selector(commitAct) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.commitButton];
 }
-
 
 #pragma mark -- 完成
 
@@ -173,12 +169,10 @@
 }
 
 - (void)deleteCurrentCell:(UIButton *)button {
-    
     JGDAwardSetTableViewCell *cell= (JGDAwardSetTableViewCell *)[[[button superview] superview] superview];
     NSIndexPath *indexPth = [self.listTableView indexPathForCell:cell];
     [self.dataArray removeObjectAtIndex:indexPth.row];
     [self.listTableView deleteRowAtIndexPath:indexPth withRowAnimation:(UITableViewRowAnimationTop)];
-    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{

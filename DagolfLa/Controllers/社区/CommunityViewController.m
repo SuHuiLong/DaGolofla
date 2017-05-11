@@ -19,16 +19,11 @@
 #import "ZanNumViewController.h"
 #import "PublishViewController.h"
 
-#import "PostDataRequest.h"
-#import "Helper.h"
-
-
 #import "PicArrShowViewControllerViewController.h"
 #import "UIButton+WebCache.h"
 
 #import "ReportViewController.h"
 
-#import "MBProgressHUD.h"
 #import "UITabBar+badge.h"
 @interface CommunityViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 {

@@ -10,20 +10,12 @@
 #import "MyNewsBoxTableCell.h"
 
 #import "NewsModel.h"
-
-#import "PostDataRequest.h"
-
 #import "ComDetailViewController.h"
 
 #import "MyNewsListModel.h"
-
-#import "SDImageCache.h"
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
 
-#import "MJRefreshFooter.h"
-#import "MJRefreshComponent.h"
-#import "MJRefreshConst.h"
 #import "UIView+MJExtension.h"
 
 @interface MyNewsBoxViewController ()<UITableViewDataSource,UITableViewDelegate>

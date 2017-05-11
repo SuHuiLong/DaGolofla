@@ -30,7 +30,6 @@
 #import "MBProgressHUD.h"
 #import "Factory.h"
 
-//    #import "MJRefresh.h"
 #define FeLogDebug(format,...)        writeCinLog(__FUNCTION__,CinLogLevelDebug,format,##__VA_ARGS__)
 #define FeLogInfo(format,...)        writeCinLog(__FUNCTION__,CinLogLevelInfo,format,##__VA_ARGS__)
 #define FeLogWarn(format,...)        writeCinLog(__FUNCTION__,CinLogLevelWarning,format,##__VA_ARGS__)

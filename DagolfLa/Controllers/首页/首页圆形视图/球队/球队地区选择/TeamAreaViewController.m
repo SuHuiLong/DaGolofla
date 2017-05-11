@@ -12,10 +12,6 @@
 #import "CityCollectionViewCell.h"
 
 #import "CityModel.h"
-#import <BaiduMapAPI/BMapKit.h>
-#import "PostDataRequest.h"
-#import "MJRefresh.h"
-#import "Helper.h"
 
 #import "UIView+ChangeFrame.h"
 

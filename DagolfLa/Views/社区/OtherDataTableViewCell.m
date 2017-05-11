@@ -7,10 +7,6 @@
 //
 
 #import "OtherDataTableViewCell.h"
-#import "UIView+Extension.h"
-#import "SDImageCache.h"
-#import "UIImageView+WebCache.h"
-#import "Helper.h"
 
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width

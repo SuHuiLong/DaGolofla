@@ -9,7 +9,6 @@
 
 #import "WXViewController.h"
 #import "PublishViewController.h"
-#import "Helper.h"
 #import "ContactViewController.h"
 #import "MyNewsBoxViewController.h"
 
