@@ -47,8 +47,12 @@
 //设置导航栏
 -(void)createNavigationView{
     self.title = @"选择省市";
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
+    //设置导航背景
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
-    
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
 }
@@ -66,8 +70,20 @@
 
 #pragma mark - InitData
 -(void)initData{
+    switch (_requestType) {
+        case 0:
+            [self initOrderParkData];
+            break;
+        case 1:
+            [self initActivityData];
+            break;
+        default:
+            break;
+    }
+}
+//获取订场城市数据
+-(void)initOrderParkData{
     //使用yyDIskCache进行本地保存
-
     NSString *cacherPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
     YYCache *diskCache = [[YYCache alloc] initWithPath:cacherPath];
     if ([diskCache containsObjectForKey:@"ballArea"]) {
@@ -81,7 +97,7 @@
     }
     [self loadData];
 }
-//通过服务器获取更新数据
+//通过服务器获取更新订场城市数据
 -(void)loadData{
     
     [[JsonHttp jsonHttp] httpRequest:@"http://res.dagolfla.com/download/json/ballArea.json" failedBlock:^(id errType) {
@@ -98,6 +114,41 @@
         }
         [self.mainTableView reloadData];
     }];
+}
+//获取订场城市数据
+-(void)initActivityData{
+    //使用yyDIskCache进行本地保存
+    NSString *cacherPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    YYCache *diskCache = [[YYCache alloc] initWithPath:cacherPath];
+    if ([diskCache containsObjectForKey:@"activityCityData"]) {
+        NSArray *list = (NSArray *)[diskCache objectForKey:@"activityCityData"];
+        self.dataArray = [NSMutableArray array];
+        for (NSDictionary *listDict in list) {
+            SearchWIthCityModel *model = [SearchWIthCityModel modelWithDictionary:listDict];
+            [self.dataArray addObject:model];
+        }
+        [self.mainTableView reloadData];
+    }
+    [self loadActivityData];
+}
+//通过服务器获取更新活动城市数据
+-(void)loadActivityData{
+    
+    [[JsonHttp jsonHttp] httpRequest:@"http://res.dagolfla.com/download/json/TeamActivityArea.json" failedBlock:^(id errType) {
+        NSLog(@"%@", errType);
+    } completionBlock:^(id data) {
+        NSString *cacherPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+        YYCache *diskCache = [[YYCache alloc] initWithPath:cacherPath];
+        NSArray *list = [NSArray arrayWithArray:[data objectForKey:@"areaList"]];
+        [diskCache setObject:list forKey:@"activityCityData"];
+        self.dataArray = [NSMutableArray array];
+        for (NSDictionary *listDict in list) {
+            SearchWIthCityModel *model = [SearchWIthCityModel modelWithDictionary:listDict];
+            [self.dataArray addObject:model];
+        }
+        [self.mainTableView reloadData];
+    }];
+
 }
 
 #pragma mark - Action
@@ -124,6 +175,9 @@
     if (remainder>0) {
         numberLine ++ ;
     }
+    if (numberLine==0) {
+        numberLine = 1;
+    }
     return kHvertical(40)*numberLine + kHvertical(10);
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -134,6 +188,7 @@
     if(cell == nil){
         cell = [[SearchWithCityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchWithCityTableViewCellId"];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     __weak typeof(self) weakself = self;
     cell.blockAddress = ^(NSString *city){
         weakself.blockAddress(city);
@@ -213,16 +268,28 @@
              CLPlacemark *placemark = [array objectAtIndex:0];
              //将获得的所有信息显示到label上
              //获取城市
+             NSString *cityName = placemark.locality;
+             
+             if (!cityName) {
+                 //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
+                 cityName = placemark.administrativeArea;
+             }
+             [UserDefaults setObject:cityName forKey:CITYNAME];
+             //省份
              NSString *city =  placemark.administrativeArea;
 
              if ([city containsString:@"市"] || [city containsString:@"省"]) {
                  city = [city substringToIndex:[city length] - 1];
              }
+             [UserDefaults setObject:city forKey:PROVINCENAME];
              [self.localCityBtn setTitle:city forState:(UIControlStateNormal)];
          }
          [cityView stopAnimating];
          [cityView removeFromSuperview];
      }];
+    [UserDefaults setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:BDMAPLAT];//纬度
+    [UserDefaults setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:BDMAPLNG];//经度
+
     [_locationManager stopUpdatingLocation];
 }
 

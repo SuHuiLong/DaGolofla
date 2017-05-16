@@ -47,29 +47,44 @@
         NSString *provinceName = model.name;
         NSString *parkCount = [NSString stringWithFormat:@"%ld",model.count];
         NSString *titleStr = [NSString stringWithFormat:@"%@ %@ 家",provinceName,parkCount];
-
+        UIColor *changeColor = RedColor;
+        if (model.dataType==1) {
+            titleStr = [NSString stringWithFormat:@"%@ %@ 个",provinceName,parkCount];
+            changeColor = RGB(0,134,73);
+        }
         
         NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:titleStr];
         
-        [AttributedStr addAttribute:NSForegroundColorAttributeName value:RedColor range:NSMakeRange(provinceName.length+1, parkCount.length)];
+        [AttributedStr addAttribute:NSForegroundColorAttributeName value:changeColor range:NSMakeRange(provinceName.length+1, parkCount.length)];
         [AttributedStr addAttribute:NSForegroundColorAttributeName value:RGB(160,160,160) range:NSMakeRange(AttributedStr.length-1, 1)];
         [AttributedStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(10)] range:NSMakeRange(AttributedStr.length-1, 1)];
         
         _descripLabel.attributedText = AttributedStr;
-
         
     }else{
         NSString *parkName = model.parkName;
-        NSString *orderPrice = model.orderPrice;
-        NSString *descripStr = [NSString stringWithFormat:@"%@ ¥%@",parkName,orderPrice];
-        _descripLabel.text = descripStr;
-        UIColor *changeColor = RGBA(61,161,255,1);
-        if (model.isLeague==1) {
-            changeColor = RGBA(236,45,51,1);
+        NSString *endStr = [NSString string];
+        UIColor *changeColor = [[UIColor alloc] init];
+
+        NSString *descripStr = [NSString string];
+
+        if (model.dataType==1) {
+            changeColor = RGB(236,45,51);
+            endStr = [NSString stringWithFormat:@"%ld个",(long)model.count];
+            descripStr = [NSString stringWithFormat:@"%@ %@",parkName,endStr];
+        }else{
+            endStr = model.orderPrice;
+            descripStr = [NSString stringWithFormat:@"%@ ¥%@",parkName,endStr];
+            changeColor = RGBA(61,161,255,1);
+            if (model.isLeague==1) {
+                changeColor = RGBA(236,45,51,1);
+            }
         }
-        _descripLabel = [self AttributedStringLabel:_descripLabel rang:NSMakeRange(parkName.length+1, orderPrice.length+1) changeColor:changeColor];
+        
+        
+        _descripLabel.text = descripStr;
+        _descripLabel = [self AttributedStringLabel:_descripLabel rang:NSMakeRange(parkName.length+1, endStr.length) changeColor:changeColor];
     }
-    
     [_descripLabel sizeToFitSelf];
     _descripLabel.x = kWvertical(25);
     _backgroundImageView.width = _descripLabel.width+kWvertical(50);

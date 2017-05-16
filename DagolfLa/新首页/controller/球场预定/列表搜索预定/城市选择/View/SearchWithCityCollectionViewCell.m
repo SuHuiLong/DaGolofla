@@ -32,13 +32,29 @@
 
 #pragma mark - 配置数据
 -(void)configModel:(SearchWithCityDetailModel *)model{
+    
     NSString *provinceStr = model.provinceName;
     NSString *parkCount = model.ballCount;
     NSString *labelStr = [NSString stringWithFormat:@"%@ (%@)",provinceStr,parkCount];
-    NSMutableAttributedString *attributerStr = [[NSMutableAttributedString alloc] initWithString:labelStr];
-    [attributerStr addAttribute:NSForegroundColorAttributeName value:RGB(160,160,160) range:NSMakeRange(provinceStr.length, parkCount.length+3)];
-    [attributerStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(11)] range:NSMakeRange(provinceStr.length, parkCount.length+3)];
-    self.cityLabel.attributedText = attributerStr;
+
+    if ([parkCount isEqualToString:@"0"]) {
+        labelStr = provinceStr;
+        self.cityLabel.textColor = RGB(160,160,160);
+        self.cityLabel.text = labelStr;
+        self.cityLabel.backgroundColor = RGB(245,245,245);
+        self.cityLabel.layer.borderColor = ClearColor.CGColor;
+
+    }else{
+        self.cityLabel.textColor = RGB(0,134,73);
+        self.cityLabel.backgroundColor = WhiteColor;
+        self.cityLabel.layer.borderColor = RGB(0,134,73).CGColor;
+
+        NSMutableAttributedString *attributerStr = [[NSMutableAttributedString alloc] initWithString:labelStr];
+        [attributerStr addAttribute:NSForegroundColorAttributeName value:RGB(160,160,160) range:NSMakeRange(provinceStr.length, parkCount.length+3)];
+        [attributerStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(11)] range:NSMakeRange(provinceStr.length, parkCount.length+3)];
+        self.cityLabel.attributedText = attributerStr;
+        
+    }
 }
 
 

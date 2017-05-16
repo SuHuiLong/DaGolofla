@@ -82,9 +82,8 @@
     self.navigationItem.rightBarButtonItem = rightBtn;
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message
-                        left:(int)left
-{
-//    [self.tabBarController.tabBar showBadgeOnItemIndex:3];
+                        left:(int)left{
+    
 }
 
 - (void)viewDidLoad {

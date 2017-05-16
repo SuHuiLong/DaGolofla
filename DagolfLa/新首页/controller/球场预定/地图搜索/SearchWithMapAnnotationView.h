@@ -10,10 +10,7 @@
 #import <BaiduMapAPI/BMKPinAnnotationView.h>
 #import "SearchWithMapModel.h"
 @interface SearchWithMapAnnotationView : BMKPinAnnotationView
-////大头针的id
-//@property(nonatomic, copy)NSString *pinId;
-////订场个数
-//@property(nonatomic, assign)NSInteger orderNum;
+
 //赋值的model
 @property(nonatomic, copy)SearchWithMapModel *dataModel;
 //文字介绍

@@ -779,9 +779,9 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     [userdef synchronize];
     dispatch_async(dispatch_get_main_queue(), ^{
         if (iconCount > 0) {
-            [RedVc.tabBarController.tabBar showBadgeOnItemIndex:2 badgeValue:iconCount];
+            [RedVc.tabBarController.tabBar showBadgeOnItemIndex:3 badgeValue:iconCount];
         } else {
-            [RedVc.tabBarController.tabBar hideBadgeOnItemIndex:2];
+            [RedVc.tabBarController.tabBar hideBadgeOnItemIndex:3];
         }
     });
 }

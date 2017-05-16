@@ -87,7 +87,9 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     SearchWithCityDetailModel *model = self.dataArray[indexPath.item];
-    
+    if ([model.ballCount isEqualToString:@"0"]) {
+        return;
+    }
     self.blockAddress(model.provinceName);
 
 }

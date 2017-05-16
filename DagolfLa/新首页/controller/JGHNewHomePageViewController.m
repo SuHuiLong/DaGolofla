@@ -128,7 +128,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     } completionBlock:^(id data) {
         if ([[data objectForKey:@"packSuccess"]boolValue]) {
             NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-            
             if ([data objectForKey:@"user"]) {
                 NSDictionary *dict = [data objectForKey:@"user"];
                 if ([dict objectForKey:@"rongTk"]) {
@@ -217,7 +216,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     }
     
     [getDict setObject:@1 forKey:@"ballType"];
-    [[JsonHttp jsonHttp]httpRequest:@"index/getIndexV1" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp]httpRequest:@"index/getIndexV2" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.homeTableView.mj_header endRefreshing];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
@@ -386,7 +385,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (section == _indexModel.plateList.count +1) {
         return 0;
     }
-    
     if (!_indexModel.Msg && (section == 0)) {
         return 0.0001;
     }else{
@@ -458,7 +456,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (section == 0) {
         return nil;
     }
-
     JGHShowSectionTableViewCell *showSectionCell = [tableView dequeueReusableCellWithIdentifier:JGHShowSectionTableViewCellIdentifier];
     showSectionCell.delegate = self;
     //showSectionCell.moreBtn.tag = 100 +section;
@@ -590,25 +587,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 
     [self isLoginUp];
 
-    /*
-    JGWkNewsViewController *wknewsCtrl = [[JGWkNewsViewController alloc]init];
-    if (_showEventID == 0) {
-        wknewsCtrl.detailDic = _indexModel.matchNewList[btn.tag - 900];
-        wknewsCtrl.urlString = [_indexModel.matchNewList[btn.tag - 900] objectForKey:@"url"];
-    }else if (_showEventID == 1){
-        wknewsCtrl.detailDic = _indexModel.ballSkillNewList[btn.tag - 900];
-        wknewsCtrl.urlString = [_indexModel.ballSkillNewList[btn.tag - 900] objectForKey:@"url"];
-    }else if (_showEventID == 2){
-        wknewsCtrl.detailDic = _indexModel.activityNewList[btn.tag - 900];
-        wknewsCtrl.urlString = [_indexModel.activityNewList[btn.tag - 900] objectForKey:@"url"];
-    }else{
-        wknewsCtrl.detailDic = _indexModel.videoNewList[btn.tag - 900];
-        wknewsCtrl.urlString = [_indexModel.videoNewList[btn.tag - 900] objectForKey:@"url"];
-    }
-    
-    wknewsCtrl.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:wknewsCtrl animated:YES];
-     */
 }
 #pragma mark -- 查看更多
 - (void)didSelectChancelMoreClick:(UIButton *)btn{
@@ -776,18 +754,12 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 
 #pragma mark -- 球场预定
 - (void)didSelectHistoryResultsBtn:(UIButton *)btn{
-//    [self isLoginUp];
     [MobClick event:@"home_ball_park_booking_click"];
 
     JGDBookCourtViewController *bookVC = [[JGDBookCourtViewController alloc] init];
     bookVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:bookVC animated:YES];
     
-//    NSString *urlRequest = @"http://www.dagolfla.com/app/bookserch.html";
-//    JGLWebUserMallViewController *mallCtrl = [[JGLWebUserMallViewController alloc]init];
-//    mallCtrl.urlRequest = urlRequest;
-//    mallCtrl.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:mallCtrl animated:YES];
 }
 
 #pragma mark -- 活动点击事件
@@ -799,16 +771,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
     teamActVC.hidesBottomBarWhenPushed = YES;//6598520
     [self.navigationController pushViewController:teamActVC animated:YES];
-    //JGHNewActivityDetailViewController
-    
-    /*
-    NSDictionary *dic = _indexModel.activityList[btn.tag - 200];
-    JGHNewActivityDetailViewController *teamActVC = [[JGHNewActivityDetailViewController alloc] init];
-    teamActVC.teamKey = [[dic objectForKey:@"timeKey"] integerValue];
-    teamActVC.hidesBottomBarWhenPushed = YES;//6598520
-    [self.navigationController pushViewController:teamActVC animated:YES];
-     */
-
 }
 
 #pragma mark -- 精彩推荐 -- 相册
@@ -827,28 +789,9 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (mallListDict) {
         NSArray *bodyList = [mallListDict objectForKey:@"bodyList"];
         NSDictionary *ablumListDict = bodyList[btn.tag -300];
-
-        /*
-        JGDDPhotoAlbumViewController *photoAlbumCtrl = [[JGDDPhotoAlbumViewController alloc] init];
-//        JGPhotoAlbumViewController *photoAlbumCtrl = [[JGPhotoAlbumViewController alloc]init];
-        photoAlbumCtrl.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
-        photoAlbumCtrl.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:photoAlbumCtrl animated:YES];
-        */
         [MobClick event:@"home_plate_click" attributes:@{@"球队掠影":[ablumListDict objectForKey:@"title"]}];
-
         JGHShadowPhotoAlbumViewController *phoVc = [[JGHShadowPhotoAlbumViewController alloc] init];
-        //    JGPhotoAlbumViewController* phoVc = [[JGPhotoAlbumViewController alloc]init];
-        //JGLPhotoAlbumModel *model = [[JGLPhotoAlbumModel alloc]init];
-        //model = _dataArray[indexPath.item];
-        
-        //phoVc.strTitle = model.name;
         phoVc.albumKey = [NSNumber numberWithInteger:[[ablumListDict objectForKey:@"timeKey"] integerValue]];
-        //phoVc.power = [NSString stringWithFormat:@"%@", model.power];
-        //phoVc.state = [_dictMember objectForKey:@"state"];
-        //phoVc.teamTimeKey = model.teamKey;
-        //phoVc.dictMember = _dictMember;
-        //phoVc.userKey = model.userKey;
         phoVc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:phoVc animated:YES];
     }
@@ -943,7 +886,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 #pragma mark -- 高旅套餐
 - (void)didSelectGolgPackageUrlString:(NSInteger)selectID{
     [self isLoginUp];
-    
     for (NSDictionary *dict in _indexModel.plateList) {
         NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
         if (bodyLayoutType == 5) {
@@ -999,11 +941,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 
 #pragma mark -- 判断是否需要登录
 - (void)isLoginUp{
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
-        
-    }
-    else
-    {
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
         [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
         } withBlockSure:^{
             JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
@@ -1017,7 +955,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         } withBlock:^(UIAlertController *alertView) {
             [self presentViewController:alertView animated:YES completion:nil];
         }];
-        
         return;
     }
 }

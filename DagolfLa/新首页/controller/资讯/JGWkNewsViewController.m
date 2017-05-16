@@ -34,7 +34,6 @@
         md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=0&newsId=%@dagolfla.com", _newsId]];
         self.urlString = [NSString stringWithFormat:@"https://mobile.dagolfla.com/news/getHtmlBody?userKey=0&newsId=%@&md5=%@", _newsId, md5Str];
     }
-//    NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&newsId=%@dagolfla.com", DEFAULF_USERID, _newsId]];
     
     self.webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64)];
     [self.view addSubview:self.webView];

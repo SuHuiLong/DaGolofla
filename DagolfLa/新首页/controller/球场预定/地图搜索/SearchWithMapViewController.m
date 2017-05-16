@@ -181,7 +181,6 @@
                 model.count = [[listDict objectForKey:@"count"] integerValue];
                 [self.provinceDataArray addObject:model];
             }
-//            [self addPointAnnotation];
         }
     }];
 }

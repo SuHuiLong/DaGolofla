@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface SearchWithMapModel : NSObject
+
+/**
+ 0：订场的数据  1：活动的数据
+ */
+@property (nonatomic,assign) NSInteger dataType;
 //球场id
 @property(nonatomic, copy)NSString *parkId;
 //球场名
@@ -18,19 +23,23 @@
 //坐标
 @property(nonatomic, assign)CGFloat latitude;
 @property(nonatomic, assign)CGFloat longtitude;
+//订场
+@property(nonatomic, assign)NSInteger orderNum;
+
+
+//订场的key
+@property(nonatomic, copy)NSString *bookballKey;
+//省份名
+@property (nonatomic,copy) NSString *name;
+//数量||活动个数
+@property (nonatomic,assign) NSInteger count;
 //价格
 @property(nonatomic, copy)NSString *orderPrice;
 //是否是联盟会员
 @property(nonatomic, assign)NSInteger isLeague;
-//订场个数
-@property(nonatomic, assign)NSInteger orderNum;
-//订场的key
-@property(nonatomic, copy)NSString *bookballKey;
 
-//省份名
-@property (nonatomic,copy) NSString *name;
-//数量
-@property (nonatomic,assign) NSInteger count;
+//活动key
+@property(nonatomic, copy)NSString *ballKey;
 
 
 @end

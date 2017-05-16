@@ -37,6 +37,7 @@
     }
     return self;
 }
+
 //高旅套餐
 - (void)configJGHGolfPackageView:(NSArray *)spectatorArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     self.backgroundColor = [UIColor whiteColor];
@@ -47,12 +48,14 @@
     [_golfPackageView configJGHGolfPackageViewData:spectatorArray andImageW:imageW andImageH:imageH];
     [self addSubview:_golfPackageView];
 }
+
 #pragma mark -- 高旅套餐
 - (void)didSelectGolgPackageViewUrlString:(NSInteger)selectID{
     if ([self.delegate respondsToSelector:@selector(didSelectGolgPackageUrlString:)]) {
         [self.delegate didSelectGolgPackageUrlString:selectID];
     }
 }
+
 //精彩赛事
 - (void)configJGHSpectatorSportsView:(NSArray *)spectatorArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
     self.backgroundColor = [UIColor whiteColor];
