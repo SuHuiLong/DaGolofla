@@ -232,14 +232,18 @@
         [user synchronize];
 
         [self.tabBarController.tabBar hideBadgeOnItemIndex:3];
-//        EnterViewController *vc = [[EnterViewController alloc] init];
-//        vc.popViewNumber = 101;
-//        [self.navigationController pushViewController:vc animated:YES];
+        //保存当前版本号
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+        [user setObject:app_Version forKey:@"version"];
+        [user setObject:app_Version forKey:@"guidVersion"];
         //重新存储 定位信息
         [user setObject:@(lat) forKey:BDMAPLAT];
         [user setObject:@(lng) forKey:BDMAPLNG];
         [user setObject:cityName forKey:CITYNAME];
         [user setValue:@"1" forKey:@"isExitTag"];
+        
+        
         [user synchronize];
         
         NSNotification * notice = [NSNotification notificationWithName:@"loadMessageData" object:nil userInfo:nil];

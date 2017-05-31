@@ -208,7 +208,8 @@
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
+            [MobClick event:@"booking_ball_normal_click"];
+
             if ([data objectForKey:@"orderKey"]) {
                 
                 

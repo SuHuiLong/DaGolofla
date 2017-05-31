@@ -19,7 +19,9 @@
 @property (nonatomic, strong)UIImage *uploadImage;
 
 @property (nonatomic, strong) UIButton *commitButton;
-
+//用户未更改之前的照片数据
+@property (nonatomic, strong) NSMutableDictionary* localDictPhoto;
+//当前页面上的照片数据
 @property (nonatomic, strong) NSMutableDictionary* dictPhoto;
 
 
@@ -42,6 +44,7 @@
     self.view.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     
     self.pickPhoto = [[SXPickPhoto alloc]init];
+    self.localDictPhoto = [[NSMutableDictionary alloc] init];
     self.dictPhoto = [[NSMutableDictionary alloc]init];
 
     UIView *whiteBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 * ProportionAdapter, screenWidth, 358 * ProportionAdapter)];
@@ -96,7 +99,6 @@
     [self dottedLine:self.certificatesView];
 
     UIButton *certificatesPhoto = [[UIButton alloc] initWithFrame:CGRectMake(120 * ProportionAdapter, 221 * ProportionAdapter, 135 * ProportionAdapter, 93 * ProportionAdapter)];
-    //    [certificatesPhoto setImage:[UIImage imageNamed:@"photoCamera"] forState:(UIControlStateNormal)];
     [certificatesPhoto addTarget:self action:@selector(SelectPhotoImage:) forControlEvents:(UIControlEventTouchUpInside)];
     certificatesPhoto.backgroundColor = [UIColor clearColor];
     certificatesPhoto.tag = 530;
@@ -136,6 +138,7 @@
         
         [_dictPhoto setObject:[NSArray arrayWithObject:picHeadURL] forKey:@"picHeadURL"];
         [_dictPhoto setObject:[NSArray arrayWithObject:picCertURLs] forKey:@"picCertURLs"];
+        _localDictPhoto = [NSMutableDictionary dictionaryWithDictionary:_dictPhoto];
     }
 
 
@@ -149,82 +152,102 @@
         [LQProgressHud showMessage:@"请选择照片后提交"];
         return;
     }
-
-
-    NSMutableDictionary *certDic = [NSMutableDictionary dictionary];
-    [certDic setObject:[self.infoDic objectForKey:@"mobile"] forKey:@"telphone"];
-    [certDic setObject:[self.infoDic objectForKey:@"checkCode"] forKey:@"checkCode"];
-    [certDic setObject:DEFAULF_USERID forKey:@"userKey"];
-
-    NSMutableDictionary *luserDic = [NSMutableDictionary dictionary];
-    [luserDic setObject:DEFAULF_USERID forKey:@"userKey"];
-    [luserDic setObject:[self.infoDic objectForKey:@"userName"] forKey:@"userName"];
-    [luserDic setObject:[self.infoDic objectForKey:@"mobile"] forKey:@"mobile"];
+    NSString *sexStr = @"0";
     if ([[self.infoDic objectForKey:@"sex"] isEqualToString:@"男"]) {
-        [luserDic setObject:@1 forKey:@"sex"];
-    }else if ([[self.infoDic objectForKey:@"sex"] isEqualToString:@"女"]) {
-        [luserDic setObject:@0 forKey:@"sex"];
+        sexStr = @"1";
     }
-    [luserDic setObject:@0 forKey:@"certType"];
-    [luserDic setObject:[self.infoDic objectForKey:@"certNumber"] forKey:@"certNumber"];
-
-    [certDic setObject:luserDic forKey:@"luinfo"];
+    NSDictionary *user = @{
+                           @"userKey":DEFAULF_USERID,
+                           @"userName":[self.infoDic objectForKey:@"userName"],
+                           @"mobile":[self.infoDic objectForKey:@"mobile"],
+                           @"sex":sexStr,
+                           @"certType":@"0",
+                           @"certNumber":[self.infoDic objectForKey:@"certNumber"]
+                           };
     
-    [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+    NSMutableDictionary *luserDic = [NSMutableDictionary dictionaryWithDictionary:user];
+    
+    NSDictionary *certDic = @{
+                              @"telphone":[self.infoDic objectForKey:@"mobile"],
+                              @"checkCode":[self.infoDic objectForKey:@"checkCode"],
+                              @"userKey":DEFAULF_USERID,
+                              @"luinfo":luserDic
+                              };
+    
+    if (![_localDictPhoto isEqual:_dictPhoto]) {
+        [[ShowHUD showHUD]showAnimationWithText:@"提交中..." FromView:self.view];
+        
+        // 上传头像
+        [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:@{@"nType":TYPE_CERT, @"tag":PHOTO_DAGOLFLA} andDataArray:[_dictPhoto objectForKey:@"picHeadURL"] failedBlock:^(id errType) {
+            [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            
+        } completionBlock:^(id data) {
+            if ([data objectForKey:@"url"]) {
+                [luserDic setObject:[data objectForKey:@"url"] forKey:@"picHeadURL"];
 
-    // 上传头像
-    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:@{@"nType":TYPE_CERT, @"tag":PHOTO_DAGOLFLA} andDataArray:[_dictPhoto objectForKey:@"picHeadURL"] failedBlock:^(id errType) {
-        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+                [self  sendCardPhoto:luserDic certDic:certDic];
+            }else{
+                // 失败
+                [[ShowHUD showHUD]hideAnimationFromView:self.view];
+            }
+            
+        }];
+    }else{
+        [luserDic setObject:[self.infoDic objectForKey:@"picHeadURL"] forKey:@"picHeadURL"];
+        [luserDic setObject:[self.infoDic objectForKey:@"picCertURLs"] forKey:@"picCertURLs"];
+        [self sendOtherData:certDic];
+    }
+    
+}
 
+
+//提交证件照
+-(void)sendCardPhoto:(NSMutableDictionary *)luserDic certDic:(NSDictionary *)certDic{
+    // 上传证件照
+    [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:@{@"nType":TYPE_CERT, @"tag":PHOTO_DAGOLFLA} andDataArray:[_dictPhoto objectForKey:@"picCertURLs"] failedBlock:^(id errType) {
+        
+        
     } completionBlock:^(id data) {
         if ([data objectForKey:@"url"]) {
-            [luserDic setObject:[data objectForKey:@"url"] forKey:@"picHeadURL"];
-            
-            // 上传证件照
-            [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:@{@"nType":TYPE_CERT, @"tag":PHOTO_DAGOLFLA} andDataArray:[_dictPhoto objectForKey:@"picCertURLs"] failedBlock:^(id errType) {
-                
-                
-            } completionBlock:^(id data) {
-                if ([data objectForKey:@"url"]) {
-                    [luserDic setObject:[data objectForKey:@"url"] forKey:@"picCertURLs"];
-                    
-                    [[JsonHttp jsonHttp] httpRequestHaveSpaceWithMD5:@"league/doSaveSystemLeagueUInfo" JsonKey:nil withData:certDic failedBlock:^(id errType) {
-                        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-
-                    } completionBlock:^(id data) {
-                        [[ShowHUD showHUD]hideAnimationFromView:self.view];
-
-                        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-                            
-                            if ([data objectForKey:@"luserKey"]) {
-                                NSLog(@"%@", [data objectForKey:@"luserKey"]);
-                            }
-                            
-                            [self poptoVipDetail];
-                            
-                        }else{
-                            
-                            if ([data objectForKey:@"packResultMsg"]) {
-                                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
-                            }
-                        }
-                    }];
-                    
-                    
-                }else{
-                    // 失败
-                    [[ShowHUD showHUD]hideAnimationFromView:self.view];
-                }
-            }];
-            
+            [luserDic setObject:[data objectForKey:@"url"] forKey:@"picCertURLs"];
+            //提交其余数据
+            [self sendOtherData:certDic];
         }else{
             // 失败
             [[ShowHUD showHUD]hideAnimationFromView:self.view];
         }
+    }];
+}
+
+//获取照片id之后提交其余数据
+-(void)sendOtherData:(NSDictionary *)certDic{
+
+    
+    [[JsonHttp jsonHttp] httpRequestHaveSpaceWithMD5:@"league/doSaveSystemLeagueUInfo" JsonKey:nil withData:certDic failedBlock:^(id errType) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
         
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            
+            if ([data objectForKey:@"luserKey"]) {
+                NSLog(@"%@", [data objectForKey:@"luserKey"]);
+            }
+            
+            [self poptoVipDetail];
+            
+        }else{
+            
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
+        }
     }];
     
+
 }
+
 
 - (void)poptoVipDetail{
     for (UIViewController *vc in self.navigationController.viewControllers) {

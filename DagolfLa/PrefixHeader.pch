@@ -8,9 +8,6 @@
 
 
 
-// Include any system framework and library headers here that should be included in all compilation units.
-// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
-
 
 #import <Availability.h>
 
@@ -36,17 +33,14 @@
 #define FeLogError(format,...)        writeCinLog(__FUNCTION__,CinLogLevelError,format,##__VA_ARGS__)
 
 #endif
-//定义debug模式下输出NSLog，release模式下不输出NSLog
-#ifdef DEBUG
-#define NSLog(format, ...) NSLog(format, ## __VA_ARGS__)
-#else
-#define NSLog(format, ...)
-#endif
+////定义debug模式下输出NSLog，release模式下不输出NSLog
+//#ifdef DEBUG
+//#define NSLog(format, ...) NSLog(format, ## __VA_ARGS__)
+//#else
+//#define NSLog(format, ...)
+//#endif
 
-//#define screen_height [UIScreen mainScreen].bounds.size.height
-//#define screen_width [UIScreen mainScreen].bounds.size.width
 
-//#define currentIOSVersion [[[UIDevice currentDevice] systemVersion] floatValue]
 
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
@@ -55,7 +49,6 @@
 #define  KEY_USERNAME_PASSWORD @"com.company.app.usernamepassword"
 #define  KEY_USERNAME @"com.company.app.username"
 #define  KEY_PASSWORD @"com.company.app.password"
-// Include any system framework and library headers here that should be included in all compilation units.
-// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
 
 #endif

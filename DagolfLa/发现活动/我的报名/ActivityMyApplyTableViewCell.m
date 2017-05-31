@@ -22,6 +22,8 @@
 -(void)createView{
     //活动照片
     _headerImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(11), kHvertical(69), kHvertical(69)) Image:nil];
+    _headerImageView.layer.masksToBounds = true;
+    _headerImageView.layer.cornerRadius = kHvertical(6);
     [self.contentView addSubview:_headerImageView];
     //状态
     _statuView = [Factory createButtonWithFrame:CGRectMake(_headerImageView.x_width + kWvertical(11), kHvertical(17), kWvertical(45), kHvertical(16)) titleFont:kHorizontal(11) textColor:WhiteColor backgroundColor:ClearColor target:self selector:nil Title:nil];
@@ -51,15 +53,15 @@
 
 #pragma mark - InitData
 -(void)configModel:(ActivityMyApplyViewModel *)model{
-    //活动照片
-    
+    //活动照片    
     NSURL *imageUrl = [Helper setImageIconUrl:@"activity" andTeamKey:model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES];
     NSLog(@"%@",imageUrl);
-    [_headerImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@""]];
+    [_headerImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:ActivityBGImage]];
     //状态
     NSString *statu = model.stateShowString;
     [_statuView setTitle:statu forState:UIControlStateNormal];
-    if (statu.length>0) {
+    _statuView.titleLabel.font = [UIFont systemFontOfSize:kHorizontal(11)];
+    if (statu.length==4) {
         _statuView.titleLabel.font = [UIFont systemFontOfSize:kHorizontal(10)];
     }
     NSString *buttonStr = model.stateButtonString;
@@ -68,7 +70,7 @@
         imageName = @"red_bg_activity";
     }else if ([buttonStr isEqualToString:@"已通过"]){
         imageName = @"green_bg_activity";
-    }else if ([buttonStr isEqualToString:@"已取消"]){
+    }else if ([buttonStr isEqualToString:@"已取消"]||[buttonStr isEqualToString:@"已结束"]){
         imageName = @"gray_bg_activity";
     }
     
@@ -77,13 +79,7 @@
     NSString *name = model.name;
     _nameLabel.text = name;
     //活动时间
-    NSString *begainTime = model.beginDate;
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate* inputDate = [inputFormatter dateFromString:begainTime];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy.MM.dd"];
-    begainTime = [dateFormatter stringFromDate:inputDate];
+    NSString *begainTime = [Helper stringFromDateString:model.beginDate withFormater:@"yyyy.MM.dd"];
     _timeLabel.text = begainTime;
     //球场
     NSString *parkName = model.ballName;
@@ -97,11 +93,24 @@
     }
     
     NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:applyStr];
-    [attributedStr addAttribute:NSForegroundColorAttributeName value:RGB(248, 134, 0) range:NSMakeRange(4, apply.length)];
+    [attributedStr addAttribute:NSForegroundColorAttributeName value:RGB(248, 134, 0) range:NSMakeRange(3, apply.length)];
     _applyLabel.attributedText = attributedStr;
     [_applyLabel sizeToFitSelf];
     _applyLabel.x = screenWidth - _applyLabel.width;
 }
+
+
+//裁剪
+-(CAShapeLayer *)bezierCorners:(CGRect )frame{
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:frame byRoundingCorners:UIRectCornerAllCorners cornerRadii:frame.size];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
+    //设置大小
+    maskLayer.frame = frame;
+    //设置图形样子
+    maskLayer.path = maskPath.CGPath;
+    return maskLayer;
+}
+
 
 - (void)awakeFromNib {
     [super awakeFromNib];

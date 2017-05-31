@@ -21,7 +21,6 @@
 #pragma mark - CreateView
 -(void)createView{
     self.cityLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(12.5), kHvertical(15), (screenWidth - kWvertical(134))/3, kHvertical(26)) textColor:RGB(0,134,73) fontSize:kHorizontal(14) Title:nil];
-    self.cityLabel.layer.masksToBounds = true;
     self.cityLabel.layer.cornerRadius = kWvertical(4);
     self.cityLabel.layer.borderColor = RGB(0,134,73).CGColor;
     self.cityLabel.layer.borderWidth = 1;

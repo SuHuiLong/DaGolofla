@@ -59,6 +59,9 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 @property (nonatomic, strong)JGHNavListView *navListView;
 @property (nonatomic, strong)UITableView *homeTableView;//TB
 @property (nonatomic, strong)UIView *toolView;//是否为启动请求数据接口 0： 非启动   1：启动
+
+//选中的元素坐标
+@property (nonatomic,assign) NSIndexPath *selectIndexPath;
 @end
 
 @implementation JGHNewHomePageViewController
@@ -214,7 +217,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         [getDict setObject:[userDef objectForKey:BDMAPLNG] forKey:@"longitude"];
         [getDict setObject:[userDef objectForKey:BDMAPLAT] forKey:@"latitude"];
     }
-    
     [getDict setObject:@1 forKey:@"ballType"];
     [[JsonHttp jsonHttp]httpRequest:@"index/getIndexV2" JsonKey:nil withData:getDict requestMethod:@"GET" failedBlock:^(id errType) {
         [self.homeTableView.mj_header endRefreshing];
@@ -524,6 +526,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         [self isLoginUp];
+        [MobClick event:@"home_news_click"];
         //系统消息
         if ([_indexModel.Msg objectForKey:@"linkURL"]) {
             [self pushctrlWithUrl:[_indexModel.Msg objectForKey:@"linkURL"]];
@@ -875,8 +878,12 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     if (moreBtn.tag != 101) {
         [self isLoginUp];
     }
-    NSArray *titleArray = [NSArray arrayWithObjects:@"精彩赛事-更多", @"球队掠影-更多", @"高旅套餐-更多", @"订场推荐-更多", @"用品商城-更多", nil];
-
+    NSMutableArray *titleArray = [NSMutableArray array];
+    for (NSDictionary *dict in _indexModel.plateList) {
+        NSString *title = [NSString stringWithFormat:@"%@-更多",[dict objectForKey:@"title"]];
+        [titleArray addObject:title];
+    }
+    
     NSDictionary *dict = _indexModel.plateList[moreBtn.tag -100 -1];
     NSString *urlString = [dict objectForKey:@"moreLink"];
     [MobClick event:@"home_plate_more_click" attributes:@{titleArray[moreBtn.tag -101]:urlString}];
@@ -884,17 +891,20 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     [self pushctrlWithUrl:urlString];
 }
 #pragma mark -- 高旅套餐
-- (void)didSelectGolgPackageUrlString:(NSInteger)selectID{
-    [self isLoginUp];
+-(void)didSelectGolgPackageViewUrlString:(NSString *)urlStr index:(NSInteger)selectID{
+    [self isLoginUp];    
     for (NSDictionary *dict in _indexModel.plateList) {
         NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
         if (bodyLayoutType == 5) {
-            
             NSArray *bodyListArray = [dict objectForKey:@"bodyList"];
             NSDictionary *bodyDict = bodyListArray[selectID];
-            if ([bodyDict objectForKey:@"weblinks"]) {
+            if ([[bodyDict objectForKey:@"weblinks"] isEqualToString:urlStr]) {
                 [[JGHPushClass pushClass] URLString:[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]] pushVC:^(UIViewController *vc) {
-                    [MobClick event:@"home_plate_click" attributes:@{@"高旅套餐":[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]]}];
+                    if ([urlStr containsString:@"openURL"]) {
+                        [MobClick event:@"home_plate_click" attributes:@{@"高旅套餐":[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]]}];
+                    }else if ([urlStr containsString:@"weblink/sysLeagueCardDetail"]) {
+                        [MobClick event:@"home_plate_click" attributes:@{@"会籍卡":[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]]}];
+                    }
                     vc.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:vc animated:YES];
                 }];
@@ -903,15 +913,14 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     }
 }
 #pragma mark -- 精彩赛事
-- (void)selectSpectatorSportsUrlString:(NSInteger)selectID{
-//    [self isLoginUp];
+- (void)selectSpectatorSportsUrlString:(NSString *)urlStr index:(NSInteger)selectID{
     for (NSDictionary *dict in _indexModel.plateList) {
         NSInteger bodyLayoutType = [[dict objectForKey:@"bodyLayoutType"] integerValue];
         if (bodyLayoutType == 4) {
             
             NSArray *bodyListArray = [dict objectForKey:@"bodyList"];
             NSDictionary *bodyDict = bodyListArray[selectID];
-            if ([bodyDict objectForKey:@"weblinks"]) {
+            if ([[bodyDict objectForKey:@"weblinks"] isEqualToString:urlStr]) {
                 [[JGHPushClass pushClass] URLString:[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]] pushVC:^(UIViewController *vc) {
                     [MobClick event:@"home_plate_click" attributes:@{@"精彩赛事":[NSString stringWithFormat:@"%@", [bodyDict objectForKey:@"weblinks"]]}];
                     vc.hidesBottomBarWhenPushed = YES;
@@ -921,7 +930,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         }
     }
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

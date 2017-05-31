@@ -58,22 +58,7 @@ static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
 }
 #pragma mark -- 完成
 - (void)completeBtnClick{
-//    _blockPlayListArray(_playListArray);
     NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-//    [dict setObject:@(_teamKey) forKey:@"teamKey"];
-//    [dict setObject:@(_activityKey) forKey:@"activityKey"];
-//    [dict setObject:_playListArray forKey:@"teamActivitySignUpList"];
-//    [[JsonHttp jsonHttp]httpRequestWithMD5:@"team/batchAddLineTeamActivitySignUp" JsonKey:@"teamActivitySignUp" withData:dict failedBlock:^(id errType) {
-//        
-//    } completionBlock:^(id data) {
-//        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//            _blockRefresh();
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
-//        else{
-//            [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-//        }
-//    }];
     
     NSMutableDictionary *info = [NSMutableDictionary dictionary];
     [info setObject:@(_teamKey) forKey:@"teamKey"];//球队key
@@ -109,22 +94,10 @@ static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
 - (void)initPlaysBaseInfo{
     [_playsBaseDict setObject:@1 forKey:@"sex"];//默认性别女-0
     [_playsBaseDict setObject:@"0" forKey:@"isOnlinePay"];//是否线上付款 1-线上
-    
-    /*
-     for (int i=0; i<_costListArray.count; i++) {
-     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-     dict = [NSMutableDictionary dictionaryWithDictionary:_costListArray[i]];
-     [dict setObject:@0 forKey:@"select"];
-     
-     [_costListArray replaceObjectAtIndex:i withObject:dict];
-     }
-     */
 }
 - (void)createAddTeamPlaysTableView{
     self.addTeamPlaysTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10*ProportionAdapter, screenWidth, screenHeight - 64)];
-//    UINib *addPlaysCellNib = [UINib nibWithNibName:@"JGHAddPlaysCell" bundle: [NSBundle mainBundle]];
-//    [self.addTeamPlaysTableView registerNib:addPlaysCellNib forCellReuseIdentifier:JGHAddPlaysCellIdentifier];
-    
+
     [self.addTeamPlaysTableView registerClass:[JGHNewAddPlaysCell class] forCellReuseIdentifier:JGHNewAddPlaysCellIdentifier];
     
     [self.addTeamPlaysTableView registerClass:[JGHApplyerHeaderCell class] forCellReuseIdentifier:JGHApplyerHeaderCellIdentifier];

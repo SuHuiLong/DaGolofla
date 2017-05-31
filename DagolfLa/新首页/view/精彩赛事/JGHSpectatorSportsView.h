@@ -10,7 +10,7 @@
 
 @protocol JGHSpectatorSportsViewDelegate <NSObject>
 
-- (void)selectSpectatorSportsViewUrlString:(NSInteger)selectID;
+- (void)selectSpectatorSportsViewUrlString:(NSString *)urlStr index:(NSInteger)selectID;
 
 @end
 

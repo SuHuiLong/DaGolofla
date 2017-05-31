@@ -7,7 +7,9 @@
 //
 
 #import "BaseViewController.h"
-
 @interface ActivityDetailViewController : BaseViewController
-
+//活动id
+@property (nonatomic,copy) NSString *activityKey;
+//球队id
+@property (nonatomic,copy) NSNumber *teamId;
 @end

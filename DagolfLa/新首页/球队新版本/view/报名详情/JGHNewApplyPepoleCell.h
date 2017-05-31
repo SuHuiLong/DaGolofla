@@ -8,12 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol JGHNewApplyPepoleCellDelegate <NSObject>
-
-- (void)addApplyerBtn:(UIButton *)addApplyBtn;
-
-@end
-
 @interface JGHNewApplyPepoleCell : UITableViewCell
 
 @property (nonatomic, retain)UIImageView *headerImageView;
@@ -22,6 +16,5 @@
 
 @property (nonatomic, retain)UIButton *addApplyBtn;
 
-@property (weak, nonatomic)id <JGHNewApplyPepoleCellDelegate> delegate;
 
 @end

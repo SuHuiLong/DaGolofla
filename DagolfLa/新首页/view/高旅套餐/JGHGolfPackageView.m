@@ -90,8 +90,10 @@ static NSString *const JGHGolfPackageSubCellIdentifier = @"JGHGolfPackageSubCell
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([self.delegate respondsToSelector:@selector(didSelectGolgPackageViewUrlString:)]) {
-        [self.delegate didSelectGolgPackageViewUrlString:indexPath.section];
+    if ([self.delegate respondsToSelector:@selector(didSelectGolgPackageViewUrlString:index:)]) {
+        NSDictionary *indexDict = _dataArray[indexPath.section];
+        NSString *urlStr = [indexDict objectForKey:@"weblinks"];
+        [self.delegate didSelectGolgPackageViewUrlString:urlStr index:indexPath.section];
     }
 }
 /*

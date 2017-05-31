@@ -274,13 +274,6 @@
                     [self.view addSubview:label1];
 
                     [self createGuidedView:NO];
-
-                    //                    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(20 * ProportionAdapter, 311 * ProportionAdapter, screenWidth - 40 * ProportionAdapter, 80 * ProportionAdapter)];
-                    //                    label2.text = @"您所有的记分都会保留在此，点击右上角“取回记分”，可通过“秘钥”取回别人给你代记的成绩。";
-                    //                    label2.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
-                    //                    label2.textColor = [UIColor colorWithHexString:@"a0a0a0"];
-                    //                    label2.numberOfLines = 0;
-                    //                    [self.view addSubview:label2];
                     
                     [self.tableView removeFromSuperview];
                 }
@@ -360,90 +353,7 @@
     }
     
 
-    
-//
-//    if ([model.scoreFinish integerValue] == 0) {
-//        JGHScoresViewController *scoreVC = [[JGHScoresViewController alloc] init];
-//        NSUserDefaults *userdef = [NSUserDefaults standardUserDefaults];
-//        if ([userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]) {
-//            scoreVC.currentPage = [[userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]] integerValue];
-//        }
-//        NSLog(@"%@", [userdef objectForKey:[NSString stringWithFormat:@"%@", model.timeKey]]);
-//        scoreVC.scorekey = [NSString stringWithFormat:@"%@", model.timeKey];
-//        [self.navigationController pushViewController:scoreVC animated:YES];
-//    }else{
-//        
-//        if ([model.srcType integerValue] == 0) {
-//            
-//            JGDNotActivityHisCoreViewController *notAciVC = [[JGDNotActivityHisCoreViewController alloc] init];
-//            notAciVC.timeKey = model.timeKey;
-//            [self.navigationController pushViewController:notAciVC animated:YES];
-//            
-//        }else{
-//            
-//            JGDHistoryScoreShowViewController *showVC = [[JGDHistoryScoreShowViewController alloc] init];
-//            showVC.timeKey = model.timeKey;
-//            [self.navigationController pushViewController:showVC animated:YES];
-//        }
-//    }
 }
-
-
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    JGDHistoryScoreModel *model = self.dataArray[indexPath.row];
-//    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//    
-//    if ([model.scoreFinish integerValue] == 2) {
-//        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"提示" message:[NSString stringWithFormat:@"该记分卡由%@代记，是否删除", model.scoreUserName] preferredStyle:UIAlertControllerStyleAlert];
-//        
-//        UIAlertAction *action1=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            [alert dismissViewControllerAnimated:YES completion:nil];
-//            
-//        }];
-//        UIAlertAction* action2=[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            [dic setValue:DEFAULF_USERID forKey:@"userKey"];
-//            [dic setValue:model.timeKey forKey:@"scoreKey"];
-//            
-//            [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
-//                
-//            } completionBlock:^(id data) {
-//                if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                    [self.dataArray removeObjectAtIndex:indexPath.row];
-//                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
-//                    
-//                }else{
-//                    if ([data objectForKey:@"packResultMsg"]) {
-//                        [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-//                    }
-//                }
-//            }];
-//        }];
-//        
-//        [alert addAction:action1];
-//        [alert addAction:action2];
-//        [self presentViewController:alert animated:YES completion:nil];
-//        
-//    }else{
-//        
-//        [dic setValue:DEFAULF_USERID forKey:@"userKey"];
-//        [dic setValue:model.timeKey forKey:@"scoreKey"];
-//        
-//        [[JsonHttp jsonHttp] httpRequestWithMD5:@"score/deleteScore" JsonKey:nil withData:dic failedBlock:^(id errType) {
-//            
-//        } completionBlock:^(id data) {
-//            if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-//                [self.dataArray removeObjectAtIndex:indexPath.row];
-//                [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
-//                
-//            }else{
-//                if ([data objectForKey:@"packResultMsg"]) {
-//                    [[ShowHUD showHUD]showToastWithText:[data objectForKey:@"packResultMsg"] FromView:self.view];
-//                }
-//            }
-//        }];
-//    }
-//    
-//}
 
 - (void)backBtn{
     

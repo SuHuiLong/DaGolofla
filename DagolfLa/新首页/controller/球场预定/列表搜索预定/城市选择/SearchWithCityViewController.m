@@ -47,14 +47,18 @@
 //设置导航栏
 -(void)createNavigationView{
     self.title = @"选择省市";
+    if (_requestType==1) {
+        self.title = @"活动省市";
+    }
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_bg"] forBarMetrics:UIBarMetricsDefault];
     //设置导航背景
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    //backL
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(popBack)];
+    leftItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftItem;
 
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
 }
 //创建tableview
 -(void)createTableView{
@@ -152,6 +156,10 @@
 }
 
 #pragma mark - Action
+-(void)popBack{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 //定位城市选择
 -(void)localCityBtnClick{
     self.blockAddress(self.localCityBtn.titleLabel.text);
@@ -207,7 +215,7 @@
     [headerView addSubview:locatCity];
     
     //定位图标
-    UIImageView *cityIcon = [Factory createImageViewWithFrame:CGRectMake(kWvertical(12), kHvertical(57), kWvertical(9), kHvertical(13)) Image:[UIImage imageNamed:@"address"]];
+    UIImageView *cityIcon = [Factory createImageViewWithFrame:CGRectMake(kWvertical(12), kHvertical(56), kWvertical(10), kHvertical(14)) Image:[UIImage imageNamed:@"address"]];
     [headerView addSubview:cityIcon];
     
     //当前省市
@@ -219,7 +227,7 @@
     //重新定位
     UIButton *resetBtn = [Factory createButtonWithFrame:CGRectMake(screenWidth - kWvertical(105), kHvertical(50), kWvertical(85), kHvertical(27)) titleFont:kHorizontal(15) textColor:RGB(0,134,73) backgroundColor:ClearColor target:self selector:@selector(resetBtnClick) Title:@" 重新定位"];
     [resetBtn setImage:[UIImage imageNamed:@"refresh"] forState:(UIControlStateNormal)];
-    [resetBtn setImageEdgeInsets:UIEdgeInsetsMake(kHvertical(5), 0, kHvertical(5), 0)];
+    [resetBtn setImageEdgeInsets:UIEdgeInsetsMake(kHvertical(3), 0, kHvertical(3), 0)];
     [headerView addSubview:resetBtn];
     //浅色分割线
     UIView *lineView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, kHvertical(81), screenWidth, kHvertical(10))];

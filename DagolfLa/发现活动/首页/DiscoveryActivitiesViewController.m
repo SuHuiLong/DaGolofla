@@ -13,11 +13,14 @@
 #import "SearchWithMapViewController.h"
 #import "ActivityMyApplyViewController.h"
 #import "DicoveryMapViewViewController.h"
+#import "ActivityDetailViewController.h"
 @interface DiscoveryActivitiesViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 //省份按钮
 @property (nonatomic,copy) UIButton *leftBtn;
 // 主视图
 @property (nonatomic,copy) UICollectionView *mainClolllectionView;
+//无数据视图
+@property (nonatomic,copy) UIView *noDataView;
 // 数据源
 @property (nonatomic,strong) NSMutableArray *dataArray;
 // 页数
@@ -39,7 +42,12 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
     [self setNavagationType];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 
@@ -57,11 +65,37 @@
     [self createNavigation];
     [self createSelectBar];
     [self createCollectionView];
+    [self alertGuideView];
 }
+//引导图
+-(void)alertGuideView{
+    NSString *lastVerson = [UserDefaults objectForKey:@"version"];
+
+    NSString *guidversion = [UserDefaults objectForKey:@"guidVersion"];
+    if (![guidversion isEqualToString:lastVerson]) {
+        [UserDefaults setValue:lastVerson forKey:@"guidVersion"];
+        UIImageView *guideView = [Factory createImageViewWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) Image:[UIImage imageNamed:@"guideView"]];
+        guideView.userInteractionEnabled = true;
+        UIView *clickView = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(kWvertical(100), screenHeight/2, screenWidth-kWvertical(200), screenHeight/4)];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(UITapGestureRecognizer  *sender) {
+            UIView *superView = sender.view.superview;
+            [superView removeFromSuperview];
+            superView.hidden = true;
+        }];
+        [clickView addGestureRecognizer:tap];
+        [guideView addSubview:clickView];
+    [[UIApplication sharedApplication].keyWindow addSubview:guideView];
+    }
+}
+
 //导航
 -(void)createNavigation{
     //当前省份
-    _province = [UserDefaults objectForKey:PROVINCENAME];
+    _province =[UserDefaults objectForKey:PROVINCENAME];
+    if (_province == nil) {
+        _province = @"上海";
+    }
     //选择省份按钮
     _leftBtn = [Factory createButtonWithFrame:CGRectMake(0, 0, kWvertical(70), kWvertical(40)) titleFont:kHorizontal(15) textColor:BarRGB_Color backgroundColor:ClearColor target:self selector:@selector(leftBtnClick) Title:nil];
     UIImage *image = [UIImage imageNamed:@"zk"];
@@ -87,10 +121,11 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_wbg"]forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:BlackColor}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:BarRGB_Color}];
 }
 //城市选择按钮
 -(void)createLeftBtn{
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_wbg"] forBarMetrics:UIBarMetricsDefault];
     if ([_province containsString:@"黑龙江"]||[_province containsString:@"内蒙古"]) {
         _province = [_province substringToIndex:3];
         _leftBtn.width = kWvertical(80);
@@ -129,6 +164,7 @@
 -(void)createCollectionView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(screenWidth, kHvertical(262));
+    layout.minimumLineSpacing = 1;//设置最小行间距
     UICollectionView *mainClollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kHvertical(50), screenWidth, screenHeight-kHvertical(50)-64-44) collectionViewLayout:layout];
     mainClollectionView.backgroundColor = ClearColor;
     [mainClollectionView registerClass:[DiscoveryActivitiesCollectionViewCell class] forCellWithReuseIdentifier:@"DiscoveryActivitiesCollectionViewCellID"];
@@ -137,6 +173,22 @@
     [self.view addSubview:mainClollectionView];
     _mainClolllectionView = mainClollectionView;
 }
+//无数据展示图片
+-(void)createNoDataView{
+    
+    UIView *backView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
+    //无订单提示图片
+    UIImageView *picImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWvertical(75),kWvertical(102), kWvertical(246), kWvertical(178))];
+    picImageView.image = [UIImage imageNamed:@"bg_set_photo"];
+    [backView addSubview:picImageView];
+    
+    UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(0, picImageView.y_height + kHvertical(29), screenWidth, kHvertical(15)) textColor:RGB(98,98,98) fontSize:kHorizontal(15) Title:@"暂无球队活动内容！"];
+    [descLabel setTextAlignment:NSTextAlignmentCenter];
+    [backView addSubview:descLabel];
+    _noDataView = backView;
+    [self.view addSubview:_noDataView];
+}
+
 #pragma mark - MJRefresh
 -(void)initRefresh{
     //刷新
@@ -155,21 +207,26 @@
     [self initCollectionViewData];
 }
 
-
 #pragma mark - InitData
 -(void)initData{
     [self initCollectionViewData];
 }
 //获取列表数据
 -(void)initCollectionViewData{
+    //判断用户是否登录
+    NSString *userKey = DEFAULF_USERID;
+    if (!DEFAULF_USERID) {
+        userKey = @"0";
+    }
     
     NSString *offset = [NSString stringWithFormat:@"%ld",(long)_offset];
     NSString *sortType = [NSString stringWithFormat:@"%ld",(long)_sortType];
-    NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]];
+    NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", userKey]];
     NSString *lat = [UserDefaults objectForKey:BDMAPLAT];
     NSString *lon = [UserDefaults objectForKey:BDMAPLNG];
+    
     NSDictionary *dict = @{
-                           @"userKey":DEFAULF_USERID,
+                           @"userKey":userKey,
                             @"offset":offset,
                             @"sortType":sortType,
                             @"province":_province,
@@ -198,8 +255,18 @@
             }
             [self.mainClolllectionView reloadData];
         }
+        if (self.dataArray.count==0) {
+            if (!_noDataView||_noDataView.hidden) {
+                _noDataView.hidden=false;
+                [self createNoDataView];
+            }
+        }else{
+            if (_noDataView) {
+                _noDataView.hidden=true;
+                [_noDataView removeFromSuperview];
+            }
+        }
     }];
-    
 }
 
 
@@ -220,6 +287,11 @@
 }
 //地图icon点击
 -(void)pushMapView{
+    if (!DEFAULF_USERID) {
+        [self AlertLongin];
+        return;
+    }
+
     DicoveryMapViewViewController *vc = [[DicoveryMapViewViewController alloc] init];
     __weak typeof(self) weakself = self;
     vc.blockProvince = ^(NSString *province) {
@@ -234,7 +306,13 @@
 }
 //我的报名
 -(void)myApplyClick{
+    if (!DEFAULF_USERID) {
+        [self AlertLongin];
+        return;
+    }
     ActivityMyApplyViewController *vc = [[ActivityMyApplyViewController alloc] init];
+                                         
+    [MobClick event:@"findactivity_myactivity_click"];
     vc.hidesBottomBarWhenPushed = true;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -271,11 +349,36 @@
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-
+    if (!DEFAULF_USERID) {
+        [self AlertLongin];
+        return;
+    }
+    ActivityDetailViewController *vc = [[ActivityDetailViewController alloc] init];
+    DisCoveryActivityModel *model = self.dataArray[indexPath.item];
+    vc.activityKey = model.timeKey;
+    vc.hidesBottomBarWhenPushed = true;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
-
-
+#pragma mark - Other
+//判断是否需要登录
+-(void)AlertLongin{
+    [Helper alertViewWithTitle:@"是否立即登录?" withBlockCancle:^{
+    } withBlockSure:^{
+        JGHLoginViewController *vc = [[JGHLoginViewController alloc] init];
+        vc.reloadCtrlData = ^(){
+            
+        };
+        [self.navigationController pushViewController:vc animated:YES];
+    } withBlock:^(UIAlertController *alertView) {
+        [self presentViewController:alertView animated:YES completion:nil];
+    }];
+}
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if ([scrollView isEqual:_mainClolllectionView]) {
+        
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

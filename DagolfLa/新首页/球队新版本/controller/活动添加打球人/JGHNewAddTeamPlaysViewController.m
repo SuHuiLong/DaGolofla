@@ -19,15 +19,16 @@
 #import "JGHApplyerHeaderCell.h"
 #import "JGHNewApplyerListCell.h"
 
+#import "JGHNewActivityDetailViewController.h"
+
 static NSString *const JGHAddPlaysCellIdentifier = @"JGHAddPlaysCell";
 static NSString *const JGHAddPlaysButtonCellIdentifier = @"JGHAddPlaysButtonCell";
 static NSString *const JGHPlayBaseInfoCellIdentifier = @"JGHPlayBaseInfoCell";
 static NSString *const JGHApplyerHeaderCellIdentifier = @"JGHApplyerHeaderCell";
 static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell";
 
-@interface JGHNewAddTeamPlaysViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JGHAddPlaysCellDelegate, JGHAddPlaysButtonCellDelegate, JGHPlayBaseInfoCellDelegate, JGHNewApplyerListCellDelegate>
-
-{
+@interface JGHNewAddTeamPlaysViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, JGHAddPlaysCellDelegate, JGHAddPlaysButtonCellDelegate, JGHPlayBaseInfoCellDelegate, JGHNewApplyerListCellDelegate>{
+    
     NSMutableDictionary *_playsBaseDict;
 }
 
@@ -41,21 +42,46 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:BG_color];
-    self.navigationItem.title = @"添加打球人";
-    
+    [self createNavagation];
+    _playsBaseDict = [NSMutableDictionary dictionary];
+    [self initPlaysBaseInfo];
+    [self createAddTeamPlaysTableView];
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    //backL
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(popBack)];
+    leftItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftItem;
+}
+-(void)createNavagation{
+    self.navigationItem.title = @"添加报名人";
     UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(completeBtnClick)];
     item.tintColor=[UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = item;
     
-    _playsBaseDict = [NSMutableDictionary dictionary];
-    [self initPlaysBaseInfo];
-    
-    [self createAddTeamPlaysTableView];
+}
+//返回
+-(void)popBack{
+    if (!_isPushToDetail) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[JGHNewActivityDetailViewController class]]) {
+                JGHNewActivityDetailViewController *vc = (JGHNewActivityDetailViewController *)controller;
+                [self.navigationController popToViewController:vc animated:YES];
+            }
+        }
+    }
 }
 #pragma mark -- 完成
 - (void)completeBtnClick{
-    _blockPlayListArray(_playListArray);
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_playListArray.count != 0) {
+        _blockPlayListArray(_playListArray);
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [[ShowHUD showHUD] showToastWithText:@"请添加报名人" FromView:self.view];
+    }
 }
 #pragma mark -- 初始化报名人信息
 - (void)initPlaysBaseInfo{
@@ -449,8 +475,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
             cs = [[NSCharacterSet characterSetWithCharactersInString:ALMOSTNUMBERS] invertedSet];
             NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
             BOOL basicTest = [string isEqualToString:filtered];
-            if(!basicTest)
-            {
+            if(!basicTest){
                 [[ShowHUD showHUD]showToastWithText:@"请输入整数数字" FromView:self.view];
                 return NO;
             }

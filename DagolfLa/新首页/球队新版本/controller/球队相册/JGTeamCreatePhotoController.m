@@ -7,6 +7,7 @@
 //
 
 #import "JGTeamCreatePhotoController.h"
+#import "SelectPhotoAsHeaderViewController.h"
 #import "UITool.h"
 #import "SXPickPhoto.h"
 
@@ -185,8 +186,6 @@
     labelTitle.font = [UIFont systemFontOfSize:15*screenWidth/375];
     [viewTitle addSubview:labelTitle];
     
-    
-    
     _textTitle = [[UITextField alloc]initWithFrame:CGRectMake(120*screenWidth/375, 1*screenWidth/375, screenWidth-130*screenWidth/375, 45*screenWidth/375)];
     _textTitle.placeholder = @"输入相册名";
     _textTitle.textColor = [UITool colorWithHexString:@"313131" alpha:1];
@@ -328,6 +327,28 @@
     UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         //        _photos = 1;
     }];
+    //球队相册
+    UIAlertAction * act4 = [UIAlertAction actionWithTitle:@"从球队相册中选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //球队相册
+        SelectPhotoAsHeaderViewController *vc = [[SelectPhotoAsHeaderViewController alloc] init];
+        vc.albumKey = _timeKey;
+        vc.selectUrl = ^(NSInteger picTimeKey) {
+            
+            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+            
+            [dict setObject:[NSString stringWithFormat:@"%ld",picTimeKey] forKey:@"mediaKey"];
+            [dict setObject:_timeKey forKey:@"timeKey"];
+            [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
+            [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
+            } completionBlock:^(id data) {
+                NSString *urlStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/album/media/%ld.jpg", (long)picTimeKey];
+                NSURL *url = [NSURL URLWithString:urlStr];
+                [_imgvChange sd_setImageWithURL:url];
+            }];
+        };
+        [self.navigationController pushViewController:vc animated:YES];
+    }];
+
     //拍照：
     UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //打开相机
@@ -346,8 +367,10 @@
         }];
     }];
     
+    
     UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"选择图片" preferredStyle:UIAlertControllerStyleActionSheet];
     [aleVC addAction:act1];
+    [aleVC addAction:act4];
     [aleVC addAction:act2];
     [aleVC addAction:act3];
     
@@ -359,7 +382,7 @@
 {
     MBProgressHUD *progress = [[MBProgressHUD alloc] initWithView:self.view];
     progress.mode = MBProgressHUDModeIndeterminate;
-    progress.labelText = @"正在上传...";
+    progress.label.text = @"正在上传...";
     [self.view addSubview:progress];
     [progress show:YES];
     /**
@@ -404,9 +427,7 @@
                     [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                     _imgvChange.image = [UIImage imageWithData:array[0]];
                 }];
-            }
-            else
-            {
+            }else{
                 [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
                 [[ShowHUD showHUD]showToastWithText:@"上传图片失败" FromView:self.view];
             }

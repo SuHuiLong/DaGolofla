@@ -7,16 +7,23 @@
 //
 
 #import "JGActivityMemNonMangerViewController.h"
-#import "JGActivityMemNonmangerTableViewCell.h"
+//#import "JGActivityMemNonmangerTableViewCell.h"
 #import "JGTeamDeatilWKwebViewController.h"
-
+#import "ActivityDetailModel.h"
+#import "ActivityDetailListTableViewCell.h"
+#import "SortManager.h"
 
 @interface JGActivityMemNonMangerViewController ()<UITableViewDelegate, UITableViewDataSource>
-
+//主视图
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, assign) NSInteger page;
+//已报名人数
 @property (nonatomic, assign) NSInteger sumCount;
-
+//总用户的数据源
+@property (nonatomic, strong) NSMutableArray *listArray;
+//排序后的出现过的拼音首字母数组
+@property(nonatomic,strong)NSMutableArray *indexArray;
+//排序好的结果数组
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation JGActivityMemNonMangerViewController
@@ -30,14 +37,12 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64) style:(UITableViewStylePlain)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView setExtraCellLineHidden];
-    [self.tableView registerClass:[JGActivityMemNonmangerTableViewCell class] forCellReuseIdentifier:@"memCell"];
-    
-    _page = 0;
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.tableView registerClass:[ActivityDetailListTableViewCell class] forCellReuseIdentifier:@"ActivityDetailListTableViewCellID"];
+    self.tableView.sectionIndexColor = RGB(50,177,77);
+
     _tableView.mj_header=[MJDIYHeader headerWithRefreshingTarget:self refreshingAction:@selector(headRereshing)];
-    _tableView.mj_footer=[MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footRereshing)];
     [_tableView.mj_header beginRefreshing];
-    
     [self.view addSubview:self.tableView];
     
     UIBarButtonItem *barItm = [[UIBarButtonItem alloc] initWithTitle:@"查看分组" style:(UIBarButtonItemStylePlain) target:self action:@selector(check)];
@@ -63,96 +68,99 @@
 }
 
 // 刷新
-- (void)headRereshing
-{
-    [self downLoadData:_page isReshing:YES];
+- (void)headRereshing{
+    [self initPlayerData];
 }
-
-- (void)footRereshing
-{
-    [self downLoadData:_page isReshing:NO];
-}
-
 #pragma mark - 下载数据
-- (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
-    [dict setObject:self.activityKey forKey:@"activityKey"];
-    [dict setObject:[NSNumber numberWithInteger:_page]forKey:@"offset"];
-    [dict setObject:@0 forKey:@"teamKey"];
-    [dict setObject:DEFAULF_USERID forKey:@"userKey"];
-    NSString *strMD = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:0 activityKey:[self.activityKey integerValue] userKey:[DEFAULF_USERID integerValue]];
-    [dict setObject:strMD forKey:@"md5"];
-    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        if (isReshing) {
-            [_tableView.mj_header endRefreshing];
-        }else {
-            [_tableView.mj_footer endRefreshing];
-        }
-    } completionBlock:^(id data) {
-        if ([data objectForKey:@"packSuccess"]) {
-            if (page == 0)
-            {
-                //清除数组数据
-                [self.dataArray removeAllObjects];
-            }
-            
-            [self.dataArray addObjectsFromArray:[data objectForKey:@"teamSignUpList"]];
-            self.sumCount = [[data objectForKey:@"sumCount"] integerValue];
-            _page++;
-            [_tableView reloadData];
-        }else {
 
-        }
-        [_tableView reloadData];
-        if (isReshing) {
+//获取联系人列表
+- (void)initPlayerData{
+    NSString *md5 = [JGReturnMD5Str getTeamActivitySignUpListWithTeamKey:0 activityKey:[self.activityKey integerValue] userKey:[DEFAULF_USERID integerValue]];
+    NSDictionary *dict = @{
+                           @"activityKey":self.activityKey,
+                           @"userKey":DEFAULF_USERID,
+                           @"teamKey":@0,
+                           @"md5":md5,
+                           };
+    
+    [[JsonHttp jsonHttp]httpRequest:@"team/getTeamActivitySignUpList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
             [_tableView.mj_header endRefreshing];
-        }else {
             [_tableView.mj_footer endRefreshing];
+    } completionBlock:^(id data) {
+        [_tableView.mj_header endRefreshing];
+        [_tableView.mj_footer endRefreshing];
+        BOOL packSucess = [[data objectForKey:@"packSuccess"] boolValue];
+        if (packSucess) {
+            self.listArray = [NSMutableArray array];
+            NSArray *listArray = [data objectForKey:@"teamSignUpList"];
+            for (NSDictionary *listDict in listArray) {
+                ActivityDetailModel *model = [ActivityDetailModel modelWithDictionary:listDict];
+                [self.listArray addObject:model];
+            }
+            _sumCount = [[data objectForKey:@"sumCount"] integerValue];
+
+            self.indexArray = [SortManager IndexWithArray:self.listArray Key:@"name"];
+            self.dataArray = [SortManager sortObjectArray:self.listArray Key:@"name"];
+
+            [_tableView reloadData];
         }
     }];
 }
 
-
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    JGActivityMemNonmangerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"memCell"];
-    cell.nameLB.text = [self.dataArray[indexPath.row] objectForKey:@"name"];
-
-    if ([self.dataArray[indexPath.row] objectForKey:@"mobile"]) {
-        cell.phoneLB.text = [self.dataArray[indexPath.row] objectForKey:@"mobile"];
-    }else{
-        cell.phoneLB.text = @"";
-    }
-    [cell.headIconV sd_setImageWithURL:[Helper setImageIconUrl:@"user" andTeamKey:[[self.dataArray[indexPath.row] objectForKey:@"userKey"] integerValue] andIsSetWidth:YES andIsBackGround:NO] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
-
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return [NSString stringWithFormat: @"活动成员列表（%td人）", self.sumCount];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 50.0 * screenWidth / 375;
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return self.dataArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.dataArray count];
+    NSArray *indexSectionArray = self.dataArray[section];
+    return [indexSectionArray count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50 * screenWidth / 375;
+    return kHvertical(50);
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return kHvertical(26);
+}
+
+//section右侧index数组
+-(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
+    return self.indexArray;
+}
+//点击右侧索引表项时调用 索引与section的对应关系
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index{
+    return index;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ActivityDetailListTableViewCell *listCell = [tableView dequeueReusableCellWithIdentifier:@"ActivityDetailListTableViewCellID"];
+    [listCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    ActivityDetailModel *model = self.dataArray[indexPath.section][indexPath.row];
+    [listCell configModel:model];
+    return listCell;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *headerView = [Factory createViewWithBackgroundColor:RGB(245,245,245) frame:CGRectMake(0, 0, screenWidth, kHvertical(26))];
+    UILabel *titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(26), 0, screenWidth-kWvertical(26), kHvertical(26)) textColor:RGB(49,49,49) fontSize:kHvertical(15) Title:_indexArray[section]];
+    [headerView addSubview:titleLabel];
+    return headerView;
+}
+
+
 
 - (NSMutableArray *)dataArray{
     if (!_dataArray) {
         _dataArray = [[NSMutableArray alloc] init];
     }
     return _dataArray;
+}
+- (NSMutableArray *)listArray{
+    if (!_listArray) {
+        _listArray = [[NSMutableArray alloc] init];
+    }
+    return _listArray;
 }
 
 - (void)didReceiveMemoryWarning {

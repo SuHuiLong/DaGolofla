@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong)UILabel *contentLable;
 
-//@property (nonatomic, strong)UILabel *line;
 
 - (void)configJGHNewActivityExplainCellContent:(NSString *)content;
 

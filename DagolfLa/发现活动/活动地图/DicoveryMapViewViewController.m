@@ -11,7 +11,8 @@
 #import <BaiduMapAPI/BMKMapView.h>
 #import "SearchWithMapOrderListViewController.h"
 #import "SearchWithMapAnnotationView.h"
-
+#import "MenbersActivityInParkViewController.h"
+#import "ActivityDetailViewController.h"
 @interface DicoveryMapViewViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>{
     //MapView
     BMKMapView* _mapView;
@@ -212,6 +213,9 @@
                 model.count = [[listDict objectForKey:@"count"] integerValue];
                 model.parkFullName = [listDict objectForKey:@"ballName"];
                 model.ballKey = [listDict objectForKey:@"ballKey"];
+                model.activityKey = [listDict objectForKey:@"activityKey"];
+                
+                
                 [self.dataArray addObject:model];
             }
             [self.cityDataDict setValue:self.dataArray forKey:_cityName];
@@ -236,14 +240,21 @@
             [self.navigationController popViewControllerAnimated:YES];
             return;
         }
-        NSString *parkId = sView.dataModel.parkId;
-        NSInteger orderNum = sView.dataModel.orderNum;
-        NSString *pardName = sView.dataModel.parkName;
-        if (orderNum==1) {
+        NSString *parkId = sView.dataModel.ballKey;
+        NSInteger count = sView.dataModel.count;
+        NSString *parkName = sView.dataModel.parkName;
+        if (count==1) {
+            
+            ActivityDetailViewController *vc = [[ActivityDetailViewController alloc] init];
+            vc.activityKey = sView.dataModel.activityKey;
+            [self.navigationController pushViewController:vc animated:YES];
             
             
         }else{
-
+            MenbersActivityInParkViewController *vc = [[MenbersActivityInParkViewController alloc] init];
+            vc.parkKey = parkId;
+            vc.parkName = parkName;
+            [self.navigationController pushViewController:vc animated:YES];
         
         }
     }

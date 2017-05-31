@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface DisCoveryActivityModel : NSObject
-//球队id
+//活动id
 @property (nonatomic,copy) NSString *timeKey;
 //已报名人数
-@property (nonatomic,assign) long activityCount;
+@property (nonatomic,assign) long sumCount;
 //球场名
 @property (nonatomic,copy) NSString *ballName;
 //球队名
-@property (nonatomic,copy) NSString *ballName1;
+@property (nonatomic,copy) NSString *teamName;
 //活动名
 @property (nonatomic,copy) NSString *name;
 //距离

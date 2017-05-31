@@ -87,22 +87,22 @@
 //  添加突出按钮
 -(void)setup
 {
-    [self addCenterButtonWithImage:[UIImage imageNamed:@"NavigationBar_ScoreCardDefault"] selectedImage:[UIImage imageNamed:@"NavigationBar_ScoreCardSelected"]];
+    [self addCenterButtonWithImage:[UIImage imageNamed:@"NavigationBar_ScoreCardDefault"]];
     self.delegate=self;
     
 }
 // addCenterButton
--(void) addCenterButtonWithImage:(UIImage*)buttonImage selectedImage:(UIImage*)selectedImage{
+-(void) addCenterButtonWithImage:(UIImage*)buttonImage{
     
     _button = [UIButton buttonWithType:UIButtonTypeCustom];
     [_button addTarget:self action:@selector(pressChange:) forControlEvents:UIControlEventTouchUpInside];
     //  设定button大小为适应图片
     CGFloat W = buttonImage.size.width;
     CGFloat H = buttonImage.size.height;
-    _button.frame = CGRectMake(self.tabBar.center.x - W/2, CGRectGetHeight(self.tabBar.bounds)-H - 8, W, H);
+    _button.frame = CGRectMake(self.tabBar.center.x - W/2, CGRectGetHeight(self.tabBar.bounds)-H - 18, W, H);
     
     [_button setImage:buttonImage forState:UIControlStateNormal];
-    [_button setImage:selectedImage forState:UIControlStateSelected];
+
     
     _button.adjustsImageWhenHighlighted=NO;
     [self.tabBar addSubview:_button];
@@ -142,6 +142,8 @@
 -(void)pressChange:(id)sender{
     self.selectedIndex=2;
     _button.selected=YES;
+    
+    [MobClick event:@"tab_activity_click"];
 }
 
 // 添加一个子控制器的方法

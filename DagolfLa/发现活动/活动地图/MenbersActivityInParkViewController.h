@@ -9,5 +9,8 @@
 #import "BaseViewController.h"
 
 @interface MenbersActivityInParkViewController : BaseViewController
-
+//球场key
+@property (nonatomic,copy) NSString *parkKey;
+//球场名
+@property (nonatomic,copy) NSString *parkName;
 @end

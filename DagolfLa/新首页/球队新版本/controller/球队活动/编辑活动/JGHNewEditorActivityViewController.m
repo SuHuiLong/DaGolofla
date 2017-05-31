@@ -459,7 +459,6 @@ static CGFloat ImageHeight  = 210.0;
             }else{
                 activityMemberCtrl.activityKey = [NSNumber numberWithInteger:[_model.timeKey integerValue]];
             }
-            
             activityMemberCtrl.teamKey = [NSNumber numberWithInteger:_model.teamKey];
             [self.navigationController pushViewController:activityMemberCtrl animated:YES];
         }else if (indexPath.row == 2){

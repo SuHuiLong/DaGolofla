@@ -360,14 +360,6 @@
 }
 //内容改变
 -(void)textFieldChange:(UITextField *)textField{
-//    NSInteger selectTag = textField.tag;
-//    if (selectTag==102) {
-//        NSString *inputStr = textField.text;
-//        _checkView.selected = FALSE;
-//        if (inputStr.length==11) {
-//            _checkView.selected = TRUE;
-//        }
-//    }
     NSInteger canClickNum = 0;
     for (int i = 0; i<3; i++) {
         UITextField *textField = (UITextField *)[self.view viewWithTag:101+i];

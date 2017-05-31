@@ -232,4 +232,5 @@ typedef NS_ENUM(NSInteger, GestureType) {
 #import "ConvertJson.h"
 #import "JGLWebUserMallViewController.h"
 #import "YYKit.h"
+#import "ClipImageManager.h"
 #endif

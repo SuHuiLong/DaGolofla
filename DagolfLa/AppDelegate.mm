@@ -201,8 +201,18 @@
         [UserDefaults setObject:[NSNumber numberWithFloat:31.15] forKey:BDMAPLAT];//纬度
         [UserDefaults setObject:[NSNumber numberWithFloat:121.56] forKey:BDMAPLNG];//经度
         [UserDefaults setObject:@"上海" forKey:CITYNAME];//城市名
+        [UserDefaults setObject:@"上海" forKey:PROVINCENAME];//省份名
         [UserDefaults synchronize];
     }else{
+        if (![UserDefaults objectForKey:PROVINCENAME]) {
+            //用户默认位置
+            [UserDefaults setObject:[NSNumber numberWithFloat:31.15] forKey:BDMAPLAT];//纬度
+            [UserDefaults setObject:[NSNumber numberWithFloat:121.56] forKey:BDMAPLNG];//经度
+            [UserDefaults setObject:@"上海" forKey:CITYNAME];//城市名
+            [UserDefaults setObject:@"上海" forKey:PROVINCENAME];//省份名
+            [UserDefaults synchronize];
+        }
+        
         [self getCurPosition];
     }
     //-------------------------初始化趣拍-------------------------
@@ -250,18 +260,17 @@
         }
     }else{
         //取出新版本号
-        NSString* versionKey = (NSString*)kCFBundleVersionKey;
-        NSString* version = [NSBundle mainBundle].infoDictionary[versionKey];
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
         //取出老的版本号
-        NSString* lastVerson = [[NSUserDefaults standardUserDefaults]valueForKey:versionKey];
-        if(![version isEqualToString:lastVerson]){
+        NSString* lastVerson = [UserDefaults objectForKey:@"version"];
+        if(![app_Version isEqualToString:lastVerson]){
             //更新广告页照片
             [self getAdvertisingImageWithUrl];
-            PageViewController* pageview = [[PageViewController alloc]init];
+            PageViewController * pageview = [[PageViewController alloc]init];
             self.window.rootViewController = pageview;
             [pageview setCallBack:^{
-                [[NSUserDefaults standardUserDefaults]setValue:version forKey:versionKey];
-                [[NSUserDefaults standardUserDefaults]synchronize];
+                [UserDefaults setValue:app_Version forKey:@"version"];
                 [self startApp];
             }];
         }else{
@@ -648,10 +657,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 }
 #pragma mark --定位方法
 -(void)getCurPosition{
-    
-    if (_locationManager==nil) {
-        _locationManager=[[CLLocationManager alloc] init];
-    }
+    _locationManager=[[CLLocationManager alloc] init];
     if ([CLLocationManager locationServicesEnabled]) {
         _locationManager.delegate=self;
         _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
@@ -675,7 +681,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
              CLPlacemark *placemark = [array objectAtIndex:0];
              //获取城市
              NSString *city = placemark.locality;
-             
+             //获取省份
+             NSString *province = placemark.administrativeArea;
              if (!city) {
                  //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
                  city = placemark.administrativeArea;
@@ -686,8 +693,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
              }
              [user setObject:city forKey:CITYNAME];
              
-             if (placemark.administrativeArea) {
-                 [user setObject:placemark.administrativeArea forKey:PROVINCENAME];
+             if (province) {
+                 [user setObject:province forKey:PROVINCENAME];
              }
              [user synchronize];
          }

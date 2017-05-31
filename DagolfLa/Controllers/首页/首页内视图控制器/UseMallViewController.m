@@ -184,7 +184,6 @@
     
     NSLog(@"%@",[request.URL absoluteString]);
     NSString *str = [[request.URL absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"1111  ======      =   %@",str);
     NSArray  * array= [[request.URL absoluteString] componentsSeparatedByString:@":"];
     NSArray  * arrayUrl= [[request.URL absoluteString] componentsSeparatedByString:@"privatemsg:"];
     NSString *xinWenURL = @"privatemsg";
@@ -227,9 +226,7 @@
                 [webView goBack];
             }
         }
-    }
-    else
-    {
+    }else{
         [self.navigationController popViewControllerAnimated:YES];
     }
     
@@ -245,39 +242,6 @@
         }];
         return NO;
     }
-    /*
-    //支付
-    if ([str rangeOfString:@"dagolfla://pay"].location != NSNotFound){
-        _payUrl = str;
-        NSArray *arrayUrl = [_payUrl componentsSeparatedByString:@"?"];
-        NSArray *arrayCanShu = [arrayUrl[2] componentsSeparatedByString:@"&"];
-        for (int i = 0; i < arrayCanShu.count; i++) {
-            if (![Helper isBlankString:arrayCanShu[i]]) {
-                NSArray* arrCan = [arrayCanShu[i] componentsSeparatedByString:@"="];
-                [_dictCan setObject:arrCan[1] forKey:arrCan[0]];
-            }
-        }
-        NSLog(@"%@",_dictCan);
-        
-        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        }];
-        UIAlertAction *weiChatAction = [UIAlertAction actionWithTitle:@"微信支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //添加请求
-            [self weChatPay];
-        }];
-        UIAlertAction *zhifubaoAction = [UIAlertAction actionWithTitle:@"支付宝支付" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //添加请求
-            [self zhifubaoPay];
-        }];
-        
-        _actionView = [UIAlertController alertControllerWithTitle:@"选择支付方式" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [_actionView addAction:weiChatAction];
-        [_actionView addAction:zhifubaoAction];
-        [_actionView addAction:cancelAction];
-        [self presentViewController:_actionView animated:YES completion:nil];
-    }
-    */
-    
     //支付
     if ([str rangeOfString:@"dagolfla://pay"].location != NSNotFound){
         _payUrl = str;

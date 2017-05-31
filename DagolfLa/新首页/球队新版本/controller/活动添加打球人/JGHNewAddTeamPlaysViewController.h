@@ -20,4 +20,6 @@
 
 @property (copy, nonatomic) void (^blockPlayListArray)(NSMutableArray *listArray);
 
+// true：返回到替朋友报名界面 flash：返回上一页
+@property (nonatomic,assign) BOOL isPushToDetail;
 @end

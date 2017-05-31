@@ -505,15 +505,8 @@
         // ---- 存在球队赛事matchKey-跳到赛事详情－否则跳转到活动详情
         JGTeamAcitivtyModel *model = self.myActivityArray[indexPath.row];
         if ([model.matchKey integerValue] > 0) {
-//            JGHEventViewController *eventCtrl = [[JGHEventViewController alloc]init];
-//            [eventCtrl getMatchInfo:[model.matchKey integerValue]];
-//            [eventCtrl getMatchInfo:[model.timeKey integerValue]];
-//            [self.navigationController pushViewController:eventCtrl animated:YES];
         }else{
             JGHNewActivityDetailViewController *teamActivityVC = [[JGHNewActivityDetailViewController alloc] init];
-            
-            //        teamActivityVC.isTeamChannal = 1;
-            //        teamActivityVC.model = model;
             teamActivityVC.teamKey = [model.timeKey integerValue];
             [self.navigationController pushViewController:teamActivityVC animated:YES];
         }        

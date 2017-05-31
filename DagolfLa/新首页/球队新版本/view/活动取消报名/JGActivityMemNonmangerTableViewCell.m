@@ -13,27 +13,22 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        
-        self.headIconV = [[UIImageView alloc] initWithFrame:CGRectMake(10 * screenWidth / 375, 5 * screenWidth / 375, 40 * screenWidth / 375, 40 * screenWidth / 375)];
-        self.headIconV.layer.cornerRadius = 20 * screenWidth / 375;
-        self.headIconV.clipsToBounds = YES;
-        [self.contentView addSubview:self.headIconV];
-        
-        self.nameLB = [[UILabel alloc] initWithFrame:CGRectMake(60 * screenWidth / 375, 0, 80 * screenWidth / 375, 50 * screenWidth / 375)];
-        self.nameLB.font = [UIFont systemFontOfSize:16 * screenWidth / 375];
-        [self.contentView addSubview:self.nameLB];
-        
-        self.phoneLB = [[UILabel alloc] initWithFrame:CGRectMake(screenWidth -120 *ProportionAdapter, 0, 120 * screenWidth / 375, 50 * screenWidth / 375l)];
-        self.phoneLB.font = [UIFont systemFontOfSize:16 * screenWidth / 375];
-        [self.contentView addSubview:self.phoneLB];
-        
-//        self.signLB = [[UILabel alloc] initWithFrame:CGRectMake(280 * ProportionAdapter, 0, 70, 50 * ProportionAdapter)];
-//        self.signLB.font = [UIFont systemFontOfSize:16 * screenWidth / 375];
-//        [self.contentView addSubview:self.signLB];
+        [self createView];
     }
     return self;
 }
-
+#pragma mark - CreateView
+-(void)createView{
+    //头像
+    _headIconV = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(5), kHvertical(40), kHvertical(40)) Image:nil];
+    [self.contentView addSubview:_headIconV];
+    //昵称
+    _nameLB = [Factory createLabelWithFrame:CGRectMake(_headIconV.x_width + kWvertical(5), kHvertical(5), kWvertical(78), kHvertical(22)) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:nil];
+    [self.contentView addSubview:_nameLB];
+    //性别
+//    _sexIconV = []
+    //差点
+}
 
 
 

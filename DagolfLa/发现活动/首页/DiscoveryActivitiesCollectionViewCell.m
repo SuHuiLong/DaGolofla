@@ -28,7 +28,12 @@
     [self.contentView addSubview:leftIcon];
     //背景图片
     _headerImageView = [Factory createImageViewWithFrame:CGRectMake(0, 0, backView.width, kHvertical(151)) Image:nil];
+    ClipImageManager *manager = [[ClipImageManager alloc] init];
+    UIImage *placeImage = [manager clipImage:[UIImage imageNamed:ActivityBGImage] WithSize:CGSizeMake(screenWidth - kWvertical(30), kHvertical(151))];
+    NSLog(@"%@",placeImage);
+    _headerImageView.image = placeImage;
     [backView addSubview:_headerImageView];
+    
     
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:backView.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight cornerRadii:CGSizeMake(kWvertical(8),kWvertical(8))];
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
@@ -48,7 +53,7 @@
     UIView *grayBackView = [Factory createViewWithBackgroundColor:RGBA(0, 0, 0, 0.5) frame:CGRectMake(0, kHvertical(130), backView.width, kHvertical(21))];
     [backView addSubview:grayBackView];
     //球场定位icon
-    UIImageView *locationIcon = [Factory createImageViewWithFrame:CGRectMake(kWvertical(6), kHvertical(134), kWvertical(9), kHvertical(13)) Image:[UIImage imageNamed:@"mapsearch_location"]];
+    UIImageView *locationIcon = [Factory createImageViewWithFrame:CGRectMake(kWvertical(6), kHvertical(134), kWvertical(10), kHvertical(13)) Image:[UIImage imageNamed:@"mapsearch_location"]];
     [backView addSubview:locationIcon];
     //球场名
     _parkLabel = [Factory createLabelWithFrame:CGRectMake(locationIcon.x_width+kWvertical(7), grayBackView.y, screenWidth-kWvertical(61), grayBackView.height) textColor:WhiteColor fontSize:kHorizontal(14) Title:nil];
@@ -60,7 +65,7 @@
     _activityNameLabel = [Factory createLabelWithFrame:CGRectMake(_teamnameLabel.x, _headerImageView.y_height + kHvertical(42), _teamnameLabel.width, kHvertical(17)) textColor:RGB(49,49,49) fontSize:kHorizontal(18) Title:nil];
     [backView addSubview:_activityNameLabel];
     //状态&时间
-    _statuLabel = [Factory createLabelWithFrame:CGRectMake(_teamnameLabel.x, _headerImageView.y_height + kHvertical(69), _teamnameLabel.width/2, kHvertical(17)) textColor:RGB(252,90,1) fontSize:kHorizontal(15) Title:nil];
+    _statuLabel = [Factory createLabelWithFrame:CGRectMake(0, _headerImageView.y_height + kHvertical(69), _teamnameLabel.width/2, kHvertical(17)) textColor:RGB(252,90,1) fontSize:kHorizontal(15) Title:nil];
     [backView addSubview:_statuLabel];
     //资费
     _priceLabel = [Factory createLabelWithFrame:CGRectMake(_statuLabel.x_width, _statuLabel.y, _activityNameLabel.width-_statuLabel.width-kWvertical(12), _statuLabel.height) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:nil];
@@ -73,22 +78,32 @@
 
 -(void)configModel:(DisCoveryActivityModel *)model{
     //已报名人数
-    NSString *applyNumStr = [NSString stringWithFormat:@"已报%ld人",model.activityCount];
+    NSString *applyNumStr = [NSString stringWithFormat:@"已报%ld人",model.sumCount];
     _applyLabel.text = applyNumStr;
     [_applyLabel sizeToFitSelf];
 
     //图片
     NSURL *imageUrl = [Helper setImageIconUrl:@"activity" andTeamKey:[model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES];
-
-    [_headerImageView sd_setImageWithURL:imageUrl placeholderImage:nil];
-    _headerImageView.backgroundColor = RandomColor;
+    ClipImageManager *manager = [[ClipImageManager alloc] init];
+    UIImage *placeImage = [manager clipImage:[UIImage imageNamed:ActivityBGImage] WithSize:CGSizeMake(screenWidth - kWvertical(30), kHvertical(151))];
+    NSLog(@"%@",placeImage);
+    [_headerImageView sd_setImageWithURL:imageUrl placeholderImage:placeImage completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        NSLog(@"%@",image);
+        ClipImageManager *manager = [[ClipImageManager alloc] init];
+        if (image) {
+            image = [manager clipImage:image WithSize:CGSizeMake(screenWidth - kWvertical(30), kHvertical(151))];
+            NSLog(@"%@",image);
+            _headerImageView.image = image;
+        }
+    }];
     //球场&距离
+    NSString *ballname  = model.ballName;
     NSString *distanceStr = [NSString stringWithFormat:@"%@", model.distance];
-    NSString *parkAndDistance = [NSString stringWithFormat:@"%@  |  %@km",@"上海天马乡村俱乐部",distanceStr];
+    NSString *parkAndDistance = [NSString stringWithFormat:@"%@  |  %@km",ballname,distanceStr];
     _parkLabel.text = parkAndDistance;
     
     //球队名
-    NSString *parkName = @"上海优高科高尔夫球队";
+    NSString *parkName = model.teamName;
     _teamnameLabel.text = parkName;
     
     //活动名
@@ -96,20 +111,15 @@
     _activityNameLabel.text = activityname;
     
     //状态&时间
-    NSString *begainTime = model.beginDate;
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    [inputFormatter setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
-    NSDate* inputDate = [inputFormatter dateFromString:begainTime];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy.MM.dd"];
-    begainTime = [dateFormatter stringFromDate:inputDate];
-    NSString *statueAndTime = [NSString stringWithFormat:@"【%@】%@",@"进行中",begainTime];
+    NSString *begainTime = [Helper stringFromDateString:model.beginDate withFormater:@"yyyy.MM.dd"];
+    NSString *statu = model.stateShowString;
+    NSString *statueAndTime = [NSString stringWithFormat:@"【%@】%@",statu,begainTime];
     NSMutableAttributedString *statueAndTimeStr = [[NSMutableAttributedString alloc] initWithString:statueAndTime];
     [statueAndTimeStr addAttribute:NSForegroundColorAttributeName value:RGB(49,49,49) range:NSMakeRange(5, statueAndTime.length - 5)];
     _statuLabel.attributedText = statueAndTimeStr;
     //费用
     NSString *costRange = model.costRange;
-    if (![costRange isEqualToString:@"无费用"]) {
+    if (!([costRange isEqualToString:@""]||[costRange isEqualToString:@"无费用"])) {
         _priceLabel.hidden = false;
         NSString *price = [NSString stringWithFormat:@"资费 %@元 /人",costRange];
         NSMutableAttributedString *priceStr = [[NSMutableAttributedString alloc] initWithString:price];

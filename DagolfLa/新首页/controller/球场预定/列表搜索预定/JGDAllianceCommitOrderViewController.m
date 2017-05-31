@@ -253,9 +253,9 @@
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
+            [MobClick event:@"booking_ball_membership_click"];
+
             if ([data objectForKey:@"orderKey"]) {
-                
                 
                 if ([[data objectForKey:@"stateButtonString"] isEqualToString:@"待付款"]) {
                     JGDConfirmPayViewController *confirVC = [[JGDConfirmPayViewController alloc] init];

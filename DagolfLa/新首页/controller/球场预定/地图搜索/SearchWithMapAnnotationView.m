@@ -23,7 +23,9 @@
     
     //设置大头针下部图片
     _backgroundImageView = [Factory createImageViewWithFrame: CGRectMake(-kWvertical(50) + self.frame.size.width/2, self.frame.size.height , kWvertical(100), kHvertical(45)) Image:[UIImage imageNamed:@"mapsearch_backview"]];
-    if (screenWidth>380) {
+    CGFloat scale_screen = [UIScreen mainScreen].scale;
+    NSLog(@"%f",scale_screen);
+    if (scale_screen==3) {
         _backgroundImageView.y = self.frame.size.height + kHvertical(10);
     }
     //自定义显示的内容
@@ -65,23 +67,19 @@
         NSString *parkName = model.parkName;
         NSString *endStr = [NSString string];
         UIColor *changeColor = [[UIColor alloc] init];
-
         NSString *descripStr = [NSString string];
-
         if (model.dataType==1) {
             changeColor = RGB(236,45,51);
             endStr = [NSString stringWithFormat:@"%ld个",(long)model.count];
             descripStr = [NSString stringWithFormat:@"%@ %@",parkName,endStr];
         }else{
-            endStr = model.orderPrice;
-            descripStr = [NSString stringWithFormat:@"%@ ¥%@",parkName,endStr];
+            endStr = [NSString stringWithFormat:@"¥%@",model.orderPrice];
+            descripStr = [NSString stringWithFormat:@"%@ %@",parkName,endStr];
             changeColor = RGBA(61,161,255,1);
             if (model.isLeague==1) {
                 changeColor = RGBA(236,45,51,1);
             }
         }
-        
-        
         _descripLabel.text = descripStr;
         _descripLabel = [self AttributedStringLabel:_descripLabel rang:NSMakeRange(parkName.length+1, endStr.length) changeColor:changeColor];
     }

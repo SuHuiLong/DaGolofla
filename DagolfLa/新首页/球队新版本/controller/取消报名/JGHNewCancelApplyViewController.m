@@ -136,6 +136,9 @@ static NSString *const JGHNewCancelAppListCellIdentifier = @"JGHNewCancelAppList
     if (section == 0) {
         return 80*ProportionAdapter;
     }
+    if (section == 3) {
+        return kHvertical(52);
+    }
     return 44*ProportionAdapter;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

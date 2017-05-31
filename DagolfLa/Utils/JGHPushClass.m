@@ -30,6 +30,9 @@
 #import "JGHTeamShadowViewController.h"
 
 #import "VipCardGoodsListViewController.h"
+#import "VipCardGoodDetailViewController.h"
+
+#import "GuestRegistrationAuditViewController.h"//嘉宾审核列表
 static JGHPushClass *pushClass = nil;
 
 @implementation JGHPushClass
@@ -57,7 +60,6 @@ static JGHPushClass *pushClass = nil;
             }
         }
     }
-    
     // 球场详情
     if ([urlString containsString:@"bookBallParkDetail"]) {
         JGDCourtDetailViewController *teamMainCtrl = [[JGDCourtDetailViewController alloc]init];
@@ -209,9 +211,7 @@ static JGHPushClass *pushClass = nil;
     
     //创建球队
     if ([urlString containsString:@"createTeam"]) {
-        
-        
-        
+            
         
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         
@@ -285,11 +285,32 @@ static JGHPushClass *pushClass = nil;
     //联盟商城
     if ([urlString containsString:@"weblink/leagueShop"]) {
         VipCardGoodsListViewController *vc = [[VipCardGoodsListViewController alloc]init];
+        
+        
         if (pushVC) {
             pushVC(vc);
         }
     }
-
+    //会籍卡详情
+    if ([urlString containsString:@"weblink/sysLeagueCardDetail"]) {
+        VipCardGoodDetailViewController *vc = [[VipCardGoodDetailViewController alloc] init];
+        vc.cardTypeKey = [NSString stringWithFormat:@"%@",[Helper returnKeyVlaueWithUrlString:urlString andKey:@"cardTypeKey"]];
+        if (pushVC) {
+            pushVC(vc);
+        }
+    }
+    //嘉宾审核列表
+    if ([urlString containsString:@"activitySignupAudingList"]) {
+        GuestRegistrationAuditViewController *vc = [[GuestRegistrationAuditViewController alloc] init];
+        NSString *activityKey = [NSString stringWithFormat:@"%@",[Helper returnKeyVlaueWithUrlString:urlString andKey:@"activityKey"]];
+        NSString *teamKey = [NSString stringWithFormat:@"%@",[Helper returnKeyVlaueWithUrlString:urlString andKey:@"teamKey"]];
+        vc.activityKey = [activityKey integerValue];
+        vc.teamKey = [teamKey integerValue];
+        if (pushVC) {
+            pushVC(vc);
+        }
+    }
+    
 }
 
 

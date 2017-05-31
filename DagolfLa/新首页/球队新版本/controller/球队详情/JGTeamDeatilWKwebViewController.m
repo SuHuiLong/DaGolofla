@@ -51,7 +51,8 @@
         
     }
     if (_isScore == YES) {
-        UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareBtn)];
+
+        UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ic_portshare"] style:UIBarButtonItemStylePlain target:self action:@selector(shareBtn)];
         bar.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = bar;
         
@@ -68,7 +69,7 @@
         }];
     }
     if (_isScoreAll == YES) {
-        UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareBtn)];
+        UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ic_portshare"] style:UIBarButtonItemStylePlain target:self action:@selector(shareBtn)];
         bar.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = bar;
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
@@ -84,7 +85,7 @@
         }];
     }
     if (_isShareBtn == 1) {
-        UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(shareBtn)];
+        UIBarButtonItem* bar = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"ic_portshare"] style:UIBarButtonItemStylePlain target:self action:@selector(shareBtn)];
         bar.tintColor = [UIColor whiteColor];
         self.navigationItem.rightBarButtonItem = bar;
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];

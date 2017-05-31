@@ -10,7 +10,7 @@
 
 @protocol JGHGolfPackageViewDelegate <NSObject>
 
-- (void)didSelectGolgPackageViewUrlString:(NSInteger)selectID;
+- (void)didSelectGolgPackageViewUrlString:(NSString *)urlStr index:(NSInteger)selectID;
 
 @end
 

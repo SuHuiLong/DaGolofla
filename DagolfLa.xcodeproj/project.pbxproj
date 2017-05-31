@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180137D41ECC234900272643 /* ActivityDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 180137D31ECC234900272643 /* ActivityDetailModel.m */; };
+		180137D71ECC24E800272643 /* ActivityDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 180137D61ECC24E800272643 /* ActivityDetailTableViewCell.m */; };
+		180137DA1ECD6D3100272643 /* ActivityDetailListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 180137D91ECD6D3100272643 /* ActivityDetailListTableViewCell.m */; };
+		180137E11ECEC6AC00272643 /* ActivityExplainDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 180137E01ECEC6AC00272643 /* ActivityExplainDetailViewController.m */; };
 		180464941EA06CF30079CAD1 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180464931EA06CF30079CAD1 /* Accounts.framework */; };
 		180464961EA06D080079CAD1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180464951EA06D080079CAD1 /* CoreData.framework */; };
 		180464981EA06D170079CAD1 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180464971EA06D170079CAD1 /* Social.framework */; };
@@ -14,6 +18,8 @@
 		182583301E5EE4CB00DE1504 /* UITableView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */; };
 		182C029A1E77CDEC001161D7 /* JZLocationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02991E77CDEC001161D7 /* JZLocationConverter.m */; };
 		182C02CD1E7A6B3A001161D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36BF02041BC78253005B3CE2 /* Images.xcassets */; };
+		182FF1481EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182FF1471EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.m */; };
+		182FF14C1EDE8E83007F24A1 /* ClipImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 182FF14B1EDE8E83007F24A1 /* ClipImageManager.m */; };
 		184138F71ECA98C80068E244 /* DiscoveryActivitiesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184138F21ECA98C80068E244 /* DiscoveryActivitiesCollectionViewCell.m */; };
 		184138F81ECA98C80068E244 /* DiscoveryActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184138F41ECA98C80068E244 /* DiscoveryActivitiesViewController.m */; };
 		184138F91ECA98C80068E244 /* DisCoveryActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 184138F61ECA98C80068E244 /* DisCoveryActivityModel.m */; };
@@ -52,6 +58,11 @@
 		18911AAB1EA46A6B00B6FAAD /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18911AA21EA46A6B00B6FAAD /* libWeChatSDK.a */; };
 		189A82AA1EC16725006D16B2 /* InitAdvertiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 189A82A91EC16725006D16B2 /* InitAdvertiseView.m */; };
 		189A82AE1EC18B6F006D16B2 /* BMCurrentLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 189A82AD1EC18B6F006D16B2 /* BMCurrentLocation.m */; };
+		189C73EF1ED52F97009DB534 /* segementBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C73EE1ED52F97009DB534 /* segementBtnView.m */; };
+		189C73FB1ED5599F009DB534 /* SortManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C73FA1ED5599F009DB534 /* SortManager.m */; };
+		189C73FF1ED57994009DB534 /* GuestRegistrationAuditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C73FE1ED57994009DB534 /* GuestRegistrationAuditViewController.m */; };
+		189C74021ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C74011ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.m */; };
+		189C74051ED57B36009DB534 /* GuestRegistrationAuditModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C74041ED57B36009DB534 /* GuestRegistrationAuditModel.m */; };
 		18C062061EB1E8770011F26A /* BYFoundationLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C062051EB1E8770011F26A /* BYFoundationLog.m */; };
 		18C4D79F1EC5AA6000FF7D72 /* JKSlideSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D1E81EC5AA5F00FF7D72 /* JKSlideSwitchView.m */; };
 		18C4D7A01EC5AA6000FF7D72 /* JKSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D1EA1EC5AA5F00FF7D72 /* JKSlideViewController.m */; };
@@ -1226,6 +1237,14 @@
 
 /* Begin PBXFileReference section */
 		012A40DDE944526C02F0677F /* Pods-DagolfLa.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DagolfLa.release.xcconfig"; path = "Pods/Target Support Files/Pods-DagolfLa/Pods-DagolfLa.release.xcconfig"; sourceTree = "<group>"; };
+		180137D21ECC234900272643 /* ActivityDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailModel.h; sourceTree = "<group>"; };
+		180137D31ECC234900272643 /* ActivityDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailModel.m; sourceTree = "<group>"; };
+		180137D51ECC24E800272643 /* ActivityDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailTableViewCell.h; sourceTree = "<group>"; };
+		180137D61ECC24E800272643 /* ActivityDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailTableViewCell.m; sourceTree = "<group>"; };
+		180137D81ECD6D3100272643 /* ActivityDetailListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailListTableViewCell.h; sourceTree = "<group>"; };
+		180137D91ECD6D3100272643 /* ActivityDetailListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailListTableViewCell.m; sourceTree = "<group>"; };
+		180137DF1ECEC6AC00272643 /* ActivityExplainDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityExplainDetailViewController.h; sourceTree = "<group>"; };
+		180137E01ECEC6AC00272643 /* ActivityExplainDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityExplainDetailViewController.m; sourceTree = "<group>"; };
 		180464931EA06CF30079CAD1 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		180464951EA06D080079CAD1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		180464971EA06D170079CAD1 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -1235,6 +1254,10 @@
 		1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Addition.m"; sourceTree = "<group>"; };
 		182C02981E77CDEC001161D7 /* JZLocationConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JZLocationConverter.h; sourceTree = "<group>"; };
 		182C02991E77CDEC001161D7 /* JZLocationConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JZLocationConverter.m; sourceTree = "<group>"; };
+		182FF1461EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPhotoAsHeaderViewController.h; sourceTree = "<group>"; };
+		182FF1471EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectPhotoAsHeaderViewController.m; sourceTree = "<group>"; };
+		182FF14A1EDE8E83007F24A1 /* ClipImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClipImageManager.h; sourceTree = "<group>"; };
+		182FF14B1EDE8E83007F24A1 /* ClipImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClipImageManager.m; sourceTree = "<group>"; };
 		184138F11ECA98C80068E244 /* DiscoveryActivitiesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoveryActivitiesCollectionViewCell.h; sourceTree = "<group>"; };
 		184138F21ECA98C80068E244 /* DiscoveryActivitiesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoveryActivitiesCollectionViewCell.m; sourceTree = "<group>"; };
 		184138F31ECA98C80068E244 /* DiscoveryActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoveryActivitiesViewController.h; sourceTree = "<group>"; };
@@ -1360,8 +1383,8 @@
 		186855FD1E5BD776001F44DD /* UIView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Addition.m"; sourceTree = "<group>"; };
 		186855FE1E5BD776001F44DD /* UIView+GPExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GPExtension.h"; sourceTree = "<group>"; };
 		186855FF1E5BD776001F44DD /* UIView+GPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GPExtension.m"; sourceTree = "<group>"; };
-		186D0CC21ECB02A700024312 /* MenbersActivityInParkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenbersActivityInParkViewController.h; sourceTree = "<group>"; };
-		186D0CC31ECB02A700024312 /* MenbersActivityInParkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenbersActivityInParkViewController.m; sourceTree = "<group>"; };
+		186D0CC21ECB02A700024312 /* MenbersActivityInParkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenbersActivityInParkViewController.h; path = ../MenbersActivityInParkViewController.h; sourceTree = "<group>"; };
+		186D0CC31ECB02A700024312 /* MenbersActivityInParkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenbersActivityInParkViewController.m; path = ../MenbersActivityInParkViewController.m; sourceTree = "<group>"; };
 		1870EE031EA6ECFA00BFD871 /* MJDIYHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJDIYHeader.h; sourceTree = "<group>"; };
 		1870EE041EA6ECFA00BFD871 /* MJDIYHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJDIYHeader.m; sourceTree = "<group>"; };
 		1872F3731E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+ChangeLineSpaceAndWordSpace.h"; sourceTree = "<group>"; };
@@ -1384,6 +1407,16 @@
 		189A82A91EC16725006D16B2 /* InitAdvertiseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitAdvertiseView.m; sourceTree = "<group>"; };
 		189A82AC1EC18B6F006D16B2 /* BMCurrentLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMCurrentLocation.h; sourceTree = "<group>"; };
 		189A82AD1EC18B6F006D16B2 /* BMCurrentLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BMCurrentLocation.m; sourceTree = "<group>"; };
+		189C73ED1ED52F97009DB534 /* segementBtnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = segementBtnView.h; sourceTree = "<group>"; };
+		189C73EE1ED52F97009DB534 /* segementBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = segementBtnView.m; sourceTree = "<group>"; };
+		189C73F91ED5599F009DB534 /* SortManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortManager.h; sourceTree = "<group>"; };
+		189C73FA1ED5599F009DB534 /* SortManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortManager.m; sourceTree = "<group>"; };
+		189C73FD1ED57994009DB534 /* GuestRegistrationAuditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestRegistrationAuditViewController.h; sourceTree = "<group>"; };
+		189C73FE1ED57994009DB534 /* GuestRegistrationAuditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestRegistrationAuditViewController.m; sourceTree = "<group>"; };
+		189C74001ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestRegistrationAuditTableViewCell.h; sourceTree = "<group>"; };
+		189C74011ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestRegistrationAuditTableViewCell.m; sourceTree = "<group>"; };
+		189C74031ED57B36009DB534 /* GuestRegistrationAuditModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestRegistrationAuditModel.h; sourceTree = "<group>"; };
+		189C74041ED57B36009DB534 /* GuestRegistrationAuditModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestRegistrationAuditModel.m; sourceTree = "<group>"; };
 		18C062051EB1E8770011F26A /* BYFoundationLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYFoundationLog.m; sourceTree = "<group>"; };
 		18C4D1E71EC5AA5F00FF7D72 /* JKSlideSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKSlideSwitchView.h; sourceTree = "<group>"; };
 		18C4D1E81EC5AA5F00FF7D72 /* JKSlideSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKSlideSwitchView.m; sourceTree = "<group>"; };
@@ -3628,6 +3661,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180137DB1ECEC19E00272643 /* 活动说明 */ = {
+			isa = PBXGroup;
+			children = (
+				180137DF1ECEC6AC00272643 /* ActivityExplainDetailViewController.h */,
+				180137E01ECEC6AC00272643 /* ActivityExplainDetailViewController.m */,
+			);
+			path = "活动说明";
+			sourceTree = "<group>";
+		};
 		1814D8BA1E821D8D00F6E063 /* placeholderTextView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3637,13 +3679,22 @@
 			path = placeholderTextView;
 			sourceTree = "<group>";
 		};
+		182FF1491EDE8E73007F24A1 /* 裁剪图片 */ = {
+			isa = PBXGroup;
+			children = (
+				182FF14A1EDE8E83007F24A1 /* ClipImageManager.h */,
+				182FF14B1EDE8E83007F24A1 /* ClipImageManager.m */,
+			);
+			path = "裁剪图片";
+			sourceTree = "<group>";
+		};
 		184138F01ECA98C80068E244 /* 首页 */ = {
 			isa = PBXGroup;
 			children = (
-				184138F11ECA98C80068E244 /* DiscoveryActivitiesCollectionViewCell.h */,
-				184138F21ECA98C80068E244 /* DiscoveryActivitiesCollectionViewCell.m */,
 				184138F31ECA98C80068E244 /* DiscoveryActivitiesViewController.h */,
 				184138F41ECA98C80068E244 /* DiscoveryActivitiesViewController.m */,
+				184138F11ECA98C80068E244 /* DiscoveryActivitiesCollectionViewCell.h */,
+				184138F21ECA98C80068E244 /* DiscoveryActivitiesCollectionViewCell.m */,
 				184138F51ECA98C80068E244 /* DisCoveryActivityModel.h */,
 				184138F61ECA98C80068E244 /* DisCoveryActivityModel.m */,
 			);
@@ -3653,8 +3704,15 @@
 		184138FA1ECA99320068E244 /* 活动详情 */ = {
 			isa = PBXGroup;
 			children = (
+				180137DB1ECEC19E00272643 /* 活动说明 */,
 				184932251ECAD8B6005F3C87 /* ActivityDetailViewController.h */,
 				184932261ECAD8B6005F3C87 /* ActivityDetailViewController.m */,
+				180137D51ECC24E800272643 /* ActivityDetailTableViewCell.h */,
+				180137D61ECC24E800272643 /* ActivityDetailTableViewCell.m */,
+				180137D81ECD6D3100272643 /* ActivityDetailListTableViewCell.h */,
+				180137D91ECD6D3100272643 /* ActivityDetailListTableViewCell.m */,
+				180137D21ECC234900272643 /* ActivityDetailModel.h */,
+				180137D31ECC234900272643 /* ActivityDetailModel.m */,
 			);
 			path = "活动详情";
 			sourceTree = "<group>";
@@ -3675,10 +3733,9 @@
 		184139081ECAAF2F0068E244 /* 活动地图 */ = {
 			isa = PBXGroup;
 			children = (
+				186D0CC51ECBE01C00024312 /* 当前球场多个活动 */,
 				184139091ECAAF2F0068E244 /* DicoveryMapViewViewController.h */,
 				1841390A1ECAAF2F0068E244 /* DicoveryMapViewViewController.m */,
-				186D0CC21ECB02A700024312 /* MenbersActivityInParkViewController.h */,
-				186D0CC31ECB02A700024312 /* MenbersActivityInParkViewController.m */,
 			);
 			path = "活动地图";
 			sourceTree = "<group>";
@@ -3853,6 +3910,15 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		186D0CC51ECBE01C00024312 /* 当前球场多个活动 */ = {
+			isa = PBXGroup;
+			children = (
+				186D0CC21ECB02A700024312 /* MenbersActivityInParkViewController.h */,
+				186D0CC31ECB02A700024312 /* MenbersActivityInParkViewController.m */,
+			);
+			path = "当前球场多个活动";
+			sourceTree = "<group>";
+		};
 		1870EE021EA6ECFA00BFD871 /* MJRefreshDIY */ = {
 			isa = PBXGroup;
 			children = (
@@ -3904,6 +3970,28 @@
 				189A82AD1EC18B6F006D16B2 /* BMCurrentLocation.m */,
 			);
 			path = "百度地图定位类";
+			sourceTree = "<group>";
+		};
+		189C73F81ED5598C009DB534 /* sortManager */ = {
+			isa = PBXGroup;
+			children = (
+				189C73F91ED5599F009DB534 /* SortManager.h */,
+				189C73FA1ED5599F009DB534 /* SortManager.m */,
+			);
+			path = sortManager;
+			sourceTree = "<group>";
+		};
+		189C73FC1ED5794E009DB534 /* 嘉宾报名审核 */ = {
+			isa = PBXGroup;
+			children = (
+				189C73FD1ED57994009DB534 /* GuestRegistrationAuditViewController.h */,
+				189C73FE1ED57994009DB534 /* GuestRegistrationAuditViewController.m */,
+				189C74001ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.h */,
+				189C74011ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.m */,
+				189C74031ED57B36009DB534 /* GuestRegistrationAuditModel.h */,
+				189C74041ED57B36009DB534 /* GuestRegistrationAuditModel.m */,
+			);
+			path = "嘉宾报名审核";
 			sourceTree = "<group>";
 		};
 		18C062041EB1E8770011F26A /* 控制台输出中文 */ = {
@@ -5065,6 +5153,7 @@
 		18C4D3F61EC5AA5F00FF7D72 /* 嘉宾 */ = {
 			isa = PBXGroup;
 			children = (
+				189C73FC1ED5794E009DB534 /* 嘉宾报名审核 */,
 				18C4D3F71EC5AA5F00FF7D72 /* JGGuestViewController.h */,
 				18C4D3F81EC5AA5F00FF7D72 /* JGGuestViewController.m */,
 				18C4D3F91EC5AA5F00FF7D72 /* 添加打球人 */,
@@ -5267,6 +5356,8 @@
 				18C4D45A1EC5AA5F00FF7D72 /* JGHNewActivityDetailViewController.m */,
 				18C4D45B1EC5AA5F00FF7D72 /* JGHNewTeamApplyViewController.h */,
 				18C4D45C1EC5AA5F00FF7D72 /* JGHNewTeamApplyViewController.m */,
+				189C73ED1ED52F97009DB534 /* segementBtnView.h */,
+				189C73EE1ED52F97009DB534 /* segementBtnView.m */,
 			);
 			path = "活动详情";
 			sourceTree = "<group>";
@@ -5389,6 +5480,8 @@
 				18C4D4A71EC5AA5F00FF7D72 /* JGTeamPhotoViewController.m */,
 				18C4D4A81EC5AA5F00FF7D72 /* SDPhotoBrowser */,
 				18C4D4B01EC5AA5F00FF7D72 /* 相册图片上传 */,
+				182FF1461EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.h */,
+				182FF1471EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.m */,
 			);
 			path = "球队相册";
 			sourceTree = "<group>";
@@ -8371,6 +8464,8 @@
 		36BFFEEA1BC76D09005B3CE2 /* 第三方库 */ = {
 			isa = PBXGroup;
 			children = (
+				182FF1491EDE8E73007F24A1 /* 裁剪图片 */,
+				189C73F81ED5598C009DB534 /* sortManager */,
 				189A82AB1EC18AF4006D16B2 /* 百度地图定位类 */,
 				18C062041EB1E8770011F26A /* 控制台输出中文 */,
 				1870EE021EA6ECFA00BFD871 /* MJRefreshDIY */,
@@ -9287,10 +9382,12 @@
 				18C4D9BC1EC5AA6200FF7D72 /* JGDprizeTableViewCell.m in Sources */,
 				203019A51E0E4292005568E2 /* ZXByQuadrantReader.m in Sources */,
 				203019971E0E4292005568E2 /* ZXDataMatrixEdifactEncoder.m in Sources */,
+				180137D71ECC24E800272643 /* ActivityDetailTableViewCell.m in Sources */,
 				36BFFF951BC76D6B005B3CE2 /* TabBarItem.m in Sources */,
 				18C4D9C31EC5AA6200FF7D72 /* JGDHistoryScoreViewController.m in Sources */,
 				18C4D7CE1EC5AA6000FF7D72 /* VipCardModel.m in Sources */,
 				36BFFFC81BC770B1005B3CE2 /* AreaViewController.m in Sources */,
+				182FF14C1EDE8E83007F24A1 /* ClipImageManager.m in Sources */,
 				36BF004F1BC77213005B3CE2 /* UserAssistModel.m in Sources */,
 				18C4D86B1EC5AA6100FF7D72 /* JGHWonderfulView.m in Sources */,
 				18C4D8FB1EC5AA6100FF7D72 /* JGHShowMyTeamHeaderCell.m in Sources */,
@@ -9316,6 +9413,7 @@
 				18C4D7CC1EC5AA6000FF7D72 /* VipCardCollectionViewCell.m in Sources */,
 				18C4D8F21EC5AA6100FF7D72 /* JGHNewCancelApplyCell.m in Sources */,
 				203019B71E0E4292005568E2 /* ZXRSSExpandedDecodedObject.m in Sources */,
+				189C74021ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.m in Sources */,
 				18C4D9931EC5AA6200FF7D72 /* JGLTeamEditTableViewCell.m in Sources */,
 				203019B81E0E4292005568E2 /* ZXRSSExpandedFieldParser.m in Sources */,
 				18C4D9411EC5AA6100FF7D72 /* JGAlreadyAddGuestCell.m in Sources */,
@@ -9430,6 +9528,7 @@
 				18C4D9351EC5AA6100FF7D72 /* JGSelfSetTableViewCell.m in Sources */,
 				18C4D79F1EC5AA6000FF7D72 /* JKSlideSwitchView.m in Sources */,
 				186856011E5BD776001F44DD /* Factory.m in Sources */,
+				180137D41ECC234900272643 /* ActivityDetailModel.m in Sources */,
 				18C4D7EC1EC5AA6000FF7D72 /* JGHNOBlankPasswordViewController.m in Sources */,
 				36DBFD3B1BEF452200CA64D3 /* NearByModel.m in Sources */,
 				18C4D85E1EC5AA6100FF7D72 /* JGHShowActivityView.m in Sources */,
@@ -9521,6 +9620,7 @@
 				18C4D9091EC5AA6100FF7D72 /* JGLActivityMemberTableViewCell.m in Sources */,
 				18C4D8851EC5AA6100FF7D72 /* JGHShowMyTeamViewController.m in Sources */,
 				18C4D9D41EC5AA6200FF7D72 /* JGLScoreRankViewController.m in Sources */,
+				180137E11ECEC6AC00272643 /* ActivityExplainDetailViewController.m in Sources */,
 				20301A011E0E4293005568E2 /* ZXQRCodeAlignmentPattern.m in Sources */,
 				203019E61E0E4293005568E2 /* ZXPDF417DecodedBitStreamParser.m in Sources */,
 				18C4D8DA1EC5AA6100FF7D72 /* JGTeamInfoViewController.m in Sources */,
@@ -9632,6 +9732,7 @@
 				18C4D7BC1EC5AA6000FF7D72 /* MySetPasswordController.m in Sources */,
 				18C4D7EA1EC5AA6000FF7D72 /* JGDPrivateAccountViewController.m in Sources */,
 				36BF01071BC775AC005B3CE2 /* MallView.m in Sources */,
+				189C73FF1ED57994009DB534 /* GuestRegistrationAuditViewController.m in Sources */,
 				18C4D9C71EC5AA6200FF7D72 /* JGDActAlmostViewController.m in Sources */,
 				18C4DA1C1EC5AA6200FF7D72 /* JGLCaddieModel.m in Sources */,
 				36747C441BE0AE3B0052A1B0 /* CityHighChooseView.m in Sources */,
@@ -9749,6 +9850,7 @@
 				18C4D8E41EC5AA6100FF7D72 /* InvoiceModel.m in Sources */,
 				18C4D93F1EC5AA6100FF7D72 /* JGActivityNameBaseCell.m in Sources */,
 				18C4D91D1EC5AA6100FF7D72 /* JGHOperScoreHeaderCell.m in Sources */,
+				189C74051ED57B36009DB534 /* GuestRegistrationAuditModel.m in Sources */,
 				1870EE051EA6ECFA00BFD871 /* MJDIYHeader.m in Sources */,
 				18C4DA3B1EC5AA6200FF7D72 /* ScoreTableViewCell.m in Sources */,
 				18C4D9851EC5AA6200FF7D72 /* JGHAddPlaysCell.m in Sources */,
@@ -9775,6 +9877,7 @@
 				18C4D9381EC5AA6100FF7D72 /* JGMemHalfTableViewCell.m in Sources */,
 				18C4D8AC1EC5AA6100FF7D72 /* JGLViewCityChoose.m in Sources */,
 				18C4D7B71EC5AA6000FF7D72 /* JGDAboutUsViewController.m in Sources */,
+				189C73EF1ED52F97009DB534 /* segementBtnView.m in Sources */,
 				18C4DA211EC5AA6200FF7D72 /* JGDPlayPersonTableViewCell.m in Sources */,
 				18C4D96F1EC5AA6200FF7D72 /* JGSignUoPromptCell.m in Sources */,
 				18C4D83B1EC5AA6100FF7D72 /* JGDCourtNameSearchViewController.m in Sources */,
@@ -10082,6 +10185,7 @@
 				65B596E61CAD43AC007AB83A /* UIView+Extension.m in Sources */,
 				203019FE1E0E4293005568E2 /* ZXQRCodeFormatInformation.m in Sources */,
 				18C4D9541EC5AA6200FF7D72 /* JGHApplyListView.m in Sources */,
+				189C73FB1ED5599F009DB534 /* SortManager.m in Sources */,
 				18C4D7F61EC5AA6000FF7D72 /* JGLBankTypeView.m in Sources */,
 				2030193B1E0E4292005568E2 /* ZXAztecEncoder.m in Sources */,
 				18C4D8931EC5AA6100FF7D72 /* UIImage+MSSScale.m in Sources */,
@@ -10212,10 +10316,12 @@
 				18C4D7F51EC5AA6000FF7D72 /* JGLBankListViewController.m in Sources */,
 				2030197E1E0E4292005568E2 /* ZXPerspectiveTransform.m in Sources */,
 				18C4D9D91EC5AA6200FF7D72 /* JGHScoresHoleView.m in Sources */,
+				182FF1481EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.m in Sources */,
 				20301A711E1269EB005568E2 /* LGLHeaderView.m in Sources */,
 				2030198A1E0E4292005568E2 /* ZXResult.m in Sources */,
 				18C4D90D1EC5AA6100FF7D72 /* JGLSignPeoTableViewCell.m in Sources */,
 				18C4D9E81EC5AA6200FF7D72 /* JGDHistoryScoreTableViewCell.m in Sources */,
+				180137DA1ECD6D3100272643 /* ActivityDetailListTableViewCell.m in Sources */,
 				18C4D85F1EC5AA6100FF7D72 /* JGDHotTeamView.m in Sources */,
 				18C4D8531EC5AA6100FF7D72 /* JGHChancelTableViewCell.m in Sources */,
 				18C4D8A91EC5AA6100FF7D72 /* JGHNewTeamApplyViewController.m in Sources */,

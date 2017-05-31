@@ -7,7 +7,6 @@
 //
 
 #import "PYTableViewIndexManager.h"
-//#import "PYTableViewIndexModel.h"
 #import "MyattenModel.h"
 #import "pinyin.h"
 

@@ -390,11 +390,8 @@
         /////  将需要转换的时间转换成 NSDate 对象
         NSDate * needFormatDate = [dateFormatter dateFromString:dateString];
         /////  取当前时间和转换时间两个日期对象的时间间隔
-        /////  这里的NSTimeInterval 并不是对象，是基本型，其实是double类型，是由c定义的:  typedef double NSTimeInterval;
         NSTimeInterval time = [nowDate timeIntervalSinceDate:needFormatDate];
-        
         //// 再然后，把间隔的秒数折算成天数和小时数：
-        
         NSString *dateStr = @"";
         
         if (time<=60) {  //// 1分钟以内的
@@ -592,10 +589,8 @@
     return @"error";
 }
 
-//+ (BOOL)returnPriceString:(NSString *)price{
-////    NSCharacterSet *priceCharSet = [[ NSCharacterSet characterSetWithCharactersInString:@"0123456789."]
-////                                   invertedSet ];
-//}
+
+
 +(NSString *)numTranslation:(NSString *)arebic
 
 {   NSString *str = arebic;
@@ -749,9 +744,6 @@
 + (NSString *)stringFromDateString:(NSString *)nowDate withFormater:(NSString *)formate{
     
     NSDateFormatter* formater =[[NSDateFormatter alloc] init];
-//    NSLocale* local =[[NSLocale alloc]initWithLocaleIdentifier:@"en_US"];
-//    [formater setLocale: local];
-//    [formater setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT+0800"]];
     [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate* date = [formater dateFromString:nowDate];
     
@@ -769,11 +761,6 @@
    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate* newdate = [dateFormatter dateFromString:date];
-    
-    
-    
-    
-//    NSDate *lastDay = [NSDate dateWithTimeInterval:-timeTer sinceDate:newdate];//前一天
     
     [dateFormatter setDateFormat:@"HH:mm"];
  
@@ -857,27 +844,19 @@
     
     if (authStatus != kABAuthorizationStatusAuthorized)
     {
-        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error)
-                                                 {
-                                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                                         if (error)
-                                                         {
-                                                             NSLog(@"Error: %@", (__bridge NSError *)error);
-                                                         }
-                                                         else if (!granted)
-                                                         {
-                                                             
-                                                             block(NO);
-                                                         }
-                                                         else
-                                                         {
-                                                             block(YES);
-                                                         }
-                                                     });
-                                                 });
-    }
-    else
-    {
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (error){
+                    NSLog(@"Error: %@", (__bridge NSError *)error);
+                }else if (!granted){
+                    
+                    block(NO);
+                }else{
+                    block(YES);
+                }
+            });
+        });
+    }else{
         block(YES);
     }
     

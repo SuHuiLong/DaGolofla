@@ -60,10 +60,9 @@
 @property (copy, nonatomic) NSString *userName;
 //联系人电话
 @property (copy, nonatomic) NSString *userMobile;
-
 //联系人电话
 @property (copy, nonatomic) NSString *mobile;
-
+//活动id
 @property (assign, nonatomic) NSInteger teamActivityKey;
 
 //活动头像
@@ -82,12 +81,9 @@
 
 //取消原因canSignUpReason
 @property (nonatomic, strong)NSString *canSignUpReason;
-
 //退款原因refoundReason
-
 @property (nonatomic, strong)NSNumber *payMoney;
 
-//
 @property (nonatomic, strong)NSNumber *money;
 //用来记录是否选中
 @property (nonatomic, assign) BOOL isClick;
@@ -99,5 +95,9 @@
 @property (nonatomic, strong)NSNumber *matchKey;
 
 @property (nonatomic, copy) NSString* teamName;
+
+//是否允许嘉宾报名
+@property (nonatomic,strong) NSNumber *allowGuestsSignup;
+
 
 @end

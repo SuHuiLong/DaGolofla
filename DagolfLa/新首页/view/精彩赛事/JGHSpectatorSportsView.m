@@ -90,8 +90,11 @@ static NSString *const JGHSpectatorSubCellIdentifier = @"JGHSpectatorSubCell";
     return 0;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([self.delegate respondsToSelector:@selector(selectSpectatorSportsViewUrlString:)]) {
-        [self.delegate selectSpectatorSportsViewUrlString:indexPath.section];
+    
+    if ([self.delegate respondsToSelector:@selector(selectSpectatorSportsViewUrlString:index:)]) {
+        NSDictionary *indexDict = _dataArray[indexPath.section];
+        NSString *urlStr = [indexDict objectForKey:@"weblinks"];
+        [self.delegate selectSpectatorSportsViewUrlString:urlStr index:indexPath.section];
     }
 }
 /*

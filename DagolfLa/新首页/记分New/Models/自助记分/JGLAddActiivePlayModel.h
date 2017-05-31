@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) NSNumber* userKey;
 
-//@property (strong, nonatomic) NSNumber* otherUserId;
 
 @property (strong, nonatomic) NSString* name;
 
@@ -42,6 +41,7 @@
 
 @property (assign , nonatomic)NSInteger select;
 
+@property (nonatomic,strong) NSNumber *teamKey;
 
 /**
  *  activityKey = 5456;

@@ -52,7 +52,7 @@
         twoLine.backgroundColor = [UIColor colorWithHexString:BG_color];
         [self addSubview:twoLine];
         
-        _resultsBtn = [[UIButton alloc]initWithFrame:CGRectMake(290 *ProportionAdapter, 15 *ProportionAdapter, 46 *ProportionAdapter, 30 *ProportionAdapter)];
+        _resultsBtn = [[UIButton alloc]initWithFrame:CGRectMake(281 *ProportionAdapter, 9 *ProportionAdapter, 62 *ProportionAdapter, 37 *ProportionAdapter)];
         [_resultsBtn setImage:[UIImage imageNamed:@"home_icon_booking"] forState:UIControlStateNormal];
         [_resultsBtn addTarget:self action:@selector(resultsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_resultsBtn];

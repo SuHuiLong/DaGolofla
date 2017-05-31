@@ -21,9 +21,6 @@
         _contentLable.font = [UIFont systemFontOfSize:15*ProportionAdapter];
         [self addSubview:_contentLable];
         
-        //_line = [[UILabel alloc]initWithFrame:CGRectMake(0, 45*ProportionAdapter -0.5, screenWidth, 0.5)];
-        //_line.backgroundColor = [UIColor colorWithHexString:BG_color];
-        //[self addSubview:_line];
     }
     
     return self;

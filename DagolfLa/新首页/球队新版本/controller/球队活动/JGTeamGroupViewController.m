@@ -176,6 +176,26 @@ static NSString *const JGGroupdetailsCollectionViewCellIdentifier = @"JGGroupdet
 }
 #pragma mark -- 自动分组
 - (void)autoGroupBtnClick:(UIButton *)btn{
+    UIAlertController * aleVC = [UIAlertController alertControllerWithTitle:@"提示" message:@"按差点分组会清空现在的所有分组信息并按成员的差点自动分组，是否确定？" preferredStyle:UIAlertControllerStyleAlert];
+
+    //拒绝
+    UIAlertAction * act1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        //球队相册
+    }];
+    
+    //同意：
+    UIAlertAction * act2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self sureGroup:btn];
+    }];
+    
+    [aleVC addAction:act1];
+    [aleVC addAction:act2];
+    
+    [self presentViewController:aleVC animated:YES completion:nil];
+
+}
+//按差点分组
+-(void)sureGroup:(UIButton *)btn{
     btn.enabled = NO;
     [[ShowHUD showHUD]showAnimationWithText:@"分组中..." FromView:self.view];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];

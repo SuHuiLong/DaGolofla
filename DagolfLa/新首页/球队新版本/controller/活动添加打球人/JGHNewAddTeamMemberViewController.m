@@ -115,9 +115,6 @@
 #pragma mark - 下载数据
 - (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
     [_dictData setObject:DEFAULF_USERID forKey:@"userKey"];
-    //    [_dictData setObject:@0 forKey:@"otherUserId"];
-    //    [_dictData setObject:@0 forKey:@"page"];
-    //    [_dictData setObject:@0 forKey:@"rows"];
     [_dictData setObject: [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"userFriend/getUserFriendList" JsonKey:nil withData:_dictData requestMethod:@"GET" failedBlock:^(id errType) {
         [_tableView.mj_header endRefreshing];
@@ -215,17 +212,6 @@
     MyattenModel *model = [[MyattenModel alloc]init];
     model = _listArray[indexPath.section][indexPath.row];
     
-//    for (int i=0; i<_allListArray.count; i++) {
-//        JGLAddActiivePlayModel *palyModel = [[JGLAddActiivePlayModel alloc]init];
-//        palyModel = _allListArray[i];
-//        if ([model.fMobile isEqualToString:palyModel.mobile]) {
-//            [[ShowHUD showHUD]showToastWithText:@"已添加" FromView:self.view];
-//            return;
-//        }
-//    }
-    
-//    _blockFriendModel(model);
-//    [self.navigationController popViewControllerAnimated:YES];
     
     for (int i=0; i<_allListArray.count; i++) {
         JGLAddActiivePlayModel *palyModel = [[JGLAddActiivePlayModel alloc]init];
@@ -246,7 +232,6 @@
     }
     
     JGLAddActiivePlayModel *newModel = [[JGLAddActiivePlayModel alloc]init];
-//    newModel.userKey = model.userKey;
     newModel.mobile = model.fMobile;
     newModel.sex = model.sex;
     newModel.userName = model.userName;

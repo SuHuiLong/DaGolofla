@@ -244,7 +244,6 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     JGHNewActivityDetailViewController *activityNameCtrl = [[JGHNewActivityDetailViewController alloc]init];
-//    activityNameCtrl.isTeamChannal = 2;
     JGTeamAcitivtyModel *model = [[JGTeamAcitivtyModel alloc]init];
     model = self.dataArray[indexPath.section];
     if (model.timeKey) {
@@ -252,8 +251,6 @@
     }else{
         activityNameCtrl.teamKey = model.teamActivityKey;
     }
-//    activityNameCtrl.teamKey = [model.timeKey integerValue];
-//    activityNameCtrl.model = model;
     [self.navigationController pushViewController:activityNameCtrl animated:YES];
 }
 - (void)didReceiveMemoryWarning {

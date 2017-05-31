@@ -19,7 +19,7 @@ static NSString *const JGHNewApplyActivityDetailCellIdentifier = @"JGHNewApplyAc
 static NSString *const JGHNewApplyPepoleCellIdentifier = @"JGHNewApplyPepoleCell";
 static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell";
 
-@interface JGHNewTeamApplyViewController ()<UITableViewDelegate, UITableViewDataSource, JGHNewApplyPepoleCellDelegate, JGHNewApplyerListCellDelegate>
+@interface JGHNewTeamApplyViewController ()<UITableViewDelegate, UITableViewDataSource, JGHNewApplyerListCellDelegate>
 {
     NSMutableArray *_relApplistArray;
     
@@ -40,7 +40,10 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = NO;
 }
-
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    _isPushToDetail = false;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"报名详情";
@@ -155,7 +158,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         return (UIView *)infoCell;
     }else {
         JGHNewApplyPepoleCell *applyPepoleCell = [tableView dequeueReusableCellWithIdentifier:JGHNewApplyPepoleCellIdentifier];
-        applyPepoleCell.delegate = self;
+        [applyPepoleCell.addApplyBtn addTarget:self action:@selector(addApplyerBtn) forControlEvents:UIControlEventTouchUpInside];
         return (UIView *)applyPepoleCell;
     }
 }
@@ -164,10 +167,10 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     footView.backgroundColor = [UIColor colorWithHexString:BG_color];
     return footView;
 }
-#pragma mark -- 添加打球人
-- (void)addApplyerBtn:(UIButton *)addApplyBtn{
-    addApplyBtn.enabled = NO;
+#pragma mark -- 添加报名人
+- (void)addApplyerBtn{
     JGHNewAddTeamPlaysViewController *addTeamPlaysCtrl = [[JGHNewAddTeamPlaysViewController alloc]init];
+    addTeamPlaysCtrl.isPushToDetail = _isPushToDetail;
     addTeamPlaysCtrl.playListArray = [NSMutableArray arrayWithArray:_applyArray];
     if (_modelss.teamActivityKey != 0) {
         addTeamPlaysCtrl.activityKey = _modelss.teamActivityKey;
@@ -176,8 +179,7 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     }
     
     addTeamPlaysCtrl.teamKey = _modelss.teamKey;
-    
-    __weak JGHNewTeamApplyViewController *weakSelf = self;
+    __weak typeof(self) weakself = self;
     addTeamPlaysCtrl.blockPlayListArray = ^(NSMutableArray *listArray){
         _applyArray = listArray;
         if (_applyArray.count > 0) {
@@ -187,11 +189,10 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
             _submitBtn.backgroundColor = [UIColor lightGrayColor];
             _submitBtn.enabled = NO;
         }
-        [weakSelf.teamApplyTableView reloadData];
+        [weakself.teamApplyTableView reloadData];
     };
     
     [self.navigationController pushViewController:addTeamPlaysCtrl animated:YES];
-    addApplyBtn.enabled = YES;
 }
 #pragma mark -- 立即报名 －－ 仅报名
 - (void)didJustApplyListApplyBtn:(UIButton *)btn{
@@ -263,32 +264,6 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
     
     [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
     
-    /*
-    if (_relApplistArray.count > 0) {
-        NSMutableArray *listArray = [NSMutableArray array];
-        listArray = [_relApplistArray mutableCopy];
-        [dict setObject:listArray forKey:@"teamSignUpList"];//报名人员数组
-        [_relApplistArray removeAllObjects];
-    }else{
-        [dict setObject:_applyArray forKey:@"teamSignUpList"];//报名人员数组
-    }
-    */
-    //过滤差点数据
-    /*
-    for (NSMutableDictionary *almostDict in _applyArray) {
-        if ([almostDict objectForKey:@"almost_system_setting"]) {
-            if ([[almostDict objectForKey:@"almost_system_setting"] integerValue] == 1) {
-                [almostDict removeObjectForKey:@"almost"];
-            }
-            break;
-        }else{
-            if ([[almostDict objectForKey:@"userKey"] integerValue] == [DEFAULF_USERID integerValue]) {
-                [almostDict removeObjectForKey:@"almost"];
-            }
-            break;
-        }
-    }
-    */
     
     [dict setObject:_info forKey:@"info"];
     [dict setObject:@0 forKey:@"srcType"];//报名类型－－0非嘉宾通道
@@ -304,14 +279,6 @@ static NSString *const JGHNewApplyerListCellIdentifier = @"JGHNewApplyerListCell
         NSLog(@"data == %@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             //跳转分组页面
-//            [Helper alertSubmitWithTitle:@"报名成功！" withBlockFirst:^{
-//                JGTeamGroupViewController *groupCtrl = [[JGTeamGroupViewController alloc]init];
-//                groupCtrl.activityFrom = 1;
-//                groupCtrl.teamActivityKey = [_modelss.timeKey integerValue];
-//                [self.navigationController pushViewController:groupCtrl animated:YES];
-//            } withBlock:^(UIAlertController *alertView) {
-//                [self presentViewController:alertView animated:YES completion:nil];
-//            }];
             [LQProgressHud showMessage:@"您已成功报名！"];
             [self performSelector:@selector(pushCtrl) withObject:self afterDelay:0.3f];
             

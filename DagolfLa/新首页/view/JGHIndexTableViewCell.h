@@ -19,9 +19,9 @@
 
 - (void)hotTeamSelectClick:(UIButton *)btn;
 
-- (void)selectSpectatorSportsUrlString:(NSInteger)selectID;
-
-- (void)didSelectGolgPackageUrlString:(NSInteger)selectID;
+- (void)selectSpectatorSportsUrlString:(NSString *)urlStr index:(NSInteger)selectID;
+//高旅套餐点击
+-(void)didSelectGolgPackageViewUrlString:(NSString *)urlStr index:(NSInteger)selectID;
 
 @end
 

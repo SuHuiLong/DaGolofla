@@ -25,8 +25,6 @@
 @property(nonatomic, assign)CGFloat longtitude;
 //订场
 @property(nonatomic, assign)NSInteger orderNum;
-
-
 //订场的key
 @property(nonatomic, copy)NSString *bookballKey;
 //省份名
@@ -38,8 +36,10 @@
 //是否是联盟会员
 @property(nonatomic, assign)NSInteger isLeague;
 
-//活动key
+//活动球场key
 @property(nonatomic, copy)NSString *ballKey;
+//活动key
+@property (nonatomic,copy) NSString *activityKey;
 
 
 @end

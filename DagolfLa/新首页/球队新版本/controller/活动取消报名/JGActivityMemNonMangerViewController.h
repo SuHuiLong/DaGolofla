@@ -10,7 +10,8 @@
 
 @interface JGActivityMemNonMangerViewController : ViewController
 
-@property (nonatomic, strong) NSMutableArray *dataArray;
+
+
 @property (nonatomic, strong) NSNumber *activityKey;
 @property (nonatomic, assign) NSInteger teamKey;
 

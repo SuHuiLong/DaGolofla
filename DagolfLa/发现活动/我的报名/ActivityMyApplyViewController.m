@@ -9,6 +9,7 @@
 #import "ActivityMyApplyViewController.h"
 #import "ActivityMyApplyTableViewCell.h"
 #import "ActivityMyApplyViewModel.h"
+#import "ActivityDetailViewController.h"
 @interface ActivityMyApplyViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 //主视图
@@ -33,6 +34,7 @@
     [self createRefresh];
     // Do any additional setup after loading the view.
 }
+
 #pragma mark - CreateView
 -(void)createView{
     [self createNavigationView];
@@ -47,10 +49,11 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
+    //backL
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"backL"] style:UIBarButtonItemStylePlain target:self action:@selector(popBack)];
+    leftItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftItem;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-
-
 }
 //创建tableview
 -(void)createTableView{
@@ -113,11 +116,22 @@
     }];
 
 }
+#pragma mark - Action
+-(void)popBack{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - UITableviewDelegate&Datasource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (self.dataArray.count==0) {
+        return screenHeight-64;
+    }
+    return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -130,11 +144,33 @@
     if (cell==nil) {
         cell = [[ActivityMyApplyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCellStyleDefaultID"];
     }
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     ActivityMyApplyViewModel *model = self.dataArray[indexPath.row];
     [cell configModel:model];
     return cell;
 }
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    UIView *backView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
+    //无订单提示图片
+    UIImageView *picImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWvertical(75),kWvertical(102), kWvertical(246), kWvertical(178))];
+    picImageView.image = [UIImage imageNamed:@"bg_set_photo"];
+    [backView addSubview:picImageView];
+    
+    UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(0, picImageView.y_height + kHvertical(29), screenWidth, kHvertical(15)) textColor:RGB(98,98,98) fontSize:kHorizontal(15) Title:@"暂无球队活动内容！"];
+    [descLabel setTextAlignment:NSTextAlignmentCenter];
+    [backView addSubview:descLabel];
+    
+    return backView;
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    ActivityDetailViewController *vc = [[ActivityDetailViewController alloc] init];
+    ActivityMyApplyViewModel *model = self.dataArray[indexPath.item];
+    vc.activityKey = [NSString stringWithFormat:@"%ld",(long)model.teamActivityKey];
+    vc.hidesBottomBarWhenPushed = true;
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning {

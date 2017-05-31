@@ -50,9 +50,9 @@
 }
 
 #pragma mark -- 高旅套餐
-- (void)didSelectGolgPackageViewUrlString:(NSInteger)selectID{
-    if ([self.delegate respondsToSelector:@selector(didSelectGolgPackageUrlString:)]) {
-        [self.delegate didSelectGolgPackageUrlString:selectID];
+-(void)didSelectGolgPackageViewUrlString:(NSString *)urlStr index:(NSInteger)selectID{
+    if ([self.delegate respondsToSelector:@selector(didSelectGolgPackageViewUrlString:index:)]) {
+        [self.delegate didSelectGolgPackageViewUrlString:urlStr index:selectID];
     }
 }
 
@@ -67,9 +67,9 @@
     [self addSubview:_spectatorSportsView];
 }
 #pragma mark -- 精彩赛事
-- (void)selectSpectatorSportsViewUrlString:(NSInteger)selectID{
-    if ([self.delegate respondsToSelector:@selector(selectSpectatorSportsUrlString:)]) {
-        [self.delegate selectSpectatorSportsUrlString:selectID];
+- (void)selectSpectatorSportsViewUrlString:(NSString *)urlStr index:(NSInteger)selectID{
+    if ([self.delegate respondsToSelector:@selector(selectSpectatorSportsUrlString:index:)]) {
+        [self.delegate selectSpectatorSportsUrlString:urlStr index:selectID];
     }
 }
 - (void)configJGHWonderfulTableViewCell:(NSArray *)wonderfulArray andImageW:(NSInteger)imageW andImageH:(NSInteger)imageH{
