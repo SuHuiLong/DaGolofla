@@ -26,7 +26,7 @@
 }
 //导航栏
 -(void)createNavigationView{
-    self.title = @"销售人员手机号";
+    self.title = @"销售人员编号";
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60) forBarMetrics:UIBarMetricsDefault];
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnClick)];
     self.navigationItem.rightBarButtonItem = rightBtn;
@@ -42,7 +42,7 @@
     
     [self.view addSubview:backGrondView];
     //默认提示
-    NSString *placeStr = @"请输入销售人员手机号";
+    NSString *placeStr = @"请输入销售人员编号";
 
     if (_defaultText.length>0) {
         placeStr = nil;

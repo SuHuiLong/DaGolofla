@@ -340,8 +340,9 @@ static CGFloat ImageHeight  = 210.0;
                     //判断活动是否结束 endDate
                     if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
                         if ([_isApply integerValue] == 0) {
-                            self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight-kHvertical(65));
+//                            self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight-kHvertical(65));
                         }else{
+                            self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight-kHvertical(65));
                             [self createCancelBtnAndApplyOrPay:1];//已报名
                         }
                     }else{

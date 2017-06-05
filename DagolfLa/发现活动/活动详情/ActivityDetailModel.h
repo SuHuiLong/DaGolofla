@@ -28,7 +28,8 @@
 //报名用户key , 没有则是嘉宾
 @property (nonatomic, assign)NSNumber *signupUserKey;
 //报名用户 , 没有则是嘉宾
-@property (nonatomic, assign)NSString *signupUserName;
+@property (nonatomic, copy)NSString *signupUserName;
+@property (nonatomic, copy)NSString *signupUame;
 //手机号
 @property (nonatomic, copy)NSString *mobile;
 //姓名

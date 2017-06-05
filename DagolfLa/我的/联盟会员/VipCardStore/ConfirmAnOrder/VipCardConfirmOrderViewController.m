@@ -257,10 +257,10 @@
     UIView *whiteView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(51))];
     [backView addSubview:whiteView];
     //销售人员手机
-    UILabel *sellPhoneLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, kWvertical(130), kHvertical(51)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:@"销售人员手机号"];
+    UILabel *sellPhoneLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, kWvertical(130), kHvertical(51)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:@"销售人员编号"];
     [whiteView addSubview:sellPhoneLabel];
-    //销售人员手机号
-    UILabel *sellPhoneTextLabel = [Factory createLabelWithFrame:CGRectMake(screenWidth/2, 0, screenWidth/2-kWvertical(25), kHvertical(51)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"请输入销售人员手机号"];
+    //销售人员编号
+    UILabel *sellPhoneTextLabel = [Factory createLabelWithFrame:CGRectMake(screenWidth/2, 0, screenWidth/2-kWvertical(25), kHvertical(51)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"请输入销售人员编号"];
     if (self.inputModel.sellPhoneStr.length>0) {
         sellPhoneTextLabel.text = self.inputModel.sellPhoneStr;
     }
@@ -424,7 +424,7 @@
     [self.navigationController pushViewController:infoVipVC animated:YES];
 }
 /**
- 修改销售人员手机号
+ 修改销售人员编号
  
  @param tap 手势
  */

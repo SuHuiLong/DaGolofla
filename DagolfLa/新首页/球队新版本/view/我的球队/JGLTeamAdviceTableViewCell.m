@@ -103,12 +103,22 @@
     }
     if ([model.sex integerValue] == 1) {
         _sexImage.image = [UIImage imageNamed:@"xb_nn"];//男
-    }
-    else
-    {
+    }else{
         _sexImage.image = [UIImage imageNamed:@"xb_n"];//女
     }
-    _chadianLabel.text = [NSString stringWithFormat:@"差点:%@",model.almost];
+    //差点
+    NSString *almostStr = [NSString stringWithFormat:@"%@",model.almost];
+    NSLog(@"%@",almostStr);
+    if (model.almost) {
+        if ([almostStr floatValue] == -10000) {
+            _chadianLabel.text = @"差点  --";
+        }else{
+            _chadianLabel.text = [NSString stringWithFormat:@"差点  %@", almostStr];
+        }
+    }else{
+        _chadianLabel.text = @"差点  --";
+    }
+    
     _mobileLabel.text = [NSString stringWithFormat:@"手机号:%@",model.mobile];
     
     

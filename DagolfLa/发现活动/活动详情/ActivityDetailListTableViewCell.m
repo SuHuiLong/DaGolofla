@@ -85,13 +85,9 @@
     _playerType.textColor = RGB(243,152,0);
     if (model.userType==1) {
         _phoneLabel.hidden = true;
-        NSString *signupUserName = @"王UI";
-        if (![name isEqualToString:@"安卓客服号"]) {
-            signupUserName = model.signupUserName;
-        }
-        playerType = @"嘉宾";
-        if (![model.signupUserKey isEqual:[model.userKey numberValue]]) {
-            playerType = [NSString stringWithFormat:@"%@的嘉宾",signupUserName];
+        playerType = [NSString stringWithFormat:@"%@的嘉宾",model.signupUserName];
+        if ([model.userKey isEqualToString:[model.signupUserKey stringValue]]) {
+            playerType = @"嘉宾";
         }
         _playerType.textColor = RGB(235,97,0);
     }

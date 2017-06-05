@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface VipCardConfirmOrderModel : NSObject
-
 /**
  用户id
  */
@@ -38,15 +37,12 @@
  用户手机号
  */
 @property(nonatomic,copy)NSString *mobile;
-
 /**
  用户timeKey
  */
 @property(nonatomic,copy)NSString *timeKey;
-
-
 /**
- 销售人员手机号
+ 销售人员编号
  */
 @property(nonatomic, copy)NSString *sellPhoneStr;
 /**

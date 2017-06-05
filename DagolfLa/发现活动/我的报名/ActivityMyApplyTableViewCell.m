@@ -24,6 +24,7 @@
     _headerImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(11), kHvertical(69), kHvertical(69)) Image:nil];
     _headerImageView.layer.masksToBounds = true;
     _headerImageView.layer.cornerRadius = kHvertical(6);
+    _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.contentView addSubview:_headerImageView];
     //状态
     _statuView = [Factory createButtonWithFrame:CGRectMake(_headerImageView.x_width + kWvertical(11), kHvertical(17), kWvertical(45), kHvertical(16)) titleFont:kHorizontal(11) textColor:WhiteColor backgroundColor:ClearColor target:self selector:nil Title:nil];
@@ -54,9 +55,13 @@
 #pragma mark - InitData
 -(void)configModel:(ActivityMyApplyViewModel *)model{
     //活动照片    
-    NSURL *imageUrl = [Helper setImageIconUrl:@"activity" andTeamKey:model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES];
-    NSLog(@"%@",imageUrl);
-    [_headerImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+//    NSURL *imageUrl = [Helper setImageIconUrl:@"activity" andTeamKey:model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES];
+//    NSLog(@"%@",imageUrl);
+//    [_headerImageView sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+    
+    
+    [self.headerImageView sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+
     //状态
     NSString *statu = model.stateShowString;
     [_statuView setTitle:statu forState:UIControlStateNormal];

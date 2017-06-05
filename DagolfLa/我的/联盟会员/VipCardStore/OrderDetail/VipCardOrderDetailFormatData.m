@@ -23,7 +23,7 @@
     NSString *orderTimeStr = [orderDict objectForKey:@"ts"];
     orderTimeStr = [orderTimeStr stringByReplacingOccurrencesOfString:@"-" withString:@"."];
     orderTimeStr = [orderTimeStr substringToIndex:orderTimeStr.length-3];
-    //销售人员手机号
+    //销售人员编号
     NSString *sellMobile = [orderDict objectForKey:@"sellMobile"];
     if (sellMobile.length==0) {
         sellMobile = @"无";

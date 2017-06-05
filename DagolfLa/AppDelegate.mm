@@ -607,6 +607,7 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 }
 //已经回到前台
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    
     _pushID = 0;
     [self connectRongTK];
     //唤醒Umeng
@@ -614,7 +615,9 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     //移除所有通知
     [application cancelAllLocalNotifications];
     //定位方法
-    [self getCurPosition];
+    if (_locationManager) {
+        [_locationManager startUpdatingLocation];
+    }
     // 下载未读消息数量/获取通知数量
     [self loadMessageData];
     // 设置电池电量条不隐藏
@@ -660,15 +663,16 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     _locationManager=[[CLLocationManager alloc] init];
     if ([CLLocationManager locationServicesEnabled]) {
         _locationManager.delegate=self;
-        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-        _locationManager.distanceFilter=10.0f;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManager.distanceFilter = 10.0f;
         [_locationManager requestWhenInUseAuthorization];  //调用了这句,就会弹出允许框了.
         [_locationManager startUpdatingLocation];
     }
 }
 //用户位置信息更新
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    
+    [_locationManager stopUpdatingLocation];
     CLLocation *currLocation = [locations lastObject];
     
     NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
@@ -702,7 +706,6 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
     
     [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.latitude] forKey:BDMAPLAT];//纬度
     [user setObject:[NSNumber numberWithFloat:currLocation.coordinate.longitude] forKey:BDMAPLNG];//经度
-    [_locationManager stopUpdatingLocation];
     [user synchronize];
 }
 //用户访问权限

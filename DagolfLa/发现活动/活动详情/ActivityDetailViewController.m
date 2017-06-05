@@ -410,7 +410,7 @@
     //当前时间与报名截止时间
     NSComparisonResult signUpEndResult = [nowDateStr compare:_detailModel.signUpEndTime];
     //当前时间与开始时间
-    NSComparisonResult beginResult = [nowDateStr compare:_detailModel.beginDate];
+    NSComparisonResult beginResult = [nowDateStr   compare:_detailModel.beginDate];
     //当前时间与结束时间
     NSComparisonResult endresult = [nowDateStr compare:_detailModel.endDate];
     //底部按钮变化
@@ -431,15 +431,15 @@
             _bottomBtnTag = 3;
         }
         if (beginResult == NSOrderedDescending) {
-            if (endresult == NSOrderedAscending) {
+//            if (endresult == NSOrderedAscending) {
                 //报名截止到开球时间
                 _bottomBtnTag = 4;
                 titleStr = @"查看成绩";
-            }else if (endresult == NSOrderedDescending){
-                //开球到结束时间
-                _bottomBtnTag = 5;
-                titleStr = [NSString string];
-            }
+//            }else if (endresult == NSOrderedDescending){
+//                //开球到结束时间
+//                _bottomBtnTag = 5;
+//                titleStr = [NSString string];
+//            }
         }
     }else{
         if (signUpEndResult == NSOrderedDescending) {

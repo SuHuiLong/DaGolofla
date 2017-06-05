@@ -597,7 +597,7 @@ static CGFloat ImageHeight  = 210.0;
         return;
     }
     
-    [LQProgressHud showLoading:@"提交中..."];
+    [[ShowHUD showHUD] showAnimationWithText:@"提交中..." FromView:self.view];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:[NSString stringWithFormat:@"%td", _model.teamKey] forKey:@"teamKey"];//球队key
@@ -634,10 +634,9 @@ static CGFloat ImageHeight  = 210.0;
     //发布活动
     [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamActivity" JsonKey:@"teamActivity" withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
-        [LQProgressHud hide];
+        [[ShowHUD showHUD] hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
-        [LQProgressHud hide];
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
             [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
@@ -664,10 +663,12 @@ static CGFloat ImageHeight  = 210.0;
             [dict setObject:TYPE_TEAM_BACKGROUND forKey:@"nType"];
             [[JsonHttp jsonHttp] httpRequestImageOrVedio:@"1" withData:dict andDataArray:imageArray failedBlock:^(id errType) {
                 NSLog(@"errType===%@", errType);
+                [[ShowHUD showHUD] hideAnimationFromView:self.view];
             } completionBlock:^(id data) {
                 NSLog(@"data == %@", data);
                 _refreshBlock();
-                
+                [[ShowHUD showHUD] hideAnimationFromView:self.view];
+
                 if ([[data objectForKey:@"code"] integerValue] == 1) {
                     NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
                     
@@ -686,6 +687,7 @@ static CGFloat ImageHeight  = 210.0;
                 }
             }];
         }else{
+            [[ShowHUD showHUD] hideAnimationFromView:self.view];
             [LQProgressHud showMessage:@"活动更新成功!"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -710,6 +712,7 @@ static CGFloat ImageHeight  = 210.0;
                 if (btn.tag == 520) {
                     self.imgProfile.image = _headerImage;
                     self.model.bgImage = _headerImage;
+                    [self reloadSaveBtn];
                 }
             }
         }];
@@ -725,6 +728,7 @@ static CGFloat ImageHeight  = 210.0;
                 if (btn.tag == 520) {
                     self.imgProfile.image = _headerImage;
                     self.model.bgImage = _headerImage;
+                    [self reloadSaveBtn];
                 }
             }
         }];
