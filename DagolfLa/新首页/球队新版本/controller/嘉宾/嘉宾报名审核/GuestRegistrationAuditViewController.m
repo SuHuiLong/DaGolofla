@@ -248,7 +248,7 @@
             [footerView addSubview:line];
             //审批记录
             UILabel *history = [Factory createLabelWithFrame:CGRectMake(screenWidth/2 - kWvertical(40), kHvertical(20), kWvertical(80), kHvertical(33)) textColor:RGB(160,160,160) fontSize:kHorizontal(14) Title:@"审批记录"];
-            history.backgroundColor = RGB(238,238,238);
+            history.backgroundColor = Back_Color;
             [history setTextAlignment:NSTextAlignmentCenter];
             [footerView addSubview:history];
         }

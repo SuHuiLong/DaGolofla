@@ -175,7 +175,7 @@
 {
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
     alert.tag = 1001;
-    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
     [alert setCallBackTitle:^(NSInteger index) {
         [self shareInfo:index];
     }];
@@ -202,7 +202,7 @@ static int _indexScroll = 0;
     
     //meida的timekey和球队key
 //    JGPhotoListModel* model = _arrayData[self.currentImageIndex];
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamPhotoShare.html?mediaKey=%@&teamKey=%@",_arrayData[_indexScroll],_teamTimeKey];
+    NSString*  shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/teamPhotoShare.html?mediaKey=%@&teamKey=%@",_arrayData[_indexScroll],_teamTimeKey];
     [UMSocialData defaultData].extConfig.title = _strTitle;
     NSData* fiData;
     fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"album/media" andTeamKey:[[self.arrayData objectAtIndex:_indexScroll] integerValue] andIsSetWidth:NO andIsBackGround:NO]];

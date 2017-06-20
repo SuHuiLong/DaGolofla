@@ -57,7 +57,7 @@
     
     self.photoImageTop.constant = 22 *ProportionAdapter;
     
-    NSString *url = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
+    NSString *url = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
     
     [[SDImageCache sharedImageCache] removeImageForKey:url fromDisk:YES withCompletion:nil];
     
@@ -74,7 +74,7 @@
     
     self.photoImageTop.constant = 22 *ProportionAdapter;
     
-    NSString *url = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
+    NSString *url = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@_caddie.jpg", DEFAULF_USERID];
     
     [[SDImageCache sharedImageCache] removeImageForKey:url fromDisk:YES withCompletion:nil];
     

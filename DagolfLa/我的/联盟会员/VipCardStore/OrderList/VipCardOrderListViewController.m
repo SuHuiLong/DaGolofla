@@ -52,7 +52,7 @@
     UIView *line = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(0, 0, 1, 1)];
     [self.view addSubview:line];
     UITableView *mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
-    mainTableView.backgroundColor = RGB(238,238,238);
+    mainTableView.backgroundColor = Back_Color;
     mainTableView.dataSource = self;
     mainTableView.delegate = self;
     [mainTableView registerClass:[VipCardOrderListTableViewCell class] forCellReuseIdentifier:@"VipCardOrderListTableViewCellId"];

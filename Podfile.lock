@@ -18,27 +18,27 @@ PODS:
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
-  - IQKeyboardManager (4.0.8)
+  - IQKeyboardManager (4.0.10)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
-  - RongCloudIM (2.8.8):
-    - RongCloudIM/CallKit (= 2.8.8)
-    - RongCloudIM/CallLib (= 2.8.8)
-    - RongCloudIM/IMKit (= 2.8.8)
-    - RongCloudIM/IMLib (= 2.8.8)
-    - RongCloudIM/RedPacket (= 2.8.8)
-    - RongCloudIM/Sticker (= 2.8.8)
-  - RongCloudIM/CallKit (2.8.8):
+  - RongCloudIM (2.8.12):
+    - RongCloudIM/CallKit (= 2.8.12)
+    - RongCloudIM/CallLib (= 2.8.12)
+    - RongCloudIM/IMKit (= 2.8.12)
+    - RongCloudIM/IMLib (= 2.8.12)
+    - RongCloudIM/RedPacket (= 2.8.12)
+    - RongCloudIM/Sticker (= 2.8.12)
+  - RongCloudIM/CallKit (2.8.12):
     - RongCloudIM/CallLib
     - RongCloudIM/IMKit
-  - RongCloudIM/CallLib (2.8.8):
+  - RongCloudIM/CallLib (2.8.12):
     - RongCloudIM/IMLib
-  - RongCloudIM/IMKit (2.8.8):
+  - RongCloudIM/IMKit (2.8.12):
     - RongCloudIM/IMLib
-  - RongCloudIM/IMLib (2.8.8)
-  - RongCloudIM/RedPacket (2.8.8):
+  - RongCloudIM/IMLib (2.8.12)
+  - RongCloudIM/RedPacket (2.8.12):
     - RongCloudIM/IMKit
-  - RongCloudIM/Sticker (2.8.8):
+  - RongCloudIM/Sticker (2.8.12):
     - RongCloudIM/IMKit
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
@@ -66,10 +66,10 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   baiduMap: 3529560fb1a6cb3ccdf6b21db16c6c86b0cfef70
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  IQKeyboardManager: 1a8189fa153bf09044355ee0ad36826f6767e7f7
+  IQKeyboardManager: 593ee99b88381f4b9ccb22bd680f22606351bd41
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  RongCloudIM: bf728368e7bb0740eab72a175a9f8f4cc52e23b9
+  RongCloudIM: 13599772038afa20dc62aff70c620b9305e6ac96
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   UMengAnalytics: 40585031b7eb085534c68a951b394731e7166257
   YBAttributeTextTapAction: 650ff36251479f8cfc7b5dd8fb62587c538ce502

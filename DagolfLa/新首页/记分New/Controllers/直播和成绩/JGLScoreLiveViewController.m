@@ -37,9 +37,7 @@
     [self uiConfig];
 }
 
-
--(void)uiConfig
-{
+-(void)uiConfig{
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 44) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -170,6 +168,50 @@
     
     return indexPath.section == 0 ? 93 * screenWidth / 375 : 44* screenWidth / 375;
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section==0) {
+        return kHvertical(0.01);
+    }
+    return kHvertical(100);
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *footerview = [Factory createViewWithBackgroundColor:ClearColor frame:CGRectMake(0, 0, screenWidth, kHvertical(100))];
+    if (section==0) {
+        footerview.height=0;
+        return footerview;
+    }
+    UILabel *oneLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 20 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    oneLable.text = @"照片太多，手机上传太慢？！";
+    oneLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    oneLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    oneLable.textAlignment = NSTextAlignmentCenter;
+    [footerview addSubview:oneLable];
+    
+    UILabel *twoLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 40 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    twoLable.text = @"我们提供了PC端导入工具，海量照片，一键导入！";
+    twoLable.textAlignment = NSTextAlignmentCenter;
+    twoLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    twoLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    [footerview addSubview:twoLable];
+    
+    UILabel *threeLable = [[UILabel alloc]initWithFrame:CGRectMake(0, 60 *ProportionAdapter, screenWidth, 20 *ProportionAdapter)];
+    threeLable.text = @"PC端登录地址：http://keeper.dagolfla.com";
+    threeLable.textColor = [UIColor colorWithHexString:Ba0_Color];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:threeLable.text];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:B31_Color] range:NSMakeRange(8, threeLable.text.length-8)]; // 0为起始位置 length是从起始位置开始 设置指定颜色的长度
+    threeLable.attributedText = attributedString;
+    
+    threeLable.textAlignment = NSTextAlignmentCenter;
+    threeLable.font = [UIFont systemFontOfSize:14 *ProportionAdapter];
+    [footerview addSubview:threeLable];
+    
+    return footerview;
+}
+
+
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%td", indexPath.row);

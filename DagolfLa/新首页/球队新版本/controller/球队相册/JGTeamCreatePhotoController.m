@@ -341,7 +341,7 @@
             [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:userID] forKey:@"userKey"];
             [[JsonHttp jsonHttp]httpRequest:@"team/updateTeamAlbum" JsonKey:nil withData:dict requestMethod:@"POST" failedBlock:^(id errType) {
             } completionBlock:^(id data) {
-                NSString *urlStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/album/media/%ld.jpg", (long)picTimeKey];
+                NSString *urlStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/album/media/%ld.jpg", (long)picTimeKey];
                 NSURL *url = [NSURL URLWithString:urlStr];
                 [_imgvChange sd_setImageWithURL:url];
             }];

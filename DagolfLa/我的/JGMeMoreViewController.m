@@ -62,8 +62,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     switch (indexPath.row) {
-        case 0:
-        {
+        case 0:{
             [MobClick event:@"mine_more_caddie_click"];
             NSMutableDictionary *cabbieDict = [NSMutableDictionary dictionary];
             [cabbieDict setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -77,11 +76,9 @@
                         caddieCtrl.blockCabbie = ^(){
 
                         };
-
                         [self.navigationController pushViewController:caddieCtrl animated:YES];
                     }else{
                         JGHCabbieCertSuccessViewController *certSuflCtrl = [[JGHCabbieCertSuccessViewController alloc]init];
-                        
                         [self.navigationController pushViewController:certSuflCtrl animated:YES];
                     }
                 }else{
@@ -90,22 +87,16 @@
                     }
                 }
             }];
-        }
-            
-            break;
-               
-        case 1:
-        {
+        }break;
+            case 1:{
             
             MySetAboutController *abVC = [[MySetAboutController alloc] init];
             abVC.title = @"关于我们";
             abVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:abVC animated:YES];
-        }
-            break;
+        }break;
             
-        case 2:
-        {
+        case 2:{
             [Helper alertViewWithTitle:@"是否立即前往appStore进行评价" withBlockCancle:^{
                 
             } withBlockSure:^{
@@ -115,16 +106,10 @@
             }];
         }
             break;
-        case 3:
-        {
+        case 3:{
             JGLFeedbackViewController* feedVc = [[JGLFeedbackViewController alloc]init];
             [self.navigationController pushViewController:feedVc animated:YES];
-        }
-            break;
-          
-
-            
-            
+        }break;
         default:
             break;
     }

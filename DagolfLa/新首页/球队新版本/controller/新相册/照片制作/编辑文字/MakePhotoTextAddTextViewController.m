@@ -30,7 +30,7 @@
 
 #pragma mark - CreateView
 -(void)createView{
-    self.view.backgroundColor = RGB(238,238,238);
+    self.view.backgroundColor = Back_Color;
     [self createNavagationView];
     [self createTextView];
 }

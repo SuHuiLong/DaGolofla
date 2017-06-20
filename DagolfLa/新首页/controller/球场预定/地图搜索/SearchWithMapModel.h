@@ -35,11 +35,11 @@
 @property(nonatomic, copy)NSString *orderPrice;
 //是否是联盟会员
 @property(nonatomic, assign)NSInteger isLeague;
-
 //活动球场key
 @property(nonatomic, copy)NSString *ballKey;
 //活动key
 @property (nonatomic,copy) NSString *activityKey;
-
+//可报名活动个数
+@property (nonatomic,assign) NSInteger canSignupCount;
 
 @end

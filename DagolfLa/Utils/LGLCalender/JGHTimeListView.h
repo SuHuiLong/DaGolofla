@@ -10,9 +10,6 @@
 
 @interface JGHTimeListView : UIView
 
-//@property (nonatomic, retain)NSNumber *ballKey;
-//
-//@property (nonatomic, retain)NSString *dateString;
 
 @property (copy, nonatomic) void (^blockSelectTimeAndPrice)(NSString *, NSString *, NSString *, NSString *, NSString *);
 

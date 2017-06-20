@@ -71,7 +71,7 @@
         //        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
         
         ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
         [alert setCallBackTitle:^(NSInteger index) {
             [self shareInfo:index];
         }];
@@ -105,7 +105,7 @@
     
     
     //
-    shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/awardedPrize.html?teamKey=%td&activityKey=%td&userKey=%@", _teamKey,[self.activeKey integerValue],DEFAULF_USERID];
+    shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/awardedPrize.html?teamKey=%td&activityKey=%td&userKey=%@", _teamKey,[self.activeKey integerValue],DEFAULF_USERID];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@ 奖品", _model.name];
     

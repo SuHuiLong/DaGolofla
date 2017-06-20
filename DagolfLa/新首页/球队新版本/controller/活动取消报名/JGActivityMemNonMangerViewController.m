@@ -58,7 +58,7 @@
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
     NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@dagolfla.com",self.teamKey, self.activityKey, DEFAULF_USERID]];
     
-    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?teamKey=%td&activityKey=%@&userKey=%@&md5=%@", self.teamKey, self.activityKey, DEFAULF_USERID, str];
+    WKCtrl.detailString = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/group.html?teamKey=%td&activityKey=%@&userKey=%@&md5=%@", self.teamKey, self.activityKey, DEFAULF_USERID, str];
     WKCtrl.teamName = [NSString stringWithFormat:@"活动总人数(%td人)", self.sumCount];
     WKCtrl.isShareBtn = 1;
     WKCtrl.activeTimeKey = [self.activityKey integerValue];

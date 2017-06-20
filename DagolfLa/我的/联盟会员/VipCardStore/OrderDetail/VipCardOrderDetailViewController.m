@@ -55,7 +55,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = RGB(238,238,238);
+    self.view.backgroundColor = Back_Color;
     // Do any additional setup after loading the view.
     [self createRefreash];
 }
@@ -88,7 +88,7 @@
     UITableView *mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-64) style:UITableViewStyleGrouped];
     mainTableView.dataSource = self;
     mainTableView.delegate = self;
-    mainTableView.backgroundColor = RGB(238,238,238);
+    mainTableView.backgroundColor = Back_Color;
     [mainTableView registerClass:[VipCardOrderDetailTableViewCell class] forCellReuseIdentifier:@"VipCardOrderDetailTableViewCellId" ];
     [mainTableView setExtraCellLineHidden];
     mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -248,13 +248,13 @@
     
     UIView *headerView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(66))];
     //灰色背景
-    UIView *grayBackView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, 0, screenWidth, kHvertical(10))];
+    UIView *grayBackView = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, 0, screenWidth, kHvertical(10))];
     [headerView addSubview:grayBackView];
     //标题
     UILabel *titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), kHvertical(10), screenWidth-kWvertical(10), kHvertical(51)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:titleArray[section]];
     [headerView addSubview:titleLabel];
     //分割线
-    UIView *line = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, kHvertical(60), screenWidth, 1)];
+    UIView *line = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, kHvertical(60), screenWidth, 1)];
     [headerView addSubview:line];
     
     return headerView;
@@ -270,7 +270,7 @@
         NSArray *indexSectionArray = self.dataArray[1];
         if (indexPath.row==indexSectionArray.count-1) {
             UseMallViewController *vc = [[UseMallViewController alloc]init];
-            vc.linkUrl = @"http://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
+            vc.linkUrl = @"https://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
             vc.isNewColor = true;
             [self.navigationController pushViewController:vc animated:YES];
         }

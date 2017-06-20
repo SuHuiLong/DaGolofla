@@ -20,5 +20,7 @@
 @property (nonatomic, copy) NSString *selectSceneMoney;     //  选择的线下支付价格
 @property (nonatomic, copy) NSString *selectDate;           //  选择的时间
 
+//本球场可使用红包列表
+@property (nonatomic, strong) NSMutableArray *myCouponList;
 
 @end

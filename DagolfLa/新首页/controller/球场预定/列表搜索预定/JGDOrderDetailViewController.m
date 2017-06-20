@@ -18,7 +18,7 @@
 @property (nonatomic, strong) UITableView *orderTableViwe;
 
 @property (nonatomic, strong) NSMutableArray *orderTitleArray;
-@property (nonatomic, strong) NSArray *reserveTitleArray;
+@property (nonatomic, strong) NSMutableArray *reserveTitleArray;
 
 @property (nonatomic, strong) NSMutableArray *orderDetailArray;
 @property (nonatomic, strong) NSMutableArray *reserveDetailArray;
@@ -77,6 +77,8 @@
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            self.orderTitleArray = nil;
+            self.reserveTitleArray = nil;
             
             if ([data objectForKey:@"customerTelephone"]) {
                 self.customerTelephone = [data objectForKey:@"customerTelephone"];
@@ -97,7 +99,6 @@
                 for (int i = 0; i < [orderKeyArray count]; i ++) {
                     if ([self.dataDic objectForKey:orderKeyArray[i]]) {
                         
-                        
                         if (i == 0) {
                             [self.orderDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:orderKeyArray[i]]]];
                             
@@ -109,7 +110,21 @@
                             
                             
                         }else if (i == 3) {
-                            [self.orderDetailArray addObject:[NSString stringWithFormat:@"¥ %@", [self.dataDic objectForKey:orderKeyArray[i]]]];
+                            //使用了红包
+                            CGFloat sale = [[self.dataDic objectForKey:@"sale"] floatValue];
+                            if (sale  > 0) {
+                                [self.orderDetailArray addObject:[NSString stringWithFormat:@"-¥ %ld", (long)sale]];
+                                [self.orderTitleArray insertObject:@"红包优惠：" atIndex:3];
+                            }
+                            NSString *orderPrice = [self.dataDic objectForKey:orderKeyArray[i]];
+                            //嘉宾价格
+                            NSString *guestUnitMoney = [self.dataDic objectForKey:@"guestUnitMoney"];
+                            //联盟价格
+                            NSString *leagueUnitMoney  = [self.dataDic objectForKey:@"leagueUnitMoney"];
+                            if ([leagueUnitMoney integerValue]>0&&[guestUnitMoney integerValue]>0) {
+                                orderPrice = [NSString stringWithFormat:@"%@（会籍价¥%@、嘉宾价¥%@）",orderPrice,leagueUnitMoney,guestUnitMoney];
+                            }
+                            [self.orderDetailArray addObject:[NSString stringWithFormat:@"¥ %@", orderPrice]];
                             
                         }else if (i == 4) {
                             if ([[self.dataDic objectForKey:@"payType"] integerValue] == 0) {
@@ -120,41 +135,39 @@
                                 [self.orderDetailArray addObject:@"球场现付"];
                                 self.orderTitleArray[5] = @"已付押金：";
                             }
-                        }else if (i == 5) {
-                            
+                        } else if (i == 5) {
                             NSInteger payManey = [[self.dataDic objectForKey:@"dedBalanceMoney"] integerValue] + [[self.dataDic objectForKey:@"payMoney"] integerValue];
-                            
                             [self.orderDetailArray addObject:[NSString stringWithFormat:@"¥ %td", payManey]];
-                            
                         }
-                        
                     }else{
                         [self.orderDetailArray addObject:@""];
                     }
                 }
-                
                 // section 1
                 for (int i = 0; i < [reserveKeyArray count]; i ++) {
                     if ([self.dataDic objectForKey:reserveKeyArray[i]]) {
                         NSString *dateString = [self.dataDic objectForKey:reserveKeyArray[i]];
-                        
                         if (i == 1) {
-                            
                             [self.reserveDetailArray addObject:[Helper stringFromDateString:dateString withFormater:@"yyyy.MM.dd EEE HH:mm"]];
-                            
                         }else{
-                            [self.reserveDetailArray addObject:[NSString stringWithFormat:@"%@", [self.dataDic objectForKey:reserveKeyArray[i]]]];
-                            
+                            NSString *detailStr = [NSString stringWithFormat:@"%@", [self.dataDic objectForKey:reserveKeyArray[i]]];
+                            if (i == 2) {
+                                detailStr = [NSString stringWithFormat:@"%@人",detailStr];
+                            }
+                            [self.reserveDetailArray addObject:detailStr];
                         }
-                        
-                        
                     }else{
                         [self.reserveDetailArray addObject:@""];
                     }
                 }
-                
-                //                // 底部按钮
-                
+                //会籍卡名称
+                NSString *sysRemark = [self.dataDic objectForKey:@"userCardName"];
+                if (sysRemark.length>0) {
+                    [self.reserveDetailArray insertObject:sysRemark atIndex:2];
+                    [self.reserveTitleArray insertObject:@"使用会籍：" atIndex:2];
+                }
+
+                // 底部按钮
                 self.shitaView = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - 64 - 50 * ProportionAdapter, screenWidth, 50 * ProportionAdapter)];
                 self.shitaView.backgroundColor = [UIColor colorWithHexString:@"EEEEEE"];
                 NSString *stateString = [self.dataDic objectForKey:@"stateButtonString"];
@@ -233,7 +246,9 @@
     // pay
     if (btn.tag == 200) {
         JGDConfirmPayViewController *payVC = [[JGDConfirmPayViewController alloc] init];
-        payVC.payMoney = [[self.dataDic objectForKey:@"money"] floatValue];
+        CGFloat sale = [[self.dataDic objectForKey:@"sale"] floatValue];
+        CGFloat money = [[self.dataDic objectForKey:@"money"] floatValue] - sale;
+        payVC.payMoney = money;
         payVC.orderKey = [self.dataDic objectForKey:@"timeKey"];
         [self.navigationController pushViewController:payVC animated:YES];
         
@@ -255,19 +270,28 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    //  JGDOrderDetailTableViewCell * cell = [self.orderTableViwe dequeueReusableCellWithIdentifier:@"orderCell"];
-    JGDOrderDetailTableViewCell * cell = [[JGDOrderDetailTableViewCell alloc] init];
+    JGDOrderDetailTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"orderCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (indexPath.section == 0) {
-        
         cell.titleLB.text = self.orderTitleArray[indexPath.row];
         cell.detailLB.text = self.orderDetailArray[indexPath.row];
+        if ((self.orderTitleArray.count == 6&&indexPath.row == 3)||(self.orderTitleArray.count == 7&&indexPath.row == 4)) {
+            NSString *detailStr = self.orderDetailArray[indexPath.row];
+            if ([detailStr containsString:@"（"]) {
+                NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:detailStr];
+                NSString *descStr = [detailStr componentsSeparatedByString:@"（"][0];
+                NSRange changeRange = NSMakeRange(descStr.length, detailStr.length - descStr.length);
+                [attributedStr addAttribute:NSForegroundColorAttributeName value:RGB(160,160,160) range:changeRange];
+                [attributedStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kHorizontal(13)] range:changeRange];
+                cell.detailLB.attributedText = attributedStr;
+            }
+        }
     }else{
         if (indexPath.row == 0) {
             cell.detailLB.textColor = [UIColor colorWithHexString:@"#32b14d"];
         }else if (indexPath.row == 1) {
-            cell.detailLB.font = [UIFont fontWithName:@"PingFang-SC-Bold" size:15 * ProportionAdapter];
+            cell.detailLB.font = [UIFont boldSystemFontOfSize:kHorizontal(15)];
         }else if (indexPath.row == 3) {
             CGFloat height = [Helper textHeightFromTextString:self.reserveDetailArray[3] width:270 * ProportionAdapter fontSize:15 * ProportionAdapter];
             cell.detailLB.frame = CGRectMake(90 * ProportionAdapter, 0, 270 * ProportionAdapter, height >= 22 * ProportionAdapter ? height : 22 * ProportionAdapter);
@@ -285,9 +309,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     if (section == 0) {
-        return 6;
+        return self.orderTitleArray.count;
     }else if (section == 1) {
-        return 6;
+        return self.reserveTitleArray.count;
     }else{
         return 0;
     }
@@ -342,7 +366,7 @@
     titleLB.attributedText = text;
     [backView addSubview:titleLB];
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 59.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 60 * ProportionAdapter - 1, screenWidth, 1 )];
     lineView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     [backView addSubview:lineView];
     
@@ -363,9 +387,10 @@
         }
     }else{
         
-        CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 110 * ProportionAdapter fontSize:15];
+        CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 110 * ProportionAdapter fontSize:kHorizontal(15)];
+        serviceDetailsHeight = serviceDetailsHeight >= 22 * ProportionAdapter ? serviceDetailsHeight : 22 * ProportionAdapter;
         
-        return serviceDetailsHeight + 10 * ProportionAdapter;
+        return serviceDetailsHeight + 20 * ProportionAdapter;
     }
 }
 
@@ -395,8 +420,14 @@
         [backView addSubview:noteLB];
         
         CGFloat noteDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"remark"] width:screenWidth - 100 * ProportionAdapter fontSize:15 * ProportionAdapter];
-        
-        UILabel *noteDetailLB = [self lablerect:CGRectMake(90 * ProportionAdapter, 20 * ProportionAdapter, screenWidth - 100 * ProportionAdapter, noteDetailsHeight) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(15 * ProportionAdapter) text:[self.dataDic objectForKey:@"remark"] textAlignment:NSTextAlignmentLeft];
+        //备注
+        NSString *remark = [self.dataDic objectForKey:@"remark"];
+        UIColor *labelColor = RGB(98,98,98);
+        if (remark.length == 0) {
+            remark = @"无";
+            labelColor = RGB(160, 160, 160);
+        }
+        UILabel *noteDetailLB = [self lablerect:CGRectMake(90 * ProportionAdapter, 20 * ProportionAdapter, screenWidth - 100 * ProportionAdapter, noteDetailsHeight) labelColor:labelColor labelFont:(15 * ProportionAdapter) text:remark textAlignment:NSTextAlignmentLeft];
         noteDetailLB.numberOfLines = 0;
         [backView addSubview:noteDetailLB];
         return backView;
@@ -404,25 +435,24 @@
         
         UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
         backView.backgroundColor = [UIColor whiteColor];
-        UILabel *oderLB = [[UILabel alloc] initWithFrame:CGRectMake(8 * ProportionAdapter, 0, 80 * ProportionAdapter, 22 * ProportionAdapter)];
+        UILabel *oderLB = [[UILabel alloc] initWithFrame:CGRectMake(8 * ProportionAdapter, 5 * ProportionAdapter, 80 * ProportionAdapter, 22 * ProportionAdapter)];
         oderLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-        oderLB.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
+        oderLB.font = [UIFont systemFontOfSize:kHorizontal(15)];
         oderLB.textAlignment = NSTextAlignmentRight;
         oderLB.text = @"预订说明：";
-        
+        [oderLB sizeToFit];
         [backView addSubview:oderLB];
         
-        CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 110 * ProportionAdapter fontSize:15];
-        
-        
-        UILabel *oderDetailLB = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter, serviceDetailsHeight >= 22 * ProportionAdapter ? 5 * ProportionAdapter : 0, screenWidth - 110 * ProportionAdapter, serviceDetailsHeight >= 22 * ProportionAdapter ? serviceDetailsHeight : 22 * ProportionAdapter)];
+        CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 110 * ProportionAdapter fontSize:kHorizontal(15)];
+        serviceDetailsHeight = serviceDetailsHeight >= 22 * ProportionAdapter ? serviceDetailsHeight : oderLB.height;
+        UILabel *oderDetailLB = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter,  5 * ProportionAdapter , screenWidth - 110 * ProportionAdapter, serviceDetailsHeight)];
         oderDetailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
-        oderDetailLB.font = [UIFont systemFontOfSize:15];
+        oderDetailLB.font = [UIFont systemFontOfSize:kHorizontal(15)];
         oderDetailLB.textAlignment = NSTextAlignmentLeft;
         oderDetailLB.text = [self.dataDic objectForKey:@"serviceDetails"];
         oderDetailLB.numberOfLines = 0;
         [backView addSubview:oderDetailLB];
-        backView.frame = CGRectMake(0, 0, screenWidth, serviceDetailsHeight + 10 * ProportionAdapter);
+        backView.frame = CGRectMake(0, 0, screenWidth, serviceDetailsHeight + 120 * ProportionAdapter);
         return backView;
     }
     
@@ -585,9 +615,9 @@
     return _orderTitleArray;
 }
 
-- (NSArray *)reserveTitleArray{
+- (NSMutableArray *)reserveTitleArray{
     if (!_reserveTitleArray) {
-        _reserveTitleArray = [NSArray arrayWithObjects:@"预订球场：", @"开球时间：", @"打球人数：", @"打球人：", @"联系电话：", @"价格包含：", nil];
+        _reserveTitleArray = [NSMutableArray arrayWithObjects:@"预订球场：", @"开球时间：", @"打球人数：", @"打球人：", @"联系电话：", @"价格包含：", nil];
     }
     return _reserveTitleArray;
 }

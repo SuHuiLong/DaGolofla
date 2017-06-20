@@ -548,7 +548,7 @@
     item.enabled = NO;
     //        self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
     [alert setCallBackTitle:^(NSInteger index) {
         [self shareInfo:index];
     }];
@@ -565,12 +565,12 @@
     if ([_model.timeKey integerValue] == 0) {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
         
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/awardedPrize.html?activityKey=%ld&userKey=%@",(long)self.activityKey,DEFAULF_USERID];
+        shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/awardedPrize.html?activityKey=%ld&userKey=%@",(long)self.activityKey,DEFAULF_USERID];
     }
     else
     {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/awardedPrize.html?activityKey=%ld&userKey=%@",(long)self.activityKey,DEFAULF_USERID];
+        shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/awardedPrize.html?activityKey=%ld&userKey=%@",(long)self.activityKey,DEFAULF_USERID];
     }
     
     

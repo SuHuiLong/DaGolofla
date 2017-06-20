@@ -84,7 +84,7 @@ static CGFloat ImageHeight  = 210.0;
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     self.navigationController.navigationBarHidden = YES;
-    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%td_background.jpg", [_model.timeKey integerValue]];
+    NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/activity/%td_background.jpg", [_model.timeKey integerValue]];
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
     
     if (_isEditor == 0) {
@@ -484,11 +484,11 @@ static CGFloat ImageHeight  = 210.0;
                     NSLog(@"data == %@", data);
                     if ([[data objectForKey:@"code"] integerValue] == 1) {
 //                        UIAlertAction *commitAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
+                            NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
                             
                             [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
                             
-                            NSString *bggUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg", strTimeKey];
+                            NSString *bggUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/activity/%@_background.jpg", strTimeKey];
                             
                             [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES withCompletion:nil];
                             

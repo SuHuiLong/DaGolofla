@@ -79,9 +79,6 @@
         _selectDay = 1;
     }
     
-    //    NSLog(@"%td" ,[[Helper stringFromDateString:self.selectDate withFormater:@"yyyy"] integerValue]);
-    //    NSLog(@"%td" ,[[Helper stringFromDateString:self.selectDate withFormater:@"M"] integerValue]);
-    //    NSLog(@"%td" ,[[Helper stringFromDateString:self.selectDate withFormater:@"d"] integerValue]);
     
     [self initOtherData];
     [self addHeaderWeekView];
@@ -402,7 +399,6 @@
     
     [_timeListView loadTimeListWithBallKey:_ballKey andDateString:dataString andIsLeagueUser:_isLeagueUser];
     
-//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (NSMutableArray *)dataSource {

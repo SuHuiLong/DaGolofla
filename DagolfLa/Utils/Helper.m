@@ -99,7 +99,7 @@
 //新方法 头像路径
 + (NSURL *)setImageIconUrl:(NSInteger)timeKey {
     //        NSString *imageStr = [NSString stringWithFormat:@"http://192.168.2.18:8080/%@",downloadImageUrl];
-    NSString *imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%td.jpg@200w_200h_2o",timeKey];
+    NSString *imageStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%td.jpg@200w_200h_2o",timeKey];
     NSURL *imageUrl = [NSURL URLWithString:imageStr];
     return imageUrl;
 }
@@ -111,17 +111,17 @@
     if (isSet == 0) {
         if (isBack == 0) {
             if ([iconType isEqualToString:@"user"] == 1) {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/head/%td.jpg",iconType,timeKey];
             }
             else
             {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td.jpg@400w_400h_2o",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/%td.jpg@400w_400h_2o",iconType,timeKey];
             }
             
         }
         else
         {
-            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td_background.jpg",iconType,timeKey];
+            imageStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/%td_background.jpg",iconType,timeKey];
         }
         
     }
@@ -129,17 +129,17 @@
     {
         if (isBack == 0) {
             if ([iconType isEqualToString:@"user"] == 1) {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",iconType,timeKey];
             }
             else
             {
-                imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td.jpg@200w_200h_2o",iconType,timeKey];
+                imageStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/%td.jpg@200w_200h_2o",iconType,timeKey];
             }
             
         }
         else
         {
-            imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/%td_background.jpg@400w_150h_2o",iconType,timeKey];
+            imageStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/%td_background.jpg@400w_150h_2o",iconType,timeKey];
         }
     }
     
@@ -637,9 +637,9 @@
 
 // 赛事头像
 + (NSURL *)setMatchImageIconUrl:(NSInteger)timeKey {
-    //   http://imgcache.dagolfla.com/match/244.jpg
+    //   https://imgcache.dagolfla.com/match/244.jpg
     
-    NSString *imageStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/match/%td.jpg",timeKey];
+    NSString *imageStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/match/%td.jpg",timeKey];
     NSURL *imageUrl = [NSURL URLWithString:imageStr];
     return imageUrl;
 }

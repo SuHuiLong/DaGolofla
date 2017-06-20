@@ -412,7 +412,7 @@
 -(void)shareStatisticsDataClick
 {
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
     [alert setCallBackTitle:^(NSInteger index) {
         [self shareInfo:index];
     }];
@@ -423,9 +423,9 @@
 -(void)shareInfo:(NSInteger)index
 {
 
-//    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=%@&userKey=%@&srcKey=1&srcType=1&scoreKey=0&md5=%@", _model.timeKey,DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=1&srcType=1dagolfla.com", _model.timeKey, DEFAULF_USERID]]];
+//    NSString*  shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=%@&userKey=%@&srcKey=1&srcType=1&scoreKey=0&md5=%@", _model.timeKey,DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=1&srcType=1dagolfla.com", _model.timeKey, DEFAULF_USERID]]];
     
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=0&userKey=%@&srcKey=%@&srcType=%@&scoreKey=%@&md5=%@&share=1", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"], _model.timeKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=%@dagolfla.com", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"]]]];
+    NSString*  shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/score/scoreCard.html?teamKey=0&userKey=%@&srcKey=%@&srcType=%@&scoreKey=%@&md5=%@&share=1", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"], _model.timeKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=%@dagolfla.com", DEFAULF_USERID, [self.dataDic objectForKey:@"srcKey"], [self.dataDic objectForKey:@"srcType"]]]];
     
     
     

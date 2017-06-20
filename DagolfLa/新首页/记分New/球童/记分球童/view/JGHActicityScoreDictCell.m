@@ -17,6 +17,7 @@
         
         _headerImageView = [[UIImageView alloc]initWithFrame:CGRectMake(12*ProportionAdapter, 12*ProportionAdapter, 66*ProportionAdapter, 66*ProportionAdapter)];
         _headerImageView.image = [UIImage imageNamed:DefaultHeaderImage];
+        _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
         _headerImageView.layer.masksToBounds = YES;
         _headerImageView.layer.cornerRadius = 3.0 *ProportionAdapter;
         [self addSubview:_headerImageView];

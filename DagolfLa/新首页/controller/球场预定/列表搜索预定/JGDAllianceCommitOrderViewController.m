@@ -17,6 +17,11 @@
 #import "LGLCalenderViewController.h"
 #import "JGDPaySuccessViewController.h"
 
+#import "SelectRedPacketTableViewCell.h"
+#import "BookCourtPriceTableViewCell.h"
+#import "BookCourtTotalPriceTableViewCell.h"
+#import "SelectRedPacketViewController.h"
+
 @interface JGDAllianceCommitOrderViewController () <UITableViewDelegate, UITableViewDataSource ,UITextFieldDelegate>
 
 @property (nonatomic, strong) UITableView *commitOrderTableView;
@@ -42,11 +47,24 @@
 @property (nonatomic, strong) UILabel *allianceCardLB;
 
 @property (nonatomic, strong) NSNumber *vipTimekey;
+//打球人数据
+@property (nonatomic,strong) NSMutableArray *addPlayerArray;
+//选中的红包
+@property (nonatomic, strong) RedPacketModel *selectModel;
+//是否显示选择红包界面
+@property (nonatomic,assign) BOOL showRedPacket;
+
 
 @end
 
 @implementation JGDAllianceCommitOrderViewController
 
+-(NSMutableArray *)addPlayerArray{
+    if (_addPlayerArray==nil) {
+        _addPlayerArray = [NSMutableArray array];
+    }
+    return _addPlayerArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -113,20 +131,25 @@
     self.commitOrderTableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.commitOrderTableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self.commitOrderTableView registerClass:[JGDBallPlayTableViewCell class] forCellReuseIdentifier:@"ballPlayCell"];
+    [self.commitOrderTableView registerClass:[SelectRedPacketTableViewCell class] forCellReuseIdentifier:@"SelectRedPacketTableViewCellID"];
+    [self.commitOrderTableView registerClass:[BookCourtPriceTableViewCell class] forCellReuseIdentifier:@"BookCourtPriceTableViewCellID"];
+    [self.commitOrderTableView registerClass:[BookCourtTotalPriceTableViewCell class] forCellReuseIdentifier:@"BookCourtTotalPriceTableViewCellID"];
+    
+    
     
     // "付款类型 0: 全额预付  1: 部分预付  2: 球场现付"
     if ([[self.detailDic objectForKey:@"payType"] integerValue] == 0) {
         
         UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
         
-        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"全额预付  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
+        self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 40 * ProportionAdapter, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"全额预付  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
         NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"全额预付  ¥%@", self.selectMoney]];
         [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
         [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%@",self.selectMoney] length] + 1)];
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
-        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 41 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
+        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 80 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
         [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -203,22 +226,21 @@
     }
 }
 
-
-
-#pragma mark --- 确定预定支付
-
+#pragma mark InitData
+//确定预定支付
 - (void)ConfirmAct{
     
     [self.view endEditing:YES];
-
+    
     if ([self.allianceCardLB.text isEqualToString:@"请选择会员卡"]) {
         [LQProgressHud showMessage:@"请选择会员卡"];
         return;
     }
+
+    NSString *name = self.playerArray[0];
+    NSString *phone = self.playerArray[1];
     
-    JGDBallPlayTableViewCell *cell3 = [self.commitOrderTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-    JGDBallPlayTableViewCell *cell4 = [self.commitOrderTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
-    if ([cell3.nameTF.text isEqualToString:@""] || [cell4.nameTF.text isEqualToString:@""]) {
+    if ([name isEqualToString:@""] || [phone isEqualToString:@""]) {
         [LQProgressHud showMessage:@"请完善打球人信息"];
         return;
     }
@@ -226,21 +248,33 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *orderDic = [NSMutableDictionary dictionary];
     
+    if (_selectModel.timeKey) {
+        [orderDic setObject:_selectModel.timeKey forKey:@"couponKey"];
+        
+    }
+    
+    NSMutableString *nameString = [NSMutableString stringWithString:name];
+    for (NSString *name in self.addPlayerArray) {
+        if (name.length==0) {
+            [LQProgressHud showMessage:@"请完善打球人信息"];
+            return;
+        }
+        nameString = [NSMutableString stringWithFormat:@"%@、 %@",nameString, name];
+    }
+
+    [orderDic setObject:nameString forKey:@"playPersonNames"];
     [orderDic setObject:self.vipTimekey forKey:@"userCardKey"];
     [orderDic setObject:self.noteTF.text forKey:@"remark"];
     [orderDic setObject:self.selectDate forKey:@"teeTime"];
-    [orderDic setObject:@1 forKey:@"userSum"];
+    //打球人数
+    NSString *userSUm = [NSString stringWithFormat:@"%ld",self.addPlayerArray.count + 1];
+    [orderDic setObject:userSUm forKey:@"userSum"];
     [orderDic setObject:DEFAULF_UserName forKey:@"userName"];
-    [orderDic setObject:cell4.nameTF.text forKey:@"userMobile"];
+    [orderDic setObject:phone forKey:@"userMobile"];
     UITextField *noteTF = [self.commitOrderTableView viewWithTag:999]; // 备注
     [orderDic setObject:noteTF.text forKey:@"remark"];
     
-//    NSMutableString *nameString = [[NSMutableString alloc] init];
-//    for (NSString *name in self.playerArray) {
-//        nameString = [NSMutableString stringWithFormat:@"%@、 %@",nameString, name];
-//    }
-    [orderDic setObject:cell3.nameTF.text forKey:@"playPersonNames"];
-//
+
     [dic setObject:orderDic forKey:@"order"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     [dic setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"bookBallParkKey"];
@@ -254,7 +288,7 @@
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             [MobClick event:@"booking_ball_membership_click"];
-
+            
             if ([data objectForKey:@"orderKey"]) {
                 
                 if ([[data objectForKey:@"stateButtonString"] isEqualToString:@"待付款"]) {
@@ -279,145 +313,17 @@
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-
-    if (tableView.tag == 567) {
-        JGDNormalWithLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"normalCell"];
-        cell.cellHeight = 41 * ProportionAdapter;
-        cell.nameLB.text = [self.vipCardArray[indexPath.row] objectForKey:@"name"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }
-    
-    if (indexPath.row == 0) {
-        JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
-        UILabel *titleLB = [self lablerect:CGRectMake(5 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(16 * ProportionAdapter) text:@"球场：" textAlignment:(NSTextAlignmentRight)];
-        [cell.contentView addSubview:titleLB];
-        
-        UILabel *ballNameLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 0, 260 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[self.detailDic objectForKey:@"ballName"] textAlignment:(NSTextAlignmentLeft)];
-        [cell.contentView addSubview:ballNameLB];
-        
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 49.5 * ProportionAdapter, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter)];
-        lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
-        [cell.contentView addSubview:lineView];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell;
-    }else if (indexPath.row == 1) {
-        JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
-        UILabel *titleLB = [self lablerect:CGRectMake(5 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(16 * ProportionAdapter) text:@"打球时间：" textAlignment:(NSTextAlignmentRight)];
-        [cell.contentView addSubview:titleLB];
-        
-        UILabel *dateLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 0, 260 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[Helper stringFromDateString:self.selectDate withFormater:@"MM月dd日  EEE  HH:mm"] textAlignment:(NSTextAlignmentLeft)];
-        
-        NSMutableAttributedString *mutabeAtr = [[NSMutableAttributedString alloc] initWithString:[Helper stringFromDateString:self.selectDate withFormater:@"MM月dd日 EEE HH:mm"]];
-        [mutabeAtr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"a0a0a0"] range:NSMakeRange(7, 2)];
-        dateLB.attributedText = mutabeAtr;
-        [cell.contentView addSubview:dateLB];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell;
-    }else if (indexPath.row == 2) {
-        JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
-        
-        NSString *begainDate = [NSString stringWithFormat:@"将为您提供%@-%@（１小时内的开球时间）", [Helper dateFromDate:self.selectDate timeInterval:-30 * 60], [Helper dateFromDate:self.selectDate timeInterval:30 * 60]];
-        
-        UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 20 * ProportionAdapter, 35 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:(15 * ProportionAdapter) text:begainDate textAlignment:(NSTextAlignmentCenter)];
-        tipLB.backgroundColor = [UIColor colorWithHexString:@"#fefaf3"];
-        tipLB.layer.cornerRadius = 6;
-        tipLB.clipsToBounds = YES;
-        
-        NSMutableAttributedString *mutabeAtr = [[NSMutableAttributedString alloc] initWithString:begainDate];
-        
-        UIImage *img = [UIImage imageNamed:@"order_icn_remark"];
-        NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
-        textAttach.image = img;
-        textAttach.bounds = CGRectMake(-3 * ProportionAdapter, -1 * ProportionAdapter, 14 * ProportionAdapter, 14 * ProportionAdapter);
-        NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:textAttach];
-        [mutabeAtr insertAttributedString:string atIndex:0];
-        
-        tipLB.attributedText = mutabeAtr;
-        
-        [cell.contentView addSubview:tipLB];
-        
-        UILabel *lB = [[UILabel alloc] initWithFrame:CGRectMake(0, 40 * ProportionAdapter, screenWidth, 10 * ProportionAdapter)];
-        lB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-        [cell.contentView addSubview:lB];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell;
-    }else if (indexPath.row == 3 || indexPath.row == 4) {
-        
-        JGDBallPlayTableViewCell *cell = [[JGDBallPlayTableViewCell alloc] init];
-        [cell.phoneImageV removeFromSuperview];
-        NSString *title;
-        indexPath.row == 3 ? (title = @"会员姓名：") : (title = @"联系方式：");
-        cell.titleLB.text = title;
-        if (indexPath.row == 4) {
-            cell.nameTF.text = self.playerArray[1];
-            cell.nameTF.tag = 777;
-            cell.nameTF.delegate = self;
-//            self.mobile = [def objectForKey:Mobile];
-        }else {
-            cell.nameTF.text = self.playerArray[0];
-            cell.nameTF.tag = 888;
-            cell.nameTF.delegate = self;
-            cell.nameTF.userInteractionEnabled = NO;
+//获取可用红包
+-(NSInteger)getCanUseNum{
+    NSInteger totalNum = _myCouponList.count;
+    for (RedPacketModel *model in _myCouponList) {
+        if (model.unusable) {
+            totalNum--;
         }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        
-        return cell;
-        
-    }else if (indexPath.row == 5) {
-        JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
-
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.noteTF = [[UITextField alloc] initWithFrame:CGRectMake(13 * ProportionAdapter, 0, screenWidth - 20 * ProportionAdapter, 50 * ProportionAdapter)];
-        self.noteTF.placeholder = @"请输入备注信息";
-        self.noteTF.tag = 999;
-        self.noteTF.delegate = self;
-        self.noteTF.clearButtonMode = UITextFieldViewModeWhileEditing;
-        self.noteTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
-        self.noteTF.text = self.remark;
-        [cell.contentView addSubview:self.noteTF];
-        
-       UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter)];
-        lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
-        [cell.contentView addSubview:lineView];
-        return cell;
-    }else{
-        
-        JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *lB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
-        lB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
-        [cell addSubview:lB];
-
-        UILabel *vipSelectLB = [Helper lableRect:CGRectMake(13 * ProportionAdapter, 10 * ProportionAdapter, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:16 * ProportionAdapter text:@"会员优惠" textAlignment:NSTextAlignmentLeft];
-        [cell.contentView addSubview:vipSelectLB];
-        
-        if ([self.vipCardArray count] > 0) {
-            self.allianceCardLB = [Helper lableRect:CGRectMake(103 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 133 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:16 * ProportionAdapter text:self.playerArray[2] textAlignment:(NSTextAlignmentRight)];
-            
-            UIImageView *accessView = [[UIImageView alloc] initWithFrame:CGRectMake(screenWidth - 20 * ProportionAdapter, 26 * ProportionAdapter, 9 * ProportionAdapter, 16 * ProportionAdapter)];
-            accessView.image = [UIImage imageNamed:@"accessoryHEI"];
-            [cell.contentView addSubview:accessView];
-            
-            [cell.contentView addSubview:self.allianceCardLB];
-        }
-        
-        return cell;
-        
     }
-    
-    
+    return totalNum;
 }
-
+//通讯录添加打球人
 - (void)contactAdd:(UIButton *)btn{
     [self.commitOrderTableView endEditing:YES];
     JGDContactViewController *contactVC = [[JGDContactViewController alloc] init];
@@ -425,33 +331,295 @@
         JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[btn superview] superview];
         NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
         cell.nameTF.text = userName;
-        self.playerArray[index.row - 5] = userName;
+        self.addPlayerArray[index.row - 2] = userName;
         cell.phoneImageV.hidden = YES;
     };
     [self.navigationController pushViewController:contactVC animated:YES];
 }
-
+//计算订单总价和实付金额
+-(void)countOrderPrice{
+    if (self.addPlayerArray.count==0) {
+        return;
+    }
+    NSInteger orderPriceCount = [_selectMoney integerValue] + [_normolPrice integerValue]*self.addPlayerArray.count;
+    NSString *orderPrice = [NSString stringWithFormat:@"¥ %lu", orderPriceCount];
+    NSString *redpacketMoney = [NSString stringWithFormat:@"-¥ %ld",_selectModel.money];
+    NSString *totalPrice = [NSString stringWithFormat:@"¥ %lu",orderPriceCount - _selectModel.money];
+    
+    BookCourtTotalPriceTableViewCell *cell = [self.commitOrderTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 + self.addPlayerArray.count inSection:1]];
+    
+    cell.orderPriceLabel.text = orderPrice;
+    cell.redpacketLabel.text = redpacketMoney;
+    cell.totalPriceLabel.text = totalPrice;
+    
+}
+#pragma mark - UITableViewDelegate&&DataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if (tableView.tag == 567) {
+        return 1;
+    }
+    return 2;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     if (tableView.tag == 567) {
         return [self.vipCardArray count];
     }else{
-        return 7;
+        if (section==0) {
+            return 7;
+        }else{
+            NSInteger num = 0;
+            if (_showRedPacket) {
+                num = 3;
+            }
+            return 2 + num + self.addPlayerArray.count;
+        }
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    if (tableView.tag == 567) {
+        return 58 * ProportionAdapter;
+    }
+    return section == 0 ? 0 : 10 * ProportionAdapter;
+}
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-//    return 3;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.000001;
+}
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView.tag == 567) {
+        return 41 * ProportionAdapter;
+    }
+    if (indexPath.section == 1) {
+        if (indexPath.row > self.addPlayerArray.count ) {
+            if (_showRedPacket){
+                if (indexPath.row == self.addPlayerArray.count+4) {
+                    return 60 * ProportionAdapter;
+                }else if (indexPath.row == self.addPlayerArray.count+3){
+                    return kHvertical(120);
+                }
+            }else{
+                return 60 * ProportionAdapter;
+            }
+        }
+    }
+    return 50 * ProportionAdapter;
+    
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (tableView.tag == 567) {
+        JGDNormalWithLabelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"normalCell"];
+        cell.cellHeight = 41 * ProportionAdapter;
+        cell.nameLB.text = [self.vipCardArray[indexPath.row] objectForKey:@"name"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }
+    if (indexPath.section==0) {
+        if (indexPath.row == 0) {
+            JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
+            UILabel *titleLB = [self lablerect:CGRectMake(5 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(16 * ProportionAdapter) text:@"球场：" textAlignment:(NSTextAlignmentRight)];
+            [cell.contentView addSubview:titleLB];
+            
+            UILabel *ballNameLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 0, 260 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[self.detailDic objectForKey:@"ballName"] textAlignment:(NSTextAlignmentLeft)];
+            [cell.contentView addSubview:ballNameLB];
+            
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter - 1, screenWidth - 10 * ProportionAdapter, 1 )];
+            lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+            [cell.contentView addSubview:lineView];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return cell;
+        }else if (indexPath.row == 1) {
+            JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
+            UILabel *titleLB = [self lablerect:CGRectMake(5 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(16 * ProportionAdapter) text:@"打球时间：" textAlignment:(NSTextAlignmentRight)];
+            [cell.contentView addSubview:titleLB];
+            
+            UILabel *dateLB = [self lablerect:CGRectMake(100 * ProportionAdapter, 0, 260 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[Helper stringFromDateString:self.selectDate withFormater:@"MM月dd日  EEE  HH:mm"] textAlignment:(NSTextAlignmentLeft)];
+            
+            NSMutableAttributedString *mutabeAtr = [[NSMutableAttributedString alloc] initWithString:[Helper stringFromDateString:self.selectDate withFormater:@"MM月dd日 EEE HH:mm"]];
+            [mutabeAtr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"a0a0a0"] range:NSMakeRange(7, 2)];
+            dateLB.attributedText = mutabeAtr;
+            [cell.contentView addSubview:dateLB];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return cell;
+        }else if (indexPath.row == 2) {
+            JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
+            NSString *begainDate = [NSString stringWithFormat:@"将为您提供%@-%@（１小时内的开球时间）", [Helper dateFromDate:self.selectDate timeInterval:-30 * 60], [Helper dateFromDate:self.selectDate timeInterval:30 * 60]];
+            UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 20 * ProportionAdapter, 35 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:(15 * ProportionAdapter) text:begainDate textAlignment:(NSTextAlignmentCenter)];
+            tipLB.backgroundColor = [UIColor colorWithHexString:@"#fefaf3"];
+            tipLB.layer.cornerRadius = 6;
+            tipLB.clipsToBounds = YES;
+            
+            NSMutableAttributedString *mutabeAtr = [[NSMutableAttributedString alloc] initWithString:begainDate];
+            UIImage *img = [UIImage imageNamed:@"order_icn_remark"];
+            NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+            textAttach.image = img;
+            textAttach.bounds = CGRectMake(-3 * ProportionAdapter, -1 * ProportionAdapter, 14 * ProportionAdapter, 14 * ProportionAdapter);
+            NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:textAttach];
+            [mutabeAtr insertAttributedString:string atIndex:0];
+            tipLB.attributedText = mutabeAtr;
+            [cell.contentView addSubview:tipLB];
+            
+            UILabel *lB = [[UILabel alloc] initWithFrame:CGRectMake(0, 40 * ProportionAdapter, screenWidth, 10 * ProportionAdapter)];
+            lB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+            [cell.contentView addSubview:lB];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }else if (indexPath.row == 3 || indexPath.row == 4) {
+            JGDBallPlayTableViewCell *cell = [[JGDBallPlayTableViewCell alloc] init];
+            [cell.phoneImageV removeFromSuperview];
+            NSString *title;
+            indexPath.row == 3 ? (title = @"会员姓名：") : (title = @"联系方式：");
+            cell.titleLB.text = title;
+            if (indexPath.row == 4) {
+                cell.nameTF.text = self.playerArray[1];
+                cell.nameTF.tag = 777;
+                cell.nameTF.delegate = self;
+            }else {
+                cell.nameTF.text = self.playerArray[0];
+                cell.nameTF.tag = 888;
+                cell.nameTF.delegate = self;
+                cell.nameTF.userInteractionEnabled = NO;
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return cell;
+            
+        }else if (indexPath.row == 5) {
+            JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            UILabel *vipSelectLB = [Helper lableRect:CGRectMake(13 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:16 * ProportionAdapter text:@"使用会籍" textAlignment:NSTextAlignmentLeft];
+            [cell.contentView addSubview:vipSelectLB];
+            
+            if ([self.vipCardArray count] > 0) {
+                self.allianceCardLB = [Helper lableRect:CGRectMake(103 * ProportionAdapter, 0, screenWidth - 133 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:16 * ProportionAdapter text:self.playerArray[2] textAlignment:(NSTextAlignmentRight)];
+                
+                UIImageView *accessView = [[UIImageView alloc] initWithFrame:CGRectMake(screenWidth - 20 * ProportionAdapter, 16 * ProportionAdapter, 9 * ProportionAdapter, 16 * ProportionAdapter)];
+                accessView.image = [UIImage imageNamed:@"darkArrow"];
+                accessView.tintColor = RGB(160,160,160);
+                [cell.contentView addSubview:accessView];
+                
+                [cell.contentView addSubview:self.allianceCardLB];
+            }
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter - 1, screenWidth - 10 * ProportionAdapter, 1 )];
+            lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+            [cell.contentView addSubview:lineView];
+            return cell;
+        }else{
+            BookCourtPriceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BookCourtPriceTableViewCellID"];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            cell.titleLabel.text = @"会籍价格";
+            cell.priceLabel.text = [NSString stringWithFormat:@"¥ %@",_selectMoney];
+            return cell;
+        }
+        
+    }else{
+        
+        if (indexPath.row == 0) {
+            JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
+            UILabel *titleLB = [self lablerect:CGRectMake(5 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(16 * ProportionAdapter) text:@"添加嘉宾：" textAlignment:(NSTextAlignmentRight)];
+            [cell.contentView addSubview:titleLB];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(264 * ProportionAdapter, 12 * ProportionAdapter, 26 * ProportionAdapter, 26 * ProportionAdapter)];
+            if ([self.addPlayerArray count] == 0) {
+                [leftBtn setImage:[UIImage imageNamed:@"order_minus"] forState:(UIControlStateNormal)]; // 灰色
+            }else{
+                [leftBtn setImage:[UIImage imageNamed:@"order_minus-color"] forState:(UIControlStateNormal)];
+            }
+            leftBtn.tag = 500;
+            [leftBtn addTarget:self action:@selector(countChanege:) forControlEvents:(UIControlEventTouchUpInside)];
+            [cell.contentView addSubview:leftBtn];
+            
+            self.countLB = [self lablerect:CGRectMake(290 * ProportionAdapter, 12 * ProportionAdapter, 50 * ProportionAdapter, 26 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"%td人", [self.addPlayerArray count]] textAlignment:(NSTextAlignmentCenter)];
+            [cell.contentView addSubview:self.countLB];
+            
+            UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(340 * ProportionAdapter, 12 * ProportionAdapter, 26 * ProportionAdapter, 26 * ProportionAdapter)];
+            rightBtn.tag = 501;
+            [rightBtn addTarget:self action:@selector(countChanege:) forControlEvents:(UIControlEventTouchUpInside)];
+            [rightBtn setImage:[UIImage imageNamed:@"order_add"] forState:(UIControlStateNormal)]; // 黑色
+            [cell.contentView addSubview:rightBtn];
+            
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter , screenWidth - 10 * ProportionAdapter, 1 )];
+            lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+            [cell.contentView addSubview:lineView];
+
+            return cell;
+            
+        }else if (indexPath.row == 1 + [self.addPlayerArray count]&&self.addPlayerArray.count>0) {
+        
+            BookCourtPriceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BookCourtPriceTableViewCellID"];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            cell.titleLabel.text = @"嘉宾价格";
+            cell.priceLabel.text = _normolPrice;
+            return cell;
+
+        }else if (indexPath.row == 2 + [self.addPlayerArray count]&&self.addPlayerArray.count>0) {
+            
+            SelectRedPacketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SelectRedPacketTableViewCellID"];
+            [cell hidenGrayView];
+            if (_selectModel.timeKey) {
+                [cell configSelectData:_selectModel];
+            }else{
+                NSInteger canUseNum = [self getCanUseNum];
+                [cell configData:canUseNum];
+            }
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+        }else if (indexPath.row == 3 + [self.addPlayerArray count]&&self.addPlayerArray.count>0) {
+            
+            BookCourtTotalPriceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BookCourtTotalPriceTableViewCellID"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
+            
+        }else if ((indexPath.row == 4 + [self.addPlayerArray count]&&self.addPlayerArray.count>0)||(self.addPlayerArray.count == 0&&indexPath.row==1)) {
+            JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
+            UILabel *lB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
+            lB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
+            [cell addSubview:lB];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            self.noteTF = [[UITextField alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 10 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 50 * ProportionAdapter)];
+            self.noteTF.placeholder = @"请输入备注信息";
+            self.noteTF.tag = 999;
+            self.noteTF.delegate = self;
+            self.noteTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+            self.noteTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
+            self.noteTF.text = self.remark;
+            [cell.contentView addSubview:self.noteTF];
+            
+            return cell;
+        }else{
+            
+            JGDBallPlayTableViewCell *cell = [[JGDBallPlayTableViewCell alloc] init];
+            cell.nameTF.text = self.addPlayerArray[indexPath.row - 1];
+            
+            [cell.nameTF.text length] > 0 ? (cell.phoneImageV.hidden = YES) : (cell.phoneImageV.hidden = NO);
+            cell.titleLB.text = @"打球人";
+            cell.nameTF.delegate = self;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.phoneImageV addTarget:self action:@selector(contactAdd:) forControlEvents:(UIControlEventTouchUpInside)];
+            return cell;
+            
+        }
+    }
+}
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     if (tableView.tag == 567) {
         
         UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, screenHeight - 235 * ProportionAdapter - 64 * ProportionAdapter, screenWidth, 58 * ProportionAdapter)];
         backView.backgroundColor = [UIColor whiteColor];
-
+        
         UILabel *titleLB = [Helper lableRect:CGRectMake(0, 0, screenWidth, 58 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:17 * ProportionAdapter text:@"选择可使用的会员卡" textAlignment:(NSTextAlignmentCenter)];
         
         UIButton *closeBtn = [[UIButton alloc] initWithFrame:CGRectMake(screenWidth - 42 * ProportionAdapter, 20 * ProportionAdapter, 22 * ProportionAdapter, 22 * ProportionAdapter)];
@@ -475,61 +643,23 @@
     return view;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
-    if (tableView.tag == 567) {
-        return 58 * ProportionAdapter;
-    }
-    return section == 0 ? 0 : 10 * ProportionAdapter;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.000001;
-}
-
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    if (tableView.tag == 567) {
-        return 41 * ProportionAdapter;
-    }
-    
-    if (indexPath.row == 2) {
-        return 50 * ProportionAdapter;
-    }
-    else if (indexPath.row == 6) {
-        return 60 * ProportionAdapter;
-    }
-    else{
-        return 50 * ProportionAdapter;
-    }
-    
-    
-    
-    //    return indexPath.section == 2 ? 70 * ProportionAdapter : 50 * ProportionAdapter;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (tableView.tag == 567) {
-
+        
         if ([[self.vipCardArray[indexPath.row] objectForKey:@"state"] integerValue] == 5) {
             [LQProgressHud showMessage:@"会员卡不可用"];
             return;
         }
         self.allianceCardLB.text = [self.vipCardArray[indexPath.row] objectForKey:@"name"];
         self.vipTimekey = [self.vipCardArray[indexPath.row] objectForKey:@"timeKey"];
-        NSLog(@"%@" , [self.vipCardArray[indexPath.row] objectForKey:@"lUserName"]);
         [tableView removeFromSuperview];
         // lUserName
         JGDBallPlayTableViewCell *cell3 = [self.commitOrderTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
         cell3.nameTF.text = [self.vipCardArray[indexPath.row] objectForKey:@"lUserName"];
         return;
     }
-    
-    
     if (indexPath.row == 1) {
         LGLCalenderViewController *caleVC = [[LGLCalenderViewController alloc] init];
         caleVC.dateString = self.selectDate;
@@ -537,16 +667,16 @@
         caleVC.isLeagueUser = YES;
         caleVC.blockTimeWithPrice = ^(NSString *selectTime, NSString *pay, NSString *scenePay, NSString *deductionMoney, NSString *leagueMoney){
             self.selectDate = selectTime;
-            
+            self.normolPrice = pay;
             if ([[self.detailDic objectForKey:@"payType"] integerValue] != 2) {
                 self.selectMoney = pay;
             }
             self.selectSceneMoney = scenePay;
             if ([deductionMoney isEqualToString:@""]) {
-
+                
             }else{
                 self.selectSceneMoney = deductionMoney;
-
+                
             }
             self.selectDate = selectTime;
             
@@ -561,14 +691,7 @@
                 }else{
                     self.selectMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [self.selectSceneMoney integerValue]];
                 }
-                
             }else{
-                //         全额预付
-//                if ([self.selectSceneMoney isEqualToString:@""]) {
-//                    self.selectMoney = pay;
-//                }else{
-//                    self.selectMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [self.selectSceneMoney integerValue]];
-//                }
                 self.selectMoney = leagueMoney;
                 
             }
@@ -577,21 +700,37 @@
             
             NSIndexPath *indexPath0 = [NSIndexPath indexPathForRow:2 inSection:0];
             NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
+            NSIndexPath *indexpath2 = [NSIndexPath indexPathForRow:6 inSection:0];
             
-            [self.commitOrderTableView reloadRowsAtIndexPaths:@[indexPath0, indexPath1] withRowAnimation:NO];
-            
+            [self.commitOrderTableView reloadRowsAtIndexPaths:@[indexPath0, indexPath1,indexpath2] withRowAnimation:NO];
         };
         [self.navigationController pushViewController:caleVC animated:YES];
         
-    }else if (indexPath.row == 6) {
+    }else if (indexPath.row == 5) {
         UITableView *cardTaBleView = [[UITableView alloc] initWithFrame:CGRectMake(0, screenHeight - 235 * ProportionAdapter - 64 * ProportionAdapter, screenWidth, 235 * ProportionAdapter)];
         cardTaBleView.delegate = self;
         cardTaBleView.dataSource = self;
         [cardTaBleView registerClass:[JGDNormalWithLabelTableViewCell class] forCellReuseIdentifier:@"normalCell"];
         [self.view addSubview:cardTaBleView];
         cardTaBleView.tag = 567;
-        cardTaBleView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    }else if (indexPath.row == 2 + [self.addPlayerArray count]){
+        NSInteger canUseNum = [self getCanUseNum];
+        if (canUseNum<1) {
+            return;
+        }
+        SelectRedPacketViewController *vc = [[SelectRedPacketViewController alloc] init];
+        vc.dataArray = _myCouponList;
+        vc.selectModel = _selectModel;
+        __weak typeof(self) weakself = self;
+        vc.selectModelBlock = ^(RedPacketModel *model) {
+            weakself.selectModel = model;
+            [weakself updatePrice];
+        };
+        [self.navigationController pushViewController:vc animated:YES];
     }
+
+
 }
 
 
@@ -602,45 +741,47 @@
     [tableView removeFromSuperview];
 }
 
+#pragma mark - TextFieldDelegate
 
-//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-//    
-//    if (textField.tag != 999) {
-//        if ([string isEqualToString:@""] && [textField.text length] == 1) {
-//            // 全删
-//            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-//            cell.phoneImageV.hidden = NO;
-//            
-//        }else{
-//            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-//            cell.phoneImageV.hidden = YES;
-//        }
-//    }
-//    
-//    return YES;
-//}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if (textField.tag != 999) {
+        if ([string isEqualToString:@""] && [textField.text length] == 1) {
+            // 全删
+            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+            cell.phoneImageV.hidden = NO;
+            
+        }else{
+            JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+            cell.phoneImageV.hidden = YES;
+        }
+    }
+    
+    return YES;
+}
 
-//- (BOOL)textFieldShouldClear:(UITextField *)textField{
-//    if (textField.tag != 999) {
-//        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-//        NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
-//        cell.phoneImageV.hidden = NO;
-//        if (index.row >=5) {
-//            self.playerArray[index.row - 5] = @"";
-//        }
-//    }
-//    return YES;
-//}
+- (BOOL)textFieldShouldClear:(UITextField *)textField{
+    if (textField.tag != 999) {
+        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
+        NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
+        cell.phoneImageV.hidden = NO;
+        if (index.row >=5) {
+            self.playerArray[index.row - 5] = @"";
+        }
+    }
+    return YES;
+}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
     
     if (textField.tag == 999) {
         self.remark = textField.text;
+        
     }else if (textField.tag == 888) {
-        self.playerArray[1] = textField.text;
-    }else if (textField.tag == 777) {
         self.playerArray[0] = textField.text;
+    }else if (textField.tag == 777) {
+        self.playerArray[1] = textField.text;
     }else{
         JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
         NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
@@ -649,56 +790,69 @@
         }else{
             cell.phoneImageV.hidden = NO;
         }
-        if (index.row >=5) {
-            self.playerArray[index.row - 5] = textField.text;
-        }else if (index.row == 4) {
-            self.mobile = textField.text;
-        }
-        
+        self.addPlayerArray[index.row-1] = textField.text;
     }
 }
 
-//- (void)textFieldDidBeginEditing:(UITextField *)textField{
-//    
-//    if (textField.tag != 999) {
-//        JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[textField superview] superview];
-//        if ([textField.text length] > 0) {
-//            cell.phoneImageV.hidden = YES;
-//        }
-//    }
-//}
-
+//更新金额
+-(void)updatePrice{
+    [self payMoneySet];
+    [_commitOrderTableView reloadRow:2 + self.addPlayerArray.count inSection:1 withRowAnimation:UITableViewRowAnimationNone];
+}
+//判断当前红包是否可用
+-(void)checkRedpacket:(NSInteger)totalPrice{
+    if (_selectModel.timeKey) {
+        if (totalPrice<_selectModel.minSellMoney) {
+            _selectModel = nil;
+            [self updatePrice];
+        }
+    }
+}
 
 #pragma mark --- 人数加减
 
 - (void)countChanege:(UIButton *)btn{
     
     UIButton *leftBtn = [self.commitOrderTableView viewWithTag:500];
-    //    UIButton *rightBtn = [self.commitOrderTableView viewWithTag:501];
     
     if (btn.tag == 500) { // －
-        
-        if (self.playerArray.count > 1) {
-            self.countLB.text = [NSString stringWithFormat:@"%td人", [self.playerArray count] - 1];
-            
-            [self.playerArray removeLastObject];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 + [self.playerArray count] inSection:0];
-            [self.commitOrderTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+        if (self.addPlayerArray.count > 0) {
+            self.countLB.text = [NSString stringWithFormat:@"%td人", [self.addPlayerArray count] - 1];
+            [self.addPlayerArray removeLastObject];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 + [self.addPlayerArray count] inSection:1];
+            if (self.addPlayerArray.count==0) {
+                _showRedPacket = false;
+                NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:1];
+                NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:indexPath.row + 2 inSection:1];
+                NSIndexPath *indexPath3 = [NSIndexPath indexPathForRow:indexPath.row + 3 inSection:1];
+                [self.commitOrderTableView deleteRowsAtIndexPaths:@[indexPath,indexPath1,indexPath2,indexPath3] withRowAnimation:NO];
+                //至少一个嘉宾才能使用红包
+                _selectModel = [[RedPacketModel alloc] init];
+            }else{
+                [self.commitOrderTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+            }
         }
-        
-        [self.playerArray count] == 1 ?[leftBtn setImage:[UIImage imageNamed:@"order_minus"] forState:(UIControlStateNormal)] : @"";
+        [self.addPlayerArray count] == 0 ?[leftBtn setImage:[UIImage imageNamed:@"order_minus"] forState:(UIControlStateNormal)] : @"";
         
     }else{ // +
         
-        if ([self.playerArray count] == 1) {
+        if ([self.addPlayerArray count] == 0) {
             [leftBtn setImage:[UIImage imageNamed:@"order_minus-color"] forState:(UIControlStateNormal)];
         }
-        self.countLB.text = [NSString stringWithFormat:@"%td人", [self.playerArray count] + 1];
+        self.countLB.text = [NSString stringWithFormat:@"%td人", [self.addPlayerArray count] + 1];
+        [self.addPlayerArray addObject:@""];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.addPlayerArray count] inSection:1];
+        if (self.addPlayerArray.count==1) {
+            _showRedPacket = true;
+            NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:1];
+            NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:indexPath.row + 2 inSection:1];
+            NSIndexPath *indexPath3 = [NSIndexPath indexPathForRow:indexPath.row + 3 inSection:1];
+            [self.commitOrderTableView insertRowsAtIndexPaths:@[indexPath,indexPath1,indexPath2,indexPath3] withRowAnimation:NO];
+        }else{
         
-        [self.playerArray addObject:@""];
+            [self.commitOrderTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+        }
         
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:4 + [self.playerArray count] inSection:0];
-        [self.commitOrderTableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
         
     }
     
@@ -713,13 +867,6 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return NO;
-//    NSInteger row = 5 + [self.playerArray count];
-//    
-//    if (indexPath.row > 5 && indexPath.row != row) {
-//        return YES;
-//    }else{
-//        return NO;
-//    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -732,9 +879,7 @@
         
         if (self.playerArray.count > 1) {
             self.countLB.text = [NSString stringWithFormat:@"%td人", [self.playerArray count] - 1];
-            NSLog(@"%td" ,indexPath.row);
             [self.playerArray removeObjectAtIndex:indexPath.row - 5];
-            //            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 + [self.playerArray count] inSection:0];
             [self.commitOrderTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
         }
         
@@ -760,23 +905,25 @@
     }else{
         paytypeString = @"线上预付";
     }
+    // 订单实付总价
+    NSInteger money = [self.selectMoney integerValue] + [_normolPrice integerValue] * [self.addPlayerArray count] - _selectModel.money;
+    //更改价格之后判断红包是否可用
+    [self checkRedpacket:money];
     
-    
-    self.payMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue]];
-    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] ]];
+    NSString *moneyStr = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, money];
+    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
     [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
-    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", [self.selectMoney integerValue]] length] + 1)];
+    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, moneyStr.length - 6)];
     self.payMoneyLB.attributedText = mutaAttStr;
-    
     
     self.scenePayMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectSceneMoney integerValue]];
     NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%td", [self.selectSceneMoney integerValue]]];
     [sceneAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
     self.scenePayMoneyLB.attributedText = sceneAttStr;
     
-    
+    //更改订单总价和红包优惠
+    [self countOrderPrice];
 }
-
 
 //  封装cell方法
 - (UILabel *)lablerect:(CGRect)rect labelColor:(UIColor *)color labelFont:(NSInteger)font text:(NSString *)text textAlignment:(NSTextAlignment )alignment{
@@ -790,34 +937,19 @@
     return label;
 }
 
-
-//- (NSMutableArray *)playerArray{
-//    if (!_playerArray) {
-//    }
-//    return _playerArray;
-//}
-
-- (NSMutableArray *)vipCardArray{
-    if (!_vipCardArray) {
-        _vipCardArray = [[NSMutableArray alloc] init];
-    }
-    return _vipCardArray;
-}
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

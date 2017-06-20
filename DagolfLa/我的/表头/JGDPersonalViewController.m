@@ -83,7 +83,7 @@
     
     self.iconBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 73 * ProportionAdapter, 73 * ProportionAdapter)];
     self.iconBtn.center = headerView.center;
-    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
+    NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
 //    [self.iconBtn sd_setImageWithURL:[NSURL URLWithString:bgUrl] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"bg_photo"]];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:bgUrl]];
     if (data) {
@@ -140,7 +140,7 @@
             [hud hideAnimationFromView:self.view];
         } completionBlock:^(id data) {
             [hud hideAnimationFromView:self.view];
-            NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
+            NSString *headUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
             [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
             if (![Helper isBlankString:headUrl]) {
@@ -298,7 +298,7 @@
         [self.view addSubview:datePic];
     }else if (indexPath.row == 3) {
         
-        NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/industry.json"];
+        NSURL *url = [NSURL URLWithString:@"https://res.dagolfla.com/download/json/industry.json"];
         NSError *error;
         NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
         NSData * data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
@@ -392,7 +392,7 @@
         
     }else if (indexPath.row == 6) {
         
-        [[JsonHttp jsonHttp] httpRequest:@"http://res.dagolfla.com/download/json/area.json" failedBlock:^(id errType) {
+        [[JsonHttp jsonHttp] httpRequest:@"https://res.dagolfla.com/download/json/area.json" failedBlock:^(id errType) {
             
         } completionBlock:^(id data) {
             NSMutableArray *mDataArray = [NSMutableArray array];
@@ -516,7 +516,7 @@
         //        [self post:@{@"userId": DEFAULF_USERID}];
         
         
-        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
+        NSString *headUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
         [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
         NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
         if (![Helper isBlankString:headUrl]) {

@@ -23,6 +23,9 @@
     UIView *backView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(15), kHvertical(10), screenWidth - kWvertical(30), kHvertical(251))];
     backView.layer.cornerRadius = kWvertical(8);
     [self.contentView addSubview:backView];
+    //底部细线
+    UIView *line = [Factory createViewWithBackgroundColor:RGB(220, 220, 220) frame:CGRectMake(kWvertical(4), backView.height-1, backView.width-kWvertical(8), 1)];
+    [backView addSubview:line];
     //背景左上角的icon
     UIImageView *leftIcon = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(20), kWvertical(6), kHvertical(26)) Image:[UIImage imageNamed:@""]];
     [self.contentView addSubview:leftIcon];
@@ -92,7 +95,6 @@
         ClipImageManager *manager = [[ClipImageManager alloc] init];
         if (image) {
             image = [manager clipImage:image WithSize:CGSizeMake(screenWidth - kWvertical(30), kHvertical(151))];
-            NSLog(@"%@",image);
             _headerImageView.image = image;
         }
     }];

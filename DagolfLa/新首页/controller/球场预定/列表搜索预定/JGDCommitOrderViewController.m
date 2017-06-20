@@ -16,6 +16,11 @@
 #import "LGLCalenderViewController.h"
 #import "JGDPaySuccessViewController.h"
 
+//选择红包
+#import "SelectRedPacketViewController.h"
+#import "RedPacketModel.h"
+#import "SelectRedPacketTableViewCell.h"
+
 @interface JGDCommitOrderViewController () <UITableViewDelegate, UITableViewDataSource ,UITextFieldDelegate>
 
 @property (nonatomic, strong) UITableView *commitOrderTableView;
@@ -35,7 +40,8 @@
 @property (nonatomic, strong) UITextField *noteTF; // 备注
 
 @property (nonatomic, copy) NSString *remark; // 备注信息
-
+//选中的红包
+@property (nonatomic, strong) RedPacketModel *selectModel;
 
 @end
 
@@ -74,7 +80,7 @@
     self.commitOrderTableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.commitOrderTableView.separatorStyle = UITableViewCellSelectionStyleNone;
     [self.commitOrderTableView registerClass:[JGDBallPlayTableViewCell class] forCellReuseIdentifier:@"ballPlayCell"];
-    
+    [self.commitOrderTableView registerClass:[SelectRedPacketTableViewCell class] forCellReuseIdentifier:@"SelectRedPacketTableViewCellID"];
     // "付款类型 0: 全额预付  1: 部分预付  2: 球场现付"
     if ([[self.detailDic objectForKey:@"payType"] integerValue] == 0) {
         
@@ -165,9 +171,18 @@
 }
 
 
-
-#pragma mark --- 确定预定支付
-
+#pragma mark InitData
+//获取可用红包
+-(NSInteger)getCanUseNum{
+    NSInteger totalNum = _myCouponList.count;
+    for (RedPacketModel *model in _myCouponList) {
+        if (model.unusable) {
+            totalNum--;
+        }
+    }
+    return totalNum;
+}
+//确定预定支付
 - (void)ConfirmAct{
     
     [self.view endEditing:YES];
@@ -177,7 +192,6 @@
             return;
         }
     }
-    
    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     NSMutableDictionary *orderDic = [NSMutableDictionary dictionary];
@@ -187,6 +201,11 @@
     [orderDic setObject:@([self.playerArray count]) forKey:@"userSum"];
     [orderDic setObject:self.playerArray[0] forKey:@"userName"];
     [orderDic setObject:self.mobile forKey:@"userMobile"];
+    if (_selectModel.timeKey) {
+        [orderDic setObject:_selectModel.timeKey forKey:@"couponKey"];
+        
+    }
+
     UITextField *noteTF = [self.commitOrderTableView viewWithTag:999]; // 备注
     [orderDic setObject:noteTF.text forKey:@"remark"];
     
@@ -199,6 +218,7 @@
     [dic setObject:orderDic forKey:@"order"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
     [dic setObject:[self.detailDic objectForKey:@"timeKey"] forKey:@"bookBallParkKey"];
+    
     [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     
     [[JsonHttp jsonHttp] httpRequestHaveSpaceWithMD5:@"bookingOrder/doCreateBookingOrder" JsonKey:nil withData:dic failedBlock:^(id errType) {
@@ -236,6 +256,8 @@
     
 }
 
+
+#pragma mark - UITableViewDelegate&&UItableviewDatasource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     
@@ -327,6 +349,17 @@
         return cell;
         
     }else if (indexPath.row == 5 + [self.playerArray count]) {
+        
+        SelectRedPacketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SelectRedPacketTableViewCellID"];
+        if (_selectModel.timeKey) {
+            [cell configSelectData:_selectModel];
+        }else{
+            NSInteger canUseNum = [self getCanUseNum];
+            [cell configData:canUseNum];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else if (indexPath.row == 6 + [self.playerArray count]) {
         JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
         UILabel *lB = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 10 * ProportionAdapter)];
         lB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -340,11 +373,6 @@
         self.noteTF.font = [UIFont systemFontOfSize:16 * ProportionAdapter];
         self.noteTF.text = self.remark;
         [cell.contentView addSubview:self.noteTF];
-        //        UITextView *noteView = [[UITextView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 20 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 60 * ProportionAdapter)];
-        //        [cell addSubview:noteView];
-        //
-        //        self.placeHoler = [self lablerect:CGRectMake(0, 0, 200, 20) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:(15 * ProportionAdapter) text:@"请输入备注信息" textAlignment:(NSTextAlignmentLeft)];
-        //        [noteView addSubview:self.placeHoler];
         
         return cell;
     }else{
@@ -388,13 +416,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 6 + [self.playerArray count];
+    return 7 + [self.playerArray count];
 }
 
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-//    return 3;
-//}
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
@@ -421,17 +447,12 @@
     
     if (indexPath.row == 2) {
         return 50 * ProportionAdapter;
-    }
-    else if (indexPath.row == 5 + [self.playerArray count]) {
+    }else if (indexPath.row > 4 + [self.playerArray count]) {
         return 60 * ProportionAdapter;
     }
     else{
         return 50 * ProportionAdapter;
     }
-    
-    
-    
-    //    return indexPath.section == 2 ? 70 * ProportionAdapter : 50 * ProportionAdapter;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -478,10 +499,7 @@
                 }else{
                     self.selectMoney = [NSString stringWithFormat:@"%td", [pay integerValue] - [self.selectSceneMoney integerValue]];
                 }
-                
             }
-            
-            
             
             [self payMoneySet];
             
@@ -495,6 +513,20 @@
             };
         [self.navigationController pushViewController:caleVC animated:YES];
 
+    }else if (indexPath.row == 5 + [self.playerArray count]){
+        NSInteger canUseNum = [self getCanUseNum];
+        if (canUseNum<1) {
+            return;
+        }
+        SelectRedPacketViewController *vc = [[SelectRedPacketViewController alloc] init];
+        vc.dataArray = _myCouponList;
+        vc.selectModel = _selectModel;
+        __weak typeof(self) weakself = self;
+        vc.selectModelBlock = ^(RedPacketModel *model) {
+            weakself.selectModel = model;
+            [weakself updatePrice];
+        };
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
@@ -561,13 +593,26 @@
 }
 
 
-#pragma mark --- 人数加减
-
+#pragma mark -- Action
+//更新金额
+-(void)updatePrice{
+    [self payMoneySet];
+    [_commitOrderTableView reloadRow:5 + self.playerArray.count inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+}
+//判断当前红包是否可用
+-(void)checkRedpacket{
+    if (_selectModel.timeKey) {
+        CGFloat money = [self.selectMoney integerValue] * ([self.playerArray count]) ;
+        if (money<_selectModel.minSellMoney) {
+            _selectModel = nil;
+            [self updatePrice];
+        }
+    }
+}
+//人数加减
 - (void)countChanege:(UIButton *)btn{
     
     UIButton *leftBtn = [self.commitOrderTableView viewWithTag:500];
-    //    UIButton *rightBtn = [self.commitOrderTableView viewWithTag:501];
-    
     if (btn.tag == 500) { // －
         
         if (self.playerArray.count > 1) {
@@ -579,7 +624,8 @@
         }
         
         [self.playerArray count] == 1 ?[leftBtn setImage:[UIImage imageNamed:@"order_minus"] forState:(UIControlStateNormal)] : @"";
-        
+        //判断当前红包是否可用
+        [self checkRedpacket];
     }else{ // +
         
         if ([self.playerArray count] == 1) {
@@ -625,7 +671,6 @@
             self.countLB.text = [NSString stringWithFormat:@"%td人", [self.playerArray count] - 1];
             NSLog(@"%td" ,indexPath.row);
             [self.playerArray removeObjectAtIndex:indexPath.row - 5];
-//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 + [self.playerArray count] inSection:0];
             [self.commitOrderTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
         }
         
@@ -635,7 +680,6 @@
         [self payMoneySet];
     }
 }
-
 
 // 加减完人数后设置金额
 
@@ -652,11 +696,11 @@
         paytypeString = @"线上预付";
     }
     
-    
-    self.payMoneyLB.text = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] * ([self.playerArray count])];
-    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@  ¥%td", paytypeString, [self.selectMoney integerValue] * ([self.playerArray count])]];
+    NSInteger money = [self.selectMoney integerValue] * ([self.playerArray count]) - _selectModel.money;
+    NSString *moneyStr = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, money];
+    NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];
     [mutaAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
-    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, [[NSString stringWithFormat:@"%td", [self.selectMoney integerValue] * ([self.playerArray count])] length] + 1)];
+    [mutaAttStr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithHexString:@"#fc5a01"] range:NSMakeRange(6, moneyStr.length-6)];
     self.payMoneyLB.attributedText = mutaAttStr;
     
     
@@ -664,7 +708,6 @@
     NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%td", [self.selectSceneMoney integerValue] * ([self.playerArray count])]];
     [sceneAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
     self.scenePayMoneyLB.attributedText = sceneAttStr;
-    
     
 }
 
@@ -680,6 +723,8 @@
     label.text = text;
     return label;
 }
+
+
 
 
 - (NSMutableArray *)playerArray{

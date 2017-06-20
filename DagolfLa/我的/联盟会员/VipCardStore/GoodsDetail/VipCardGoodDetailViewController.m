@@ -83,7 +83,7 @@
 -(void)createMainView{
     //背景图
     self.mainBackView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
-    self.mainBackView.backgroundColor = RGB(238,238,238);
+    self.mainBackView.backgroundColor = Back_Color;
     self.mainBackView.delegate = self;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.mainBackView setContentSize:CGSizeMake(screenWidth, screenHeight+1)];
@@ -212,7 +212,7 @@
  */
 -(void)shareBtnClick{
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
     [alert setCallBackTitle:^(NSInteger index) {
         [self shareWithInfo:index];
     }];
@@ -226,7 +226,7 @@
  */
 -(void)allianceBtnClick{
     UseMallViewController *vc = [[UseMallViewController alloc]init];
-    vc.linkUrl = @"http://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
+    vc.linkUrl = @"https://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
     vc.isNewColor = true;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -267,7 +267,7 @@
 
     NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"cardTypeKey=%@&userKey=%@dagolfla.com",_cardTypeKey,DEFAULF_USERID]];
     //分享链接
-    NSString *shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/league/sysLeagueCardInfo.html?userKey=%@&cardTypeKey=%@&md5=%@&share=1", DEFAULF_USERID,_cardTypeKey,md5Value];
+    NSString *shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/league/sysLeagueCardInfo.html?userKey=%@&cardTypeKey=%@&md5=%@&share=1", DEFAULF_USERID,_cardTypeKey,md5Value];
     //分享图片
     UIImage *iconImageFull = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.dataModel.bigPicURL]]];
     

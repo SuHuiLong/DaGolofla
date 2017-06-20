@@ -28,6 +28,8 @@
 - (void)initData;
 //添加事件
 - (void)addTouchAction;
+//刷新
+- (void)createRefresh;
 //创建上导航左侧按钮(以view作模板)
 - (void)createNavigationLeftButton:(id)view;
 //创建上导航的左侧按钮(系统标题)

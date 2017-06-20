@@ -40,13 +40,14 @@
 #import "JGLAnimationViewController.h"
 
 #import "UMSocialSinaHandler.h"
-#define ImgUrlString2 @"http://res.dagolfla.com/h5/ad/app.jpg"
+#define ImgUrlString2 @"https://res.dagolfla.com/h5/ad/app.jpg"
 #import "JGHScoreAF.h"
 
 //启动广告页
 #import "AdvertiseView.h"
 #import "InitAdvertiseView.h"
 
+#import <UMMobClick/MobClickSocialAnalytics.h>
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
 #endif
@@ -67,9 +68,10 @@
 - (void)umengTrack {
     [MobClick setLogEnabled:NO];// 打开友盟sdk调试，注意Release发布时需要注释掉此行,减少io消耗
     UMConfigInstance.appKey = @"574c75ed67e58ecb16003314";
-    UMConfigInstance.secret = nil;
+//    UMConfigInstance.secret = nil;
+    UMConfigInstance.channelId = @"App Store";
     [MobClick startWithConfigure:UMConfigInstance];
-    [MobClick beginLogPageView:@""];
+    
 }
 
 

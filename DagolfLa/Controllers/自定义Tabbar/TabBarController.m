@@ -102,7 +102,6 @@
     _button.frame = CGRectMake(self.tabBar.center.x - W/2, CGRectGetHeight(self.tabBar.bounds)-H - 18, W, H);
     
     [_button setImage:buttonImage forState:UIControlStateNormal];
-
     
     _button.adjustsImageWhenHighlighted=NO;
     [self.tabBar addSubview:_button];

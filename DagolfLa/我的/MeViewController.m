@@ -41,12 +41,10 @@
 
 
 #import "JGDNewTeamDetailViewController.h"
-//#import "JGTeamMemberORManagerViewController.h"
 #import "DetailViewController.h"
 #import "UseMallViewController.h"
 
 #import "JGMyBarCodeViewController.h"
-//#import "JGNewCreateTeamTableViewController.h"
 
 #import "JGMeMoreViewController.h" // 更多
 #import "JGDOrderListViewController.h"
@@ -56,7 +54,8 @@
 
 //联盟会员
 #import "AllianceVipViewController.h"
-
+//红包
+#import "RedPacketViewController.h"
 @interface MeViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView* _tableView;
@@ -223,8 +222,8 @@
     _arrayTitle = [[NSArray alloc]init];
     _arrayPic = [[NSArray alloc]init];
 
-    _arrayTitle = @[@[@""],@[@"球友",@"足迹",@"我的二维码"],@[@"个人帐户",@"联盟会员", @"球场订单", @"交易中心"],@[@"设置",@"更多"]];
-    _arrayPic = @[@[@""],@[@"qyIcon",@"zuji",@"saomiao"],@[@"gerenzhanghu",@"icn_allianceVip", @"icn_order", @"jyIcon"],@[@"sz",@"btn_more"]];
+    _arrayTitle = @[@[@""],@[@"球友",@"我的二维码"],@[@"我的红包", @"个人帐户",@"联盟会员", @"球场订单", @"交易中心"],@[@"设置",@"更多"]];
+    _arrayPic = @[@[@""],@[@"qyIcon",@"saomiao"],@[@"icn_lucky",@"gerenzhanghu",@"icn_allianceVip", @"icn_order", @"jyIcon"],@[@"sz",@"btn_more"]];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 44*9*ScreenWidth/375+40*ScreenWidth/375+78*ScreenWidth/375)];
     
     _tableView.delegate = self;
@@ -253,25 +252,9 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger count = 2;
-    if (section == 0)
-    {
-        count = 1;
-    }
-    else if (section == 1)
-    {
-        count = 3;
-    }
-    else if (section == 2)
-    {
-        count = 4;
-    }
-    else if (section == 3)
-    {
-        count = 2;
-    }
+    NSArray *sectionArray = _arrayTitle[section];
+    return sectionArray.count;
     
-    return count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -284,7 +267,7 @@
         
         if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
             
-            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
+            NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
             [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
             NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:bgUrl]];
             if (data) {
@@ -354,8 +337,9 @@
 {
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]) {
-        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"足迹",@"个人账户",@"",@"球场订单",@"交易中心",@"设置", @"更多"];
-        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"MyFootViewController",@"JGDPrivateAccountViewController",@"AllianceVipViewController",@"JGDOrderListViewController",@"MyTradeViewController",@"MySetViewController", @"JGMeMoreViewController"];
+        NSArray *titleArr = @[@"个人资料",@"球友",@"我的二维码",@"我的红包",@"个人账户",@"",@"球场订单",@"交易中心",@"设置", @"更多"];
+//        MyFootViewController
+        NSArray* VcArr = @[@"PersonHomeController",@"ContactViewController",@"JGMyBarCodeViewController",@"RedPacketViewController",@"JGDPrivateAccountViewController",@"AllianceVipViewController",@"JGDOrderListViewController",@"MyTradeViewController",@"MySetViewController", @"JGMeMoreViewController"];
         
         NSMutableArray *arr = [[NSMutableArray alloc]init];
         for (int i = 0; i < VcArr.count; i++) {
@@ -371,93 +355,68 @@
             personVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:personVC animated:YES];
             
-        }
-        else if (indexPath.section == 1)
-        {
+        }else if (indexPath.section == 1){
             
             switch (indexPath.row) {
-                case 0:
-                {
+                case 0:{
                     [MobClick event:@"mine_ball_friends_click"];
                     ContactViewController *VC = arr[1];
                     VC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:VC animated:YES];
                     break;
-                }
-                case 1:
-                {
-                    [self.navigationController pushViewController:arr[3] animated:YES];
-                    break;
-                }
-                case 2:
-                {
+                }case 1:{
                     [MobClick event:@"mine_qr_code_click"];
 
                     [self.navigationController pushViewController:arr[2] animated:YES];
                     break;
-                }
-                default:
+                }default:
                     break;
             }
-        }
-        else if (indexPath.section == 2)
-        {
+        }else if (indexPath.section == 2){
             
             switch (indexPath.row) {
-                case 0:
-                {
+                case 0:{
+                    RedPacketViewController *vc = [[RedPacketViewController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [MobClick event:@"mine_redpacket_click"];
+                    [self.navigationController pushViewController:vc animated:YES];
+                    break;
+                }case 1:{
                     [MobClick event:@"mine_account_click"];
-
                     [self.navigationController pushViewController:arr[4] animated:YES];
                     break;
-                }
-                case 1:
-                {
+                }case 2:{
                     [MobClick event:@"mine_league_member_click"];
                     [self.navigationController pushViewController:arr[5] animated:YES];
                     break;
-                }
-                case 2:
-                {
+                }case 3:{
                     [MobClick event:@"mine_booking_order_click"];
                     [self.navigationController pushViewController:arr[6] animated:YES];
                     break;
-                }
-                case 3:
-                {
+                }case 4:{
                     [MobClick event:@"mine_trade_center_click"];
                     [self.navigationController pushViewController:arr[7] animated:YES];
                     break;
-                }
-                default:
+                }default:
                     break;
             }
-        }
-        else if (indexPath.section == 3)
-        {
-            
+        }else if (indexPath.section == 3){
             switch (indexPath.row) {
-                case 0:
-                {
+                case 0:{
+                    
                     [self.navigationController pushViewController:arr[8] animated:YES];
                     break;
-                }
-                    
-                case 1:{
+                }case 1:{
                     
                     [MobClick event:@"mine_more_click"];
 
                     [self.navigationController pushViewController:arr[9] animated:YES];
                     
                     break;
-                }
-                    
-                default:
+                }default:
                     break;
             }
-        }
-        else
-        {
+        }else{
             [self.navigationController pushViewController:arr[10] animated:YES];
         }
     }

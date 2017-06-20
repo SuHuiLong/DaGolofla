@@ -64,7 +64,7 @@
  */
 -(void)createTableView{
     UITableView *mainTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight) style:UITableViewStylePlain];
-    mainTableView.backgroundColor = RGB(238,238,238);
+    mainTableView.backgroundColor = Back_Color;
     mainTableView.dataSource = self;
     mainTableView.delegate = self;
     [mainTableView setExtraCellLineHidden];
@@ -88,11 +88,11 @@
     [inputAlertLabel setTextAlignment:NSTextAlignmentRight];
     [backView addSubview:inputAlertLabel];
     UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(inputAlertLabel.x_width + kWvertical(5), kHvertical(20), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"darkArrow"]];
+    arrowImageView.tintColor = RGB(160,160,160);
     [backView addSubview:arrowImageView];
     //浅灰
-    UIView *bottomView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, backView.y_height-kWvertical(10), screenWidth, kHvertical(10))];
+    UIView *bottomView = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, backView.y_height-kWvertical(10), screenWidth, kHvertical(10))];
     [backView addSubview:bottomView];
-    
     return backView;
 }
 
@@ -108,20 +108,20 @@
     UILabel *titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, kWvertical(200), kHvertical(50)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:@"会员信息"];
     [backView addSubview:titleLabel];
     //分割线
-    UIView *line = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, kHvertical(50), screenWidth, 1)];
+    UIView *line = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, kHvertical(50), screenWidth, 1)];
     [backView addSubview:line];
     //头像背景
-    UIView *userImageBackView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(10), kHvertical(71), kHvertical(61), kHvertical(61))];
-    userImageBackView.layer.borderColor = RGB(229,229,229).CGColor;
-    userImageBackView.layer.borderWidth = 1;
-    [backView addSubview:userImageBackView];
+//    UIView *userImageBackView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(kWvertical(10), kHvertical(71), kHvertical(61), kHvertical(61))];
+//    userImageBackView.layer.borderColor = RGB(229,229,229).CGColor;
+//    userImageBackView.layer.borderWidth = 1;
+//    [backView addSubview:userImageBackView];
     //用户头像
-    NSURL *userImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@@200w_200h_2o",self.inputModel.picHeadURL]];
-    UIImageView *headImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(11), kHvertical(72), kHvertical(59), kHvertical(59)) Image:nil];
-    [headImageView sd_setImageWithURL:userImageUrl placeholderImage:[UIImage imageNamed:@"moren"]];
+//    NSURL *userImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@@200w_200h_2o",self.inputModel.picHeadURL]];
+    UIImageView *headImageView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(0), kHvertical(72), kHvertical(0), kHvertical(59)) Image:nil];
+//    [headImageView sd_setImageWithURL:userImageUrl placeholderImage:[UIImage imageNamed:@"moren"]];
     [backView addSubview:headImageView];
     //用户名
-    UILabel *nameLabel = [Factory createLabelWithFrame:CGRectMake(headImageView.x_width + kWvertical(11), kHvertical(70), 0, kHvertical(22)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:self.inputModel.userName];
+    UILabel *nameLabel = [Factory createLabelWithFrame:CGRectMake(headImageView.x_width + kWvertical(11), kHvertical(65), 0, kHvertical(22)) textColor:RGB(49,49,49) fontSize:kHorizontal(17) Title:self.inputModel.userName];
     [nameLabel sizeToFitSelf];
     [backView addSubview:nameLabel];
     //用户性别
@@ -130,28 +130,29 @@
     if (sex == 1) {
         sexImageName = @"xb_nn";
     }
-    UIImageView *sexImageView = [Factory createImageViewWithFrame:CGRectMake(nameLabel.x_width+kWvertical(11), kHvertical(74), 13,13) Image:[UIImage imageNamed:sexImageName]];
+    UIImageView *sexImageView = [Factory createImageViewWithFrame:CGRectMake(nameLabel.x_width+kWvertical(11), kHvertical(70), kHvertical(13),kHvertical(13)) Image:[UIImage imageNamed:sexImageName]];
     [backView addSubview:sexImageView];
     //用户身份信息
     NSString *documentsStr = self.inputModel.certNumber;
     UIImageView *documentsIcon = [Factory createImageViewWithFrame:CGRectMake(nameLabel.x, kHvertical(98), kWvertical(17), kHvertical(12)) Image:[UIImage imageNamed:@"icn_allianceDocuments"]];
     [backView addSubview:documentsIcon];
-    UILabel *documentsLable = [Factory createLabelWithFrame:CGRectMake(documentsIcon.x_width + kWvertical(5), kHvertical(99), screenWidth-documentsIcon.x_width-kWvertical(15), kHvertical(10)) textColor:RGB(160,160,160) fontSize:kHorizontal(14) Title:documentsStr];
+    UILabel *documentsLable = [Factory createLabelWithFrame:CGRectMake(documentsIcon.x_width + kWvertical(5), kHvertical(95), screenWidth-documentsIcon.x_width-kWvertical(15), kHvertical(18)) textColor:RGB(160,160,160) fontSize:kHorizontal(14) Title:documentsStr];
     [backView addSubview:documentsLable];
     //用户手机号
     NSString *phoneStr = self.inputModel.mobile;
-    UIImageView *phoneIcon = [Factory createImageViewWithFrame:CGRectMake(documentsIcon.x, kHvertical(120), kHvertical(13), kHvertical(13)) Image:[UIImage imageNamed:@"icn_alliancePhone"]];
+    UIImageView *phoneIcon = [Factory createImageViewWithFrame:CGRectMake(documentsIcon.x + kWvertical(8.5) - kHvertical(6.5) , kHvertical(122), kHvertical(13), kHvertical(13)) Image:[UIImage imageNamed:@"icn_alliancePhone"]];
     [backView addSubview:phoneIcon];
-    UILabel *phoneLabel = [Factory createLabelWithFrame:CGRectMake(documentsLable.x, kHvertical(120), documentsLable.width, documentsLable.height) textColor:RGB(160, 160, 160) fontSize:kHorizontal(14) Title:phoneStr];
+    UILabel *phoneLabel = [Factory createLabelWithFrame:CGRectMake(documentsLable.x, kHvertical(119), documentsLable.width, documentsLable.height) textColor:RGB(160, 160, 160) fontSize:kHorizontal(14) Title:phoneStr];
     [backView addSubview:phoneLabel];
     //编辑信息
-    UILabel *editLabel = [Factory createLabelWithFrame:CGRectMake(screenWidth - kWvertical(80), kHvertical(74), kWvertical(55), kHvertical(13)) textColor:RGB(178,178,178) fontSize:kHorizontal(13) Title:@"编辑信息"];
+    UILabel *editLabel = [Factory createLabelWithFrame:CGRectMake(screenWidth - kWvertical(80), kHvertical(69), kWvertical(55), kHvertical(13)) textColor:RGB(178,178,178) fontSize:kHorizontal(13) Title:@"编辑信息"];
     [editLabel setTextAlignment:NSTextAlignmentRight];
     [backView addSubview:editLabel];
-    UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(editLabel.x_width + kWvertical(5), kHvertical(74), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"darkArrow"]];
+    UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(editLabel.x_width + kWvertical(5), kHvertical(69), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"darkArrow"]];
+    arrowImageView.tintColor = RGB(160,160,160);
     [backView addSubview:arrowImageView];
     //浅灰
-    UIView *bottomView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, backView.y_height-kWvertical(20), screenWidth, kHvertical(20))];
+    UIView *bottomView = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, backView.y_height-kWvertical(20), screenWidth, kHvertical(20))];
     [backView addSubview:bottomView];
     //锯齿
     UIImageView *jagView = [Factory createImageViewWithFrame:CGRectMake(0, backView.y_height-kHvertical(20), screenWidth, kHvertical(10)) Image:[UIImage imageNamed:@"icn_allianceJag"]];
@@ -210,7 +211,7 @@
     }
     [backView addSubview:rightBtn];
     //分割线1
-    UIView *line1 = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(kWvertical(10), kHvertical(100), screenWidth, 1)];
+    UIView *line1 = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(kWvertical(10), kHvertical(100), screenWidth, 1)];
     [backView addSubview:line1];
     //套餐权益
     
@@ -222,7 +223,7 @@
 //    enjoyLabel.numberOfLines = 0;
 //    [backView addSubview:enjoyLabel];
     //分割线2
-//    UIView *line2 = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, enjoyLabel.y_height + kHvertical(9), screenWidth, 1)];
+//    UIView *line2 = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, enjoyLabel.y_height + kHvertical(9), screenWidth, 1)];
 //    [backView addSubview:line2];
     //卡片数
     NSString *totalCardStr = [NSString stringWithFormat:@"共 %ld 件商品",self.dataModel.cardNum];
@@ -238,7 +239,7 @@
     [totalPriceLabel setTextAlignment:NSTextAlignmentRight];
     [backView addSubview:totalPriceLabel];
     //浅灰
-    UIView *bottomView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, totalPriceLabel.y_height, screenWidth, kHvertical(10))];
+    UIView *bottomView = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, totalPriceLabel.y_height, screenWidth, kHvertical(10))];
     [backView addSubview:bottomView];
     return backView;
 }
@@ -251,7 +252,7 @@
     //是否勾选
     BOOL isSelect = self.inputModel.isSelect;
     
-    UIView *backView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, 0, screenWidth, kHvertical(260))];
+    UIView *backView = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, 0, screenWidth, kHvertical(260))];
     backView.userInteractionEnabled = true;
     //白色背景
     UIView *whiteView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(51))];
@@ -270,19 +271,20 @@
     [sellPhoneTextLabel addGestureRecognizer:sellPhoneTap];
     [whiteView addSubview:sellPhoneTextLabel];
     UIImageView *arrowImageView = [Factory createImageViewWithFrame:CGRectMake(sellPhoneTextLabel.x_width + kWvertical(5), kHvertical(20), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"darkArrow"]];
+    arrowImageView.tintColor = RGB(160,160,160);
     [whiteView addSubview:arrowImageView];
-    //君高协议
-    UIButton *circleBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(10), kHvertical(61), kHvertical(16), kHvertical(16)) NormalImage:@"icn_allianceAgreementSelect" SelectedImage:@"icn_allianceAgreementUnselect" target:self selector:@selector(circleBtnClick:)];
+    //勾选按钮
+    UIButton *circleBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(10), kHvertical(65), kHvertical(16), kHvertical(16)) NormalImage:@"icn_allianceAgreementSelect" SelectedImage:@"icn_allianceAgreementUnselect" target:self selector:@selector(circleBtnClick:)];
     circleBtn.selected = isSelect;
     [backView addSubview:circleBtn];
-    //描述文件
-    UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(circleBtn.x_width + kWvertical(5), kHvertical(61), 0, kHvertical(13)) textColor:RGB(160,160,160) fontSize:kHorizontal(13) Title:@"勾选表示已查阅并认同"];
+    //描述
+    UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(circleBtn.x_width + kWvertical(5), kHvertical(65), 0, kHvertical(16)) textColor:RGB(160,160,160) fontSize:kHorizontal(13) Title:@"勾选表示已查阅并认同"];
     [descLabel sizeToFit];
     [backView addSubview:descLabel];
     //服务协议
     UILabel *titleTestLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) fontSize:kHorizontal(13) Title:@"《君高高尔夫会籍入会协议书》"];
     [titleTestLabel sizeToFit];
-    UIButton *agreementBtn = [Factory createButtonWithFrame:CGRectMake(descLabel.x_width, descLabel.y+kHvertical(1), titleTestLabel.width, kHorizontal(13)) titleFont:kHorizontal(13) textColor:RGB(0,134,73) backgroundColor:ClearColor target:self selector:@selector(agreementBtnClick:) Title:titleTestLabel.text];
+    UIButton *agreementBtn = [Factory createButtonWithFrame:CGRectMake(descLabel.x_width, kHvertical(60), titleTestLabel.width, kHorizontal(26)) titleFont:kHorizontal(13) textColor:RGB(0,134,73) backgroundColor:ClearColor target:self selector:@selector(agreementBtnClick:) Title:titleTestLabel.text];
     [backView addSubview:agreementBtn];
     //提交订单按钮
     UIButton *sendBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(8), descLabel.y_height + kHvertical(85), screenWidth - kWvertical(16), kHvertical(46)) titleFont:kHorizontal(19) textColor:RGB(255,255,255) backgroundColor:RGB(252,90,1) target:self selector:@selector(sendBtnClick:) Title:@"提交订单"];
@@ -411,7 +413,7 @@
  */
 -(void)agreementBtnClick:(UIButton *)btn{
     UseMallViewController *vc = [[UseMallViewController alloc]init];
-    vc.linkUrl = @"http://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
+    vc.linkUrl = @"https://res.dagolfla.com/h5/league/sysLeagueAgreement.html";
     vc.isNewColor = true;
     [self.navigationController pushViewController:vc animated:YES];    
 }

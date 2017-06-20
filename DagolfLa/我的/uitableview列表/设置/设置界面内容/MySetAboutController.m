@@ -59,7 +59,7 @@
         
     NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     
-    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://res.dagolfla.com/h5/aboutUs/index.html?version=%@", version]];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://res.dagolfla.com/h5/aboutUs/index.html?version=%@", version]];
     
     //设置页面禁止滚动
     _webView.scrollView.bounces = NO ;

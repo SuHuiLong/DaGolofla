@@ -54,7 +54,7 @@
     
 //    [self.myImageV sd_setImageWithURL:[Helper imageIconUrl:myModel.pic]];
     
-    NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",myModel.friendUserKey];
+    NSString *head = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",myModel.friendUserKey];
     
     [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES withCompletion:nil];
     

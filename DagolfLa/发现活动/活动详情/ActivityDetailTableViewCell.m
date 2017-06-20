@@ -34,6 +34,8 @@
     [self.contentView addSubview:_viewGroup];
     //向右箭头
     _arrowImageView = [Factory createImageViewWithFrame:CGRectMake(screenWidth - kWvertical(24), kHvertical(16), kWvertical(8), kHvertical(13)) Image:[UIImage imageNamed:@"darkArrow"]];
+    _arrowImageView.tintColor = RGB(160,160,160);
+
     [self.contentView addSubview:_arrowImageView];
     //分割线
     _line = [Factory createViewWithBackgroundColor:RGB(232, 232, 232) frame:CGRectMake(0, kHvertical(45)-1, screenWidth, 1)];

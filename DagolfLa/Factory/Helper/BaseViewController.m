@@ -26,6 +26,8 @@
     [self initData];
     //添加行为
     [self addTouchAction];
+    //刷新
+    [self createRefresh];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,6 +67,10 @@
 //创建视图
 - (void)createView {
     //不做实现，只是为了使用方便
+}
+//创建刷新
+-(void)createRefresh{
+
 }
 
 - (void)toNextView {

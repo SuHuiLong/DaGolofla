@@ -16,6 +16,7 @@
 #import "JGLScoreLiveViewController.h"
 #import "JGLScoreRankViewController.h"
 #import "JGTeamDeatilWKwebViewController.h"
+
 @interface ActivityDetailViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 //标题
 @property (nonatomic,copy) UILabel *titleLabel;
@@ -75,7 +76,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createRefresh];
     // Do any additional setup after loading the view.
 }
 -(void)viewWillDisappear:(BOOL)animated{
@@ -230,9 +230,9 @@
                 NSInteger sex = [textFieldText[i] integerValue];
                 if (sex==0&&j==1) {
                     sexBtn.selected = true;
+                }else if (sex==1&&j==0){
+                    sexBtn.selected = true;
                 }
-//                [sexBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -selectImage.size.width+kWvertical(10), 0, selectImage.size.width+kWvertical(5))];
-//                [sexBtn setImageEdgeInsets:UIEdgeInsetsMake(0, sexBtn.width-selectImage.size.width, 0,0)];
                 [whiteBackView addSubview:sexLabel];
                 [whiteBackView addSubview:sexBtn];
             }
@@ -403,18 +403,12 @@
     [self.dataArray addObject:nodeModel];
     
     //活动开始之后按钮变化
-    NSDate *nowDate = [NSDate date];
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-    [inputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *nowDateStr = [inputFormatter stringFromDate:nowDate];
-    //当前时间与报名截止时间
-    NSComparisonResult signUpEndResult = [nowDateStr compare:_detailModel.signUpEndTime];
-    //当前时间与开始时间
-    NSComparisonResult beginResult = [nowDateStr   compare:_detailModel.beginDate];
-    //当前时间与结束时间
-    NSComparisonResult endresult = [nowDateStr compare:_detailModel.endDate];
     //底部按钮变化
     NSDictionary *signup = [data objectForKey:@"signup"];
+    //是否可以报名
+    BOOL showSignUp = [[data objectForKey:@"showSignUp"] boolValue];
+    //是否查看历史
+    BOOL showScore = [[data objectForKey:@"showScore"] boolValue];
     //按钮标题
     NSString *titleStr = [NSString string];
     if (signup) {
@@ -430,22 +424,16 @@
             titleStr = @"再次报名（审核未通过）";
             _bottomBtnTag = 3;
         }
-        if (beginResult == NSOrderedDescending) {
-//            if (endresult == NSOrderedAscending) {
-                //报名截止到开球时间
-                _bottomBtnTag = 4;
-                titleStr = @"查看成绩";
-//            }else if (endresult == NSOrderedDescending){
-//                //开球到结束时间
-//                _bottomBtnTag = 5;
-//                titleStr = [NSString string];
-//            }
+        if (showScore) {
+            //报名截止到开球时间
+            _bottomBtnTag = 4;
+            titleStr = @"查看成绩";
         }
     }else{
-        if (signUpEndResult == NSOrderedDescending) {
-            titleStr = [NSString string];
-            _bottomBtnTag = 6;
-        }else{
+        if (showScore) {
+            titleStr = @"查看成绩";
+            _bottomBtnTag = 4;
+        }else if (showSignUp){
             titleStr = @"报名参加";
             _bottomBtnTag = 0;
         }
@@ -540,11 +528,10 @@
             packResultMsg = @"报名成功";
         }
         [[ShowHUD showHUD] showLinesToastWithText:packResultMsg FromView:self.view];
-
-            [self.importDict removeAllObjects];
-            [_alertView removeAllSubviews];
-            [_alertView removeFromSuperview];
-            [_alapView removeFromSuperview];
+        [self.importDict removeAllObjects];
+        [_alertView removeAllSubviews];
+        [_alertView removeFromSuperview];
+        [_alapView removeFromSuperview];
     }];
 
 }
@@ -630,7 +617,7 @@
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
     NSString *str = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@dagolfla.com",_detailModel.teamKey, self.activityKey, DEFAULF_USERID]];
     
-    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/group.html?teamKey=%td&activityKey=%@&userKey=%@&md5=%@", _detailModel.teamKey, self.activityKey, DEFAULF_USERID, str];
+    WKCtrl.detailString = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/group.html?teamKey=%td&activityKey=%@&userKey=%@&md5=%@", _detailModel.teamKey, self.activityKey, DEFAULF_USERID, str];
     NSString *playerCountStr = [NSString stringWithFormat:@"%ld",(long)self.playerDataArray.count];
     WKCtrl.teamName = [NSString stringWithFormat:@"活动总人数(%@人)", playerCountStr];
     WKCtrl.isShareBtn = 1;
@@ -883,7 +870,7 @@
         //头部照片
         _headerImageView = [Factory createImageViewWithFrame:CGRectMake(0, 0, screenWidth, kHvertical(187)) Image:nil];
         [headerView addSubview:_headerImageView];
-        [_headerImageView sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_detailModel.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        [_headerImageView sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_detailModel.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage] options:SDWebImageRefreshCached];
         //渐变图
         _gradientImage = [Factory createImageViewWithFrame:CGRectMake(0, 0, screenWidth, _headerImageView.height) Image:[UIImage imageNamed:@"backChange"]];
         [headerView addSubview:_gradientImage];
@@ -963,11 +950,11 @@
     if ([_detailModel.timeKey integerValue] == 0) {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_detailModel.teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
         NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%td&userKey=%@dagolfla.com", _detailModel.teamKey, _detailModel.teamActivityKey, DEFAULF_USERID]];
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%td&userKey=%@&share=1&md5=%@", _detailModel.teamKey, _detailModel.teamActivityKey, DEFAULF_USERID, md5String];
+        shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%td&userKey=%@&share=1&md5=%@", _detailModel.teamKey, _detailModel.teamActivityKey, DEFAULF_USERID, md5String];
     }else{
         NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@dagolfla.com", _detailModel.teamKey, _detailModel.timeKey, DEFAULF_USERID]];
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_detailModel.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%@&userKey=%@&share=1&md5=%@", _detailModel.teamKey, _detailModel.timeKey, DEFAULF_USERID, md5String];
+        shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%@&userKey=%@&share=1&md5=%@", _detailModel.teamKey, _detailModel.timeKey, DEFAULF_USERID, md5String];
     }
     
     

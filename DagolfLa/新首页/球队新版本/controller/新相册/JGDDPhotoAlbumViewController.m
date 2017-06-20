@@ -492,8 +492,8 @@
         MSSBrowseModel *browseItem = [[MSSBrowseModel alloc]init];
         //browseItem.bigImageUrl = [NSString stringWithFormat:@"%@", [Helper setImageIconUrl:@"album/media" andTeamKey:[model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:NO]];// 加载网络图片大图地址
         
-        browseItem.bigImageUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/album/media/%@.jpg", model.timeKey];
-        //[self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/album/media/%td.jpg@400w_400h_2o", timeKey]] placeholderImage:[UIImage imageNamed:@"teamPhotoGroupDefault"]];
+        browseItem.bigImageUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/album/media/%@.jpg", model.timeKey];
+        //[self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://imgcache.dagolfla.com/album/media/%td.jpg@400w_400h_2o", timeKey]] placeholderImage:[UIImage imageNamed:@"teamPhotoGroupDefault"]];
         browseItem.smallImageView = imageView;// 小图
        
         browseItem.timeKey = _teamTimeKey;

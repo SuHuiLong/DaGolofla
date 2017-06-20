@@ -29,7 +29,7 @@
     [backWhiteView addSubview:backImageView];
     [backWhiteView addSubview:_cardImageView];
     
-    UIView *line = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(kWvertical(15), _cardImageView.y_height+kHvertical(26), screenWidth - kWvertical(30), 1)];
+    UIView *line = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(kWvertical(15), _cardImageView.y_height+kHvertical(26), screenWidth - kWvertical(30), 1)];
     [backWhiteView addSubview:line];
     
     _nameAndPrice = [Factory createLabelWithFrame:CGRectMake(kWvertical(20), line.y_height+kHvertical(20), screenWidth - kWvertical(40), kHvertical(17)) textColor:RGB(49,49,49) fontSize:kHorizontal(18) Title:@"君高联盟VIP卡 ￥4600"];

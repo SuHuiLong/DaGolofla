@@ -347,7 +347,7 @@
                 model.remark = name;
                 
                 //                NSString *friendUserKey = [NSString stringWithFormat:@"%@", model.friendUserKey];
-                //                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:name portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
+                //                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:name portrait:[NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
                 //
                 //                [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
                 
@@ -355,7 +355,7 @@
                 cell.myLabel.text = model.userName;
                 
                 //                NSString *friendUserKey = [NSString stringWithFormat:@"%@", model.friendUserKey];
-                //                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:model.userName portrait:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
+                //                RCUserInfo *friendUser = [[RCUserInfo alloc] initWithUserId: friendUserKey name:model.userName portrait:[NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@.jpg@200w_200h_2o",friendUserKey]];
                 //
                 //                [[RCIM sharedRCIM] refreshUserInfoCache:friendUser  withUserId:friendUserKey];
                 

@@ -33,6 +33,7 @@
 #import "VipCardGoodDetailViewController.h"
 
 #import "GuestRegistrationAuditViewController.h"//嘉宾审核列表
+#import "RedPacketViewController.h"//红包列表
 static JGHPushClass *pushClass = nil;
 
 @implementation JGHPushClass
@@ -310,7 +311,14 @@ static JGHPushClass *pushClass = nil;
             pushVC(vc);
         }
     }
-    
+    //红包列表
+    if ([urlString containsString:@"weblink/getMyCouponList"]) {
+        RedPacketViewController *vc = [[RedPacketViewController alloc] init];
+        if (pushVC) {
+            pushVC(vc);
+        }
+    }
+
 }
 
 

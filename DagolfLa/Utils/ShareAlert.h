@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface ShareAlert : UIView
-//@property(nonatomic,strong) UINavigationController* myNav;
+
 - (id)initMyAlert;
+
 - (id)initMyAlertWithWeChat:(BOOL)usWeChat;
+
 @property(strong,nonatomic)void(^callBackTitle)(NSInteger);
 - (void)show;
 @end

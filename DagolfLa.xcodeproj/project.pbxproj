@@ -16,6 +16,8 @@
 		180464981EA06D170079CAD1 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 180464971EA06D170079CAD1 /* Social.framework */; };
 		1814D8BD1E821D8D00F6E063 /* ShlTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1814D8BC1E821D8D00F6E063 /* ShlTextView.m */; };
 		182583301E5EE4CB00DE1504 /* UITableView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */; };
+		18278AE81EEE6C0800E3D523 /* RedpacketAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18278AE71EEE6C0800E3D523 /* RedpacketAlertView.m */; };
+		182A6CAE1EE7AF370088CF76 /* RedPacketModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 182A6CAD1EE7AF370088CF76 /* RedPacketModel.m */; };
 		182C029A1E77CDEC001161D7 /* JZLocationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 182C02991E77CDEC001161D7 /* JZLocationConverter.m */; };
 		182C02CD1E7A6B3A001161D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36BF02041BC78253005B3CE2 /* Images.xcassets */; };
 		182FF1481EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 182FF1471EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.m */; };
@@ -27,7 +29,6 @@
 		184139011ECA9BAB0068E244 /* ActivityMyApplyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 184139001ECA9BAB0068E244 /* ActivityMyApplyTableViewCell.m */; };
 		184139041ECA9BC30068E244 /* ActivityMyApplyViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 184139031ECA9BC30068E244 /* ActivityMyApplyViewModel.m */; };
 		1841390B1ECAAF2F0068E244 /* DicoveryMapViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1841390A1ECAAF2F0068E244 /* DicoveryMapViewViewController.m */; };
-		184182341EADDFEC0040820B /* DagolfLaUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 184182331EADDFEC0040820B /* DagolfLaUITests.m */; };
 		184932271ECAD8B6005F3C87 /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184932261ECAD8B6005F3C87 /* ActivityDetailViewController.m */; };
 		1862C1431E8BB8A2004E4537 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1862C0E11E8BB8A1004E4537 /* libcrypto.a */; };
 		1862C1441E8BB8A2004E4537 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1862C0E21E8BB8A1004E4537 /* libssl.a */; };
@@ -48,6 +49,9 @@
 		186D0CC41ECB02A700024312 /* MenbersActivityInParkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186D0CC31ECB02A700024312 /* MenbersActivityInParkViewController.m */; };
 		1870EE051EA6ECFA00BFD871 /* MJDIYHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 1870EE041EA6ECFA00BFD871 /* MJDIYHeader.m */; };
 		1872F3751E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */; };
+		18832AAC1EE7E600008CB350 /* HistoryRedPacketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18832AAB1EE7E600008CB350 /* HistoryRedPacketViewController.m */; };
+		18833FF51EEFBA9A00071B4E /* MessageShareAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 18833FF41EEFBA9A00071B4E /* MessageShareAlert.m */; };
+		18833FF71EF2233A00071B4E /* DagolfLaUITest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18833FF61EF2233A00071B4E /* DagolfLaUITest.m */; };
 		188B934F1E8CE1BD00A04D62 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 188B934D1E8CE1BD00A04D62 /* AlipaySDK.bundle */; };
 		188B93501E8CE1BD00A04D62 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188B934E1E8CE1BD00A04D62 /* AlipaySDK.framework */; };
 		18911AA61EA46A6B00B6FAAD /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = 18911A9A1EA46A6B00B6FAAD /* ApiXml.mm */; };
@@ -63,7 +67,13 @@
 		189C73FF1ED57994009DB534 /* GuestRegistrationAuditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C73FE1ED57994009DB534 /* GuestRegistrationAuditViewController.m */; };
 		189C74021ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C74011ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.m */; };
 		189C74051ED57B36009DB534 /* GuestRegistrationAuditModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 189C74041ED57B36009DB534 /* GuestRegistrationAuditModel.m */; };
+		189CD0211EE691870090870B /* RedPacketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189CD0201EE691870090870B /* RedPacketViewController.m */; };
+		189CD0251EE695970090870B /* RedPacketTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 189CD0241EE695970090870B /* RedPacketTableViewCell.m */; };
+		18BAF5511EF77BE800084288 /* BookCourtPriceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BAF5501EF77BE800084288 /* BookCourtPriceTableViewCell.m */; };
+		18BAF5551EF7B81500084288 /* BookCourtTotalPriceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BAF5541EF7B81500084288 /* BookCourtTotalPriceTableViewCell.m */; };
 		18C062061EB1E8770011F26A /* BYFoundationLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C062051EB1E8770011F26A /* BYFoundationLog.m */; };
+		18C0B29C1EE9371B002F0445 /* SelectRedPacketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0B29B1EE9371B002F0445 /* SelectRedPacketViewController.m */; };
+		18C0B2A61EE944FD002F0445 /* SelectRedPacketTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C0B2A51EE944FD002F0445 /* SelectRedPacketTableViewCell.m */; };
 		18C4D79F1EC5AA6000FF7D72 /* JKSlideSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D1E81EC5AA5F00FF7D72 /* JKSlideSwitchView.m */; };
 		18C4D7A01EC5AA6000FF7D72 /* JKSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D1EA1EC5AA5F00FF7D72 /* JKSlideViewController.m */; };
 		18C4D7A11EC5AA6000FF7D72 /* JKSlideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C4D1EB1EC5AA5F00FF7D72 /* JKSlideViewController.xib */; };
@@ -1219,13 +1229,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		184182361EADDFEC0040820B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 36BFFD201BC76C8D005B3CE2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 36BFFD271BC76C8D005B3CE2;
-			remoteInfo = DagolfLa;
-		};
 		36BFFD421BC76C8D005B3CE2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 36BFFD201BC76C8D005B3CE2 /* Project object */;
@@ -1252,6 +1255,10 @@
 		1814D8BC1E821D8D00F6E063 /* ShlTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShlTextView.m; sourceTree = "<group>"; };
 		1825832E1E5EE4CB00DE1504 /* UITableView+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Addition.h"; sourceTree = "<group>"; };
 		1825832F1E5EE4CB00DE1504 /* UITableView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Addition.m"; sourceTree = "<group>"; };
+		18278AE61EEE6C0800E3D523 /* RedpacketAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedpacketAlertView.h; sourceTree = "<group>"; };
+		18278AE71EEE6C0800E3D523 /* RedpacketAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedpacketAlertView.m; sourceTree = "<group>"; };
+		182A6CAC1EE7AF370088CF76 /* RedPacketModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPacketModel.h; sourceTree = "<group>"; };
+		182A6CAD1EE7AF370088CF76 /* RedPacketModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPacketModel.m; sourceTree = "<group>"; };
 		182C02981E77CDEC001161D7 /* JZLocationConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JZLocationConverter.h; sourceTree = "<group>"; };
 		182C02991E77CDEC001161D7 /* JZLocationConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JZLocationConverter.m; sourceTree = "<group>"; };
 		182FF1461EDE6088007F24A1 /* SelectPhotoAsHeaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPhotoAsHeaderViewController.h; sourceTree = "<group>"; };
@@ -1272,9 +1279,6 @@
 		184139031ECA9BC30068E244 /* ActivityMyApplyViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityMyApplyViewModel.m; sourceTree = "<group>"; };
 		184139091ECAAF2F0068E244 /* DicoveryMapViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DicoveryMapViewViewController.h; sourceTree = "<group>"; };
 		1841390A1ECAAF2F0068E244 /* DicoveryMapViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DicoveryMapViewViewController.m; sourceTree = "<group>"; };
-		184182311EADDFEB0040820B /* DagolfLaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DagolfLaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		184182331EADDFEC0040820B /* DagolfLaUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DagolfLaUITests.m; sourceTree = "<group>"; };
-		184182351EADDFEC0040820B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		184932251ECAD8B6005F3C87 /* ActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailViewController.h; sourceTree = "<group>"; };
 		184932261ECAD8B6005F3C87 /* ActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailViewController.m; sourceTree = "<group>"; };
 		1862C0E11E8BB8A1004E4537 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
@@ -1389,6 +1393,11 @@
 		1870EE041EA6ECFA00BFD871 /* MJDIYHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJDIYHeader.m; sourceTree = "<group>"; };
 		1872F3731E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+ChangeLineSpaceAndWordSpace.h"; sourceTree = "<group>"; };
 		1872F3741E725A6D00EEEC42 /* UILabel+ChangeLineSpaceAndWordSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+ChangeLineSpaceAndWordSpace.m"; sourceTree = "<group>"; };
+		18832AAA1EE7E600008CB350 /* HistoryRedPacketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryRedPacketViewController.h; sourceTree = "<group>"; };
+		18832AAB1EE7E600008CB350 /* HistoryRedPacketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryRedPacketViewController.m; sourceTree = "<group>"; };
+		18833FF31EEFBA9A00071B4E /* MessageShareAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageShareAlert.h; sourceTree = "<group>"; };
+		18833FF41EEFBA9A00071B4E /* MessageShareAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageShareAlert.m; sourceTree = "<group>"; };
+		18833FF61EF2233A00071B4E /* DagolfLaUITest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DagolfLaUITest.m; sourceTree = "<group>"; };
 		188B934D1E8CE1BD00A04D62 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		188B934E1E8CE1BD00A04D62 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		18911A991EA46A6B00B6FAAD /* ApiXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiXml.h; sourceTree = "<group>"; };
@@ -1417,7 +1426,19 @@
 		189C74011ED57B25009DB534 /* GuestRegistrationAuditTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestRegistrationAuditTableViewCell.m; sourceTree = "<group>"; };
 		189C74031ED57B36009DB534 /* GuestRegistrationAuditModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestRegistrationAuditModel.h; sourceTree = "<group>"; };
 		189C74041ED57B36009DB534 /* GuestRegistrationAuditModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestRegistrationAuditModel.m; sourceTree = "<group>"; };
+		189CD01F1EE691870090870B /* RedPacketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPacketViewController.h; sourceTree = "<group>"; };
+		189CD0201EE691870090870B /* RedPacketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPacketViewController.m; sourceTree = "<group>"; };
+		189CD0231EE695970090870B /* RedPacketTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedPacketTableViewCell.h; sourceTree = "<group>"; };
+		189CD0241EE695970090870B /* RedPacketTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedPacketTableViewCell.m; sourceTree = "<group>"; };
+		18BAF54F1EF77BE800084288 /* BookCourtPriceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookCourtPriceTableViewCell.h; sourceTree = "<group>"; };
+		18BAF5501EF77BE800084288 /* BookCourtPriceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookCourtPriceTableViewCell.m; sourceTree = "<group>"; };
+		18BAF5531EF7B81500084288 /* BookCourtTotalPriceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookCourtTotalPriceTableViewCell.h; sourceTree = "<group>"; };
+		18BAF5541EF7B81500084288 /* BookCourtTotalPriceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookCourtTotalPriceTableViewCell.m; sourceTree = "<group>"; };
 		18C062051EB1E8770011F26A /* BYFoundationLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYFoundationLog.m; sourceTree = "<group>"; };
+		18C0B29A1EE9371B002F0445 /* SelectRedPacketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectRedPacketViewController.h; sourceTree = "<group>"; };
+		18C0B29B1EE9371B002F0445 /* SelectRedPacketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectRedPacketViewController.m; sourceTree = "<group>"; };
+		18C0B2A41EE944FD002F0445 /* SelectRedPacketTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectRedPacketTableViewCell.h; sourceTree = "<group>"; };
+		18C0B2A51EE944FD002F0445 /* SelectRedPacketTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectRedPacketTableViewCell.m; sourceTree = "<group>"; };
 		18C4D1E71EC5AA5F00FF7D72 /* JKSlideSwitchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKSlideSwitchView.h; sourceTree = "<group>"; };
 		18C4D1E81EC5AA5F00FF7D72 /* JKSlideSwitchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKSlideSwitchView.m; sourceTree = "<group>"; };
 		18C4D1E91EC5AA5F00FF7D72 /* JKSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKSlideViewController.h; sourceTree = "<group>"; };
@@ -3584,17 +3605,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1841822E1EADDFEB0040820B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		36BFFD251BC76C8D005B3CE2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36A0469C1BC8E5DC00296DE3 /* MessageUI.framework in Frameworks */,
 				180464981EA06D170079CAD1 /* Social.framework in Frameworks */,
 				180464961EA06D080079CAD1 /* CoreData.framework in Frameworks */,
 				180464941EA06CF30079CAD1 /* Accounts.framework in Frameworks */,
@@ -3645,7 +3660,6 @@
 				36CFDBA01BCE2E7900301269 /* AddressBookUI.framework in Frameworks */,
 				20BA61311CDC99D0004B61F5 /* TAESDK.framework in Frameworks */,
 				36CFDB9E1BCE2E7300301269 /* AddressBook.framework in Frameworks */,
-				36A0469C1BC8E5DC00296DE3 /* MessageUI.framework in Frameworks */,
 				20BA61321CDC99D0004B61F5 /* UTDID.framework in Frameworks */,
 				7FBDA4AC1E4700055828A1C5 /* libPods-DagolfLa.a in Frameworks */,
 			);
@@ -3677,6 +3691,17 @@
 				1814D8BC1E821D8D00F6E063 /* ShlTextView.m */,
 			);
 			path = placeholderTextView;
+			sourceTree = "<group>";
+		};
+		18278AE51EEE5B4400E3D523 /* 分享红包 */ = {
+			isa = PBXGroup;
+			children = (
+				18278AE61EEE6C0800E3D523 /* RedpacketAlertView.h */,
+				18278AE71EEE6C0800E3D523 /* RedpacketAlertView.m */,
+				18833FF31EEFBA9A00071B4E /* MessageShareAlert.h */,
+				18833FF41EEFBA9A00071B4E /* MessageShareAlert.m */,
+			);
+			path = "分享红包";
 			sourceTree = "<group>";
 		};
 		182FF1491EDE8E73007F24A1 /* 裁剪图片 */ = {
@@ -3743,8 +3768,7 @@
 		184182321EADDFEC0040820B /* DagolfLaUITests */ = {
 			isa = PBXGroup;
 			children = (
-				184182331EADDFEC0040820B /* DagolfLaUITests.m */,
-				184182351EADDFEC0040820B /* Info.plist */,
+				18833FF61EF2233A00071B4E /* DagolfLaUITest.m */,
 			);
 			path = DagolfLaUITests;
 			sourceTree = "<group>";
@@ -3994,12 +4018,72 @@
 			path = "嘉宾报名审核";
 			sourceTree = "<group>";
 		};
+		189CD01E1EE6913B0090870B /* 红包 */ = {
+			isa = PBXGroup;
+			children = (
+				18C0B2991EE935D0002F0445 /* 支付选用红包 */,
+				189CD0221EE691B00090870B /* 历史红包 */,
+				189CD01F1EE691870090870B /* RedPacketViewController.h */,
+				189CD0201EE691870090870B /* RedPacketViewController.m */,
+				189CD0231EE695970090870B /* RedPacketTableViewCell.h */,
+				189CD0241EE695970090870B /* RedPacketTableViewCell.m */,
+				182A6CAC1EE7AF370088CF76 /* RedPacketModel.h */,
+				182A6CAD1EE7AF370088CF76 /* RedPacketModel.m */,
+			);
+			path = "红包";
+			sourceTree = "<group>";
+		};
+		189CD0221EE691B00090870B /* 历史红包 */ = {
+			isa = PBXGroup;
+			children = (
+				18832AAA1EE7E600008CB350 /* HistoryRedPacketViewController.h */,
+				18832AAB1EE7E600008CB350 /* HistoryRedPacketViewController.m */,
+			);
+			path = "历史红包";
+			sourceTree = "<group>";
+		};
+		18BAF54E1EF77BC100084288 /* 会籍和普通价格 */ = {
+			isa = PBXGroup;
+			children = (
+				18BAF54F1EF77BE800084288 /* BookCourtPriceTableViewCell.h */,
+				18BAF5501EF77BE800084288 /* BookCourtPriceTableViewCell.m */,
+			);
+			path = "会籍和普通价格";
+			sourceTree = "<group>";
+		};
+		18BAF5521EF7B77000084288 /* 实付总价 */ = {
+			isa = PBXGroup;
+			children = (
+				18BAF5531EF7B81500084288 /* BookCourtTotalPriceTableViewCell.h */,
+				18BAF5541EF7B81500084288 /* BookCourtTotalPriceTableViewCell.m */,
+			);
+			path = "实付总价";
+			sourceTree = "<group>";
+		};
 		18C062041EB1E8770011F26A /* 控制台输出中文 */ = {
 			isa = PBXGroup;
 			children = (
 				18C062051EB1E8770011F26A /* BYFoundationLog.m */,
 			);
 			path = "控制台输出中文";
+			sourceTree = "<group>";
+		};
+		18C0B2991EE935D0002F0445 /* 支付选用红包 */ = {
+			isa = PBXGroup;
+			children = (
+				18C0B29A1EE9371B002F0445 /* SelectRedPacketViewController.h */,
+				18C0B29B1EE9371B002F0445 /* SelectRedPacketViewController.m */,
+			);
+			path = "支付选用红包";
+			sourceTree = "<group>";
+		};
+		18C0B29D1EE9410F002F0445 /* 红包优惠 */ = {
+			isa = PBXGroup;
+			children = (
+				18C0B2A41EE944FD002F0445 /* SelectRedPacketTableViewCell.h */,
+				18C0B2A51EE944FD002F0445 /* SelectRedPacketTableViewCell.m */,
+			);
+			path = "红包优惠";
 			sourceTree = "<group>";
 		};
 		18C4D1E61EC5AA5F00FF7D72 /* 球友圈 */ = {
@@ -4035,6 +4119,7 @@
 				18C4D1F51EC5AA5F00FF7D72 /* MeViewController.m */,
 				18C4D1F61EC5AA5F00FF7D72 /* PersonHomeController.h */,
 				18C4D1F71EC5AA5F00FF7D72 /* PersonHomeController.m */,
+				189CD01E1EE6913B0090870B /* 红包 */,
 				18C4D1F81EC5AA5F00FF7D72 /* uitableview列表 */,
 				18C4D23E1EC5AA5F00FF7D72 /* 建议与反馈 */,
 				18C4D2491EC5AA5F00FF7D72 /* 联盟会员 */,
@@ -4735,6 +4820,7 @@
 		18C4D3451EC5AA5F00FF7D72 /* 列表搜索预定 */ = {
 			isa = PBXGroup;
 			children = (
+				18278AE51EEE5B4400E3D523 /* 分享红包 */,
 				18C4D3461EC5AA5F00FF7D72 /* JGDAllianceCommitOrderViewController.h */,
 				18C4D3471EC5AA5F00FF7D72 /* JGDAllianceCommitOrderViewController.m */,
 				18C4D3481EC5AA5F00FF7D72 /* JGDBookCourtViewController.h */,
@@ -4958,6 +5044,9 @@
 		18C4D3AE1EC5AA5F00FF7D72 /* 球场预定 */ = {
 			isa = PBXGroup;
 			children = (
+				18BAF5521EF7B77000084288 /* 实付总价 */,
+				18BAF54E1EF77BC100084288 /* 会籍和普通价格 */,
+				18C0B29D1EE9410F002F0445 /* 红包优惠 */,
 				18C4D3AF1EC5AA5F00FF7D72 /* JGDBallPlayTableViewCell.h */,
 				18C4D3B01EC5AA5F00FF7D72 /* JGDBallPlayTableViewCell.m */,
 				18C4D3B11EC5AA5F00FF7D72 /* JGDBookCourtTableViewCell.h */,
@@ -8401,7 +8490,6 @@
 			children = (
 				36BFFD281BC76C8D005B3CE2 /* DagolfLa.app */,
 				36BFFD411BC76C8D005B3CE2 /* DagolfLaTests.xctest */,
-				184182311EADDFEB0040820B /* DagolfLaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8985,24 +9073,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		184182301EADDFEB0040820B /* DagolfLaUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 184182381EADDFEC0040820B /* Build configuration list for PBXNativeTarget "DagolfLaUITests" */;
-			buildPhases = (
-				1841822D1EADDFEB0040820B /* Sources */,
-				1841822E1EADDFEB0040820B /* Frameworks */,
-				1841822F1EADDFEB0040820B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				184182371EADDFEC0040820B /* PBXTargetDependency */,
-			);
-			name = DagolfLaUITests;
-			productName = DagolfLaUITests;
-			productReference = 184182311EADDFEB0040820B /* DagolfLaUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		36BFFD271BC76C8D005B3CE2 /* DagolfLa */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36BFFD4B1BC76C8D005B3CE2 /* Build configuration list for PBXNativeTarget "DagolfLa" */;
@@ -9051,12 +9121,6 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = bhxx;
 				TargetAttributes = {
-					184182301EADDFEB0040820B = {
-						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = 5P6JNXBH3C;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 36BFFD271BC76C8D005B3CE2;
-					};
 					36BFFD271BC76C8D005B3CE2 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = 5P6JNXBH3C;
@@ -9096,19 +9160,11 @@
 			targets = (
 				36BFFD271BC76C8D005B3CE2 /* DagolfLa */,
 				36BFFD401BC76C8D005B3CE2 /* DagolfLaTests */,
-				184182301EADDFEB0040820B /* DagolfLaUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		1841822F1EADDFEB0040820B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		36BFFD261BC76C8D005B3CE2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9308,14 +9364,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1841822D1EADDFEB0040820B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				184182341EADDFEC0040820B /* DagolfLaUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		36BFFD241BC76C8D005B3CE2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9443,6 +9491,7 @@
 				36BFFF841BC76D09005B3CE2 /* IWTextView.m in Sources */,
 				203019FF1E0E4293005568E2 /* ZXQRCodeMode.m in Sources */,
 				203019DB1E0E4293005568E2 /* ZXUPCEANReader.m in Sources */,
+				182A6CAE1EE7AF370088CF76 /* RedPacketModel.m in Sources */,
 				203019551E0E4292005568E2 /* ZXProductResultParser.m in Sources */,
 				203019541E0E4292005568E2 /* ZXProductParsedResult.m in Sources */,
 				203019C61E0E4293005568E2 /* ZXCode128Reader.m in Sources */,
@@ -9498,6 +9547,7 @@
 				203019B11E0E4292005568E2 /* ZXAnyAIDecoder.m in Sources */,
 				18C4D8901EC5AA6100FF7D72 /* MSSBrowseNetworkViewController.m in Sources */,
 				20D1E1AE1DD42F7400EB25C3 /* JGHbalanceView.m in Sources */,
+				18BAF5511EF77BE800084288 /* BookCourtPriceTableViewCell.m in Sources */,
 				18C4DA2E1EC5AA6200FF7D72 /* JGHActivityScoreView.m in Sources */,
 				203019E41E0E4293005568E2 /* ZXPDF417Codeword.m in Sources */,
 				18C4D9DF1EC5AA6200FF7D72 /* JGHRetrieveScoreModel.m in Sources */,
@@ -9617,6 +9667,7 @@
 				18C4D8BA1EC5AA6100FF7D72 /* JGInvoiceViewController.m in Sources */,
 				18C4D9AB1EC5AA6200FF7D72 /* JGLWinnersShareViewController.m in Sources */,
 				2030194A1E0E4292005568E2 /* ZXEmailAddressParsedResult.m in Sources */,
+				189CD0251EE695970090870B /* RedPacketTableViewCell.m in Sources */,
 				18C4D9091EC5AA6100FF7D72 /* JGLActivityMemberTableViewCell.m in Sources */,
 				18C4D8851EC5AA6100FF7D72 /* JGHShowMyTeamViewController.m in Sources */,
 				18C4D9D41EC5AA6200FF7D72 /* JGLScoreRankViewController.m in Sources */,
@@ -9688,6 +9739,7 @@
 				18C4D7A81EC5AA6000FF7D72 /* CollectViewController.m in Sources */,
 				18C4D88A1EC5AA6100FF7D72 /* MSSBrowseActionSheetCell.m in Sources */,
 				F5EB44711C9957A7008ACD73 /* PYTableViewIndexManager.m in Sources */,
+				18833FF51EEFBA9A00071B4E /* MessageShareAlert.m in Sources */,
 				18C4DA101EC5AA6200FF7D72 /* JGLScoreSureViewController.m in Sources */,
 				18C4D96B1EC5AA6200FF7D72 /* JGHTotalPriceCell.m in Sources */,
 				18C4D8971EC5AA6100FF7D72 /* MakePhotoTextTableViewCell.m in Sources */,
@@ -9714,6 +9766,7 @@
 				18C4DA051EC5AA6200FF7D72 /* JGDPlayerHisScoreDetailViewController.m in Sources */,
 				18C4D7DF1EC5AA6000FF7D72 /* VipCardOrderDetailViewController.m in Sources */,
 				18C4D8C41EC5AA6100FF7D72 /* JGHNewEditorActivityViewController.m in Sources */,
+				18C0B29C1EE9371B002F0445 /* SelectRedPacketViewController.m in Sources */,
 				65B596E71CAD43AC007AB83A /* WFActionSheet.m in Sources */,
 				18C4D8EB1EC5AA6100FF7D72 /* JGPhotoListModel.m in Sources */,
 				203019411E0E4292005568E2 /* ZXAztecReader.m in Sources */,
@@ -9804,6 +9857,7 @@
 				18C4D9CF1EC5AA6200FF7D72 /* JGLBarCodeViewController.m in Sources */,
 				18C4D8D91EC5AA6100FF7D72 /* JGTeamDetailViewController.m in Sources */,
 				18C4D89E1EC5AA6100FF7D72 /* MakePhotoTextSelectHeaderViewController.m in Sources */,
+				18C0B2A61EE944FD002F0445 /* SelectRedPacketTableViewCell.m in Sources */,
 				203019821E0E4292005568E2 /* ZXByteMatrix.m in Sources */,
 				18C4D9B71EC5AA6200FF7D72 /* JGHAwardCell.m in Sources */,
 				18C4D9631EC5AA6200FF7D72 /* JGHJustApplyListView.m in Sources */,
@@ -10003,9 +10057,11 @@
 				203019C41E0E4293005568E2 /* ZXCodaBarReader.m in Sources */,
 				36BF01A11BC779D8005B3CE2 /* YueDetailModel.m in Sources */,
 				20BA61291CDC99D0004B61F5 /* ALAirplayView.m in Sources */,
+				18278AE81EEE6C0800E3D523 /* RedpacketAlertView.m in Sources */,
 				18C4D87B1EC5AA6100FF7D72 /* JGDCreatTeamViewController.m in Sources */,
 				F50022D91E7F8AE200846D1A /* JGDContactUpdata.m in Sources */,
 				65B596D51CAD43AC007AB83A /* ILRegularExpressionManager.m in Sources */,
+				189CD0211EE691870090870B /* RedPacketViewController.m in Sources */,
 				18C4D8261EC5AA6100FF7D72 /* JGDServiceViewController.m in Sources */,
 				18C4D8A71EC5AA6100FF7D72 /* JGHNewAddTeamPlaysViewController.m in Sources */,
 				18C4D7C81EC5AA6000FF7D72 /* AddVipCardViewController.m in Sources */,
@@ -10125,6 +10181,7 @@
 				18C4D9FF1EC5AA6200FF7D72 /* JGHNewScoresPageCell.m in Sources */,
 				18C4D8751EC5AA6100FF7D72 /* JGDAlmostSetTableViewCell.m in Sources */,
 				18C4D7C71EC5AA6000FF7D72 /* JGLWriteReplyViewController.m in Sources */,
+				18BAF5551EF7B81500084288 /* BookCourtTotalPriceTableViewCell.m in Sources */,
 				18C4D9E21EC5AA6200FF7D72 /* JGLAddActiivePlayModel.m in Sources */,
 				20BC97831E1BA789007DFD34 /* UIAlertController+JGHUIAlertController.m in Sources */,
 				18C4D85A1EC5AA6100FF7D72 /* JGDShowPhotoView.m in Sources */,
@@ -10275,6 +10332,7 @@
 				65B596DA1CAD43AC007AB83A /* YMTextData.m in Sources */,
 				18C4D9111EC5AA6100FF7D72 /* JGHLableAndGouCell.m in Sources */,
 				18C4D9E11EC5AA6200FF7D72 /* JGLScoreRankModel.m in Sources */,
+				18832AAC1EE7E600008CB350 /* HistoryRedPacketViewController.m in Sources */,
 				203017421E0E3EAA005568E2 /* JGHDatePicksViewController.m in Sources */,
 				18C4D8FE1EC5AA6100FF7D72 /* JGHNewApplyerListCell.m in Sources */,
 				18C4D9341EC5AA6100FF7D72 /* JGMenberTableViewCell.m in Sources */,
@@ -10348,17 +10406,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				36BFFD481BC76C8D005B3CE2 /* DagolfLaTests.m in Sources */,
+				18833FF71EF2233A00071B4E /* DagolfLaUITest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		184182371EADDFEC0040820B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 36BFFD271BC76C8D005B3CE2 /* DagolfLa */;
-			targetProxy = 184182361EADDFEC0040820B /* PBXContainerItemProxy */;
-		};
 		36BFFD431BC76C8D005B3CE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 36BFFD271BC76C8D005B3CE2 /* DagolfLa */;
@@ -10387,43 +10441,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		184182391EADDFEC0040820B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				INFOPLIST_FILE = DagolfLaUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gaopeng.DagolfLaUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = DagolfLa;
-			};
-			name = Debug;
-		};
-		1841823A1EADDFEC0040820B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = DagolfLaUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gaopeng.DagolfLaUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = DagolfLa;
-			};
-			name = Release;
-		};
 		36BFFD491BC76C8D005B3CE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -10553,7 +10570,7 @@
 					"$(SRCROOT)/DagolfLa/zhifu",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10612,7 +10629,7 @@
 					"$(SRCROOT)/DagolfLa/zhifu",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10690,15 +10707,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		184182381EADDFEC0040820B /* Build configuration list for PBXNativeTarget "DagolfLaUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				184182391EADDFEC0040820B /* Debug */,
-				1841823A1EADDFEC0040820B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		36BFFD231BC76C8D005B3CE2 /* Build configuration list for PBXProject "DagolfLa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

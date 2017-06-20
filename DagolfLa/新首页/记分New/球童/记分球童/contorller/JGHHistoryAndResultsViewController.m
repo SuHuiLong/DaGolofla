@@ -44,7 +44,7 @@
     //替换任务栏
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
     
-    [self.scoreResultWKwebView loadWebUrl:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]]];
+    [self.scoreResultWKwebView loadWebUrl:[NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]]];
     if (_historyScoreView.dataArray.count>0) {
         [self.historyScoreView.tableView.mj_header beginRefreshing];
     }
@@ -102,7 +102,7 @@
 -(void)shareStatisticsDataClick
 {
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
     [alert setCallBackTitle:^(NSInteger index) {
         [self shareWithInfo:index];
     }];
@@ -114,7 +114,7 @@
 -(void)shareWithInfo:(NSInteger)index
 {
     
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@&share=1",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
+    NSString*  shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@&share=1",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"打球数据统计分析"];
     if(index==0)
@@ -154,7 +154,7 @@
 #pragma mark -- 创建统计数据
 - (void)createCountData{
     _scoreResultWKwebView = [[JGHScoreResultWKwebView alloc]initWithFrame:CGRectMake(screenWidth, 0, screenWidth, screenHeight -64)];
-    [_scoreResultWKwebView loadWebUrl:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]]];
+    [_scoreResultWKwebView loadWebUrl:[NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/score/scoreList.html?userKey=%@&md5=%@",DEFAULF_USERID, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]]]];
     [self.baseScrollView addSubview:_scoreResultWKwebView];
 }
 #pragma mark -- 创建历史记分

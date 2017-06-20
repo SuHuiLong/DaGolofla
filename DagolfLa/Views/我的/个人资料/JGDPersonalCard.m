@@ -58,7 +58,7 @@
         imageView.clipsToBounds = YES;
         [self.backView addSubview:imageView];
         
-        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
+        NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
         UIButton *iconBtn = [[UIButton alloc] initWithFrame:CGRectMake((screenWidth - 26 * ProportionAdapter)/2 - 66 * ProportionAdapter / 2, 133 * ProportionAdapter - 66 * ProportionAdapter / 2, 66 * ProportionAdapter, 66 * ProportionAdapter)];
         [iconBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:bgUrl] forState:(UIControlStateNormal) placeholderImage:[UIImage imageNamed:@"bg_photo"]];
         iconBtn.layer.cornerRadius = 66 * ProportionAdapter / 2;
@@ -216,7 +216,7 @@
         } completionBlock:^(id data) {
             [[ShowHUD showHUD] hideAnimationFromView:self];
 
-            NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
+            NSString *headUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
             [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
             NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
             if (![Helper isBlankString:headUrl]) {
@@ -369,7 +369,7 @@
 - (NSMutableArray *)dataArray{
     if (!_dataArray) {
         _dataArray = [[NSMutableArray alloc] init];
-        NSURL *url = [NSURL URLWithString:@"http://res.dagolfla.com/download/json/industry.json"];
+        NSURL *url = [NSURL URLWithString:@"https://res.dagolfla.com/download/json/industry.json"];
         NSError *error;
         NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
         NSData * data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];

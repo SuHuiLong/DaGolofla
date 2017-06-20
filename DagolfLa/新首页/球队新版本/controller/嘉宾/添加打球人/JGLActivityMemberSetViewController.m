@@ -90,6 +90,20 @@
     groupCtrl.teamActivityKey = [_activityKey integerValue];
     [self.navigationController pushViewController:groupCtrl animated:YES];
 }
+
+#pragma mark - CreateView
+//左滑删除提示弹窗
+-(void)alertDeleat{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (![UserDefaults objectForKey:@"isAlertSwithToDeleat"]) {
+                [UserDefaults setValue:@"1" forKey:@"isAlertSwithToDeleat"];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[ShowHUD showHUD] showToastWithText:@"左滑可以帮成员取消报名" FromView:self.view];
+                });
+        }
+    });
+
+}
 //底部按钮
 -(void)createBtn
 {
@@ -166,6 +180,9 @@
             }
             self.keyArray = [SortManager IndexWithArray:_dataArray Key:@"name"];
             self.listArray = [SortManager sortObjectArray:_dataArray Key:@"name"];
+            if (_dataArray.count>0) {
+                [self alertDeleat];
+            }
             [_tableView reloadData];
             
         }else{

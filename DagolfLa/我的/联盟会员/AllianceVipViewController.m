@@ -525,7 +525,7 @@
     
     NSString *md5Value =[Helper md5HexDigest:[NSString stringWithFormat:@"cardKey=%@&userKey=%@dagolfla.com",model.cardId, DEFAULF_USERID]];
     
-    NSString *urlString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/league/leagueUserCardInfo.html?md5=%@&winzoom=1&cardKey=%@&userKey=%@",md5Value,model.cardId,DEFAULF_USERID];
+    NSString *urlString = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/league/leagueUserCardInfo.html?md5=%@&winzoom=1&cardKey=%@&userKey=%@",md5Value,model.cardId,DEFAULF_USERID];
     
     //跳转
     UseMallViewController *vc = [[UseMallViewController alloc]init];

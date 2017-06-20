@@ -421,7 +421,7 @@
 -(void)realShareStatisticsDataClick
 {
     ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
     [alert setCallBackTitle:^(NSInteger index) {
         [self shareInfo:index];
     }];
@@ -434,15 +434,8 @@
 -(void)shareInfo:(NSInteger)index
 {
     
-    // http://imgcache.dagolfla.com/share/score/scoreDetail.html?teamKey=222&userKey=1&srcKey=1&srcType=1&key=11&share=1
-    /*
-     [dic setObject:self.scoreKey forKey:@"scoreKey"];
-     [dic setObject:self.userKey forKey:@"userKey"];
-     [dic setObject:self.srcKey forKey:@"srcKey"];
-     [dic setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", self.userKey, self.srcKey]] forKey:@"md5"];
-     */
     
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreDetail.html?teamKey=0&userKey=%@&srcKey=%@&srcType=1&key=%@&share=1&md5=%@", self.userKey, self.srcKey, self.scoreKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", self.userKey, self.srcKey]]];
+    NSString*  shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/score/scoreDetail.html?teamKey=0&userKey=%@&srcKey=%@&srcType=1&key=%@&share=1&md5=%@", self.userKey, self.srcKey, self.scoreKey, [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=0&userKey=%@&srcKey=%@&srcType=1dagolfla.com", self.userKey, self.srcKey]]];
 
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"个人成绩简单记分表"];

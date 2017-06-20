@@ -108,18 +108,18 @@
 }
 #pragma mark - 分享
 -(void)shareInfo:(NSInteger)index{
-    //http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=222&userKey=1&srcKey=1&srcType=1&share=1                  球队计分分享
+    //https://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=222&userKey=1&srcKey=1&srcType=1&share=1                  球队计分分享
     NSData *fiData = [[NSData alloc]init];
     NSString*  shareUrl;
 //    if ([_model.timeKey integerValue] == 0) {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_activity integerValue] andIsSetWidth:YES andIsBackGround:YES]];
     NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%@&userKey=%@&srcKey=%@&srcType=1dagolfla.com", _teamKey, DEFAULF_USERID, _activity]];
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%@&userKey=%@&srcKey=%@&srcType=1&share=1&md5=%@", _teamKey, DEFAULF_USERID, _activity, md5Str];
+        shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/score/scoreRanking.html?teamKey=%@&userKey=%@&srcKey=%@&srcType=1&share=1&md5=%@", _teamKey, DEFAULF_USERID, _activity, md5Str];
 //    }
 //    else
 //    {
 //        fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
-//        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
+//        shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/teamac.html?key=%@", _model.timeKey];
 //    }
     
     
@@ -329,6 +329,7 @@
     
     return 44* screenWidth / 375;
 }
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    /*

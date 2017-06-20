@@ -217,8 +217,8 @@ static CGFloat ImageHeight  = 210.0;
             [self.navigationController presentViewController:alertView animated:YES completion:nil];
         }];
     } completionBlock:^(id data) {
-        NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.detailDic objectForKey:@"timeKey"]];
-        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@", [self.detailDic objectForKey:@"timeKey"]];
+        NSString *head = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.detailDic objectForKey:@"timeKey"]];
+        NSString *headUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%@_background.jpg@", [self.detailDic objectForKey:@"timeKey"]];
         [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
         [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES withCompletion:nil];
         
@@ -432,7 +432,7 @@ static CGFloat ImageHeight  = 210.0;
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
                         
-//                        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
+//                        NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
 //                        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
                         //                        [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
                         //                        }];
@@ -456,8 +456,8 @@ static CGFloat ImageHeight  = 210.0;
                     [[JsonHttp jsonHttp]httpRequestImageOrVedio:@"1" withData:dict andDataArray:[NSArray arrayWithObject:UIImageJPEGRepresentation((UIImage *)Data, 0.7)] failedBlock:^(id errType) {
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
-//                        NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/661.jpg@100w_100h"];
-//                        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.detailDic objectForKey:@"timeKey"]];
+//                        NSString *head = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/661.jpg@100w_100h"];
+//                        NSString *headUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", [self.detailDic objectForKey:@"timeKey"]];
 //                        [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES];
 //                        [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES];
                         //                        [[SDImageCache sharedImageCache]removeImageForKey:headUrl fromDisk:YES withCompletion:^{
@@ -487,7 +487,7 @@ static CGFloat ImageHeight  = 210.0;
                         NSLog(@"errType===%@", errType);
                     } completionBlock:^(id data) {
 
-//                        NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
+//                        NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%@_background.jpg@400w_150h", [self.detailDic objectForKey:@"timeKey"]];
 //                        [[SDImageCache sharedImageCache] removeImageForKey:bgUrl];
 //                        [[SDImageCache sharedImageCache]removeImageForKey:bgUrl fromDisk:YES withCompletion:^{
 //                        }];
@@ -548,10 +548,10 @@ static CGFloat ImageHeight  = 210.0;
 }
 #pragma mark -- 清除头像及背景缓存
 - (void)cleakHeaderWithBgImage{
-    NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg", [self.detailDic objectForKey:@"timeKey"]];
+    NSString *headUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%@.jpg", [self.detailDic objectForKey:@"timeKey"]];
     [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
     
-    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
+    NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%@_background.jpg", [self.detailDic objectForKey:@"timeKey"]];
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
 }
 //- (BOOL)shouldAutorotate{

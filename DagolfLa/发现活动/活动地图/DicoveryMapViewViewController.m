@@ -140,7 +140,7 @@
     newAnnotation.animatesDrop = false;
     //设置大头针图标
     NSString *image = @"pin";
-    if (model.name) {
+    if (model.name||model.canSignupCount>0) {
         image = @"provincePin";
     }
     newAnnotation.image = [UIImage imageNamed:image];
@@ -209,12 +209,11 @@
                 model.longtitude = [[latlon objectForKey:@"longitude"] floatValue];
                 model.latitude = [[latlon objectForKey:@"latitude"] floatValue];
                 model.parkName = [listDict objectForKey:@"ballSimpleName"];
-
                 model.count = [[listDict objectForKey:@"count"] integerValue];
                 model.parkFullName = [listDict objectForKey:@"ballName"];
                 model.ballKey = [listDict objectForKey:@"ballKey"];
                 model.activityKey = [listDict objectForKey:@"activityKey"];
-                
+                model.canSignupCount = [[listDict objectForKey:@"canSignupCount"] integerValue];
                 
                 [self.dataArray addObject:model];
             }

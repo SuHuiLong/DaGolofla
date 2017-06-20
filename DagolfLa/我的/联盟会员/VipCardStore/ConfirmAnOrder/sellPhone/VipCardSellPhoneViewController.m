@@ -31,7 +31,7 @@
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(rightBtnClick)];
     self.navigationItem.rightBarButtonItem = rightBtn;
     [rightBtn setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kWvertical(15)], NSFontAttributeName, nil] forState:UIControlStateNormal];
-    self.view.backgroundColor = RGB(238,238,238);
+    self.view.backgroundColor = Back_Color;
 }
 //输入框
 -(void)createTextField{

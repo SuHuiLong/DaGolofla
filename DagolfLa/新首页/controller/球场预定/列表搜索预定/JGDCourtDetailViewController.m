@@ -19,6 +19,8 @@
 #import "ShowMapViewViewController.h"
 #import "VipCardGoodsListViewController.h"
 
+#import "RedPacketModel.h"
+
 static CGFloat ImageHeight  = 210.0;
 
 @interface JGDCourtDetailViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -58,11 +60,18 @@ static CGFloat ImageHeight  = 210.0;
 @property (nonatomic, assign) NSInteger isLeague;   // 是否是联盟球场
 @property (nonatomic, copy) NSString *strPrompt;
 @property (nonatomic, copy) NSString *showBookNumber;  // 显示剩余可预订球位数
+//本球场可使用红包列表
+@property (nonatomic, strong) NSMutableArray *myCouponList;
 
 @end
 
 @implementation JGDCourtDetailViewController
-
+-(NSMutableArray *)myCouponList{
+    if (_myCouponList==nil) {
+        _myCouponList = [NSMutableArray array];
+    }
+    return _myCouponList;
+}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
@@ -72,10 +81,10 @@ static CGFloat ImageHeight  = 210.0;
         [self downData];
     }
     
-    NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey];
+    NSString *headUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey];
     [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
     
-    [self.imgProfile sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey]] placeholderImage:[UIImage imageNamed:TeamBGImage]];
+    [self.imgProfile sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey]] placeholderImage:[UIImage imageNamed:TeamBGImage]];
     
     
 }
@@ -221,7 +230,6 @@ static CGFloat ImageHeight  = 210.0;
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
             self.hasLeagueUser = [[data objectForKey:@"hasLeagueUser"] boolValue];
             if ([data objectForKey:@"strPrompt"]) {
                 self.strPrompt = [data objectForKey:@"strPrompt"];
@@ -235,6 +243,17 @@ static CGFloat ImageHeight  = 210.0;
                 
                 self.detailDic = [[data objectForKey:@"ball"] mutableCopy];
 
+                //红包是否可用 0：不可用 1：可用
+                NSInteger enableCoupon = [[self.detailDic objectForKey:@"enableCoupon"] integerValue];
+                if (enableCoupon==1) {
+                    NSArray *myCouponList = [data objectForKey:@"myCouponList"];
+                    _myCouponList = [NSMutableArray array];
+                    for (NSDictionary *indexDict in myCouponList) {
+                        RedPacketModel *model = [RedPacketModel modelWithDictionary:indexDict];
+                        [_myCouponList addObject:model];
+                    }
+                }
+                
                 self.isLeague = [[self.detailDic objectForKey:@"isLeague"] integerValue];
 
                 if ([self.detailDic objectForKey:@"leagueMoney"]) {
@@ -307,7 +326,7 @@ static CGFloat ImageHeight  = 210.0;
         [self.navigationController pushViewController:detailVC animated:YES];
     }else if (btn.tag == 530) {
         ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
         [alert setCallBackTitle:^(NSInteger index) {
             [self shareInfo:index];
         }];
@@ -433,7 +452,6 @@ static CGFloat ImageHeight  = 210.0;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (indexPath.section == 0) {
-        
         if (indexPath.row == 0) {
             self.detailLB = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
             self.detailLB.layer.borderWidth = 0.5 * ProportionAdapter;
@@ -470,8 +488,6 @@ static CGFloat ImageHeight  = 210.0;
             [self lableReDraw:underLine rect:CGRectMake(0, 79.5 * ProportionAdapter, screenWidth, 0.5 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#EEEEEE"] labelFont:0 text:@"" textAlignment:NSTextAlignmentCenter];
             underLine.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
             [cell.contentView addSubview:underLine];
-            
-            
             
         }else{
             UILabel *begainLB = [[UILabel alloc] init];
@@ -554,7 +570,6 @@ static CGFloat ImageHeight  = 210.0;
                     [cell.contentView addSubview:lineLB];
                     
                 // 优惠后价格
-//                    NSInteger orangePrice = [self.unitPrice integerValue] - [self.deductionMoney integerValue];
 
                     UILabel *orangeLB = [self lablerect:CGRectMake(screenWidth - 165 * ProportionAdapter , 50 * ProportionAdapter, 70 * ProportionAdapter, 20 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#fc5a01"] labelFont:17 text:[NSString stringWithFormat:@"¥%@", self.payMoney] textAlignment:(NSTextAlignmentRight)];
                     [cell.contentView addSubview:orangeLB];
@@ -585,16 +600,12 @@ static CGFloat ImageHeight  = 210.0;
                 
             }else{
                 [payBtn setTitle:@"全额预付" forState:(UIControlStateNormal)];
-                
             }
             
             [payBtn addTarget:self action:@selector(payAct) forControlEvents:(UIControlEventTouchUpInside)];
             payBtn.titleLabel.font = [UIFont systemFontOfSize:15 * ProportionAdapter];
             [payBtn setTitleEdgeInsets:UIEdgeInsetsMake(27 * ProportionAdapter, 0, 0, 0)];
             [cell addSubview:payBtn];
-            
-            
-            
         }else{
             
             UILabel *discLB = [[UILabel alloc] init];
@@ -609,12 +620,8 @@ static CGFloat ImageHeight  = 210.0;
             self.serviceDetail.numberOfLines = 0;
             [cell.contentView addSubview:self.serviceDetail];
         }
-        
-        
     }
-    
     return cell;
-    
 }
 
 
@@ -667,10 +674,6 @@ static CGFloat ImageHeight  = 210.0;
 // 联盟会员付款
 - (void)vipCommitAct{
     
-    //    if (!self.hasLeagueUser) {
-    //        [[ShowHUD showHUD] showToastWithText:@"请先开通君高会籍" FromView:self.view];
-    //        return;
-    //    }else
     
     if (self.strPrompt){
         [[ShowHUD showHUD] showToastWithText:self.strPrompt FromView:self.view];
@@ -690,6 +693,8 @@ static CGFloat ImageHeight  = 210.0;
     commitVC.detailDic = self.detailDic;
     commitVC.timeKey = self.timeKey;
     commitVC.selectMoney = self.leagueMoney;
+    commitVC.normolPrice = self.payMoney;
+    commitVC.myCouponList = self.myCouponList;
     [self.navigationController pushViewController:commitVC animated:YES];
 }
 //普通会员付款
@@ -717,10 +722,9 @@ static CGFloat ImageHeight  = 210.0;
         }else{
             commitVC.selectMoney = [NSString stringWithFormat:@"%td", [self.payMoney integerValue] - [self.unitPaymentMoney integerValue]];
         }
-
     }
     
-    
+    commitVC.myCouponList = _myCouponList;
     commitVC.selectSceneMoney = self.unitPaymentMoney;
     commitVC.detailDic = self.detailDic;
     commitVC.timeKey = self.timeKey;
@@ -734,18 +738,16 @@ static CGFloat ImageHeight  = 210.0;
     
     NSData *fiData;
     
-    fiData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey]]];
+    fiData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://imgcache.dagolfla.com/bookball/%@.jpg", self.timeKey]]];
     NSObject* obj;
     if (fiData != nil && fiData.length > 0) {
         obj = fiData;
-    }
-    else
-    {
+    }else{
         obj = [UIImage imageNamed:@"iconlogo"];
     }
 
     NSString *md5Str = [Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", self.timeKey]];
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/bookball/bookBallPark.html?ballKey=%@&md5=%@", self.timeKey, md5Str];
+    NSString*  shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/bookball/bookBallPark.html?ballKey=%@&md5=%@", self.timeKey, md5Str];
     
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"%@",[self.detailDic objectForKey:@"ballName"]];
     

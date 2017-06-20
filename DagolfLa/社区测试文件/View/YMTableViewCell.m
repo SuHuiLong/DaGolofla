@@ -192,7 +192,7 @@
     tempDate = ymData;
 #pragma mark -  //头像 昵称 简介
 
-    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[tempDate.uId integerValue]];
+    NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[tempDate.uId integerValue]];
 
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
     [_userHeaderImage sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:@"moren"]];

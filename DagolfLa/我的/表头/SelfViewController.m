@@ -218,7 +218,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if (isClick == NO) {
-            NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
+            NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
             [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
             [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
 
@@ -229,7 +229,7 @@
                 cell.iconImage.image = [UIImage imageWithData:_arrayPage[0]];
             }
             else{
-                NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
+                NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/%@/head/%td.jpg@200w_200h_2o",@"user",[DEFAULF_USERID integerValue]];
                 [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
                 [cell.iconImage sd_setImageWithURL:[NSURL URLWithString:bgUrl] placeholderImage:[UIImage imageNamed:DefaultHeaderImage]];
             }
@@ -572,7 +572,7 @@
     } completionBlock:^(id data) {
         [self post:@{@"userId": DEFAULF_USERID}];
         
-        NSString *headUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
+        NSString *headUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@.jpg@120w_120h", DEFAULF_USERID];
         [[SDImageCache sharedImageCache] removeImageForKey:headUrl fromDisk:YES withCompletion:nil];
         NSUserDefaults *user=[NSUserDefaults standardUserDefaults];
         if (![Helper isBlankString:headUrl]) {
@@ -594,7 +594,7 @@
     userInfo.userId = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]];
     userInfo.name = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"]];
     
-    userInfo.portraitUri = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/user/head/%@.jpg", DEFAULF_USERID];
+    userInfo.portraitUri = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/user/head/%@.jpg", DEFAULF_USERID];
     
     return userInfo;
 }

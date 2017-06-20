@@ -68,12 +68,14 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+
     [[UIApplication sharedApplication]setStatusBarHidden:false];
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationController.navigationBarHidden = YES;
     
     self.tabBarController.tabBar.hidden = NO;
+    
+    [self scrollViewDidScroll:_homeTableView];
 }
 
 
@@ -82,7 +84,7 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
     [super viewWillDisappear:animated];
     //把当前界面的导航栏隐藏
     self.navigationController.navigationBarHidden = NO;
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)viewDidLoad {
@@ -119,7 +121,6 @@ static NSString *const JGHSpectatorSportsCellIdentifier = @"JGHSpectatorSportsCe
         //刷新融云TongKT
         [self getRongTK];
     }
-    
 }
 
 - (void)getRongTK{

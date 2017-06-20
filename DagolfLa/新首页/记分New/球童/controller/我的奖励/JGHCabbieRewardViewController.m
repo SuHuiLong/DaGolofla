@@ -64,8 +64,8 @@ static NSString *const JGHCabbieAwaredCellIdentifier = @"JGHCabbieAwaredCell";
 #pragma mark -- 奖励政策
 - (void)rewardPolicy{
     JGTeamDeatilWKwebViewController *wkCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-    //http://imgcache.dagolfla.com/share/score/rewardPolicy.html
-    wkCtrl.detailString = @"http://imgcache.dagolfla.com/share/score/rewardPolicy.html";
+    //https://imgcache.dagolfla.com/share/score/rewardPolicy.html
+    wkCtrl.detailString = @"https://imgcache.dagolfla.com/share/score/rewardPolicy.html";
     wkCtrl.isReward = 1;
     [self.navigationController pushViewController:wkCtrl animated:YES];
 }

@@ -31,6 +31,7 @@
     self.tabBarController.view.backgroundColor = [UIColor blackColor];
     self.navigationController.navigationBarHidden = YES;
     self.tabBarController.tabBar.hidden = NO;
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -68,7 +69,6 @@
     
     
     _muArray = [[NSMutableArray alloc] init];
-//    self.title = @"滑动切换视图";
     self.slideSwitchView.tabItemNormalColor = [JKSlideSwitchView colorFromHexRGB:@"DCDCDC"];
     self.slideSwitchView.tabItemSelectedColor = [JKSlideSwitchView colorFromHexRGB:@"FFFFFF"];
     self.slideSwitchView.bottomLineColor = [UIColor whiteColor];

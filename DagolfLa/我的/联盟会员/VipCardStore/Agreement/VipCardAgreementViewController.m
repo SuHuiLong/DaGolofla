@@ -47,7 +47,7 @@
     
     WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight-kHvertical(51))];
     //2.创建URL
-    NSURL *URL = [NSURL URLWithString:@"http://res.dagolfla.com/h5/league/sysLeagueAgreement.html"];
+    NSURL *URL = [NSURL URLWithString:@"https://res.dagolfla.com/h5/league/sysLeagueAgreement.html"];
     //3.创建Request
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     //4.加载Request

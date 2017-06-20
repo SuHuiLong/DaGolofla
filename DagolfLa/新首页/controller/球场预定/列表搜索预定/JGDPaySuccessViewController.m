@@ -10,8 +10,19 @@
 #import "JGDOrderDetailViewController.h"
 #import "JGDCourtDetailViewController.h"
 #import "JGDOrderListViewController.h"
+#import "RedpacketAlertView.h"
+#import "MessageShareAlert.h"
+#import <MessageUI/MessageUI.h>
+@interface JGDPaySuccessViewController ()<MFMessageComposeViewControllerDelegate>
+//红包弹出视图
+@property (nonatomic,copy) RedpacketAlertView *redPacketAlertView;
+//红包数据
+@property (nonatomic,copy) NSDictionary *redpacketData;
+//分享选项
+@property (nonatomic,copy) MessageShareAlert *shareAlert;
+//是否分享成功
+@property (nonatomic,assign) BOOL shareSucess;
 
-@interface JGDPaySuccessViewController ()
 
 @end
 
@@ -59,8 +70,6 @@
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
-
-        
         if ([vc isKindOfClass:[JGDOrderDetailViewController class]] || [vc isKindOfClass:[JGDCourtDetailViewController class]]) {
             [self.navigationController popToViewController:vc animated:YES];
             return;
@@ -72,11 +81,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"orderStateChange" object:nil];
+    [self createView];
+}
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    //移除分享界面
+    [self removeShreView];
+}
+
+#pragma mark - CreateView
+-(void)createView{
     if (_payORlaterPay == 1) {
         self.title = @"支付成功";
+        //获取订场红包
+        [self initRedpacket];
     }else if (_payORlaterPay == 2 || _payORlaterPay == 4) {
         self.title = @"提交成功";
     }else if (_payORlaterPay == 3 || _payORlaterPay == 5) {
@@ -90,10 +110,6 @@
     
     UILabel *orderStateLB = [self lablerect:CGRectMake(0, 10, screenWidth, 30 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(15 * ProportionAdapter) text:@"订单状态" textAlignment:(NSTextAlignmentCenter)];
     [ueView addSubview:orderStateLB];
-    
-    
-    
-    
     
     
     UIView *shitaView = [[UIView alloc] initWithFrame:CGRectMake(0, 120 * ProportionAdapter, screenWidth, 160 * ProportionAdapter)];
@@ -249,7 +265,162 @@
     return label;
 }
 
+#pragma mark - 订场红包
+//获取是否有红包
+-(void)initRedpacket{
 
+    NSDictionary *dict = @{
+                           @"orderKey":_orderKey,
+                           };
+    [[JsonHttp jsonHttp] httpRequestWithMD5:@"orderPay/doQueryOrderPayResult" JsonKey:nil withData:dict failedBlock:^(id errType) {
+        
+    } completionBlock:^(id data) {
+        BOOL packSuccess = [[data objectForKey:@"packSuccess"] boolValue];
+        if (packSuccess) {
+            NSInteger payMoney = [[data objectForKey:@"payMoney"] integerValue];
+            if (payMoney>0) {
+                NSString *title = [data objectForKey:@"strPrompt"];
+                self.redpacketData = [data objectForKey:@"redPacket"];
+                if (self.redpacketData.allKeys.count>0) {
+                    [self alertRedpaketviewWithText:title];
+                }
+            }else{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self initRedpacket];
+                });
+            }
+        }
+        
+    }];
+}
+//弹出红包
+-(void)alertRedpaketviewWithText:(NSString *)text{
+    
+    _redPacketAlertView = [[RedpacketAlertView alloc] initWithFrame:self.view.bounds Text:text];
+    _redPacketAlertView.hidden = false;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickToShare)];
+    [_redPacketAlertView.circleView addGestureRecognizer:tap];
+    [[UIApplication sharedApplication].keyWindow addSubview:_redPacketAlertView];
+}
+//点击分享
+-(void)clickToShare{
+    
+    MessageShareAlert *alert = [[MessageShareAlert alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+    alert.selectIndex = ^(NSInteger index) {
+        if (index == 0) {
+            [self shareCancelClick];
+        }else{
+            _shareSucess = false;
+            [self shareInfo:index];
+        }
+    };
+    [[UIApplication sharedApplication].keyWindow addSubview:alert];
+    _shareAlert = alert;
+}
+
+
+-(void)shareInfo:(NSInteger)index{
+    
+    //分享链接
+    NSString *shareUrl = [_redpacketData objectForKey:@"shareURL"];
+    //标题
+    NSString *name = [_redpacketData objectForKey:@"title"];
+    //微信分享内容
+    NSString *desc = [_redpacketData objectForKey:@"desc"];
+    //图标
+    UIImage *icon = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[_redpacketData objectForKey:@"iconURL"]]]];
+    
+    [UMSocialData defaultData].extConfig.title=name;
+    if(index==1){
+        
+        //微信
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:desc image:icon location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                [MobClick event:@"redpacket_weixin_share"];
+
+                [self shareSucessBlock];
+            }
+        }];
+    }else if (index==2){
+        //朋友圈
+        [UMSocialWechatHandler setWXAppId:@"wxdcdc4e20544ed728" appSecret:@"fdc75aae5a98f2aa0f62ef8cba2b08e9" url:shareUrl];
+        [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSina]];
+        [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:desc image:icon location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+            if (response.responseCode == UMSResponseCodeSuccess) {
+                [MobClick event:@"redpacket_pengyouquan_share"];
+
+                [self shareSucessBlock];
+            }
+        }];
+        
+    }else if (index==3){
+        NSString *smsBody = [_redpacketData objectForKey:@"smsBody"];
+        if( [MFMessageComposeViewController canSendText] ){
+            MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc] init];
+            controller.messageComposeDelegate = self;
+            controller.body = smsBody;
+            [self justHiden];
+            [self presentViewController:controller animated:YES completion:nil];
+        }
+    }
+}
+
+
+//短信发送结果
+-(void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+    [self justShow];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    NSString *resultStr = [NSString string];
+    if (result == MessageComposeResultCancelled) {
+        resultStr = @"取消发送";
+    }else if (result == MessageComposeResultSent){
+        resultStr = @"发送成功";
+        [MobClick event:@"redpacket_message_share"];
+        [self shareSucessBlock];
+    }else{
+        resultStr = @"发送失败";
+    }
+    [[ShowHUD showHUD] showToastWithText:resultStr FromView:self.view];
+}
+
+//隐藏视图
+//所有只是隐藏
+-(void)justHiden{
+    _redPacketAlertView.hidden = true;
+    _shareAlert.hidden = true;
+}
+//取消隐藏
+-(void)justShow{
+    _redPacketAlertView.hidden = false;
+    _shareAlert.hidden = false;
+}
+//分享成功
+-(void)shareSucessBlock{
+    _shareSucess = true;
+}
+
+//分享取消按钮点击
+-(void)shareCancelClick{
+    if (_shareSucess) {
+        [self removeShreView];
+    }
+}
+//移除分享界面
+-(void)removeShreView{
+    if (!_redPacketAlertView.hidden) {
+        _redPacketAlertView.hidden = true;
+        [_redPacketAlertView removeAllSubviews];
+        [_redPacketAlertView removeFromSuperview];
+    }
+    if (!_shareAlert.hidden) {
+        _shareAlert.hidden = true;
+        [_shareAlert removeAllSubviews];
+        [_shareAlert removeFromSuperview];
+        
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

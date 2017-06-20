@@ -104,7 +104,7 @@
 //通过服务器获取更新订场城市数据
 -(void)loadData{
     
-    [[JsonHttp jsonHttp] httpRequest:@"http://res.dagolfla.com/download/json/ballArea.json" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"https://res.dagolfla.com/download/json/ballArea.json" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {
         NSString *cacherPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
@@ -138,7 +138,7 @@
 //通过服务器获取更新活动城市数据
 -(void)loadActivityData{
     
-    [[JsonHttp jsonHttp] httpRequest:@"http://res.dagolfla.com/download/json/TeamActivityArea.json" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"https://res.dagolfla.com/download/json/TeamActivityArea.json" failedBlock:^(id errType) {
         NSLog(@"%@", errType);
     } completionBlock:^(id data) {
         NSString *cacherPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
@@ -230,7 +230,7 @@
     [resetBtn setImageEdgeInsets:UIEdgeInsetsMake(kHvertical(3), 0, kHvertical(3), 0)];
     [headerView addSubview:resetBtn];
     //浅色分割线
-    UIView *lineView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, kHvertical(81), screenWidth, kHvertical(10))];
+    UIView *lineView = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, kHvertical(81), screenWidth, kHvertical(10))];
     [headerView addSubview:lineView];
     
     //提示文字

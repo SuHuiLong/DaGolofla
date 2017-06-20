@@ -54,12 +54,12 @@ static CGFloat ImageHeight  = 210.0;
 
 @property (nonnull, strong)UIButton *headPortraitBtn;//头像
 
-
 @property (nonatomic, strong)UIView *titleView;//顶部导航
 
 @property (nonatomic, strong)UIButton *addressBtn;//添加地址
 
 @property (nonatomic, strong)NSMutableArray *costListArray;//费用列表
+
 
 @end
 
@@ -167,11 +167,15 @@ static CGFloat ImageHeight  = 210.0;
     
     if (_model.teamActivityKey == 0) {
         //我的球队活动
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue] andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            self.model.bgImage = image;
+        }];
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     }else{
         //球队活动
-        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage]];
+        [self.imgProfile sd_setImageWithURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:NO andIsBackGround:YES] placeholderImage:[UIImage imageNamed:ActivityBGImage] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            self.model.bgImage = image;
+        }];
         [self.headPortraitBtn sd_setImageWithURL:[Helper setImageIconUrl:@"team" andTeamKey:_model.teamKey andIsSetWidth:YES andIsBackGround:NO] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:TeamLogoImage]];
     }
     
@@ -637,9 +641,11 @@ static CGFloat ImageHeight  = 210.0;
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
     } completionBlock:^(id data) {
         NSLog(@"%@", data);
+        
         if ([[data objectForKey:@"packSuccess"] integerValue] == 0) {
             [Helper alertViewWithTitle:[data objectForKey:@"packResultMsg"] withBlock:^(UIAlertController *alertView) {
                 [self presentViewController:alertView animated:YES completion:nil];
+                [[ShowHUD showHUD] hideAnimationFromView:self.view];
             }];
             return ;
         }
@@ -670,11 +676,11 @@ static CGFloat ImageHeight  = 210.0;
                 [[ShowHUD showHUD] hideAnimationFromView:self.view];
 
                 if ([[data objectForKey:@"code"] integerValue] == 1) {
-                    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
+                    NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/activity/%@_background.jpg@400w_150h_2o", strTimeKey];
                     
                     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
                     
-                    NSString *bggUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/activity/%@_background.jpg", strTimeKey];
+                    NSString *bggUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/activity/%@_background.jpg", strTimeKey];
                     
                     [[SDImageCache sharedImageCache] removeImageForKey:bggUrl fromDisk:YES withCompletion:nil];
                     

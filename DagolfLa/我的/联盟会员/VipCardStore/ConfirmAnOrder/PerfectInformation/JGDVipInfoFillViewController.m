@@ -11,7 +11,7 @@
 #import "JGDTakeCodeTableViewCell.h"
 #import "JGDPickerView.h"
 
-#import "JGDPhotoIploadViewController.h"
+//#import "JGDPhotoIploadViewController.h"
 #import "VipCardConfirmOrderViewController.h"
 
 @interface JGDVipInfoFillViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
@@ -57,7 +57,7 @@
     self.nextButton.clipsToBounds = YES;
     self.nextButton.layer.cornerRadius = 6.f;
     self.nextButton.enabled = NO;
-    [self.nextButton setTitle:@"下一步" forState:UIControlStateNormal];
+    [self.nextButton setTitle:@"完成" forState:UIControlStateNormal];
     self.nextButton.backgroundColor = [UIColor colorWithHexString:@"#A0A0A0"];
     [self.nextButton addTarget:self action:@selector(previewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.nextButton];
@@ -72,7 +72,7 @@
     // Do any additional setup after loading the view.
 }
 
-#pragma mark -- 下一步 --
+#pragma mark -- 完成 --
 
 - (void)previewBtnClick:(UIButton *)commitBtn{
     
@@ -112,15 +112,17 @@
         commitBtn.userInteractionEnabled = YES;
         
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
-            
-            JGDPhotoIploadViewController * photoVC = [[JGDPhotoIploadViewController alloc] init];
-            photoVC.infoDic = infoDic;
-            if (self.inputModel.userKey) {
-                [photoVC.infoDic setObject:self.inputModel.picHeadURL forKey:@"picHeadURL"];
-                [photoVC.infoDic setObject:self.inputModel.picCertURLs forKey:@"picCertURLs"];
-            }
-            [self.navigationController pushViewController:photoVC animated:YES];
-            
+            [self sendOtherData:infoDic];
+            /*
+             移除审核上传照片
+             JGDPhotoIploadViewController * photoVC = [[JGDPhotoIploadViewController alloc] init];
+             photoVC.infoDic = infoDic;
+             if (self.inputModel.userKey) {
+             [photoVC.infoDic setObject:self.inputModel.picHeadURL forKey:@"picHeadURL"];
+             [photoVC.infoDic setObject:self.inputModel.picCertURLs forKey:@"picCertURLs"];
+             }
+             [self.navigationController pushViewController:photoVC animated:YES];
+            */
         }else{
 
             if ([data objectForKey:@"packResultMsg"]) {
@@ -130,6 +132,53 @@
     }];
     
 }
+
+//获取照片id之后提交其余数据
+-(void)sendOtherData:(NSDictionary *)infoDic{
+    NSString *sexStr = @"0";
+    if ([[infoDic objectForKey:@"sex"] isEqualToString:@"男"]) {
+        sexStr = @"1";
+    }
+    NSDictionary *user = @{
+                           @"userKey":DEFAULF_USERID,
+                           @"userName":[infoDic objectForKey:@"userName"],
+                           @"mobile":[infoDic objectForKey:@"mobile"],
+                           @"sex":sexStr,
+                           @"certType":@"0",
+                           @"certNumber":[infoDic objectForKey:@"certNumber"]
+                           };
+    
+    NSMutableDictionary *luserDic = [NSMutableDictionary dictionaryWithDictionary:user];
+    
+    NSDictionary *certDic = @{
+                              @"telphone":[infoDic objectForKey:@"mobile"],
+                              @"checkCode":[infoDic objectForKey:@"checkCode"],
+                              @"userKey":DEFAULF_USERID,
+                              @"luinfo":luserDic
+                              };
+
+    
+    [[JsonHttp jsonHttp] httpRequestHaveSpaceWithMD5:@"league/doSaveSystemLeagueUInfo" JsonKey:nil withData:certDic failedBlock:^(id errType) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        
+    } completionBlock:^(id data) {
+        [[ShowHUD showHUD]hideAnimationFromView:self.view];
+        
+        if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
+            [self.navigationController popViewControllerAnimated:true];
+        }else{
+            
+            if ([data objectForKey:@"packResultMsg"]) {
+                [LQProgressHud showMessage:[data objectForKey:@"packResultMsg"]];
+            }
+        }
+    }];
+    
+    
+}
+
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     

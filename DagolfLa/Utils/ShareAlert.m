@@ -11,11 +11,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ViewController.h"
 #define kAlertWidth ScreenWidth
-#define kAlertHeight ((ScreenWidth/4.0)+70)
+#define kAlertHeight kHvertical(210)
 
 
 @interface ShareAlert ()
 {
+    
     CGFloat space;
     CGFloat font;
     UIButton* _btnBack;
@@ -38,7 +39,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+    
     }
     return self;
 }
@@ -49,171 +50,50 @@
 #define kContentOffset 30.0f
 #define kBetweenLabelOffset 20.0f
 
--(id)initMyAlertWithWeChat:(BOOL)usWeChat
-{
-    //CGFloat x=17.0;
-    //font=selfHeight<490?x-3:(selfHeight<570?x-2:(selfHeight<670?x:(selfHeight<740?x:1000)));
-    NSArray* titleArray=@[@"微信",@"朋友圈",@"新浪"];
-    NSArray* imagArray=@[@"weixin-1",@"pengyouquan",@"xinliang"];
-    space=10.0;
-    //CGFloat btnWidth=(selfWidth-8*10)/4.0;
-    CGFloat btnWidth=ScreenWidth/3.0;
-    UIImage* shareImg=[UIImage imageNamed:imagArray[0]];
-    CGFloat imgWidth=shareImg.size.width;
+
+- (id)initMyAlert{
     
-    
-    if (self = [super init])
-    {
-    
-            UIButton* myBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-            [myBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [myBtn setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
-            myBtn.backgroundColor=[UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
-            
-            if(ScreenHeight<700)
-            {
-                if(ScreenHeight<500)
-                {
-                    myBtn.frame=CGRectMake(0, 0, screenWidth, btnWidth+40);
-                    myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
-                    [myBtn setImage:[UIImage imageNamed:imagArray[0]] forState:UIControlStateNormal];
-                    ////NSLog(@"%@",titleArray[0]);
-                    [myBtn setTitle:titleArray[0] forState:UIControlStateNormal];
-                    myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
-                    [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (screenWidth/2-imgWidth)/2.0,btnWidth-imgWidth, (btnWidth-imgWidth)/2.0)];
-                    [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
-                }
-                else
-                {
-                    myBtn.frame=CGRectMake(0, 0, screenWidth, btnWidth+20);
-                    myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
-                    [myBtn setImage:[UIImage imageNamed:imagArray[0]] forState:UIControlStateNormal];
-                    [myBtn setTitle:titleArray[0] forState:UIControlStateNormal];
-                    myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
-                    [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (screenWidth/2-imgWidth)/2.0,btnWidth-imgWidth, (btnWidth-imgWidth)/2.0)];
-                    [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
-                    
-                }
-            }
-            else
-            {
-                myBtn.frame=CGRectMake(0, 25, screenWidth, btnWidth);
-                myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
-                [myBtn setImage:[UIImage imageNamed:imagArray[0]] forState:UIControlStateNormal];
-                [myBtn setTitle:titleArray[0] forState:UIControlStateNormal];
-                myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
-                [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (screenWidth/2-imgWidth)/2.0,btnWidth-imgWidth-20, (btnWidth-imgWidth)/2.0)];
-                [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
-            }
-            [myBtn addTarget:self action:@selector(selectIndex:) forControlEvents:UIControlEventTouchUpInside];
-            myBtn.tag=200;
-            myBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-            [self addSubview:myBtn];
-        
-        UIButton* cancle=[UIButton buttonWithType:UIButtonTypeCustom];
-        [cancle setTitle:@"取消" forState:UIControlStateNormal];
-        [cancle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        
-        cancle.frame=CGRectMake(0, kAlertHeight-(ScreenHeight<500?35:50), ScreenWidth, ScreenHeight<500?35:50);
-        cancle.backgroundColor=[UIColor whiteColor];
-        [cancle addTarget:self action:@selector(dismissAlert) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:cancle];
-        
+    if (self = [super init]){
+        [self createView];
     }
     return self;
 }
 
+//创建alert
+-(void)createView{
 
-- (id)initMyAlert
-{
-    //CGFloat x=17.0;
-    //font=selfHeight<490?x-3:(selfHeight<570?x-2:(selfHeight<670?x:(selfHeight<740?x:1000)));
-    NSArray* titleArray=@[@"微信",@"朋友圈",@"新浪"];
-    NSArray* imagArray=@[@"weixin-1",@"pengyouquan",@"xinliang"];
-    space=10.0;
-    //CGFloat btnWidth=(selfWidth-8*10)/4.0;
-    CGFloat btnWidth=ScreenWidth/3.0;
-    UIImage* shareImg=[UIImage imageNamed:imagArray[0]];
-    CGFloat imgWidth=shareImg.size.width;
     
+    NSArray *titleArray = @[@"微信好友",@"微信朋友圈",@"新浪微博"];
+    NSArray *iconArray = @[@"weixin-1",@"pengyouquan",@"xinliang"];
     
-    if (self = [super init])
-    {
-        
-        for(int i=0;i<3;i++)
-        {
-            UIButton* myBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-            [myBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [myBtn setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
-            myBtn.backgroundColor=[UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
-            
-            if(ScreenHeight<700)
-            {
-                if(ScreenHeight<500)
-                {
-                    myBtn.frame=CGRectMake(btnWidth*i, 0, btnWidth, btnWidth+40);
-                    myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
-                    [myBtn setImage:[UIImage imageNamed:imagArray[i]] forState:UIControlStateNormal];
-                    ////NSLog(@"%@",titleArray[0]);
-                    [myBtn setTitle:titleArray[i] forState:UIControlStateNormal];
-                    myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
-                    [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (btnWidth-imgWidth)/2.0,btnWidth-imgWidth, (btnWidth-imgWidth)/2.0)];
-                    [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
-                }
-                else
-                {
-//                    if (i == 1) {
-//                        myBtn.frame=CGRectMake(btnWidth*i, 0, btnWidth, btnWidth+20);
-//                        myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
-//                        [myBtn setImage:[UIImage imageNamed:imagArray[i]] forState:UIControlStateNormal];
-//                        [myBtn setTitle:titleArray[i] forState:UIControlStateNormal];
-//                        myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
-//                        [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (btnWidth-imgWidth)/2.0,btnWidth-imgWidth, (btnWidth-imgWidth)/2.0)];
-//                        [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
-//                    }
-//                    else{
-                        myBtn.frame=CGRectMake(btnWidth*i, 0, btnWidth, btnWidth+20);
-                        myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
-                        [myBtn setImage:[UIImage imageNamed:imagArray[i]] forState:UIControlStateNormal];
-                        [myBtn setTitle:titleArray[i] forState:UIControlStateNormal];
-                        myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
-                        [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (btnWidth-imgWidth)/2.0,btnWidth-imgWidth, (btnWidth-imgWidth)/2.0)];
-                        [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
-//                    }
-                    
-                }
-            }
-            else
-            {
-                myBtn.frame=CGRectMake(btnWidth*i, 25, btnWidth, btnWidth);
-                myBtn.titleLabel.font=[UIFont systemFontOfSize:13.0f];
-                [myBtn setImage:[UIImage imageNamed:imagArray[i]] forState:UIControlStateNormal];
-                [myBtn setTitle:titleArray[i] forState:UIControlStateNormal];
-                myBtn.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
-                [myBtn setImageEdgeInsets:UIEdgeInsetsMake(space, (btnWidth-imgWidth)/2.0,btnWidth-imgWidth-20, (btnWidth-imgWidth)/2.0)];
-                [myBtn setTitleEdgeInsets:UIEdgeInsetsMake(20, -myBtn.titleLabel.bounds.size.width-50, 0, 0)];
-            }
-            [myBtn addTarget:self action:@selector(selectIndex:) forControlEvents:UIControlEventTouchUpInside];
-            myBtn.tag=i+200;
-            myBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-            [self addSubview:myBtn];
-        }
-        UIButton* cancle=[UIButton buttonWithType:UIButtonTypeCustom];
-        [cancle setTitle:@"取消" forState:UIControlStateNormal];
-        [cancle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        
-        cancle.frame=CGRectMake(0, kAlertHeight-(ScreenHeight<500?35:50), ScreenWidth, ScreenHeight<500?35:50);
-        cancle.backgroundColor=[UIColor whiteColor];
-        [cancle addTarget:self action:@selector(dismissAlert) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:cancle];
-        
+    UIView *buttonView = [Factory createViewWithBackgroundColor:RGB(255,255,255) frame:CGRectMake(kWvertical(10), 0, screenWidth - kWvertical(20), kHvertical(140))];
+    buttonView.layer.masksToBounds = true;
+    buttonView.layer.cornerRadius = kHvertical(8);
+    [self addSubview:buttonView];
+    for (int i = 0; i < 3; i++) {
+        //按钮
+        UIButton *indexBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(4) + (buttonView.width/3 - kWvertical(8))*i, kHvertical(13), buttonView.width/3 - kWvertical(8), kHvertical(84)) image:[UIImage imageNamed:iconArray[i]] target:self selector:@selector(selectIndex:) Title:nil];
+        indexBtn.tag = i+200;
+        [buttonView addSubview:indexBtn];
+        //文字
+        UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(indexBtn.x, kHvertical(90), indexBtn.width, kHvertical(21)) textColor:RGB(49,49,49) fontSize:kHorizontal(15) Title:titleArray[i]];
+        [descLabel setTextAlignment:NSTextAlignmentCenter];
+        [buttonView addSubview:descLabel];
     }
-    return self;
+    
+    
+    UIButton *cancel = [Factory createButtonWithFrame:CGRectMake(buttonView.x, buttonView.y_height + kHvertical(10), buttonView.width, kHvertical(50)) titleFont:kHorizontal(20) textColor:RGB(49,49,49) backgroundColor:WhiteColor target:self selector:@selector(dismissAlert) Title:@"取消"];
+    cancel.layer.cornerRadius = kHvertical(8);
+    cancel.layer.masksToBounds = true;
+    [self addSubview:cancel];
 }
+
+
+
+
 #pragma mark---查询
--(void)selectIndex:(UIButton*)sender
-{
-    //NSString* str=_titleArray[sender.tag-200];
+-(void)selectIndex:(UIButton*)sender{
+    
     _callBackTitle(sender.tag-200);
     [self dismissAlert];
 }

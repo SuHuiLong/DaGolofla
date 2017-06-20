@@ -29,7 +29,7 @@
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures =YES;
     
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/ball/ballDetails.html?ballKey=%@&md5=%@", self.ballKey, [Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", self.ballKey]]]]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/ball/ballDetails.html?ballKey=%@&md5=%@", self.ballKey, [Helper md5HexDigest:[NSString stringWithFormat:@"ballKey=%@dagolfla.com", self.ballKey]]]]]];
 
     
     // Do any additional setup after loading the view.

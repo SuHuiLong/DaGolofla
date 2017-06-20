@@ -31,7 +31,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createRefresh];
     // Do any additional setup after loading the view.
 }
 
@@ -152,7 +151,7 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    UIView *backView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
+    UIView *backView = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
     //无订单提示图片
     UIImageView *picImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWvertical(75),kWvertical(102), kWvertical(246), kWvertical(178))];
     picImageView.image = [UIImage imageNamed:@"bg_set_photo"];

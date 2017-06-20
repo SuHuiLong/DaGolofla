@@ -45,9 +45,9 @@
         [self.phoneImageV setImage:[UIImage imageNamed:@"order_phone"] forState:(UIControlStateNormal)];
         [self.contentView addSubview:self.phoneImageV];
         
-        self.lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 10 * ProportionAdapter, 0.5 * ProportionAdapter)];
-        self.lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
-        [self.contentView addSubview:self.lineView];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 50 * ProportionAdapter - 1, screenWidth - 10 * ProportionAdapter, 1 )];
+        lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+        [self.contentView addSubview:lineView];
         
     }
     return self;

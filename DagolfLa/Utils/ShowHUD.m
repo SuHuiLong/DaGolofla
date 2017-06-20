@@ -101,9 +101,13 @@ static ShowHUD *showHUD = nil;
  */
 -(void)hideAnimationFromView:(UIView *)view
 {
-    [_HUD removeFromSuperview];
-    [_HUD hideAnimated:YES];
-    _HUD = nil;
+    if (_HUD.superview) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_HUD removeFromSuperview];
+            [_HUD hideAnimated:YES];
+            _HUD = nil;
+        });
+    }
 }
 
 

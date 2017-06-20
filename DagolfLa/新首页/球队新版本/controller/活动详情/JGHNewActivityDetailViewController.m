@@ -340,7 +340,6 @@ static CGFloat ImageHeight  = 210.0;
                     //判断活动是否结束 endDate
                     if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
                         if ([_isApply integerValue] == 0) {
-//                            self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight-kHvertical(65));
                         }else{
                             self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight-kHvertical(65));
                             [self createCancelBtnAndApplyOrPay:1];//已报名
@@ -648,7 +647,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 详情页面
 - (void)pushDetailSCtrl:(UIButton *)btn{
     JGTeamDeatilWKwebViewController *WKCtrl = [[JGTeamDeatilWKwebViewController alloc]init];
-    WKCtrl.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamActivityDetails.html?key=%@", _model.timeKey];
+    WKCtrl.detailString = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/teamActivityDetails.html?key=%@", _model.timeKey];
     WKCtrl.teamName = @"活动详情";
     [self.navigationController pushViewController:WKCtrl animated:YES];
 }
@@ -755,8 +754,8 @@ static CGFloat ImageHeight  = 210.0;
     btn.userInteractionEnabled = NO;
     
     UseMallViewController *webCtrl = [[UseMallViewController alloc]init];
-    //http://res.dagolfla.com/h5/luck/historyListDetail.html?userKey=167238&teamKey=4011&activityKey=571084&luckDrawKey=571249&md5=6FC5449449E8E78326ACBF47873681F0
-    webCtrl.linkUrl = [NSString stringWithFormat:@"http://res.dagolfla.com/h5/luck/luckMain.html?userKey=%@&teamKey=%td&activityKey=%td&md5=%@", DEFAULF_USERID, _model.teamKey, _teamKey, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%td&activityKey=%tddagolfla.com", DEFAULF_USERID, _model.teamKey, _teamKey]]];
+    //https://res.dagolfla.com/h5/luck/historyListDetail.html?userKey=167238&teamKey=4011&activityKey=571084&luckDrawKey=571249&md5=6FC5449449E8E78326ACBF47873681F0
+    webCtrl.linkUrl = [NSString stringWithFormat:@"https://res.dagolfla.com/h5/luck/luckMain.html?userKey=%@&teamKey=%td&activityKey=%td&md5=%@", DEFAULF_USERID, _model.teamKey, _teamKey, [Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@&teamKey=%td&activityKey=%tddagolfla.com", DEFAULF_USERID, _model.teamKey, _teamKey]]];
     
     [self.navigationController pushViewController:webCtrl animated:YES];
     btn.userInteractionEnabled = YES;
@@ -821,11 +820,11 @@ static CGFloat ImageHeight  = 210.0;
     if ([_model.timeKey integerValue] == 0) {
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:_model.teamActivityKey andIsSetWidth:YES andIsBackGround:YES]];
         NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%td&userKey=%@dagolfla.com", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID]];
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%td&userKey=%@&share=1&md5=%@", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID, md5String];
+        shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%td&userKey=%@&share=1&md5=%@", _model.teamKey, _model.teamActivityKey, DEFAULF_USERID, md5String];
     }else{
         NSString *md5String = [Helper md5HexDigest:[NSString stringWithFormat:@"teamKey=%td&activityKey=%@&userKey=%@dagolfla.com", _model.teamKey, _model.timeKey, DEFAULF_USERID]];
         fiData = [NSData dataWithContentsOfURL:[Helper setImageIconUrl:@"activity" andTeamKey:[_model.timeKey integerValue]andIsSetWidth:YES andIsBackGround:YES]];
-        shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%@&userKey=%@&share=1&md5=%@", _model.teamKey, _model.timeKey, DEFAULF_USERID, md5String];
+        shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/teamac.html?teamKey=%td&activityKey=%@&userKey=%@&share=1&md5=%@", _model.teamKey, _model.timeKey, DEFAULF_USERID, md5String];
     }
     
     

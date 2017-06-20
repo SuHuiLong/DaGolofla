@@ -22,7 +22,7 @@
  创建界面
  */
 -(void)createView{
-    self.contentView.backgroundColor = RGB(238,238,238);
+    self.contentView.backgroundColor = Back_Color;
     //背景图
     UIView *whiteView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, kHvertical(10), screenWidth, kHvertical(200))];
     [self.contentView addSubview:whiteView];

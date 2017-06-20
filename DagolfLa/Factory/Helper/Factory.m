@@ -82,7 +82,6 @@
 + (UIImageView *)createImageViewWithFrame:(CGRect)frame Image:(UIImage *)image{
     UIImageView *view = [[UIImageView alloc] initWithFrame:frame];
     view.image = image;
-
     return view;
 }
 

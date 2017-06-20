@@ -598,7 +598,7 @@
         self.ymData = (YMTextData *)[_tableDataSource objectAtIndex:indexRow];
         
         ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
         [alert setCallBackTitle:^(NSInteger index) {
             [self shareInfo:index cellIndex:indexRow];
         }];

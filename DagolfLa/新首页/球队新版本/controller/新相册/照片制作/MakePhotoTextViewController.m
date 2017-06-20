@@ -129,7 +129,7 @@
             vc.headerStr = _photoTitleLabelStr;
             vc.timeKey = _headerViewTimekey;
             vc.writerStr = _photoWriterStr;
-            vc.urlStr = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/picsShare.html?userKey=%@&shareKey=%@&md5=%@",DEFAULF_USERID,shareKey,md5Value];
+            vc.urlStr = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/picsShare.html?userKey=%@&shareKey=%@&md5=%@",DEFAULF_USERID,shareKey,md5Value];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }];

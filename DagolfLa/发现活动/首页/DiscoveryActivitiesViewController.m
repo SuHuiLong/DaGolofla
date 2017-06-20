@@ -46,11 +46,6 @@
     [self setNavagationType];
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = Back_Color;
@@ -176,7 +171,7 @@
 //无数据展示图片
 -(void)createNoDataView{
     
-    UIView *backView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
+    UIView *backView = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, 0, screenWidth, screenHeight-64)];
     //无订单提示图片
     UIImageView *picImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kWvertical(75),kWvertical(102), kWvertical(246), kWvertical(178))];
     picImageView.image = [UIImage imageNamed:@"bg_set_photo"];

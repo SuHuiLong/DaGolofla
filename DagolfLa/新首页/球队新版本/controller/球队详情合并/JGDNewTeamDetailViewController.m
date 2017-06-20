@@ -113,8 +113,8 @@ static CGFloat ImageHeight  = 210.0;
     
 
     self.navigationController.navigationBarHidden = YES;
-    NSString *head = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", self.timeKey];
-    NSString *bgUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/team/%@_background.jpg", self.timeKey];
+    NSString *head = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%@.jpg@200w_200h_2o", self.timeKey];
+    NSString *bgUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/team/%@_background.jpg", self.timeKey];
     
     [[SDImageCache sharedImageCache] removeImageForKey:head fromDisk:YES withCompletion:nil];
     [[SDImageCache sharedImageCache] removeImageForKey:bgUrl fromDisk:YES withCompletion:nil];
@@ -330,7 +330,7 @@ static CGFloat ImageHeight  = 210.0;
     if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
         
         ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+        alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
         [alert setCallBackTitle:^(NSInteger index) {
             [self shareInfo:index];
         }];
@@ -369,7 +369,7 @@ static CGFloat ImageHeight  = 210.0;
     }
     
     //http://192.168.1.104:8888/imgcache.dagolfla.com/share/team/team.html?key=181
-    NSString*  shareUrl = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/team.html?key=%@",self.timeKey];
+    NSString*  shareUrl = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/team.html?key=%@",self.timeKey];
     [UMSocialData defaultData].extConfig.title=[NSString stringWithFormat:@"欢迎加入%@",[self.dataDict objectForKey:@"name"]];
     if (index == 0){
         
@@ -440,15 +440,7 @@ static CGFloat ImageHeight  = 210.0;
 #pragma mark -- 微信分享召集好友
 - (void)previewBtnClick{
     
-    ShareAlert* alert = [[ShareAlert alloc]initMyAlertWithWeChat:YES];
-    alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
-    [alert setCallBackTitle:^(NSInteger index) {
-        [self shareInfo:index];
-    }];
-    [UIView animateWithDuration:0.2 animations:^{
-        [alert show];
-    }];
-    
+        [self shareInfo:0];
 }
 
 
@@ -795,7 +787,7 @@ static CGFloat ImageHeight  = 210.0;
             
         }else if (indexPath.section == 3){
             JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
-            wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamDetails.html?key=%@", [self.dataDict objectForKey:@"timeKey"]];;
+            wkVC.detailString = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/teamDetails.html?key=%@", [self.dataDict objectForKey:@"timeKey"]];;
             wkVC.teamName = [self.dataDict objectForKey:@"name"];
             [self.navigationController pushViewController:wkVC animated:YES];
         }
@@ -864,7 +856,7 @@ static CGFloat ImageHeight  = 210.0;
                 {
                     JGTeamDeatilWKwebViewController *wkVC = [[JGTeamDeatilWKwebViewController alloc] init];
                     
-                    wkVC.detailString = [NSString stringWithFormat:@"http://imgcache.dagolfla.com/share/team/teamDetails.html?key=%@", self.timeKey];;
+                    wkVC.detailString = [NSString stringWithFormat:@"https://imgcache.dagolfla.com/share/team/teamDetails.html?key=%@", self.timeKey];;
                     wkVC.teamName = [self.dataDict objectForKey:@"name"];
                     [self.navigationController pushViewController:wkVC animated:YES];
                 }

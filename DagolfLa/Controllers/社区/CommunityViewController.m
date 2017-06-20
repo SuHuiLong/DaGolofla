@@ -574,7 +574,7 @@
             if ([[NSUserDefaults standardUserDefaults]objectForKey:@"userId"]) {
                 _comModel =[_dataArray objectAtIndex:indexPath.row];
                 ShareAlert* alert = [[ShareAlert alloc]initMyAlert];
-                alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, ScreenWidth);
+                alert.frame = CGRectMake(0, ScreenHeight, ScreenWidth, kHvertical(210));
                 [alert setCallBackTitle:^(NSInteger index) {
                     [self shareInfo:index];
                 }];

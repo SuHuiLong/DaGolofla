@@ -42,7 +42,8 @@
 @property (nonatomic,assign) NSInteger almost;
 //类型: 0:球队队员  1:嘉宾
 @property (nonatomic, assign)NSInteger userType;
-
+//显示的球员类型
+@property (nonatomic,copy) NSString *showName;
 //来源 1-队员，2-球友
 @property (nonatomic,assign) NSInteger selectID;
 @end
