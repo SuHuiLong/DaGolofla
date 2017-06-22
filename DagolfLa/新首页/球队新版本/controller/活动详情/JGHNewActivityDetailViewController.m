@@ -328,6 +328,22 @@ static CGFloat ImageHeight  = 210.0;
             
             [self.model setValuesForKeysWithDictionary:[data objectForKey:@"activity"]];
             [self setData];//设置名称 及 图片
+            
+            
+            
+            
+            //是否可以报名
+            BOOL showSignUp = [[data objectForKey:@"showSignUp"] boolValue];
+            if (showSignUp) {
+                self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight-kHvertical(65));
+                if ([_isApply integerValue] == 0) {
+                    [self createApplyBtn:0];//报名按钮
+                }else{
+                    [self createCancelBtnAndApplyOrPay:0];//已报名
+                }
+            
+            
+            /*
             if ([[Helper returnCurrentDateString] compare:_model.endDate] < 0) {
                 if ([[Helper returnCurrentDateString] compare:_model.signUpEndTime] < 0) {
                     self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight-kHvertical(65));
@@ -348,6 +364,7 @@ static CGFloat ImageHeight  = 210.0;
                         self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
                     }
                 }
+            */
             }else{
                 self.teamActibityNameTableView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
             }

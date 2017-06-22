@@ -229,9 +229,9 @@
         UIButton *detailBtn = [[UIButton alloc] initWithFrame:CGRectMake(20 + i * 185 * ProportionAdapter, screenHeight - 190 * ProportionAdapter, 150 * ProportionAdapter, 30 * ProportionAdapter)];
         [detailBtn setTitle: array[i] forState:(UIControlStateNormal)];
         detailBtn.titleLabel.font = [UIFont systemFontOfSize:14 * ProportionAdapter];
-        [detailBtn setTitleColor:[UIColor colorWithHexString:@"#32b14b"] forState:(UIControlStateNormal)];
+        [detailBtn setTitleColor:BarRGB_Color forState:(UIControlStateNormal)];
         detailBtn.layer.borderWidth = 0.5 * ProportionAdapter;
-        detailBtn.layer.borderColor = [[UIColor colorWithHexString:@"#32b14b"] CGColor];
+        detailBtn.layer.borderColor = [BarRGB_Color CGColor];
         detailBtn.layer.cornerRadius = 6;
         detailBtn.clipsToBounds = YES;
         detailBtn.tag = 80 + i;

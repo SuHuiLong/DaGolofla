@@ -123,7 +123,7 @@
 
 - (void)commitOrderTable{
     
-    self.commitOrderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64 * ProportionAdapter) style:(UITableViewStylePlain)];
+    self.commitOrderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64) style:(UITableViewStylePlain)];
     self.commitOrderTableView.delegate = self;
     self.commitOrderTableView.dataSource = self;
     [self.view addSubview:self.commitOrderTableView];
@@ -140,7 +140,7 @@
     // "付款类型 0: 全额预付  1: 部分预付  2: 球场现付"
     if ([[self.detailDic objectForKey:@"payType"] integerValue] == 0) {
         
-        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
+        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 130 * ProportionAdapter)];
         
         self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 40 * ProportionAdapter, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"全额预付  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
         NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"全额预付  ¥%@", self.selectMoney]];
@@ -149,7 +149,7 @@
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
-        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 80 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
+        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 80 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 45 * ProportionAdapter)];
         [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -160,7 +160,7 @@
         
     }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 1) {
         
-        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
+        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 130 * ProportionAdapter)];
         
         self.scenePayMoneyLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"现场支付  ¥%@", self.selectSceneMoney] textAlignment:(NSTextAlignmentLeft)];
         NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%@", self.selectSceneMoney]];
@@ -176,7 +176,7 @@
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
-        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 41 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
+        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 41 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 45 * ProportionAdapter)];
         [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -213,7 +213,7 @@
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
-        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, height +  70 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
+        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, height +  70 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 45 * ProportionAdapter)];
         [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -250,7 +250,6 @@
     
     if (_selectModel.timeKey) {
         [orderDic setObject:_selectModel.timeKey forKey:@"couponKey"];
-        
     }
     
     NSMutableString *nameString = [NSMutableString stringWithString:name];
@@ -273,7 +272,6 @@
     [orderDic setObject:phone forKey:@"userMobile"];
     UITextField *noteTF = [self.commitOrderTableView viewWithTag:999]; // 备注
     [orderDic setObject:noteTF.text forKey:@"remark"];
-    
 
     [dic setObject:orderDic forKey:@"order"];
     [dic setObject:DEFAULF_USERID forKey:@"userKey"];
@@ -310,19 +308,58 @@
             }
         }
     }];
-    
 }
 
 //获取可用红包
 -(NSInteger)getCanUseNum{
     NSInteger totalNum = _myCouponList.count;
+    //订单金额
+    NSInteger money =  [_normolPrice integerValue] * [self.addPlayerArray count] ;
+    NSMutableArray *mArray = [NSMutableArray array];
     for (RedPacketModel *model in _myCouponList) {
-        if (model.unusable) {
-            totalNum--;
+        model.unusable = false;
+        if (model.minSellMoney>=money) {
+            model.unusable = true;
+            totalNum -- ;
         }
+        [mArray addObject:model];
     }
+    _myCouponList = mArray;
+
     return totalNum;
 }
+//更新金额
+-(void)updatePrice{
+    [self payMoneySet];
+    [self reloadCellData];
+}
+//刷新cell
+-(void)reloadCellData{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 + self.addPlayerArray.count inSection:1];
+    
+    SelectRedPacketTableViewCell *cell = [_commitOrderTableView cellForRowAtIndexPath:indexPath];
+    [cell hidenGrayView];
+    if (_selectModel.timeKey) {
+        [cell configSelectData:_selectModel];
+    }else{
+        NSInteger canUseNum = [self getCanUseNum];
+        [cell configData:canUseNum];
+    }
+}
+
+//判断当前红包是否可用
+-(void)checkRedpacket{
+    NSInteger totalPrice =  [_normolPrice integerValue] * [self.addPlayerArray count];
+    if (_selectModel.timeKey) {
+        if (totalPrice<_selectModel.minSellMoney) {
+            _selectModel = nil;
+            [self updatePrice];
+        }
+    }
+}
+
+
+
 //通讯录添加打球人
 - (void)contactAdd:(UIButton *)btn{
     [self.commitOrderTableView endEditing:YES];
@@ -331,7 +368,7 @@
         JGDBallPlayTableViewCell *cell = (JGDBallPlayTableViewCell *)[[btn superview] superview];
         NSIndexPath *index = [self.commitOrderTableView indexPathForCell:cell];
         cell.nameTF.text = userName;
-        self.addPlayerArray[index.row - 2] = userName;
+        self.addPlayerArray[index.row - 1] = userName;
         cell.phoneImageV.hidden = YES;
     };
     [self.navigationController pushViewController:contactVC animated:YES];
@@ -351,7 +388,7 @@
     cell.orderPriceLabel.text = orderPrice;
     cell.redpacketLabel.text = redpacketMoney;
     cell.totalPriceLabel.text = totalPrice;
-    
+    [self reloadCellData];
 }
 #pragma mark - UITableViewDelegate&&DataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -454,10 +491,13 @@
         }else if (indexPath.row == 2) {
             JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
             NSString *begainDate = [NSString stringWithFormat:@"将为您提供%@-%@（１小时内的开球时间）", [Helper dateFromDate:self.selectDate timeInterval:-30 * 60], [Helper dateFromDate:self.selectDate timeInterval:30 * 60]];
-            UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 20 * ProportionAdapter, 35 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:(15 * ProportionAdapter) text:begainDate textAlignment:(NSTextAlignmentCenter)];
-            tipLB.backgroundColor = [UIColor colorWithHexString:@"#fefaf3"];
-            tipLB.layer.cornerRadius = 6;
-            tipLB.clipsToBounds = YES;
+            // 带圆角背景
+            UIView *layerView = [Factory createViewWithBackgroundColor:RGB(254,250,243) frame:CGRectMake(10 * ProportionAdapter, 0, (int)(screenWidth - 20 * ProportionAdapter), (int) 35 * ProportionAdapter)];
+            layerView.layer.cornerRadius = 6;
+            layerView.clipsToBounds = YES;
+            
+            UILabel *tipLB = [self lablerect:layerView.bounds labelColor:RGB(99,99,99) labelFont:(15 * ProportionAdapter) text:begainDate textAlignment:(NSTextAlignmentCenter)];
+            [layerView addSubview:tipLB];
             
             NSMutableAttributedString *mutabeAtr = [[NSMutableAttributedString alloc] initWithString:begainDate];
             UIImage *img = [UIImage imageNamed:@"order_icn_remark"];
@@ -467,7 +507,7 @@
             NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:textAttach];
             [mutabeAtr insertAttributedString:string atIndex:0];
             tipLB.attributedText = mutabeAtr;
-            [cell.contentView addSubview:tipLB];
+            [cell.contentView addSubview:layerView];
             
             UILabel *lB = [[UILabel alloc] initWithFrame:CGRectMake(0, 40 * ProportionAdapter, screenWidth, 10 * ProportionAdapter)];
             lB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -497,8 +537,10 @@
         }else if (indexPath.row == 5) {
             JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            UILabel *vipSelectLB = [Helper lableRect:CGRectMake(13 * ProportionAdapter, 0, 90 * ProportionAdapter, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:16 * ProportionAdapter text:@"使用会籍" textAlignment:NSTextAlignmentLeft];
+            UILabel *testLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) fontSize:kHorizontal(16) Title:@"："];
+            [testLabel sizeToFit];
+            CGFloat difference = testLabel.width;
+            UILabel *vipSelectLB = [Helper lableRect:CGRectMake(5 * ProportionAdapter, 0, 90 * ProportionAdapter - difference, 50 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#a0a0a0"] labelFont:16 * ProportionAdapter text:@"使用会籍" textAlignment:NSTextAlignmentRight];
             [cell.contentView addSubview:vipSelectLB];
             
             if ([self.vipCardArray count] > 0) {
@@ -531,8 +573,8 @@
             [cell.contentView addSubview:titleLB];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(264 * ProportionAdapter, 12 * ProportionAdapter, 26 * ProportionAdapter, 26 * ProportionAdapter)];
-            if ([self.addPlayerArray count] == 0) {
+            UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(262 * ProportionAdapter, 10 * ProportionAdapter, 30 * ProportionAdapter, 30 * ProportionAdapter)];
+            if ([self.playerArray count] == 1) {
                 [leftBtn setImage:[UIImage imageNamed:@"order_minus"] forState:(UIControlStateNormal)]; // 灰色
             }else{
                 [leftBtn setImage:[UIImage imageNamed:@"order_minus-color"] forState:(UIControlStateNormal)];
@@ -544,7 +586,7 @@
             self.countLB = [self lablerect:CGRectMake(290 * ProportionAdapter, 12 * ProportionAdapter, 50 * ProportionAdapter, 26 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"%td人", [self.addPlayerArray count]] textAlignment:(NSTextAlignmentCenter)];
             [cell.contentView addSubview:self.countLB];
             
-            UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(340 * ProportionAdapter, 12 * ProportionAdapter, 26 * ProportionAdapter, 26 * ProportionAdapter)];
+            UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(338 * ProportionAdapter, 10 * ProportionAdapter, 30 * ProportionAdapter, 30 * ProportionAdapter)];
             rightBtn.tag = 501;
             [rightBtn addTarget:self action:@selector(countChanege:) forControlEvents:(UIControlEventTouchUpInside)];
             [rightBtn setImage:[UIImage imageNamed:@"order_add"] forState:(UIControlStateNormal)]; // 黑色
@@ -561,7 +603,7 @@
             BookCourtPriceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BookCourtPriceTableViewCellID"];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             cell.titleLabel.text = @"嘉宾价格";
-            cell.priceLabel.text = _normolPrice;
+            cell.priceLabel.text = [NSString stringWithFormat:@"¥%@",_normolPrice];
             return cell;
 
         }else if (indexPath.row == 2 + [self.addPlayerArray count]&&self.addPlayerArray.count>0) {
@@ -604,7 +646,7 @@
             cell.nameTF.text = self.addPlayerArray[indexPath.row - 1];
             
             [cell.nameTF.text length] > 0 ? (cell.phoneImageV.hidden = YES) : (cell.phoneImageV.hidden = NO);
-            cell.titleLB.text = @"打球人";
+            cell.titleLB.text = @"打球人：";
             cell.nameTF.delegate = self;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.phoneImageV addTarget:self action:@selector(contactAdd:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -794,21 +836,6 @@
     }
 }
 
-//更新金额
--(void)updatePrice{
-    [self payMoneySet];
-    [_commitOrderTableView reloadRow:2 + self.addPlayerArray.count inSection:1 withRowAnimation:UITableViewRowAnimationNone];
-}
-//判断当前红包是否可用
--(void)checkRedpacket:(NSInteger)totalPrice{
-    if (_selectModel.timeKey) {
-        if (totalPrice<_selectModel.minSellMoney) {
-            _selectModel = nil;
-            [self updatePrice];
-        }
-    }
-}
-
 #pragma mark --- 人数加减
 
 - (void)countChanege:(UIButton *)btn{
@@ -908,7 +935,7 @@
     // 订单实付总价
     NSInteger money = [self.selectMoney integerValue] + [_normolPrice integerValue] * [self.addPlayerArray count] - _selectModel.money;
     //更改价格之后判断红包是否可用
-    [self checkRedpacket:money];
+    [self checkRedpacket];
     
     NSString *moneyStr = [NSString stringWithFormat:@"%@  ¥%td", paytypeString, money];
     NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:moneyStr];

@@ -9,7 +9,7 @@
 #import "JGLAnimationViewController.h"
 #define screenWidth  [UIScreen mainScreen].bounds.size.width
 #define screenHeight  [UIScreen mainScreen].bounds.size.height
-@interface JGLAnimationViewController()
+@interface JGLAnimationViewController()<CAAnimationDelegate>
 {
     CALayer *_layer, *_layer1;
     NSTimer* _timer;

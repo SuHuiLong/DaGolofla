@@ -100,14 +100,12 @@
 
 
 
-
+//消失
 - (void)dismissAlert
 {
     [UIView animateWithDuration:0.2 animations:^{
          [self removeFromSuperview];
     }];
-   
-    
 }
 
 
@@ -138,12 +136,6 @@
     
     self.frame=afterFrame;
     [super removeFromSuperview];
-    //    [UIView animateWithDuration:0.5f delay:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^{
-    //        self.frame = afterFrame;
-    //        [super removeFromSuperview];
-    //    } completion:^(BOOL finished) {
-    //
-    //    }];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
@@ -171,8 +163,8 @@
     [self.backImageView addSubview:_btnBack];
     CGRect afterFrame = CGRectMake(0, ScreenHeight-kAlertHeight, ScreenWidth, kAlertHeight);
     self.frame = afterFrame;
-    [UIView animateWithDuration:0.5f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        //self.transform = CGAffineTransformMakeRotation(0);
+    [UIView animateWithDuration:0.2f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+
         self.backImageView.alpha = 0.4f;
         self.frame = afterFrame;
     } completion:^(BOOL finished) {

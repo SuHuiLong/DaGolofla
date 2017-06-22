@@ -161,7 +161,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *headerView = [Factory createViewWithBackgroundColor:Back_Color frame:CGRectMake(0, 0, screenWidth, kHvertical(33))];
     //图标
-    UIImageView *iconView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(15), kHvertical(16), kHvertical(16)) Image:[UIImage imageNamed:@"icn_luckydetail"]];
+    UIImageView *iconView = [Factory createImageViewWithFrame:CGRectMake(kWvertical(10), kHvertical(13), kHvertical(20), kHvertical(20)) Image:[UIImage imageNamed:@"icn_luckydetail"]];
     [headerView addSubview:iconView];
     //红包说明
     UILabel *explainLabel = [Factory createLabelWithFrame:CGRectMake(iconView.x_width+kWvertical(5), kHvertical(13), kWvertical(70), kHvertical(20)) textColor:RGB(0,134,73) fontSize:kHorizontal(15) Title:@"红包说明"];

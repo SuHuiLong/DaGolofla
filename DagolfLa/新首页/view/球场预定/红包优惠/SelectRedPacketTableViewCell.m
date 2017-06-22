@@ -24,7 +24,12 @@
     [self.contentView addSubview:grayView];
     _grayView = grayView;
     
-    _titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), kHvertical(10), screenWidth, kHvertical(51)) textColor:RGB(160,160,160) fontSize:kHorizontal(16) Title:@"红包优惠"];
+    UILabel *titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(5), kHvertical(10), kWvertical(90), kWvertical(50)) textColor:RGB(160,160,160) fontSize:kHorizontal(16) Title:@"红包优惠"];
+    UILabel *testLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) fontSize:kHorizontal(16) Title:@"："];
+    [testLabel sizeToFit];
+    titleLabel.width = titleLabel.width - testLabel.width;
+    [titleLabel setTextAlignment:NSTextAlignmentRight];
+    _titleLabel = titleLabel;
     [self.contentView addSubview:_titleLabel];
     
     _descLabel = [Factory createLabelWithFrame:CGRectMake(0, kHvertical(10), screenWidth - kWvertical(24), kHvertical(51)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"无可用红包"];

@@ -21,6 +21,9 @@
 }
 #pragma mark - CreateView
 -(void)createUI{
+    UILabel *testLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) fontSize:kHorizontal(16) Title:@"："];
+    [testLabel sizeToFit];
+    CGFloat difference = testLabel.width;
     
     UIView *backWhiteView = [Factory createViewWithBackgroundColor:WhiteColor frame:CGRectMake(0, 0, screenWidth, kHvertical(120))];
     [self.contentView addSubview:backWhiteView];
@@ -28,14 +31,16 @@
     UIView *grayView = [Factory createViewWithBackgroundColor:RGB(238,238,238) frame:CGRectMake(0, 0, screenWidth, kHvertical(10))];
     [backWhiteView addSubview:grayView];
     //订单总价
-    _orderPrice = [Factory createLabelWithFrame:CGRectMake(kWvertical(15), kHvertical(10), screenWidth/2, kHvertical(36)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"订单总价"];
+    _orderPrice = [Factory createLabelWithFrame:CGRectMake(kWvertical(5), kHvertical(10), kWvertical(90)-difference, kHvertical(36)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"订单总价"];
+    [_orderPrice setTextAlignment:NSTextAlignmentRight];
     [backWhiteView addSubview:_orderPrice];
     //订单总价金额
     _orderPriceLabel = [Factory createLabelWithFrame:CGRectMake(0, kHvertical(10), screenWidth - kWvertical(10), kHvertical(36)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@""];
     [_orderPriceLabel setTextAlignment:NSTextAlignmentRight];
     [backWhiteView addSubview:_orderPriceLabel];
     //红包优惠
-    _redPacket = [Factory createLabelWithFrame:CGRectMake(kWvertical(15), kHvertical(35), screenWidth/2, kHvertical(36)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"红包优惠"];
+    _redPacket = [Factory createLabelWithFrame:CGRectMake(kWvertical(5), kHvertical(35), kWvertical(90)-difference, kHvertical(36)) textColor:RGB(160,160,160) fontSize:kHorizontal(15) Title:@"红包优惠"];
+    [_redPacket setTextAlignment:NSTextAlignmentRight];
     [backWhiteView addSubview:_redPacket];
     //红包优惠金额
     _redpacketLabel = [Factory createLabelWithFrame:CGRectMake(0, kHvertical(35), screenWidth - kWvertical(10), _orderPriceLabel.height) textColor:RGB(160, 160, 160) fontSize:kHorizontal(15) Title:@""];
@@ -45,7 +50,8 @@
     UIImageView *lineView = [Factory createImageViewWithFrame:CGRectMake(0, kHvertical(65), screenWidth, kHvertical(5)) Image:[UIImage imageNamed:@"order_line"]];
     [backWhiteView addSubview:lineView];
     //实付总价
-    _totalPrice = [Factory createLabelWithFrame:CGRectMake(kWvertical(11), kHvertical(70), screenWidth/2, kHvertical(50)) textColor:RGB(49,49,49) fontSize:kHorizontal(18) Title:@"实付金额"];
+    _totalPrice = [Factory createLabelWithFrame:CGRectMake(kWvertical(5), kHvertical(70), kWvertical(90)-difference, kHvertical(50)) textColor:RGB(49,49,49) fontSize:kHorizontal(18) Title:@"实付金额"];
+    [_totalPrice setTextAlignment:NSTextAlignmentRight];
     [backWhiteView addSubview:_totalPrice];
     //实付总价金额
     _totalPriceLabel = [Factory createLabelWithFrame:CGRectMake(0, kHvertical(70), screenWidth - kWvertical(10), kHvertical(50)) textColor:RGB(252,90,1) fontSize:kHorizontal(16) Title:@""];

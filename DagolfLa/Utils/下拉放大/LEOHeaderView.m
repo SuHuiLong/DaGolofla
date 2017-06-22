@@ -20,9 +20,6 @@ block(__VA_ARGS__); \
 }
 #endif
 
-static CGFloat const kHeaderWidth = 100; // 头像宽度
-static CGFloat const kHeaderMinWidth = 40; // 头像在顶部时的宽度
-
 @interface LEOHeaderView ()
 
 @property (nonatomic, copy) ReachtopBlock block;

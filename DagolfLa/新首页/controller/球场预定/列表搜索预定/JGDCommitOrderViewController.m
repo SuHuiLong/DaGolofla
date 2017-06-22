@@ -72,7 +72,7 @@
 
 - (void)commitOrderTable{
     
-    self.commitOrderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64 * ProportionAdapter) style:(UITableViewStylePlain)];
+    self.commitOrderTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight - 64 ) style:(UITableViewStylePlain)];
     self.commitOrderTableView.delegate = self;
     self.commitOrderTableView.dataSource = self;
     [self.view addSubview:self.commitOrderTableView];
@@ -84,7 +84,7 @@
     // "付款类型 0: 全额预付  1: 部分预付  2: 球场现付"
     if ([[self.detailDic objectForKey:@"payType"] integerValue] == 0) {
         
-        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
+        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 130 * ProportionAdapter)];
         
         self.payMoneyLB = [self lablerect:CGRectMake(220 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"全额预付  ¥%@", self.selectMoney] textAlignment:(NSTextAlignmentRight)];
         NSMutableAttributedString *mutaAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"全额预付  ¥%@", self.selectMoney]];
@@ -93,7 +93,7 @@
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
-        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 41 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
+        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 41 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 45 * ProportionAdapter)];
         [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -104,7 +104,7 @@
         
     }else if ([[self.detailDic objectForKey:@"payType"] integerValue] == 1) {
         
-        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 120 * ProportionAdapter)];
+        UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 130 * ProportionAdapter)];
         
         self.scenePayMoneyLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, 140 * ProportionAdapter, 40 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(16 * ProportionAdapter) text:[NSString stringWithFormat:@"现场支付  ¥%@", self.selectSceneMoney] textAlignment:(NSTextAlignmentLeft)];
         NSMutableAttributedString *sceneAttStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"现场支付  ¥%@", self.selectSceneMoney]];
@@ -120,7 +120,7 @@
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
-        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 41 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
+        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, 41 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 45 * ProportionAdapter)];
         [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -157,7 +157,7 @@
         self.payMoneyLB.attributedText = mutaAttStr;
         [footView addSubview:self.payMoneyLB];
         
-        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, height +  70 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 40 * ProportionAdapter)];
+        UIButton *commitBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter, height +  70 * ProportionAdapter, screenWidth - 20 * ProportionAdapter, 45 * ProportionAdapter)];
         [commitBtn setTitle:@"确定预订" forState:(UIControlStateNormal)];
         commitBtn.backgroundColor = [UIColor colorWithHexString:@"#fc5a01"];
         [commitBtn addTarget:self action:@selector(ConfirmAct) forControlEvents:(UIControlEventTouchUpInside)];
@@ -175,13 +175,51 @@
 //获取可用红包
 -(NSInteger)getCanUseNum{
     NSInteger totalNum = _myCouponList.count;
+    //订单金额
+    CGFloat money = [self.selectMoney integerValue] * ([self.playerArray count]) ;
+    NSMutableArray *mArray = [NSMutableArray array];
     for (RedPacketModel *model in _myCouponList) {
-        if (model.unusable) {
-            totalNum--;
+        model.unusable = false;
+        if (model.minSellMoney>=money) {
+            model.unusable = true;
+            totalNum -- ;
         }
+        [mArray addObject:model];
     }
+    _myCouponList = mArray;
     return totalNum;
 }
+//更新金额
+-(void)updatePrice{
+    [self payMoneySet];
+    [self reloadCellData];
+}
+//刷新cell
+-(void)reloadCellData{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:5 + self.playerArray.count inSection:0];
+    
+    SelectRedPacketTableViewCell *cell = [_commitOrderTableView cellForRowAtIndexPath:indexPath];
+    [cell hidenGrayView];
+    if (_selectModel.timeKey) {
+        [cell configSelectData:_selectModel];
+    }else{
+        NSInteger canUseNum = [self getCanUseNum];
+        [cell configData:canUseNum];
+    }
+}
+
+//判断当前红包是否可用
+-(void)checkRedpacket{
+    if (_selectModel.timeKey) {
+        CGFloat money = [self.selectMoney integerValue] * ([self.playerArray count]) ;
+        if (money<_selectModel.minSellMoney) {
+            _selectModel = nil;
+        }
+    }
+    [self updatePrice];
+
+}
+
 //确定预定支付
 - (void)ConfirmAct{
     
@@ -295,11 +333,14 @@
         JGDCostumTableViewCell *cell = [[JGDCostumTableViewCell alloc] init];
         
         NSString *begainDate = [NSString stringWithFormat:@"将为您提供%@-%@（１小时内的开球时间）", [Helper dateFromDate:self.selectDate timeInterval:-30 * 60], [Helper dateFromDate:self.selectDate timeInterval:30 * 60]];
+
+        // 带圆角背景
+        UIView *layerView = [Factory createViewWithBackgroundColor:RGB(254,250,243) frame:CGRectMake(10 * ProportionAdapter, 0, (int)(screenWidth - 20 * ProportionAdapter), (int) 35 * ProportionAdapter)];
+        layerView.layer.cornerRadius = 6;
+        layerView.clipsToBounds = YES;
         
-        UILabel *tipLB = [self lablerect:CGRectMake(10 * ProportionAdapter, 0, screenWidth - 20 * ProportionAdapter, 35 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#636363"] labelFont:(15 * ProportionAdapter) text:begainDate textAlignment:(NSTextAlignmentCenter)];
-        tipLB.backgroundColor = [UIColor colorWithHexString:@"#fefaf3"];
-        tipLB.layer.cornerRadius = 6;
-        tipLB.clipsToBounds = YES;
+        UILabel *tipLB = [self lablerect:layerView.bounds labelColor:RGB(99,99,99) labelFont:(15 * ProportionAdapter) text:begainDate textAlignment:(NSTextAlignmentCenter)];
+        [layerView addSubview:tipLB];
         
         NSMutableAttributedString *mutabeAtr = [[NSMutableAttributedString alloc] initWithString:begainDate];
         
@@ -312,7 +353,7 @@
         
         tipLB.attributedText = mutabeAtr;
         
-        [cell.contentView addSubview:tipLB];
+        [cell.contentView addSubview:layerView];
         
         UILabel *lB = [[UILabel alloc] initWithFrame:CGRectMake(0, 40 * ProportionAdapter, screenWidth, 10 * ProportionAdapter)];
         lB.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
@@ -326,7 +367,7 @@
         [cell.contentView addSubview:titleLB];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(264 * ProportionAdapter, 12 * ProportionAdapter, 26 * ProportionAdapter, 26 * ProportionAdapter)];
+        UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(262 * ProportionAdapter, 10 * ProportionAdapter, 30 * ProportionAdapter, 30 * ProportionAdapter)];
         if ([self.playerArray count] == 1) {
             [leftBtn setImage:[UIImage imageNamed:@"order_minus"] forState:(UIControlStateNormal)]; // 灰色
         }else{
@@ -339,7 +380,7 @@
         self.countLB = [self lablerect:CGRectMake(290 * ProportionAdapter, 12 * ProportionAdapter, 50 * ProportionAdapter, 26 * ProportionAdapter) labelColor:[UIColor colorWithHexString:@"#313131"] labelFont:(17 * ProportionAdapter) text:[NSString stringWithFormat:@"%td人", [self.playerArray count]] textAlignment:(NSTextAlignmentCenter)];
         [cell.contentView addSubview:self.countLB];
         
-        UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(340 * ProportionAdapter, 12 * ProportionAdapter, 26 * ProportionAdapter, 26 * ProportionAdapter)];
+        UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(338 * ProportionAdapter, 10 * ProportionAdapter, 30 * ProportionAdapter, 30 * ProportionAdapter)];
         rightBtn.tag = 501;
         [rightBtn addTarget:self action:@selector(countChanege:) forControlEvents:(UIControlEventTouchUpInside)];
         [rightBtn setImage:[UIImage imageNamed:@"order_add"] forState:(UIControlStateNormal)]; // 黑色
@@ -594,21 +635,6 @@
 
 
 #pragma mark -- Action
-//更新金额
--(void)updatePrice{
-    [self payMoneySet];
-    [_commitOrderTableView reloadRow:5 + self.playerArray.count inSection:0 withRowAnimation:UITableViewRowAnimationNone];
-}
-//判断当前红包是否可用
--(void)checkRedpacket{
-    if (_selectModel.timeKey) {
-        CGFloat money = [self.selectMoney integerValue] * ([self.playerArray count]) ;
-        if (money<_selectModel.minSellMoney) {
-            _selectModel = nil;
-            [self updatePrice];
-        }
-    }
-}
 //人数加减
 - (void)countChanege:(UIButton *)btn{
     
@@ -709,6 +735,7 @@
     [sceneAttStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12 * ProportionAdapter] range:NSMakeRange(6, 1)];
     self.scenePayMoneyLB.attributedText = sceneAttStr;
     
+    [self reloadCellData];
 }
 
 

@@ -87,8 +87,10 @@
     
     [[JsonHttp jsonHttp] httpRequest:@"coupon/getMyHistoryCouponList" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
         [_mainTableView.mj_header endRefreshing];
+        [_mainTableView.mj_footer endRefreshing];
     } completionBlock:^(id data) {
         [_mainTableView.mj_header endRefreshing];
+        [_mainTableView.mj_footer endRefreshing];
         BOOL packSuccess = [[data objectForKey:@"packSuccess"] boolValue];
         if (packSuccess) {
             if (_offset==0) {

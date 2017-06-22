@@ -134,8 +134,8 @@
 
 
 #pragma mark - 下载数据
-- (void)downLoadData:(int)page isReshing:(BOOL)isReshing{
-    [[PostDataRequest sharedInstance] postDataRequest:kBallPark_URL parameter:@{@"page":[NSNumber numberWithInt:page],@"rows":@15,@"ballName":_textField.text} success:^(id respondsData) {
+- (void)downLoadData:(NSInteger)page isReshing:(BOOL)isReshing{
+    [[PostDataRequest sharedInstance] postDataRequest:kBallPark_URL parameter:@{@"page":[NSNumber numberWithInteger:page],@"rows":@15,@"ballName":_textField.text} success:^(id respondsData) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:respondsData options:NSJSONReadingMutableContainers error:nil];
         if ([[dict objectForKey:@"success"] boolValue]) {
             if (page == 1){

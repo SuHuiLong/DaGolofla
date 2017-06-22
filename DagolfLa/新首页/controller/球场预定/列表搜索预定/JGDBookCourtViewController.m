@@ -41,9 +41,6 @@
 @property (nonatomic, strong) UIView *headerView;
 
 @property (nonatomic, strong) UIView *backTitleView;
-
-//城市
-@property (nonatomic, copy) NSString *cityString;
 //省份
 @property (nonatomic,copy) NSString *provinceName;
 
@@ -55,7 +52,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.cityString = [[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME];
+    self.provinceName = [[NSUserDefaults standardUserDefaults] objectForKey:PROVINCENAME];
     self.offset = 0;
     [self  tableViewSet];
     
@@ -69,17 +66,13 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:[NSNumber numberWithInteger:self.offset] forKey:@"offset"];
     [dic setObject:[NSNumber numberWithInteger:type] forKey:@"sortType"];
-    if (self.provinceName.length>0) {
-        [dic setObject:self.provinceName forKey:@"province"];
-    }else{
-        [dic setObject:self.cityString forKey:@"cityName"];
-    }
+    [dic setObject:self.provinceName forKey:@"province"];
     [dic setObject:[def objectForKey:BDMAPLAT] forKey:@"latitude"];
     [dic setObject:[def objectForKey:BDMAPLNG] forKey:@"longitude"];
     if (self.offset == 0) {
         [[ShowHUD showHUD] showAnimationWithText:@"加载中…" FromView:self.view];
     }
-    [[JsonHttp jsonHttp] httpRequest:@"bookball/getBallBookingList" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
+    [[JsonHttp jsonHttp] httpRequest:@"bookball/getBallBookingListV1" JsonKey:nil withData:dic requestMethod:@"GET" failedBlock:^(id errType) {
         [self.courtTableView.mj_footer endRefreshing];
 
         [[ShowHUD showHUD] hideAnimationFromView:self.view];
@@ -174,7 +167,7 @@
     [MobClick event:@"booking_map_click"];
     [self isLogin];
     SearchWithMapViewController *vc = [[SearchWithMapViewController alloc] init];
-    vc.cityName = _cityString;
+    vc.cityName = [[NSUserDefaults standardUserDefaults] objectForKey:CITYNAME];
     vc.blockProvince = ^(NSString *province) {
         CGFloat width = [Helper textWidthFromTextString:province height:screenWidth - 20 * ProportionAdapter fontSize:17];
         self.cityLitleLB.text = province;
@@ -216,7 +209,7 @@
     }
 
     self.currentType = btn.tag - 300;
-    [btn setTitleColor:[UIColor colorWithHexString:@"#32b14d"] forState:(UIControlStateNormal)];
+    [btn setTitleColor:BarRGB_Color forState:(UIControlStateNormal)];
     self.offset = 0;
     [self dataSet:self.currentType];
 }
@@ -301,7 +294,7 @@
         for (int i = 0; i < 3; i ++) {
             UIButton *sortBtn = [[UIButton alloc] initWithFrame:CGRectMake(10 * ProportionAdapter + i * 139 * ProportionAdapter, 0, 76 * ProportionAdapter, 49 * ProportionAdapter)];
             sortBtn.tag = 300 + i;
-            [sortBtn setTitleColor:i == 0 ? [UIColor colorWithHexString:@"#32b14b"] : [UIColor blackColor] forState:(UIControlStateNormal)];
+            [sortBtn setTitleColor:i == 0 ? BarRGB_Color : [UIColor blackColor] forState:(UIControlStateNormal)];
             [sortBtn setTitle:sortStyleArray[i] forState:(UIControlStateNormal)];
             [sortBtn addTarget:self action:@selector(sortCourt:) forControlEvents:(UIControlEventTouchUpInside)];
             sortBtn.titleLabel.font = [UIFont systemFontOfSize:17 * ProportionAdapter];

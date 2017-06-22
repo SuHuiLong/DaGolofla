@@ -186,7 +186,6 @@
 		18C4D8111EC5AA6000FF7D72 /* JGLAddBankNewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D2F31EC5AA5F00FF7D72 /* JGLAddBankNewsTableViewCell.m */; };
 		18C4D8121EC5AA6000FF7D72 /* JGLBankCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D2F51EC5AA5F00FF7D72 /* JGLBankCardTableViewCell.m */; };
 		18C4D8131EC5AA6000FF7D72 /* JGDSetPayPasswordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D2F81EC5AA5F00FF7D72 /* JGDSetPayPasswordTableViewCell.m */; };
-		18C4D8141EC5AA6000FF7D72 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D2FB1EC5AA5F00FF7D72 /* MessageViewController.m */; };
 		18C4D8151EC5AA6000FF7D72 /* ChatDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D2FE1EC5AA5F00FF7D72 /* ChatDetailViewController.m */; };
 		18C4D8161EC5AA6000FF7D72 /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D3001EC5AA5F00FF7D72 /* ChatListViewController.m */; };
 		18C4D8171EC5AA6000FF7D72 /* JGScanAddTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D3031EC5AA5F00FF7D72 /* JGScanAddTableViewCell.m */; };
@@ -1655,8 +1654,6 @@
 		18C4D2F51EC5AA5F00FF7D72 /* JGLBankCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGLBankCardTableViewCell.m; sourceTree = "<group>"; };
 		18C4D2F71EC5AA5F00FF7D72 /* JGDSetPayPasswordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGDSetPayPasswordTableViewCell.h; sourceTree = "<group>"; };
 		18C4D2F81EC5AA5F00FF7D72 /* JGDSetPayPasswordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGDSetPayPasswordTableViewCell.m; sourceTree = "<group>"; };
-		18C4D2FA1EC5AA5F00FF7D72 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
-		18C4D2FB1EC5AA5F00FF7D72 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
 		18C4D2FD1EC5AA5F00FF7D72 /* ChatDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDetailViewController.h; sourceTree = "<group>"; };
 		18C4D2FE1EC5AA5F00FF7D72 /* ChatDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDetailViewController.m; sourceTree = "<group>"; };
 		18C4D2FF1EC5AA5F00FF7D72 /* ChatListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatListViewController.h; sourceTree = "<group>"; };
@@ -4680,8 +4677,6 @@
 		18C4D2F91EC5AA5F00FF7D72 /* 消息 */ = {
 			isa = PBXGroup;
 			children = (
-				18C4D2FA1EC5AA5F00FF7D72 /* MessageViewController.h */,
-				18C4D2FB1EC5AA5F00FF7D72 /* MessageViewController.m */,
 				18C4D2FC1EC5AA5F00FF7D72 /* 会话 */,
 				18C4D3011EC5AA5F00FF7D72 /* 新朋友 */,
 				18C4D3061EC5AA5F00FF7D72 /* 球友列表 */,
@@ -10366,7 +10361,6 @@
 				203019BE1E0E4293005568E2 /* ZXAbstractRSSReader.m in Sources */,
 				20301A0E1E0E4293005568E2 /* ZXQRCodeMultiReader.m in Sources */,
 				18C4D7BB1EC5AA6000FF7D72 /* MySetHelpController.m in Sources */,
-				18C4D8141EC5AA6000FF7D72 /* MessageViewController.m in Sources */,
 				369B2B671C61B23F00366AA2 /* NewsDetailViewCell.m in Sources */,
 				18C4D89D1EC5AA6100FF7D72 /* MakePhotoTextSelectFromAllViewController.m in Sources */,
 				36BF01911BC7766B005B3CE2 /* MeWonderViewCell.m in Sources */,
@@ -10570,7 +10564,7 @@
 					"$(SRCROOT)/DagolfLa/zhifu",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.6;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10629,7 +10623,7 @@
 					"$(SRCROOT)/DagolfLa/zhifu",
 				);
 				INFOPLIST_FILE = DagolfLa/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.6;
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

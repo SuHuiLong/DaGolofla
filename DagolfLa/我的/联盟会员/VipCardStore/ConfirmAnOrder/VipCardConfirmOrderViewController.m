@@ -274,11 +274,11 @@
     arrowImageView.tintColor = RGB(160,160,160);
     [whiteView addSubview:arrowImageView];
     //勾选按钮
-    UIButton *circleBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(10), kHvertical(65), kHvertical(16), kHvertical(16)) NormalImage:@"icn_allianceAgreementSelect" SelectedImage:@"icn_allianceAgreementUnselect" target:self selector:@selector(circleBtnClick:)];
+    UIButton *circleBtn = [Factory createButtonWithFrame:CGRectMake(0, kHvertical(65)-kWvertical(10), kHvertical(16)+kWvertical(20), kHvertical(16)+kWvertical(20)) NormalImage:@"icn_allianceAgreementSelect" SelectedImage:@"icn_allianceAgreementUnselect" target:self selector:@selector(circleBtnClick:)];
     circleBtn.selected = isSelect;
     [backView addSubview:circleBtn];
     //描述
-    UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(circleBtn.x_width + kWvertical(5), kHvertical(65), 0, kHvertical(16)) textColor:RGB(160,160,160) fontSize:kHorizontal(13) Title:@"勾选表示已查阅并认同"];
+    UILabel *descLabel = [Factory createLabelWithFrame:CGRectMake(circleBtn.x_width - kWvertical(5), kHvertical(65), 0, kHvertical(16)) textColor:RGB(160,160,160) fontSize:kHorizontal(13) Title:@"勾选表示已查阅并认同"];
     [descLabel sizeToFit];
     [backView addSubview:descLabel];
     //服务协议

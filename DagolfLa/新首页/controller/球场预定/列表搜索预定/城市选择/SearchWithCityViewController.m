@@ -131,7 +131,9 @@
             SearchWIthCityModel *model = [SearchWIthCityModel modelWithDictionary:listDict];
             [self.dataArray addObject:model];
         }
-        [self.mainTableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mainTableView reloadData];
+        });
     }
     [self loadActivityData];
 }
@@ -144,13 +146,16 @@
         NSString *cacherPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
         YYCache *diskCache = [[YYCache alloc] initWithPath:cacherPath];
         NSArray *list = [NSArray arrayWithArray:[data objectForKey:@"areaList"]];
-        [diskCache setObject:list forKey:@"activityCityData"];
         self.dataArray = [NSMutableArray array];
         for (NSDictionary *listDict in list) {
             SearchWIthCityModel *model = [SearchWIthCityModel modelWithDictionary:listDict];
             [self.dataArray addObject:model];
         }
-        [self.mainTableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mainTableView reloadData];
+        });
+        
+        [diskCache setObject:list forKey:@"activityCityData"];
     }];
 
 }
@@ -219,7 +224,7 @@
     [headerView addSubview:cityIcon];
     
     //当前省市
-    self.localCityBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(26), kHvertical(56), kWvertical(100), kHvertical(14)) titleFont:kHorizontal(15) textColor:RGB(49,49,49) backgroundColor:ClearColor target:self selector:@selector(localCityBtnClick) Title:[UserDefaults objectForKey:CITYNAME]];
+    self.localCityBtn = [Factory createButtonWithFrame:CGRectMake(kWvertical(26), kHvertical(56), kWvertical(100), kHvertical(14)) titleFont:kHorizontal(15) textColor:RGB(49,49,49) backgroundColor:ClearColor target:self selector:@selector(localCityBtnClick) Title:[UserDefaults objectForKey:PROVINCENAME]];
     [self.localCityBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     self.localCityBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [headerView addSubview:self.localCityBtn];
@@ -277,20 +282,19 @@
              //将获得的所有信息显示到label上
              //获取城市
              NSString *cityName = placemark.locality;
-             
              if (!cityName) {
                  //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得（如果city为空，则可知为直辖市）
                  cityName = placemark.administrativeArea;
              }
              [UserDefaults setObject:cityName forKey:CITYNAME];
              //省份
-             NSString *city =  placemark.administrativeArea;
+             NSString *province =  placemark.administrativeArea;
 
-             if ([city containsString:@"市"] || [city containsString:@"省"]) {
-                 city = [city substringToIndex:[city length] - 1];
+             if ([province containsString:@"市"] || [province containsString:@"省"]) {
+                 province = [province substringToIndex:[province length] - 1];
              }
-             [UserDefaults setObject:city forKey:PROVINCENAME];
-             [self.localCityBtn setTitle:city forState:(UIControlStateNormal)];
+             [UserDefaults setObject:province forKey:PROVINCENAME];
+             [self.localCityBtn setTitle:province forState:(UIControlStateNormal)];
          }
          [cityView stopAnimating];
          [cityView removeFromSuperview];

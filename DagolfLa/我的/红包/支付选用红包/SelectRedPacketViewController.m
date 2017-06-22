@@ -47,7 +47,17 @@
     [self.view addSubview:mainTableView];
     _mainTableView = mainTableView;
 }
-
+#pragma mark - InitData
+-(void)initViewData{
+    NSMutableArray *mArry = [NSMutableArray arrayWithArray:_dataArray];
+    for (RedPacketModel *model in _dataArray) {
+        if (model.unusable) {
+            [mArry removeObject:model];
+        }
+    }
+    _dataArray = mArry;
+    [_mainTableView reloadData];
+}
 #pragma mark - Action
 //返回
 -(void)backButtonClcik{

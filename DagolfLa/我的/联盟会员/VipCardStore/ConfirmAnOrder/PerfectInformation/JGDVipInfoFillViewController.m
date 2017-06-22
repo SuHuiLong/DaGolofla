@@ -48,6 +48,7 @@
     self.infoTableView.backgroundColor = [UIColor colorWithHexString:@"#EEEEEE"];
     self.infoTableView.delegate = self;
     self.infoTableView.dataSource = self;
+    self.infoTableView.scrollEnabled = false;
     [self.view addSubview:self.infoTableView];
     
     [self.infoTableView registerClass:[JGDInfoTextFieldTableViewCell class] forCellReuseIdentifier:@"infoTextField"];

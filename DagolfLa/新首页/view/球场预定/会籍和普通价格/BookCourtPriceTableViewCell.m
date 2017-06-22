@@ -20,7 +20,12 @@
 
 #pragma mark - CreateView
 -(void)createUI{
-    UILabel *titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(10), 0, screenWidth/2, kWvertical(50)) textColor:RGB(160,160,160) fontSize:kHorizontal(16) Title:@""];
+
+    UILabel *titleLabel = [Factory createLabelWithFrame:CGRectMake(kWvertical(5), 0, kWvertical(90), kWvertical(50)) textColor:RGB(160,160,160) fontSize:kHorizontal(16) Title:@""];
+    UILabel *testLabel = [Factory createLabelWithFrame:CGRectMake(0, 0, 0, 0) fontSize:kHorizontal(16) Title:@"："];
+    [testLabel sizeToFit];
+    titleLabel.width = titleLabel.width - testLabel.width;
+    [titleLabel setTextAlignment:NSTextAlignmentRight];
     _titleLabel = titleLabel;
     [self.contentView addSubview:_titleLabel];
 

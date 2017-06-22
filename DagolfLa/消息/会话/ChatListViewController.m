@@ -121,22 +121,17 @@
 - (void)loadMessageData{
     
     if (!DEFAULF_USERID){
-        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"君高高尔夫" message:@"是否立即登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
         [self.conversationListTableView.mj_header endRefreshing];
         return;
     }
-    
     [self notifyUpdateUnreadMessageCount];
-    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:DEFAULF_USERID forKey:@"userKey"];
     [dict setObject:[Helper md5HexDigest:[NSString stringWithFormat:@"userKey=%@dagolfla.com", DEFAULF_USERID]] forKey:@"md5"];
     [[JsonHttp jsonHttp]httpRequest:@"msg/geSumtUnread" JsonKey:nil withData:dict requestMethod:@"GET" failedBlock:^(id errType) {
-        
     } completionBlock:^(id data) {
-        NSLog(@"%@", data);
         if ([[data objectForKey:@"packSuccess"] integerValue] == 1) {
             if ([data objectForKey:@"teamMsgNewest"]) {
                 _teamNotDetailLable.text = [NSString stringWithFormat:@"%@", [[data objectForKey:@"teamMsgNewest"] objectForKey:@"title"]];

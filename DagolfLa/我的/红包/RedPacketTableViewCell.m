@@ -85,7 +85,7 @@
         _conditionLabel.text = conditionStr;
     }
     //红包类型和剩余天数
-    NSString *type = @"订场分享红包";
+    NSString *type = model.name;
     NSInteger remainingtime = model.remainingtime;
     
     NSMutableAttributedString *residueAstr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",type]];

@@ -289,7 +289,7 @@
         }
     }else{
         if (indexPath.row == 0) {
-            cell.detailLB.textColor = [UIColor colorWithHexString:@"#32b14d"];
+            cell.detailLB.textColor = BarRGB_Color;
         }else if (indexPath.row == 1) {
             cell.detailLB.font = [UIFont boldSystemFontOfSize:kHorizontal(15)];
         }else if (indexPath.row == 3) {
@@ -422,17 +422,16 @@
         CGFloat noteDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"remark"] width:screenWidth - 100 * ProportionAdapter fontSize:15 * ProportionAdapter];
         //备注
         NSString *remark = [self.dataDic objectForKey:@"remark"];
-        UIColor *labelColor = RGB(98,98,98);
+        UIColor *labelColor = RGB(49,49,49);
         if (remark.length == 0) {
             remark = @"无";
-            labelColor = RGB(160, 160, 160);
+            labelColor = RGB(98,98,98);
         }
         UILabel *noteDetailLB = [self lablerect:CGRectMake(90 * ProportionAdapter, 20 * ProportionAdapter, screenWidth - 100 * ProportionAdapter, noteDetailsHeight) labelColor:labelColor labelFont:(15 * ProportionAdapter) text:remark textAlignment:NSTextAlignmentLeft];
         noteDetailLB.numberOfLines = 0;
         [backView addSubview:noteDetailLB];
         return backView;
     }else{
-        
         UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, 100 * ProportionAdapter)];
         backView.backgroundColor = [UIColor whiteColor];
         UILabel *oderLB = [[UILabel alloc] initWithFrame:CGRectMake(8 * ProportionAdapter, 5 * ProportionAdapter, 80 * ProportionAdapter, 22 * ProportionAdapter)];
@@ -446,7 +445,7 @@
         CGFloat serviceDetailsHeight = [Helper textHeightFromTextString:[self.dataDic objectForKey:@"serviceDetails"] width:screenWidth - 110 * ProportionAdapter fontSize:kHorizontal(15)];
         serviceDetailsHeight = serviceDetailsHeight >= 22 * ProportionAdapter ? serviceDetailsHeight : oderLB.height;
         UILabel *oderDetailLB = [[UILabel alloc] initWithFrame:CGRectMake(90 * ProportionAdapter,  5 * ProportionAdapter , screenWidth - 110 * ProportionAdapter, serviceDetailsHeight)];
-        oderDetailLB.textColor = [UIColor colorWithHexString:@"#a0a0a0"];
+        oderDetailLB.textColor = RGB(98,98,98);
         oderDetailLB.font = [UIFont systemFontOfSize:kHorizontal(15)];
         oderDetailLB.textAlignment = NSTextAlignmentLeft;
         oderDetailLB.text = [self.dataDic objectForKey:@"serviceDetails"];

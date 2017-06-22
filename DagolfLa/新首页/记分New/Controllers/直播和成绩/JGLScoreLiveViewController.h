@@ -12,7 +12,6 @@
 
 @property (strong, nonatomic) NSNumber* activity;//key,srcKey
 
-//@property (strong, nonatomic) NSNumber* teamKey;
 
 
 
